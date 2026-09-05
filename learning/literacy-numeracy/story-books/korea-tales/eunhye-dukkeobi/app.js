@@ -234,6 +234,450 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐸",
+        art: "cover.webp",
+        title: "The Grateful Toad",
+        intro: [
+            "This is an oral tale with no known author. It belongs to the kind where an animal a person cared for pays that person back.",
+            "Our forebears thought a toad kept a house safe. One in the kitchen meant good luck coming, so nobody chased it out.",
+            "The centipede here is far bigger than a real one. In old tales a centipede is a creature grown strange with age."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Guest on the Kitchen Ledge",
+            beats: [
+                {
+                    art: "01-girl.webp",
+                    emoji: "🍚",
+                    left: [
+                        "Long ago in a village there lived a poor girl.",
+                        "She had lost her parents early and worked in another house's kitchen.",
+                        "The mistress of the house was not kind to her.",
+                        "From dawn she drew water, made the fire and washed up.",
+                        "Her hands were always cracked and sore."
+                    ],
+                    right: [
+                        "Cook all day as she might, her own share was one handful.",
+                        "Often it was cold rice at that.",
+                        "She ate it in the corner of the kitchen.",
+                        "Even so she never grumbled. She said thank you first when the bowl came.",
+                        "Her parents had taught her to do that."
+                    ]
+                },
+                {
+                    art: "02-toad.webp",
+                    emoji: "🐸",
+                    left: [
+                        "One evening the girl was at the last of the washing up.",
+                        "Something stirred in the corner of the kitchen ledge.",
+                        "A shadow moved there.",
+                        { t: "\"Oh!\"", v: "girl" },
+                        "She jumped back, and her fire stick shook."
+                    ],
+                    right: [
+                        "She looked, and a toad sat there blinking.",
+                        "Its back was bumpy and its belly was thin.",
+                        "The toad looked up at her too.",
+                        "The girl quietly put the stick down.",
+                        { t: "\"So you came all this way because you are hungry.\"", v: "girl" },
+                        "She was smiling before she knew it."
+                    ]
+                },
+                {
+                    art: "03-share.webp",
+                    emoji: "🤲",
+                    left: [
+                        "The girl took some grains from her own bowl and set them on the ledge.",
+                        "It was little enough to start with.",
+                        "That was her whole supper.",
+                        "The toad worked its mouth and ate them up. The girl watched with her chin in her hand.",
+                        "And she did not once think it a waste."
+                    ],
+                    right: [
+                        { t: "\"Come tomorrow too. Eating alone is dull.\"", v: "girl" },
+                        "The toad did not leave a grain.",
+                        "From that day she set food aside every day.",
+                        "A few grains when there was little, a spoonful when there was more.",
+                        "It was the best part of the girl's day."
+                    ]
+                },
+                {
+                    art: "04-grow.webp",
+                    emoji: "📏",
+                    left: [
+                        "Months went by, and then years.",
+                        "The more it ate, the more the toad grew.",
+                        "At first it fitted her palm; before long two hands would not hold it.",
+                        "The kitchen ledge began to look small.",
+                        "The girl only thought it wonderful."
+                    ],
+                    right: [
+                        { t: "\"How big you have grown.\"", v: "girl" },
+                        "The girl stroked its back and laughed.",
+                        "The toad's back was warm.",
+                        "It blinked as though it understood.",
+                        "That toad was the only friend she had, and she told it everything."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · A Night at the Shrine",
+            beats: [
+                {
+                    art: "05-shrine.webp",
+                    emoji: "⛩️",
+                    left: [
+                        "That village had one old worry.",
+                        "A huge centipede was said to live in the shrine on the hill behind.",
+                        "A shrine is a small house kept for the ancestors.",
+                        "Nobody had gone near this one for a long time.",
+                        "If the centipede grew angry, they said, the fields dried and the animals sickened."
+                    ],
+                    right: [
+                        "So each year the village chose one person to spend a night at the shrine.",
+                        "It was meant to keep the centipede quiet.",
+                        "They decided it by drawing lots.",
+                        "That one night was famous through the whole district for its terror.",
+                        "Nobody had ever come back from it."
+                    ]
+                },
+                {
+                    art: "06-chosen.webp",
+                    emoji: "😰",
+                    left: [
+                        "That year the one chosen was the girl.",
+                        "She had no parents and nobody to speak for her.",
+                        "It was as good as settled before the lots were drawn.",
+                        "The girl said nothing at all. She only nodded once.",
+                        "Nobody tried to stop her."
+                    ],
+                    right: [
+                        { t: "\"I am sorry. There is nothing we can do either.\"", v: "woman" },
+                        "The mistress of the house turned her face away.",
+                        "The villagers could not meet the girl's eyes.",
+                        "As the sun went down she changed into white and went up the hill road.",
+                        "Nobody came with her, and she did not look back."
+                    ]
+                },
+                {
+                    art: "07-hidden.webp",
+                    emoji: "🫥",
+                    left: [
+                        "Inside the old shrine it was dark and still.",
+                        "Wind came whistling through the cracks in the door.",
+                        "Moonlight lay in thin lines on the floorboards.",
+                        "The girl sat in a corner with her knees in her arms.",
+                        "Then her skirt felt oddly heavy, and something wriggled inside it."
+                    ],
+                    right: [
+                        "She lifted the skirt, and there was the toad, hunched inside.",
+                        "The toad looked up at her.",
+                        { t: "\"You... how long have you been following me?\"", v: "girl" },
+                        "Instead of answering it climbed up onto her knee.",
+                        "Only then did the girl cry."
+                    ]
+                },
+                {
+                    art: "08-centipede.webp",
+                    emoji: "😱",
+                    left: [
+                        "It was the middle of the night.",
+                        "From the ceiling came a slow dragging sound.",
+                        "The girl lifted her head very slowly.",
+                        "She had forgotten to breathe.",
+                        "She gripped the folds of her skirt tight."
+                    ],
+                    right: [
+                        "Under the ceiling something huge hung in the air.",
+                        "It was a centipede of a terrible size.",
+                        "Its body was as thick as a pillar and it curled at every joint.",
+                        "A blue light poured off it and filled the whole shrine.",
+                        "The girl shut her eyes tight."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Two Lights Meet",
+            beats: [
+                {
+                    art: "09-glow.webp",
+                    emoji: "✨",
+                    left: [
+                        "Just then the skirt heaved and the toad leapt out.",
+                        "It planted itself square in front of the girl.",
+                        "The toad's body began to swell.",
+                        "Its back blew up big as a balloon.",
+                        "Light came out of its eyes as well."
+                    ],
+                    right: [
+                        "A warm yellow light rose off the toad's back.",
+                        "The shrine went as bright as noon.",
+                        "The blue light and the yellow light met with a ringing crack.",
+                        "The pillars shook and dust came down from the ceiling.",
+                        "The girl kept close behind the toad and watched."
+                    ]
+                },
+                {
+                    art: "10-retreat.webp",
+                    emoji: "🌀",
+                    left: [
+                        "How long it went on nobody knows.",
+                        "The two lights pushed and gave and pushed again.",
+                        "The whole shrine shook with it.",
+                        "The yellow light pressed up a hand's breadth, and another.",
+                        "The blue light began to thin, and the centipede's body went slack."
+                    ],
+                    right: [
+                        "The centipede threw itself about one last time.",
+                        "Then it turned to black smoke and drifted apart.",
+                        "The yellow light faded too, like a candle going out.",
+                        "The shrine was dark again.",
+                        "And the toad sank down where it stood."
+                    ]
+                },
+                {
+                    art: "11-morning.webp",
+                    emoji: "🌅",
+                    left: [
+                        "When it grew light the villagers came carefully up to the shrine.",
+                        "They went to the door on quiet feet.",
+                        "There had not been a sound all night.",
+                        { t: "\"Surely not...\"", v: "man" },
+                        "Nobody would open the door. They were braced for the worst."
+                    ],
+                    right: [
+                        "The door creaked open, and there sat the girl, safe.",
+                        "The people stood with their mouths open.",
+                        "There was not a speck of dirt on her clothes.",
+                        "In her arms lay the toad, limp.",
+                        { t: "\"Please... open your eyes.\"", v: "girl" }
+                    ]
+                },
+                {
+                    art: "12-recover.webp",
+                    emoji: "🌿",
+                    left: [
+                        "The girl took the toad home and nursed it with all her care.",
+                        "All night she changed the wet cloth and held rice to its mouth.",
+                        "The mistress gave up a good room for it.",
+                        "The whole village helped the girl.",
+                        "On the seventh day the toad opened its eyes."
+                    ],
+                    right: [
+                        { t: "\"Thank you. Thank you truly.\"", v: "girl" },
+                        "The toad gave her finger a small nudge.",
+                        "The girl held it and cried a long while.",
+                        "After that nobody kept watch at the shrine again.",
+                        "The centipede never came back, and the toad stayed by her for years."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What did the girl do when she saw the toad?", choices: ["Drove it off with the stick", "Quietly put the stick down", "Called the mistress in"], answer: 1 },
+        { q: "What was the village's old worry?", choices: ["A drought coming every year", "A tiger off the mountain", "The centipede at the shrine"], answer: 2 },
+        { q: "Why did the village keep watch every year?", choices: ["The shrine was old and unsafe", "Thieves kept getting into it", "In case the centipede grew angry"], answer: 2 },
+        { q: "What was the sound from the ceiling at midnight?", choices: ["A slow dragging sound", "Wind whistling in the door cracks", "A mouth working at rice grains"], answer: 0 },
+        { q: "What did the toad and the centipede fight with?", choices: ["The light they gave off", "Shouting very loudly", "Pushing at each other"], answer: 0 },
+        { q: "What happened to the village after that?", choices: ["They built a new shrine", "Nobody kept watch again", "They kept toads at home"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "She shared rice when she had not enough herself, so sharing is not something you do because you have plenty.",
+                "The girl with no parents was chosen before the lots were drawn, so you can see where the weak stood in those days.",
+                "The girl nursed the toad for seven days, so there is no telling who gave and who paid back.",
+                "The toad followed her all the way to the shrine, so the girl must have asked it to come with her."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "cared for (care)", k: "거두어 주었다", s: "an animal a person cared for pays that person back" },
+            { w: "pays ~ back (pay)", k: "은혜를 갚는다", s: "an animal a person cared for pays that person back" },
+            { w: "forebears", k: "조상", s: "Our forebears thought a toad kept a house safe." },
+            { w: "kept ~ safe (keep)", k: "지켜 주었다", s: "Our forebears thought a toad kept a house safe." },
+            { w: "chased ~ out (chase)", k: "쫓아냈다", s: "One in the kitchen meant good luck, so nobody chased it out." },
+            { w: "centipede", k: "지네", s: "The centipede here is far bigger than a real one." },
+            { w: "grown strange with age", k: "오래 묵어 이상해진", s: "a creature grown strange with age" }
+        ],
+        "01-girl.webp": [
+            { w: "lost ~ early (lose)", k: "일찍 여의었다", s: "She had lost her parents early" },
+            { w: "mistress", k: "주인집 아주머니", s: "The mistress of the house was not kind to her." },
+            { w: "From dawn", k: "새벽부터", s: "From dawn she drew water, made the fire and washed up." },
+            { w: "washed up", k: "설거지를 했다", s: "she drew water, made the fire and washed up" },
+            { w: "cracked and sore", k: "트고 갈라진", s: "Her hands were always cracked and sore." },
+            { w: "Cook all day as she might", k: "하루 종일 밥을 지어도", s: "Cook all day as she might, her own share was one handful." },
+            { w: "share", k: "몫", s: "her own share was one handful" },
+            { w: "grumbled (grumble)", k: "투덜댔다", s: "Even so she never grumbled." }
+        ],
+        "02-toad.webp": [
+            { w: "the last of ~", k: "마지막 ~", s: "the girl was at the last of the washing up" },
+            { w: "stirred (stir)", k: "꿈틀했다", s: "Something stirred in the corner of the kitchen ledge." },
+            { w: "ledge", k: "부뚜막", s: "Something stirred in the corner of the kitchen ledge." },
+            { w: "jumped back", k: "뒤로 물러섰다", s: "She jumped back, and her fire stick shook." },
+            { w: "fire stick", k: "불 쑤시는 막대", s: "She jumped back, and her fire stick shook." },
+            { w: "toad", k: "두꺼비", s: "She looked, and a toad sat there blinking." },
+            { w: "bumpy", k: "울퉁불퉁한", s: "Its back was bumpy and its belly was thin." },
+            { w: "all this way", k: "여기까지", s: "So you came all this way because you are hungry." },
+            { w: "before she knew it", k: "저도 모르게", s: "She was smiling before she knew it." }
+        ],
+        "03-share.webp": [
+            { w: "grains", k: "밥알", s: "The girl took some grains from her own bowl" },
+            { w: "little enough", k: "그러잖아도 모자란", s: "It was little enough to start with." },
+            { w: "supper", k: "저녁 몫", s: "That was her whole supper." },
+            { w: "worked its mouth", k: "우물우물했다", s: "The toad worked its mouth and ate them up." },
+            { w: "with her chin in her hand", k: "턱을 괴고", s: "The girl watched with her chin in her hand." },
+            { w: "a waste", k: "아까운 일", s: "And she did not once think it a waste." },
+            { w: "dull", k: "심심한", s: "Come tomorrow too. Eating alone is dull." },
+            { w: "set ~ aside", k: "덜어 두었다", s: "From that day she set food aside every day." },
+            { w: "a spoonful", k: "한 숟갈", s: "A few grains when there was little, a spoonful when there was more." }
+        ],
+        "04-grow.webp": [
+            { w: "went by (go by)", k: "지나갔다", s: "Months went by, and then years." },
+            { w: "The more ~, the more ~", k: "~할수록 더", s: "The more it ate, the more the toad grew." },
+            { w: "fitted her palm (fit)", k: "손바닥만 했다", s: "At first it fitted her palm" },
+            { w: "would not hold it", k: "다 안기지 않았다", s: "before long two hands would not hold it" },
+            { w: "began to look small", k: "좁아 보였다", s: "The kitchen ledge began to look small." },
+            { w: "stroked (stroke)", k: "쓰다듬었다", s: "The girl stroked its back and laughed." },
+            { w: "as though it understood", k: "알아듣는다는 듯", s: "It blinked as though it understood." },
+            { w: "told it everything", k: "속엣말을 다 했다", s: "That toad was the only friend she had, and she told it everything." }
+        ],
+        "05-shrine.webp": [
+            { w: "worry", k: "근심", s: "That village had one old worry." },
+            { w: "was said to ~", k: "~한다고 했다", s: "A huge centipede was said to live in the shrine" },
+            { w: "shrine", k: "사당", s: "A shrine is a small house kept for the ancestors." },
+            { w: "ancestors", k: "조상", s: "a small house kept for the ancestors" },
+            { w: "gone near ~", k: "발길을 했다", s: "Nobody had gone near this one for a long time." },
+            { w: "sickened (sicken)", k: "병들었다", s: "the fields dried and the animals sickened" },
+            { w: "keep ~ quiet", k: "달래다", s: "It was meant to keep the centipede quiet." },
+            { w: "drawing lots", k: "제비뽑기", s: "They decided it by drawing lots." },
+            { w: "terror", k: "무서움", s: "That one night was famous through the whole district for its terror." }
+        ],
+        "06-chosen.webp": [
+            { w: "the one chosen", k: "뽑힌 사람", s: "That year the one chosen was the girl." },
+            { w: "speak for ~", k: "편들어 주다", s: "She had no parents and nobody to speak for her." },
+            { w: "as good as settled", k: "정해진 것이나 마찬가지", s: "It was as good as settled before the lots were drawn." },
+            { w: "nodded once", k: "고개를 한 번 끄덕였다", s: "She only nodded once." },
+            { w: "There is nothing we can do", k: "어쩔 수 없다", s: "I am sorry. There is nothing we can do either." },
+            { w: "turned her face away", k: "고개를 돌렸다", s: "The mistress of the house turned her face away." },
+            { w: "meet ~ eyes", k: "눈을 마주치다", s: "The villagers could not meet the girl's eyes." },
+            { w: "look back", k: "뒤를 돌아보다", s: "Nobody came with her, and she did not look back." }
+        ],
+        "07-hidden.webp": [
+            { w: "still", k: "조용한", s: "Inside the old shrine it was dark and still." },
+            { w: "whistling (whistle)", k: "휘휘 부는", s: "Wind came whistling through the cracks in the door." },
+            { w: "Moonlight", k: "달빛", s: "Moonlight lay in thin lines on the floorboards." },
+            { w: "floorboards", k: "마룻바닥", s: "Moonlight lay in thin lines on the floorboards." },
+            { w: "with her knees in her arms", k: "무릎을 안고", s: "The girl sat in a corner with her knees in her arms." },
+            { w: "oddly heavy", k: "이상하게 묵직한", s: "Then her skirt felt oddly heavy" },
+            { w: "wriggled (wriggle)", k: "꼼지락거렸다", s: "something wriggled inside it" },
+            { w: "hunched (hunch)", k: "웅크린", s: "there was the toad, hunched inside" },
+            { w: "Instead of answering", k: "대답 대신", s: "Instead of answering it climbed up onto her knee." }
+        ],
+        "08-centipede.webp": [
+            { w: "the middle of the night", k: "한밤중", s: "It was the middle of the night." },
+            { w: "ceiling", k: "천장", s: "From the ceiling came a slow dragging sound." },
+            { w: "dragging (drag)", k: "쓸리는", s: "From the ceiling came a slow dragging sound." },
+            { w: "forgotten to breathe", k: "숨 쉬는 것을 잊었다", s: "She had forgotten to breathe." },
+            { w: "gripped (grip)", k: "움켜쥐었다", s: "She gripped the folds of her skirt tight." },
+            { w: "hung in the air (hang)", k: "허공에 떠 있었다", s: "Under the ceiling something huge hung in the air." },
+            { w: "of a terrible size", k: "어마어마하게 큰", s: "It was a centipede of a terrible size." },
+            { w: "as thick as a pillar", k: "기둥만큼 굵은", s: "Its body was as thick as a pillar" },
+            { w: "poured off ~ (pour)", k: "뿜어져 나왔다", s: "A blue light poured off it and filled the whole shrine." }
+        ],
+        "09-glow.webp": [
+            { w: "heaved (heave)", k: "들썩했다", s: "Just then the skirt heaved and the toad leapt out." },
+            { w: "leapt out (leap)", k: "훌쩍 뛰어나왔다", s: "the toad leapt out" },
+            { w: "planted itself", k: "딱 버티고 섰다", s: "It planted itself square in front of the girl." },
+            { w: "square in front of ~", k: "~ 앞을 가로막고", s: "It planted itself square in front of the girl." },
+            { w: "swell", k: "부풀다", s: "The toad's body began to swell." },
+            { w: "blew up (blow up)", k: "불어올랐다", s: "Its back blew up big as a balloon." },
+            { w: "as bright as noon", k: "대낮처럼 환한", s: "The shrine went as bright as noon." },
+            { w: "with a ringing crack", k: "쩌엉 하고", s: "The blue light and the yellow light met with a ringing crack." },
+            { w: "kept close behind ~", k: "뒤에 몸을 붙였다", s: "The girl kept close behind the toad and watched." }
+        ],
+        "10-retreat.webp": [
+            { w: "How long it went on", k: "얼마나 지났을까", s: "How long it went on nobody knows." },
+            { w: "pushed and gave", k: "밀고 밀렸다", s: "The two lights pushed and gave and pushed again." },
+            { w: "a hand's breadth", k: "한 뼘", s: "The yellow light pressed up a hand's breadth, and another." },
+            { w: "thin", k: "흐려지다", s: "The blue light began to thin" },
+            { w: "went slack", k: "축 늘어졌다", s: "the centipede's body went slack" },
+            { w: "threw itself about", k: "몸부림쳤다", s: "The centipede threw itself about one last time." },
+            { w: "drifted apart", k: "스르르 흩어졌다", s: "Then it turned to black smoke and drifted apart." },
+            { w: "faded (fade)", k: "스러졌다", s: "The yellow light faded too, like a candle going out." },
+            { w: "sank down (sink)", k: "주저앉았다", s: "And the toad sank down where it stood." }
+        ],
+        "11-morning.webp": [
+            { w: "on quiet feet", k: "발소리를 죽이며", s: "They went to the door on quiet feet." },
+            { w: "not been a sound", k: "아무 소리도 없었다", s: "There had not been a sound all night." },
+            { w: "Surely not", k: "설마", s: "Surely not..." },
+            { w: "braced for ~", k: "각오하고 있는", s: "They were braced for the worst." },
+            { w: "creaked open (creak)", k: "끼익 하고 열렸다", s: "The door creaked open, and there sat the girl, safe." },
+            { w: "a speck of dirt", k: "흙 한 점", s: "There was not a speck of dirt on her clothes." },
+            { w: "limp", k: "축 늘어진", s: "In her arms lay the toad, limp." }
+        ],
+        "12-recover.webp": [
+            { w: "nursed (nurse)", k: "돌보았다", s: "The girl took the toad home and nursed it with all her care." },
+            { w: "with all her care", k: "정성껏", s: "nursed it with all her care" },
+            { w: "wet cloth", k: "물수건", s: "All night she changed the wet cloth and held rice to its mouth." },
+            { w: "gave up ~ (give up)", k: "내주었다", s: "The mistress gave up a good room for it." },
+            { w: "On the seventh day", k: "일곱 날이 지나자", s: "On the seventh day the toad opened its eyes." },
+            { w: "nudge", k: "툭 건드림", s: "The toad gave her finger a small nudge." },
+            { w: "kept watch (keep)", k: "밤을 지켰다", s: "After that nobody kept watch at the shrine again." },
+            { w: "stayed by her", k: "곁에 있었다", s: "the toad stayed by her for years" }
+        ],
+        "after": [
+            { w: "a story of repayment", k: "보은 이야기", s: "A story like this is called a story of repayment." },
+            { w: "is laid over ~", k: "겹쳐 있다", s: "Another story is laid over that one here." },
+            { w: "handed over (hand over)", k: "바쳤다", s: "the part where the village handed over one person a year" },
+            { w: "to calm ~", k: "달래려고", s: "Giving up a person to calm a frightening thing" },
+            { w: "a strong warrior", k: "힘센 장수", s: "usually a strong warrior comes" },
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "It is worth noticing that the story does not end there." },
+            { w: "what was left over", k: "남은 것", s: "What she gave the toad was not what was left over." },
+            { w: "her own share", k: "제 몫", s: "It was her own share." },
+            { w: "though she had little", k: "모자란데도", s: "She shared though she had little" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐸',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "A story like this is called a story of repayment: somebody cares for an animal and is helped by it later. It is one of the shapes our old tales use most often.",
+                    "Another story is laid over that one here. That is the part where the village handed over one person a year. Giving up a person to calm a frightening thing is told all over the world.",
+                    "In stories like that, usually a strong warrior comes to the rescue. Here what comes is the toad the girl shared her rice with.",
+                    "It is worth noticing that the story does not end with the village saved. It goes on to say how the girl lived afterwards."
+                ],
+                right: [
+                    "Why did the toad help her? Was it the rice, or something else?",
+                    "What she gave the toad was not what was left over. It was her own share. She shared though she had little, not because she had plenty. Years later that is what kept her safe.",
+                    "Have you ever shared something when you did not have much yourself?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "부뚜막에서 두꺼비를 본 소녀는 어떻게 했나요?", choices: ["막대로 쫓아냈다", "막대를 슬며시 내려놓았다", "주인집 아주머니를 불렀다"], answer: 1 },
     { q: "마을 사람들의 오랜 근심은 무엇이었나요?", choices: ["해마다 드는 가뭄", "산에서 오는 호랑이", "사당의 커다란 지네"], answer: 2 },

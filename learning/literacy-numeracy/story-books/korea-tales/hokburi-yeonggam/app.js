@@ -237,6 +237,456 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🎵",
+        art: "cover.webp",
+        title: "The Old Man with the Lump",
+        intro: [
+            "This is an oral tale with no known author. A saying we still use came out of it, and you will know which one by the end.",
+            "A lump is a soft swelling on the neck or the chin. It did not hurt, but it showed, and people were teased for it.",
+            "Japan has almost the same story. Scholars are still arguing about which of the two came first."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Singing in the Empty Hut",
+            beats: [
+                {
+                    art: "01-oldman.webp",
+                    emoji: "👴",
+                    left: [
+                        "Long ago in a village there lived an old man with a lump.",
+                        "It hung under his chin, about the size of a fist.",
+                        "It swung as he walked, and children stared at it.",
+                        { t: "\"This lump and I have been together all my life.\"", v: "old" },
+                        "The old man smiled the whole day long."
+                    ],
+                    right: [
+                        "And how well he could sing.",
+                        "When he began in the fields the whole village stopped work.",
+                        { t: "\"Now that is a fine sound.\"", v: "man" },
+                        "The children came and sat down round him.",
+                        { t: "\"Old man, give us one more!\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "02-mountain.webp",
+                    emoji: "🌄",
+                    left: [
+                        "One day the old man went deep into the mountain for firewood.",
+                        "He hummed as he went, cutting the dry branches away.",
+                        "It was such fun he did not watch the time.",
+                        { t: "\"One more load. Just one more load.\"", v: "old" },
+                        "And then the sun went down on him."
+                    ],
+                    right: [
+                        "The mountain went black in the blink of an eye.",
+                        "There was no telling road from cliff edge.",
+                        { t: "\"Now I am in trouble.\"", v: "old" },
+                        "His clothes kept catching on the branches.",
+                        { t: "\"There is nothing for it but to sleep out here.\"", v: "old" },
+                        "He shouldered his frame and felt his way down the valley."
+                    ]
+                },
+                {
+                    art: "03-hut.webp",
+                    emoji: "🏚️",
+                    left: [
+                        "As luck had it there was an empty hut deep in the valley.",
+                        "He pushed the door open and set his carrying frame down.",
+                        "The floor was thick with white dust.",
+                        "The place had plainly stood empty a long time.",
+                        { t: "\"Tonight I shall put up here.\"", v: "old" }
+                    ],
+                    right: [
+                        "It was so quiet that the quiet itself was frightening.",
+                        "Every time the wind came through the door crack his back went cold.",
+                        "Somewhere an owl was calling too.",
+                        { t: "\"Right. I shall sing, then.\"", v: "old" },
+                        { t: "\"Nothing beats a song when you are afraid.\"", v: "old" }
+                    ]
+                },
+                {
+                    art: "04-dokkaebi.webp",
+                    emoji: "👹",
+                    left: [
+                        "He had got through two songs, then three.",
+                        "He had forgotten to be afraid and was enjoying himself.",
+                        "Thump. Thump. Thump.",
+                        "It was the sound of somebody stamping closer.",
+                        { t: "\"Wh-who is there?\"", v: "old" }
+                    ],
+                    right: [
+                        "The door flew open and a bright red goblin strode in.",
+                        "Its horns were so big they nearly touched the roof.",
+                        "Behind it came a green goblin and a small blue baby goblin.",
+                        "The old man stopped singing and backed to the wall."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Sound in the Lump",
+            beats: [
+                {
+                    art: "05-question.webp",
+                    emoji: "❓",
+                    left: [
+                        "The goblin chief came striding over.",
+                        "It got close enough for its nose to touch his face.",
+                        { t: "\"That sound just now. Did you make it?\"", v: "beast" },
+                        "The goblin's breath was hot.",
+                        { t: "\"Y-yes... I did, sir.\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"And where does a sound as good as that come from?\"", v: "beast" },
+                        "The goblins stared and looked him up and down.",
+                        "The baby goblin lifted the hem of his coat to see.",
+                        { t: "\"Speak up, will you!\"", v: "beast" },
+                        "The old man's head went blank. He had to say something."
+                    ]
+                },
+                {
+                    art: "06-lie.webp",
+                    emoji: "😬",
+                    left: [
+                        "His hand went up to his chin without his meaning it to.",
+                        { t: "\"It... it comes out of this lump.\"", v: "old" },
+                        "Having said it, the old man was the more startled of them all.",
+                        "He did not know himself why such a thing had come out."
+                    ],
+                    right: [
+                        "But every goblin's eyes lit up at once.",
+                        { t: "\"Aha! So the lump is a bag of songs!\"", v: "beast" },
+                        { t: "\"We want to sing too!\"", v: "boy" },
+                        { t: "\"No wonder the sound was so plump.\"", v: "beast" },
+                        "The goblins looked at each other and nodded. The baby goblin clapped."
+                    ]
+                },
+                {
+                    art: "07-trade.webp",
+                    emoji: "💎",
+                    left: [
+                        { t: "\"Sell us that lump.\"", v: "beast" },
+                        { t: "\"What? No, that is...\"", v: "old" },
+                        { t: "\"Sirs, if you please...\"", v: "old" },
+                        { t: "\"We will pay you well!\"", v: "beast" },
+                        "The chief goblin banged a yellow club. Sparks flew at every knock."
+                    ],
+                    right: [
+                        "Gold and silver and beads came pouring out.",
+                        "In no time the heap came up to the old man's knees.",
+                        { t: "\"That should do it?\"", v: "beast" },
+                        { t: "\"Now hand over the lump.\"", v: "beast" },
+                        "The goblin took the lump off his chin. Strangely, it did not hurt."
+                    ]
+                },
+                {
+                    art: "08-home.webp",
+                    emoji: "🎉",
+                    left: [
+                        "When it grew light the old man came down the mountain.",
+                        "His chin was smooth and his frame was full of treasure.",
+                        "The villagers' eyes went round to see him.",
+                        { t: "\"Let us have a look at you!\"", v: "man" },
+                        { t: "\"Where has your lump gone?\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"Ha! Sold it to the goblins, that is where.\"", v: "old" },
+                        { t: "\"And got gold for it into the bargain.\"", v: "old" },
+                        { t: "\"Did you ever hear the like!\"", v: "man" },
+                        "He set the frame down and showed them, and their mouths hung open.",
+                        "From that day the village talked of nothing else."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · One Lump More",
+            beats: [
+                {
+                    art: "09-greedy.webp",
+                    emoji: "😏",
+                    left: [
+                        "In the next village lived another old man with a lump.",
+                        "But this one was very greedy.",
+                        "The moment he heard he came running over and asked and asked.",
+                        { t: "\"I shall go and sell mine too!\"", v: "old" },
+                        { t: "\"Which hut was it? What did you sing?\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"What time did they come? How many were there?\"", v: "old" },
+                        { t: "\"Well now, I doubt it goes like that.\"", v: "old" },
+                        { t: "\"Do not go and be sorry for it.\"", v: "old" },
+                        "The first old man laughed and tried to stop him, with no use at all.",
+                        "The greedy one took his stick and went straight up the mountain."
+                    ]
+                },
+                {
+                    art: "10-sing.webp",
+                    emoji: "🎤",
+                    left: [
+                        "That night the greedy man sat himself in that hut.",
+                        "He was grinning already at the thought of the treasure.",
+                        { t: "\"Right. Here we go!\"", v: "old" },
+                        { t: "\"Come along, goblins, come along!\"", v: "old" },
+                        "He sang at the top of his voice, loud enough to shift the hills."
+                    ],
+                    right: [
+                        "But the sound was nothing much at all.",
+                        "It cracked, it wobbled, and not one beat fell right.",
+                        "Even so, before long there came a thump, thump, thump.",
+                        { t: "\"There now, I have them!\"", v: "old" },
+                        "The goblins really had come. He was delighted."
+                    ]
+                },
+                {
+                    art: "11-angry.webp",
+                    emoji: "😡",
+                    left: [
+                        { t: "\"This sound comes out of my lump! Buy it, quickly!\"", v: "old" },
+                        "The greedy old man stuck his chin out at them.",
+                        "He put his palm out too, pressing for the price.",
+                        { t: "\"You must pay me well for it!\"", v: "old" },
+                        "But the goblins' faces went hard and blue."
+                    ],
+                    right: [
+                        { t: "\"What? That last lump made no sound at all!\"", v: "beast" },
+                        { t: "\"We shook it all night and we banged it!\"", v: "beast" },
+                        { t: "\"You are trying to cheat us again!\"", v: "beast" },
+                        { t: "\"We cannot let this one go!\"", v: "beast" },
+                        "The goblins' shouting made the hut ring."
+                    ]
+                },
+                {
+                    art: "12-two.webp",
+                    emoji: "😱",
+                    left: [
+                        { t: "\"Take back that useless lump!\"", v: "beast" },
+                        "The chief goblin drew out the lump it had taken before.",
+                        { t: "\"No! Not that, I say!\"", v: "old" },
+                        "It clapped the lump onto the other side of his chin.",
+                        "And then the goblins were gone."
+                    ],
+                    right: [
+                        "The greedy old man came down the mountain with two lumps.",
+                        "His chin swung on both sides as he went.",
+                        "Treasure, indeed. He had got one lump more.",
+                        { t: "\"Oh, the state of me.\"", v: "old" },
+                        "And that is where the saying comes from: went to lose a lump, came back with one."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What was the old man good at?", choices: ["Cutting firewood", "Singing songs", "Carrying a frame"], answer: 1 },
+        { q: "Why did he sing in the empty hut?", choices: ["To call the goblins", "To drive the owl off", "Because he was afraid"], answer: 2 },
+        { q: "What did the goblin ask him?", choices: ["Where the sound came from", "How much he should be paid", "To sing them one more song"], answer: 0 },
+        { q: "What did the goblins give him?", choices: ["A book of songs", "A large club", "Gold and beads"], answer: 2 },
+        { q: "Why did the greedy old man go up the mountain?", choices: ["To get treasure", "To learn to sing", "To cut firewood"], answer: 0 },
+        { q: "What happened to the greedy old man?", choices: ["All his lumps went", "He got one lump more", "He came back with treasure"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He sang to keep his fear down, so when you are frightened making a noise helps you bear it.",
+                "A lie he told on the spot turned into luck, so luck in a story does not come to the one who aims at it.",
+                "The greedy one pressed for the price first, so the same place with a different heart ends differently.",
+                "The goblins bought the lump because they wanted the songs, so they paid for it and were not cheated."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "a saying", k: "속담", s: "A saying we still use came out of it." },
+            { w: "came out of ~", k: "~에서 나왔다", s: "A saying we still use came out of it." },
+            { w: "by the end", k: "다 읽고 나면", s: "you will know which one by the end" },
+            { w: "swelling", k: "볼록한 살덩이", s: "A lump is a soft swelling on the neck or the chin." },
+            { w: "it showed", k: "눈에 띄었다", s: "It did not hurt, but it showed" },
+            { w: "were teased (tease)", k: "놀림을 받았다", s: "it showed, and people were teased for it" },
+            { w: "Scholars", k: "학자들", s: "Scholars are still arguing about which of the two came first." },
+            { w: "came first", k: "먼저였다", s: "arguing about which of the two came first" }
+        ],
+        "01-oldman.webp": [
+            { w: "lump", k: "혹", s: "there lived an old man with a lump" },
+            { w: "chin", k: "턱", s: "It hung under his chin, about the size of a fist." },
+            { w: "the size of a fist", k: "주먹만 한", s: "about the size of a fist" },
+            { w: "swung (swing)", k: "덜렁덜렁 흔들렸다", s: "It swung as he walked, and children stared at it." },
+            { w: "all my life", k: "한평생", s: "This lump and I have been together all my life." },
+            { w: "the whole day long", k: "하루 종일", s: "The old man smiled the whole day long." },
+            { w: "stopped work", k: "일손을 멈췄다", s: "When he began in the fields the whole village stopped work." },
+            { w: "one more", k: "한 곡 더", s: "Old man, give us one more!" }
+        ],
+        "02-mountain.webp": [
+            { w: "firewood", k: "땔나무", s: "the old man went deep into the mountain for firewood" },
+            { w: "hummed (hum)", k: "흥얼거렸다", s: "He hummed as he went, cutting the dry branches away." },
+            { w: "watch the time", k: "시간을 살피다", s: "It was such fun he did not watch the time." },
+            { w: "load", k: "한 짐", s: "One more load. Just one more load." },
+            { w: "went down on him", k: "그새 넘어갔다", s: "And then the sun went down on him." },
+            { w: "in the blink of an eye", k: "눈 깜짝할 사이에", s: "The mountain went black in the blink of an eye." },
+            { w: "no telling ~ from ~", k: "~인지 ~인지 모르는", s: "There was no telling road from cliff edge." },
+            { w: "kept catching (keep)", k: "자꾸 걸렸다", s: "His clothes kept catching on the branches." },
+            { w: "nothing for it but to ~", k: "꼼짝없이 ~해야 하는", s: "There is nothing for it but to sleep out here." },
+            { w: "felt his way (feel)", k: "더듬더듬 갔다", s: "He shouldered his frame and felt his way down the valley." }
+        ],
+        "03-hut.webp": [
+            { w: "As luck had it", k: "다행히", s: "As luck had it there was an empty hut deep in the valley." },
+            { w: "hut", k: "오두막", s: "there was an empty hut deep in the valley" },
+            { w: "carrying frame", k: "지게", s: "He pushed the door open and set his carrying frame down." },
+            { w: "thick with ~", k: "~이 뽀얗게 쌓인", s: "The floor was thick with white dust." },
+            { w: "plainly", k: "분명히", s: "The place had plainly stood empty a long time." },
+            { w: "put up here", k: "신세를 지다", s: "Tonight I shall put up here." },
+            { w: "door crack", k: "문틈", s: "Every time the wind came through the door crack his back went cold." },
+            { w: "his back went cold", k: "등골이 서늘해졌다", s: "his back went cold" },
+            { w: "owl", k: "부엉이", s: "Somewhere an owl was calling too." },
+            { w: "Nothing beats ~", k: "~이 제일이다", s: "Nothing beats a song when you are afraid." }
+        ],
+        "04-dokkaebi.webp": [
+            { w: "got through ~", k: "이어 불렀다", s: "He had got through two songs, then three." },
+            { w: "forgotten to ~ (forget)", k: "잊고 있었다", s: "He had forgotten to be afraid and was enjoying himself." },
+            { w: "Thump", k: "쿵", s: "Thump. Thump. Thump." },
+            { w: "stamping (stamp)", k: "발을 구르는", s: "It was the sound of somebody stamping closer." },
+            { w: "flew open (fly)", k: "벌컥 열렸다", s: "The door flew open and a bright red goblin strode in." },
+            { w: "goblin", k: "도깨비", s: "a bright red goblin strode in" },
+            { w: "strode in (stride)", k: "성큼 들어섰다", s: "a bright red goblin strode in" },
+            { w: "horns", k: "뿔", s: "Its horns were so big they nearly touched the roof." },
+            { w: "backed to ~", k: "물러나 붙었다", s: "The old man stopped singing and backed to the wall." }
+        ],
+        "05-question.webp": [
+            { w: "striding (stride)", k: "성큼성큼 걷는", s: "The goblin chief came striding over." },
+            { w: "close enough to ~", k: "~할 만큼 가까이", s: "It got close enough for its nose to touch his face." },
+            { w: "just now", k: "방금", s: "That sound just now. Did you make it?" },
+            { w: "breath", k: "콧김", s: "The goblin's breath was hot." },
+            { w: "as good as that", k: "그렇게 좋은", s: "And where does a sound as good as that come from?" },
+            { w: "looked him up and down", k: "위아래로 훑어보았다", s: "The goblins stared and looked him up and down." },
+            { w: "hem", k: "옷자락", s: "The baby goblin lifted the hem of his coat to see." },
+            { w: "Speak up", k: "어서 말해라", s: "Speak up, will you!" },
+            { w: "went blank", k: "머리가 하얘졌다", s: "The old man's head went blank." }
+        ],
+        "06-lie.webp": [
+            { w: "without meaning to", k: "저도 모르게", s: "His hand went up to his chin without his meaning it to." },
+            { w: "comes out of ~", k: "~에서 나온다", s: "It... it comes out of this lump." },
+            { w: "the more startled", k: "더 놀란", s: "the old man was the more startled of them all" },
+            { w: "did not know himself", k: "스스로도 몰랐다", s: "He did not know himself why such a thing had come out." },
+            { w: "lit up (light up)", k: "반짝였다", s: "But every goblin's eyes lit up at once." },
+            { w: "a bag of songs", k: "노래 주머니", s: "Aha! So the lump is a bag of songs!" },
+            { w: "No wonder", k: "어쩐지", s: "No wonder the sound was so plump." },
+            { w: "plump", k: "통통한", s: "No wonder the sound was so plump." },
+            { w: "clapped (clap)", k: "손뼉을 쳤다", s: "The baby goblin clapped." }
+        ],
+        "07-trade.webp": [
+            { w: "if you please", k: "제발", s: "Sirs, if you please..." },
+            { w: "pay you well", k: "값을 넉넉히 치르다", s: "We will pay you well!" },
+            { w: "banged (bang)", k: "뚝딱 두드렸다", s: "The chief goblin banged a yellow club." },
+            { w: "club", k: "방망이", s: "The chief goblin banged a yellow club." },
+            { w: "Sparks flew", k: "불꽃이 튀었다", s: "Sparks flew at every knock." },
+            { w: "beads", k: "구슬", s: "Gold and silver and beads came pouring out." },
+            { w: "came pouring out", k: "와르르 쏟아졌다", s: "Gold and silver and beads came pouring out." },
+            { w: "heap", k: "쌓인 더미", s: "In no time the heap came up to the old man's knees." },
+            { w: "hand over ~", k: "내놓다", s: "Now hand over the lump." },
+            { w: "Strangely", k: "신기하게도", s: "Strangely, it did not hurt." }
+        ],
+        "08-home.webp": [
+            { w: "grew light (grow)", k: "날이 밝았다", s: "When it grew light the old man came down the mountain." },
+            { w: "smooth", k: "매끈한", s: "His chin was smooth and his frame was full of treasure." },
+            { w: "went round", k: "휘둥그레졌다", s: "The villagers' eyes went round to see him." },
+            { w: "have a look at ~", k: "좀 봅시다", s: "Let us have a look at you!" },
+            { w: "into the bargain", k: "게다가", s: "And got gold for it into the bargain." },
+            { w: "hear the like", k: "이런 일을 듣다", s: "Did you ever hear the like!" },
+            { w: "hung open (hang)", k: "다물지 못했다", s: "he showed them, and their mouths hung open" },
+            { w: "nothing else", k: "그 이야기만", s: "From that day the village talked of nothing else." }
+        ],
+        "09-greedy.webp": [
+            { w: "greedy", k: "욕심 많은", s: "But this one was very greedy." },
+            { w: "The moment ~", k: "~하자마자", s: "The moment he heard he came running over." },
+            { w: "asked and asked", k: "꼬치꼬치 캐물었다", s: "he came running over and asked and asked" },
+            { w: "I doubt ~", k: "~는 아닐 텐데", s: "Well now, I doubt it goes like that." },
+            { w: "be sorry for it", k: "후회하다", s: "Do not go and be sorry for it." },
+            { w: "with no use at all", k: "소용이 없었다", s: "The first old man tried to stop him, with no use at all." },
+            { w: "stick", k: "지팡이", s: "The greedy one took his stick and went straight up the mountain." }
+        ],
+        "10-sing.webp": [
+            { w: "sat himself (sit)", k: "떡하니 앉았다", s: "That night the greedy man sat himself in that hut." },
+            { w: "grinning (grin)", k: "입이 벌어진", s: "He was grinning already at the thought of the treasure." },
+            { w: "at the thought of ~", k: "~ 생각에", s: "grinning already at the thought of the treasure" },
+            { w: "Come along", k: "어서 오너라", s: "Come along, goblins, come along!" },
+            { w: "at the top of his voice", k: "목청껏", s: "He sang at the top of his voice." },
+            { w: "shift the hills", k: "산이 떠나갈 듯한", s: "loud enough to shift the hills" },
+            { w: "nothing much", k: "영 신통치 않은", s: "But the sound was nothing much at all." },
+            { w: "wobbled (wobble)", k: "흔들렸다", s: "It cracked, it wobbled, and not one beat fell right." },
+            { w: "beat", k: "박자", s: "not one beat fell right" },
+            { w: "delighted", k: "신이 난", s: "The goblins really had come. He was delighted." }
+        ],
+        "11-angry.webp": [
+            { w: "stuck his chin out (stick)", k: "턱을 쑥 내밀었다", s: "The greedy old man stuck his chin out at them." },
+            { w: "palm", k: "손바닥", s: "He put his palm out too, pressing for the price." },
+            { w: "pressing for ~", k: "재촉하며", s: "He put his palm out too, pressing for the price." },
+            { w: "went hard", k: "굳어졌다", s: "But the goblins' faces went hard and blue." },
+            { w: "made no sound at all", k: "아무 소리도 안 났다", s: "That last lump made no sound at all!" },
+            { w: "shook (shake)", k: "흔들었다", s: "We shook it all night and we banged it!" },
+            { w: "cheat", k: "속이다", s: "You are trying to cheat us again!" },
+            { w: "let ~ go", k: "그냥 두다", s: "We cannot let this one go!" },
+            { w: "made the hut ring", k: "쩌렁쩌렁 울렸다", s: "The goblins' shouting made the hut ring." }
+        ],
+        "12-two.webp": [
+            { w: "Take back ~", k: "도로 가져가라", s: "Take back that useless lump!" },
+            { w: "useless", k: "가짜인, 쓸모없는", s: "Take back that useless lump!" },
+            { w: "drew out (draw)", k: "꺼냈다", s: "The chief goblin drew out the lump it had taken before." },
+            { w: "clapped ~ onto (clap)", k: "척 붙였다", s: "It clapped the lump onto the other side of his chin." },
+            { w: "were gone", k: "사라졌다", s: "And then the goblins were gone." },
+            { w: "swung (swing)", k: "덜렁덜렁했다", s: "His chin swung on both sides as he went." },
+            { w: "indeed", k: "~은커녕", s: "Treasure, indeed. He had got one lump more." },
+            { w: "the state of me", k: "내 신세야", s: "Oh, the state of me." },
+            { w: "went to lose ~", k: "떼러 갔다", s: "went to lose a lump, came back with one" }
+        ],
+        "after": [
+            { w: "in place of ~", k: "~ 자리에", s: "In the Japanese one an oni appears in place of the goblin." },
+            { w: "has not been settled", k: "밝혀지지 않았다", s: "Which came first has not been settled." },
+            { w: "wrestling", k: "씨름", s: "They like wrestling too, and buckwheat jelly." },
+            { w: "get on with ~", k: "어울리다", s: "They like to get on with people." },
+            { w: "was caught out (catch)", k: "날이 저물었다", s: "He was caught out by the dark" },
+            { w: "went in (go in)", k: "들었다", s: "went in to an empty hut" },
+            { w: "were cheated", k: "속았다", s: "It was because they saw they had been cheated." },
+            { w: "for the love of ~", k: "~이 좋아서", s: "The first sang for the love of the song" },
+            { w: "for want of ~", k: "~이 탐나서", s: "the second sang for want of the treasure" },
+            { w: "the same place", k: "같은 자리", s: "The same place, the same thing done" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎵',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story is told in our country and in Japan. In the Japanese one an oni appears in place of the goblin. Which came first has not been settled.",
+                    "Our goblins are fond of singing and dancing. They like wrestling too, and buckwheat jelly. They are not only frightening; they like to get on with people.",
+                    "Look again and the first old man did not go out to meet any goblins. He was caught out by the dark, went in to an empty hut, and sang because he was afraid.",
+                    "The goblins were not angry because the second man sang badly, either. It was because they saw they had been cheated."
+                ],
+                right: [
+                    "The first old man sang for the love of the song. The second sang for want of the treasure.",
+                    "The same place, the same thing done, and a different heart behind it: the endings were not the same.",
+                    "When you set about something, what is in your mind as you begin?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "혹부리 영감이 잘하는 것은 무엇이었나요?", choices: ["나무 하기", "노래 부르기", "지게 지기"], answer: 1 },
     { q: "영감은 왜 빈 오두막에서 노래를 불렀나요?", choices: ["도깨비를 부르려고", "부엉이를 쫓으려고", "무서움을 달래려고"], answer: 2 },
