@@ -229,7 +229,16 @@ function startLesson(index) {
   setMode("study");
 }
 
-byId("backToLessons").addEventListener("click", () => {
+function showOverview() {
   byId("learningShell").hidden = true; byId("lessonOverview").hidden = false; renderLessonList();
+}
+
+byId("backToLessons").addEventListener("click", showOverview);
+
+// 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
+// 차시 목록(집)이 아니면 사이트 밖으로 나가지 않고 차시 목록으로만 돌아간다.
+window.addEventListener("sitebackrequest", (event) => {
+  if (!byId("learningShell").hidden) { event.preventDefault(); showOverview(); }
 });
+
 renderLessonList();

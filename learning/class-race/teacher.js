@@ -312,5 +312,14 @@
     elements.lessonSelect.addEventListener("change", updateRangeSummary);
     elements.teacherStartButton.addEventListener("click", startCompetition);
     elements.resetRaceButton.addEventListener("click", resetCompetition);
+
+    // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
+    // 순위전이 진행 중일 때는 사이트 밖으로 나가지 않고 방금 상태로 새로고침한다.
+    window.addEventListener("sitebackrequest", (event) => {
+        if (elements.racePanel.classList.contains("hidden")) return;
+        event.preventDefault();
+        location.reload();
+    });
+
     initialize();
 })();

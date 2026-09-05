@@ -1293,6 +1293,17 @@
         elements.spellingGameStartButton.addEventListener("click", openSpellingGame);
         elements.spellingReviewButton.addEventListener("click", openSpellingReview);
         elements.backFromSpelling.addEventListener("click", backFromSpelling);
+
+        // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
+        // 화면 단계를 한 걸음씩만 되돌리고, 맨 처음 화면(레벨 고르기)에서만 사이트 밖으로 나간다.
+        window.addEventListener("sitebackrequest", (event) => {
+            if (!elements.studyScreen.hidden) { event.preventDefault(); backToLevels(); return; }
+            if (!elements.lessonQuizScreen.hidden) { event.preventDefault(); backFromLessonQuiz(); return; }
+            if (!elements.lessonScreen.hidden) { event.preventDefault(); backFromLessons(); return; }
+            if (!elements.bandListScreen.hidden) { event.preventDefault(); backFromBandList(); return; }
+            if (!elements.gameScreen.hidden) { event.preventDefault(); backFromGame(); return; }
+            if (!elements.spellingScreen.hidden) { event.preventDefault(); backFromSpelling(); return; }
+        });
         elements.spellingResetButton.addEventListener("click", restartSpellingMode);
         elements.spellingHintButton.addEventListener("click", showSpellingHint);
         elements.spellingSpeakButton.addEventListener("click", () => speakText(state.spellingTarget?.word));

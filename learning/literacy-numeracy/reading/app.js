@@ -176,5 +176,10 @@
   }
   document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => { state.track = tab.dataset.track; document.querySelectorAll(".tab").forEach((button) => button.classList.toggle("active", button === tab)); renderLevels(); }));
   $("backButton").addEventListener("click", () => show("dashboard")); $("restartButton").addEventListener("click", () => show("dashboard")); $("nextButton").addEventListener("click", () => {});
+  // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
+  // 목록 화면이 아니면 사이트 밖으로 나가지 않고 목록으로만 돌아간다.
+  window.addEventListener("sitebackrequest", (event) => {
+    if ($("dashboardView").hidden) { event.preventDefault(); show("dashboard"); }
+  });
   start();
 })();

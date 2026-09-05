@@ -371,5 +371,16 @@
 
     elements.nextButton.addEventListener("click", goToNextQuestion);
     document.addEventListener("keydown", handleKeyboard);
+
+    // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
+    // 문제를 푸는 중이거나 결과 화면이면 사이트 밖으로 나가지 않고 방금 상태로 새로고침해
+    // 참가 화면으로 돌아간다. 참가를 기다리는 중이라면 그냥 메인으로 나간다.
+    window.addEventListener("sitebackrequest", (event) => {
+        const inQuiz = !elements.quizScreen.classList.contains("hidden") || !elements.resultScreen.classList.contains("hidden");
+        if (!inQuiz) return;
+        event.preventDefault();
+        location.reload();
+    });
+
     initialize();
 })();
