@@ -218,15 +218,15 @@ const EN = {
                     emoji: "🐕",
                     left: [
                         "Long ago there was a pedlar who carried his pack from market to market.",
-                        "The pedlar had a dog. It had a black spot on its back, so its name was Baduk, which means a spot.",
-                        "Some years before, on a snowy day, he had picked it up shivering at the roadside and carried it home.",
+                        "The pedlar had a dog with a black spot on its back, so its name was Baduk, which means a spot.",
+                        "Some years before he had picked it up shivering at the roadside on a snowy day.",
                         "From that day on the two of them were never apart."
                     ],
                     right: [
                         { t: "\"Baduk! Let's go!\"", v: "man" },
-                        "When the pedlar called, Baduk came running with his tail going. He was at his master's feet before the call was finished.",
+                        "When the pedlar called, Baduk was at his feet before the call was finished.",
                         "Baduk followed at the pedlar's heels wherever he went.",
-                        "When the pedlar ate soup and rice, Baduk ate soup and rice. When the pedlar slept, he slept at his feet."
+                        "When the pedlar ate soup and rice, so did Baduk. When he slept, the dog slept at his feet."
                     ]
                 },
                 {

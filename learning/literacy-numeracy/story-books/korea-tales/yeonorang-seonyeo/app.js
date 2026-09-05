@@ -209,6 +209,406 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🌅",
+        art: "cover.webp",
+        title: "Yeono and Seo",
+        intro: [
+            "Yeono and Seo is a very old story written down in the Samguk Yusa. It is set in the reign of King Adalla of Silla, nearly two thousand years ago.",
+            "A couple ride a rock across the sea, and in Silla the sun and the moon lose their light. What brings the light back is not an army but one roll of silk.",
+            "Yeongilman bay, said to be where the sun rises first, took its name from this story."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Carried Off on a Rock",
+            beats: [
+                {
+                    art: "01-couple.webp",
+                    emoji: "🌊",
+                    left: [
+                        "Long ago a husband and wife lived on the east coast of Silla. He was called Yeono, she was called Seo.",
+                        "Yeono went out to the sea every day to gather seaweed.",
+                        "Seo stayed at home and wove cloth.",
+                        "The silk she wove was famous along that coast for its beauty."
+                    ],
+                    right: [
+                        { t: "\"There'll be plenty of seaweed today.\"", v: "man" },
+                        "Yeono set off with his basket on his back.",
+                        { t: "\"Don't go far. The waves are high.\"", v: "woman" },
+                        "Seo came to the door and waved.",
+                        "The sea was unusually calm that day, and the sun glittered on the water."
+                    ]
+                },
+                {
+                    art: "02-rock.webp",
+                    emoji: "🪨",
+                    left: [
+                        "Yeono climbed onto a rock at the water's edge to gather seaweed. The rock was thick with it.",
+                        "And then the rock moved.",
+                        { t: "\"Eh — what?\"", v: "man" },
+                        "It floated up on the water and slid away out to sea.",
+                        "Yeono lay flat and held on."
+                    ],
+                    right: [
+                        "The rock rode the waves like a boat, further and further east.",
+                        "When he looked back, the land of Silla had shrunk to a dot.",
+                        { t: "\"Seo! Seo!\"", v: "man" },
+                        "He shouted, and only the waves answered.",
+                        "The sun went down and the stars came out and the rock did not stop."
+                    ]
+                },
+                {
+                    art: "03-island.webp",
+                    emoji: "🏝️",
+                    left: [
+                        "Next morning the rock came to a strange island.",
+                        "People crowded down to the shore. Their speech and their clothes were new to him.",
+                        { t: "\"A man has come over the sea on a rock!\"", v: "man" },
+                        { t: "\"This is no ordinary man. Heaven has sent him.\"", v: "granny" },
+                        "The people bowed low before Yeono."
+                    ],
+                    right: [
+                        "The islanders made him their king.",
+                        "Yeono lived in a palace. He wore silk and ate good food.",
+                        "And every night he could not sleep.",
+                        { t: "\"How is Seo living now?\"", v: "man" },
+                        "He looked only at the western sea."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Seo Follows",
+            beats: [
+                {
+                    art: "04-search.webp",
+                    emoji: "🔍",
+                    left: [
+                        "Back on the Silla shore, Seo waited for her husband.",
+                        "One day passed and then another. Yeono did not come home.",
+                        { t: "\"Has something happened out at sea?\"", v: "woman" },
+                        "Seo searched the shore from one end to the other.",
+                        "Her feet were blistered."
+                    ],
+                    right: [
+                        "Something lay on the rock at the water's edge. One of Yeono's straw sandals.",
+                        "Seo climbed the rock to pick it up.",
+                        "And the rock moved again.",
+                        { t: "\"So this rock took him away.\"", v: "woman" },
+                        "She held the sandal against her and sat down on the rock."
+                    ]
+                },
+                {
+                    art: "05-follow.webp",
+                    emoji: "🌅",
+                    left: [
+                        "The rock rose on the water and went east.",
+                        "Seo was not afraid. This was the road her husband had taken.",
+                        "She rode all night, and a strange island came into view.",
+                        "The islanders came crowding down again.",
+                        { t: "\"This time a woman! She came on a rock!\"", v: "man" }
+                    ],
+                    right: [
+                        "Yeono heard and ran barefoot out of the palace.",
+                        { t: "\"Seo!\"", v: "man" },
+                        { t: "\"Husband!\"", v: "woman" },
+                        "They held each other on the shore. The straw sandal fell from her arms.",
+                        "The islanders made Seo their queen. And in the palace she went on weaving."
+                    ]
+                },
+                {
+                    art: "06-dark.webp",
+                    emoji: "🌑",
+                    left: [
+                        "But something strange happened back in Silla.",
+                        "The sun rose and gave no light. Nor did the moon.",
+                        "Daytime was as dim as evening. The cocks did not know when to crow.",
+                        { t: "\"Is the sun ill?\"", v: "man" },
+                        "People looked up and murmured. The crops did not grow."
+                    ],
+                    right: [
+                        "The king called for the officer who read the will of heaven.",
+                        "He studied the stars a long while and said,",
+                        { t: "\"Two people carrying the power of sun and moon have gone over the sea.\"", v: "old" },
+                        { t: "\"Yeono and Seo. The light has followed them.\"", v: "old" },
+                        "The king rose from his seat."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Light Brought Back by Silk",
+            beats: [
+                {
+                    art: "07-envoy.webp",
+                    emoji: "⛵",
+                    left: [
+                        "The king sent an envoy east by boat to the island.",
+                        "The envoy bowed to the ground before Yeono.",
+                        { t: "\"In Silla the sun and moon have lost their light. Please come back to us.\"", v: "man" },
+                        "Yeono said nothing for a long time."
+                    ],
+                    right: [
+                        { t: "\"My coming here was the will of heaven. I cannot go back.\"", v: "man" },
+                        "The envoy went pale.",
+                        "Then Seo came out with a roll of silk.",
+                        { t: "\"Take this. I wove it here.\"", v: "woman" },
+                        { t: "\"Make an offering to heaven with it and the light will return.\"", v: "woman" }
+                    ]
+                },
+                {
+                    art: "08-silk.webp",
+                    emoji: "🧵",
+                    left: [
+                        "The envoy carried the silk back across the sea.",
+                        "The king of Silla built an altar on a hill above the shore.",
+                        "The silk was spread on the altar and the king bowed down.",
+                        { t: "\"Heaven, give us back the light.\"", v: "old" },
+                        "The whole country held its breath."
+                    ],
+                    right: [
+                        "And the sky grew bright.",
+                        "The sun shone as before, and that night the moon came up clear.",
+                        { t: "\"The light is back!\"", v: "girl" },
+                        "People danced on the hill. The cocks called the dawn again.",
+                        "The king made that silk a treasure of the kingdom."
+                    ]
+                },
+                {
+                    art: "09-names.webp",
+                    emoji: "🏛️",
+                    left: [
+                        "The king called the storehouse that held the silk Gwibigo.",
+                        "It means the store of the honoured queen.",
+                        "The hill where the offering was made he called Yeongil, which means greeting the sun.",
+                        "Those names are still there today. Yeongilman bay in Pohang is the place."
+                    ],
+                    right: [
+                        "Over the sea on the island, Yeono and Seo lived long and well.",
+                        "Seo went on weaving all her life.",
+                        "And Yeono still looked west from time to time.",
+                        "But neither of them ever crossed back."
+                    ]
+                },
+                {
+                    art: "10-sunrise.webp",
+                    emoji: "🌄",
+                    left: [
+                        "They say the sun still rises first over Yeongilman.",
+                        "On the first day of the year people gather on that shore.",
+                        "To watch the sun come up out of the sea.",
+                        { t: "\"That is the sun Yeono and Seo gave back.\"", v: "old" },
+                        "That is what the grown-ups tell the children."
+                    ],
+                    right: [
+                        "So the story of the couple who crossed the sea on a rock has lasted.",
+                        "It is a story about light following people.",
+                        "And about how, even when those who left do not return, what they leave behind can bring the light back.",
+                        "Where that silk is now, nobody knows."
+                    ]
+                }
+            ],
+            moral: "Yeono and Seo carried the power of sun and moon, and did not know it while they gathered seaweed and wove cloth. The light came back not because they returned but because of one roll of silk.",
+            question: "Has anyone been so close to you that you did not see they were your light?"
+        }
+    ],
+    quiz: [
+        { q: "What did Yeono do at the sea every day?", choices: ["Caught fish", "Gathered seaweed", "Made salt"], answer: 1 },
+        { q: "What carried Yeono across the sea?", choices: ["A rock at the water's edge", "A great turtle", "A strange boat"], answer: 0 },
+        { q: "What did Seo find on the rock?", choices: ["A basket full of seaweed", "The silk she had woven", "One of Yeono's straw sandals"], answer: 2 },
+        { q: "What happened in Silla after the two left?", choices: ["The sun and moon lost their light", "The sea dried up", "The rain would not stop"], answer: 0 },
+        { q: "What did the envoy take back to Silla?", choices: ["Yeono's sandal", "A handful of island earth", "The silk Seo had woven"], answer: 2 },
+        { q: "What did the king do with the silk?", choices: ["Had clothes made from it", "Made an offering to heaven", "Gave it to the envoy as a reward"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The light went with the two of them, so people thought the sun and moon were tied to particular people.",
+                "He sent silk instead of going back, so what crossed the sea was the care in it, not the person.",
+                "She climbed the rock at the sight of one sandal, so wanting to find him came before being afraid.",
+                "Yeono went back to Silla with the envoy, so he could not refuse the king in the end."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "written down (write)", k: "책에 실린", s: "a very old story written down in the Samguk Yusa" },
+            { w: "is set in ~", k: "~ 때 이야기다", s: "It is set in the reign of King Adalla of Silla" },
+            { w: "reign", k: "임금이 다스리던 때", s: "in the reign of King Adalla" },
+            { w: "nearly", k: "가까이", s: "nearly two thousand years ago" },
+            { w: "ride (ride)", k: "타다", s: "A couple ride a rock across the sea" },
+            { w: "lose their light", k: "빛을 잃다", s: "the sun and the moon lose their light" },
+            { w: "brings ~ back", k: "되찾아 준다", s: "What brings the light back is not an army" },
+            { w: "a roll of silk", k: "비단 한 필", s: "not an army but one roll of silk" },
+            { w: "took its name from ~", k: "~에서 이름이 나왔다", s: "took its name from this story" }
+        ],
+        "01-couple.webp": [
+            { w: "the east coast", k: "동쪽 바닷가", s: "a husband and wife lived on the east coast of Silla" },
+            { w: "gather seaweed", k: "미역을 따다", s: "Yeono went out to the sea every day to gather seaweed." },
+            { w: "wove cloth (weave)", k: "베를 짰다", s: "Seo stayed at home and wove cloth." },
+            { w: "famous for ~", k: "~으로 이름난", s: "The silk she wove was famous along that coast for its beauty." },
+            { w: "plenty of ~", k: "많은", s: "There'll be plenty of seaweed today." },
+            { w: "set off (set)", k: "나섰다", s: "Yeono set off with his basket on his back." },
+            { w: "waves", k: "파도", s: "Don't go far. The waves are high." },
+            { w: "waved (wave)", k: "손을 흔들었다", s: "Seo came to the door and waved." },
+            { w: "unusually calm", k: "유난히 잔잔한", s: "The sea was unusually calm that day" },
+            { w: "glittered (glitter)", k: "반짝였다", s: "the sun glittered on the water" }
+        ],
+        "02-rock.webp": [
+            { w: "the water's edge", k: "물가", s: "Yeono climbed onto a rock at the water's edge" },
+            { w: "thick with ~", k: "~이 잔뜩 붙은", s: "The rock was thick with it." },
+            { w: "floated up (float)", k: "둥실 떠올랐다", s: "It floated up on the water" },
+            { w: "slid away (slide)", k: "미끄러져 나갔다", s: "and slid away out to sea" },
+            { w: "lay flat (lie)", k: "엎드렸다", s: "Yeono lay flat and held on." },
+            { w: "held on (hold on)", k: "붙들었다", s: "Yeono lay flat and held on." },
+            { w: "rode the waves (ride)", k: "물결을 탔다", s: "The rock rode the waves like a boat" },
+            { w: "had shrunk to ~ (shrink)", k: "~처럼 작아졌다", s: "the land of Silla had shrunk to a dot" },
+            { w: "only ~ answered", k: "~만 돌아왔다", s: "He shouted, and only the waves answered." }
+        ],
+        "03-island.webp": [
+            { w: "came to ~", k: "~에 닿았다", s: "Next morning the rock came to a strange island." },
+            { w: "crowded down (crowd)", k: "몰려왔다", s: "People crowded down to the shore." },
+            { w: "new to him", k: "처음 보는", s: "Their speech and their clothes were new to him." },
+            { w: "no ordinary man", k: "보통 사람이 아닌", s: "This is no ordinary man." },
+            { w: "Heaven has sent ~", k: "하늘이 보냈다", s: "Heaven has sent him." },
+            { w: "bowed low (bow)", k: "엎드려 절했다", s: "The people bowed low before Yeono." },
+            { w: "made him their king", k: "임금으로 모셨다", s: "The islanders made him their king." },
+            { w: "could not sleep", k: "잠이 오지 않았다", s: "And every night he could not sleep." },
+            { w: "the western sea", k: "서쪽 바다", s: "He looked only at the western sea." }
+        ],
+        "04-search.webp": [
+            { w: "Back on ~", k: "한편 ~에서는", s: "Back on the Silla shore, Seo waited for her husband." },
+            { w: "and then another", k: "이틀이 갔다", s: "One day passed and then another." },
+            { w: "out at sea", k: "바다에서", s: "Has something happened out at sea?" },
+            { w: "from one end to the other", k: "이 끝에서 저 끝까지", s: "Seo searched the shore from one end to the other." },
+            { w: "blistered", k: "부르튼", s: "Her feet were blistered." },
+            { w: "lay (lie)", k: "놓여 있었다", s: "Something lay on the rock at the water's edge." },
+            { w: "straw sandals", k: "짚신", s: "One of Yeono's straw sandals." },
+            { w: "pick it up", k: "집다", s: "Seo climbed the rock to pick it up." },
+            { w: "took him away", k: "데려갔다", s: "So this rock took him away." },
+            { w: "held ~ against her", k: "품에 안았다", s: "She held the sandal against her" }
+        ],
+        "05-follow.webp": [
+            { w: "rose on ~ (rise)", k: "떠올랐다", s: "The rock rose on the water and went east." },
+            { w: "was not afraid", k: "무섭지 않았다", s: "Seo was not afraid." },
+            { w: "the road he had taken", k: "그이가 간 길", s: "This was the road her husband had taken." },
+            { w: "came into view", k: "보였다", s: "a strange island came into view" },
+            { w: "came crowding", k: "몰려나왔다", s: "The islanders came crowding down again." },
+            { w: "ran barefoot (run)", k: "맨발로 뛰었다", s: "Yeono heard and ran barefoot out of the palace." },
+            { w: "held each other", k: "부둥켜안았다", s: "They held each other on the shore." },
+            { w: "fell from ~ (fall)", k: "떨어졌다", s: "The straw sandal fell from her arms." },
+            { w: "made ~ their queen", k: "왕비로 모셨다", s: "The islanders made Seo their queen." },
+            { w: "went on ~ing", k: "계속 ~했다", s: "in the palace she went on weaving" }
+        ],
+        "06-dark.webp": [
+            { w: "gave no light", k: "빛이 없었다", s: "The sun rose and gave no light." },
+            { w: "Nor did ~", k: "~도 마찬가지였다", s: "Nor did the moon." },
+            { w: "as dim as ~", k: "~처럼 어둑한", s: "Daytime was as dim as evening." },
+            { w: "cocks", k: "닭", s: "The cocks did not know when to crow." },
+            { w: "crow", k: "울다", s: "The cocks did not know when to crow." },
+            { w: "murmured (murmur)", k: "웅성거렸다", s: "People looked up and murmured." },
+            { w: "crops", k: "곡식", s: "The crops did not grow." },
+            { w: "the will of heaven", k: "하늘의 뜻", s: "the officer who read the will of heaven" },
+            { w: "studied (study)", k: "살폈다", s: "He studied the stars a long while" },
+            { w: "carrying the power of ~", k: "~의 기운을 지닌", s: "Two people carrying the power of sun and moon" },
+            { w: "has followed ~ (follow)", k: "따라갔다", s: "The light has followed them." }
+        ],
+        "07-envoy.webp": [
+            { w: "envoy", k: "사신", s: "The king sent an envoy east by boat to the island." },
+            { w: "bowed to the ground", k: "엎드렸다", s: "The envoy bowed to the ground before Yeono." },
+            { w: "Please come back", k: "돌아와 주십시오", s: "Please come back to us." },
+            { w: "said nothing", k: "말이 없었다", s: "Yeono said nothing for a long time." },
+            { w: "the will of heaven", k: "하늘의 뜻", s: "My coming here was the will of heaven." },
+            { w: "cannot go back", k: "돌아갈 수 없다", s: "I cannot go back." },
+            { w: "went pale", k: "얼굴이 하얘졌다", s: "The envoy went pale." },
+            { w: "I wove it (weave)", k: "제가 짰습니다", s: "Take this. I wove it here." },
+            { w: "make an offering", k: "제사를 지내다", s: "Make an offering to heaven with it" },
+            { w: "will return", k: "돌아올 것이다", s: "the light will return" }
+        ],
+        "08-silk.webp": [
+            { w: "carried ~ back", k: "안고 돌아갔다", s: "The envoy carried the silk back across the sea." },
+            { w: "altar", k: "제단", s: "The king of Silla built an altar on a hill above the shore." },
+            { w: "was spread (spread)", k: "펼쳐졌다", s: "The silk was spread on the altar" },
+            { w: "bowed down", k: "절을 올렸다", s: "the king bowed down" },
+            { w: "give us back ~", k: "돌려주십시오", s: "Heaven, give us back the light." },
+            { w: "held its breath", k: "숨을 죽였다", s: "The whole country held its breath." },
+            { w: "grew bright (grow)", k: "환해졌다", s: "And the sky grew bright." },
+            { w: "as before", k: "예전처럼", s: "The sun shone as before" },
+            { w: "came up clear", k: "환하게 떴다", s: "that night the moon came up clear" },
+            { w: "called the dawn", k: "새벽을 알렸다", s: "The cocks called the dawn again." },
+            { w: "a treasure of ~", k: "~의 보물", s: "The king made that silk a treasure of the kingdom." }
+        ],
+        "09-names.webp": [
+            { w: "storehouse", k: "창고", s: "The king called the storehouse that held the silk Gwibigo." },
+            { w: "It means ~", k: "~라는 뜻이다", s: "It means the store of the honoured queen." },
+            { w: "honoured", k: "귀한", s: "the store of the honoured queen" },
+            { w: "greeting the sun", k: "해를 맞이하는 것", s: "Yeongil, which means greeting the sun" },
+            { w: "are still there today", k: "지금까지 남아 있다", s: "Those names are still there today." },
+            { w: "bay", k: "만, 바닷가", s: "Yeongilman bay in Pohang is the place." },
+            { w: "long and well", k: "오래 잘", s: "Yeono and Seo lived long and well" },
+            { w: "all her life", k: "평생", s: "Seo went on weaving all her life." },
+            { w: "from time to time", k: "이따금", s: "And Yeono still looked west from time to time." },
+            { w: "crossed back", k: "다시 건너갔다", s: "But neither of them ever crossed back." }
+        ],
+        "10-sunrise.webp": [
+            { w: "rises first", k: "제일 먼저 뜬다", s: "They say the sun still rises first over Yeongilman." },
+            { w: "the first day of the year", k: "새해 첫날", s: "On the first day of the year people gather on that shore." },
+            { w: "come up out of ~", k: "~에서 솟다", s: "To watch the sun come up out of the sea." },
+            { w: "gave back (give back)", k: "돌려주었다", s: "That is the sun Yeono and Seo gave back." },
+            { w: "has lasted (last)", k: "그렇게 남았다", s: "So the story of the couple ... has lasted." },
+            { w: "following people", k: "사람을 따라가는", s: "It is a story about light following people." },
+            { w: "those who left", k: "떠난 사람", s: "even when those who left do not return" },
+            { w: "what they leave behind", k: "두고 간 것", s: "what they leave behind can bring the light back" },
+            { w: "nobody knows", k: "아무도 모른다", s: "Where that silk is now, nobody knows." }
+        ],
+        "after": [
+            { w: "the eighth king", k: "여덟째 임금", s: "It is set down as happening under Adalla, the eighth king of Silla" },
+            { w: "among the oldest", k: "아주 오래된 축", s: "which puts it among the oldest of our tales" },
+            { w: "became a king", k: "왕이 되었다", s: "Japan also has a story of someone who crossed the sea and became a king." },
+            { w: "how much ~", k: "얼마나 ~하는지", s: "This story shows how much the two peoples went back and forth" },
+            { w: "went back and forth", k: "오갔다", s: "how much the two peoples went back and forth by sea" },
+            { w: "in their place", k: "대신", s: "The silk Seo wove came across in their place." },
+            { w: "care put into ~", k: "정성이 담긴", s: "The old people believed something with care put into it" },
+            { w: "carries ~ across", k: "옮겨 간다", s: "carries a person's power across with it" },
+            { w: "place name", k: "땅 이름", s: "The place name Yeongil and the storehouse name Gwibigo have come down with the story." },
+            { w: "have come down (come down)", k: "전해 온다", s: "have come down with the story" },
+            { w: "If a name stays", k: "이름이 남으면", s: "If a name stays, the story stays too." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🧵',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story is in the Samguk Yusa. It is set down as happening under Adalla, the eighth king of Silla, which puts it among the oldest of our tales.",
+                    "Japan also has a story of someone who crossed the sea and became a king. This story shows how much the two peoples went back and forth by sea in those days.",
+                    "Look again: the light did not come back because the people came back. The silk Seo wove came across in their place. The old people believed something with care put into it carries a person's power across with it.",
+                    "The place name Yeongil and the storehouse name Gwibigo have come down with the story. It is Yeongilman bay in Pohang today. If a name stays, the story stays too."
+                ],
+                right: [
+                    "Yeono and Seo carried the power of sun and moon, and did not know it while they gathered seaweed and wove cloth. The light is that close at hand.",
+                    "Has anyone been so close to you that you did not see they were your light?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "연오랑이 날마다 바다에서 한 일은 무엇인가요?", choices: ["고기 잡기", "미역 따기", "소금 만들기"], answer: 1 },
     { q: "연오랑을 바다 건너로 데려간 것은 무엇인가요?", choices: ["물가의 바위", "커다란 거북", "낯선 배"], answer: 0 },

@@ -202,6 +202,401 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🔥",
+        art: "cover.webp",
+        title: "The Dog Who Saved His Master",
+        intro: [
+            "The Dog Who Saved His Master is an old Korean tale with no known author. It is better known as the righteous dog of Osu.",
+            "The story really belongs to Osu in Imsil. The place name joins the character for dog to the character for tree. A monument and a grave for the dog still stand there.",
+            "It is written down in a book put together in the Goryeo period, so it has been told for at least seven hundred years."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Night Road Home from Market",
+            beats: [
+                {
+                    art: "01-pair.webp",
+                    emoji: "🐕",
+                    left: [
+                        "Long ago in a district called Osu lived a man named Kim. Nureongi the dog was always at his side.",
+                        { t: "\"Nureongi! Let's go!\"", v: "man" },
+                        "He was at his master's feet before the call was finished.",
+                        "Out to the field, off to the market, even to the outhouse — the dog never once left him."
+                    ],
+                    right: [
+                        { t: "\"This fellow is my own shadow.\"", v: "man" },
+                        "Kim would say it and laugh, and Nureongi would wag his tail.",
+                        "The dog seemed to understand.",
+                        "The neighbours thought of Kim and Nureongi as one pair.",
+                        { t: "\"Here come Kim and Nureongi.\"", v: "granny" }
+                    ]
+                },
+                {
+                    art: "02-tavern.webp",
+                    emoji: "🍶",
+                    left: [
+                        "That day they were coming back from the market. Passing an inn, Kim met somebody he knew.",
+                        { t: "\"It's been a long time! Come and have a drink!\"", v: "man" },
+                        "One cup became two, and the drinks kept coming.",
+                        { t: "\"Kim, just one more!\"", v: "man" },
+                        "Nureongi lay under the inn floor and waited."
+                    ],
+                    right: [
+                        "Only after the sun had gone did Kim get up. He wove one way and then the other.",
+                        { t: "\"Dear me. What's wrong with my legs.\"", v: "man" },
+                        "Nureongi walked close beside him, propping him up with his body whenever he looked like falling.",
+                        "The dog never once walked in front."
+                    ]
+                },
+                {
+                    art: "03-asleep.webp",
+                    emoji: "😴",
+                    left: [
+                        "Halfway across the open field Kim stopped.",
+                        "The dry grass in that field came up to the knee.",
+                        { t: "\"Oh, my legs. Let's rest a moment.\"", v: "man" },
+                        "And down he lay in the dry grass.",
+                        { t: "\"Just one little sleep.\"", v: "man" }
+                    ],
+                    right: [
+                        "And he began to snore. Shake him as you might, he was not going to wake.",
+                        "Only Nureongi did not sleep.",
+                        "He sat down beside his master with his ears up and kept watch through the night.",
+                        "A cold wind came over the field."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Field Catches Fire",
+            beats: [
+                {
+                    art: "04-fire.webp",
+                    emoji: "🔥",
+                    left: [
+                        "It was the middle of the night. Far off at the end of the field a red light began to move.",
+                        "At first it was a very small flame.",
+                        "A spark somebody had left behind had caught the dry grass. That autumn had been unusually dry.",
+                        "The end of the field grew brighter and brighter."
+                    ],
+                    right: [
+                        "On the wind the flames came striding closer. The dry grass crackled as it burned.",
+                        "Nureongi sprang up.",
+                        "A sharp burnt smell came into his nose.",
+                        "The smoke was already stinging his eyes."
+                    ]
+                },
+                {
+                    art: "05-wake.webp",
+                    emoji: "😰",
+                    left: [
+                        { t: "\"Woof! Woof! Woof-woof-woof!\"", v: "beast" },
+                        "Nureongi barked into his master's face until his throat tore.",
+                        "He thumped his master's chest with his front paws.",
+                        { t: "\"Mmm... be quiet... go away...\"", v: "man" },
+                        "Kim only waved a hand at him.",
+                        "He did not even open his eyes."
+                    ],
+                    right: [
+                        "Nureongi took his clothes in his teeth and shook, and it was no use. Kim rolled over and snored again.",
+                        "The dog stamped his feet and whined.",
+                        "The fire was almost on them. Hot air came at them in gusts.",
+                        "And then Nureongi stopped barking."
+                    ]
+                },
+                {
+                    art: "06-stream.webp",
+                    emoji: "💧",
+                    left: [
+                        "He turned and started to run — to the stream across the field.",
+                        "He had thought of something.",
+                        "He ran with everything he had and never looked back. His pads felt as if they would come off.",
+                        "He tripped on stones and did not stop."
+                    ],
+                    right: [
+                        "Splash!",
+                        "The cold water soaked right through him.",
+                        "Nureongi went under, then came leaping out again. Water ran off his coat.",
+                        "And he ran the whole way back.",
+                        "His breath came up in his throat."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · How Osu Got Its Name",
+            beats: [
+                {
+                    art: "07-roll.webp",
+                    emoji: "🌀",
+                    left: [
+                        "Nureongi rolled himself in the dry grass all round his master.",
+                        "Roll, roll, roll.",
+                        "Water off his wet coat wetted the grass a little. But a little was nowhere near enough.",
+                        "He was covered in mud.",
+                        "And he turned back towards the stream."
+                    ],
+                    right: [
+                        "So he ran to the stream again.",
+                        "Soak, roll, soak again, roll again.",
+                        "How many times, nobody knows. And all the while the fire came closer.",
+                        "His coat had no time to dry.",
+                        "His legs shook and he kept falling."
+                    ]
+                },
+                {
+                    art: "08-stop.webp",
+                    emoji: "🛡️",
+                    left: [
+                        "At last the fire reached the place. It came on terribly, swallowing the grass.",
+                        "The flames were as tall as a man.",
+                        "The grass curled up in the heat.",
+                        "And in front of the wet grass the fire lost its strength. It hissed, and only white smoke went up."
+                    ],
+                    right: [
+                        "In the middle of that round patch of wet ground, Kim snored on, knowing nothing.",
+                        "The fire swallowed everything round it and passed by.",
+                        "And Nureongi dropped down beside him, panting, his tongue right out.",
+                        "He had no strength left to stand."
+                    ]
+                },
+                {
+                    art: "09-dawn.webp",
+                    emoji: "🌄",
+                    left: [
+                        "Kim woke at dawn and jumped up. The whole field was burnt black.",
+                        "The smell of ash was sharp.",
+                        "The only unburnt place was where he had been lying — that one patch. A chill went down his back.",
+                        "He looked all round him for a long time."
+                    ],
+                    right: [
+                        "And there beside him lay Nureongi, soaking wet, his eyes shut.",
+                        "His coat was scorched all over.",
+                        { t: "\"Nureongi! Nureongi!\"", v: "man" },
+                        "However Kim shook him, the dog could not wag his tail once.",
+                        "And then Kim understood what had happened."
+                    ]
+                },
+                {
+                    art: "10-tree.webp",
+                    emoji: "🌳",
+                    left: [
+                        "Kim took the dog on his back and ran for home. Tears blinded him and he fell more than once.",
+                        "The dog's body hung limp.",
+                        { t: "\"Only live. Just live.\"", v: "man" },
+                        "After days of feeding and nursing, Nureongi got his strength back."
+                    ],
+                    right: [
+                        "Kim planted a tree where the fire had stopped. Some say he pushed his stick into the ground and it took root.",
+                        "The tree grew straight and threw a wide shade.",
+                        "People called it the dog tree. And that is how the district came to be called Osu.",
+                        "It is written with the character for dog and the character for tree."
+                    ]
+                }
+            ],
+            moral: "When barking did no good, Nureongi found something he could do himself. Even when words do not get through, there is still a way to show what you mean.",
+            question: "Have you ever shown how you felt when you could not say it?"
+        }
+    ],
+    quiz: [
+        { q: "Where did Kim fall asleep?", choices: ["In the warm room at the inn", "In the field on the way home", "On a rock by the stream"], answer: 1 },
+        { q: "What happened in the field in the middle of the night?", choices: ["Rain poured down", "Snow fell", "A fire spread"], answer: 2 },
+        { q: "What did Nureongi do to wake his master?", choices: ["Barked and pulled his clothes", "Poured water on him", "Ran far away"], answer: 0 },
+        { q: "How did Nureongi stop the fire?", choices: ["By digging earth over it", "By barking loudly", "By rolling with a wet coat"], answer: 2 },
+        { q: "What did the field look like in the morning?", choices: ["Burnt black", "Green as before", "Under water"], answer: 0 },
+        { q: "What did people call the tree that grew there?", choices: ["Nureongi's tree", "The dog tree", "The Osu tree"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He ran for the stream once barking failed, so when a thing is not working you look for another way.",
+                "Only one patch was left unburnt, so you can tell who kept that circle and how.",
+                "The district name came from the dog tree, so people left what they were grateful for in the name of the land.",
+                "Nureongi got up in the morning and walked home behind his master, so he was a tough dog indeed."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "master", k: "주인", s: "The Dog Who Saved His Master" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "better known as ~", k: "~으로 더 알려진", s: "It is better known as the righteous dog of Osu." },
+            { w: "righteous", k: "의로운", s: "the righteous dog of Osu" },
+            { w: "belongs to ~ (belong)", k: "~에 전해 온다", s: "The story really belongs to Osu in Imsil." },
+            { w: "joins ~ to ... (join)", k: "합친다", s: "The place name joins the character for dog to the character for tree." },
+            { w: "monument", k: "비석", s: "A monument and a grave for the dog still stand there." },
+            { w: "was put together (put)", k: "엮였다", s: "a book put together in the Goryeo period" },
+            { w: "at least", k: "적어도", s: "it has been told for at least seven hundred years" }
+        ],
+        "01-pair.webp": [
+            { w: "district", k: "고을", s: "in a district called Osu lived a man named Kim" },
+            { w: "at his side", k: "곁에", s: "Nureongi the dog was always at his side." },
+            { w: "before the call was finished", k: "부르기가 무섭게", s: "He was at his master's feet before the call was finished." },
+            { w: "outhouse", k: "화장실", s: "even to the outhouse" },
+            { w: "never once left ~", k: "한 번도 떨어지지 않았다", s: "the dog never once left him" },
+            { w: "my own shadow", k: "내 그림자", s: "This fellow is my own shadow." },
+            { w: "wag his tail", k: "꼬리를 흔들다", s: "Nureongi would wag his tail" },
+            { w: "seemed to understand", k: "알아듣는 것 같았다", s: "The dog seemed to understand." },
+            { w: "as one pair", k: "한 짝으로", s: "The neighbours thought of Kim and Nureongi as one pair." }
+        ],
+        "02-tavern.webp": [
+            { w: "coming back from ~", k: "다녀오는 길인", s: "That day they were coming back from the market." },
+            { w: "inn", k: "주막", s: "Passing an inn, Kim met somebody he knew." },
+            { w: "It's been a long time!", k: "오랜만일세!", s: "It's been a long time! Come and have a drink!" },
+            { w: "kept coming", k: "자꾸 늘었다", s: "One cup became two, and the drinks kept coming." },
+            { w: "lay under ~ (lie)", k: "밑에 엎드렸다", s: "Nureongi lay under the inn floor and waited." },
+            { w: "Only after ~ did he ...", k: "~하고서야 비로소", s: "Only after the sun had gone did Kim get up." },
+            { w: "wove (weave)", k: "비틀거렸다", s: "He wove one way and then the other." },
+            { w: "propping ~ up (prop)", k: "몸으로 받쳐 주는", s: "propping him up with his body" },
+            { w: "whenever ~", k: "~할 것 같으면", s: "whenever he looked like falling" },
+            { w: "in front", k: "앞서서", s: "The dog never once walked in front." }
+        ],
+        "03-asleep.webp": [
+            { w: "Halfway across ~", k: "반쯤 건넜을 때", s: "Halfway across the open field Kim stopped." },
+            { w: "came up to the knee", k: "무릎까지 자랐다", s: "The dry grass in that field came up to the knee." },
+            { w: "Let's rest a moment", k: "잠깐 쉬었다 가자", s: "Oh, my legs. Let's rest a moment." },
+            { w: "down he lay", k: "벌렁 드러누웠다", s: "And down he lay in the dry grass." },
+            { w: "snore (snore)", k: "코를 골다", s: "And he began to snore." },
+            { w: "Shake him as you might", k: "아무리 흔들어도", s: "Shake him as you might, he was not going to wake." },
+            { w: "kept watch (keep)", k: "지켰다", s: "kept watch through the night" },
+            { w: "came over ~", k: "불어왔다", s: "A cold wind came over the field." }
+        ],
+        "04-fire.webp": [
+            { w: "Far off", k: "저 멀리", s: "Far off at the end of the field a red light began to move." },
+            { w: "flame", k: "불빛, 불길", s: "At first it was a very small flame." },
+            { w: "spark", k: "불씨", s: "A spark somebody had left behind had caught the dry grass." },
+            { w: "had caught (catch)", k: "옮아붙었다", s: "had caught the dry grass" },
+            { w: "unusually dry", k: "유난히 비가 안 온", s: "That autumn had been unusually dry." },
+            { w: "came striding (stride)", k: "성큼성큼 다가왔다", s: "On the wind the flames came striding closer." },
+            { w: "crackled (crackle)", k: "타닥타닥 소리를 냈다", s: "The dry grass crackled as it burned." },
+            { w: "sprang up (spring)", k: "벌떡 일어났다", s: "Nureongi sprang up." },
+            { w: "burnt smell", k: "매캐한 냄새", s: "A sharp burnt smell came into his nose." },
+            { w: "stinging (sting)", k: "찌르는", s: "The smoke was already stinging his eyes." }
+        ],
+        "05-wake.webp": [
+            { w: "barked into ~", k: "얼굴에 대고 짖었다", s: "Nureongi barked into his master's face" },
+            { w: "until his throat tore", k: "목이 터져라", s: "barked into his master's face until his throat tore" },
+            { w: "thumped (thump)", k: "쿵쿵 두드렸다", s: "He thumped his master's chest with his front paws." },
+            { w: "waved a hand", k: "손을 휘휘 내저었다", s: "Kim only waved a hand at him." },
+            { w: "in his teeth", k: "입에 물고", s: "Nureongi took his clothes in his teeth and shook" },
+            { w: "it was no use", k: "소용없었다", s: "and it was no use" },
+            { w: "rolled over (roll)", k: "돌아누웠다", s: "Kim rolled over and snored again." },
+            { w: "whined (whine)", k: "낑낑거렸다", s: "The dog stamped his feet and whined." },
+            { w: "almost on them", k: "코앞까지 온", s: "The fire was almost on them." },
+            { w: "in gusts", k: "훅훅", s: "Hot air came at them in gusts." }
+        ],
+        "06-stream.webp": [
+            { w: "turned and started to run", k: "몸을 돌려 달리기 시작했다", s: "He turned and started to run" },
+            { w: "across the field", k: "들판 저쪽의", s: "to the stream across the field" },
+            { w: "had thought of ~", k: "생각해 냈다", s: "He had thought of something." },
+            { w: "with everything he had", k: "있는 힘껏", s: "He ran with everything he had" },
+            { w: "pads", k: "발바닥", s: "His pads felt as if they would come off." },
+            { w: "tripped (trip)", k: "발이 걸렸다", s: "He tripped on stones and did not stop." },
+            { w: "Splash!", k: "첨벙!", s: "Splash!" },
+            { w: "soaked right through ~", k: "온몸에 스며들었다", s: "The cold water soaked right through him." },
+            { w: "went under (go)", k: "푹 담갔다", s: "Nureongi went under, then came leaping out again." },
+            { w: "ran off ~ (run)", k: "뚝뚝 떨어졌다", s: "Water ran off his coat." },
+            { w: "the whole way back", k: "왔던 길을 그대로", s: "And he ran the whole way back." }
+        ],
+        "07-roll.webp": [
+            { w: "rolled himself in ~", k: "몸을 굴렸다", s: "Nureongi rolled himself in the dry grass" },
+            { w: "all round ~", k: "둘레에", s: "in the dry grass all round his master" },
+            { w: "wetted (wet)", k: "적셨다", s: "Water off his wet coat wetted the grass a little." },
+            { w: "nowhere near enough", k: "어림도 없는", s: "But a little was nowhere near enough." },
+            { w: "covered in mud", k: "흙투성이가 된", s: "He was covered in mud." },
+            { w: "turned back towards ~", k: "다시 고개를 돌렸다", s: "And he turned back towards the stream." },
+            { w: "Soak, roll", k: "적시고, 굴리고", s: "Soak, roll, soak again, roll again." },
+            { w: "all the while", k: "그러는 사이", s: "And all the while the fire came closer." },
+            { w: "no time to dry", k: "마를 새가 없는", s: "His coat had no time to dry." },
+            { w: "kept falling", k: "자꾸 넘어졌다", s: "His legs shook and he kept falling." }
+        ],
+        "08-stop.webp": [
+            { w: "reached (reach)", k: "닿았다", s: "At last the fire reached the place." },
+            { w: "swallowing (swallow)", k: "삼키며", s: "It came on terribly, swallowing the grass." },
+            { w: "as tall as a man", k: "사람 키만큼 높은", s: "The flames were as tall as a man." },
+            { w: "curled up (curl)", k: "오그라들었다", s: "The grass curled up in the heat." },
+            { w: "lost its strength (lose)", k: "힘을 잃었다", s: "the fire lost its strength" },
+            { w: "hissed (hiss)", k: "치익 소리를 냈다", s: "It hissed, and only white smoke went up." },
+            { w: "patch", k: "자리, 뙈기", s: "In the middle of that round patch of wet ground" },
+            { w: "knowing nothing", k: "아무것도 모른 채", s: "Kim snored on, knowing nothing" },
+            { w: "passed by", k: "지나갔다", s: "The fire swallowed everything round it and passed by." },
+            { w: "panting (pant)", k: "숨이 가빠", s: "Nureongi dropped down beside him, panting" },
+            { w: "his tongue right out", k: "혀를 길게 늘어뜨린 채", s: "panting, his tongue right out" }
+        ],
+        "09-dawn.webp": [
+            { w: "woke at dawn (wake)", k: "새벽에 눈을 떴다", s: "Kim woke at dawn and jumped up." },
+            { w: "burnt black", k: "까맣게 탄", s: "The whole field was burnt black." },
+            { w: "ash", k: "재", s: "The smell of ash was sharp." },
+            { w: "unburnt", k: "타지 않은", s: "The only unburnt place was where he had been lying" },
+            { w: "A chill went down his back", k: "등골이 서늘해졌다", s: "A chill went down his back." },
+            { w: "soaking wet", k: "흠뻑 젖은", s: "there beside him lay Nureongi, soaking wet" },
+            { w: "scorched (scorch)", k: "그을린", s: "His coat was scorched all over." },
+            { w: "However ~ shook him", k: "아무리 흔들어도", s: "However Kim shook him, the dog could not wag his tail once." },
+            { w: "understood what had happened", k: "무슨 일이 있었는지 알았다", s: "And then Kim understood what had happened." }
+        ],
+        "10-tree.webp": [
+            { w: "took ~ on his back", k: "들쳐 업었다", s: "Kim took the dog on his back and ran for home." },
+            { w: "blinded him (blind)", k: "앞을 가렸다", s: "Tears blinded him and he fell more than once." },
+            { w: "hung limp (hang)", k: "축 늘어졌다", s: "The dog's body hung limp." },
+            { w: "Only live.", k: "제발 살아만 다오.", s: "Only live. Just live." },
+            { w: "nursing (nurse)", k: "돌보기", s: "After days of feeding and nursing" },
+            { w: "got his strength back", k: "기운을 차렸다", s: "Nureongi got his strength back" },
+            { w: "planted (plant)", k: "심었다", s: "Kim planted a tree where the fire had stopped." },
+            { w: "took root", k: "뿌리가 내렸다", s: "he pushed his stick into the ground and it took root" },
+            { w: "threw a wide shade (throw)", k: "큰 그늘을 드리웠다", s: "The tree grew straight and threw a wide shade." },
+            { w: "came to be called ~", k: "~라 불리게 되었다", s: "that is how the district came to be called Osu" },
+            { w: "is written with ~", k: "~ 자로 쓴다", s: "It is written with the character for dog and the character for tree." }
+        ],
+        "after": [
+            { w: "the same story", k: "같은 이야기", s: "The same story is in a book put together in the Goryeo period." },
+            { w: "has been told for ~", k: "~ 동안 전해 왔다", s: "So it has been told for at least eight hundred years." },
+            { w: "held that place (hold)", k: "그 자리를 지켰다", s: "What held that place all that time was one monument and one place name." },
+            { w: "at first", k: "처음에", s: "look again and Nureongi barked at first" },
+            { w: "would not wake", k: "깨지 않았다", s: "When his master would not wake" },
+            { w: "chose ~ (choose)", k: "골랐다", s: "he chose the way that used his body" },
+            { w: "get through", k: "통하다", s: "once he knew words would not get through" },
+            { w: "went back and forth", k: "오갔다", s: "How many times he went back and forth ... nobody knows" },
+            { w: "the answer of the story", k: "이야기의 답", s: "That the fire lost its strength at the wet grass is the answer of the story." },
+            { w: "carried it on ~", k: "몸에 묻혀 왔다", s: "He did not pour water; he carried it on himself." },
+            { w: "there is still a way", k: "방법은 남아 있다", s: "Even when words do not get through, there is still a way to show what you mean." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🔥',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The same story is in a book put together in the Goryeo period. So it has been told for at least eight hundred years. What held that place all that time was one monument and one place name.",
+                    "A monument to the dog still stands there today. The district is Osu-myeon in Imsil.",
+                    "And look again: Nureongi barked at first. When his master would not wake, he began doing something else.",
+                    "Once he knew words would not get through, he chose the way that used his body. How many times he went back and forth between stream and grass, nobody knows."
+                ],
+                right: [
+                    "That the fire lost its strength at the wet grass is the answer of the story. He did not pour water; he carried it on himself.",
+                    "When barking did no good, Nureongi found something he could do himself. Even when words do not get through, there is still a way to show what you mean.",
+                    "Have you ever shown how you felt when you could not say it?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "김 서방은 어디에서 잠이 들었나요?", choices: ["주막의 아랫목에", "집으로 가던 들판", "개울가 바위 위에"], answer: 1 },
     { q: "한밤중에 들판에 무슨 일이 생겼나요?", choices: ["비가 쏟아졌다", "눈이 내렸다", "불이 번졌다"], answer: 2 },

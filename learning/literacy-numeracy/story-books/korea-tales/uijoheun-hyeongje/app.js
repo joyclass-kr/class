@@ -299,9 +299,9 @@ const EN = {
                     right: [
                         "He looked all around him.",
                         { t: "'If he knows, he won't take them. He mustn't know.'", v: "old" },
-                        "He slipped the sheaves onto his brother's pile and hurried back.",
+                        "He slipped the sheaves onto his brother's pile and hurried off.",
                         "Nobody had seen him, and that put his mind at rest.",
-                        "Only once he was under his quilt again did he finally fall asleep."
+                        "Only under his own quilt again did he fall asleep."
                     ]
                 },
                 {
@@ -344,7 +344,7 @@ const EN = {
                     left: [
                         "The next morning.",
                         "The elder brother went out to the field and blinked.",
-                        "The pile of sheaves was exactly as it had been. He counted again and again, and it made no difference.",
+                        "The pile was exactly as it had been. He counted twice more and it made no difference.",
                         { t: "\"Eh? It's the same as yesterday.\"", v: "old" },
                         "And yet he had certainly carried a whole frameful away."
                     ],
@@ -512,7 +512,7 @@ const EN = {
             { w: "he mustn't know", k: "모르게 해야 한다", s: "If he knows, he won't take them. He mustn't know." },
             { w: "slipped ~ onto (slip)", k: "슬쩍 올려놓았다", s: "He slipped the sheaves onto his brother's pile" },
             { w: "put his mind at rest", k: "마음이 놓였다", s: "Nobody had seen him, and that put his mind at rest." },
-            { w: "only once ~ did he ...", k: "~하고 나서야 비로소", s: "Only once he was under his quilt again did he finally fall asleep." }
+            { w: "only once ~ did he ...", k: "~하고 나서야 비로소", s: "Only under his own quilt again did he fall asleep." }
         ],
         "05-younger-thinks.webp": [
             { w: "that very same night", k: "바로 그 밤", s: "But that very same night the younger brother could not sleep either." },

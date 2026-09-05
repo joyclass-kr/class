@@ -210,6 +210,401 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🎶",
+        art: "cover.webp",
+        title: "Seodong and Princess Seonhwa",
+        intro: [
+            "Seodong and Princess Seonhwa is a story from the Samguk Yusa. It says King Mu of Baekje was called Seodong as a boy.",
+            "A poor boy who digs yams wins a princess of the next kingdom with one song, and becomes a king. That song, the Seodongyo, is the oldest song written down in our own language.",
+            "A song moves people and moves a country. See where that power comes from."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Boy Who Dug Yams",
+            beats: [
+                {
+                    art: "01-ma.webp",
+                    emoji: "🍠",
+                    left: [
+                        "Long ago, by a pond in the south of Baekje, a boy called Seodong lived with his widowed mother.",
+                        "Every day he dug yams on the mountain and sold them at the market. A yam is a long root that grows underground.",
+                        { t: "\"Yams! Buy my yams!\"", v: "boy" },
+                        "People called him the yam-digging boy, Seodong."
+                    ],
+                    right: [
+                        "Seodong was poor and very quick-witted.",
+                        "A song heard once he never forgot; a road walked once he could find again.",
+                        { t: "\"That boy will come to something.\"", v: "old" },
+                        "The old men at the market said so as they bought his yams.",
+                        "Seodong only grinned. His mother loved that grin."
+                    ]
+                },
+                {
+                    art: "02-rumor.webp",
+                    emoji: "👑",
+                    left: [
+                        "One day at the market Seodong heard talk of Silla.",
+                        { t: "\"The Silla king's third daughter, Princess Seonhwa, is the loveliest in the world.\"", v: "man" },
+                        { t: "\"They say anyone who sees her forgets himself.\"", v: "granny" },
+                        "Seodong put down his basket and stood still a long time.",
+                        "That night he packed his things."
+                    ],
+                    right: [
+                        { t: "\"Mother, I'm going to Silla.\"", v: "boy" },
+                        { t: "\"Silla and Baekje are on bad terms. Whatever for?\"", v: "mother" },
+                        { t: "\"To see the princess, just once.\"", v: "boy" },
+                        "His mother was too astonished to speak.",
+                        "Seodong shouldered a sack of yams and went to Seorabeol, the capital of Silla."
+                    ]
+                },
+                {
+                    art: "03-song.webp",
+                    emoji: "🎶",
+                    left: [
+                        "In Seorabeol he called the children together in every lane.",
+                        { t: "\"I'll give you a yam. You learn one song for it.\"", v: "boy" },
+                        "The children took the yams and pricked up their ears.",
+                        "Seodong sang.",
+                        { t: "\"Princess Seonhwa goes secretly, night after night, to meet Seodong.\"", v: "boy" }
+                    ],
+                    right: [
+                        "The children chewed their yams and sang it after him.",
+                        "From lane to lane, and in one day every child in Seorabeol was singing it.",
+                        { t: "\"Princess Seonhwa goes secretly—\"", v: "girl" },
+                        "They sang it without knowing what it meant.",
+                        "Seodong stood under a wall and listened."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Song Reaches the Palace",
+            beats: [
+                {
+                    art: "04-banish.webp",
+                    emoji: "😢",
+                    left: [
+                        "The song went over walls and gates and into the palace.",
+                        { t: "\"My daughter goes to meet whom, night after night?\"", v: "old" },
+                        "The king struck the table and his officials bowed.",
+                        { t: "\"It is false, Father. I do not even know who Seodong is.\"", v: "girl" },
+                        "She wept, and it did no good."
+                    ],
+                    right: [
+                        { t: "\"The kingdom has its good name. Go and live far from here.\"", v: "old" },
+                        "The king sent her out of Seorabeol. Being sent away like that is called banishment.",
+                        "Her mother the queen secretly pressed a sack of gold into her hands.",
+                        { t: "\"Live on this, wherever you go.\"", v: "woman" },
+                        "The princess swallowed her tears and went."
+                    ]
+                },
+                {
+                    art: "05-meet.webp",
+                    emoji: "🤝",
+                    left: [
+                        "As she walked the mountain road alone, somebody came up behind her.",
+                        { t: "\"Princess, let me go with you.\"", v: "boy" },
+                        "It was a young man with a sack of yams.",
+                        { t: "\"Who are you?\" \"They call me Seodong.\"", v: "girl" },
+                        "Her eyes went wide. It was the name in the song. \"That song — was it you?\""
+                    ],
+                    right: [
+                        "Seodong knelt and told her everything: that he had made the song and taught it to the children.",
+                        { t: "\"I only wanted to see you once.\"", v: "boy" },
+                        "The princess meant to be angry and found herself laughing.",
+                        { t: "\"Even the song did not know we would meet like this.\"", v: "girl" },
+                        "And the two of them went off together to Baekje."
+                    ]
+                },
+                {
+                    art: "06-gold.webp",
+                    emoji: "💰",
+                    left: [
+                        "In Baekje the princess opened her sack of gold.",
+                        { t: "\"We can build a house and live on this.\"", v: "girl" },
+                        "But Seodong looked at the gold and tilted his head.",
+                        { t: "\"Are these stones worth something?\"", v: "boy" },
+                        { t: "\"Stones? This is gold.\" She hardly knew what to say.", v: "girl" }
+                    ],
+                    right: [
+                        { t: "\"If that's all, there's a heap of it like earth on the mountain where I dug yams.\"", v: "boy" },
+                        "Seodong took her up the mountain.",
+                        "Among the yam roots, yellow stones lay glittering.",
+                        "The princess sat straight down.",
+                        { t: "\"Seodong, there is enough gold here to buy a kingdom.\"", v: "girl" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Gold and a Temple",
+            beats: [
+                {
+                    art: "07-monk.webp",
+                    emoji: "🙏",
+                    left: [
+                        { t: "\"Send this gold to my father and his heart will soften.\"", v: "girl" },
+                        { t: "\"How do we carry a mountain of it to Silla?\"", v: "boy" },
+                        "They went to a monk named Jimyeong, who was said to have strange powers.",
+                        { t: "\"Bring the gold here.\"", v: "old" }
+                    ],
+                    right: [
+                        "The monk closed his eyes before the heap of gold and said his words.",
+                        "And the gold lifted into the sky as if the wind had taken it.",
+                        "That night it came down like a mountain in the palace yard in Silla.",
+                        { t: "\"What is this!\"", v: "old" },
+                        "The king ran out without his shoes."
+                    ]
+                },
+                {
+                    art: "08-king.webp",
+                    emoji: "📜",
+                    left: [
+                        "A letter lay on top of the gold.",
+                        { t: "\"Sent by Seodong of Baekje, together with the princess.\"", v: "man" },
+                        "The king looked at the letter a long while.",
+                        { t: "\"I threw my daughter out over a song.\"", v: "old" },
+                        "He sent an envoy to Baekje. \"I acknowledge Seodong as my son-in-law.\""
+                    ],
+                    right: [
+                        "Seodong went on to win the hearts of the people of Baekje and became king. He was called King Mu.",
+                        "A yam-digging boy had become a king.",
+                        "And Princess Seonhwa became queen.",
+                        "The two of them often went back to the pond where he had lived as a boy.",
+                        { t: "\"I used to dig yams here.\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "09-temple.webp",
+                    emoji: "🏯",
+                    left: [
+                        "One day as they passed the pond, three Buddhas rose out of the water.",
+                        { t: "\"Please build a temple here.\"", v: "woman" },
+                        "the queen asked.",
+                        "The king filled in the pond and built a great temple there. Its name was Mireuksa.",
+                        "A stone pagoda rose into the sky."
+                    ],
+                    right: [
+                        "That pagoda still stands at the Mireuksa site in Iksan.",
+                        "It is fourteen hundred years old. It fell down and was raised again.",
+                        "Standing in front of it, you think of the boy digging yams."
+                    ]
+                },
+                {
+                    art: "10-song.webp",
+                    emoji: "📜",
+                    left: [
+                        "The song Seodong made is called the Seodongyo.",
+                        "It is the oldest song written down in our country.",
+                        "One short song sent a princess out of a palace and made a yam-digging boy a king.",
+                        "A song is as strong as that."
+                    ],
+                    right: [
+                        "Whether it really happened, and whether Seodong really was King Mu, nobody knows.",
+                        "Still, people come to the Mireuksa site in Iksan today.",
+                        "They look up at the pagoda and hum the song.",
+                        { t: "\"Princess Seonhwa goes—\"", v: "girl" },
+                        "The song from a Seorabeol lane fourteen hundred years ago."
+                    ]
+                }
+            ],
+            moral: "A yam-digging boy met a princess and became a king through one song. Songs move people and move kingdoms. And the king who threw out his daughter over a song was only sorry when the gold came.",
+            question: "Have you ever judged somebody wrongly because of a rumour?"
+        }
+    ],
+    quiz: [
+        { q: "What did Seodong dig on the mountain every day?", choices: ["Wild ginseng", "Yams", "Bellflower root"], answer: 1 },
+        { q: "What did Seodong get the children of Seorabeol to do for a yam?", choices: ["Learn a song", "Carry a letter", "Show him the way"], answer: 0 },
+        { q: "What did the king do to the princess after hearing the song?", choices: ["Married her to Seodong", "Shut her in her room", "Sent her out of the capital"], answer: 2 },
+        { q: "What did Seodong call the gold the princess brought out?", choices: ["A treasure he had never seen", "Common stones on his yam mountain", "Stones found only in Silla"], answer: 1 },
+        { q: "Who sent the gold to the Silla palace in one night?", choices: ["The monk Jimyeong", "Princess Seonhwa", "The king of Baekje"], answer: 0 },
+        { q: "What was built where the Buddhas rose from the pond?", choices: ["A great fortress", "The king's palace", "Mireuksa temple"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "He taught the song to children, so a rumour spreads from children's mouths, not from grown-ups'.",
+                "She sat down when he called gold a stone, so a thing is only worth what somebody knows it to be worth.",
+                "The king was only sorry once the gold arrived, so what a song lost him, gold won back.",
+                "The princess never found out the song was false, so she married him still deceived."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "It says ~", k: "~라고 전한다", s: "It says King Mu of Baekje was called Seodong as a boy." },
+            { w: "as a boy", k: "어릴 적", s: "was called Seodong as a boy" },
+            { w: "digs yams (dig)", k: "마를 캔다", s: "A poor boy who digs yams" },
+            { w: "wins (win)", k: "아내로 맞다", s: "wins a princess of the next kingdom with one song" },
+            { w: "the oldest ~", k: "가장 오래된", s: "is the oldest song written down in our own language" },
+            { w: "written down", k: "글로 남은", s: "the oldest song written down in our own language" },
+            { w: "moves (move)", k: "움직인다", s: "A song moves people and moves a country." },
+            { w: "where ~ comes from", k: "어디서 오는지", s: "See where that power comes from." }
+        ],
+        "01-ma.webp": [
+            { w: "widowed", k: "홀로 된", s: "a boy called Seodong lived with his widowed mother" },
+            { w: "root", k: "뿌리", s: "A yam is a long root that grows underground." },
+            { w: "underground", k: "땅속에서", s: "a long root that grows underground" },
+            { w: "quick-witted", k: "머리가 좋은", s: "Seodong was poor and very quick-witted." },
+            { w: "never forgot", k: "잊지 않았다", s: "A song heard once he never forgot" },
+            { w: "come to something", k: "크게 되다", s: "That boy will come to something." },
+            { w: "grinned (grin)", k: "씩 웃었다", s: "Seodong only grinned." },
+            { w: "loved that grin", k: "그 웃음을 좋아했다", s: "His mother loved that grin." }
+        ],
+        "02-rumor.webp": [
+            { w: "heard talk of ~", k: "~ 이야기를 들었다", s: "One day at the market Seodong heard talk of Silla." },
+            { w: "the loveliest", k: "제일 고운", s: "Princess Seonhwa, is the loveliest in the world" },
+            { w: "forgets himself", k: "넋을 잃는다", s: "anyone who sees her forgets himself" },
+            { w: "stood still (stand)", k: "한참 서 있었다", s: "Seodong put down his basket and stood still a long time." },
+            { w: "packed his things", k: "짐을 꾸렸다", s: "That night he packed his things." },
+            { w: "on bad terms", k: "사이가 나쁜", s: "Silla and Baekje are on bad terms." },
+            { w: "Whatever for?", k: "무엇 하러?", s: "Whatever for?" },
+            { w: "too astonished to speak", k: "기가 막혀 말을 잃은", s: "His mother was too astonished to speak." },
+            { w: "shouldered (shoulder)", k: "지고 갔다", s: "Seodong shouldered a sack of yams" },
+            { w: "capital", k: "서울", s: "Seorabeol, the capital of Silla" }
+        ],
+        "03-song.webp": [
+            { w: "called ~ together", k: "불러 모았다", s: "he called the children together in every lane" },
+            { w: "lane", k: "골목", s: "in every lane" },
+            { w: "learn one song for it", k: "대신 노래 하나를 배우다", s: "You learn one song for it." },
+            { w: "pricked up their ears", k: "귀를 세웠다", s: "The children took the yams and pricked up their ears." },
+            { w: "secretly", k: "남몰래", s: "Princess Seonhwa goes secretly" },
+            { w: "night after night", k: "밤마다", s: "goes secretly, night after night, to meet Seodong" },
+            { w: "chewed (chew)", k: "씹었다", s: "The children chewed their yams and sang it after him." },
+            { w: "sang it after him", k: "따라 불렀다", s: "sang it after him" },
+            { w: "From lane to lane", k: "골목에서 골목으로", s: "From lane to lane, and in one day every child ... was singing it" },
+            { w: "what it meant", k: "무슨 뜻인지", s: "They sang it without knowing what it meant." }
+        ],
+        "04-banish.webp": [
+            { w: "went over ~ (go over)", k: "넘어갔다", s: "The song went over walls and gates and into the palace." },
+            { w: "struck the table (strike)", k: "상을 내리쳤다", s: "The king struck the table." },
+            { w: "officials", k: "신하", s: "His officials bowed their heads." },
+            { w: "It is false", k: "거짓입니다", s: "It is false, Father." },
+            { w: "did no good", k: "소용없었다", s: "She wept, and it did no good." },
+            { w: "its good name", k: "체면", s: "The kingdom has its good name." },
+            { w: "banishment", k: "귀양", s: "Being sent from the palace like that is called banishment." },
+            { w: "pressed ~ into (press)", k: "쥐여 주었다", s: "her mother the queen secretly pressed a sack of gold into her hands" },
+            { w: "Live on ~", k: "~으로 살아라", s: "Live on this, wherever you go." },
+            { w: "swallowed her tears", k: "눈물을 삼켰다", s: "The princess swallowed her tears and left the palace." }
+        ],
+        "05-meet.webp": [
+            { w: "came up behind ~", k: "뒤따라왔다", s: "somebody came up behind her" },
+            { w: "let me go with you", k: "제가 모시겠습니다", s: "Princess, let me go with you." },
+            { w: "They call me ~", k: "~라 합니다", s: "They call me Seodong." },
+            { w: "went wide", k: "커졌다", s: "Her eyes went wide." },
+            { w: "knelt (kneel)", k: "무릎을 꿇었다", s: "Seodong knelt and told her everything" },
+            { w: "told ~ everything", k: "다 털어놓았다", s: "Seodong knelt and told her everything" },
+            { w: "taught (teach)", k: "가르쳤다", s: "he had made the song and taught it to the children" },
+            { w: "meant to be angry", k: "화를 내려 했다", s: "The princess meant to be angry and found herself laughing." },
+            { w: "found herself ~ing", k: "그만 ~하고 말았다", s: "found herself laughing" },
+            { w: "went off together", k: "함께 갔다", s: "the two of them went off together to Baekje" }
+        ],
+        "06-gold.webp": [
+            { w: "opened (open)", k: "풀었다", s: "the princess opened her sack of gold" },
+            { w: "build a house", k: "집을 짓다", s: "We can build a house and live on this." },
+            { w: "tilted his head", k: "고개를 갸웃했다", s: "But Seodong looked at the gold and tilted his head." },
+            { w: "worth something", k: "귀한", s: "Are these stones worth something?" },
+            { w: "hardly knew what to say", k: "어이없었다", s: "She hardly knew what to say." },
+            { w: "a heap of ~", k: "잔뜩 쌓인", s: "there's a heap of it like earth on the mountain" },
+            { w: "lay glittering (lie)", k: "반짝반짝 박혀 있었다", s: "Among the yam roots, yellow stones lay glittering." },
+            { w: "sat straight down", k: "그만 주저앉았다", s: "The princess sat straight down." },
+            { w: "enough to buy ~", k: "~을 살 만한", s: "there is enough gold here to buy a kingdom" }
+        ],
+        "07-monk.webp": [
+            { w: "his heart will soften", k: "마음이 풀리실 것이다", s: "Send this gold to my father and his heart will soften." },
+            { w: "all the way to ~", k: "~까지", s: "How do we carry a mountain of it all the way to Silla?" },
+            { w: "monk", k: "스님", s: "They went to a monk named Jimyeong at a temple nearby." },
+            { w: "had studied long", k: "도를 많이 닦았다", s: "He had studied long and was said to have strange powers." },
+            { w: "strange powers", k: "신기한 힘", s: "was said to have strange powers" },
+            { w: "said his words", k: "주문을 외웠다", s: "The monk closed his eyes before the heap of gold and said his words." },
+            { w: "lifted into ~ (lift)", k: "떠올랐다", s: "And the gold lifted into the sky" },
+            { w: "as if the wind had taken it", k: "바람에 날리듯", s: "as if the wind had taken it" },
+            { w: "came down like ~", k: "~처럼 쏟아졌다", s: "it came down like a mountain in the palace yard" },
+            { w: "without his shoes", k: "신도 못 신고", s: "The king ran out without his shoes." }
+        ],
+        "08-king.webp": [
+            { w: "lay on top of ~ (lie)", k: "위에 놓여 있었다", s: "A letter lay on top of the gold." },
+            { w: "together with ~", k: "~과 함께", s: "Sent by Seodong of Baekje, together with the princess." },
+            { w: "threw ~ out (throw)", k: "내쳤다", s: "I threw my daughter out over a song." },
+            { w: "over a song", k: "노래 하나에", s: "I threw my daughter out over a song." },
+            { w: "envoy", k: "사신", s: "He sent an envoy to Baekje." },
+            { w: "acknowledge (acknowledge)", k: "인정하다", s: "I acknowledge Seodong as my son-in-law." },
+            { w: "son-in-law", k: "사위", s: "I acknowledge Seodong as my son-in-law." },
+            { w: "win the hearts of ~", k: "마음을 얻다", s: "Seodong went on to win the hearts of the people of Baekje" },
+            { w: "became king", k: "임금이 되었다", s: "won the hearts of the people of Baekje and became king" },
+            { w: "used to ~", k: "예전에 ~했다", s: "I used to dig yams here." }
+        ],
+        "09-temple.webp": [
+            { w: "rose out of ~ (rise)", k: "솟아올랐다", s: "three Buddhas rose out of the water" },
+            { w: "Please build ~", k: "세워 주세요", s: "Please build a temple here." },
+            { w: "filled in ~ (fill in)", k: "메웠다", s: "The king filled in the pond" },
+            { w: "temple", k: "절", s: "built a great temple there" },
+            { w: "pagoda", k: "탑", s: "A stone pagoda rose into the sky." },
+            { w: "still stands", k: "지금도 서 있다", s: "That pagoda still stands at the Mireuksa site in Iksan." },
+            { w: "fourteen hundred years old", k: "천사백 년 된", s: "It is fourteen hundred years old." },
+            { w: "was raised again (raise)", k: "다시 세워졌다", s: "It fell down and was raised again." },
+            { w: "you think of ~", k: "~이 생각난다", s: "Standing in front of it, you think of the boy digging yams." }
+        ],
+        "10-song.webp": [
+            { w: "is called ~", k: "~라고 한다", s: "The song Seodong made is called the Seodongyo." },
+            { w: "the oldest", k: "가장 오래된", s: "It is the oldest song written down in our country." },
+            { w: "sent ~ out of", k: "내보냈다", s: "One short song sent a princess out of a palace" },
+            { w: "as strong as that", k: "그렇게 힘이 세다", s: "A song is as strong as that." },
+            { w: "Whether ~", k: "~인지 아닌지", s: "Whether it really happened ... nobody knows." },
+            { w: "Still", k: "그래도", s: "Still, people come to the Mireuksa site in Iksan today." },
+            { w: "look up at ~", k: "올려다보다", s: "They look up at the pagoda and hum the song." },
+            { w: "hum (hum)", k: "흥얼거리다", s: "They look up at the pagoda and hum the song." }
+        ],
+        "after": [
+            { w: "is in the chapter on ~", k: "~ 편에 실려 있다", s: "This story is in the chapter on King Mu in the Samguk Yusa." },
+            { w: "is written that ~", k: "적혀 있다", s: "It is written that the thirtieth king of Baekje was the yam-digging Seodong" },
+            { w: "scholars differ", k: "학자들 말이 갈린다", s: "Scholars differ on whether that is true." },
+            { w: "borrowed (borrow)", k: "빌렸다", s: "It is a hyangga, a song that borrowed Chinese characters" },
+            { w: "characters", k: "한자", s: "borrowed Chinese characters to write Korean" },
+            { w: "four lines long", k: "넉 줄짜리", s: "It is four lines long." },
+            { w: "neither ~ nor ~", k: "~도 ~도 아닌", s: "what Seodong used was neither strength nor money but a song" },
+            { w: "spread (spread)", k: "퍼뜨렸다", s: "He gave the children yams and spread the song." },
+            { w: "how a rumour moves people", k: "소문이 어떻게 사람을 움직이는지", s: "People very long ago already knew how a rumour moves people." },
+            { w: "took years to ~", k: "오랜 세월 걸려", s: "It fell and took years to raise again." },
+            { w: "does not blame ~ (blame)", k: "나무라지 않는다", s: "The story does not blame Seodong." },
+            { w: "quietly looks at ~", k: "조용히 들여다본다", s: "Instead it quietly looks at the king" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🏯',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story is in the chapter on King Mu in the Samguk Yusa. It is written that the thirtieth king of Baekje was the yam-digging Seodong as a boy. Scholars differ on whether that is true.",
+                    "The Seodongyo is the oldest song we have written down. It is a hyangga, a song that borrowed Chinese characters to write Korean. It is four lines long.",
+                    "Look again and what Seodong used was neither strength nor money but a song. He gave the children yams and spread the song. People very long ago already knew how a rumour moves people.",
+                    "The stone pagoda still stands on the Mireuksa site in Iksan. It fell and took years to raise again. It is a place where a story stayed by staying on the ground."
+                ],
+                right: [
+                    "The princess lost her palace because of a song, and ended up living with the man who wrote it. A false song came true. The story does not blame Seodong. Instead it quietly looks at the king who threw out his daughter over a song.",
+                    "Have you ever judged somebody wrongly because of a rumour?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "서동이 날마다 산에서 캔 것은 무엇인가요?", choices: ["산삼", "마", "도라지"], answer: 1 },
     { q: "서동이 서라벌 아이들에게 마를 주며 시킨 일은 무엇인가요?", choices: ["노래 배우기", "편지 전하기", "길 안내하기"], answer: 0 },

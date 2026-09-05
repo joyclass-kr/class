@@ -402,10 +402,10 @@ const EN = {
                     ],
                     right: [
                         "After seven days both of them flew up into the sky again.",
-                        "The scholar stood watching them go for a long time.",
+                        "The scholar watched them go a long time.",
                         { t: "\"How am I ever to pay you back?\"", v: "man" },
-                        "He missed the examination that year, but he had a story to tell his mother.",
-                        "And ever after, magpies built their nest in that house's yard, year after year."
+                        "He missed the examination that year, but he had a story for his mother.",
+                        "And ever after, magpies nested in that house's yard, year after year."
                     ]
                 }
             ],

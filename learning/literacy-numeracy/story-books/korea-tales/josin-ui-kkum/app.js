@@ -210,6 +210,401 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "💭",
+        art: "cover.webp",
+        title: "Josin's Dream",
+        intro: [
+            "Josin's Dream is a story from the Samguk Yusa. It is the dream a monk had in one night at a temple called Naksansa.",
+            "He wins the woman he wanted, lives with her forty years, has five children, is driven by poverty, and parts from her. And he opens his eyes and it has been one night.",
+            "It is the root of later novels like the Nine Cloud Dream. Watch what the man does after he wakes."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Praying at Naksansa",
+            beats: [
+                {
+                    art: "01-monk.webp",
+                    emoji: "🛕",
+                    left: [
+                        "Long ago in Silla there was a young monk called Josin.",
+                        "He had been sent to Myeongju to look after the temple's land. Myeongju is Gangneung today.",
+                        "One day he saw the daughter of the district governor.",
+                        "From that day Josin could not sleep."
+                    ],
+                    right: [
+                        "Monks do not marry.",
+                        "And yet Josin could not get the woman out of his mind.",
+                        "He went to Naksansa, a temple on the cliffs above the sea.",
+                        { t: "\"Buddha, let me live with her.\"", v: "man" },
+                        "He lay down before the Buddha and prayed day and night."
+                    ]
+                },
+                {
+                    art: "02-news.webp",
+                    emoji: "💔",
+                    left: [
+                        "Several years went by.",
+                        "Then news came from Myeongju: the governor's daughter had married somebody else.",
+                        "Josin ran into the prayer hall.",
+                        { t: "\"Buddha, why will you not grant what I ask!\"", v: "man" },
+                        "He wept before the Buddha and fell asleep there."
+                    ],
+                    right: [
+                        "How long did he sleep? Somebody shook him awake.",
+                        "He opened his eyes and there she stood in the hall doorway.",
+                        { t: "\"I came against my parents' wishes. I want to live with you.\"", v: "woman" },
+                        "Josin could not believe his ears.",
+                        "That night the two of them left the temple."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Forty Years in a Dream",
+            beats: [
+                {
+                    art: "03-life.webp",
+                    emoji: "🏡",
+                    left: [
+                        "They built a small house in his home country and lived there.",
+                        "One child was born, then two, and then there were five.",
+                        "Josin ploughed other people's fields and his wife took in sewing for money.",
+                        "They were poor, and there was laughter in the house."
+                    ],
+                    right: [
+                        "Then the harvests failed, year after year.",
+                        "The man who had lent them the field took it back.",
+                        "They had to sell the house as well.",
+                        "Seven people set off with bundles on their heads.",
+                        "They begged from village to village. Ten years went by that way."
+                    ]
+                },
+                {
+                    art: "04-loss.webp",
+                    emoji: "🍂",
+                    left: [
+                        "One winter the eldest child, ten years old, fell ill.",
+                        "There was no money for medicine.",
+                        "After a few days the child closed his eyes quietly in his parents' arms.",
+                        "Josin buried him beside a pass called Haehyeon.",
+                        "His wife could not get up from that place."
+                    ],
+                    right: [
+                        "They went on with the four who were left.",
+                        "Their daughter was bitten by a dog while begging in a village.",
+                        "Josin carried her on his back through the night, crying.",
+                        { t: "'I am starving every one of them.'", v: "man" },
+                        "There was grey in his wife's hair now too."
+                    ]
+                },
+                {
+                    art: "05-part.webp",
+                    emoji: "🌫️",
+                    left: [
+                        "One night his wife sat down in front of him.",
+                        { t: "\"Let us part.\"", v: "woman" },
+                        { t: "\"When we first met your face was lovely and I was young.\"", v: "woman" },
+                        { t: "\"Now we are each other's burden. Let us take two children each.\"", v: "woman" },
+                        "Her voice was quite steady."
+                    ],
+                    right: [
+                        "Josin could not say a word.",
+                        "Every word of hers was right.",
+                        "At dawn the next day they stood where the roads divided. Two children behind her, two behind him.",
+                        { t: "\"Live well, I hope.\"", v: "woman" },
+                        "She turned and walked away. He watched her go, and—"
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · One Night",
+            beats: [
+                {
+                    art: "06-wake.webp",
+                    emoji: "🕯️",
+                    left: [
+                        "He opened his eyes.",
+                        "He was in the prayer hall. The Buddha was looking down at him just as before.",
+                        "It was still dark outside. The candle was still burning.",
+                        "Not even one night had passed. Forty years had been a dream.",
+                        "Josin looked down at his own hands."
+                    ],
+                    right: [
+                        "There were no wrinkles on them. They were young hands.",
+                        "But when he touched his hair, it had gone white.",
+                        "In one night it had turned white.",
+                        "Josin lay down before the Buddha again.",
+                        { t: "\"So that is what I was asking for.\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "07-dig.webp",
+                    emoji: "⛏️",
+                    left: [
+                        "He went straight to the Haehyeon pass — the place where he had buried the child in the dream.",
+                        "Beside the road was a mound of earth he knew.",
+                        "Josin dug with his bare hands.",
+                        { t: "'It was a dream. It was only a dream.'", v: "man" },
+                        "Something hard met his fingers. His hands stopped."
+                    ],
+                    right: [
+                        "What came out of the earth was a Buddha carved in stone.",
+                        "Josin sat holding it for a long time.",
+                        "Where the child of his dream was buried, a Buddha had been lying.",
+                        "He washed it, carried it back, and built a temple called Jeongtosa on that spot."
+                    ]
+                },
+                {
+                    art: "08-after.webp",
+                    emoji: "🙏",
+                    left: [
+                        "After that Josin gave up looking after the temple's land.",
+                        "He gave away everything he had and served the Buddha only.",
+                        "He never spoke of the governor's daughter again.",
+                        "People asked him,",
+                        { t: "\"Master, why has your hair gone so white?\"", v: "man" }
+                    ],
+                    right: [
+                        { t: "\"I lived forty years in one night.\"", v: "man" },
+                        "That was all he said, and he smiled.",
+                        "Nobody knew what he meant.",
+                        "They only knew that the monk had stopped wanting things.",
+                        "He bowed his thanks for a bowl of rice. And he slept well."
+                    ]
+                },
+                {
+                    art: "09-dream.webp",
+                    emoji: "💭",
+                    left: [
+                        "So the dream story stayed.",
+                        "The story of a man who got everything he wanted and saw where it ended, all in one night.",
+                        "People went on telling it afterwards.",
+                        { t: "\"It's like Josin's dream.\"", v: "granny" },
+                        "That is how they came to speak of things that do not last."
+                    ],
+                    right: [
+                        "Wanting something is not wrong.",
+                        "But most people stop at the wanting.",
+                        "Josin saw the whole of it and came back.",
+                        "That is why his hair went white.",
+                        "One night was enough."
+                    ]
+                },
+                {
+                    art: "10-naksan.webp",
+                    emoji: "🌊",
+                    left: [
+                        "Naksansa still stands on the cliffs above the East Sea.",
+                        "You can see it at Yangyang in Gangwon-do.",
+                        "The hall where Josin lay praying burned down and was built again.",
+                        "But the sea is as it was, and so is the sound of the waves.",
+                        "People go there and make their wishes."
+                    ],
+                    right: [
+                        "They do not think much about what happens if the wish comes true.",
+                        "Nor did Josin.",
+                        "The Buddha granted what he asked. Only, in a dream.",
+                        "Getting a wish and seeing where it ends are two different things."
+                    ]
+                }
+            ],
+            moral: "The Buddha did not refuse Josin's wish. He granted it as a dream, so that Josin saw it to the end. After he woke, Josin lived like a man who had already lived forty years — and it had been one night.",
+            question: "If what you want now came true, what would come after it?"
+        }
+    ],
+    quiz: [
+        { q: "What did Josin pray for at Naksansa?", choices: ["That the temple land would prosper", "To live with the governor's daughter", "To be cured of an illness"], answer: 1 },
+        { q: "When did Josin fall asleep?", choices: ["Weeping because his wish was refused", "Worn out from work in the fields", "The night he parted from his wife"], answer: 0 },
+        { q: "How many children did Josin have in the dream?", choices: ["Two", "Five", "Seven"], answer: 1 },
+        { q: "What did Josin bury at the Haehyeon pass?", choices: ["The eldest child, who fell ill and died", "His wife's clothes", "A Buddha carved in stone"], answer: 0 },
+        { q: "Who said first that they should part?", choices: ["Josin", "The eldest daughter", "His wife"], answer: 2 },
+        { q: "What had happened to Josin's body when he woke?", choices: ["His hands were wrinkled", "His hair had gone white", "He was limping"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "His wife spoke of parting first, so it was not that love had ended — she did not want to be a burden.",
+                "He went and dug where the dream child was buried, so what happens in a dream still stays in the heart.",
+                "He stopped wanting things afterwards, so seeing where a wish ends leaves you with fewer wishes.",
+                "He woke and went back to the governor's daughter, so the Buddha granted his wish after all."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "monk", k: "스님", s: "the dream a monk had in one night" },
+            { w: "temple", k: "절", s: "at a temple called Naksansa" },
+            { w: "wins (win)", k: "얻는다", s: "He wins the woman he wanted" },
+            { w: "is driven by ~ (drive)", k: "~에 쫓긴다", s: "is driven by poverty" },
+            { w: "poverty", k: "가난", s: "is driven by poverty" },
+            { w: "parts from ~ (part)", k: "헤어진다", s: "and parts from her" },
+            { w: "the root of ~", k: "~의 뿌리", s: "It is the root of later novels" },
+            { w: "after he wakes", k: "깨어난 뒤에", s: "Watch what the man does after he wakes." }
+        ],
+        "01-monk.webp": [
+            { w: "had been sent (send)", k: "가 있었다", s: "He had been sent to Myeongju to look after the temple's land." },
+            { w: "look after ~", k: "돌보다", s: "to look after the temple's land" },
+            { w: "governor", k: "태수", s: "he saw the daughter of the district governor" },
+            { w: "could not sleep", k: "잠을 못 잤다", s: "From that day Josin could not sleep." },
+            { w: "do not marry", k: "혼인하지 않는다", s: "Monks do not marry." },
+            { w: "could not get ~ out of his mind", k: "자꾸 눈에 밟혔다", s: "Josin could not get the woman out of his mind" },
+            { w: "cliffs", k: "절벽", s: "a temple on the cliffs above the sea" },
+            { w: "let me ~", k: "~하게 해 주십시오", s: "Buddha, let me live with her." },
+            { w: "lay down (lie)", k: "엎드렸다", s: "He lay down before the Buddha" },
+            { w: "day and night", k: "밤낮으로", s: "prayed day and night" }
+        ],
+        "02-news.webp": [
+            { w: "went by (go by)", k: "지났다", s: "Several years went by." },
+            { w: "news came", k: "소식이 왔다", s: "Then news came from Myeongju" },
+            { w: "had married ~", k: "시집갔다", s: "the governor's daughter had married somebody else" },
+            { w: "prayer hall", k: "법당", s: "Josin ran into the prayer hall." },
+            { w: "grant (grant)", k: "들어주다", s: "why will you not grant what I ask" },
+            { w: "wept (weep)", k: "울었다", s: "He wept before the Buddha and fell asleep there." },
+            { w: "shook him awake (shake)", k: "흔들어 깨웠다", s: "Somebody shook him awake." },
+            { w: "doorway", k: "문 앞", s: "there she stood in the hall doorway" },
+            { w: "against ~'s wishes", k: "뜻을 거스르고", s: "I came against my parents' wishes." },
+            { w: "could not believe his ears", k: "제 귀를 의심했다", s: "Josin could not believe his ears." }
+        ],
+        "03-life.webp": [
+            { w: "his home country", k: "고향", s: "They built a small house in his home country" },
+            { w: "was born (bear)", k: "태어났다", s: "One child was born, then two" },
+            { w: "ploughed (plough)", k: "논을 갈았다", s: "Josin ploughed other people's fields" },
+            { w: "took in sewing", k: "삯바느질을 했다", s: "his wife took in sewing for money" },
+            { w: "the harvests failed", k: "흉년이 들었다", s: "Then the harvests failed, year after year." },
+            { w: "year after year", k: "여러 해 잇달아", s: "the harvests failed, year after year" },
+            { w: "had lent (lend)", k: "빌려주었다", s: "The man who had lent them the field took it back." },
+            { w: "took it back", k: "거두어 갔다", s: "The man who had lent them the field took it back." },
+            { w: "set off (set)", k: "길을 나섰다", s: "Seven people set off with bundles on their heads." },
+            { w: "begged (beg)", k: "얻어먹었다", s: "They begged from village to village." }
+        ],
+        "04-loss.webp": [
+            { w: "fell ill (fall)", k: "앓아누웠다", s: "the eldest child, ten years old, fell ill" },
+            { w: "medicine", k: "약", s: "There was no money for medicine." },
+            { w: "closed his eyes", k: "눈을 감았다", s: "the child closed his eyes quietly in his parents' arms" },
+            { w: "buried (bury)", k: "묻었다", s: "Josin buried him beside a pass called Haehyeon." },
+            { w: "pass", k: "고갯길", s: "beside a pass called Haehyeon" },
+            { w: "could not get up", k: "일어서지 못했다", s: "His wife could not get up from that place." },
+            { w: "who were left", k: "남은", s: "They went on with the four who were left." },
+            { w: "was bitten (bite)", k: "물렸다", s: "Their daughter was bitten by a dog" },
+            { w: "on his back", k: "업고", s: "Josin carried her on his back through the night" },
+            { w: "starving (starve)", k: "굶기는", s: "I am starving every one of them." },
+            { w: "grey in her hair", k: "머리에 흰 것", s: "There was grey in his wife's hair now too." }
+        ],
+        "05-part.webp": [
+            { w: "Let us part.", k: "헤어집시다.", s: "Let us part." },
+            { w: "lovely", k: "고운", s: "When we first met your face was lovely" },
+            { w: "each other's burden", k: "서로의 짐", s: "Now we are each other's burden." },
+            { w: "two children each", k: "아이 둘씩", s: "Let us take two children each." },
+            { w: "quite steady", k: "아주 차분한", s: "Her voice was quite steady." },
+            { w: "Every word of hers", k: "아내 말이 다", s: "Every word of hers was right." },
+            { w: "where the roads divided", k: "갈림길에", s: "they stood where the roads divided" },
+            { w: "Live well", k: "부디 잘 사시오", s: "Live well, I hope." },
+            { w: "turned and walked away", k: "돌아서서 걸어갔다", s: "She turned and walked away." }
+        ],
+        "06-wake.webp": [
+            { w: "just as before", k: "그대로", s: "The Buddha was looking down at him just as before." },
+            { w: "was still burning", k: "그대로 타고 있었다", s: "The candle was still burning." },
+            { w: "Not even one night", k: "하룻밤도 안 되어", s: "Not even one night had passed." },
+            { w: "had been a dream", k: "꿈이었다", s: "Forty years had been a dream." },
+            { w: "wrinkles", k: "주름", s: "There were no wrinkles on them." },
+            { w: "had gone white", k: "하얗게 세었다", s: "when he touched his hair, it had gone white" },
+            { w: "In one night", k: "하룻밤 사이에", s: "In one night it had turned white." },
+            { w: "So that is ~", k: "그런 것이었군요", s: "So that is what I was asking for." }
+        ],
+        "07-dig.webp": [
+            { w: "went straight to ~", k: "그길로 갔다", s: "He went straight to the Haehyeon pass" },
+            { w: "mound of earth", k: "흙더미", s: "Beside the road was a mound of earth he knew." },
+            { w: "with his bare hands", k: "맨손으로", s: "Josin dug with his bare hands." },
+            { w: "met his fingers", k: "손끝에 닿았다", s: "Something hard met his fingers." },
+            { w: "carved in stone (carve)", k: "돌로 만든", s: "What came out of the earth was a Buddha carved in stone." },
+            { w: "sat holding ~", k: "안고 앉아 있었다", s: "Josin sat holding it for a long time." },
+            { w: "had been lying (lie)", k: "묻혀 있었다", s: "a Buddha had been lying" },
+            { w: "washed (wash)", k: "씻었다", s: "He washed the stone Buddha and carried it back" },
+            { w: "on that spot", k: "그 자리에", s: "And on that spot he built a temple" }
+        ],
+        "08-after.webp": [
+            { w: "gave up ~ (give up)", k: "그만두었다", s: "Josin gave up looking after the temple's land." },
+            { w: "gave away ~ (give away)", k: "다 내놓았다", s: "He gave away everything he had" },
+            { w: "served (serve)", k: "모셨다", s: "and served the Buddha only" },
+            { w: "never spoke of ~", k: "두 번 다시 꺼내지 않았다", s: "He never spoke of the governor's daughter again." },
+            { w: "in one night", k: "하룻밤에", s: "I lived forty years in one night." },
+            { w: "That was all he said", k: "그 말만 했다", s: "That was all he said, and he smiled." },
+            { w: "what he meant", k: "무슨 뜻인지", s: "Nobody knew what he meant." },
+            { w: "stopped wanting things", k: "바라는 일이 없어졌다", s: "the monk had stopped wanting things" },
+            { w: "bowed his thanks", k: "고맙다고 절했다", s: "He bowed his thanks for a bowl of rice." }
+        ],
+        "09-dream.webp": [
+            { w: "stayed (stay)", k: "남았다", s: "So the dream story stayed." },
+            { w: "where it ended", k: "그 끝이 어떤지", s: "got everything he wanted and saw where it ended" },
+            { w: "all in one night", k: "하룻밤에", s: "saw where it ended, all in one night" },
+            { w: "went on telling it", k: "계속 이야기했다", s: "People went on telling it afterwards." },
+            { w: "It's like ~", k: "~ 같은 일이다", s: "It's like Josin's dream." },
+            { w: "do not last", k: "덧없는", s: "how they came to speak of things that do not last" },
+            { w: "is not wrong", k: "잘못이 아니다", s: "Wanting something is not wrong." },
+            { w: "stop at ~", k: "~에서 멈춘다", s: "But most people stop at the wanting." },
+            { w: "the whole of it", k: "그 끝까지 다", s: "Josin saw the whole of it and came back." },
+            { w: "was enough", k: "충분했다", s: "One night was enough." }
+        ],
+        "10-naksan.webp": [
+            { w: "still stands", k: "지금도 있다", s: "Naksansa still stands on the cliffs above the East Sea." },
+            { w: "burned down (burn)", k: "불에 탔다", s: "The hall where Josin lay praying burned down" },
+            { w: "was built again", k: "다시 지어졌다", s: "burned down and was built again" },
+            { w: "as it was", k: "그때 그대로", s: "But the sea is as it was" },
+            { w: "make their wishes", k: "소원을 빈다", s: "People go there and make their wishes." },
+            { w: "comes true", k: "이루어지다", s: "what happens if the wish comes true" },
+            { w: "Nor did ~", k: "~도 그랬다", s: "Nor did Josin." },
+            { w: "Only, in a dream", k: "다만 꿈으로", s: "The Buddha granted what Josin asked. Only, in a dream." },
+            { w: "two different things", k: "다른 일", s: "Getting a wish and seeing where a wish ends are two different things." }
+        ],
+        "after": [
+            { w: "is set down (set down)", k: "적혀 있다", s: "It is set down that Josin was a monk of Sedalsa" },
+            { w: "a whole life", k: "한평생", s: "A story where somebody lives a whole life in a dream and wakes" },
+            { w: "took over ~ (take over)", k: "그대로 이어받았다", s: "the Nine Cloud Dream later took over the same shape" },
+            { w: "did not refuse ~", k: "물리치지 않았다", s: "the Buddha did not refuse Josin's wish" },
+            { w: "to the end", k: "그 끝까지", s: "he granted it as a dream, so that Josin saw it to the end" },
+            { w: "harsher", k: "더 매서운", s: "That is a harsher answer than refusing." },
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "What Josin does after waking is worth noticing too." },
+            { w: "even knowing ~", k: "~인 줄 알면서도", s: "Even knowing it was a dream." },
+            { w: "does not say ~", k: "~라고 하지 않는다", s: "This story does not say do not wish for things." },
+            { w: "beyond ~", k: "~ 다음까지", s: "It says think beyond the wish coming true." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🕯️',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "This story is in the Samguk Yusa. It is set down that Josin was a monk of Sedalsa, sent to Myeongju to look after the temple land, where he saw the daughter of the governor Kim Heun.",
+                    "A story where somebody lives a whole life in a dream and wakes is called a dream tale. This is the oldest of ours, and the Nine Cloud Dream later took over the same shape.",
+                    "Look again: the Buddha did not refuse Josin's wish. He granted it — he granted it as a dream, so that Josin saw it to the end. That is a harsher answer than refusing.",
+                    "What Josin does after waking is worth noticing too. He goes to the place where he buried the child in the dream and digs. Even knowing it was a dream. And a stone Buddha comes out."
+                ],
+                right: [
+                    "This story does not say do not wish for things. It says think beyond the wish coming true. Josin lived the rest of his life like a man who had lived forty years — and it had been one night.",
+                    "If what you want now came true, what would come after it?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "조신이 낙산사 부처님께 빈 것은 무엇인가요?", choices: ["절 땅이 잘되게 해 달라고", "태수의 딸과 살게 해 달라고", "병을 낫게 해 달라고"], answer: 1 },
     { q: "조신이 잠든 것은 언제였나요?", choices: ["소원이 안 이루어져 울다가", "밭일을 하다 지쳐서", "아내와 헤어진 날 밤에"], answer: 0 },
