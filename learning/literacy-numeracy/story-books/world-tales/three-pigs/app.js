@@ -398,7 +398,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "짚과 나무와 벽돌, 이렇게 셋으로 나뉘는 짜임은 영국 옛이야기에서 왔습니다. 백오십 년쯤 전에 처음 책으로 묶였지요.",
+                "짚과 나무와 벽돌, 이렇게 셋으로 나뉘는 짜임은 영국 옛이야기에서 왔습니다. 백사십 년쯤 전에 처음 책으로 묶였지요.",
                 "삼형제는 다 집을 지었습니다. 게으름을 부린 형제도 일은 한 것입니다. 다만 빨리 끝나는 쪽을 골랐지요.",
                 "짚과 나무가 나쁜 것도 아닙니다. 바람이 불지 않았다면 아무 일도 없었을 테니까요. 셋째는 바람이 불 날을 미리 생각한 것뿐입니다.",
                 "늑대는 세 번 다 같은 방법을 썼습니다. 후 불어 넘기는 것이지요. 통하지 않자 그제야 굴뚝으로 갔습니다."
@@ -911,7 +911,7 @@ const EN = {
             {
                 art: 'end.webp',
                 left: [
-                    "Straw, sticks, bricks — that three-part shape comes from an old English tale, gathered into a book about a hundred and fifty years ago.",
+                    "Straw, sticks, bricks — that three-part shape comes from an old English tale, gathered into a book about a hundred and forty years ago.",
                     "All three brothers built houses. Even the lazy ones did the work. They just chose the way that would be over soonest.",
                     "Straw and sticks are not bad things. If the wind had never blown, nothing would have happened. The youngest only thought ahead to the day it would come.",
                     "The wolf tried the same trick three times. Only when it failed did he go for the chimney."
@@ -1002,7 +1002,7 @@ const EN = {
             { word: 'thump', meaning: '쿵 하는 소리', sentence: 'He landed in the yard with a thump.' }
         ],
         'end.webp': [
-            { word: 'gather', meaning: '모으다', sentence: 'It was gathered into a book about a hundred and fifty years ago.' },
+            { word: 'gather', meaning: '모으다', sentence: 'It was gathered into a book about a hundred and forty years ago.' },
             { word: 'think ahead', meaning: '미리 생각하다', sentence: 'The youngest only thought ahead to the day it would come.' },
             { word: 'turn away', meaning: '내치다', sentence: 'The youngest did not turn his brothers away.' }
         ]

@@ -416,7 +416,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "안데르센이 맨 처음 펴낸 이야기 묶음에 이 이야기가 실렸습니다. 스물아홉 살 때였지요.",
+                "안데르센이 맨 처음 펴낸 이야기 묶음에 이 이야기가 실렸습니다. 서른 살 때였지요.",
                 "병사가 나무 아래에서 챙긴 것은 두 가지입니다. 돈과 낡은 통이지요. 돈은 눈에 보였고 통은 볼품없었습니다.",
                 "그런데 노파가 끝까지 달라고 한 것은 통이었습니다. 병사가 값어치를 안 것은 그 대목에서였지요.",
                 "돈이 떨어지자 친구들이 발길을 끊습니다. 다시 넉넉해지자 돌아오고요. 병사는 그것을 보고도 아무 말 하지 않습니다."
@@ -1018,7 +1018,7 @@ const EN = {
             {
                 art: 'end.webp',
                 left: [
-                    "This story was in the very first collection Andersen published. He was twenty-nine.",
+                    "This story was in the very first collection Andersen published. He was thirty.",
                     "The soldier brought two things up out of that tree: money, and an old box. The money was the thing you could see. The box looked like nothing at all.",
                     "And the box was the thing the old woman went on and on asking for. That is the point at which the soldier worked out what it was worth.",
                     "When the money runs out his friends stop coming. When he is rich again they come back. And the soldier watches all that and says nothing about it."

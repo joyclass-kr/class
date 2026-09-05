@@ -386,7 +386,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "오스카 와일드가 제 아이들에게 들려주려고 지은 이야기입니다. 백삼십 년쯤 전이지요.",
+                "오스카 와일드가 제 아이들에게 들려주려고 지은 이야기입니다. 백사십 년쯤 전이지요.",
                 "왕자는 살아 있을 때 슬픔을 몰랐습니다. 담장 안에서만 살았으니까요. 동상이 되어 높이 선 뒤에야 도시가 다 보였습니다.",
                 "보이니까 견딜 수가 없었지요. 그래서 제 몸을 하나씩 떼어 보냅니다. 칼자루의 루비, 두 눈의 사파이어, 온몸의 금박까지요.",
                 "눈을 내준 뒤로 왕자는 아무것도 볼 수 없습니다. 제비가 대신 보고 와서 말해 주지요."
@@ -904,7 +904,7 @@ const EN = {
             {
                 art: 'end.webp',
                 left: [
-                    "Oscar Wilde made this story up to tell his own children, about a hundred and thirty years ago.",
+                    "Oscar Wilde made this story up to tell his own children, about a hundred and forty years ago.",
                     "While he was alive, the prince knew nothing about sorrow, because he lived inside a wall. Only once he was a statue standing high up could he see the whole city.",
                     "And once he could see it, he could not bear it. So he sends himself away piece by piece — the ruby in his sword, the sapphires in his eyes, and finally every sheet of gold on him.",
                     "After he gives his eyes away the prince can see nothing at all. The swallow goes and looks for him and comes back and tells him."

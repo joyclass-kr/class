@@ -413,7 +413,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "이 이야기는 프랑스의 엑토르 말로가 쓴 『집 없는 아이』입니다. 백사십 년쯤 전에 나왔습니다.",
+                "이 이야기는 프랑스의 엑토르 말로가 쓴 『집 없는 아이』입니다. 백오십 년쯤 전에 나왔습니다.",
                 "비탈리스 할아버지가 레미에게 가르친 것은 하프만이 아닙니다. 흙바닥에 나뭇가지로 글자를 썼지요.",
                 "배워 두면 언젠가 쓸 데가 있다고 했습니다. 그날 당장 쓸 데가 없는 것을 가르친 것입니다.",
                 "길 위의 식구들도 다시 보십시오. 카피와 제르비노와 돌체와 졸리쾨르지요. 할아버지는 그들을 레미의 형제라고 했습니다."
@@ -1017,7 +1017,7 @@ const EN = {
             {
                 art: 'end.webp',
                 left: [
-                    "This story is Nobody's Boy, by the French writer Hector Malot. It came out about a hundred and forty years ago.",
+                    "This story is Nobody's Boy, by the French writer Hector Malot. It came out about a hundred and fifty years ago.",
                     "What old Vitalis taught Rémi was not only the harp. He wrote letters in the dirt with a stick.",
                     "Learn it, he said, and one day it will be of use. He taught what was of no use that day.",
                     "Look again at the family on the road: Capi, Zerbino, Dolce and Joli-Cœur. The old man called them Rémi's brothers."
@@ -1135,7 +1135,7 @@ const EN = {
             { word: 'at one’s feet', meaning: '발치에', sentence: 'With Capi always lying at his feet.' }
         ],
         'end.webp': [
-            { word: 'come out', meaning: '나오다', sentence: 'It came out a hundred and forty years ago.' },
+            { word: 'come out', meaning: '나오다', sentence: 'It came out a hundred and fifty years ago.' },
             { word: 'of no use', meaning: '쓸 데가 없는', sentence: 'He taught what was of no use that day.' },
             { word: 'raise', meaning: '기르다', sentence: 'He did not forget the one who raised him.' },
             { word: 'mean to', meaning: '~에게 뜻하다', sentence: 'What did family mean to Rémi?' }

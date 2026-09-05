@@ -419,7 +419,7 @@ const AFTERWORD = {
                 "문은 잠겼는데 신발만 닳아 있습니다. 이 수수께끼로 시작하는 이야기지요. 그림 형제가 모았습니다.",
                 "임금님을 답답하게 한 것은 신발값이 아니었습니다. 문이 잠겨 있는데 신발만 닳아 있다는 것이었지요. 눈앞의 일이 말이 되지 않았던 것입니다.",
                 "앞서 온 왕자들은 다 잠들어 버립니다. 큰공주가 내온 술 때문이지요. 병사는 그 술을 마시지 않았습니다. 노파가 미리 일러 주었으니까요.",
-                "병사가 한 일은 따라간 것뿐입니다. 그리고 은잎과 금잎을 하나씩 꺾어 왔지요."
+                "병사가 한 일은 따라간 것뿐입니다. 그리고 은과 금과 다이아몬드 가지를 하나씩 꺾어 왔지요."
             ],
             right: [
                 "말로 하면 아무도 믿지 않을 이야기였습니다. 그래서 가지가 필요했던 것입니다.",
@@ -518,7 +518,7 @@ const QUIZ = [
         "choices": [
                 "병사가 잔을 입에 대고 옷깃 뒤로 흘려보낸 것을 보면, 노파가 미리 일러 준 대로 했네.",
                 "막내 공주만 자꾸 뒤를 돌아본 것을 보면, 뒤에 누가 있다는 것을 혼자만 느낀 거지.",
-                "병사가 은잎과 금잎을 꺾어 품에 넣은 것을 보면, 말로만 해서는 아무도 믿지 않을 줄 알았구나.",
+                "병사가 세 숲에서 가지를 하나씩 꺾어 품에 넣은 것을 보면, 말로만 해서는 아무도 믿지 않을 줄 알았구나.",
                 "임금님이 사흘 안에 알아내야 한다고 못 박은 것을 보면, 나선 사람이 오래 고생하지 않도록 기한을 짧게 잡아 줬네."
             ],
         "answer": 3
@@ -1023,7 +1023,7 @@ const EN = {
                     "The door is locked, and only the shoes are worn out. That riddle is where the story starts. The Brothers Grimm collected it.",
                     "What troubled the king was not the cost of the shoes. It was that the door was locked and the shoes were worn out anyway. What was in front of him did not add up.",
                     "The princes who came before all fall asleep, because of the wine the eldest princess brings them. The soldier does not drink it, because the old woman told him first.",
-                    "What the soldier did was follow. And break off one branch of silver and one of gold on the way."
+                    "What the soldier did was follow. And break off a branch in each wood — silver, gold and diamond."
                 ],
                 right: [
                     "Nobody would have believed the story if he had only told it. That is what the branches were for.",

@@ -427,7 +427,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "구름 위에 거인이 산다는 이야기는 영국에서 오래 전해 왔습니다. 이백 년쯤 전에 책으로 묶였지요.",
+                "구름 위에 거인이 산다는 이야기는 영국에서 오래 전해 왔습니다. 백사십 년쯤 전에 지금 아는 모습으로 묶였지요.",
                 "잭은 소를 콩 몇 알과 바꿔 왔습니다. 누가 봐도 밑진 장사였지요. 어머니가 콩을 창밖으로 던진 것도 그래서입니다.",
                 "그런데 그 콩이 밤새 자랐습니다. 어머니가 던지지 않았다면 콩나무는 창가에서 자라지 않았을 것입니다. 화가 나서 한 일이 길을 열어 준 셈이지요.",
                 "잭은 구름 위에 세 번 올라갔습니다. 첫 번째는 무서워서 숨었고, 두 번째는 조금 익숙했고, 세 번째는 하프를 노리고 갔습니다."
@@ -968,7 +968,7 @@ const EN = {
             {
                 art: 'end.webp',
                 left: [
-                    "The story of a giant living above the clouds has been told in England for a very long time, and it was gathered into a book about two hundred years ago.",
+                    "The story of a giant living above the clouds has been told in England for a very long time, and it was gathered into the shape we know about a hundred and forty years ago.",
                     "Jack traded a cow for a few beans. Anybody could see it was a bad bargain — which is exactly why his mother threw them out of the window.",
                     "And then those beans grew overnight. If she had not thrown them, no beanstalk would have grown by the window. Something done in anger opened the road.",
                     "Jack climbed above the clouds three times. The first time he hid in fear, the second time he half knew his way, and the third time he went up meaning to take the harp."
@@ -1076,7 +1076,7 @@ const EN = {
             { word: 'scramble', meaning: '허둥지둥 기어오르다', sentence: 'The giant scrambled back up into the clouds.' }
         ],
         'end.webp': [
-            { word: 'gather', meaning: '모으다', sentence: 'It was gathered into a book two hundred years ago.' },
+            { word: 'gather', meaning: '모으다', sentence: 'It was gathered into the shape we know.' },
             { word: 'bargain', meaning: '거래, 장사', sentence: 'Anybody could see it was a bad bargain.' },
             { word: 'in anger', meaning: '화가 나서', sentence: 'Something done in anger opened the road.' },
             { word: 'keep safe', meaning: '지켜 주다', sentence: 'She was the one who kept him safe.' },
