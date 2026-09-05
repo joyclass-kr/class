@@ -216,7 +216,7 @@
                 else this._setStatus("방을 만들려면 CREATE ROOM을 누르세요.");
             } else {
                 this._setStatus("방장이 알려준 번호를 입력하세요.");
-                setTimeout(() => this.elements.joinCode?.focus(), 50);
+                setTimeout(() => this.elements.joinCode?.focus({ preventScroll: true }), 50);
             }
         }
 

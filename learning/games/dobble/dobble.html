@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>같은 그림 찾기</title>
-<link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
+<link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css?v=20260906">
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef0f5;background:#161221;--accent:#e0855a;--accent-soft:#8a4a2a;--panel:#211b30;--panel-edge:#453a5c}
 *{box-sizing:border-box}
@@ -22,6 +22,8 @@ h1,h2,h3,p{margin-top:0}
 .spread{justify-content:space-between}
 .primary,.secondary{min-height:40px;padding:9px 14px;border:1px solid var(--accent-soft);border-radius:10px;font-weight:850;cursor:pointer;background:#2c2640;color:#e8ebf3}
 .primary{background:linear-gradient(#f0a878,#b6592c);color:#2a1204}
+#createTab:not(.active){background:#2c2640;color:#e8ebf3}
+#joinTab.active{background:linear-gradient(#f0a878,#b6592c);color:#2a1204}
 .primary:disabled,.secondary:disabled{cursor:not-allowed;opacity:.4}
 .code{font-size:26px;font-weight:950;letter-spacing:.16em}
 .status{min-height:22px;color:#e4cf9c;font-weight:700}
@@ -80,7 +82,7 @@ h1,h2,h3,p{margin-top:0}
 .resultModal .outcome{margin:4px 0 6px;font-size:clamp(26px,6vw,36px);font-weight:950;color:var(--accent)}
 </style>
 <script src="../../../assets/network/game-network.js?v=20260821"></script>
-<script src="../../../assets/network/multiplayer-lobby.js"></script>
+<script src="../../../assets/network/multiplayer-lobby.js?v=20260906"></script>
 <script src="../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
 <link rel="stylesheet" href="../../../assets/device-game.css">
 </head>
