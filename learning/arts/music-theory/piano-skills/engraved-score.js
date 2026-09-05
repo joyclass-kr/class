@@ -12,14 +12,20 @@
     const FLAT_NAMES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
     const SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const SCALE_KEY_ORDER = ["C", "D", "E", "G", "A", "F", "B", "Db", "Eb", "Gb", "Ab", "Bb"];
-    // Exact written starting registers from the fingering source. Upper tonics
-    // start below middle C instead of being forced above C4 by pitch class.
-    const SCALE_ROOT_MIDIS = {
-        C:60, D:62, E:64, F:65,
-        G:55, A:57, B:59,
-        Db:61, Eb:63,
-        Gb:54, Ab:56, Bb:58
-    };
+    // Center each written two-octave range on its own staff.
+    function scaleRootMidi(rootName, clef) {
+        const root = parseRoot(rootName);
+        const center = clef === "bass" ? 22 : 34; // D3 / B4, in diatonic steps.
+        let best = null;
+        for (let octave = 1; octave <= 4; octave += 1) {
+            const middle = octave * 7 + LETTERS.indexOf(root.letter) + 7;
+            const distance = Math.abs(middle - center);
+            if (!best || distance < best.distance) {
+                best = { distance:distance, midi:12 * (octave + 1) + NATURAL_PC[root.letter] + root.accidental };
+            }
+        }
+        return best.midi;
+    }
     const SCALE_PAGE_LABELS = { major:"Major Scale", naturalMinor:"Natural Minor Scale", harmonicMinor:"Harmonic Minor Scale", melodicMinor:"Melodic Minor Scale" };
     const SCALE_ROOT_NAMES = {
         Db:{ major:"Db", minor:"C#" },
@@ -148,7 +154,8 @@
         const rootName = rootNames
             ? (settings.scaleType === "major" ? rootNames.major : rootNames.minor)
             : key.id;
-        const rootMidi = SCALE_ROOT_MIDIS[key.id];
+        const rightRootMidi = scaleRootMidi(rootName, "treble");
+        const leftRootMidi = scaleRootMidi(rootName, "bass");
         const ascendingIntervals = type.intervals.slice(0, -1).concat(type.intervals.map(function (interval) { return interval + 12; }));
         const descendingIntervals = settings.scaleType === "melodicMinor"
             ? [24,22,20,19,17,15,14,12,10,8,7,5,3,2,0]
@@ -164,12 +171,12 @@
             const leftFingers = direction === "up" ? leftUpFingers : leftUpFingers.slice().reverse();
             return {
                 right:intervals.map(function (interval, index) {
-                    const note = pitchSpec(rootName, rootMidi + interval, degrees[index]);
+                    const note = pitchSpec(rootName, rightRootMidi + interval, degrees[index]);
                     note.finger = rightFingers[index];
                     return note;
                 }),
                 left:intervals.map(function (interval, index) {
-                    const note = pitchSpec(rootName, rootMidi + interval - 12, degrees[index]);
+                    const note = pitchSpec(rootName, leftRootMidi + interval, degrees[index]);
                     note.finger = leftFingers[index];
                     return note;
                 })
@@ -1287,7 +1294,7 @@
         const VF = window.Vex.Flow;
         const width = 1200;
         const bothHands = page.hand === "both";
-        const height = bothHands ? 570 : 480;
+        const height = bothHands ? 640 : 480;
         const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
         renderer.resize(width, height);
         const context = renderer.getContext();
@@ -1296,7 +1303,7 @@
         const handLabel = { both:"Both Hands", right:"Right Hand", left:"Left Hand" }[page.hand] || "Both Hands";
         if (bothHands) {
             drawScaleSystem(VF, context, page.up, 70, "Ascending", true, page.hand, page.keySignature);
-            drawScaleSystem(VF, context, page.down, 320, "Descending", false, page.hand, page.keySignature);
+            drawScaleSystem(VF, context, page.down, 370, "Descending", false, page.hand, page.keySignature);
         } else {
             drawScaleSystem(VF, context, page.up, 70, "Ascending", true, page.hand, page.keySignature);
             drawScaleSystem(VF, context, page.down, 300, "Descending", false, page.hand, page.keySignature);

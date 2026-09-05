@@ -51,6 +51,12 @@ const base = process.env.PIANO_TEST_URL || "http://127.0.0.1:8765/learning/arts/
                                         failures.push(tag + " " + direction + " " + side + " note " + i + ": wrong accidental " + actual[i]);
                                 });
                             }
+                            if (hand === "both") {
+                                const groups = [...host.querySelectorAll(".vf-stavenote")];
+                                const upBottom = Math.max(...groups.slice(0,30).map(e => { const b=e.getBBox(); return b.y+b.height; }));
+                                const downTop = Math.min(...groups.slice(30).map(e => e.getBBox().y));
+                                if (downTop - upBottom < 14) failures.push(tag + ": ascending and descending overlap");
+                            }
                             const svg = host.querySelector("svg"), bounds = svg.viewBox.baseVal;
                             for (const element of svg.querySelectorAll(".vf-notehead, .vf-annotation")) {
                                 const box = element.getBBox();

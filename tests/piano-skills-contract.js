@@ -68,7 +68,6 @@ assert.match(engraving, /beams\.push\.apply\(beams, buildFingeringBeams[\s\S]*ri
 assert.match(engraving, /breakBeforeThumb/);
 assert.match(engraving, /beamGroups[\s\S]*next\.unshift[\s\S]*previous\.push[\s\S]*new VF\.Beam/, "한 음짜리 eighth-note group을 인접 beam에 합쳐 flag를 섞지 않아야 합니다.");
 assert.match(engraving, /SCALE_ROOT_NAMES/);
-assert.match(engraving, /SCALE_ROOT_MIDIS/, "원본의 조별 시작 register map을 사용해야 합니다.");
 assert.match(engraving, /addClef\("bass"\)/, "Left Hand는 Bass Clef로 조판해야 합니다.");
 assert.match(engraving, /StaveConnector\.type\.BRACE/, "Both Hands는 Grand Staff로 연결해야 합니다.");
 assert.match(engraving, /Ascending/);
@@ -125,32 +124,31 @@ assert.equal(scaleModel.pages[0].down.left.length, 15, "두 옥타브 하행은 
 assert.equal(scaleModel.pages[0].up.right[0].finger, 1);
 assert.equal(scaleModel.pages[0].keyLabel, "C");
 
-const sourceScaleRootMidis = {
-    C:60, D:62, E:64, F:65,
-    G:55, A:57, B:59,
-    Db:61, Eb:63,
-    Gb:54, Ab:56, Bb:58
+const staffScaleRoots = {
+    C:[60,36], D:[62,38], E:[64,40], F:[53,41], G:[55,43], A:[57,33], B:[59,35],
+    Db:[61,37], Eb:[63,39], Gb:[54,42], Ab:[56,32], Bb:[58,34]
 };
-Object.entries(sourceScaleRootMidis).forEach(([keyId, rightRoot]) => {
+Object.entries(staffScaleRoots).forEach(([keyId, roots]) => {
     Object.keys(data.scaleTypes).forEach((scaleType) => {
-        const both = score.build({ mode:"scale", keyId, scaleType, hand:"both", tempo:60 });
-        const right = score.build({ mode:"scale", keyId, scaleType, hand:"right", tempo:60 });
-        const left = score.build({ mode:"scale", keyId, scaleType, hand:"left", tempo:60 });
-        const page = both.pages[0];
-
-        assert.equal(page.up.right[0].midi, rightRoot, `${keyId} ${scaleType} Right Hand는 원본 register에서 시작해야 합니다.`);
-        assert.equal(page.up.right[14].midi, rightRoot + 24);
-        assert.equal(page.down.right[0].midi, rightRoot + 24);
-        assert.equal(page.down.right[14].midi, rightRoot);
-
-        assert.equal(page.up.left[0].midi, rightRoot - 12, `${keyId} ${scaleType} Left Hand는 Right Hand보다 one octave 아래에서 시작해야 합니다.`);
-        assert.equal(page.up.left[14].midi, rightRoot + 12);
-        assert.equal(page.down.left[0].midi, rightRoot + 12);
-        assert.equal(page.down.left[14].midi, rightRoot - 12);
-
-        assert.deepEqual(Array.from(right.audioGroups[0]), [rightRoot]);
-        assert.deepEqual(Array.from(left.audioGroups[0]), [rightRoot - 12]);
-        assert.deepEqual(Array.from(both.audioGroups[0]), [rightRoot - 12, rightRoot]);
+        const rightRoot = roots[0];
+        const leftRoot = keyId === "Ab" && scaleType !== "major" ? 44 : roots[1];
+        const model = score.build({ mode:"scale", keyId, scaleType, hand:"both" });
+        const page = model.pages[0];
+        for (const [side, root, bottom, top] of [["right",rightRoot,30,38],["left",leftRoot,18,26]]) {
+            assert.equal(page.up[side][0].midi, root, keyId + " " + scaleType + " " + side);
+            assert.equal(page.up[side][14].midi, root + 24);
+            assert.equal(page.down[side][0].midi, root + 24);
+            assert.equal(page.down[side][14].midi, root);
+            for (const note of page.up[side].concat(page.down[side])) {
+                const [pitch, octave] = note.key.split("/");
+                const step = Number(octave) * 7 + "cdefgab".indexOf(pitch[0]);
+                const ledgers = Math.floor(Math.max(bottom-step, step-top, 0) / 2);
+                assert.ok(ledgers <= 3, keyId + " " + side + ": too many ledger lines at " + note.key);
+            }
+        }
+        const right = page.up.right.concat(page.down.right.slice(1));
+        const left = page.up.left.concat(page.down.left.slice(1));
+        model.audioGroups.forEach((group, i) => assert.deepEqual(Array.from(group), [left[i].midi,right[i].midi]));
     });
 });
 
