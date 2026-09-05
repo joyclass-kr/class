@@ -63,7 +63,7 @@ for (const b of books) {
     // 본문만. 「읽고 나서」와 영어판은 뺀다 — 해설에서 "이 책은…"은 정상이다.
     const start = Math.max(0, s.indexOf('const CHAPTERS = ['));
     let end = s.length;
-    for (const k of ['const AFTERWORD', 'const CHAPTER_SEGS', 'const EN']) {
+    for (const k of ['const AFTERWORD = ', 'const CHAPTER_SEGS = ', 'const EN = ']) {
         const i = s.indexOf(k, start);
         if (i > 0 && i < end) end = i;
     }

@@ -79,7 +79,7 @@ function koStory(src) {
     if (i < 0) i = src.indexOf('const FABLES = [');
     if (i < 0) return '';
     let j = src.length;
-    for (const mark of ['const AFTERWORD', 'const CHAPTER_SEGS', 'const COVER', 'const QUIZ', 'const EN']) {
+    for (const mark of ['const AFTERWORD = ', 'const CHAPTER_SEGS = ', 'const COVER = ', 'const QUIZ = ', 'const EN = ']) {
         const k = src.indexOf(mark, i);
         if (k > 0 && k < j) j = k;
     }
@@ -125,8 +125,11 @@ for (const b of books) {
     const en = enQuiz(src), enText = enStory(src);
     if (!ko) { seen.skip(b, '한글 문제를 읽지 못했다'); continue; }
     if (!koText) { seen.skip(b, '한글 본문 틀을 못 찾았다'); continue; }
+    /* 틀을 찾고도 속이 비면 재는 시드만 하게 된다. 전래동화 방이 개에 데인 자리다. */
+    if (koText.length < 400) { seen.skip(b, '한글 본문이 너무 짧다 — 못 읽은 것으로 본다'); continue; }
     if (!en) { seen.skip(b, '영어 문제를 읽지 못했다'); continue; }
     if (!enText) { seen.skip(b, '영어 본문을 못 찾았다'); continue; }
+    if (enText.length < 400) { seen.skip(b, '영어 본문이 너무 짧다 — 못 읽은 것으로 본다'); continue; }
 
     const look = (label, qz, story, run, limit, size) => {
         for (const [i, q] of qz.entries()) {
