@@ -910,7 +910,7 @@ const EN = {
                         "And the sack stayed on his shoulder.",
                         "\"Here is a present to show my brothers.\"",
                         "The donkey gave a bray.",
-                        "The hoofs went clip-clop along the morning road."
+                        "The hooves went clip-clop along the morning road."
                     ],
                     right: [
                         "Next morning the youngest set out.",

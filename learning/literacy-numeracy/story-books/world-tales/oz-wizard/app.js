@@ -776,7 +776,7 @@ const EN = {
                         "Oz would see only one person a day. In front of Dorothy floated an enormous head and nothing else.",
                         "It had no body and no arms at all. Yet outside, when they compared what they had seen, no two accounts agreed.",
                         "\"I saw a beautiful lady with wings!\"",
-                        "\"Mine was a beast the size of a rhinoceros. The Lion says he saw a ball of fire!"
+                        "\"Mine was a beast the size of a rhinoceros. The Lion says he saw a ball of fire!\""
                     ]
                 },
                 {
@@ -892,7 +892,7 @@ const EN = {
                         "\"Make the Scarecrow your king!\"",
                         "The old man climbed into the basket, and Dorothy was about to climb in after him when Toto took fright at the noise and jumped out of her arms.",
                         "By the time she had caught him and turned round, the rope had snapped. The balloon rose into the sky with nobody in it but the old man.",
-                        "\"Dorothy! I don't know how to make it stop —"
+                        "\"Dorothy! I don't know how to make it stop —\""
                     ]
                 },
                 {

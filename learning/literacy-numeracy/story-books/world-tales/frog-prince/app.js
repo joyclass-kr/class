@@ -684,7 +684,7 @@ const EN = {
                         "The princess laughed at him inwardly.",
                         "How could a frog possibly get as far as the palace?",
                         "It was a long walk from the pond to the palace,",
-                        "and no distance at all for a frog's legs.",
+                        "and far too far for a frog's legs.",
                         "The princess waved a hand.",
                         "\"Very well, very well. Only fetch it, quickly.\""
                     ]
@@ -1036,7 +1036,7 @@ const EN = {
             { word: 'float', meaning: '떠 있다', sentence: 'The frog floated quietly on the water.' },
             { word: 'take for', meaning: '~로 삼다', sentence: 'Take me for your friend.' },
             { word: 'inwardly', meaning: '속으로', sentence: 'The princess laughed at him inwardly.' },
-            { word: 'no distance at all', meaning: '어림도 없는 거리', sentence: "No distance at all for a frog's legs." }
+            { word: 'far too far', meaning: '어림도 없이 먼', sentence: "Far too far for a frog's legs." }
         ],
         '03-promise-2.webp': [
             { word: 'in drops', meaning: '뚝뚝', sentence: 'The water ran off his back in drops.' },

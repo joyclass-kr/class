@@ -695,7 +695,7 @@ const EN = {
                         "They set off before the sun was up.",
                         "The cart was piled with sacks of grain.",
                         "On the uphill roads his feet sank in.",
-                        "His back ached and his hoofs split.",
+                        "His back ached and his hooves split.",
                         "And the trader took a switch to him the moment he slowed."
                     ],
                     right: [
@@ -1060,7 +1060,7 @@ const EN = {
         '03-labor.webp': [
             { word: 'sack', meaning: '자루', sentence: 'The cart was piled with sacks of grain.' },
             { word: 'sink in', meaning: '푹푹 빠지다', sentence: 'On the uphill roads his feet sank in.' },
-            { word: 'hoof', meaning: '발굽', sentence: 'His hoofs split.' },
+            { word: 'hoof', meaning: '발굽', sentence: 'His hooves split.' },
             { word: 'switch', meaning: '회초리', sentence: 'The trader took a switch to him.' },
             { word: 'bear', meaning: '참다', sentence: 'He could do nothing but bear it.' }
         ],
