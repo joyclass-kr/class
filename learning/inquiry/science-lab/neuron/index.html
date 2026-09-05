@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="신경 세포막에 세기와 시간이 다른 자극을 주어 활동 전위가 생기는지, 몇 번 생기는지, 크기는 늘 같은지를 실제 이온 통로 방정식(호지킨–헉슬리)으로 계산하고, 말이집과 굵기가 다른 축삭에서 흥분이 1 m를 가는 시간을 재고, 시냅스에 약물이 끼어들 때 다음 세포의 반응이 어떻게 달라지는지 확인하는 고등학교 생명과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="neuron-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>신경 세포의 흥분 전도와 시냅스</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 2~3학년</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>활동 전위 만들기, 축삭을 따라 전달되는 속도, 시냅스에서의 전달 가운데 하나를 고릅니다.</li>
+            <li>자극의 세기와 시간, 축삭의 종류, 시냅스에 끼어드는 약물을 정합니다.</li>
+            <li>활동 전위가 몇 번 생길지, 1 m를 가는 데 얼마나 걸릴지, 다음 세포가 어떻게 반응할지 예상합니다.</li>
+            <li>시작해서 막전위 변화, 이온 통로의 열림, 흥분이 옮겨 가는 모습을 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">막전위가 문턱(−55 mV)을 넘으면 Na⁺ 통로가 한꺼번에 열립니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="spike">활동 전위<small>자극을 주면</small></button>
+                        <button type="button" data-mode="conduct">흥분 전도<small>1 m 가는 데</small></button>
+                        <button type="button" data-mode="synapse">시냅스<small>다음 세포로</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">자극 주기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">세포막의 한 조각입니다. 위가 세포 밖, 아래가 세포 안이고 파란 통로가 Na⁺, 노란 통로가 K⁺ 통로입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>휴지 전위와 활동 전위</strong> 쉬고 있는 신경 세포의 안쪽은 바깥보다 65 mV쯤 낮습니다(휴지 전위). 자극으로 막전위가 문턱(약 −55 mV)을 넘으면 Na⁺ 통로가 한꺼번에 열려 Na⁺가 쏟아져 들어와 안쪽이 +40 mV까지 뒤집히고(탈분극), 곧 Na⁺ 통로가 닫히고 K⁺ 통로가 열려 K⁺가 빠져나가 다시 낮아집니다(재분극). 이 1~2 ms의 전압 변화가 활동 전위입니다.</p>
+                <p><strong>실무율과 불응기</strong> 문턱을 넘지 못한 자극은 아무 활동 전위도 만들지 못하고, 넘긴 자극은 세기와 상관없이 늘 같은 크기의 활동 전위를 만듭니다(실무율). 자극이 셀수록 달라지는 것은 크기가 아니라 횟수입니다. 활동 전위 직후에는 Na⁺ 통로가 잠시 다시 열리지 못해(불응기) 아무리 센 자극도 1초에 수백 번 넘게는 만들지 못합니다.</p>
+                <p><strong>전도 속도</strong> 활동 전위는 이웃한 막을 차례로 문턱 너머로 밀어 축삭을 따라 옮겨 갑니다. 굵은 축삭은 전류가 잘 흘러 빠르고, 말이집이 감긴 축삭은 말이집 사이의 마디에서만 활동 전위가 생겨 건너뛰듯 훨씬 빠릅니다. 사람의 말이집 운동 신경은 초속 100 m로 발끝에서 척수까지 10 ms면 가지만, 말이집 없는 얇은 통각 신경은 초속 1 m로 1초 가까이 걸립니다. 다친 순간 날카로운 통증 뒤에 둔한 통증이 늦게 오는 까닭입니다.</p>
+                <p><strong>시냅스</strong> 신경 세포 사이에는 20 nm쯤의 틈(시냅스)이 있어 전기 신호가 그대로 건너가지 못합니다. 흥분이 끝에 닿으면 신경 전달 물질이 틈으로 나와 다음 세포의 수용체에 붙고, 그 세포의 막전위를 바꿉니다. 전달 물질은 곧 효소가 분해하거나 앞 세포가 되가져가 신호가 짧게 끝납니다. 수용체를 막는 물질(쿠라레)은 신호를 끊고, 재흡수나 분해를 막는 약물은 신호를 오래 끌어 우울증 치료약이나 살충제·신경 가스가 그렇게 작용합니다. 전달 물질은 앞 세포에서만 나오므로 신호는 한쪽으로만 갑니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>문턱을 넘긴 자극을 두 배 세게 주면 활동 전위는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 크기가 두 배가 된다</label>
+                        <label><input type="radio" name="q1" value="b"> 크기가 두 배, 횟수도 두 배가 된다</label>
+                        <label><input type="radio" name="q1" value="c"> 크기는 같고, 오래 주면 횟수가 늘어난다</label>
+                        <label><input type="radio" name="q1" value="d"> 세포가 다쳐 생기지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>활동 전위의 크기는 Na⁺·K⁺ 통로가 정하므로 자극 세기와 상관없이 같습니다(실무율). 센 자극은 문턱에 더 빨리 다시 이르게 해 횟수를 늘립니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>말이집이 있는 축삭에서 흥분이 훨씬 빨리 전달되는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 말이집 사이의 마디에서만 활동 전위가 생겨 건너뛰듯 나아가기 때문에</label>
+                        <label><input type="radio" name="q2" value="b"> 말이집이 전기를 잘 통하기 때문에</label>
+                        <label><input type="radio" name="q2" value="c"> 말이집 속에 Na⁺ 통로가 더 많기 때문에</label>
+                        <label><input type="radio" name="q2" value="d"> 말이집이 축삭을 뜨겁게 하기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>말이집은 절연체여서 그 아래 막에서는 활동 전위가 생기지 않고, 전류가 다음 마디까지 흘러가 그곳에서 새 활동 전위가 생깁니다. 마디마다 건너뛰므로 초속 100 m까지 빠릅니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>시냅스에서 신호가 한쪽으로만 전달되는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 전기가 한쪽으로만 흐르기 때문에</label>
+                        <label><input type="radio" name="q3" value="b"> 틈이 너무 좁기 때문에</label>
+                        <label><input type="radio" name="q3" value="c"> 뒤 세포가 앞 세포보다 크기 때문에</label>
+                        <label><input type="radio" name="q3" value="d"> 신경 전달 물질은 앞 세포 끝에서만 나오고 수용체는 뒤 세포에만 있기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>전달 물질이 든 소포는 앞 세포의 끝에만 있고, 그것을 받는 수용체는 뒤 세포의 막에만 있습니다. 그래서 신호는 앞에서 뒤로만 건너갑니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>어떤 살충제는 신경 전달 물질을 분해하는 효소를 못 쓰게 합니다. 시냅스에서는 무슨 일이 생길까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 전달 물질이 나오지 않아 신호가 끊긴다</label>
+                        <label><input type="radio" name="q4" value="b"> 전달 물질이 틈에 오래 남아 다음 세포가 계속 자극된다</label>
+                        <label><input type="radio" name="q4" value="c"> 아무 변화가 없다</label>
+                        <label><input type="radio" name="q4" value="d"> 신호가 반대 방향으로 간다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>효소가 전달 물질을 치우지 못하면 수용체가 계속 자극되어 근육이 떨리거나 굳습니다. 신경 가스도 같은 원리이고, 치료약으로 쓰이는 것도 있습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>

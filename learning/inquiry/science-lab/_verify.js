@@ -74,6 +74,7 @@
         return j < 0 ? null : j;
     }
 
+    const NOUNS_RO = new Set(['통로', '도로', '경로', '진로', '회로', '항로', '선로', '수로', '철로', '가로', '세로', '별로', '따로', '서로', '스스로']);
     function particleScan(text, tag) {
         // hard set: 을/를 and 로/으로 and 와/과 — these are almost never verb endings
         // 로/으로 is safe after Hangul, but 을/를 is not: 부을, 나을, 지을 are
@@ -86,6 +87,8 @@
             const b = batchimOf(m[2], m[1]);
             if (b === null) continue;
             const p = m[3];
+            // nouns that merely end in 로 (이온 통로, 회로, 경로) are not particles
+            if (p === '로' && NOUNS_RO.has(m[2] + '로')) continue;
             // ㄹ (jong 8) takes 로, everything else with batchim takes 으로
             if (p === '로' && b > 0 && b !== 8) add('KOREAN', `${tag}: "${ctx}" should be …${m[2]}으로`);
             if (p === '으로' && (b === 0 || b === 8)) add('KOREAN', `${tag}: "${ctx}" should be …${m[2]}로`);
