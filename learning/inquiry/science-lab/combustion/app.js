@@ -1,41 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const modeButtons = [...document.querySelectorAll('[data-mode]')];
     const controlArea = document.getElementById('controlArea');
     const predictionArea = document.getElementById('predictionArea');
-    const predictionLegend = document.getElementById('predictionLegend');
-    const methodHint = document.getElementById('methodHint');
     const checkBtn = document.getElementById('checkBtn');
     const resetBtn = document.getElementById('resetBtn');
     const resultEmpty = document.getElementById('resultEmpty');
     const resultContent = document.getElementById('resultContent');
-    const labelA = document.getElementById('labelA');
-    const labelB = document.getElementById('labelB');
     const valueA = document.getElementById('valueA');
     const valueB = document.getElementById('valueB');
     const predictionResult = document.getElementById('predictionResult');
     const explanation = document.getElementById('elementaryExplanation');
-    const stageCaption = document.getElementById('stageCaption');
     const stageBadge = document.getElementById('stageBadge');
     const mainGroup = document.getElementById('mainGroup');
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
-    const O2_START = 21, O2_FLOOR = 16;   // a candle goes out near 16 % oxygen
-    const O2_RATE = 4;                    // mL of oxygen burned each second
     const GRAPH = { x0: 62, x1: 424, y0: 152, y1: 26 };
 
-    const batchim = w => {
-        const c = w.charCodeAt(w.length - 1);
-        return c >= 0xAC00 && c <= 0xD7A3 ? (c - 0xAC00) % 28 !== 0 : false;
-    };
-    const eun = w => w + (batchim(w) ? '은' : '는');
-    const iga = w => w + (batchim(w) ? '이' : '가');
-
-    const FUELS = {
-        none: { label: '없음', hint: '탈 물질 없음', ignite: null },
-        candle: { label: '양초', hint: '발화점 190 ℃', ignite: 190 },
-        paper: { label: '종이', hint: '발화점 450 ℃', ignite: 450 },
-    };
     // Iron gains oxygen; wood loses its carbon and hydrogen as gas.
     const MATERIALS = {
         steel: { label: '강철솜', hint: '철 + 산소', eq: '4Fe + 3O₂ → 2Fe₂O₃',
@@ -44,37 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 oxygenPerCombustible: 192 / 162.14, ashFrac: 0.03, burnsAway: true },
     };
 
-    const state = {
-        mode: 'burn',
-        fuel: 'candle', temp: 300, oxygen: 'open', jar: 500,
-        material: 'steel', vessel: 'open', mass: 5,
-        progress: 0, prediction: null,
-    };
+    const state = { material: 'steel', vessel: 'open', mass: 5, progress: 0, prediction: null };
     let running = false, frameId = 0, lastStamp = 0;
 
-    /* ------------------------------------------------------------ models */
-    function analyseBurn(s = state) {
-        const fuel = FUELS[s.fuel];
-        const hasFuel = fuel.ignite !== null;
-        const hotEnough = hasFuel && s.temp >= fuel.ignite;
-        let outcome, missing;
-        if (!hasFuel) { outcome = 'none'; missing = 'fuel'; }
-        else if (!hotEnough) { outcome = 'none'; missing = 'heat'; }
-        else if (s.oxygen === 'closed') { outcome = 'out'; missing = 'oxygen'; }
-        else { outcome = 'burn'; missing = null; }
-        // How long the trapped oxygen lasts: the usable share above the floor,
-        // divided by how fast the flame eats it.
-        const outTime = ((O2_START - O2_FLOOR) / 100) * s.jar / O2_RATE;
-        const runFor = outcome === 'out' ? outTime : outcome === 'burn' ? 8 : 3;
-        return { kind: 'burn', fuel, hasFuel, hotEnough, outcome, missing, outTime, runFor };
-    }
-
-    function o2At(t, a, s = state) {
-        if (s.oxygen === 'open' || a.outcome === 'none') return O2_START;
-        return Math.max(O2_FLOOR, O2_START - ((O2_RATE * t) / s.jar) * 100);
-    }
-
-    function analyseOxide(s = state) {
+    /* ------------------------------------------------------------- model */
+    function analyse(s = state) {
         const mat = MATERIALS[s.material];
         const m = s.mass;
         let oxygenTotal, solidEnd, gasEnd, combustible;
@@ -92,10 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalBefore = m + oxygenTotal;
         const totalAfter = solidEnd + gasEnd;
         const verdict = s.vessel === 'sealed' ? 'same' : mat.burnsAway ? 'down' : 'up';
-        return { kind: 'oxide', mat, m, combustible, oxygenTotal, solidEnd, gasEnd, totalBefore, totalAfter, verdict, runFor: 6 };
+        return { mat, m, combustible, oxygenTotal, solidEnd, gasEnd, totalBefore, totalAfter, verdict, runFor: 6 };
     }
 
-    function stepOxide(p, a) {
+    function step(p, a) {
         const oxygen = a.oxygenTotal * p;
         const solid = a.mat.burnsAway ? a.m - a.combustible * p : a.m + oxygen;
         const gas = a.mat.burnsAway ? (a.combustible + a.oxygenTotal) * p : 0;
@@ -103,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return { oxygen, solid, gas, measured };
     }
 
-    const analyse = () => (state.mode === 'burn' ? analyseBurn() : analyseOxide());
     const runSeconds = () => analyse().runFor;
 
     /* ---------------------------------------------------------- controls */
@@ -123,20 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function buildControls() {
-        if (state.mode === 'burn') {
-            controlArea.innerHTML =
-                pickRow('탈 물질', 'fuel', Object.entries(FUELS).map(([k, v]) => ({ value: k, label: v.label, hint: v.hint })), state.fuel, 3) +
-                sliderRow('tempRange', '가열 온도', 0, 500, 10, state.temp, ['0℃', '250℃', '500℃']) +
-                pickRow('산소', 'oxygen', [{ value: 'open', label: '열어 둠', hint: '공기가 계속 들어옴' },
-                                          { value: 'closed', label: '유리병으로 덮음', hint: '산소가 갇힘' }], state.oxygen, 2) +
-                sliderRow('jarRange', '덮은 유리병의 크기', 250, 1000, 250, state.jar, ['250mL', '625mL', '1000mL']);
-        } else {
-            controlArea.innerHTML =
-                pickRow('태울 물질', 'material', Object.entries(MATERIALS).map(([k, v]) => ({ value: k, label: v.label, hint: v.hint })), state.material, 2) +
-                pickRow('용기', 'vessel', [{ value: 'open', label: '열린 그릇', hint: '기체가 드나듦' },
-                                          { value: 'sealed', label: '밀폐 용기', hint: '기체가 갇힘' }], state.vessel, 2) +
-                sliderRow('massRange', '처음 질량', 1, 10, 1, state.mass, ['1g', '5g', '10g']);
-        }
+        controlArea.innerHTML =
+            pickRow('태울 물질', 'material', Object.entries(MATERIALS).map(([k, v]) => ({ value: k, label: v.label, hint: v.hint })), state.material, 2) +
+            pickRow('용기', 'vessel', [{ value: 'open', label: '열린 그릇', hint: '기체가 드나듦' },
+                                      { value: 'sealed', label: '밀폐 용기', hint: '기체가 갇힘' }], state.vessel, 2) +
+            sliderRow('massRange', '처음 질량', 1, 10, 1, state.mass, ['1g', '5g', '10g']);
         controlArea.querySelectorAll('[data-pick]').forEach(group => {
             group.querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
                 state[group.dataset.pick] = button.dataset.value;
@@ -144,30 +88,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 settingsChanged();
             }));
         });
-        ['tempRange', 'jarRange', 'massRange'].forEach(id => {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.addEventListener('input', () => {
-                if (id === 'tempRange') state.temp = Number(el.value);
-                if (id === 'jarRange') state.jar = Number(el.value);
-                if (id === 'massRange') state.mass = Number(el.value);
-                settingsChanged();
-            });
+        const massRange = document.getElementById('massRange');
+        massRange.addEventListener('input', () => {
+            state.mass = Number(massRange.value);
+            settingsChanged();
         });
     }
 
-    const PRED_BURN = [{ value: 'burn', label: '계속 탄다' }, { value: 'out', label: '타다가 꺼진다' }, { value: 'none', label: '불이 붙지 않는다' }];
-    const PRED_OXIDE = [{ value: 'up', label: '늘어난다' }, { value: 'same', label: '그대로다' }, { value: 'down', label: '줄어든다' }];
-
-    function buildPrediction() {
-        const list = state.mode === 'burn' ? PRED_BURN : PRED_OXIDE;
-        predictionLegend.textContent = state.mode === 'burn' ? '불은 어떻게 될까요?' : '저울에 재는 질량은 어떻게 될까요?';
-        predictionArea.innerHTML = list.map(o => `<button type="button" data-prediction="${o.value}">${o.label}</button>`).join('');
-        predictionArea.querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
-            state.prediction = button.dataset.prediction;
-            predictionArea.querySelectorAll('button').forEach(b => b.classList.toggle('selected', b === button));
-        }));
-    }
+    const predictionButtons = [...predictionArea.querySelectorAll('button')];
+    predictionButtons.forEach(button => button.addEventListener('click', () => {
+        state.prediction = button.dataset.prediction;
+        predictionButtons.forEach(b => b.classList.toggle('selected', b === button));
+    }));
+    const clearPrediction = () => {
+        state.prediction = null;
+        predictionButtons.forEach(b => b.classList.remove('selected'));
+    };
 
     /* ----------------------------------------------------------- visuals */
     function flame(cx, baseY, s, dim = 1) {
@@ -180,71 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
                `C${(cx + 3 * s).toFixed(1)},${(baseY - 11 * s).toFixed(1)} ${(cx + 4 * s).toFixed(1)},${(baseY - 4 * s).toFixed(1)} ${cx},${baseY} Z"/>`;
     }
 
-    function renderBurn(a, p) {
-        const t = p * a.runFor;
-        const o2 = o2At(t, a);
-        const STAND_Y = 178, CX = 200;
-        let out = '';
+    const VERDICT = { up: '질량이 늘어난다', same: '질량이 그대로다', down: '질량이 줄어든다' };
+    const TONE = { up: '#52c7ff', same: '#54e6c1', down: '#ff9d6b' };
 
-        // thermometer, with the fuel's ignition point marked on it
-        const TX = 44, TOP = 56, BOT = 172;
-        out += `<rect class="therm-tube" x="${TX}" y="${TOP}" width="9" height="${BOT - TOP}" rx="4.5"/>`;
-        const tf = Math.min(1, state.temp / 500);
-        out += `<rect class="therm-fill" x="${TX + 2}" y="${(BOT - 4 - (BOT - TOP - 8) * tf).toFixed(1)}" width="5" height="${((BOT - TOP - 8) * tf + 4).toFixed(1)}" rx="2.5"/>`;
-        // below the bulb, so the ignition-point label can never land on it
-        out += `<text class="read-text" x="${TX + 4}" y="190" text-anchor="middle">${state.temp} ℃</text>`;
-        if (a.hasFuel) {
-            const iy = BOT - 4 - (BOT - TOP - 8) * (a.fuel.ignite / 500);
-            out += `<line class="ignite-line" x1="${TX - 8}" y1="${iy.toFixed(1)}" x2="${TX + 74}" y2="${iy.toFixed(1)}"/>`;
-            out += `<text class="ignite-text" x="${TX + 15}" y="${(iy - 4).toFixed(1)}">발화점 ${a.fuel.ignite} ℃</text>`;
-        }
-
-        // the burning thing on its stand
-        out += `<rect class="stand" x="${CX - 50}" y="${STAND_Y}" width="100" height="8" rx="2"/>`;
-        let flameBase = STAND_Y;
-        const burning = (a.outcome === 'burn') || (a.outcome === 'out' && o2 > O2_FLOOR + 0.001);
-        if (state.fuel === 'candle') {
-            const used = a.outcome === 'none' ? 0 : 14 * p;
-            const top = 128 + used;
-            out += `<rect class="candle" x="${CX - 9}" y="${top.toFixed(1)}" width="18" height="${(STAND_Y - top).toFixed(1)}" rx="2"/>`;
-            out += `<line class="wick" x1="${CX}" y1="${top.toFixed(1)}" x2="${CX}" y2="${(top - 7).toFixed(1)}"/>`;
-            flameBase = top - 6;
-        } else if (state.fuel === 'paper') {
-            const left = a.outcome === 'none' ? 1 : 1 - 0.75 * p;
-            out += `<rect class="paper" x="${(CX - 24 * left).toFixed(1)}" y="158" width="${(48 * left).toFixed(1)}" height="20" rx="2"/>`;
-            flameBase = 156;
-        } else {
-            out += `<text class="small-label" x="${CX}" y="${STAND_Y - 8}" text-anchor="middle">탈 물질이 없습니다</text>`;
-        }
-
-        if (burning && a.hasFuel) {
-            // the flame shrinks as the trapped oxygen runs low
-            const strength = state.oxygen === 'closed' ? 0.4 + 0.6 * ((o2 - O2_FLOOR) / (O2_START - O2_FLOOR)) : 1;
-            out += flame(CX, flameBase, strength);
-        } else if (a.outcome === 'out' && p > 0) {
-            for (let i = 0; i < 3; i += 1) {
-                out += `<path class="smoke" d="M${CX + i * 4 - 4},${flameBase - i * 9} q6,-7 0,-13"/>`;
-            }
-        }
-
-        // the jar that traps the air
-        if (state.oxygen === 'closed') {
-            const half = 34 + (state.jar - 250) / 250 * 8;
-            out += `<path class="glass" d="M${CX - half},${STAND_Y + 2} L${CX - half},${76} Q${CX - half},${64} ${CX - half + 12},${64} ` +
-                   `L${CX + half - 12},${64} Q${CX + half},${64} ${CX + half},${76} L${CX + half},${STAND_Y + 2}"/>`;
-            out += `<text class="part-label" x="${CX}" y="56" text-anchor="middle">${state.jar} mL 유리병</text>`;
-        }
-
-        out += `<text class="part-label" x="300" y="86">산소 농도</text>`;
-        out += `<text class="read-text" x="300" y="106">${o2.toFixed(1)} %</text>`;
-        out += `<text class="note-text" x="300" y="124">꺼지는 농도 ${O2_FLOOR} %</text>`;
-        out += `<text class="part-label" x="300" y="148">지난 시간</text>`;
-        out += `<text class="note-text" x="300" y="164">${t.toFixed(1)} 초</text>`;
-        return out;
-    }
-
-    function renderOxide(a, p) {
-        const st = stepOxide(p, a);
+    function renderMain(a) {
+        const p = state.progress;
+        const st = step(p, a);
         const CX = 214, PAN_Y = 150;
         let out = '';
 
@@ -299,26 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="note-text" x="316" y="160">날아간 기체 ${st.gas.toFixed(2)} g</text>`;
         // its own full-width line: the cellulose equation is too long for a column
         out += `<text class="part-label" x="20" y="204">${a.mat.eq}</text>`;
-        return out;
-    }
 
-    const BURN_VERDICT = { burn: '계속 탄다', out: '타다가 꺼진다', none: '불이 붙지 않는다' };
-    const BURN_TONE = { burn: '#ffd166', out: '#ff9d6b', none: '#8fa8b0' };
-    const OXIDE_VERDICT = { up: '질량이 늘어난다', same: '질량이 그대로다', down: '질량이 줄어든다' };
-    const OXIDE_TONE = { up: '#52c7ff', same: '#54e6c1', down: '#ff9d6b' };
-
-    function renderMain(a) {
-        const p = state.progress;
-        let out = state.mode === 'burn' ? renderBurn(a, p) : renderOxide(a, p);
-        const text = a.kind === 'burn'
-            ? `${FUELS[state.fuel].label} · ${state.oxygen === 'open' ? '열어 둠' : '덮음'} · ${state.temp} ℃ → ${BURN_VERDICT[a.outcome]}`
-            : `${a.mat.label} · ${state.vessel === 'open' ? '열린 그릇' : '밀폐 용기'} → ${OXIDE_VERDICT[a.verdict]}`;
-        const tone = a.kind === 'burn' ? BURN_TONE[a.outcome] : OXIDE_TONE[a.verdict];
-        out += `<text class="verdict-text" fill="${tone}" x="20" y="28">${text}</text>`;
+        const text = `${a.mat.label} · ${state.vessel === 'open' ? '열린 그릇' : '밀폐 용기'} → ${VERDICT[a.verdict]}`;
+        out += `<text class="verdict-text" fill="${TONE[a.verdict]}" x="20" y="28">${text}</text>`;
         mainGroup.innerHTML = out;
     }
 
-    /* ------------------------------------------------------------ graphs */
+    /* ------------------------------------------------------------- graph */
     function graphFrame(xTicks, yTicks, xTitle, yTitle) {
         let out = '';
         yTicks.forEach(([v, y]) => {
@@ -335,40 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return out;
     }
 
-    function graphBurn(a) {
-        const total = a.runFor, t = state.progress * total;
-        const gx = s => GRAPH.x0 + (s / total) * (GRAPH.x1 - GRAPH.x0);
-        const gy = v => GRAPH.y0 - ((v - 14) / 8) * (GRAPH.y0 - GRAPH.y1);
-        let out = graphFrame(
-            [0, 0.25, 0.5, 0.75, 1].map(f => [(f * total).toFixed(1), gx(f * total)]),
-            [16, 18, 20, 22].map(v => [v, gy(v)]),
-            '시간 (초)', '산소 농도 (%)');
-        out += `<line class="limit-line" x1="${GRAPH.x0}" y1="${gy(O2_FLOOR).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(O2_FLOOR).toFixed(1)}"/>`;
-        out += `<text class="limit-text" x="${GRAPH.x1 - 4}" y="${(gy(O2_FLOOR) - 5).toFixed(1)}" text-anchor="end">${O2_FLOOR} % 아래로는 탈 수 없습니다</text>`;
-        const line = (t1, cls) => {
-            const pts = [];
-            for (let i = 0; i <= 80; i += 1) {
-                const s = (t1 * i) / 80;
-                pts.push(`${gx(s).toFixed(1)},${gy(o2At(s, a)).toFixed(1)}`);
-            }
-            return `<path class="${cls}" d="M${pts.join('L')}"/>`;
-        };
-        out += line(total, 'trace-done');
-        if (t > 0) out += line(t, 'trace');
-        out += `<circle class="trace-dot" cx="${gx(t).toFixed(1)}" cy="${gy(o2At(t, a)).toFixed(1)}" r="5" fill="#52c7ff"/>`;
-        if (state.oxygen === 'open') {
-            out += `<text class="note-text" x="${GRAPH.x0 + 8}" y="${(gy(O2_START) + 16).toFixed(1)}">공기가 계속 들어와 산소가 줄지 않습니다</text>`;
-        } else if (a.outcome === 'none') {
-            out += `<text class="note-text" x="${GRAPH.x0 + 8}" y="${(gy(O2_START) + 16).toFixed(1)}">타지 않으므로 산소도 줄지 않습니다</text>`;
-        }
-        return out;
-    }
-
-    function graphOxide(a) {
-        const st = stepOxide(state.progress, a);
+    function graph(a) {
+        const st = step(state.progress, a);
         const rows = [
             ['반응 전 고체', a.m, '#b4d2dc'],
-            ['반응 후 고체', a.mat.burnsAway ? a.solidEnd : a.solidEnd, a.mat.burnsAway ? '#ff9d6b' : '#52c7ff'],
+            ['반응 후 고체', a.solidEnd, a.mat.burnsAway ? '#ff9d6b' : '#52c7ff'],
             ['반응 전 전체 (고체 + 산소)', a.totalBefore, '#54e6c1'],
             ['반응 후 전체 (고체 + 기체)', a.totalAfter, '#54e6c1'],
         ];
@@ -385,17 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function noteFor(a) {
-        if (a.kind === 'burn') {
-            const t = state.progress * a.runFor;
-            return `<div class="data-row"><span class="data-name">탈 물질</span><span class="data-val">${a.fuel.label}${a.hasFuel ? ` · 발화점 ${a.fuel.ignite} ℃` : ' — 없으면 탈 수 없습니다'}</span></div>` +
-                `<div class="data-row"><span class="data-name">온도</span><span class="data-val">${state.temp} ℃ ${a.hasFuel ? (a.hotEnough ? '— 발화점 이상' : '— 발화점보다 낮음') : ''}</span></div>` +
-                `<div class="data-row"><span class="data-name">산소</span><span class="data-val">${state.oxygen === 'open' ? '계속 들어옴 (21 %)' : `${state.jar} mL 안에 갇힘 · 지금 ${o2At(t, a).toFixed(1)} %`}</span></div>` +
-                (state.oxygen === 'closed'
-                    ? `<div class="data-row"><span class="data-name">꺼지기까지</span><span class="data-val">쓸 수 있는 산소 ${(((O2_START - O2_FLOOR) / 100) * state.jar).toFixed(1)} mL ÷ 초당 ${O2_RATE} mL = ${a.outTime.toFixed(1)} 초</span></div>`
-                    : '') +
-                `<div class="data-row match"><span class="data-name">결과</span><span class="data-val">${BURN_VERDICT[a.outcome]}</span></div>`;
-        }
-        const st = stepOxide(state.progress, a);
+        const st = step(state.progress, a);
         return `<div class="data-row"><span class="data-name">반응식</span><span class="data-val">${a.mat.eq}</span></div>` +
             `<div class="data-row"><span class="data-name">고체</span><span class="data-val">${a.m.toFixed(2)} g → ${a.solidEnd.toFixed(2)} g</span></div>` +
             `<div class="data-row"><span class="data-name">주고받은 기체</span><span class="data-val">산소 ${a.oxygenTotal.toFixed(2)} g 결합 · 기체 ${a.gasEnd.toFixed(2)} g 생성</span></div>` +
@@ -406,19 +231,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function render() {
         const a = analyse();
         renderMain(a);
-        graphGroup.innerHTML = a.kind === 'burn' ? graphBurn(a) : graphOxide(a);
-        const tOut = document.getElementById('tempRangeOut');
-        if (tOut) tOut.textContent = `${state.temp} ℃`;
-        const jOut = document.getElementById('jarRangeOut');
-        if (jOut) jOut.textContent = `${state.jar} mL`;
+        graphGroup.innerHTML = graph(a);
         const mOut = document.getElementById('massRangeOut');
         if (mOut) mOut.textContent = `${state.mass} g`;
-        stageBadge.textContent = a.kind === 'burn'
-            ? `${FUELS[state.fuel].label} · ${BURN_VERDICT[a.outcome]}`
-            : `${a.mat.label} · ${OXIDE_VERDICT[a.verdict]}`;
-        methodHint.textContent = state.mode === 'burn'
-            ? '연소에는 탈 물질·산소·발화점 이상의 온도가 모두 필요합니다'
-            : '반응에 관여한 기체까지 세면 질량은 변하지 않습니다';
+        stageBadge.textContent = `${a.mat.label} · ${VERDICT[a.verdict]}`;
         dataNote.innerHTML = noteFor(a);
         return a;
     }
@@ -452,27 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = render();
         resultEmpty.hidden = true;
         resultContent.hidden = false;
-        if (a.kind === 'burn') {
-            labelA.textContent = '결과'; labelB.textContent = '빠진 조건';
-            valueA.textContent = BURN_VERDICT[a.outcome];
-            valueB.textContent = a.missing === 'fuel' ? '탈 물질' : a.missing === 'heat' ? '발화점 이상의 온도' : a.missing === 'oxygen' ? '산소' : '없음';
-            predictionResult.textContent = !state.prediction ? '다음에는 결과를 먼저 예상해 보세요.'
-                : state.prediction === a.outcome ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
-            let s = '';
-            if (a.missing === 'fuel') s = `탈 물질이 없으면 산소와 온도가 아무리 충분해도 탈 수 없습니다.`;
-            else if (a.missing === 'heat') s = `${eun(a.fuel.label)} 발화점이 ${a.fuel.ignite} ℃ 인데 ${state.temp} ℃ 까지만 올렸습니다. 발화점보다 낮으면 불이 붙지 않습니다.`;
-            else if (a.missing === 'oxygen') {
-                s = `${state.jar} mL 유리병 안에서 쓸 수 있는 산소는 ${(((O2_START - O2_FLOOR) / 100) * state.jar).toFixed(1)} mL 입니다. ` +
-                    `초당 ${O2_RATE} mL 씩 쓰므로 ${a.outTime.toFixed(1)} 초 만에 산소가 ${O2_FLOOR} % 까지 줄어 불이 꺼졌습니다. ` +
-                    `병이 클수록 산소가 많아 더 오래 탑니다.`;
-            } else s = `탈 물질 ${a.fuel.label}, 산소, ${a.fuel.ignite} ℃ 이상의 온도가 모두 갖추어져 계속 탑니다. 셋 중 하나만 없애도 불은 꺼집니다.`;
-            explanation.textContent = s;
-            return;
-        }
-        labelA.textContent = '저울 눈금'; labelB.textContent = '전체 질량';
         // both readings must come from the same meter: in a sealed vessel the
         // starting reading already includes the trapped air.
-        const st0 = stepOxide(0, a), st = stepOxide(1, a);
+        const st0 = step(0, a), st = step(1, a);
         valueA.textContent = `${st0.measured.toFixed(2)} g → ${st.measured.toFixed(2)} g`;
         valueB.textContent = `${a.totalBefore.toFixed(2)} g 그대로`;
         predictionResult.textContent = !state.prediction ? '다음에는 결과를 먼저 예상해 보세요.'
@@ -482,15 +280,15 @@ document.addEventListener('DOMContentLoaded', () => {
             s = `밀폐 용기에서는 드나드는 기체가 없어 저울 눈금이 ${a.totalBefore.toFixed(2)} g 그대로입니다. ` +
                 (a.mat.burnsAway
                     ? `나무가 타서 생긴 기체 ${a.gasEnd.toFixed(2)} g이 용기 안에 그대로 남아 있기 때문입니다.`
-                    : `강철솜이 결합한 산소 ${a.oxygenTotal.toFixed(2)} g 도 원래 용기 안의 공기에서 온 것이기 때문입니다.`) +
+                    : `강철솜이 결합한 산소 ${a.oxygenTotal.toFixed(2)} g도 원래 용기 안의 공기에서 온 것이기 때문입니다.`) +
                 ` 반응 전 ${a.totalBefore.toFixed(2)} g, 반응 후 ${a.totalAfter.toFixed(2)} g으로 질량은 보존됩니다.`;
         } else if (a.mat.burnsAway) {
             s = `열린 그릇에서는 타서 생긴 기체 ${a.gasEnd.toFixed(2)} g이 날아가 버립니다. ` +
-                `그래서 저울에는 재 ${a.solidEnd.toFixed(2)} g 만 남아 줄어든 것처럼 보입니다. ` +
+                `그래서 저울에는 재 ${a.solidEnd.toFixed(2)} g만 남아 줄어든 것처럼 보입니다. ` +
                 `하지만 날아간 기체까지 세면 ${a.totalBefore.toFixed(2)} g 그대로입니다.`;
         } else {
             s = `열린 그릇에서는 공기 중의 산소 ${a.oxygenTotal.toFixed(2)} g이 철과 결합해 들어옵니다. ` +
-                `그래서 ${a.m.toFixed(2)} g 이던 강철솜이 ${a.solidEnd.toFixed(2)} g으로 늘어납니다. ` +
+                `그래서 ${a.m.toFixed(2)} g이던 강철솜이 ${a.solidEnd.toFixed(2)} g으로 늘어납니다. ` +
                 `타면 가벼워질 것 같지만, 금속은 산소가 붙기 때문에 오히려 무거워집니다.`;
         }
         explanation.textContent = s;
@@ -504,22 +302,13 @@ document.addEventListener('DOMContentLoaded', () => {
         render();
     }
 
-    modeButtons.forEach(button => button.addEventListener('click', () => {
-        state.mode = button.dataset.mode;
-        state.prediction = null;
-        modeButtons.forEach(item => item.classList.toggle('selected', item === button));
-        buildControls();
-        buildPrediction();
-        stageCaption.textContent = state.mode === 'burn'
-            ? '세 가지 조건 가운데 하나라도 빠지면 불은 붙지 않거나 꺼집니다.'
-            : '저울 눈금과 전체 질량이 어떻게 다른지 견주어 보세요.';
-        settingsChanged();
-    }));
     checkBtn.addEventListener('click', startRun);
     resetBtn.addEventListener('click', () => {
         stopRun();
-        Object.assign(state, { fuel: 'candle', temp: 300, oxygen: 'open', jar: 500, material: 'steel', vessel: 'open', mass: 5, progress: 0, prediction: null });
-        modeButtons.find(b => b.dataset.mode === 'burn').click();
+        Object.assign(state, { material: 'steel', vessel: 'open', mass: 5, progress: 0 });
+        clearPrediction();
+        buildControls();
+        settingsChanged();
     });
 
     function shuffleQuizOptions(card) {
@@ -556,10 +345,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    window.__burnModel = {
-        O2_START, O2_FLOOR, O2_RATE, FUELS, MATERIALS, state,
-        analyseBurn, analyseOxide, analyse, o2At, stepOxide, render, runSeconds,
-        setMode(m) { modeButtons.find(b => b.dataset.mode === m).click(); },
+    window.__oxideModel = {
+        MATERIALS, state,
+        analyse, step, render, runSeconds,
         set(key, value) { state[key] = value; buildControls(); settingsChanged(); },
         setProgress(p) { stopRun(); state.progress = p; render(); },
         runToEnd(dt = 0.25, cap = 5000) {
