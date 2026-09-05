@@ -195,33 +195,27 @@
   }
 
   function buildAids(problem) {
+    if (!problem.help) return document.createDocumentFragment();
+
     const wrap = document.createElement("div");
     const bar = document.createElement("div");
     bar.className = "aids";
 
-    const body = document.createElement("dl");
+    const body = document.createElement("div");
     body.className = "aid-body";
     body.hidden = true;
+    body.innerHTML = problem.help;
 
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "aid-btn";
-    btn.textContent = "풀이의 첫 수 보기";
+    btn.textContent = "풀이";
     btn.setAttribute("aria-expanded", "false");
     btn.addEventListener("click", function () {
       const open = body.hidden;
       body.hidden = !open;
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-      btn.textContent = open ? "첫 수 감추기" : "풀이의 첫 수 보기";
-    });
-
-    [["첫 수", problem.start], ["막히는 곳", problem.trap]].forEach(([label, text]) => {
-      if (!text) return;
-      const dt = document.createElement("dt");
-      dt.textContent = label;
-      const dd = document.createElement("dd");
-      dd.innerHTML = text;
-      body.append(dt, dd);
+      btn.textContent = open ? "풀이 접기" : "풀이";
     });
 
     bar.appendChild(btn);

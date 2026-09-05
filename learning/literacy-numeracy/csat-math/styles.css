@@ -251,9 +251,6 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   padding: 2px 0 2px 14px;
   font-size: 0.95rem;
 }
-.aid-body dt { font-weight: 700; font-size: 0.86rem; color: var(--ink-soft); }
-.aid-body dd { margin: 2px 0 10px; }
-.aid-body dd:last-child { margin-bottom: 2px; }
 
 .empty { text-align: center; color: var(--ink-soft); padding: 40px 0; }
 
