@@ -62,6 +62,12 @@ body {
 
 .back-link:hover,
 .back-link:focus-visible,
+/* 숨김 표시가 이겨야 한다. 영어판이 없는 책은 EN 단추가 hidden 인데,
+   .toc-link 의 display 가 그것을 덮어써서 단추가 그대로 보였다. */
+.top-bar [hidden] {
+    display: none;
+}
+
 .toc-link:hover,
 .toc-link:focus-visible {
     border-color: var(--gold-bright);
@@ -713,6 +719,51 @@ body {
     /* 글씨는 전권·전화면이 같다. 줄이지 않는다. */
 }
 
+/* history page (건국 신화 books only) */
+.page-history {
+    align-items: center;
+    gap: 10px;
+    background: var(--parchment-shade);
+    overflow-y: auto;
+    justify-content: safe center;
+}
+
+.page-history h2 {
+    margin: 0;
+    font-size: clamp(19px, 3.763cqh, 39px);
+    color: var(--ink);
+}
+
+.page-history .history-note {
+    margin: 0;
+    font-size: clamp(13px, 2.171cqh, 23px);
+    color: var(--muted);
+    font-style: italic;
+}
+
+.page-history hr {
+    width: 72px;
+    max-width: 40%;
+    height: 0;
+    margin: 2px 0 4px;
+    border: 0;
+    border-top: 2px solid var(--moral-border);
+}
+
+.page-history .history-body {
+    max-width: 620px;
+    text-align: left;
+}
+
+.page-history .history-body p {
+    margin: 0 0 8px;
+    font-size: clamp(14px, 2.315cqh, 24px);
+    line-height: 1.7;
+    color: var(--ink);
+}
+
+.page-history .history-body p:last-child { margin-bottom: 0; }
+
 /* 그림책은 장이 서넛뿐이라 차례가 펼침 하나를 쓸 만큼이 못 된다.
    표지 오른쪽 아래에 작은 칩으로 흘려 놓는다. 세로로 쌓으면 작은 창에서 넘친다. */
 .cover-toc {
@@ -784,3 +835,198 @@ body {
     display: inline-flex;
     align-items: center;
 }
+
+/* ── 단어장 ────────────────────────────────────────────────────
+   책은 아이패드·크롬북 화면에 꽉 차게 맞춰 두었으므로 손대지 않는다.
+   책 아래에 화면을 한 장 더 두고, 볼 때만 밀어 내린다. */
+body {
+    display: block;
+    padding: 0;
+}
+
+.screen {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* display:flex 가 [hidden] 을 이겨 버린다. 우리말로 읽을 때는 아예 없애야 한다. */
+.screen[hidden] { display: none; }
+
+/* 아래 화면은 한 화면을 다 차지하지 않는다. 높이는 JS가 그림선에 맞춰 준다.
+   그래야 더 내려갈 데가 없어 딱 그 자리에 걸린다. */
+.screen-vocab {
+    min-height: 0;
+    align-items: flex-start;
+    padding-top: 14px;
+}
+
+.vocab-panel {
+    width: min(1300px, 96vw, calc((100dvh - 46px) * 4 / 3));
+    box-sizing: border-box;
+    padding: 20px 24px 26px;
+    background: var(--parchment);
+    border: 10px solid var(--wood);
+    border-radius: 10px;
+    box-shadow: var(--shadow), inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+    color: var(--ink);
+}
+
+
+
+.vocab-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 8px 12px;
+}
+
+.vocab-list li {
+    padding: 8px 12px;
+    background: #fffaf0;
+    border: 1px solid var(--parchment-shade);
+    border-radius: 9px;
+}
+
+.vocab-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+/* 듣기 단추 — 손가락 규칙대로 44x44 아래로 내려가지 않는다. */
+.vocab-say {
+    flex: none;
+    min-width: 44px;
+    min-height: 44px;
+    margin: -4px -4px 0 0;
+    padding: 0;
+    border: 1px solid var(--parchment-shade);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.vocab-say:hover,
+.vocab-say:focus-visible {
+    border-color: var(--wood);
+    background: var(--moral-bg, #fff4e0);
+}
+
+.vocab-say:active {
+    transform: scale(0.94);
+}
+
+.vocab-word {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(14px, 2vh, 21px);
+}
+
+.vocab-mean {
+    margin: 1px 0 0;
+    font-size: clamp(13px, 1.8vh, 19px);
+}
+
+.vocab-sent {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: clamp(12px, 1.6vh, 17px);
+    font-style: italic;
+}
+
+/* 아래에 무엇이 더 있는지 알려 주는 단추. 트랙패드로도 굴릴 수 있지만
+   책이 화면에 딱 맞아 아래가 있는 줄 모르기 쉽다. */
+.scroll-down {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    z-index: 40;
+    min-width: 96px;
+    min-height: 44px;
+    padding: 6px 18px;
+    border: 1px solid rgba(215, 171, 95, 0.5);
+    border-radius: 999px;
+    background: rgba(27, 15, 16, 0.78);
+    color: var(--gold-bright);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.scroll-down:hover,
+.scroll-down:focus-visible {
+    border-color: var(--gold-bright);
+    background: rgba(92, 58, 34, 0.85);
+}
+
+/* 영어로 읽을 때만 글꼴을 바꾼다. 한글 명조의 알파벳은 영어 읽기용이 아니다.
+   Roboto Slab 은 슬래브 명조라 지금 결을 크게 흔들지 않으면서 g 가 한 층이다.
+   단어장의 우리말 뜻은 Roboto Slab 에 한글이 없어 저절로 본래 글꼴로 떨어진다. */
+html[lang="en"] body {
+    font-family: "Roboto Slab", "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif;
+}
+
+/* 한글 명조는 500이 보통으로 보이지만 슬래브 명조는 500이면 확 두꺼워진다.
+   우리말 쪽과 획 굵기를 맞추려면 영어 글은 400이라야 한다.
+   글 요소마다 500이 따로 걸려 있어서 body 만 내려서는 안 먹는다. */
+html[lang="en"] .spread-text p,
+html[lang="en"] .moral-box p,
+html[lang="en"] .page-cover .story-page-right p,
+html[lang="en"] .page-after p,
+html[lang="en"] .vocab-sent {
+    font-weight: 400;
+}
+
+/* 단추를 그림 모서리에 붙이려면 그 칸이 자리 기준이 되어야 한다. */
+.page-cover .story-page-left-full,
+.after-col-right { position: relative; }
+
+/* 읽어 주기 — 그림 오른쪽 위. 넘김 단추는 가운데라 겹치지 않는다. */
+.read-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 12;
+    min-width: 46px;
+    min-height: 46px;
+    padding: 0;
+    border: 1px solid rgba(215, 171, 95, 0.55);
+    border-radius: 50%;
+    background: rgba(27, 15, 16, 0.78);
+    color: var(--gold-bright);
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.read-btn:hover,
+.read-btn:focus-visible {
+    border-color: var(--gold-bright);
+    background: rgba(92, 58, 34, 0.9);
+}
+
+/* 지금 읽고 있는 문단 */
+.spread-text p.saying {
+    background: rgba(215, 171, 95, 0.3);
+    border-radius: 6px;
+    box-shadow: 0 0 0 4px rgba(215, 171, 95, 0.3);
+}
+
+/* 읽어 주는 동안에만 문단을 눌러 그 자리로 옮길 수 있다.
+   읽지도 않는데 눌러서 소리가 나면 곤란하므로 그때만 손 모양을 준다. */
+html[lang="en"] .is-reading [data-say] { cursor: pointer; }
+html[lang="en"] .is-reading [data-say]:hover { background: rgba(215, 171, 95, 0.14); border-radius: 6px; }

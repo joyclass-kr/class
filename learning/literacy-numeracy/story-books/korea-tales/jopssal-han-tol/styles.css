@@ -62,6 +62,12 @@ body {
 
 .back-link:hover,
 .back-link:focus-visible,
+/* 숨김 표시가 이겨야 한다. 영어판이 없는 책은 EN 단추가 hidden 인데,
+   .toc-link 의 display 가 그것을 덮어써서 단추가 그대로 보였다. */
+.top-bar [hidden] {
+    display: none;
+}
+
 .toc-link:hover,
 .toc-link:focus-visible {
     border-color: var(--gold-bright);

@@ -200,7 +200,7 @@ const COVER = {
 };
 
 /* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
-   읽기를 앞세운다. 줄임말을 쓰고(I'm, couldn't), 영국 옛말투는 쉬운 말로 바꾼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
    왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
 const EN = {
     lang: 'en',
@@ -688,6 +688,48 @@ const EN = {
     }
 };
 
+const QUIZ = [
+    { q: "소년은 집을 떠나며 어머니에게 뭐라고 했나요?", choices: ["쌀을 구해 오겠다고", "큰 세상을 보겠다고", "황소를 사 오겠다고"], answer: 1 },
+    { q: "좁쌀을 먹어 버린 것은 무엇인가요?", choices: ["새", "개", "쥐"], answer: 2 },
+    { q: "쥐를 물어 간 것은 무엇인가요?", choices: ["고양이", "개", "황소"], answer: 0 },
+    { q: "개는 어떻게 그 집을 떠났나요?", choices: ["담 밖으로 쫓겨 갔다", "줄을 끊고 달아났다", "고삐를 물어뜯었다"], answer: 1 },
+    { q: "소년이 마지막으로 얻은 것은 무엇인가요?", choices: ["말", "고양이", "황소"], answer: 2 },
+    { q: "소년이 품에서 꺼내 편 것은 무엇인가요?", choices: ["황소의 고삐", "낡은 봇짐 하나", "접힌 종이 한 장"], answer: 2 },
+    {
+        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
+        wide: true,
+        choices: [
+            "좁쌀 한 톨을 종이에 싸서 맡긴 것을 보면, 작다고 함부로 하지 않는 마음이 시작이었구나.",
+            "집집마다 미안해하며 더 큰 것을 내준 것을 보면, 그때 사람들은 남의 것을 무겁게 여겼네.",
+            "소년이 끝까지 제가 가진 것 전부라고 말한 것을 보면, 값이 아니라 태도가 사람을 만드는 거야.",
+            "소년이 맡길 때마다 더 큰 것으로 바꿔 달라고 한 것을 보면, 셈이 밝은 아이였나 봐."
+        ],
+        answer: 3
+    }
+];
+
+/* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
+   펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🐮',
+    spreads: [
+        {
+            art: 'end.webp',
+            left: [
+                "이런 이야기는 듣는 아이가 다음에 무엇이 나올지 미리 맞혀 보게 만듭니다. 좁쌀 다음은 쥐, 쥐 다음은 고양이. 그 재미로 오래 전해진 것이지요.",
+                "이런 이야기는 듣기에 재미있어서 세계 곳곳에 있습니다. 짚 한 오라기로 시작해 부자가 되는 일본 이야기도 있고, 물물교환이 이어지는 서양 이야기도 있습니다.",
+                "소년이 한 일이라고는 제 것을 맡기고 그것이 없어졌다고 말한 것뿐입니다. 그러면 주인들이 미안해서 더 큰 것을 내주었지요.",
+                "그러니 소년을 키운 것은 좁쌀이 아니라 그것을 끝까지 제 것으로 여긴 마음입니다."
+            ],
+            right: [
+                "작다고 함부로 여기지 않는 마음이 좁쌀 한 톨을 황소로 만들었습니다. 소년은 한 번도 억지를 부리지 않았습니다. 그저 제 것을 끝까지 소중히 여겼을 뿐입니다.",
+                "지금 내 손에 있는 작은 것 가운데 소중히 여겨야 할 것은 무엇일까요?"
+            ]
+        }
+    ]
+};
+
 /* ── 한국어·영어 ────────────────────────────────────────────
    글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
    영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
@@ -717,6 +759,9 @@ const CH = () => (LANG === 'en' ? EN.chapters  : CHAPTERS);
 const QZ = () => (LANG === 'en' ? EN.quiz      : QUIZ);
 const AF = () => (LANG === 'en' ? EN.afterword : AFTERWORD);
 const CV = () => (LANG === 'en' ? EN.cover     : COVER);
+// 건국 신화 다섯 권에만 있는 「진짜 역사」 쪽. 없는 책에서는 아예 안 짜인다.
+const HAS_HISTORY = typeof HISTORY !== 'undefined';
+const HS = () => ((LANG === 'en' && EN.history) ? EN.history : HISTORY);
 
 // 「1장 · 」이든 「Chapter 1 · 」이든 앞머리를 뗀다.
 const bareTitle = t => t.replace(/^(\d+장|Chapter \d+) · /, '');
@@ -763,6 +808,19 @@ function coverPage() {
         </div>`;
 }
 
+function historyPage() {
+    const h = HS();
+    return `
+        <div class="page page-history">
+            <h2>${h.title}</h2>
+            <p class="history-note">${h.note}</p>
+            <hr>
+            <div class="history-body">
+                ${h.paras.map(t => `<p>${t}</p>`).join('')}
+            </div>
+        </div>`;
+}
+
 function spreadPage(chapter, beat, isFirst) {
     const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
     const readBtn = readBtnHtml();
@@ -783,26 +841,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-
-const QUIZ = [
-    { q: "소년은 집을 떠나며 어머니에게 뭐라고 했나요?", choices: ["쌀을 구해 오겠다고", "큰 세상을 보겠다고", "황소를 사 오겠다고"], answer: 1 },
-    { q: "좁쌀을 먹어 버린 것은 무엇인가요?", choices: ["새", "개", "쥐"], answer: 2 },
-    { q: "쥐를 물어 간 것은 무엇인가요?", choices: ["고양이", "개", "황소"], answer: 0 },
-    { q: "개는 어떻게 그 집을 떠났나요?", choices: ["담 밖으로 쫓겨 갔다", "줄을 끊고 달아났다", "고삐를 물어뜯었다"], answer: 1 },
-    { q: "소년이 마지막으로 얻은 것은 무엇인가요?", choices: ["말", "고양이", "황소"], answer: 2 },
-    { q: "소년이 품에서 꺼내 편 것은 무엇인가요?", choices: ["황소의 고삐", "낡은 봇짐 하나", "접힌 종이 한 장"], answer: 2 },
-    {
-        q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
-        wide: true,
-        choices: [
-            "좁쌀 한 톨을 종이에 싸서 맡긴 것을 보면, 작다고 함부로 하지 않는 마음이 시작이었구나.",
-            "집집마다 미안해하며 더 큰 것을 내준 것을 보면, 그때 사람들은 남의 것을 무겁게 여겼네.",
-            "소년이 끝까지 제가 가진 것 전부라고 말한 것을 보면, 값이 아니라 태도가 사람을 만드는 거야.",
-            "소년이 맡길 때마다 더 큰 것으로 바꿔 달라고 한 것을 보면, 셈이 밝은 아이였나 봐."
-        ],
-        answer: 3
-    }
-];
 
 /* 보기는 책을 열 때마다 자리를 바꾼다. 답의 자리를 외워 버리면 문제가 아니게 된다.
    섞는 것은 그리는 차례뿐이고, 채점은 data-choice 에 담긴 원래 번호로 한다.
@@ -846,28 +884,6 @@ function quizPage() {
 }
 
 
-/* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
-   펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
-const AFTERWORD = {
-    title: '읽고 나서',
-    emoji: '🐮',
-    spreads: [
-        {
-            art: 'end.webp',
-            left: [
-                "이런 이야기는 듣는 아이가 다음에 무엇이 나올지 미리 맞혀 보게 만듭니다. 좁쌀 다음은 쥐, 쥐 다음은 고양이. 그 재미로 오래 전해진 것이지요.",
-                "이런 이야기는 듣기에 재미있어서 세계 곳곳에 있습니다. 짚 한 오라기로 시작해 부자가 되는 일본 이야기도 있고, 물물교환이 이어지는 서양 이야기도 있습니다.",
-                "소년이 한 일이라고는 제 것을 맡기고 그것이 없어졌다고 말한 것뿐입니다. 그러면 주인들이 미안해서 더 큰 것을 내주었지요.",
-                "그러니 소년을 키운 것은 좁쌀이 아니라 그것을 끝까지 제 것으로 여긴 마음입니다."
-            ],
-            right: [
-                "작다고 함부로 여기지 않는 마음이 좁쌀 한 톨을 황소로 만들었습니다. 소년은 한 번도 억지를 부리지 않았습니다. 그저 제 것을 끝까지 소중히 여겼을 뿐입니다.",
-                "지금 내 손에 있는 작은 것 가운데 소중히 여겨야 할 것은 무엇일까요?"
-            ]
-        }
-    ]
-};
-
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AF().title}</h2>` : '';
     // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
@@ -900,6 +916,7 @@ function buildPages() {
     PAGES = [
         { kind: 'cover' },
         ...CH().flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
+        ...(HAS_HISTORY ? [{ kind: 'history' }] : []),
         { kind: 'quiz' },
         ...after.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === after.spreads.length - 1 })),
     ];
@@ -922,6 +939,8 @@ function renderPage(page) {
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'after':
             return afterPage({ ...page.spread, last: page.last }, page.isFirst);
+        case 'history':
+            return historyPage();
         case 'quiz':
             return quizPage();
         default:
@@ -1082,10 +1101,9 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-
-
 /* ── 목소리 ────────────────────────────────────────────────────
-   대사에는 말하는 이를 표시해 두었다(v: 'boy' | 'mother' | 'man').
+   대사에는 말하는 이를 표시해 두었다(v: 'boy' | 'girl' | 'woman' | 'mother' |
+   'man' | 'old' | 'granny' | 'beast'). 전래동화에 자주 나오는 사람들에 맞춰 두었다.
    기기에 남녀 목소리가 있으면 골라 쓰고, 없으면 음높이만으로 가른다.
    아이 목소리는 어느 기기에도 없어서 음높이를 올려 흉내 낸다. */
 const textOf = p => (typeof p === 'string' ? p : p.t);
@@ -1115,8 +1133,13 @@ const SAY_RATE = 0.85;
 const SAY_AS = {
     narration: { pitch: 1.00, rate: SAY_RATE, want: 'any' },
     boy:       { pitch: 1.40, rate: SAY_RATE, want: 'male' },
+    girl:      { pitch: 1.45, rate: SAY_RATE, want: 'female' },
+    woman:     { pitch: 1.15, rate: SAY_RATE, want: 'female' },
     mother:    { pitch: 1.20, rate: SAY_RATE, want: 'female' },
-    man:       { pitch: 0.80, rate: SAY_RATE, want: 'male' }
+    granny:    { pitch: 1.05, rate: SAY_RATE, want: 'female' },
+    man:       { pitch: 0.80, rate: SAY_RATE, want: 'male' },
+    old:       { pitch: 0.72, rate: SAY_RATE, want: 'male' },
+    beast:     { pitch: 0.60, rate: SAY_RATE, want: 'male' }
 };
 
 const VOICES = { any: null, male: null, female: null };

@@ -20,16 +20,22 @@ function probe(){const bad=[],roll=[];
 (async()=>{const lines=[];
  for(const b of BOOKS){const res=[];
   const roll=[];
-  for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
-   // 브라우저에 영어가 저장돼 있으면 영어로 열린다. 우리말로 못 박고 잰다.
-   try{localStorage.setItem('korea-tales-lang','ko');}catch(e){}
-   await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
-   await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
-   await new Promise(r=>setTimeout(r,140));
-   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');
-    v.bad.forEach(x=>res.push('  ['+w+'x'+h+'] '+x));
-    if(v.roll.length) roll.push('  ['+w+'x'+h+'] \uad74\ub824\uc11c \ubcf4\ub294 \uce78 '+v.roll.length+'\uacf3');}
-   catch(e){res.push('  실패 '+e.message);}}
+  // 우리말로 한 번, 영어판이 있으면 영어로 한 번 더 잰다.
+  // 영어는 글 길이가 달라서 우리말이 안 넘쳐도 넘칠 수 있다.
+  for(const lang of ['ko','en']){
+   let has=true;
+   for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+    try{localStorage.setItem('korea-tales-lang',lang);}catch(e){}
+    await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+    await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
+    await new Promise(r=>setTimeout(r,140));
+    try{
+     if(lang==='en'&&!frame.contentWindow.eval('HAS_EN')){has=false;break;}
+     const v=frame.contentWindow.eval('('+probe.toString()+')()');
+     v.bad.forEach(x=>res.push('  ['+lang+' '+w+'x'+h+'] '+x));
+     if(v.roll.length) roll.push('  ['+lang+' '+w+'x'+h+'] 굴려서 보는 칸 '+v.roll.length+'곳');}
+    catch(e){res.push('  ['+lang+'] 실패 '+e.message);}}
+   if(!has) break;}
   lines.push((res.length?'✗ ':'✔ ')+b+(res.length?'\n'+res.join('\n'):'')+(roll.length?'\n'+roll.join('\n'):''));
   out.textContent=lines.join('\n');}
  out.textContent=lines.join('\n')+'\n\n=== 끝 ===';})();
