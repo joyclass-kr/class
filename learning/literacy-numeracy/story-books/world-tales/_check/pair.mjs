@@ -9,6 +9,7 @@
    전래동화 방은 두 판이 번역이어서 자리를 맞추는 쪽을 골랐다.
    여기는 번역이 아니므로 자리를 맞출 길이 없고, 대신 자취를 갈랐다. */
 import fs from 'node:fs';
+import { tally } from './seen.mjs';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
@@ -30,11 +31,12 @@ function items(src) {
 
 const books = fs.readdirSync(ROOT).filter(d => !d.startsWith('_') && fs.existsSync(path.join(ROOT, d, 'app.js'))).sort();
 let bad = 0;
+const seen = tally(books.length);
 
 for (const b of books) {
     const s = fs.readFileSync(path.join(ROOT, b, 'app.js'), 'utf8');
     const cut = s.indexOf('const EN');
-    if (cut < 0) { console.log('## ' + b + ' — 영어판이 없습니다'); continue; }
+    if (cut < 0) { seen.skip(b, '영어판이 없다'); continue; }
     const ko = items(s.slice(0, cut));
     const en = items(s.slice(cut));
     const say = [];
@@ -53,5 +55,6 @@ for (const b of books) {
 }
 
 console.log('');
-console.log('책 ' + books.length + '권 가운데 두 판이 어긋난 책 ' + bad + '권.');
+seen.report();
+console.log('두 판이 어긋난 책 ' + bad + '권.');
 console.log('자취를 말별로 적어 두므로 자리가 달라도 탈은 나지 않는다. 두 판이 갈라진 자리를 적어 둘 뿐이다.');

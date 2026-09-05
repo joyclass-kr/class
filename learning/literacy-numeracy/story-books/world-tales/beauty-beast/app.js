@@ -470,7 +470,7 @@ const QUIZ = [
         "answer": 1
     },
     {
-        "q": "벨이 손거울로 본 것은 무엇인가요?",
+        "q": "벨이 손거울로 처음 본 것은 무엇인가요?",
         "choices": [
             "앓아누운 아버지",
             "항구에 닿은 배",
@@ -965,7 +965,7 @@ const EN = {
             answer: 0
         },
         {
-            q: 'What did Belle see in the hand mirror?',
+            q: 'What did Belle see in the hand mirror the first time?',
             choices: ['The Beast in the garden', 'Her sisters at a feast', 'Her father lying ill at home'],
             answer: 2
         },
