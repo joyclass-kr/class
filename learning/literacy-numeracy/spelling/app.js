@@ -19,7 +19,6 @@
         lessonScreen: document.getElementById("lessonScreen"),
         quizScreen: document.getElementById("quizScreen"),
         resultScreen: document.getElementById("resultScreen"),
-        personalStartButton: document.getElementById("personalStartButton"),
         lessonProgressSummary: document.getElementById("lessonProgressSummary"),
         lessonList: document.getElementById("lessonList"),
         restartButton: document.getElementById("restartButton"),
@@ -156,38 +155,65 @@
         elements.headerBestScore.textContent = `${getBestScore()}/${SESSION_SIZE}`;
     }
 
+    function buildLessonCard({ numberText, title, note, metaText, isDone, isPerfect, extraClass, onClick }) {
+        const item = document.createElement("li");
+        const button = document.createElement("button");
+        const number = document.createElement("span");
+        const copy = document.createElement("span");
+        const titleEl = document.createElement("strong");
+        const noteEl = document.createElement("small");
+        const meta = document.createElement("span");
+
+        button.type = "button";
+        button.className = "lesson-card";
+        if (extraClass) button.classList.add(extraClass);
+        if (isDone) button.classList.add("is-done");
+        if (isPerfect) button.classList.add("is-perfect");
+        number.className = "lesson-number";
+        number.textContent = numberText;
+        copy.className = "lesson-copy";
+        titleEl.textContent = title;
+        noteEl.textContent = note;
+        copy.append(titleEl, noteEl);
+        meta.className = "lesson-meta";
+        meta.textContent = metaText;
+        button.append(number, copy, meta);
+        button.addEventListener("click", onClick);
+        item.append(button);
+        return item;
+    }
+
+    function buildRandomCard() {
+        const best = getBestScore();
+        return buildLessonCard({
+            numberText: "무작위",
+            title: "전체 무작위 10문제",
+            note: `${questionBank.length}문제 중 10문제, 매번 다르게 나와요`,
+            metaText: best > 0 ? `${best === SESSION_SIZE ? "✓ 완벽" : "✓ 최고"} · ${best}/${SESSION_SIZE}` : `${SESSION_SIZE}문제`,
+            isDone: best > 0,
+            isPerfect: best === SESSION_SIZE,
+            extraClass: "is-random",
+            onClick: startRandomQuiz
+        });
+    }
+
     function renderLessonList() {
         const progress = readLessonProgress();
         const completedCount = lessons.filter((lesson) => progress[lesson.id]).length;
         elements.lessonProgressSummary.textContent = `${lessons.length}차시 중 ${completedCount}차시를 끝냈어요. 차시를 골라 문제를 풀어요.`;
-        elements.lessonList.replaceChildren(...lessons.map((lesson, index) => {
-            const item = document.createElement("li");
-            const button = document.createElement("button");
-            const number = document.createElement("span");
-            const copy = document.createElement("span");
-            const title = document.createElement("strong");
-            const note = document.createElement("small");
-            const meta = document.createElement("span");
+        elements.lessonList.replaceChildren(buildRandomCard(), ...lessons.map((lesson, index) => {
             const record = progress[lesson.id];
-
-            button.type = "button";
-            button.className = "lesson-card";
-            if (record) button.classList.add("is-done");
-            if (record && record.best === record.total) button.classList.add("is-perfect");
-            number.className = "lesson-number";
-            number.textContent = `${index + 1}차시`;
-            copy.className = "lesson-copy";
-            title.textContent = lesson.title;
-            note.textContent = lesson.note;
-            copy.append(title, note);
-            meta.className = "lesson-meta";
-            meta.textContent = record
-                ? `${record.best === record.total ? "✓ 완벽" : "✓ 완료"} · ${record.best}/${record.total}`
-                : `${lesson.ids.length}문제`;
-            button.append(number, copy, meta);
-            button.addEventListener("click", () => startLesson(index));
-            item.append(button);
-            return item;
+            return buildLessonCard({
+                numberText: `${index + 1}차시`,
+                title: lesson.title,
+                note: lesson.note,
+                metaText: record
+                    ? `${record.best === record.total ? "✓ 완벽" : "✓ 완료"} · ${record.best}/${record.total}`
+                    : `${lesson.ids.length}문제`,
+                isDone: Boolean(record),
+                isPerfect: Boolean(record && record.best === record.total),
+                onClick: () => startLesson(index)
+            });
         }));
     }
 
@@ -223,8 +249,7 @@
         const session = buildSession(ids, isLesson ? 0 : SESSION_SIZE);
         const expected = isLesson ? ids.length : SESSION_SIZE;
         if (session.length === 0 || session.length !== expected) {
-            elements.personalStartButton.textContent = "문항을 불러오지 못했어요";
-            elements.personalStartButton.disabled = true;
+            elements.lessonProgressSummary.textContent = "문항을 불러오지 못했어요. 새로고침해 주세요.";
             return;
         }
 
@@ -449,7 +474,6 @@
         }
     });
 
-    elements.personalStartButton.addEventListener("click", startRandomQuiz);
     elements.restartButton.addEventListener("click", restartCurrent);
     elements.nextLessonButton.addEventListener("click", goToNextLesson);
     elements.lessonListButton.addEventListener("click", selectLessonMode);

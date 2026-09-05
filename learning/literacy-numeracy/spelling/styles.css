@@ -85,20 +85,31 @@ button {
 }
 
 .back-link,
-.record {
+.record,
+.race-link {
     min-height: 44px;
     border: 1px solid rgba(244, 215, 154, 0.7);
     background: rgba(48, 23, 10, 0.88);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
 }
 
-.back-link {
+.back-link,
+.race-link {
     display: inline-flex;
     align-items: center;
     padding: 0 16px;
     color: #fff4d8;
     font-weight: 800;
     text-decoration: none;
+}
+
+.race-link {
+    font-size: 13px;
+}
+
+.race-link:hover,
+.race-link:focus-visible {
+    background: rgba(72, 39, 15, 0.92);
 }
 
 .back-link:hover,
@@ -978,14 +989,14 @@ footer a {
 }
 
 .lesson-panel {
+    padding: clamp(18px, 4vw, 28px);
     text-align: left;
 }
 
-.lesson-panel h2 {
-    text-align: center;
-}
-
-.lesson-panel .lead {
+.lesson-progress-line {
+    margin: 0 0 14px;
+    color: var(--muted-ink);
+    font-size: 14px;
     text-align: center;
 }
 
@@ -1029,6 +1040,16 @@ footer a {
 .lesson-card.is-perfect {
     border-color: var(--green);
     background: var(--green-light);
+}
+
+.lesson-card.is-random {
+    grid-column: 1 / -1;
+    border-color: var(--brown);
+    background: #fff4dc;
+}
+
+.lesson-card.is-random .lesson-number {
+    color: var(--brown);
 }
 
 .lesson-number {

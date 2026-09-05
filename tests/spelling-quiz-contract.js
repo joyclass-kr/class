@@ -73,7 +73,6 @@ for (const requiredId of [
     "lessonList",
     "quizScreen",
     "resultScreen",
-    "personalStartButton",
     "questionText",
     "choiceList",
     "feedback",
@@ -107,6 +106,8 @@ assert.ok(html.includes("나의 오답노트"), "Personal wrong-answer notebook 
 assert.ok(html.includes('id="lessonScreen"'), "The lesson list should be the primary first-screen content.");
 assert.ok(!html.includes('class="title-block"'), "The advertising-style title hero should be removed.");
 assert.ok(!html.includes('id="playerGreeting"'), "The promotional greeting should be removed.");
+assert.ok(!html.includes('id="lessonTitle"') && !html.includes('class="lesson-tools"'), "The lesson screen should open straight into the list, without a separate title/button header.");
+assert.ok(!/id="personalStartButton"/.test(html), "The random-10 entry point must live inside the lesson list, not a static header button.");
 assert.ok(!/\b230문제/.test(html), "Question counts must come from data-question-count, not a hard-coded number.");
 assert.ok(html.includes("한국어 어문 규범"), "Official language norms source should be visible.");
 assert.ok(html.includes("표준국어대사전"), "Standard dictionary source should be visible.");
@@ -122,6 +123,7 @@ assert.ok(!appSource.includes("SPELLING_ACTION"), "Class ranking traffic must no
 assert.ok(!appSource.includes("ClassroomMultiplayerLobby"), "The spelling app must not create a lobby any more.");
 assert.ok(!appSource.includes("bgmToggle"), "Spelling must not keep a separate legacy music toggle.");
 assert.ok(appSource.includes('addEventListener("sitebackrequest"'), "The shared back button must return to the lesson list instead of leaving the site from a quiz or result screen.");
+assert.ok(appSource.includes("buildRandomCard"), "The random-10 entry must be rendered as the first card of the lesson list.");
 
 const hub = fs.readFileSync(hubPath, "utf8");
 assert.ok(/href="learning\/literacy-numeracy\/spelling\/(?:index\.html)?"/.test(hub), "Hub is missing the spelling quiz link.");
