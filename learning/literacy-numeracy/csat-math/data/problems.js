@@ -21,6 +21,10 @@
 
   const exams = [
     {
+      id: "2027-09", year: 2027, round: "9월", label: "2027학년도 9월",
+      source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500236&m=0403&s=suneung"
+    },
+    {
       id: "2026-suneung", year: 2026, round: "수능", label: "2026학년도 수능",
       source: "https://www.suneung.re.kr/boardCnts/list.do?boardID=1500234&m=0403&s=suneung"
     }
@@ -185,6 +189,158 @@
       answer: 457,
       start: R`\(\mathrm{A}(a,b)\)를 \(y=x\)에 대칭하면 \((b,a)\)다. 이 점이 원점과 \(\mathrm{B}\)를 잇는 직선 위에 있다는 조건부터 식으로 쓴다.`,
       trap: R`중점 조건은 \(x\)에서 하나, \(y\)에서 하나로 모두 두 개의 식이다. 하나만 쓰고 넘어가기 쉽다.`
+    },
+    {
+      id: "2027-09-9", exam: "2027-09", no: 9, score: 4,
+      units: ["m2-diff"], memo: "속도가 같아지는 순간의 가속도",
+      body: R`수직선 위를 움직이는 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)가 있다. 시각이
+        \(t\,(t\ge 0)\)일 때 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)의 위치가 각각
+        \[x_{1}=4t^{3}-t^{2}-11t,\qquad x_{2}=2t^{2}+7t+3\]
+        이다. 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)의 속도가 같아지는 순간 두 점 \(\mathrm{P}\), \(\mathrm{Q}\)의
+        가속도를 각각 \(p\), \(q\)라 할 때, \(p-q\)의 값은?`,
+      choices: [R`\(30\)`, R`\(33\)`, R`\(36\)`, R`\(39\)`, R`\(42\)`],
+      answer: 1,
+      start: R`속도는 위치를 한 번, 가속도는 두 번 미분한 것이다. 두 속도를 같게 놓고 \(t\)부터 구한다.`,
+      trap: R`\(2t^{2}-t-3=0\)의 두 근 가운데 하나는 음수다. \(t\ge 0\)이라는 조건이 그것을 걸러 준다.`
+    },
+    {
+      id: "2027-09-10", exam: "2027-09", no: 10, score: 4,
+      units: ["m1-explog"], memo: "지수함수 두 개와 가로 선분의 길이",
+      body: R`상수 \(a\,(a>1)\)에 대하여 직선 \(y=7\)이 두 곡선
+        \(y=16a^{x}\), \(y=\dfrac{1}{4}a^{x}\)과 만나는 점을 각각 \(\mathrm{A}\), \(\mathrm{B}\)라 하자.
+        \(\overline{\mathrm{AB}}=4\)일 때, \(a\)의 값은?`,
+      choices: [R`\(\sqrt{2}\)`, R`\(2\)`, R`\(2\sqrt{2}\)`, R`\(4\)`, R`\(4\sqrt{2}\)`],
+      answer: 3,
+      start: R`두 점의 \(y\)좌표가 \(7\)로 같으니 \(\overline{\mathrm{AB}}\)는 \(x\)좌표의 차다. 두 \(x\)를 로그로 각각 써 놓는다.`,
+      trap: R`두 로그를 따로 계산하면 길어진다. 빼는 순간 한 덩어리로 묶여 \(\log_{a}64=4\)가 된다.`
+    },
+    {
+      id: "2027-09-11", exam: "2027-09", no: 11, score: 4,
+      units: ["m2-integ", "m2-diff"], memo: "적분식으로 주어진 다항함수",
+      body: R`다항함수 \(f(x)\)가 모든 실수 \(x\)에 대하여
+        \[\int_{-1}^{x} f(t)\,dt = xf(x)-2x^{3}-3x^{2}+6\]
+        을 만족시킬 때, \(f(0)\)의 값은?`,
+      choices: [R`\(6\)`, R`\(7\)`, R`\(8\)`, R`\(9\)`, R`\(10\)`],
+      answer: 3,
+      start: R`양변을 \(x\)로 미분한다. 왼쪽은 \(f(x)\)가 되고 오른쪽에서 \(f(x)\)가 지워져 \(f'(x)\)만 남는다.`,
+      trap: R`미분만으로는 적분상수가 안 잡힌다. 아래끝인 \(x=-1\)을 원래 식에 넣는 한 수가 따로 필요하다.`
+    },
+    {
+      id: "2027-09-12", exam: "2027-09", no: 12, score: 4,
+      units: ["m1-trig"], memo: "외접원과 원주각으로 길이 구하기",
+      body: R`그림과 같이 \(\overline{\mathrm{AB}}=4\), \(\overline{\mathrm{AC}}=5\), \(\cos(\angle\mathrm{BAC})=\dfrac{1}{8}\)인
+        삼각형 \(\mathrm{ABC}\)의 외접원에서 점 \(\mathrm{A}\)를 포함하지 않는 호 \(\mathrm{BC}\)
+        위에 점 \(\mathrm{D}\)가 있다. \(\sin(\angle\mathrm{BCD})=\dfrac{\sqrt{14}}{4}\)일 때, 선분 \(\mathrm{BD}\)의
+        길이는?`,
+      figure: "2027-09-12.webp",
+      choices: [R`\(2\sqrt{7}\)`, R`\(\dfrac{12\sqrt{5}}{5}\)`, R`\(\dfrac{7\sqrt{10}}{4}\)`, R`\(4\sqrt{2}\)`, R`\(\dfrac{9\sqrt{10}}{5}\)`],
+      answer: 4,
+      start: R`코사인법칙으로 \(\overline{\mathrm{BC}}\)를 먼저 구한다. 그러면 사인법칙으로 외접원의 반지름이 잡힌다.`,
+      trap: R`\(\angle\mathrm{BCD}\)는 호 \(\mathrm{BD}\)에 대한 원주각이다. 삼각형 \(\mathrm{BCD}\)를 붙들지 말고 외접원 반지름으로 바로 넘어간다.`
+    },
+    {
+      id: "2027-09-13", exam: "2027-09", no: 13, score: 4,
+      units: ["m2-integ"], memo: "정적분과 절댓값, 일차함수 더하기",
+      body: R`최고차항의 계수가 \(6\)인 이차함수 \(f(x)\)가
+        \[f(0)=0,\qquad \int_{0}^{2} f(x)\,dx = 4\]
+        를 만족시킨다. &lt;보기&gt;에서 옳은 것만을 있는 대로 고른 것은?`,
+      noteTitle: "보 기",
+      note: [
+        R`ㄱ. \(\displaystyle\int_{0}^{2}\bigl|f(x)\bigr|\,dx = 6\)`,
+        R`ㄴ. \(g(1)=0\)인 일차함수 \(g(x)\)에 대하여 \(\displaystyle\int_{0}^{2}\bigl(f(x)+g(x)\bigr)dx = 4\)이다.`,
+        R`ㄷ. \(k>6\)인 각각의 실수 \(k\)에 대하여, \(\displaystyle\int_{0}^{2}\bigl(f(x)+h(x)\bigr)dx = 4\)와 \(\displaystyle\int_{0}^{2}\bigl|f(x)+h(x)\bigr|dx = k\)를 동시에 만족시키는 일차함수 \(h(x)\)가 존재한다.`
+      ],
+      choices: [R`ㄱ`, R`ㄱ, ㄴ`, R`ㄱ, ㄷ`, R`ㄴ, ㄷ`, R`ㄱ, ㄴ, ㄷ`],
+      answer: 5,
+      start: R`\(f(0)=0\)이므로 \(f(x)=6x^{2}+bx\)로 놓고 \(\int_{0}^{2}f=4\)에서 \(b\)를 잡는다. \(f(x)=6x(x-1)\)이 나오면 절반은 끝난다.`,
+      trap: R`ㄴ과 ㄷ의 열쇠는 같다. \(\int_{0}^{2}\)의 값이 \(0\)이 되는 일차함수는 \(x-1\)에 상수를 곱한 것뿐이다.`
+    },
+    {
+      id: "2027-09-14", exam: "2027-09", no: 14, score: 4,
+      units: ["m1-seq"], memo: "경우가 갈리는 함수의 합이 자연수가 될 조건",
+      body: R`실수 전체의 집합에서 정의된 함수
+        \[f(x)=\begin{cases}5 &amp; (x\text{가 자연수가 아닌 경우})\\[2pt] \dfrac{1}{x} &amp; (x\text{가 자연수인 경우})\end{cases}\]
+        에 대하여, \(\displaystyle\sum_{k=1}^{n}\frac{f\left(\sqrt[3]{k}\right)}{5f(k)}\)의 값이 자연수가 되도록 하는
+        \(300\) 이하의 자연수 \(n\)의 개수는?`,
+      choices: [R`\(135\)`, R`\(144\)`, R`\(153\)`, R`\(162\)`, R`\(171\)`],
+      answer: 5,
+      start: R`\(k\)가 세제곱수냐 아니냐로 항이 갈린다. 두 경우를 나눠 쓰면 합이 두 덩어리가 된다.`,
+      trap: R`세제곱수가 아닌 항들의 합은 언제나 정수다. 그러니 분수가 될 수 있는 쪽, 곧 세제곱수 항의 합만 따지면 된다.`
+    },
+    {
+      id: "2027-09-15", exam: "2027-09", no: 15, score: 4,
+      units: ["m2-limit"], memo: "분모가 0이 되는 자리와 극한의 존재",
+      body: R`최고차항의 계수가 \(1\)인 이차함수 \(f(x)\)가 다음 조건을
+        만족시킬 때, \(f(2)\)의 값은?`,
+      note: [
+        R`모든 실수 \(a\)에 대하여 \(\displaystyle\lim_{x\to a}\frac{(2x+1)f(x)}{f(x)+f(x-t)}\)의 값이 존재하도록 하는 양수 \(t\)의 집합은 \(\left\{t\ \middle|\ t\ge\dfrac{3}{2}\right\}\)이다.`
+      ],
+      choices: [R`\(\dfrac{5}{2}\)`, R`\(5\)`, R`\(\dfrac{15}{2}\)`, R`\(10\)`, R`\(\dfrac{25}{2}\)`],
+      answer: 4,
+      start: R`분모 \(f(x)+f(x-t)\)는 \(x\)에 대한 이차식이다. 그 판별식을 \(t\)로 나타내면 조건이 \(t\)의 부등식이 된다.`,
+      trap: R`경계인 \(t=\frac{3}{2}\)가 집합에 들어 있다. 그러니 그때는 분모가 중근을 갖고도 극한이 있어야 하고, 그 중근이 분자의 \(2x+1\)이 \(0\)이 되는 자리와 겹쳐야 한다.`
+    },
+    {
+      id: "2027-09-20", exam: "2027-09", no: 20, score: 4,
+      units: ["m1-trig"], memo: "사인과 코사인 곡선의 교점과 넓이의 비",
+      body: R`\(0\le x\le 2\pi\)에서 정의된 두 함수
+        \[f(x)=\sin x,\qquad g(x)=-k\cos x\quad(k>1)\]
+        이 있다. 두 곡선 \(y=f(x)\)와 \(y=g(x)\)가 제1사분면에서
+        만나는 점을 \(\mathrm{A}\), 제4사분면에서 만나는 점을 \(\mathrm{B}\)라 하자.
+        점 \(\mathrm{A}\)를 지나고 \(x\)축에 평행한 직선이 곡선 \(y=g(x)\)와 만나는
+        점 중 \(\mathrm{A}\)가 아닌 점을 \(\mathrm{C}\)라 하고, 점 \(\mathrm{B}\)를 지나고 \(x\)축에
+        평행한 직선이 곡선 \(y=g(x)\)와 만나는 점 중 \(\mathrm{B}\)가 아닌 점을
+        \(\mathrm{D}\)라 하자. 다음은
+        \[(\text{삼각형 CDB의 넓이}):(\text{삼각형 AOD의 넓이})=14:5\]
+        일 때, 상수 \(k\)의 값을 구하는 과정의 일부이다. (단, \(\mathrm{O}\)는 원점이다.)`,
+      bodyAfter: R`<div class="proof-box">
+        <p>두 곡선 \(y=f(x)\)와 \(y=g(x)\)는 그림과 같다.</p>
+        <div class="figure"><img src="assets/figures/2027-09-20.webp" alt="2027학년도 9월 모의평가 20번 그림" loading="lazy"></div>
+        <p>점 \(\mathrm{A}\)의 \(x\)좌표를 \(a\)라 하면 두 점 \(\mathrm{B}\), \(\mathrm{D}\)의 좌표는 다음과 같다.</p>
+        \[\mathrm{B}\left(\fbox{(가)},\ -\sin a\right),\quad \mathrm{D}\left(\fbox{(나)},\ -\sin a\right)\]
+        <p>삼각형 \(\mathrm{CDB}\)의 넓이는</p>
+        \[\frac{1}{2}\times\overline{\mathrm{DB}}\times 2\sin a\]
+        <p>이고,</p>
+        \[(\text{삼각형 AOD의 넓이})=\frac{5}{14}\times(\text{삼각형 CDB의 넓이})\]
+        <p>이므로 \(a=\fbox{(다)}\)이다. 따라서</p>
+        \[k=-\tan\left(\fbox{(다)}\right)\]
+        <p>이다.</p>
+        </div>
+        위의 (가), (나)에 알맞은 식을 각각 \(p(a)\), \(q(a)\)라 하고, (다)에
+        알맞은 수를 \(\alpha\)라 하자. \(3\times\dfrac{p(\alpha)}{q(\alpha)}\)의 값을 구하시오.`,
+      short: true,
+      answer: 17,
+      start: R`두 곡선의 교점은 \(\sin x=-k\cos x\), 곧 \(\tan x=-k\)에서 나온다. 제1사분면 교점이 \(a\)면 제4사분면 교점은 \(a+\pi\)다.`,
+      trap: R`\(\mathrm{D}\)는 \(g\)의 대칭성으로 \(\pi-a\)에 놓인다. 네 점의 \(x\)좌표를 \(a\) 하나로 쓰고 나면 넓이의 비가 \(a\)만의 식이 된다.`
+    },
+    {
+      id: "2027-09-21", exam: "2027-09", no: 21, score: 4,
+      units: ["m2-diff"], memo: "꺾인 두 함수를 더해 미분가능하게 만들기",
+      body: R`최고차항의 계수가 \(1\)인 삼차함수 \(f(x)\)가 다음 조건을
+        만족시킬 때, \(f(0)\)의 최댓값과 최솟값의 곱을 구하시오.`,
+      note: [
+        R`(가) 방정식 \(f(x)=0\)의 서로 다른 실근의 개수는 \(2\)이다.`,
+        R`(나) \(g(x)=\begin{cases}-f(x) &amp; (f(x)\ge 0)\\ 7f(x) &amp; (f(x)&lt;0)\end{cases}\)일 때, 어떤 실수 \(a\)에 대하여 함수 \(h(x)=g(x)+\bigl|(x-1)(x-a)(x-4+a)\bigr|\)가 실수 전체의 집합에서 미분가능하다.`
+      ],
+      short: true,
+      answer: 12,
+      start: R`\(g\)는 \(f\)의 부호가 바뀌는 자리에서 꺾인다. 그 꺾임을 절댓값 쪽 꺾임이 정확히 지워야 \(h\)가 미분가능해진다.`,
+      trap: R`(가)에서 실근이 두 개라는 건 삼차함수가 중근을 하나 갖는다는 뜻이다. 중근에서는 \(f\)의 부호가 바뀌지 않아 꺾이지도 않는다.`
+    },
+    {
+      id: "2027-09-22", exam: "2027-09", no: 22, score: 4,
+      units: ["m1-explog"], memo: "지수·로그 곡선과 포물선, 직사각형",
+      body: R`상수 \(a\,(a>1)\)과 직사각형 \(\mathrm{ABCD}\)가 다음 조건을 만족시킨다.`,
+      note: [
+        R`(가) 두 곡선 \(y=a^{x}\), \(y=2x^{2}-\dfrac{7}{2}x+3\)은 모두 점 \(\mathrm{A}\)와 점 \(\mathrm{B}\)를 지난다.`,
+        R`(나) 두 곡선 \(y=\log_{a}\left(x-\dfrac{1}{4}\right)-\dfrac{1}{4}\), \(y=2x^{2}-\dfrac{15}{2}x+\dfrac{15}{2}\)는 모두 점 \(\mathrm{C}\)와 점 \(\mathrm{D}\)를 지난다.`
+      ],
+      bodyAfter: R`\(a^{3}=\dfrac{q}{p}\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인
+        자연수이다.)`,
+      short: true,
+      answer: 97,
+      start: R`(나)의 로그 곡선은 \(y=a^{x}\)를 직선 \(y=x-\dfrac{1}{4}\)에 대하여 대칭이동한 것이다. 먼저 이것부터 확인한다.`,
+      trap: R`두 포물선은 \((1,-1)\)만큼 떨어진 평행이동 관계다. 대칭 하나와 평행이동 하나, 이 두 관계가 네 점을 직사각형으로 묶는다.`
     }
   ];
 
