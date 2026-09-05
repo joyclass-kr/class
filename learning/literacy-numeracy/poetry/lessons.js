@@ -326,6 +326,60 @@
                 "eobu-refrain", "eobu-scene", "eobu-gull",
                 "gwandong-why", "gwandong-feel", "gwandong-road",
                 "gasa-shape"
+            ]),
+
+        // ── 고1 ───────────────────────────────────────────────────────
+        lesson("h1-jiyong", 10, "정지용의 산과 겨울", "감정을 지운 자리",
+            ["jiyong-bi", "jiyong-indongcha", "jiyong-jangsusan", "jiyong-yurichang"],
+            [
+                "bi-start", "bi-no-feeling", "bi-bird",
+                "indong-winter", "indong-warm",
+                "jangsu-quiet", "jangsu-endure", "jangsu-form",
+                "jiyong-late"
+            ]),
+        lesson("h1-two-faces", 10, "김영랑과 이육사, 다른 얼굴", "아는 이름의 낯선 시",
+            ["yeongrang-dok", "yeongrang-buk", "yuksa-jayagok", "yeongrang-doldam"],
+            [
+                "dok-what", "dok-friend", "dok-end",
+                "buk-leather", "buk-jeongjungdong",
+                "jayagok-home", "jayagok-frame",
+                "two-faces"
+            ]),
+        lesson("h1-dongju", 10, "윤동주, 잃어버린 것을 찾아서", "담 저쪽의 나",
+            ["dongju-gil", "dongju-gan", "dongju-chamhoerok"],
+            [
+                "gil-lost", "gil-wall", "gil-sky", "gil-why-walk",
+                "gan-stories", "gan-eagle", "gan-turtle",
+                "dongju-search"
+            ]),
+        lesson("h1-leesang", 10, "이상, 낯선 시", "띄어쓰기를 없앤 까닭",
+            ["leesang-ogamdo", "leesang-geoul"],
+            [
+                "ogamdo-children", "ogamdo-alley", "ogamdo-fear", "ogamdo-why",
+                "leesang-two"
+            ]),
+        lesson("h1-hyangga", 10, "향가 더 읽기", "열 줄 노래의 짜임",
+            ["hyangga-changiparang", "hyangga-anminga", "hyangga-jemangmaega"],
+            [
+                "changiparang-moon", "changiparang-pine",
+                "anmin-family", "anmin-peace",
+                "hyangga-ah", "hyangga-ten"
+            ]),
+        lesson("h1-joseon", 10, "조선의 노래", "나라의 노래와 한 사람의 노래",
+            ["joseon-yongbi", "jeongcheol-samiin"],
+            [
+                "yongbi-tree", "yongbi-meaning", "yongbi-first",
+                "samiin-who", "samiin-time", "samiin-plum",
+                "joseon-purpose"
+            ]),
+        lesson("h1-textbook", 10, "교과서에서 읽는 시", "본문은 교과서에서",
+            ["baekseok-yeoseung", "hyeonseung-platanus", "gwangseop-bidulgi", "hyeonggi-nakhwa"],
+            [
+                "yeoseung-life", "yeoseung-time", "yeoseung-last",
+                "platanus-friend", "platanus-soul",
+                "bidulgi-lost", "bidulgi-symbol",
+                "nakhwa-time", "nakhwa-fruit",
+                "textbook-h1-common"
             ])
     ]);
 
@@ -336,6 +390,7 @@
         { grade: 6, label: "초등 6학년", short: "초6" },
         { grade: 7, label: "중학 1학년", short: "중1" },
         { grade: 8, label: "중학 2학년", short: "중2" },
-        { grade: 9, label: "중학 3학년", short: "중3" }
+        { grade: 9, label: "중학 3학년", short: "중3" },
+        { grade: 10, label: "고등 1학년", short: "고1" }
     ]);
 })();
