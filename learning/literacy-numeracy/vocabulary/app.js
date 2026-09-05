@@ -239,11 +239,10 @@
 
     function renderLevelGroups() {
         elements.stageGroups.replaceChildren();
-        const preferredLevel = Number(state.currentLevel || state.recommendedLesson?.level || 1);
         STAGES.forEach((stage) => {
             const section = document.createElement("details");
             section.className = "stage-group";
-            section.open = stage.levels.includes(preferredLevel);
+            section.open = false;
 
             const heading = document.createElement("summary");
             heading.className = "stage-heading";
