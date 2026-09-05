@@ -106,7 +106,7 @@
                 if (hostPane?.id) hostTab.setAttribute("aria-controls", hostPane.id);
             }
             if (joinTab) {
-                joinTab.textContent = "방번호 입력";
+                joinTab.textContent = "JOIN ROOM";
                 joinTab.setAttribute("aria-label", "방 번호 입력 방식 선택");
                 joinTab.setAttribute("role", "tab");
                 if (joinPane?.id) joinTab.setAttribute("aria-controls", joinPane.id);

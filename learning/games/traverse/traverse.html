@@ -63,7 +63,7 @@ body:has(#gameScreen:not(.hidden)){height:100dvh;min-height:0;overflow:hidden}
 <section id="lobbyScreen" class="screen hidden mp-lobby-compact" data-multiplayer-lobby><div class="panel">
 <h1 class="title">SHAPE CROSSING</h1><div class="subtitle">도형 건너기 · 2인 또는 4인 · 3인 플레이 금지</div>
 <div class="mp-lobby-card mp-lobby-player-name">PLAYER <span id="savedName">-</span></div>
-<div class="mp-lobby-tabs"><button id="hostTab" class="tab active" type="button">CREATE ROOM</button><button id="joinTab" class="tab" type="button" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button></div>
+<div class="mp-lobby-tabs"><button id="hostTab" class="tab active" type="button">CREATE ROOM</button><button id="joinTab" class="tab" type="button" aria-label="방 번호 입력 방식 선택" role="tab">JOIN ROOM</button></div>
 <div id="hostPane" class="mp-lobby-card"><div class="mp-lobby-room-code" id="roomCode">----</div><div class="mp-lobby-status" id="hostStatus">방을 만드는 중입니다.</div></div>
 <div id="joinPane" class="mp-lobby-card hidden"><div class="mp-lobby-row"><input id="joinCode" class="mp-lobby-code-input" maxlength="4" inputmode="numeric" placeholder="ROOM CODE · 4 DIGITS"><button id="joinBtn" class="btn primary" type="button" aria-label="입력한 방 번호로 참가">참가</button></div><div class="mp-lobby-status" id="joinStatus">방장이 알려준 번호를 입력하세요.</div></div>
 <div class="mp-lobby-card"><div class="mp-lobby-status" id="lobbyGuide">2명 또는 4명이 모이면 시작할 수 있습니다.</div><div class="mp-lobby-player-list" id="lobbyPlayers"></div></div>
