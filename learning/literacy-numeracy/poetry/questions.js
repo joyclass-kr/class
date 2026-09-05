@@ -4721,5 +4721,471 @@ window.POETRY_QUESTIONS = Object.freeze([
         ],
         answer: "잃음과 떠남",
         explanation: "가족을 잃고, 영혼을 나누지 못하고, 보금자리를 잃고, 꽃이 져요."
+    },
+
+    // ── 고2·3 · 관동별곡 깊이 읽기 ────────────────────────────────
+    {
+        id: "gw2-jinheol",
+        poemId: "jeongcheol-gwandong-2",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "진헐대에서 본 금강산 봉우리들을 무엇에 빗대었나요?",
+        choices: [
+            "꽂아 놓은 연꽃과 묶어 놓은 백옥",
+            "달리는 말과 나는 새",
+            "구름과 안개"
+        ],
+        answer: "꽂아 놓은 연꽃과 묶어 놓은 백옥",
+        explanation: "날거든 뛰지 마나, 섰거든 솟지 마나. 봉우리마다 움직이는 듯 그렸어요."
+    },
+    {
+        id: "gw2-mangko",
+        poemId: "jeongcheol-gwandong-2",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "하늘에 치밀어 천만 겁이 지나도 굽힐 줄 모르는 망고대와 혈망봉은 무엇을 가리킬까요?",
+        choices: [
+            "임금께 바른말을 하며 굽히지 않는 충신",
+            "높은 산 그 자체",
+            "먼 길을 가는 나그네"
+        ],
+        answer: "임금께 바른말을 하며 굽히지 않는 충신",
+        explanation: "'무슨 일을 사뢰리라'가 임금께 아뢴다는 말이에요. 봉우리에 신하의 뜻을 실었어요."
+    },
+    {
+        id: "gw2-whale",
+        poemId: "jeongcheol-gwandong-2",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "망양정에서 본 '노한 고래'는 무엇인가요?",
+        choices: ["세차게 치는 파도", "진짜 고래", "먼 배"],
+        answer: "세차게 치는 파도",
+        explanation: "은산을 꺾어 내리는 듯한 흰 물결이에요."
+    },
+    {
+        id: "gw2-snow",
+        poemId: "jeongcheol-gwandong-2",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "'오월 장천에 백설'은 무엇인가요?",
+        choices: ["부서지는 물보라", "때 아닌 눈", "흰 구름"],
+        answer: "부서지는 물보라",
+        explanation: "오월 하늘에 눈이 웬 말이냐고 놀라는 척하며 파도를 그려요."
+    },
+    {
+        id: "gw2-dream",
+        poemId: "jeongcheol-gwandong-2",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "꿈속 사람은 말하는 이를 누구라고 했나요?",
+        choices: [
+            "하늘나라의 참된 신선",
+            "관동의 관찰사",
+            "길 잃은 나그네"
+        ],
+        answer: "하늘나라의 참된 신선",
+        explanation: "경전 한 글자를 잘못 읽어 인간 세상에 내려온 신선이래요."
+    },
+    {
+        id: "gw2-wine",
+        poemId: "jeongcheol-gwandong-2",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "술을 온 세상에 나눠 백성을 다 취하게 한 뒤에 다시 만나자는 말은 무엇을 뜻하나요?",
+        choices: [
+            "백성을 먼저 돌보고 내 즐거움은 나중에",
+            "술이 모자란다는 것",
+            "신선이 되기 싫다는 것"
+        ],
+        answer: "백성을 먼저 돌보고 내 즐거움은 나중에",
+        explanation: "자연을 즐기고 싶은 마음과 벼슬아치의 책무 사이에서 책무를 고른 거예요."
+    },
+    {
+        id: "gw2-moon",
+        poemId: "jeongcheol-gwandong-2",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "마지막 줄의 명월은 무엇으로 읽을 수 있나요?",
+        choices: [
+            "온 세상을 고루 비추는 임금의 덕",
+            "밤바다의 달",
+            "떠나온 고향"
+        ],
+        answer: "온 세상을 고루 비추는 임금의 덕",
+        explanation: "천산만락에 비치지 않는 데가 없다는 말로 노래를 닫아요."
+    },
+    {
+        id: "gw2-structure",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "「관동별곡」의 첫머리와 이 대목을 함께 떠올려 보세요.",
+        sentence: "「관동별곡」 전체는 어떤 차례로 짜여 있나요?",
+        choices: [
+            "서울을 떠나 금강산을 거쳐 동해로, 끝에 꿈",
+            "동해에서 금강산으로, 끝에 서울",
+            "꿈에서 시작해 서울로"
+        ],
+        answer: "서울을 떠나 금강산을 거쳐 동해로, 끝에 꿈",
+        explanation: "길을 따라가는 노래라 여정이 곧 짜임이에요."
+    },
+    {
+        id: "gw2-two-minds",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "「관동별곡」 전체를 떠올려 보세요.",
+        sentence: "노래 내내 말하는 이 안에서 부딪치는 두 마음은 무엇인가요?",
+        choices: [
+            "자연을 즐기고 싶은 마음과 벼슬아치의 책무",
+            "고향 생각과 여행의 즐거움",
+            "임금에 대한 원망과 충성"
+        ],
+        answer: "자연을 즐기고 싶은 마음과 벼슬아치의 책무",
+        explanation: "경치에 취하다가도 백성과 임금을 떠올려요. 시험은 이 갈등을 묻습니다."
+    },
+
+    // ── 고2·3 · 속미인곡 ──────────────────────────────────────────
+    {
+        id: "sm-two",
+        poemId: "jeongcheol-songmiin",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "이 노래는 어떻게 짜여 있나요?",
+        choices: [
+            "두 여인이 주고받는 대화",
+            "한 여인의 혼잣말",
+            "임금에게 올리는 글"
+        ],
+        answer: "두 여인이 주고받는 대화",
+        explanation: "묻는 이가 짧게, 답하는 이가 길게 사연을 풀고, 끝에서 묻는 이가 한 줄 보태요."
+    },
+    {
+        id: "sm-why",
+        poemId: "jeongcheol-songmiin",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "님과 헤어진 까닭을 누구 탓으로 돌리나요?",
+        choices: [
+            "내 죄와 조물의 탓",
+            "님의 탓",
+            "묻는 이의 탓"
+        ],
+        answer: "내 죄와 조물의 탓",
+        explanation: "하늘도 사람도 원망하지 않아요. 임금을 탓하지 않는 신하의 태도예요."
+    },
+    {
+        id: "sm-worry",
+        poemId: "jeongcheol-songmiin",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "님을 위해 하는 걱정은 무엇인가요?",
+        choices: [
+            "추울까 더울까, 밤과 아침 진지는 어떤지",
+            "님이 나를 잊었을까",
+            "님이 다른 사람을 만날까"
+        ],
+        answer: "추울까 더울까, 밤과 아침 진지는 어떤지",
+        explanation: "곁에서 모시던 사람의 걱정이에요. 자기 처지보다 님의 살림을 걱정해요."
+    },
+    {
+        id: "sm-mountain",
+        poemId: "jeongcheol-songmiin",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "높은 뫼에 올라도 님 계신 곳을 못 보게 하는 것은 무엇인가요?",
+        choices: ["구름과 안개", "밤과 어둠", "먼 거리"],
+        answer: "구름과 안개",
+        explanation: "일월을 가리는 구름과 안개는 임금의 눈을 가리는 무리로 읽어요."
+    },
+    {
+        id: "sm-boat",
+        poemId: "jeongcheol-songmiin",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "물가에 가니 무엇이 있었나요?",
+        choices: ["사공 없이 걸린 빈 배", "님이 탄 배", "떠나는 나룻배"],
+        answer: "사공 없이 걸린 빈 배",
+        explanation: "산에서도 물가에서도 길이 막혀요. 소식이 끊긴 처지예요."
+    },
+    {
+        id: "sm-dream",
+        poemId: "jeongcheol-songmiin",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "꿈에 본 님은 어떤 모습이었나요?",
+        choices: ["옥 같은 얼굴이 반이나 늙었어요", "예전 그대로였어요", "얼굴을 볼 수 없었어요"],
+        answer: "옥 같은 얼굴이 반이나 늙었어요",
+        explanation: "말을 다 못 하고 닭 울음에 잠이 깨요."
+    },
+    {
+        id: "sm-end",
+        poemId: "jeongcheol-songmiin",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "죽어서 무엇이 되겠다고 했고, 묻는 이는 무엇이 되라고 했나요?",
+        choices: [
+            "지는 달이 되겠다 하니 궂은비가 되라고",
+            "구름이 되겠다 하니 바람이 되라고",
+            "새가 되겠다 하니 꽃이 되라고"
+        ],
+        answer: "지는 달이 되겠다 하니 궂은비가 되라고",
+        explanation: "달은 멀리서 비추지만 비는 님의 옷을 적셔요. 더 가까이 가라는 말이에요."
+    },
+    {
+        id: "sm-vs-samiin",
+        poemId: "jeongcheol-samiin",
+        category: "견주어 읽기",
+        prompt: "「사미인곡」과 「속미인곡」을 나란히 놓고 답해 보세요.",
+        sentence: "「속미인곡」이 「사미인곡」과 다른 점은 무엇인가요?",
+        choices: [
+            "혼잣말이 아니라 대화이고 말이 더 순우리말에 가까워요",
+            "임금 대신 부모를 그리워해요",
+            "봄만 노래해요"
+        ],
+        answer: "혼잣말이 아니라 대화이고 말이 더 순우리말에 가까워요",
+        explanation: "같은 사람이 같은 마음을 다른 틀로 두 번 썼어요. 견주어 묻기 좋은 짝이에요."
+    },
+
+    // ── 고2·3 · 규원가 ────────────────────────────────────────────
+    {
+        id: "gy-who",
+        poemId: "heo-gyuwonga",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "말하는 이는 어떤 처지인가요?",
+        choices: [
+            "남편이 돌아오지 않는 채 늙어 가는 여인",
+            "먼 길 떠난 나그네",
+            "벼슬에서 물러난 선비"
+        ],
+        answer: "남편이 돌아오지 않는 채 늙어 가는 여인",
+        explanation: "규방의 원망이라는 제목 그대로예요."
+    },
+    {
+        id: "gy-husband",
+        poemId: "heo-gyuwonga",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "남편은 어떤 사람이라고 했나요?",
+        choices: ["서울의 놀기 좋아하는 가벼운 사내", "높은 벼슬아치", "가난한 선비"],
+        answer: "서울의 놀기 좋아하는 가벼운 사내",
+        explanation: "'장안 유협 경박자'예요. 꿈같이 만났다가 살얼음 딛듯 살았어요."
+    },
+    {
+        id: "gy-face",
+        poemId: "heo-gyuwonga",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "세월이 흘러 얼굴이 어떻게 되었다고 했나요?",
+        choices: [
+            "고운 얼굴이 밉살스러운 얼굴이 되었다고",
+            "더 고와졌다고",
+            "그대로라고"
+        ],
+        answer: "고운 얼굴이 밉살스러운 얼굴이 되었다고",
+        explanation: "베틀의 북이 지나가듯 세월이 빨랐대요."
+    },
+    {
+        id: "gy-sleep",
+        poemId: "heo-gyuwonga",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "꿈에서라도 보려는데 잠을 깨우는 것은 무엇인가요?",
+        choices: ["지는 잎과 우는 벌레", "닭 울음", "빗소리"],
+        answer: "지는 잎과 우는 벌레",
+        explanation: "아무 죄 없는 잎과 벌레를 원수라 불러요. 마음이 그만큼 날카로워요."
+    },
+    {
+        id: "gy-star",
+        poemId: "heo-gyuwonga",
+        category: "견주어 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "견우직녀를 끌어온 까닭은 무엇인가요?",
+        choices: [
+            "그들은 일 년에 한 번은 만나는데 나는 소식조차 없어서",
+            "칠월칠석이 다가와서",
+            "은하수가 아름다워서"
+        ],
+        answer: "그들은 일 년에 한 번은 만나는데 나는 소식조차 없어서",
+        explanation: "가장 슬픈 이별과 견주어 제 처지가 더 못하다고 해요."
+    },
+    {
+        id: "gy-end",
+        poemId: "heo-gyuwonga",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "마지막 탄식은 무엇인가요?",
+        choices: [
+            "복 없는 고운 여인이 나 같은 이 또 있을까",
+            "님이 곧 오실 것이다",
+            "이제 잊겠다"
+        ],
+        answer: "복 없는 고운 여인이 나 같은 이 또 있을까",
+        explanation: "님 때문에 살동말동 하다는 말로 닫아요. 원망이 끝까지 풀리지 않아요."
+    },
+    {
+        id: "gy-author",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "「규원가」와 「사미인곡」을 떠올려 보세요.",
+        sentence: "두 노래 다 여인의 목소리인데, 무엇이 다른가요?",
+        choices: [
+            "「규원가」는 여인이 여인으로서 쓴 노래고, 「사미인곡」은 남자 신하가 여인의 말투를 빌린 노래예요",
+            "둘 다 신하가 임금을 그리워해요",
+            "둘 다 남편을 원망해요"
+        ],
+        answer: "「규원가」는 여인이 여인으로서 쓴 노래고, 「사미인곡」은 남자 신하가 여인의 말투를 빌린 노래예요",
+        explanation: "허난설헌은 실제로 이런 처지였고, 정철은 임금 그리는 마음을 그렇게 꾸몄어요."
+    },
+
+    // ── 고2·3 · 누항사와 선상탄 ───────────────────────────────────
+    {
+        id: "nu-poor",
+        poemId: "bakinro-nuhangsa",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "말하는 이의 살림은 어떤가요?",
+        choices: [
+            "누추한 곳 초막에서 서 홉 밥 닷 홉 죽",
+            "넉넉한 기와집",
+            "떠도는 나그네"
+        ],
+        answer: "누추한 곳 초막에서 서 홉 밥 닷 홉 죽",
+        explanation: "썩은 짚이 땔감이고 연기만 많대요. 가난을 숨기지 않아요."
+    },
+    {
+        id: "nu-attitude",
+        poemId: "bakinro-nuhangsa",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "가난을 어떻게 받아들이나요?",
+        choices: [
+            "원망하지 않고 이만하면 족하다고",
+            "부끄러워 숨긴다고",
+            "부자가 되겠다고"
+        ],
+        answer: "원망하지 않고 이만하면 족하다고",
+        explanation: "빈이무원이 어렵다지만 서러운 뜻은 없다고 해요."
+    },
+    {
+        id: "nu-goal",
+        poemId: "bakinro-nuhangsa",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "평생의 뜻으로 삼는 것은 무엇인가요?",
+        choices: [
+            "충효와 형제 우애와 벗과의 믿음",
+            "따뜻한 옷과 배부른 밥",
+            "높은 벼슬"
+        ],
+        answer: "충효와 형제 우애와 벗과의 믿음",
+        explanation: "온포에는 뜻이 없다고 못 박아요."
+    },
+    {
+        id: "nu-fate",
+        poemId: "bakinro-nuhangsa",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "길흉화복은 어디에 맡겨 두었나요?",
+        choices: ["하늘", "임금", "벗"],
+        answer: "하늘",
+        explanation: "내 힘으로 안 되는 것은 하늘에 두고 내 할 일만 하겠다는 태도예요."
+    },
+    {
+        id: "ss-why",
+        poemId: "bakinro-seonsangtan",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "말하는 이가 배에 오른 까닭은 무엇인가요?",
+        choices: [
+            "늙고 병들었지만 수군으로 보내져서",
+            "고기잡이를 하려고",
+            "유람을 하려고"
+        ],
+        answer: "늙고 병들었지만 수군으로 보내져서",
+        explanation: "나라를 지키는 중요한 곳이니 병들었다고 앉아 있을 수 없대요."
+    },
+    {
+        id: "ss-see",
+        poemId: "bakinro-seonsangtan",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "대마도를 굽어보는 마음은 어떤가요?",
+        choices: ["분한 기운에 눈을 부릅떠요", "그리워해요", "두려워 떨어요"],
+        answer: "분한 기운에 눈을 부릅떠요",
+        explanation: "왜적이 쳐들어온 쪽이에요. 전쟁의 기운이 구름처럼 쌓였대요."
+    },
+    {
+        id: "gasa-late",
+        poemId: "",
+        category: "견주어 읽기",
+        prompt: "「누항사」와 「선상탄」을 떠올려 보세요.",
+        sentence: "두 노래를 지은 박인로는 어떤 사람인가요?",
+        choices: [
+            "임진왜란을 겪은 무인이자 가난한 선비",
+            "높은 벼슬을 지낸 재상",
+            "궁궐의 여인"
+        ],
+        answer: "임진왜란을 겪은 무인이자 가난한 선비",
+        explanation: "전쟁 뒤의 가사라 정철의 가사보다 살림과 현실이 많이 들어와요."
+    },
+
+    // ── 고2·3 · 농가월령가 ────────────────────────────────────────
+    {
+        id: "ng-order",
+        poemId: "jeonghakyu-nongga",
+        category: "표현 찾기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "이 노래는 어떤 차례로 짜여 있나요?",
+        choices: ["정월부터 열두 달 차례로", "봄 여름 가을 겨울로", "하루의 아침부터 밤까지"],
+        answer: "정월부터 열두 달 차례로",
+        explanation: "「동동」과 같은 달거리예요."
+    },
+    {
+        id: "ng-first",
+        poemId: "jeonghakyu-nongga",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "정월의 절기는 무엇인가요?",
+        choices: ["입춘과 우수", "경칩과 춘분", "청명과 곡우"],
+        answer: "입춘과 우수",
+        explanation: "산골엔 눈이 남았지만 들에는 봄기운이 돌아요."
+    },
+    {
+        id: "ng-king",
+        poemId: "jeonghakyu-nongga",
+        category: "장면 확인",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "임금이 한 일은 무엇인가요?",
+        choices: ["농사를 권하는 말씀을 온 고을에 내렸어요", "세금을 올렸어요", "군사를 모았어요"],
+        answer: "농사를 권하는 말씀을 온 고을에 내렸어요",
+        explanation: "백성을 아끼고 농사를 무겁게 여긴다는 말이에요."
+    },
+    {
+        id: "ng-purpose",
+        poemId: "jeonghakyu-nongga",
+        category: "마음 읽기",
+        prompt: "노래를 읽고 답해 보세요.",
+        sentence: "이 노래를 지은 까닭은 무엇일까요?",
+        choices: [
+            "달마다 할 농사일을 가르치고 권하려고",
+            "임금을 기리려고",
+            "님을 그리워하려고"
+        ],
+        answer: "달마다 할 농사일을 가르치고 권하려고",
+        explanation: "노래로 외우면 농사 달력이 돼요."
+    },
+    {
+        id: "ng-vs-dongdong",
+        poemId: "goryeo-dongdong",
+        category: "견주어 읽기",
+        prompt: "「동동」과 「농가월령가」를 나란히 놓고 답해 보세요.",
+        sentence: "둘 다 달마다 이어지는데 무엇이 다른가요?",
+        choices: [
+            "하나는 님 그리움을, 하나는 농사일을 노래해요",
+            "하나는 열두 달, 하나는 여섯 달이에요",
+            "둘 다 농사를 노래해요"
+        ],
+        answer: "하나는 님 그리움을, 하나는 농사일을 노래해요",
+        explanation: "같은 틀에 다른 내용이에요. 견주어 묻기 좋은 짝이에요."
     }
 ]);

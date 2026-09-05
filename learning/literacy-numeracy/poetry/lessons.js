@@ -380,6 +380,40 @@
                 "bidulgi-lost", "bidulgi-symbol",
                 "nakhwa-time", "nakhwa-fruit",
                 "textbook-h1-common"
+            ]),
+
+        // ── 고2·3 · 수능 고전시가 ─────────────────────────────────────
+        lesson("h2-gwandong", 11, "관동별곡 깊이 읽기", "금강산·동해·꿈",
+            ["jeongcheol-gwandong-2", "jeongcheol-gwandong"],
+            [
+                "gw2-jinheol", "gw2-mangko", "gw2-whale", "gw2-snow",
+                "gw2-dream", "gw2-wine", "gw2-moon",
+                "gw2-structure", "gw2-two-minds"
+            ]),
+        lesson("h2-songmiin", 11, "속미인곡", "두 여인의 대화",
+            ["jeongcheol-songmiin", "jeongcheol-samiin"],
+            [
+                "sm-two", "sm-why", "sm-worry", "sm-mountain", "sm-boat", "sm-dream", "sm-end",
+                "sm-vs-samiin"
+            ]),
+        lesson("h2-gyuwon", 11, "규원가", "여인이 쓴 여인의 노래",
+            ["heo-gyuwonga", "jeongcheol-samiin"],
+            [
+                "gy-who", "gy-husband", "gy-face", "gy-sleep", "gy-star", "gy-end",
+                "gy-author"
+            ]),
+        lesson("h2-nuhang", 11, "누항사와 선상탄", "전쟁 뒤의 가사",
+            ["bakinro-nuhangsa", "bakinro-seonsangtan"],
+            [
+                "nu-poor", "nu-attitude", "nu-goal", "nu-fate",
+                "ss-why", "ss-see",
+                "gasa-late"
+            ]),
+        lesson("h2-nongga", 11, "농가월령가", "열두 달 농사 노래",
+            ["jeonghakyu-nongga", "goryeo-dongdong"],
+            [
+                "ng-order", "ng-first", "ng-king", "ng-purpose",
+                "ng-vs-dongdong"
             ])
     ]);
 
@@ -391,6 +425,7 @@
         { grade: 7, label: "중학 1학년", short: "중1" },
         { grade: 8, label: "중학 2학년", short: "중2" },
         { grade: 9, label: "중학 3학년", short: "중3" },
-        { grade: 10, label: "고등 1학년", short: "고1" }
+        { grade: 10, label: "고등 1학년", short: "고1" },
+        { grade: 11, label: "고등 2·3학년", short: "고2·3" }
     ]);
 })();
