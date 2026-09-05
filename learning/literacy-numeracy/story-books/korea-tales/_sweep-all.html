@@ -3,6 +3,12 @@
 <body><pre id="out">…</pre><iframe id="frame"></iframe><script>
 const out=document.getElementById('out'),frame=document.getElementById('frame');
 const BOOKS=['agijangsu-uturi','bak-hyeokgeose','bakssijeon','bame-chajaon-dokkaebi','banggwi-myeoneuri','banjjogi','barideggi','bongi-kimseondal','cheonggaeguri','chunhyangjeon','dangun','deuljwi-sontop','dokkaebi-bangmangi','dokkaebi-gamtu','dukkeobi-tokki-horangi','eunhye-dukkeobi','eunhye-kkachi','gangdo-jabeun-gae','geumdokki-eundokki','geuneul-san-saram','gotgam-horangi','gureongdeongdeong','gyeonu-jiknyeo','haewa-dari-doen-onui','halmikkot','heungbujeon','hokburi-yeonggam','honggildongjeon','horangi-hyeongnim','horangi-sogin-tokki','hwangso-nongbu','imgeumnim-gwi','iyagi-jumeoni','jangkkijeon','jaringobi','jeonuchijeon','jige-iyagi','jinju-geowi','jopssal-han-tol','josin-ui-kkum','juin-guhan-nureongi','jumong','jwi-sawi','kim-suro','kkoe-manheun-sonyeon','kkongji-datbal','kongjwi-patjwi','mangduseok-jaepan','muyeongtap','myeolchi-kkum','nai-jarang','namukkun-seonnyeo','ondal-pyeonggang','onggojipjeon','patjuk-halmeom','ppalgan-buchae','pureun-gusul','samhyeongje-jaeju','samnyeon-gogae','seodong-seonhwa','seok-talhae','simcheongjeon','singihan-jeolgu','tokki-jaepan','tokkijeon','uijoheun-hyeongje','ureongi-gaksi','yeoni-beodeul','yeonorang-seonyeo','yosul-hangari'];
+// 서버가 죽거나 중간에 끊기면 처음부터 다시 돌릴 것 없이 남은 것만 본다.
+// ?from=tokki-jaepan (거기서부터) · ?only=a,b,c (그 책들만)
+const 고르기=new URLSearchParams(location.search);
+const only=고르기.get('only'), from=고르기.get('from');
+const 볼책=only?only.split(',').map(s=>s.trim()).filter(Boolean)
+       :from?BOOKS.slice(Math.max(0,BOOKS.indexOf(from))):BOOKS;
 const SIZES=[[1366,768],[1280,720],[1920,1080],[810,1080],[768,1024],[1024,768]];
 // 글씨는 전권·전화면이 같다. 칸이 모자라면 그 칸을 굴리면 그만이므로
 // 굴러가는 넘침은 흠이 아니다. 잘려서 못 읽는 것만 흠이다.
@@ -18,7 +24,7 @@ function probe(){const bad=[],roll=[];
    if(moved) roll.push(line); else bad.push(line+' \u2717\uc798\ub9bc('+oy+')');});}
  current=0;paint();return {bad:bad,roll:roll};}
 (async()=>{const lines=[];
- for(const b of BOOKS){const res=[];
+ for(const b of 볼책){const res=[];
   const roll=[];
   // 우리말로 한 번, 영어판이 있으면 영어로 한 번 더 잰다.
   // 영어는 글 길이가 달라서 우리말이 안 넘쳐도 넘칠 수 있다.
