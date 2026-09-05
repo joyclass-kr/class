@@ -296,6 +296,565 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "👂",
+        art: "cover.webp",
+        title: "The King's Donkey Ears",
+        intro: [
+            "This story really is told in Korea. Its king is Gyeongmun of Silla, and it is in the Samguk Yusa, put together by the monk Iryeon.",
+            "The bamboo cut down and the cornel trees planted are in the Samguk Yusa too. People a thousand years ago laughed at this story.",
+            "Greece has one very like it. King Midas gets donkey ears, and a barber shouts into a hole, and the reeds carry his words."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Ears Long Overnight",
+            beats: [
+                {
+                    art: "01-morning.webp",
+                    emoji: "👂",
+                    left: [
+                        "In Silla there was a king called Gyeongmun.",
+                        "He was good and hard-working, and the people followed him gladly.",
+                        "In a drought he opened the stores; in a flood he went out himself.",
+                        "The people were very fond of that king.",
+                        "But then, one morning."
+                    ],
+                    right: [
+                        "The king woke and was scratching his head when his hand stopped.",
+                        "He was still half asleep.",
+                        "Something long and soft was there under his fingers.",
+                        "The king felt over his head with both hands.",
+                        "One on the left, one on the right."
+                    ]
+                },
+                {
+                    art: "02-mirror.webp",
+                    emoji: "😱",
+                    left: [
+                        "The king jumped up and ran to the mirror.",
+                        "He ran barefoot, without stopping for shoes.",
+                        "His topknot was still undone.",
+                        { t: "\"Wh-what is this! What is wrong with my ears!\"", v: "old" },
+                        "He shouted it without meaning to, at what the mirror showed."
+                    ],
+                    right: [
+                        "His ears had grown longer than his face.",
+                        "They were donkey ears and nothing else.",
+                        "Rub his eyes as he might, they stayed.",
+                        "Pull at them with his hands, they stayed.",
+                        "The strength went out of his legs and the king sat down."
+                    ]
+                },
+                {
+                    art: "03-hat.webp",
+                    emoji: "👑",
+                    left: [
+                        "The king sent for the crown-maker.",
+                        "He had him brought in by the back door so nobody would know.",
+                        { t: "\"Make me a crown big and high enough to cover the ears.\"", v: "old" },
+                        { t: "\"Never let a word of what you saw today out of your mouth.\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"Yes, yes! I would give my life on it!\"", v: "man" },
+                        "The crown-maker bowed, shaking all over.",
+                        "In a fortnight a great gold crown was finished.",
+                        "From that day the king appeared wearing that crown.",
+                        "The ears were hidden away completely."
+                    ]
+                },
+                {
+                    art: "04-suspicion.webp",
+                    emoji: "🤔",
+                    left: [
+                        "But the officials began to mutter.",
+                        "Look at it how they might, it was odd.",
+                        { t: "\"His Majesty never takes that crown off these days.\"", v: "man" },
+                        { t: "\"He wears it in his sleep, they say.\"", v: "man" },
+                        { t: "\"Does his neck not ache?\"", v: "man" },
+                        "They whispered it behind their sleeves."
+                    ],
+                    right: [
+                        { t: "\"Sire, the day is hot. Do take it off a while.\"", v: "man" },
+                        "One official said it carefully, fanning himself.",
+                        { t: "\"Q-quite all right! I am not hot in the least!\"", v: "old" },
+                        "The king pressed the crown down with both hands.",
+                        "And all the time the sweat ran off his forehead."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Chasing a Fox",
+            beats: [
+                {
+                    art: "05-aim.webp",
+                    emoji: "🏹",
+                    left: [
+                        "One day the king went out hunting.",
+                        "It was to get a little air, for once.",
+                        "In the wood he caught sight of a fox. The king reined in.",
+                        "It was a fox with red fur and a fine full tail.",
+                        "The king drew his bowstring tight."
+                    ],
+                    right: [
+                        { t: "\"Today I shall have you.\"", v: "old" },
+                        "He was about to let the string go.",
+                        "But the fox showed no thought of running.",
+                        "It sat behind a tree looking straight at the king.",
+                        "There was not a sign of fear in it."
+                    ]
+                },
+                {
+                    art: "06-fox.webp",
+                    emoji: "🦊",
+                    left: [
+                        "And then the fox began to laugh, holding its sides.",
+                        "It slapped the tree with a front paw, chuckling.",
+                        { t: "\"Ha ha ha! Look at that crown!\"", v: "beast" },
+                        { t: "\"Carrying a thing like that on your head!\"", v: "beast" },
+                        { t: "\"Is it not heavy? Your neck will break!\"", v: "beast" }
+                    ],
+                    right: [
+                        "The fox leaned on the tree and stamped its feet, laughing.",
+                        "The king threw his bow down on the ground.",
+                        { t: "\"Why, you —\"", v: "old" },
+                        "Under the crown the king's face went scarlet.",
+                        "And the more it did, the louder and longer the fox laughed."
+                    ]
+                },
+                {
+                    art: "07-chase.webp",
+                    emoji: "💨",
+                    left: [
+                        "The fox shot away and the king went after it.",
+                        "The sound of hoofs rang through the wood.",
+                        "The fox slipped this way and that and got clean away.",
+                        "They were pushing through bushes and under branches.",
+                        "The king had hold of nothing but the reins."
+                    ],
+                    right: [
+                        "Snag!",
+                        "The crown caught on a low-hanging branch.",
+                        "The gold crown came off and hung swinging from the branch.",
+                        "The king knew nothing of it and rode on further.",
+                        "The fox took its chance and was gone beyond the bushes."
+                    ]
+                },
+                {
+                    art: "08-hide.webp",
+                    emoji: "🌿",
+                    left: [
+                        "Only then did the king notice his head was bare.",
+                        "The two long ears were out in the open.",
+                        "The king dropped the reins and froze.",
+                        { t: "\"This is a disaster!\"", v: "old" },
+                        "If anybody saw, it was the end. He was alone in the wood."
+                    ],
+                    right: [
+                        "The king scrambled into the bushes at the side.",
+                        "He crouched down as small as he could.",
+                        "But the ears were so long that they stood up above the bushes.",
+                        "The two of them swayed together among the leaves.",
+                        "The king did not know it."
+                    ]
+                },
+                {
+                    art: "09-spot.webp",
+                    emoji: "👀",
+                    left: [
+                        "Just then an official riding by saw them.",
+                        "It was the very official who waited on the king.",
+                        "He had come out looking for him.",
+                        { t: "\"What is that? Is there a beast with ears that big?\"", v: "man" },
+                        "The official stopped his horse and narrowed his eyes."
+                    ],
+                    right: [
+                        "He never dreamed for a moment that it was the king.",
+                        "Catch that thing and give it to His Majesty, he thought, and I shall be well rewarded.",
+                        "The official's eyes lit up.",
+                        "He waved the hunters over with his hand.",
+                        "The hunters came up without a sound."
+                    ]
+                },
+                {
+                    art: "10-order.webp",
+                    emoji: "🎯",
+                    left: [
+                        { t: "\"There! Shoot into that bush!\"", v: "man" },
+                        "The official shouted it with his arm flung out at the hunters.",
+                        "The hunters raised their bows all together.",
+                        "They aimed at the two ears standing above the bush.",
+                        "The strings all being drawn made a loud noise."
+                    ],
+                    right: [
+                        "Twang! Twang!",
+                        "Arrows flew into the bush without mercy.",
+                        "Leaves came showering down.",
+                        { t: "\"Aaargh!\"", v: "old" },
+                        "A human scream came out of the bush and the hunters dropped their bows.",
+                        { t: "\"That thing makes a human noise!\"", v: "man" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Pond and the Bamboo",
+            beats: [
+                {
+                    art: "11-dive.webp",
+                    emoji: "🌊",
+                    left: [
+                        "The king burst out of the bush and ran for his life.",
+                        "The official and the hunters chased him without knowing why.",
+                        { t: "\"Stop there! Do not let it get away!\"", v: "man" },
+                        "But what blocked the way in front was a great pond.",
+                        "The king did not look back."
+                    ],
+                    right: [
+                        "He went into the water without even taking his shoes off.",
+                        "Splash!",
+                        "The spray went up high and then the water was still.",
+                        "The people above it looked about them a long while.",
+                        "There was no telling where the king had gone."
+                    ]
+                },
+                {
+                    art: "12-turtle.webp",
+                    emoji: "🐢",
+                    left: [
+                        "Under the water it was very quiet.",
+                        "The waterweed swayed slowly.",
+                        "The king held his breath till his cheeks bulged.",
+                        "His chest hurt with holding it.",
+                        "Then something came sliding up in front of his eyes.",
+                        "The king turned his head."
+                    ],
+                    right: [
+                        "Right in front of him was a great turtle.",
+                        "The turtle's eyes and the king's eyes met.",
+                        "The turtle blinked its big eyes.",
+                        "Even under the water the two long ears floated and waved.",
+                        "The turtle said nothing and swam away."
+                    ]
+                },
+                {
+                    art: "13-report.webp",
+                    emoji: "😤",
+                    left: [
+                        "That evening the official came before the king to report.",
+                        "The king sat there keeping a perfectly straight face.",
+                        { t: "\"Sire! Today I saw a most peculiar beast!\"", v: "man" },
+                        { t: "\"It had ears out to about here!\"", v: "man" },
+                        "The official spread both arms out wide."
+                    ],
+                    right: [
+                        { t: "\"I meant to catch it for you and lost it, worse luck!\"", v: "man" },
+                        "The official looked thoroughly sorry about it.",
+                        { t: "\"Next time I shall certainly bring it in.\"", v: "man" },
+                        "Inside the crown the king's ears trembled.",
+                        "The king only cleared his throat."
+                    ]
+                },
+                {
+                    art: "14-crownmaker.webp",
+                    emoji: "🤐",
+                    left: [
+                        "The one person in the world who knew that secret was the crown-maker.",
+                        "The king was always uneasy about that one man.",
+                        "But he kept his word and held his tongue all his life.",
+                        "He told nobody, not even his own wife."
+                    ],
+                    right: [
+                        "But he could not bear how much he wanted to say it.",
+                        "Eating, sleeping, the words came up into his throat.",
+                        "Every time, he put a hand over his own mouth.",
+                        "His chest was tight and he turned over all night.",
+                        "So the years went by, and he grew old."
+                    ]
+                },
+                {
+                    art: "15-shout.webp",
+                    emoji: "🎋",
+                    left: [
+                        "There came a day when he was old and ill.",
+                        "To die like this, he felt, would leave him no peace.",
+                        "He took his stick and went into the bamboo wood behind Dorimsa.",
+                        "Look where he might, there was nobody about.",
+                        "The bamboo rustled in the wind."
+                    ],
+                    right: [
+                        "He put both hands to his mouth like a trumpet.",
+                        { t: "\"The king has donkey ears!\"", v: "man" },
+                        "He shouted till his throat tore, and shouted again, and again.",
+                        "Birds went up into the sky in fright.",
+                        "Nothing had ever eased him so much."
+                    ]
+                },
+                {
+                    art: "16-laugh.webp",
+                    emoji: "😄",
+                    left: [
+                        "From that day, whenever the wind blew, the bamboo made a sound.",
+                        "Every time the wind went through the stems.",
+                        { t: "\"The king has donkey ea — rs —\"", v: "man" },
+                        "That talk went all round Seorabeol.",
+                        "The angry king had the bamboo cut down and cornel trees planted there."
+                    ],
+                    right: [
+                        "The king looked down at the new cornel trees.",
+                        "Now it will be quiet, he thought.",
+                        "But when the wind blew, there was a sound again.",
+                        { t: "\"The king's ears are lo — ng —\"", v: "man" },
+                        "And the king burst out laughing.",
+                        { t: "\"Well, long they are.\"", v: "old" }
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What happened to the king's ears?", choices: ["Went pointed like a fox's", "Grew long like a donkey's", "Went flat like a turtle's"], answer: 1 },
+        { q: "Why did the crown come off at the hunt?", choices: ["The wind blew hard", "He fell from his horse", "On a branch, chasing the fox"], answer: 2 },
+        { q: "What did the official take the ears for?", choices: ["A beast he had never seen", "An enemy hiding there", "A very large leaf"], answer: 0 },
+        { q: "What did the official tell the hunters to do?", choices: ["Chase after the fox", "Look for the crown", "Shoot into the bush"], answer: 2 },
+        { q: "Where did the king go to escape the arrows?", choices: ["Into the bamboo wood", "Into the pond", "Into the bushes"], answer: 1 },
+        { q: "What was planted where the bamboo was cut?", choices: ["Several pine trees", "Cornel trees", "Peach trees"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The king sweated because he could not take the crown off, so hiding a thing is the harder work of the two.",
+                "He put a hand over his own mouth night after night, so holding something in can make a person ill.",
+                "The sound came even after all the bamboo was cut down, so stopping mouths does not stop words.",
+                "The king burst out laughing in the end, so he can never have meant to hide the ears at all."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "really is told", k: "실제로 전해진다", s: "This story really is told in Korea." },
+            { w: "put together by ~", k: "~이 엮은", s: "the Samguk Yusa, put together by the monk Iryeon" },
+            { w: "cornel trees", k: "산수유 나무", s: "The bamboo cut down and the cornel trees planted" },
+            { w: "a thousand years ago", k: "천 년 전", s: "People a thousand years ago laughed at this story." },
+            { w: "very like it", k: "아주 닮은", s: "Greece has one very like it." },
+            { w: "barber", k: "이발사", s: "a barber shouts into a hole" },
+            { w: "reeds", k: "갈대", s: "the reeds carry his words" }
+        ],
+        "01-morning.webp": [
+            { w: "hard-working", k: "부지런한", s: "He was good and hard-working" },
+            { w: "followed him gladly", k: "잘 따랐다", s: "the people followed him gladly" },
+            { w: "drought", k: "가뭄", s: "In a drought he opened the stores" },
+            { w: "flood", k: "홍수", s: "in a flood he went out himself" },
+            { w: "fond of ~", k: "좋아하는", s: "The people were very fond of that king." },
+            { w: "scratching (scratch)", k: "긁는", s: "The king woke and was scratching his head" },
+            { w: "half asleep", k: "잠이 덜 깬", s: "He was still half asleep." },
+            { w: "felt over ~ (feel)", k: "더듬어 보았다", s: "The king felt over his head with both hands." }
+        ],
+        "02-mirror.webp": [
+            { w: "barefoot", k: "맨발로", s: "He ran barefoot, without stopping for shoes." },
+            { w: "topknot", k: "상투", s: "His topknot was still undone." },
+            { w: "undone", k: "풀어진", s: "His topknot was still undone." },
+            { w: "without meaning to", k: "저도 모르게", s: "He shouted it without meaning to" },
+            { w: "and nothing else", k: "영락없이", s: "They were donkey ears and nothing else." },
+            { w: "Rub ~ as he might", k: "아무리 비벼도", s: "Rub his eyes as he might, they stayed." },
+            { w: "Pull at ~", k: "잡아당기다", s: "Pull at them with his hands, they stayed." },
+            { w: "went out of ~ (go)", k: "쭉 빠졌다", s: "The strength went out of his legs" }
+        ],
+        "03-hat.webp": [
+            { w: "sent for ~ (send)", k: "불렀다", s: "The king sent for the crown-maker." },
+            { w: "the back door", k: "뒷문", s: "He had him brought in by the back door" },
+            { w: "high enough to ~", k: "~할 만큼 높은", s: "Make me a crown big and high enough to cover the ears." },
+            { w: "let a word out", k: "입 밖에 내다", s: "Never let a word of what you saw today out of your mouth." },
+            { w: "give my life on it", k: "목숨을 걸겠다", s: "Yes, yes! I would give my life on it!" },
+            { w: "shaking all over", k: "벌벌 떨며", s: "The crown-maker bowed, shaking all over." },
+            { w: "a fortnight", k: "보름", s: "In a fortnight a great gold crown was finished." },
+            { w: "hidden away (hide)", k: "감쪽같이 가려진", s: "The ears were hidden away completely." }
+        ],
+        "04-suspicion.webp": [
+            { w: "mutter", k: "수군거리다", s: "But the officials began to mutter." },
+            { w: "Look at it how they might", k: "아무리 보아도", s: "Look at it how they might, it was odd." },
+            { w: "His Majesty", k: "전하", s: "His Majesty never takes that crown off these days." },
+            { w: "in his sleep", k: "주무실 때도", s: "He wears it in his sleep, they say." },
+            { w: "ache", k: "아프다", s: "Does his neck not ache?" },
+            { w: "behind their sleeves", k: "소매로 입을 가리고", s: "They whispered it behind their sleeves." },
+            { w: "fanning himself", k: "부채를 부치며", s: "One official said it carefully, fanning himself." },
+            { w: "in the least", k: "하나도", s: "I am not hot in the least!" },
+            { w: "pressed ~ down", k: "꾹 눌렀다", s: "The king pressed the crown down with both hands." }
+        ],
+        "05-aim.webp": [
+            { w: "get a little air", k: "바람을 쐬다", s: "It was to get a little air, for once." },
+            { w: "caught sight of ~", k: "발견했다", s: "In the wood he caught sight of a fox." },
+            { w: "reined in", k: "말을 세웠다", s: "The king reined in." },
+            { w: "full", k: "탐스러운", s: "It was a fox with red fur and a fine full tail." },
+            { w: "bowstring", k: "활시위", s: "The king drew his bowstring tight." },
+            { w: "was about to ~", k: "막 ~하려 했다", s: "He was about to let the string go." },
+            { w: "no thought of ~", k: "~할 생각이 없는", s: "But the fox showed no thought of running." },
+            { w: "not a sign of ~", k: "기색이 없는", s: "There was not a sign of fear in it." }
+        ],
+        "06-fox.webp": [
+            { w: "holding its sides", k: "배를 잡고", s: "the fox began to laugh, holding its sides" },
+            { w: "slapped (slap)", k: "탁탁 쳤다", s: "It slapped the tree with a front paw, chuckling." },
+            { w: "chuckling (chuckle)", k: "깔깔대며", s: "It slapped the tree with a front paw, chuckling." },
+            { w: "Carrying ~ on your head", k: "머리에 이고 다니다", s: "Carrying a thing like that on your head!" },
+            { w: "stamped its feet", k: "발을 굴렀다", s: "The fox leaned on the tree and stamped its feet." },
+            { w: "threw ~ down (throw)", k: "내던졌다", s: "The king threw his bow down on the ground." },
+            { w: "went scarlet", k: "시뻘게졌다", s: "Under the crown the king's face went scarlet." },
+            { w: "the more ~, the louder ~", k: "그럴수록 더 크게", s: "the more it did, the louder the fox laughed" }
+        ],
+        "07-chase.webp": [
+            { w: "shot away (shoot)", k: "쏜살같이 달아났다", s: "The fox shot away and the king went after it." },
+            { w: "went after ~", k: "뒤를 쫓았다", s: "The fox shot away and the king went after it." },
+            { w: "slipped (slip)", k: "요리조리 빠져나갔다", s: "The fox slipped this way and that" },
+            { w: "got clean away", k: "잘도 달아났다", s: "The fox slipped this way and that and got clean away." },
+            { w: "reins", k: "고삐", s: "The king had hold of nothing but the reins." },
+            { w: "Snag", k: "탁", s: "Snag!" },
+            { w: "low-hanging", k: "낮게 늘어진", s: "The crown caught on a low-hanging branch." },
+            { w: "hung swinging (hang)", k: "대롱대롱 매달렸다", s: "The gold crown came off and hung swinging from the branch." },
+            { w: "took its chance", k: "그 틈을 탔다", s: "The fox took its chance and was gone." }
+        ],
+        "08-hide.webp": [
+            { w: "notice", k: "알아채다", s: "Only then did the king notice his head was bare." },
+            { w: "bare", k: "허전한, 드러난", s: "the king notice his head was bare" },
+            { w: "out in the open", k: "훤히 드러난", s: "The two long ears were out in the open." },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "The king dropped the reins and froze." },
+            { w: "a disaster", k: "큰일", s: "This is a disaster!" },
+            { w: "scrambled into ~", k: "허둥지둥 들어갔다", s: "The king scrambled into the bushes at the side." },
+            { w: "crouched down (crouch)", k: "웅크렸다", s: "He crouched down as small as he could." },
+            { w: "stood up above ~", k: "위로 솟았다", s: "the ears stood up above the bushes" },
+            { w: "swayed (sway)", k: "흔들렸다", s: "The two of them swayed together among the leaves." }
+        ],
+        "09-spot.webp": [
+            { w: "riding by", k: "말을 타고 지나던", s: "Just then an official riding by saw them." },
+            { w: "waited on ~", k: "곁에서 모셨다", s: "It was the very official who waited on the king." },
+            { w: "looking for ~", k: "찾으러", s: "He had come out looking for him." },
+            { w: "narrowed his eyes", k: "눈을 가늘게 떴다", s: "The official stopped his horse and narrowed his eyes." },
+            { w: "never dreamed", k: "꿈에도 몰랐다", s: "He never dreamed for a moment that it was the king." },
+            { w: "well rewarded", k: "큰 상을 받는", s: "I shall be well rewarded" },
+            { w: "lit up (light up)", k: "번쩍 빛났다", s: "The official's eyes lit up." },
+            { w: "waved ~ over", k: "손짓해 불렀다", s: "He waved the hunters over with his hand." },
+            { w: "without a sound", k: "소리 없이", s: "The hunters came up without a sound." }
+        ],
+        "10-order.webp": [
+            { w: "flung out (fling)", k: "쭉 뻗었다", s: "The official shouted it with his arm flung out" },
+            { w: "all together", k: "일제히", s: "The hunters raised their bows all together." },
+            { w: "aimed at ~", k: "겨누었다", s: "They aimed at the two ears standing above the bush." },
+            { w: "being drawn (draw)", k: "당겨지는", s: "The strings all being drawn made a loud noise." },
+            { w: "Twang", k: "피융", s: "Twang! Twang!" },
+            { w: "without mercy", k: "사정없이", s: "Arrows flew into the bush without mercy." },
+            { w: "showering down", k: "우수수 떨어지는", s: "Leaves came showering down." },
+            { w: "scream", k: "비명", s: "A human scream came out of the bush" },
+            { w: "dropped (drop)", k: "뚝 내렸다", s: "the hunters dropped their bows" }
+        ],
+        "11-dive.webp": [
+            { w: "burst out of ~", k: "뛰쳐나왔다", s: "The king burst out of the bush and ran for his life." },
+            { w: "ran for his life", k: "죽어라 달렸다", s: "The king burst out of the bush and ran for his life." },
+            { w: "without knowing why", k: "영문도 모르고", s: "The official and the hunters chased him without knowing why." },
+            { w: "get away", k: "놓치다", s: "Stop there! Do not let it get away!" },
+            { w: "blocked (block)", k: "가로막았다", s: "But what blocked the way in front was a great pond." },
+            { w: "Splash", k: "첨벙", s: "Splash!" },
+            { w: "spray", k: "물보라", s: "The spray went up high and then the water was still." },
+            { w: "looked about them", k: "두리번거렸다", s: "The people above it looked about them a long while." },
+            { w: "no telling", k: "알 수 없는", s: "There was no telling where the king had gone." }
+        ],
+        "12-turtle.webp": [
+            { w: "waterweed", k: "물풀", s: "The waterweed swayed slowly." },
+            { w: "held his breath", k: "숨을 참았다", s: "The king held his breath till his cheeks bulged." },
+            { w: "bulged (bulge)", k: "빵빵해졌다", s: "till his cheeks bulged" },
+            { w: "came sliding up", k: "스르륵 다가왔다", s: "Then something came sliding up in front of his eyes." },
+            { w: "Right in front of ~", k: "코앞에", s: "Right in front of him was a great turtle." },
+            { w: "met (meet)", k: "마주쳤다", s: "The turtle's eyes and the king's eyes met." },
+            { w: "blinked (blink)", k: "껌뻑였다", s: "The turtle blinked its big eyes." },
+            { w: "floated and waved", k: "흐느적흐느적 떠 있었다", s: "the two long ears floated and waved" }
+        ],
+        "13-report.webp": [
+            { w: "came before ~ to report", k: "나와 아뢰었다", s: "the official came before the king to report" },
+            { w: "a straight face", k: "시치미 뗀 얼굴", s: "The king sat there keeping a perfectly straight face." },
+            { w: "peculiar", k: "괴상한", s: "Sire! Today I saw a most peculiar beast!" },
+            { w: "out to about here", k: "이만큼이나", s: "It had ears out to about here!" },
+            { w: "spread ~ out wide", k: "크게 벌렸다", s: "The official spread both arms out wide." },
+            { w: "worse luck", k: "아깝게도", s: "I meant to catch it for you and lost it, worse luck!" },
+            { w: "thoroughly", k: "아주", s: "The official looked thoroughly sorry about it." },
+            { w: "trembled (tremble)", k: "파르르 떨렸다", s: "Inside the crown the king's ears trembled." },
+            { w: "cleared his throat", k: "헛기침을 했다", s: "The king only cleared his throat." }
+        ],
+        "14-crownmaker.webp": [
+            { w: "the one person", k: "한 사람뿐", s: "The one person in the world who knew that secret" },
+            { w: "uneasy", k: "불안한", s: "The king was always uneasy about that one man." },
+            { w: "kept his word", k: "약속을 지켰다", s: "But he kept his word and held his tongue all his life." },
+            { w: "held his tongue", k: "입을 다물었다", s: "he kept his word and held his tongue all his life" },
+            { w: "not even ~", k: "~에게조차", s: "He told nobody, not even his own wife." },
+            { w: "could not bear ~", k: "견딜 수 없었다", s: "But he could not bear how much he wanted to say it." },
+            { w: "came up into his throat", k: "목구멍까지 차올랐다", s: "the words came up into his throat" },
+            { w: "turned over", k: "뒤척였다", s: "His chest was tight and he turned over all night." }
+        ],
+        "15-shout.webp": [
+            { w: "old and ill", k: "늙고 병든", s: "There came a day when he was old and ill." },
+            { w: "leave him no peace", k: "한이 되다", s: "To die like this, he felt, would leave him no peace." },
+            { w: "stick", k: "지팡이", s: "He took his stick and went into the bamboo wood." },
+            { w: "bamboo wood", k: "대나무숲", s: "He went into the bamboo wood behind Dorimsa." },
+            { w: "nobody about", k: "사람이 없는", s: "Look where he might, there was nobody about." },
+            { w: "rustled (rustle)", k: "서걱거렸다", s: "The bamboo rustled in the wind." },
+            { w: "like a trumpet", k: "나팔처럼", s: "He put both hands to his mouth like a trumpet." },
+            { w: "till his throat tore", k: "목이 터져라", s: "He shouted till his throat tore" },
+            { w: "eased him (ease)", k: "속이 시원했다", s: "Nothing had ever eased him so much." }
+        ],
+        "16-laugh.webp": [
+            { w: "whenever ~", k: "~할 때마다", s: "whenever the wind blew, the bamboo made a sound" },
+            { w: "stems", k: "대나무 줄기", s: "Every time the wind went through the stems." },
+            { w: "went all round ~", k: "온 ~에 퍼졌다", s: "That talk went all round Seorabeol." },
+            { w: "had ~ cut down", k: "베게 했다", s: "The angry king had the bamboo cut down" },
+            { w: "planted (plant)", k: "심었다", s: "and cornel trees planted there" },
+            { w: "looked down at ~", k: "내려다보았다", s: "The king looked down at the new cornel trees." },
+            { w: "burst out laughing", k: "웃음을 터뜨렸다", s: "And the king burst out laughing." },
+            { w: "long they are", k: "길긴 길다", s: "Well, long they are." }
+        ],
+        "after": [
+            { w: "carry the words", k: "말을 옮긴다", s: "In Greece it is the reeds that carry the words" },
+            { w: "crosses a border", k: "나라를 건넌다", s: "When a story crosses a border it changes" },
+            { w: "what is common there", k: "그 땅에 흔한 것", s: "it changes into what is common in that land" },
+            { w: "the forty-eighth", k: "제48대", s: "It is set down as the story of Gyeongmun, the forty-eighth king" },
+            { w: "the talk", k: "소문", s: "What the king feared was not the ears but the talk." },
+            { w: "instead", k: "대신", s: "And the cornel trees made the sound instead." },
+            { w: "grew it (grow)", k: "키웠다", s: "Trying to hide it was what grew the talk." },
+            { w: "nothing at all", k: "아무 일도 아닌", s: "the moment he took it, it became nothing at all" },
+            { w: "nowhere to go", k: "갈 곳을 잃은", s: "At that moment the talk had nowhere to go." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎋',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "In Greece it is the reeds that carry the words; in our story it is bamboo. When a story crosses a border it changes into what is common in that land. Bamboo was nearer to us than reeds.",
+                    "Our record of it is in the Samguk Yusa. It is set down as the story of Gyeongmun, the forty-eighth king of Silla. Even the name of the temple, Dorimsa, is written there.",
+                    "Look again and what the king feared was not the ears but the talk. So he had the bamboo cut down. And the cornel trees made the sound instead.",
+                    "It was not the thing he hid but the hiding of it that grew the talk. Cutting the wood down to stop the sound made the sound once more."
+                ],
+                right: [
+                    "At the end, when the king laughed and took it, the whole thing became nothing at all. At that moment the talk had nowhere left to go.",
+                    "He cut the bamboo to stop the sound and the sound came back from the cornel trees. What grew bigger the harder he hid it became nothing the moment he owned it.",
+                    "Is there something you want to hide from other people? What would happen if you simply owned it?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "임금님의 귀는 어떻게 되었나요?", choices: ["여우 귀처럼 뾰족해졌다", "당나귀 귀처럼 길어졌다", "거북이처럼 납작해졌다"], answer: 1 },
     { q: "사냥터에서 왕관은 왜 벗겨졌나요?", choices: ["바람이 세게 불어서", "말에서 떨어지면서", "여우를 쫓다 나뭇가지에"], answer: 2 },

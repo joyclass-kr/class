@@ -305,6 +305,569 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐴",
+        art: "cover.webp",
+        title: "Ondal and Princess Pyeonggang",
+        intro: [
+            "The story of Ondal and Princess Pyeonggang is in the lives section of the Samguk Sagi. They were real people, in King Pyeongwon's time.",
+            "That section gathers the lives of people who were not kings. Ondal is the most read of all of them.",
+            "Goguryeo held a great hunt on the Nangnang hills on the third day of the third moon."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Crying Princess",
+            beats: [
+                {
+                    art: "01-ondal.webp",
+                    emoji: "🍚",
+                    left: [
+                        "Long ago in Goguryeo there lived a young man called Ondal.",
+                        "He lived with his blind mother, just the two of them.",
+                        "His clothes were worn and his shoes did not match.",
+                        "In winter he was sometimes barefoot.",
+                        "More days than not he ate what he was given."
+                    ],
+                    right: [
+                        "Even so Ondal always had a smile on his face.",
+                        "The market children followed him about, calling names.",
+                        "Some of them threw stones.",
+                        { t: "\"There goes Ondal the fool!\"", v: "boy" },
+                        "Ondal only walked on, and did not look back at a stone."
+                    ]
+                },
+                {
+                    art: "02-kind.webp",
+                    emoji: "🌰",
+                    left: [
+                        "But Ondal never grew angry.",
+                        "He grinned even at the children who teased him.",
+                        "He would pick up a child who had fallen over.",
+                        "In the end the children felt foolish themselves.",
+                        "Some quietly put down the stone they meant to throw."
+                    ],
+                    right: [
+                        "Ondal stripped bark from the zelkova tree to cook for his mother.",
+                        "If he was given food, his mother's share came off first.",
+                        "He put the bowl into her hands.",
+                        { t: "\"A fool he may be, but a good one.\"", v: "man" },
+                        { t: "\"Where would you find another as kind as that?\"", v: "man" }
+                    ]
+                },
+                {
+                    art: "03-cry.webp",
+                    emoji: "😭",
+                    left: [
+                        "About that time there was a crying princess in the palace.",
+                        "Princess Pyeonggang, the king's only daughter.",
+                        "She was famous through the country for how often she cried.",
+                        "Several times a day she would start up wailing.",
+                        "Nobody could tell what she was crying about."
+                    ],
+                    right: [
+                        "The palace women soothed her, and it was no use.",
+                        "Give her cake, sing her a song, and she stopped and started again.",
+                        "The king went about with his ears covered.",
+                        "The whole palace was worn out by that crying.",
+                        "Nobody could quiet the princess."
+                    ]
+                },
+                {
+                    art: "04-threat.webp",
+                    emoji: "😤",
+                    left: [
+                        { t: "\"Cry any more and I shall marry you to Ondal the fool!\"", v: "old" },
+                        "The king shouted it with both hands over his ears.",
+                        "He only meant it as a joke.",
+                        "And oddly enough the princess would stop crying at once.",
+                        "The name Ondal did it every time."
+                    ],
+                    right: [
+                        "You cannot think how often that was said.",
+                        "She heard it until she was ten years old.",
+                        "Every time she cried, every time she made a fuss.",
+                        "It was a thing the princess had heard since she was very small.",
+                        "The princess kept that name clearly in her mind.",
+                        "She wanted to see that person one day."
+                    ]
+                },
+                {
+                    art: "05-sixteen.webp",
+                    emoji: "💍",
+                    left: [
+                        "It was the year the princess turned sixteen.",
+                        "She had come of an age to marry.",
+                        "The king had already chosen a son-in-law for her.",
+                        "He was the son of a famous house.",
+                        "The whole palace was busy with the wedding.",
+                        "But the princess shook her head."
+                    ],
+                    right: [
+                        { t: "\"I shall go to Ondal the fool.\"", v: "girl" },
+                        "There was not a shake in the princess's voice.",
+                        { t: "\"...What did you say?\"", v: "old" },
+                        "The king got to his feet.",
+                        "He thought he had heard wrong.",
+                        "But the princess said the same words once more."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Princess Leaves the Palace",
+            beats: [
+                {
+                    art: "06-argue.webp",
+                    emoji: "⚡",
+                    left: [
+                        { t: "\"That was only something I said!\"", v: "old" },
+                        "The king struck the table.",
+                        { t: "\"A king's word is a word, even in joke.\"", v: "girl" },
+                        "The princess looked straight at her father.",
+                        { t: "\"I heard that word for ten years.\"", v: "girl" },
+                        "There was no sign of her giving way."
+                    ],
+                    right: [
+                        "The king's face went red. The officials held their breath.",
+                        { t: "\"If you want to go so much, then go!\"", v: "old" },
+                        "The princess got up where she stood and bowed to him.",
+                        "Then she went out without once looking back.",
+                        "The king put out a hand then, and it was too late."
+                    ]
+                },
+                {
+                    art: "07-leave.webp",
+                    emoji: "🚪",
+                    left: [
+                        "The princess took only a few gold bracelets and left the palace.",
+                        "The silk clothes and the palanquin she left behind her.",
+                        "That was the first day she had ever been outside.",
+                        "The road was so long that her feet blistered.",
+                        "And still the princess did not stop walking."
+                    ],
+                    right: [
+                        "Asking her way as she went, she found the hut below the mountain.",
+                        "It was a house all but falling down.",
+                        "Grass grew thick on the roof of it.",
+                        "The princess stood outside that door a long while.",
+                        "Not hesitating, but setting her mind."
+                    ]
+                },
+                {
+                    art: "08-refuse.webp",
+                    emoji: "🙅",
+                    left: [
+                        "Ondal's mother opened the door and came out.",
+                        { t: "\"I am the princess. I have come to marry Ondal.\"", v: "woman" },
+                        "The blind mother felt at the hem of the princess's coat.",
+                        "By her fingertips she knew it was silk.",
+                        "And then she waved a hand at her."
+                    ],
+                    right: [
+                        { t: "\"My son is poor and slow. Please go home again.\"", v: "granny" },
+                        "The mother's voice was very low.",
+                        { t: "\"I have no home to go to.\"", v: "woman" },
+                        "The princess did not give an inch where she stood.",
+                        "That night the princess slept on the floor of the porch."
+                    ]
+                },
+                {
+                    art: "09-horse.webp",
+                    emoji: "🐴",
+                    left: [
+                        "Next day the princess held out all her bracelets.",
+                        "A few gold bracelets were everything she had.",
+                        { t: "\"Go to the market and buy a horse.\"", v: "woman" },
+                        "Ondal blinked at her.",
+                        "He had never bought a horse in his life.",
+                        "Still, he nodded."
+                    ],
+                    right: [
+                        { t: "\"Only, it must not be an expensive one.\"", v: "woman" },
+                        "The princess said it like a promise to keep.",
+                        { t: "\"Buy a horse the country sold off for being thin.\"", v: "woman" },
+                        "Ondal went to the market with a puzzled face.",
+                        "He could not think why she wanted such a horse.",
+                        "But he did as he was told."
+                    ]
+                },
+                {
+                    art: "10-train.webp",
+                    emoji: "🌾",
+                    left: [
+                        "The horse Ondal led home had all its ribs showing.",
+                        "It was the cheapest horse in the market.",
+                        "It walked unsteadily too.",
+                        "Ondal felt sorry about it.",
+                        "But the princess fed that horse and washed it with great care.",
+                        "She brushed it every day."
+                    ],
+                    right: [
+                        { t: "\"This was a good horse to begin with. It has only gone hungry.\"", v: "woman" },
+                        "The princess said it, stroking the horse's neck.",
+                        "In a few months the horse was not to be known again.",
+                        "Its coat shone and there was strength in its eye.",
+                        "Ondal's eyes went round."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · The Hunt on the Nangnang Hills",
+            beats: [
+                {
+                    art: "11-study.webp",
+                    emoji: "🏹",
+                    left: [
+                        "From that day the princess taught Ondal to read.",
+                        "And how to hold a bow, and how to ride.",
+                        "Everything she had learned in the palace, she taught him.",
+                        "Teach Ondal one thing and he did it over ten times.",
+                        "Ondal drew that bow till the night was through."
+                    ],
+                    right: [
+                        "His palms split and healed and split again.",
+                        "The bowstring took the skin off and drew blood.",
+                        "Every night the princess put medicine on those hands.",
+                        { t: "\"Being a fool, I suppose I never get tired of it.\"", v: "man" },
+                        "Ondal said it with a grin."
+                    ]
+                },
+                {
+                    art: "12-hunt.webp",
+                    emoji: "🌄",
+                    left: [
+                        "On the third day of the third moon a great hunt was held on the Nangnang hills.",
+                        "It was a feast the country kept every year.",
+                        "The king and every fighting man in the land rode out.",
+                        "The sound of hoofs rang over the hills.",
+                        "Dust went up white to the sky."
+                    ],
+                    right: [
+                        "Among them was one young man nobody knew.",
+                        "Not a soul took any notice of him.",
+                        "His clothes and his horse looked poor enough.",
+                        "But as they rode the hills that horse passed the leaders one by one.",
+                        "He was faster than any of them."
+                    ]
+                },
+                {
+                    art: "13-win.webp",
+                    emoji: "🥇",
+                    left: [
+                        "When the hunt was over a strange thing had happened.",
+                        "The fighting men looked at one another.",
+                        "In front of that young man the game lay piled highest of all.",
+                        "It was like a hill.",
+                        "The second man was nowhere near him."
+                    ],
+                    right: [
+                        "The king rode his horse over in front of him.",
+                        { t: "\"Who in the world is that man?\"", v: "old" },
+                        "The young man got down and bowed low.",
+                        { t: "\"This person is called Ondal, sire.\"", v: "man" },
+                        "The king's face set at once. He could not forget that name."
+                    ]
+                },
+                {
+                    art: "14-king.webp",
+                    emoji: "👑",
+                    left: [
+                        "For a long while the king could not say anything.",
+                        "The king looked Ondal up and down.",
+                        "Was this the fool who had gone about in rags?",
+                        "And then he burst out laughing.",
+                        "The laugh rang out over the hills."
+                    ],
+                    right: [
+                        { t: "\"My son-in-law indeed!\"", v: "old" },
+                        "The king took Ondal by the shoulder.",
+                        "Ondal was given office that same day.",
+                        "Below the hill the princess was watching it.",
+                        "There were tears in the princess's eyes, ten years of them."
+                    ]
+                },
+                {
+                    art: "15-general.webp",
+                    emoji: "⚔️",
+                    left: [
+                        "After that Ondal went first into every battle.",
+                        "He drove off the soldiers who came from the north, again and again.",
+                        "The horse the princess had raised ran like an arrow.",
+                        "Wherever Ondal went, he won.",
+                        "People did not call him Ondal the fool any more."
+                    ],
+                    right: [
+                        "They called him General Ondal.",
+                        "Even the children looked up to him now.",
+                        "The very children who had thrown stones.",
+                        "But Ondal only grinned as he always had.",
+                        { t: "\"I am just the same as I was.\"", v: "man" },
+                        "And Ondal really believed it."
+                    ]
+                },
+                {
+                    art: "16-together.webp",
+                    emoji: "🌅",
+                    left: [
+                        "On the nights he came home from a battle the two sat on the porch.",
+                        "In the yard that thin horse stood tied, filled out now.",
+                        { t: "\"Home safe again today.\"", v: "woman" },
+                        "The princess took his armour off for him.",
+                        "There was white dust settled all over it."
+                    ],
+                    right: [
+                        { t: "\"Thanks to your choosing the horse well.\"", v: "man" },
+                        "The princess shook her head.",
+                        { t: "\"You are the one who raised the horse.\"", v: "woman" },
+                        "Ondal laughed a long while at that.",
+                        "Their laughing filled the yard, and the tied horse pricked its ears."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What sort of child was Princess Pyeonggang?", choices: ["A child who said little", "A child who cried a lot", "A child who was often ill"], answer: 1 },
+        { q: "What did the king do when she turned sixteen?", choices: ["Chose a son-in-law for her", "Tried to send her out", "Gave her a horse"], answer: 0 },
+        { q: "What did she bring away from the palace?", choices: ["One suit of silk clothes", "A few gold bracelets", "One palanquin"], answer: 1 },
+        { q: "What sort of horse did she send him to buy?", choices: ["The dearest in the market", "One with a shining coat", "One the country had sold off"], answer: 2 },
+        { q: "Where did Ondal make his name?", choices: ["The hunt on the third moon", "A great feast in the palace", "A wrestling ring at market"], answer: 0 },
+        { q: "What did the king say when he saw Ondal?", choices: ["Leave the palace at once", "My son-in-law indeed", "You shall have no reward"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "She kept a word said in joke for ten years, so the princess was much the more serious of the two.",
+                "She chose a thin horse the country had sold off, so she had the eye to see it had only gone hungry.",
+                "The children who called him a fool looked up to him later, so what people call you changes as easily as that.",
+                "Ondal's mother welcomed the princess from the first day, so she knew a daughter-in-law when she met one."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "the lives section", k: "열전", s: "is in the lives section of the Samguk Sagi" },
+            { w: "real people", k: "실제로 있었던 사람들", s: "They were real people, in King Pyeongwon's time." },
+            { w: "gathers (gather)", k: "모아 놓았다", s: "That section gathers the lives of people who were not kings." },
+            { w: "the most read", k: "가장 많이 읽히는", s: "Ondal is the most read of all of them." },
+            { w: "held a hunt (hold)", k: "사냥 대회를 열었다", s: "Goguryeo held a great hunt on the Nangnang hills." },
+            { w: "the third moon", k: "삼월", s: "on the third day of the third moon" }
+        ],
+        "01-ondal.webp": [
+            { w: "blind", k: "눈먼", s: "He lived with his blind mother" },
+            { w: "worn", k: "다 해진", s: "His clothes were worn and his shoes did not match." },
+            { w: "did not match", k: "짝짝이였다", s: "his shoes did not match" },
+            { w: "barefoot", k: "맨발인", s: "In winter he was sometimes barefoot." },
+            { w: "More days than not", k: "더 많은 날은", s: "More days than not he ate what he was given." },
+            { w: "calling names", k: "놀리며", s: "The market children followed him about, calling names." },
+            { w: "the fool", k: "바보", s: "There goes Ondal the fool!" },
+            { w: "walked on", k: "그저 걸어갔다", s: "Ondal only walked on, and did not look back at a stone." }
+        ],
+        "02-kind.webp": [
+            { w: "grew angry (grow)", k: "화를 냈다", s: "But Ondal never grew angry." },
+            { w: "teased (tease)", k: "놀렸다", s: "He grinned even at the children who teased him." },
+            { w: "fallen over", k: "넘어진", s: "He would pick up a child who had fallen over." },
+            { w: "felt foolish", k: "머쓱해졌다", s: "In the end the children felt foolish themselves." },
+            { w: "stripped bark (strip)", k: "껍질을 벗겼다", s: "Ondal stripped bark from the zelkova tree" },
+            { w: "zelkova", k: "느티나무", s: "Ondal stripped bark from the zelkova tree to cook" },
+            { w: "share", k: "몫", s: "his mother's share came off first" },
+            { w: "he may be", k: "~이기는 하지만", s: "A fool he may be, but a good one." }
+        ],
+        "03-cry.webp": [
+            { w: "About that time", k: "그 무렵", s: "About that time there was a crying princess in the palace." },
+            { w: "only daughter", k: "하나뿐인 딸", s: "Princess Pyeonggang, the king's only daughter." },
+            { w: "famous for ~", k: "~로 이름난", s: "She was famous through the country for how often she cried." },
+            { w: "start up wailing", k: "앙 하고 울었다", s: "Several times a day she would start up wailing." },
+            { w: "soothed (soothe)", k: "달랬다", s: "The palace women soothed her, and it was no use." },
+            { w: "went about with ~", k: "~한 채 다녔다", s: "The king went about with his ears covered." },
+            { w: "worn out (wear)", k: "시달렸다", s: "The whole palace was worn out by that crying." },
+            { w: "quiet", k: "달래다", s: "Nobody could quiet the princess." }
+        ],
+        "04-threat.webp": [
+            { w: "Cry any more", k: "자꾸 울면", s: "Cry any more and I shall marry you to Ondal the fool!" },
+            { w: "marry you to ~", k: "~에게 시집보내다", s: "I shall marry you to Ondal the fool!" },
+            { w: "meant it as a joke", k: "농담으로 한 말이었다", s: "He only meant it as a joke." },
+            { w: "oddly enough", k: "신기하게도", s: "And oddly enough the princess would stop crying at once." },
+            { w: "every time", k: "그때마다", s: "The name Ondal did it every time." },
+            { w: "You cannot think", k: "얼마나 ~인지 모른다", s: "You cannot think how often that was said." },
+            { w: "made a fuss", k: "떼썼다", s: "Every time she cried, every time she made a fuss." },
+            { w: "kept ~ in her mind", k: "기억해 두었다", s: "The princess kept that name clearly in her mind." }
+        ],
+        "05-sixteen.webp": [
+            { w: "turned sixteen", k: "열여섯이 되었다", s: "It was the year the princess turned sixteen." },
+            { w: "come of an age to ~", k: "~할 나이가 되다", s: "She had come of an age to marry." },
+            { w: "son-in-law", k: "사윗감", s: "The king had already chosen a son-in-law for her." },
+            { w: "a famous house", k: "이름난 집안", s: "He was the son of a famous house." },
+            { w: "busy with ~", k: "~ 준비로 부산한", s: "The whole palace was busy with the wedding." },
+            { w: "not a shake", k: "조금도 떨림이 없는", s: "There was not a shake in the princess's voice." },
+            { w: "heard wrong", k: "잘못 들었다", s: "He thought he had heard wrong." },
+            { w: "once more", k: "한 번 더", s: "But the princess said the same words once more." }
+        ],
+        "06-argue.webp": [
+            { w: "only something I said", k: "그냥 해 본 말", s: "That was only something I said!" },
+            { w: "struck (strike)", k: "내리쳤다", s: "The king struck the table." },
+            { w: "even in joke", k: "농담이어도", s: "A king's word is a word, even in joke." },
+            { w: "looked straight at ~", k: "똑바로 바라보았다", s: "The princess looked straight at her father." },
+            { w: "giving way", k: "물러서기", s: "There was no sign of her giving way." },
+            { w: "held their breath", k: "숨을 죽였다", s: "The officials held their breath." },
+            { w: "so much", k: "그리", s: "If you want to go so much, then go!" },
+            { w: "without once looking back", k: "뒤도 돌아보지 않고", s: "Then she went out without once looking back." },
+            { w: "put out a hand", k: "손을 뻗었다", s: "The king put out a hand then, and it was too late." }
+        ],
+        "07-leave.webp": [
+            { w: "bracelets", k: "팔찌", s: "The princess took only a few gold bracelets" },
+            { w: "palanquin", k: "가마", s: "The silk clothes and the palanquin she left behind her." },
+            { w: "left behind (leave)", k: "두고 갔다", s: "The silk clothes and the palanquin she left behind her." },
+            { w: "blistered (blister)", k: "부르텄다", s: "The road was so long that her feet blistered." },
+            { w: "Asking her way", k: "물어물어", s: "Asking her way as she went, she found the hut." },
+            { w: "hut", k: "오두막", s: "she found the hut below the mountain" },
+            { w: "all but falling down", k: "다 쓰러져 가는", s: "It was a house all but falling down." },
+            { w: "hesitating (hesitate)", k: "망설이는", s: "Not hesitating, but setting her mind." },
+            { w: "setting her mind", k: "마음을 다잡기", s: "Not hesitating, but setting her mind." }
+        ],
+        "08-refuse.webp": [
+            { w: "felt at ~ (feel)", k: "더듬었다", s: "The blind mother felt at the hem of the princess's coat." },
+            { w: "hem", k: "옷자락", s: "felt at the hem of the princess's coat" },
+            { w: "By her fingertips", k: "손끝으로", s: "By her fingertips she knew it was silk." },
+            { w: "waved a hand", k: "손을 내저었다", s: "And then she waved a hand at her." },
+            { w: "slow", k: "미련한", s: "My son is poor and slow. Please go home again." },
+            { w: "no home to go to", k: "돌아갈 곳이 없는", s: "I have no home to go to." },
+            { w: "give an inch", k: "물러서다", s: "The princess did not give an inch where she stood." },
+            { w: "porch", k: "마루", s: "That night the princess slept on the floor of the porch." }
+        ],
+        "09-horse.webp": [
+            { w: "held out (hold)", k: "내주었다", s: "Next day the princess held out all her bracelets." },
+            { w: "everything she had", k: "가진 것 전부", s: "A few gold bracelets were everything she had." },
+            { w: "blinked at ~", k: "껌뻑껌뻑했다", s: "Ondal blinked at her." },
+            { w: "in his life", k: "살면서", s: "He had never bought a horse in his life." },
+            { w: "expensive", k: "값비싼", s: "Only, it must not be an expensive one." },
+            { w: "like a promise to keep", k: "다짐하듯", s: "The princess said it like a promise to keep." },
+            { w: "sold off (sell)", k: "내다 팔았다", s: "Buy a horse the country sold off for being thin." },
+            { w: "puzzled", k: "어리둥절한", s: "Ondal went to the market with a puzzled face." },
+            { w: "as he was told", k: "시키는 대로", s: "But he did as he was told." }
+        ],
+        "10-train.webp": [
+            { w: "led home (lead)", k: "끌고 왔다", s: "The horse Ondal led home had all its ribs showing." },
+            { w: "ribs showing", k: "갈비뼈가 드러난", s: "The horse had all its ribs showing." },
+            { w: "cheapest", k: "제일 값싼", s: "It was the cheapest horse in the market." },
+            { w: "unsteadily", k: "비칠비칠", s: "It walked unsteadily too." },
+            { w: "with great care", k: "정성껏", s: "the princess fed that horse and washed it with great care" },
+            { w: "brushed (brush)", k: "빗질했다", s: "She brushed it every day." },
+            { w: "to begin with", k: "원래", s: "This was a good horse to begin with." },
+            { w: "gone hungry", k: "굶었다", s: "It has only gone hungry." },
+            { w: "not to be known", k: "몰라볼 만큼 달라진", s: "In a few months the horse was not to be known again." }
+        ],
+        "11-study.webp": [
+            { w: "taught ~ to read", k: "글을 가르쳤다", s: "the princess taught Ondal to read" },
+            { w: "how to hold a bow", k: "활 잡는 법", s: "And how to hold a bow, and how to ride." },
+            { w: "did it over", k: "되풀이했다", s: "Teach Ondal one thing and he did it over ten times." },
+            { w: "till the night was through", k: "밤이 새도록", s: "Ondal drew that bow till the night was through." },
+            { w: "split and healed", k: "터지고 아물었다", s: "His palms split and healed and split again." },
+            { w: "bowstring", k: "활시위", s: "The bowstring took the skin off and drew blood." },
+            { w: "took the skin off", k: "살갗을 벗겼다", s: "The bowstring took the skin off and drew blood." },
+            { w: "get tired of ~", k: "지겨워하다", s: "Being a fool, I suppose I never get tired of it." }
+        ],
+        "12-hunt.webp": [
+            { w: "was held (hold)", k: "열렸다", s: "a great hunt was held on the Nangnang hills" },
+            { w: "kept every year (keep)", k: "해마다 열었다", s: "It was a feast the country kept every year." },
+            { w: "fighting man", k: "무사", s: "The king and every fighting man in the land rode out." },
+            { w: "rode out (ride)", k: "말을 달렸다", s: "every fighting man in the land rode out" },
+            { w: "rang over ~ (ring)", k: "울렸다", s: "The sound of hoofs rang over the hills." },
+            { w: "Not a soul", k: "아무도", s: "Not a soul took any notice of him." },
+            { w: "took notice of ~", k: "눈여겨보았다", s: "Not a soul took any notice of him." },
+            { w: "poor enough", k: "초라해 보이는", s: "His clothes and his horse looked poor enough." },
+            { w: "the leaders", k: "앞선 무리", s: "that horse passed the leaders one by one" }
+        ],
+        "13-win.webp": [
+            { w: "was over", k: "끝났다", s: "When the hunt was over a strange thing had happened." },
+            { w: "game", k: "잡은 짐승", s: "the game lay piled highest of all" },
+            { w: "piled (pile)", k: "쌓인", s: "the game lay piled highest of all" },
+            { w: "like a hill", k: "산더미 같은", s: "It was like a hill." },
+            { w: "nowhere near ~", k: "견줄 수 없는", s: "The second man was nowhere near him." },
+            { w: "rode ~ over (ride)", k: "말을 몰고 다가갔다", s: "The king rode his horse over in front of him." },
+            { w: "got down", k: "말에서 내렸다", s: "The young man got down and bowed low." },
+            { w: "This person", k: "소인", s: "This person is called Ondal, sire." },
+            { w: "set (set)", k: "굳어졌다", s: "The king's face set at once." }
+        ],
+        "14-king.webp": [
+            { w: "looked ~ up and down", k: "위아래로 훑어보았다", s: "The king looked Ondal up and down." },
+            { w: "in rags", k: "해진 옷을 입고", s: "Was this the fool who had gone about in rags?" },
+            { w: "burst out laughing", k: "웃음을 터뜨렸다", s: "And then he burst out laughing." },
+            { w: "rang out (ring)", k: "쩌렁쩌렁 울렸다", s: "The laugh rang out over the hills." },
+            { w: "indeed", k: "과연", s: "My son-in-law indeed!" },
+            { w: "took ~ by the shoulder", k: "어깨를 덥석 잡았다", s: "The king took Ondal by the shoulder." },
+            { w: "was given office", k: "벼슬을 받았다", s: "Ondal was given office that same day." },
+            { w: "ten years of them", k: "십 년을 기다린", s: "There were tears in the princess's eyes, ten years of them." }
+        ],
+        "15-general.webp": [
+            { w: "went first into ~", k: "앞장섰다", s: "After that Ondal went first into every battle." },
+            { w: "drove off (drive)", k: "물리쳤다", s: "He drove off the soldiers who came from the north." },
+            { w: "raised (raise)", k: "키웠다", s: "The horse the princess had raised ran like an arrow." },
+            { w: "like an arrow", k: "화살처럼", s: "The horse ran like an arrow." },
+            { w: "Wherever ~", k: "가는 곳마다", s: "Wherever Ondal went, he won." },
+            { w: "any more", k: "더 이상", s: "People did not call him Ondal the fool any more." },
+            { w: "looked up to ~", k: "우러러보았다", s: "Even the children looked up to him now." },
+            { w: "The very children", k: "바로 그 아이들", s: "The very children who had thrown stones." },
+            { w: "just the same", k: "그대로인", s: "I am just the same as I was." }
+        ],
+        "16-together.webp": [
+            { w: "came home from ~", k: "돌아왔다", s: "On the nights he came home from a battle" },
+            { w: "stood tied", k: "매여 있었다", s: "In the yard that thin horse stood tied, filled out now." },
+            { w: "filled out", k: "살이 오른", s: "that thin horse stood tied, filled out now" },
+            { w: "Home safe", k: "잘 다녀왔다", s: "Home safe again today." },
+            { w: "armour", k: "갑옷", s: "The princess took his armour off for him." },
+            { w: "settled (settle)", k: "뽀얗게 앉은", s: "There was white dust settled all over it." },
+            { w: "Thanks to ~", k: "~ 덕분에", s: "Thanks to your choosing the horse well." },
+            { w: "the one who ~", k: "~한 사람", s: "You are the one who raised the horse." },
+            { w: "pricked its ears", k: "귀를 쫑긋 세웠다", s: "the tied horse pricked its ears" }
+        ],
+        "after": [
+            { w: "made up", k: "지어낸", s: "Ondal was not a made-up person." },
+            { w: "is set down (set)", k: "이름이 올라 있다", s: "his name is set down in the lives section" },
+            { w: "opinions are divided", k: "말이 갈린다", s: "Opinions are divided about where that place was." },
+            { w: "these days", k: "요즘은", s: "these days more scholars think it was Achasanseong" },
+            { w: "kept (keep)", k: "지켰다", s: "the princess kept the joke her father had made" },
+            { w: "not the grown-up", k: "어른이 아니라", s: "The one who kept the word was not the grown-up but the child." },
+            { w: "fed (feed)", k: "먹여 주었다", s: "only nobody had fed either of them" },
+            { w: "shows what it is", k: "제 모습이 나온다", s: "A person or a horse shows what it is when somebody sees it." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐎',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Ondal was not a made-up person. He was a general of Goguryeo whose name is set down in the lives section of the Samguk Sagi. Princess Pyeonggang is in that record with him.",
+                    "Opinions are divided about where the place was. Some say Ondalsanseong at Danyang, some say Achasanseong in Seoul. Because the fighting was over the Han River, these days more scholars think it was Achasanseong.",
+                    "The story begins because the princess kept, exactly as it stood, a joke her father had made when she was small.",
+                    "The one who kept the word was not the grown-up but the child."
+                ],
+                right: [
+                    "What the princess chose was not somebody grand. It was a thin horse and a man people laughed at. Neither of them was poor stuff to begin with; only nobody had fed either of them.",
+                    "A person or a horse shows what it is when it meets somebody who sees it.",
+                    "Has anybody ever seen what you were? Who could you see?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "평강 공주는 어릴 때 어떤 아이였나요?", choices: ["말이 없는 아이", "울음이 많은 아이", "몸이 약한 아이"], answer: 1 },
     { q: "공주가 열여섯이 되자 임금은 무엇을 했나요?", choices: ["사윗감을 골라 놓았다", "궁 밖으로 내보내려 했다", "말을 한 필 내주었다"], answer: 0 },
