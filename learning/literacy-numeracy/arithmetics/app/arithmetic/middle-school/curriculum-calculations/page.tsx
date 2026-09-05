@@ -179,7 +179,7 @@ export default function MiddleCurriculumCalculationsPage() {
   return (
     <main className={`counting-page polynomial-page logarithm-page numeric-choice-page middle-quadratic-page middle-curriculum-page${kind === "solid-geometry" ? " solid-geometry-page" : ""}${kind === "triangle-quadrilateral" ? " triangle-quadrilateral-page" : ""}`}>
       <div className="counting-toolbar">
-        <a className="counting-back" href="/arithmetic">← 연산</a>
+        <a className="counting-back" href="/arithmetic" aria-label="연산 목록으로 돌아가기">←</a>
         <div className="counting-progress">
           <strong>
             {Object.values(results).filter(Boolean).length}

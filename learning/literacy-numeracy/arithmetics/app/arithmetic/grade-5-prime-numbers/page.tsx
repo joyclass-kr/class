@@ -107,7 +107,7 @@ export default function GradeFivePrimeNumbersPage() {
   return (
     <main className="counting-page multiplication-page">
       <div className="counting-toolbar">
-        <a className="counting-back" href="/arithmetic">← 연산</a>
+        <a className="counting-back" href="/arithmetic" aria-label="연산 목록으로 돌아가기">←</a>
         <div className="counting-progress"><strong>{correct}<small>/100 정답</small></strong></div>
         <div className="toolbar">
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 하기</button>

@@ -285,7 +285,7 @@ export default function CountingOnePage() {
   return (
     <main className="counting-page">
       <div className="counting-toolbar">
-        <a className="counting-back" href="/arithmetic">← 연산</a>
+        <a className="counting-back" href="/arithmetic" aria-label="연산 목록으로 돌아가기">←</a>
         <div className="counting-progress">
           <strong>{correct}<small>/9 정답</small></strong>
         </div>

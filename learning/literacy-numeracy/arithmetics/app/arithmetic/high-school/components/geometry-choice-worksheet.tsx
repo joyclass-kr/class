@@ -136,7 +136,7 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
   return (
     <main className={`counting-page polynomial-page derivative-page trig-derivative-page geometry-choice-page formula-only-page ${pageClassName}`.trim()}>
       <div className="counting-toolbar">
-        <a className="counting-back" href="/arithmetic">← 연산</a>
+        <a className="counting-back" href="/arithmetic" aria-label="연산 목록으로 돌아가기">←</a>
         <div className="counting-progress"><strong>{Object.values(results).filter(Boolean).length}<small>/{displayedProblems.length} 정답</small></strong></div>
         <div className="toolbar">
           {(problemFactory || problemSets) && <button className="button secondary" onClick={newProblems}>새 문제</button>}

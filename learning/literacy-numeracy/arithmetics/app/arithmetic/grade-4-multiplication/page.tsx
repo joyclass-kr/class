@@ -152,7 +152,7 @@ export default function GradeFourMultiplicationPage() {
   return (
     <main className="counting-page multiplication-page">
       <div className="counting-toolbar">
-        <a className="counting-back" href="/arithmetic">← 연산</a>
+        <a className="counting-back" href="/arithmetic" aria-label="연산 목록으로 돌아가기">←</a>
         <div className="counting-progress"><strong>{correct}<small>/11 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>

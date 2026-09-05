@@ -158,7 +158,7 @@ export default function MiddleCoreCalculationsPage() {
   return (
     <main className="counting-page polynomial-page logarithm-page numeric-choice-page middle-quadratic-page middle-core-page">
       <div className="counting-toolbar">
-        <a className="counting-back" href="/arithmetic">← 연산</a>
+        <a className="counting-back" href="/arithmetic" aria-label="연산 목록으로 돌아가기">←</a>
         <div className="counting-progress"><strong>{Object.values(results).filter(Boolean).length}<small>/{problems.length} 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={() => { setProblemSet(createFreshMiddleCoreProblemSet(kind, Date.now() >>> 0, problemSet.problems)); reset(); }}>새 문제</button>

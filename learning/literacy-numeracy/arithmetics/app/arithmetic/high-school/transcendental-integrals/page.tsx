@@ -63,7 +63,7 @@ export default function TranscendentalIntegralsPage() {
   return (
     <main className="counting-page polynomial-page derivative-page trig-derivative-page">
       <div className="counting-toolbar">
-        <a className="counting-back" href="/arithmetic">← 연산</a>
+        <a className="counting-back" href="/arithmetic" aria-label="연산 목록으로 돌아가기">←</a>
         <div className="counting-progress"><strong>{Object.values(results).filter(Boolean).length}<small>/{problems.length} 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" onClick={() => { setSet(createTranscendentalIntegralProblemSet(Date.now() >>> 0)); reset(); }}>새 문제</button>

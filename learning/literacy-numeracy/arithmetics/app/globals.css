@@ -9055,8 +9055,17 @@ main {
 }
 
 .counting-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: white;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 900;
   text-decoration: none;
 }
@@ -9489,7 +9498,9 @@ main {
   }
 
   .counting-back {
-    font-size: 11px;
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
   }
 
   .counting-progress {
