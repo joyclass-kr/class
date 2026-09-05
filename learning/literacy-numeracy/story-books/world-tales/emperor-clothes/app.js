@@ -509,9 +509,13 @@ const QUIZ = [
 
 /* 푼 자취는 책을 덮을 때까지 남긴다. 쪽을 옮겼다 돌아와도 표시가 그대로다.
    자취는 보기의 원래 번호로 적어 두므로, 다시 그릴 때 자리가 바뀌어도 따라간다. */
-const QUIZ_WRONG = {};   // 문제 번호 → 잘못 고른 보기의 원래 번호들
-const QUIZ_DONE = {};    // 문제 번호 → 맞혔는가
-const QUIZ_ORDER = {};   // 문제 번호 → 보기를 늘어놓을 차례
+/* 한글 문제와 영어 문제는 서로 다른 것을 묻는다. 그래서 자취도 말별로 따로 적는다.
+   한 자리에 같이 적어 두면, 말을 바꿨을 때 아이가 누른 적 없는 보기에 표시가 앉는다. */
+const QUIZ_WRONG = {};   // 말:문제 번호 → 잘못 고른 보기의 원래 번호들
+const QUIZ_DONE = {};    // 말:문제 번호 → 맞혔는가
+const QUIZ_ORDER = {};   // 말:문제 번호 → 보기를 늘어놓을 차례
+const QK = i => LANG + ':' + i;
+const quizDone = () => Object.keys(QUIZ_DONE).filter(k => k.startsWith(LANG + ':')).length;
 
 /* 보기 차례는 책을 여는 순간 한 번만 정한다. 답의 자리를 외워 버리면 문제가 아니게 되니 섞되,
    쪽을 옮길 때마다 다시 섞으면 방금 고른 자리가 눈앞에서 움직여 어지럽다.
@@ -528,9 +532,9 @@ function shuffledOrder(n) {
 
 function quizPage() {
     const items = QZ().map((item, i) => {
-        const wrong = QUIZ_WRONG[i] || [];
-        const solved = !!QUIZ_DONE[i];
-        const order = QUIZ_ORDER[i] || (QUIZ_ORDER[i] = shuffledOrder(item.choices.length));
+        const wrong = QUIZ_WRONG[QK(i)] || [];
+        const solved = !!QUIZ_DONE[QK(i)];
+        const order = QUIZ_ORDER[QK(i)] || (QUIZ_ORDER[QK(i)] = shuffledOrder(item.choices.length));
         const btns = order.map(ci => {
             const mark = solved && ci === item.answer ? ' correct' : (wrong.includes(ci) ? ' incorrect' : '');
             return `<button type="button" class="quiz-choice${mark}" data-choice="${ci}">${item.choices[ci]}</button>`;
@@ -544,7 +548,7 @@ function quizPage() {
     return `
         <div class="page page-quiz">
             <h2>${T().quiz}</h2>
-            <p class="quiz-intro-text" id="quizProgress">${T().done(Object.keys(QUIZ_DONE).length, QZ().length)}</p>
+            <p class="quiz-intro-text" id="quizProgress">${T().done(quizDone(), QZ().length)}</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -1152,13 +1156,13 @@ function initQuiz() {
                 // 답을 미리 보여 주면 아이가 생각할 자리가 사라진다.
                 if (ci !== q.answer) {
                     btn.classList.add('incorrect');
-                    (QUIZ_WRONG[qi] = QUIZ_WRONG[qi] || []).push(ci);
+                    (QUIZ_WRONG[QK(qi)] = QUIZ_WRONG[QK(qi)] || []).push(ci);
                     return;
                 }
                 btn.classList.add('correct');
                 item.classList.add('graded');
-                QUIZ_DONE[qi] = true;
-                progressEl.textContent = T().done(Object.keys(QUIZ_DONE).length, QZ().length);
+                QUIZ_DONE[QK(qi)] = true;
+                progressEl.textContent = T().done(quizDone(), QZ().length);
             });
         });
     });
