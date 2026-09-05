@@ -315,20 +315,32 @@
         <section id="sec-approval" class="hidden">
             <div class="panel-card">
                 <h2 style="font-size:18px; margin:0 0 16px; color:var(--green);">📝 결석계 및 교외체험학습 전자 결재함</h2>
-                <div id="approvalList">
-                    <div class="item-row">
+                <!-- 내 서명. 승인할 때 결재란에 이 그림이 찍힌다. -->
+                <div id="signatureCard" style="border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:16px; background:#111713;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
                         <div>
-                            <span class="badge pending">결재 대기</span>
-                            <strong style="margin-left:8px; font-size:16px;">3학년 2반 12번 이영희</strong> (결석계 - 질병)
-                            <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
-                                결석 기간: 2026-08-05 ~ 2026-08-06 (2일간) | 학부모 서명 완료 | 진단서 사진 첨부됨
-                            </p>
+                            <strong style="font-size:15px;">✍️ 내 결재 서명</strong>
+                            <span id="approverRoleLabel" style="margin-left:8px; color:var(--muted); font-size:13px;"></span>
                         </div>
-                        <div style="display:flex; gap:8px;">
-                            <button class="btn-secondary" onclick="openPrintForm('absence', '1')">🖨️ 서울계상초 A4 서식 인쇄</button>
-                            <button class="btn-action" style="padding:8px 16px; font-size:14px;" onclick="approveDoc(this)">승인</button>
-                        </div>
+                        <button class="btn-secondary" type="button" onclick="toggleSignatureEditor()">서명 등록·바꾸기</button>
                     </div>
+                    <div id="signatureCurrent" style="margin-top:10px; display:none;">
+                        <img id="signatureCurrentImg" alt="등록된 서명" style="max-height:60px; background:#fff; border-radius:6px; padding:4px;">
+                    </div>
+                    <p id="signatureMissing" style="margin:10px 0 0; color:#ffcf7c; font-size:13px; display:none;">아직 서명이 없습니다. 승인하려면 먼저 등록해 주세요.</p>
+                    <div id="signatureEditor" style="display:none; margin-top:12px;">
+                        <canvas id="teacherSignatureCanvas" style="width:100%; height:120px; background:#fff; border-radius:8px; touch-action:none;"></canvas>
+                        <div style="display:flex; gap:8px; margin-top:8px;">
+                            <button class="btn-action" type="button" style="padding:8px 16px; font-size:14px;" onclick="saveTeacherSignature()">이 서명으로 등록</button>
+                            <button class="btn-secondary" type="button" onclick="clearTeacherSignature()">지우기</button>
+                        </div>
+                        <p id="signatureStatus" style="font-size:13px; margin:8px 0 0; min-height:18px;"></p>
+                    </div>
+                </div>
+                <div id="approvalList">
+                    <!-- 실제 목록은 loadApprovals() 가 채운다. 가짜 견본 행을 두면 불러오기 전에
+                         없는 학생이 보인다. -->
+                    <div class="item-row" style="justify-content:center; color:var(--muted);">불러오는 중…</div>
                 </div>
             </div>
         </section>
@@ -494,11 +506,6 @@
             } catch (err) {
                 detailEl.innerHTML = `<div class="item-row" style="justify-content:center; color:#ff7b72;">${escapeHtml(err.message)}</div>`;
             }
-        }
-
-        function toggleStudentTargetInput() {
-            const val = document.getElementById('nTargetType').value;
-            document.getElementById('targetStudentBox').classList.toggle('hidden', val !== 'students');
         }
 
         function openPrintForm(type, docId) {
@@ -854,135 +861,171 @@
             }
         }
 
+        // ── 전자결재함 ──
+        // 내 차례인 문서만 온다. 담임은 자기 반, 교무부장·교감·교장은 학교 전체.
+        const APPROVAL_TYPE_LABELS = { absence: '📝 결석계', exp_app: '✈️ 체험학습 신청서', exp_report: '📄 체험학습 보고서' };
+        const PRINT_TYPE = { absence: 'absence', exp_app: 'exp_app', exp_report: 'exp_report' };
+        let approverHasSignature = false;
+
+        function chainHtml(steps) {
+            if (!Array.isArray(steps) || steps.length === 0) return '';
+            return `<div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-top:8px;">${
+                steps.map(st => {
+                    const color = st.status === 'approved' ? 'var(--green)' : st.status === 'rejected' ? '#ff7b72' : 'var(--muted)';
+                    const mark = st.status === 'approved' ? '✓' : st.status === 'rejected' ? '✕' : '·';
+                    const who = st.approverName ? ` ${escapeHtml(st.approverName)}` : '';
+                    return `<span style="font-size:12px; color:${color}; border:1px solid ${color}; border-radius:999px; padding:2px 8px;">${mark} ${escapeHtml(st.roleLabel)}${who}</span>`;
+                }).join('<span style="color:var(--muted);">→</span>')
+            }</div>`;
+        }
+
         async function loadApprovals() {
             const listEl = document.getElementById('approvalList');
             if (!listEl) return;
             try {
-                const [notesRes, expRes] = await Promise.all([
-                    fetch('/api/teacher/absence-notes'),
-                    fetch('/api/teacher/experiential-apps')
-                ]);
-                const notesData = notesRes.ok ? await notesRes.json() : { notes: [] };
-                const expData = expRes.ok ? await expRes.json() : { applications: [], reports: [] };
+                const res = await fetch('/api/teacher/approvals');
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '결재함을 불러오지 못했습니다.');
 
-                const notes = notesData.notes || [];
-                const apps = expData.applications || [];
-                const reports = expData.reports || [];
+                approverHasSignature = Boolean(data.hasSignature);
+                const roleEl = document.getElementById('approverRoleLabel');
+                if (roleEl) roleEl.textContent = data.roleLabel ? `(${data.roleLabel} 결재)` : '(결재 권한 없음)';
+                document.getElementById('signatureMissing').style.display = approverHasSignature ? 'none' : '';
 
-                if (notes.length === 0 && apps.length === 0 && reports.length === 0) {
-                    listEl.innerHTML = '<div class="item-row" style="justify-content:center; color:var(--muted);">대기 중인 전자 결재 문서가 없습니다.</div>';
+                const items = data.items || [];
+                if (items.length === 0) {
+                    listEl.innerHTML = '<div class="item-row" style="justify-content:center; color:var(--muted);">내 차례인 결재 문서가 없습니다.</div>';
                     return;
                 }
 
-                let html = '';
-
-                // Render Absence Notes
-                notes.forEach(n => {
-                    const isApproved = n.status === 'approved';
-                    html += `
-                        <div class="item-row">
+                listEl.innerHTML = items.map(it => `
+                    <div class="item-row" style="flex-direction:column; align-items:stretch; gap:8px;">
+                        <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
                             <div>
-                                <span class="badge ${isApproved ? 'approved' : 'pending'}">${isApproved ? '결재 완료' : '결재 대기'}</span>
-                                <strong style="margin-left:8px; font-size:16px;">${n.grade}학년 ${n.classNumber}반 ${n.studentNumber}번 ${n.studentName}</strong> (결석계 - ${n.reasonType})
+                                <span class="badge pending">결재 대기</span>
+                                <strong style="margin-left:8px; font-size:16px;">${it.grade}학년 ${it.classNumber}반 ${escapeHtml(it.studentNumber)}번 ${escapeHtml(it.studentName)}</strong>
+                                <span style="margin-left:6px; color:var(--muted);">${APPROVAL_TYPE_LABELS[it.docType] || it.docType}</span>
                                 <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
-                                    결석 기간: ${n.startDate} ~ ${n.endDate} (${n.totalDays}일간) | 사유: ${n.reasonDetail} | 보호자: ${n.parentName} (전자서명 완료) ${n.evidenceUrl ? ' | 📷 증빙자료 첨부됨' : ''}
+                                    ${escapeHtml(it.startDate)} ~ ${escapeHtml(it.endDate)} (${it.totalDays}일) · ${escapeHtml(it.detail)}
+                                    · 보호자 ${escapeHtml(it.parentName)} ${it.parentSignature ? '<img src="' + it.parentSignature + '" alt="보호자 서명" style="height:22px; vertical-align:middle; background:#fff; border-radius:4px; margin-left:4px;">' : ''}
+                                    ${it.attachment ? ` · <a href="${it.attachment}" target="_blank" rel="noopener" style="color:var(--green);">첨부 보기</a>` : ''}
                                 </p>
+                                ${chainHtml(it.approvals)}
                             </div>
-                            <div style="display:flex; gap:8px;">
-                                <button class="btn-secondary" onclick="openPrintForm('absence', '${n.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
-                                <button class="btn-action" style="padding:8px 16px; font-size:14px; ${isApproved ? 'background:#233328; color:var(--green);' : ''}" ${isApproved ? 'disabled' : ''} onclick="approveAbsenceNote('${n.id}', this)">
-                                    ${isApproved ? '승인 완료' : '승인'}
-                                </button>
+                            <div style="display:flex; gap:8px; align-items:flex-start; flex-wrap:wrap;">
+                                <button class="btn-secondary" onclick="openPrintForm('${PRINT_TYPE[it.docType]}', '${it.docId}')">🖨️ 서식 인쇄</button>
+                                <button class="btn-action" style="padding:8px 16px; font-size:14px;" onclick="decideDoc('${it.docType}', '${it.docId}', 'approve', this)">승인</button>
+                                <button class="btn-secondary" style="color:#ff7b72; border-color:#ff7b72;" onclick="decideDoc('${it.docType}', '${it.docId}', 'reject', this)">반려</button>
                             </div>
                         </div>
-                    `;
-                });
-
-                // Render Experiential Apps
-                apps.forEach(a => {
-                    const isApproved = a.status === 'approved';
-                    html += `
-                        <div class="item-row">
-                            <div>
-                                <span class="badge ${isApproved ? 'approved' : 'pending'}">${isApproved ? '승인 완료' : '결재 대기'}</span>
-                                <strong style="margin-left:8px; font-size:16px;">${a.grade}학년 ${a.classNumber}반 ${a.studentNumber}번 ${a.studentName}</strong> (교외체험학습 신청서)
-                                <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
-                                    기간: ${a.startDate} ~ ${a.endDate} | 장소: ${a.location} | 목적/계획: ${a.planDetail} | 보호자: ${a.parentName} (${a.parentPhone})
-                                </p>
-                            </div>
-                            <div style="display:flex; gap:8px;">
-                                <button class="btn-secondary" onclick="openPrintForm('exp_app', '${a.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
-                                <button class="btn-action" style="padding:8px 16px; font-size:14px; ${isApproved ? 'background:#233328; color:var(--green);' : ''}" ${isApproved ? 'disabled' : ''} onclick="approveExpDoc('${a.id}', 'app', this)">
-                                    ${isApproved ? '승인 완료' : '승인'}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                // Render Experiential Reports
-                reports.forEach(r => {
-                    const isApproved = r.status === 'approved';
-                    html += `
-                        <div class="item-row">
-                            <div>
-                                <span class="badge ${isApproved ? 'approved' : 'pending'}">${isApproved ? '승인 완료' : '결재 대기'}</span>
-                                <strong style="margin-left:8px; font-size:16px;">${r.grade}학년 ${r.classNumber}반 ${r.studentNumber}번 ${r.studentName}</strong> (교외체험학습 보고서)
-                                <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
-                                    기간: ${r.startDate} ~ ${r.endDate} | 장소: ${r.location} | 보고 내용: ${r.reportDetail} | 보호자: ${r.parentName}
-                                </p>
-                            </div>
-                            <div style="display:flex; gap:8px;">
-                                <button class="btn-secondary" onclick="openPrintForm('exp_report', '${r.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
-                                <button class="btn-action" style="padding:8px 16px; font-size:14px; ${isApproved ? 'background:#233328; color:var(--green);' : ''}" ${isApproved ? 'disabled' : ''} onclick="approveExpDoc('${r.id}', 'report', this)">
-                                    ${isApproved ? '승인 완료' : '승인'}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                listEl.innerHTML = html;
+                    </div>
+                `).join('');
             } catch (err) {
-                console.error('Failed to load approvals:', err);
+                listEl.innerHTML = `<div class="item-row" style="justify-content:center; color:#ff7b72;">${escapeHtml(err.message)}</div>`;
             }
         }
 
-        async function approveAbsenceNote(id, btn) {
+        async function decideDoc(docType, docId, decision, btn) {
+            if (decision === 'approve' && !approverHasSignature) {
+                alert('먼저 위에서 내 서명을 등록해 주세요. 승인하면 그 서명이 결재란에 찍힙니다.');
+                toggleSignatureEditor(true);
+                return;
+            }
+            let comment = '';
+            if (decision === 'reject') {
+                comment = prompt('반려 사유를 적어 주세요. 학부모에게 그대로 보입니다.') || '';
+                if (!comment.trim()) return;
+            } else if (!confirm('승인하시겠습니까? 등록된 서명이 결재란에 찍힙니다.')) {
+                return;
+            }
+            btn.disabled = true;
             try {
-                const res = await fetch(`/api/teacher/absence-notes/${id}/approve`, {
-                    method: 'PATCH',
+                const res = await fetch(`/api/teacher/approvals/${docType}/${docId}`, {
+                    method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: 'approved' })
+                    body: JSON.stringify({ decision, comment })
                 });
-                if (!res.ok) throw new Error('승인 처리 실패');
-                btn.textContent = '승인 완료';
-                btn.disabled = true;
-                btn.style.background = '#233328';
-                btn.style.color = '#75d69f';
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '처리 실패');
                 loadApprovals();
             } catch (err) {
-                alert(err.message || '승인 처리 실패');
+                alert(err.message || '처리 실패');
+                btn.disabled = false;
             }
         }
 
-        async function approveExpDoc(id, type, btn) {
-            try {
-                const res = await fetch(`/api/teacher/experiential-apps/${id}/approve?type=${type}`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: 'approved' })
-                });
-                if (!res.ok) throw new Error('승인 처리 실패');
-                btn.textContent = '승인 완료';
-                btn.disabled = true;
-                btn.style.background = '#233328';
-                btn.style.color = '#75d69f';
-                loadApprovals();
-            } catch (err) {
-                alert(err.message || '승인 처리 실패');
-            }
+        // ── 내 서명 등록 ──
+        let teacherSigCtx = null;
+
+        function canvasHasInk(cv) {
+            const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data;
+            for (let i = 3; i < d.length; i += 4) if (d[i] !== 0) return true;
+            return false;
         }
+
+        function setupTeacherSignatureCanvas() {
+            const cv = document.getElementById('teacherSignatureCanvas');
+            if (!cv || teacherSigCtx) return;
+            cv.width = cv.offsetWidth || 400;
+            cv.height = cv.offsetHeight || 120;
+            const c = cv.getContext('2d');
+            c.lineWidth = 3; c.lineCap = 'round'; c.strokeStyle = '#000';
+            let drawing = false;
+            const pos = (e) => { const r = cv.getBoundingClientRect(); const p = e.touches ? e.touches[0] : e; return { x: p.clientX - r.left, y: p.clientY - r.top }; };
+            cv.addEventListener('mousedown', e => { drawing = true; const p = pos(e); c.beginPath(); c.moveTo(p.x, p.y); });
+            cv.addEventListener('mousemove', e => { if (!drawing) return; const p = pos(e); c.lineTo(p.x, p.y); c.stroke(); });
+            cv.addEventListener('mouseup', () => { drawing = false; });
+            cv.addEventListener('mouseleave', () => { drawing = false; });
+            cv.addEventListener('touchstart', e => { drawing = true; const p = pos(e); c.beginPath(); c.moveTo(p.x, p.y); }, { passive: true });
+            cv.addEventListener('touchmove', e => { if (!drawing) return; const p = pos(e); c.lineTo(p.x, p.y); c.stroke(); e.preventDefault(); }, { passive: false });
+            cv.addEventListener('touchend', () => { drawing = false; });
+            teacherSigCtx = c;
+        }
+
+        function toggleSignatureEditor(forceOpen) {
+            const ed = document.getElementById('signatureEditor');
+            const open = forceOpen === true ? true : ed.style.display === 'none';
+            ed.style.display = open ? '' : 'none';
+            if (open) setupTeacherSignatureCanvas();
+        }
+
+        function clearTeacherSignature() {
+            const cv = document.getElementById('teacherSignatureCanvas');
+            if (cv && teacherSigCtx) teacherSigCtx.clearRect(0, 0, cv.width, cv.height);
+        }
+
+        async function loadTeacherSignature() {
+            try {
+                const res = await fetch('/api/me/signature');
+                if (!res.ok) return;
+                const data = await res.json();
+                const box = document.getElementById('signatureCurrent');
+                const img = document.getElementById('signatureCurrentImg');
+                approverHasSignature = Boolean(data.signature);
+                box.style.display = data.signature ? '' : 'none';
+                if (data.signature) img.src = data.signature;
+                document.getElementById('signatureMissing').style.display = data.signature ? 'none' : '';
+            } catch (e) { console.error('signature load failed', e); }
+        }
+
+        async function saveTeacherSignature() {
+            const cv = document.getElementById('teacherSignatureCanvas');
+            const status = document.getElementById('signatureStatus');
+            if (!cv || !canvasHasInk(cv)) { status.style.color = '#ff7b72'; status.textContent = '먼저 서명을 그려 주세요.'; return; }
+            try {
+                const res = await fetch('/api/me/signature', {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ signature: cv.toDataURL('image/png') })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '등록 실패');
+                status.style.color = 'var(--green)'; status.textContent = '서명을 등록했습니다.';
+                clearTeacherSignature();
+                await loadTeacherSignature();
+            } catch (e) { status.style.color = '#ff7b72'; status.textContent = e.message || '등록하지 못했습니다.'; }
+        }
+
+        loadTeacherSignature();
 
         loadQuickAbsences();
         loadApprovals();

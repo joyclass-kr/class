@@ -528,7 +528,7 @@
                             <th style="width:80px;">담당 반</th>
                             <th style="width:110px;">담당 과목 (전담)</th>
                             <th style="width:110px;">기본 특별실</th>
-                            <th style="width:110px;">직책 (자동)</th>
+                            <th style="width:120px;">직책</th>
                             <th style="width:90px;">연동 상태</th>
                             <th style="width:60px;">관리</th>
                         </tr>
@@ -558,6 +558,16 @@
                         <input class="add-item-input" id="newColumnInput" placeholder="열 이름 (예: 동아리, 걸스카우트)" maxlength="30" onkeydown="if(event.key===&quot;Enter&quot;)addRosterColumn()">
                         <button class="btn btn-secondary btn-sm" onclick="addRosterColumn()">+ 열 추가</button>
                     </div>
+                </div>
+                <!-- 결재선 -->
+                <div class="card" style="margin:0;grid-column:1/-1;">
+                    <div class="card-title" style="font-size:14px;">🖋️ 결재선</div>
+                    <div class="card-desc">결석계·체험학습 문서가 누구를 거쳐 결재되는지 문서마다 정합니다. 체크한 사람을 담임 → 교무부장 → 교감 → 교장 순으로 거치고, 전결자로 고른 사람이 최종 결재권을 갖습니다(결재란에 '전결' 표시).</div>
+                    <div id="approvalLineList"></div>
+                    <div class="add-item-row" id="approvalLineActions" style="justify-content:flex-end;">
+                        <button class="btn btn-primary btn-sm" onclick="saveApprovalLines()">💾 결재선 저장</button>
+                    </div>
+                    <p class="status-msg" id="approvalLineStatus"></p>
                 </div>
                 <!-- 특별실 -->
                 <div class="card" style="margin:0;">
@@ -766,7 +776,16 @@
                     <td>
                         <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.roomName ?? '')}" placeholder="예: 음악실" onchange="updateTeacherField(${idx}, 'roomName', this.value)">
                     </td>
-                    <td style="text-align:center;">${roleBadge}</td>
+                    <td style="text-align:center;">
+                        <!-- 담임·전담은 학년·반으로 자동. 교무부장·교감·교장은 여기서 고른다.
+                             결재선의 '교무부장·교감·교장' 차례는 이 직책으로 정해진다. -->
+                        <select class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 4px;" onchange="updateTeacherField(${idx}, 'role', this.value)">
+                            <option value="auto" ${!['교무부장','교감','교장'].includes(t.role || t.type) ? 'selected' : ''}>자동 (담임/전담)</option>
+                            <option value="교무부장" ${(t.role || t.type) === '교무부장' ? 'selected' : ''}>교무부장</option>
+                            <option value="교감" ${(t.role || t.type) === '교감' ? 'selected' : ''}>교감</option>
+                            <option value="교장" ${(t.role || t.type) === '교장' ? 'selected' : ''}>교장</option>
+                        </select>
+                    </td>
                     <td style="text-align:center;">${linkedBadge}</td>
                     <td style="text-align:center;">
                         <button class="delete-item-btn" onclick="deleteTeacherRow(${idx})" title="삭제">🗑️</button>
@@ -820,8 +839,11 @@
                 const cleanName = String(t.name || "").replace(/\s+/g, "");
                 const cleanEmail = t.email ? String(t.email).trim() : null;
 
+                // 직책 칸에서 고른 것이 있으면 그것이 우선, 없으면 학년·반으로 자동.
+                const pickedRole = (t.role || t.type);
+                const explicitType = ['교무부장', '교감', '교장'].includes(pickedRole) ? pickedRole : null;
                 return {
-                    type: calculatedType,
+                    type: explicitType || calculatedType,
                     name: cleanName,
                     email: cleanEmail,
                     grade: g,
@@ -1292,7 +1314,7 @@
         try {
             const data = await api(`/api/school/settings?year=${currentYear}`);
             isSchoolAdmin = Boolean(data.isAdmin);
-            schoolSettings = { columns: data.columns || [], specialRooms: data.specialRooms || [] };
+            schoolSettings = { columns: data.columns || [], specialRooms: data.specialRooms || [], approvalLines: data.approvalLines || {} };
             
             if (data.schoolName) {
                 document.getElementById("schoolName").textContent = data.schoolName;
@@ -1313,6 +1335,7 @@
             }
 
             renderRosterColumns();
+            renderApprovalLines();
             renderSettingsList("specialRoomList", schoolSettings.specialRooms, "specialRooms", "room_name");
             updatePasteColsHint();
         } catch (e) {
@@ -1438,6 +1461,74 @@
         schoolSettings[key].splice(idx, 1);
         renderSettingsList("specialRoomList", schoolSettings.specialRooms, "specialRooms", "room_name");
         setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
+    };
+
+    // ─── 결재선 ────────────────────────────────────────────────
+    // 문서 종류마다 담임·교무부장·교감·교장 중 누구를 거칠지 체크하고, 전결자를 하나 고른다.
+    const APPROVAL_DOC_LABELS = { absence: "📝 결석계", exp_app: "✈️ 체험학습 신청서", exp_report: "📄 체험학습 보고서" };
+    const APPROVAL_ROLE_ORDER = ["homeroom", "head", "vice", "principal"];
+    const APPROVAL_ROLE_LABEL = { homeroom: "담임", head: "교무부장", vice: "교감", principal: "교장" };
+
+    function renderApprovalLines() {
+        const box = document.getElementById("approvalLineList");
+        if (!box) return;
+        const lines = schoolSettings.approvalLines || {};
+        document.getElementById("approvalLineActions").style.display = isSchoolAdmin ? "flex" : "none";
+        box.innerHTML = Object.keys(APPROVAL_DOC_LABELS).map(docType => {
+            const entries = lines[docType] || [];
+            const checked = new Set(entries.map(e => e.role));
+            const finalRole = (entries.find(e => e.isFinal) || {}).role || "";
+            const boxes = APPROVAL_ROLE_ORDER.map(role => `
+                <label style="display:inline-flex;align-items:center;gap:4px;margin-right:14px;font-size:13px;">
+                    <input type="checkbox" ${checked.has(role) ? "checked" : ""} ${isSchoolAdmin ? "" : "disabled"}
+                           onchange="toggleApprovalRole('${docType}', '${role}', this.checked)">
+                    ${APPROVAL_ROLE_LABEL[role]}
+                </label>`).join("");
+            const finalOptions = ['<option value="">없음 (마지막 사람이 결재)</option>']
+                .concat(APPROVAL_ROLE_ORDER.filter(r => checked.has(r)).map(r =>
+                    `<option value="${r}" ${finalRole === r ? "selected" : ""}>${APPROVAL_ROLE_LABEL[r]}</option>`))
+                .join("");
+            return `
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--line);">
+                    <strong style="min-width:150px;font-size:14px;">${APPROVAL_DOC_LABELS[docType]}</strong>
+                    <div>${boxes}</div>
+                    <label style="font-size:13px;color:var(--muted);margin-left:auto;">전결
+                        <select ${isSchoolAdmin ? "" : "disabled"} style="margin-left:6px;padding:3px 6px;border:1px solid var(--line);border-radius:4px;"
+                                onchange="setApprovalFinal('${docType}', this.value)">${finalOptions}</select>
+                    </label>
+                </div>`;
+        }).join("");
+    }
+
+    window.toggleApprovalRole = function(docType, role, on) {
+        const lines = schoolSettings.approvalLines || (schoolSettings.approvalLines = {});
+        const entries = lines[docType] || (lines[docType] = []);
+        const idx = entries.findIndex(e => e.role === role);
+        if (on && idx < 0) entries.push({ role, isFinal: false });
+        if (!on && idx >= 0) entries.splice(idx, 1);
+        renderApprovalLines();
+        setStatus("approvalLineStatus", "⚠️ 바뀐 결재선은 '💾 결재선 저장'을 눌러야 적용됩니다.");
+    };
+
+    window.setApprovalFinal = function(docType, role) {
+        const entries = (schoolSettings.approvalLines || {})[docType] || [];
+        entries.forEach(e => { e.isFinal = e.role === role; });
+        renderApprovalLines();
+        setStatus("approvalLineStatus", "⚠️ 바뀐 결재선은 '💾 결재선 저장'을 눌러야 적용됩니다.");
+    };
+
+    window.saveApprovalLines = async function() {
+        try {
+            const res = await api("/api/school/approval-lines", {
+                method: "PUT",
+                body: JSON.stringify({ lines: schoolSettings.approvalLines || {} })
+            });
+            schoolSettings.approvalLines = res.lines || schoolSettings.approvalLines;
+            renderApprovalLines();
+            setStatus("approvalLineStatus", "✅ 결재선을 저장했습니다.", "ok");
+        } catch (e) {
+            setStatus("approvalLineStatus", e.message, "error");
+        }
     };
 
     window.addSpecialRoom = function() {

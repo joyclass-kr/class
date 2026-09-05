@@ -168,6 +168,29 @@
             margin-top: 10px;
         }
 
+        .head-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .head-row .approval-box { float: none; margin: 0; }
+        .head-row .sub-note { margin: 0 0 4px; }
+        .row-tall td, .row-tall th { height: 44px; }
+        .nowrap { white-space: nowrap; }
+        .reason-cell { height: 76px; vertical-align: top; line-height: 1.6; }
+        .checkbox-group .cg-title { font-weight: bold; margin-top: 6px; }
+        .checkbox-group .cg-title:first-child { margin-top: 0; }
+        .checkbox-group .cg-line { margin-left: 14px; }
+        .checkbox-group .cg-sub { margin-left: 40px; color: #333; }
+        .signature-section { font-size: 17px; line-height: 2.1; }
+        .period-cell { padding: 10px 12px; line-height: 1.8; }
+        .period-label { color: #1f4bd6; }
+        .period-sub { display: inline-block; margin-left: 24px; }
+        .plan-cell { height: 240px; vertical-align: top; line-height: 1.7; }
+        .gender { color: #555; font-size: 13px; }
+
         @media print {
             body { background: transparent; padding: 0; }
             .no-print-bar { display: none !important; }
@@ -197,6 +220,25 @@
         const formType = urlParams.get('type') || 'absence';
         const docId = urlParams.get('id');
 
+        // 결재란. 서버가 준 결재 단계(approvals)대로 칸을 만들고, 승인된 칸에는 그 사람의
+        // 서명과 날짜를 찍는다. 학교가 전결자로 정한 칸에는 '전결'이 붙는다.
+        function approvalBox(d) {
+            const fallback = [{ roleLabel: '담임' }, { roleLabel: '교무부장' }, { roleLabel: '교감' }, { roleLabel: '교장' }];
+            const steps = (Array.isArray(d.approvals) && d.approvals.length > 0) ? d.approvals : fallback;
+            const fmt = function (iso) { if (!iso) return ''; const t = new Date(iso); return (t.getMonth() + 1) + '.' + t.getDate(); };
+            const head = steps.map(function (s) {
+                return '<th width="64">' + s.roleLabel + (s.isFinal ? '<br><span style="font-size:10px;">(전결)</span>' : '') + '</th>';
+            }).join('');
+            const cells = steps.map(function (s) {
+                if (s.status === 'approved' && s.signature) {
+                    return '<td class="stamp-cell"><img src="' + s.signature + '" class="sig-img" alt="서명"><div style="font-size:9px;">' + fmt(s.decidedAt) + (s.isFinal ? ' 전결' : '') + '</div></td>';
+                }
+                if (s.status === 'rejected') return '<td class="stamp-cell" style="color:#c00;font-weight:bold;">반려</td>';
+                return '<td class="stamp-cell">' + (s.isFinal ? '<span style="font-size:10px;color:#666;">전결</span>' : '') + '</td>';
+            }).join('');
+            return '<table class="approval-box"><tr><th rowspan="2" width="20">결<br>재</th>' + head + '</tr><tr>' + cells + '</tr></table>';
+        }
+
         async function loadDocumentData() {
             let data = {};
             if (docId) {
@@ -219,30 +261,38 @@
             }
         }
 
+        // 날짜 '2026-09-01' -> '2026년 9월 1일'. 없으면 종이 양식처럼 빈칸을 둔다.
+        function koreanDate(value) {
+            const m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (!m) return '202&nbsp;&nbsp;년 &nbsp;&nbsp;월 &nbsp;&nbsp;일';
+            return Number(m[1]) + '년 ' + Number(m[2]) + '월 ' + Number(m[3]) + '일';
+        }
+
+        function box(on) { return on ? '☑' : '☐'; }
+
         function getAbsenceHTML(d) {
             const year = d.year || new Date().getFullYear();
             const month = d.month || (new Date().getMonth() + 1);
             const day = d.day || new Date().getDate();
+            const school = d.schoolName || '';
+            const days = Number(d.totalDays || 0);
+            const reason = String(d.reasonType || '');
+            // 학부모가 고른 결석 구분에 맞춰 증빙서류 칸에 표시한다.
+            const isDust = reason === '미세먼지결석';
+            const isSick = reason === '질병결석';
+            const isOther = reason === '기타결석';
+            const isRecognized = reason === '출석인정결석';
+            // 담임 확인란. 결재가 끝난 문서만 표시한다.
+            const done = d.teacherCheck === 'approved' || d.status === 'approved';
+            const col = done ? ((isSick || isDust) ? '질병' : isOther ? '기타' : isRecognized ? '인정' : '') : '';
 
             return `
             <div class="a4-page">
-                <table class="approval-box">
-                    <tr>
-                        <th rowspan="2" width="20">결<br>재</th>
-                        <th width="60">담임</th>
-                        <th width="70">교무부장</th>
-                        <th width="60">교감</th>
-                    </tr>
-                    <tr>
-                        <td class="stamp-cell"></td>
-                        <td class="stamp-cell"></td>
-                        <td class="stamp-cell">전결</td>
-                    </tr>
-                </table>
-                <div class="clear"></div>
-
                 <div class="title">결 석 계</div>
-                <div class="sub-note">※ 결석한 날부터 5일 이내에 제출</div>
+                <div class="head-row">
+                    <div class="sub-note">※ 결석한 날부터 5일 이내에 제출</div>
+                    ${approvalBox(d)}
+                </div>
 
                 <table class="form-table">
                     <tr>
@@ -251,46 +301,45 @@
                         <th width="20%">번호</th>
                         <th width="30%">성명</th>
                     </tr>
-                    <tr>
-                        <td class="center">서울계상초등학교</td>
+                    <tr class="row-tall">
+                        <td class="center">${school}</td>
                         <td class="center">${d.grade || ''}학년 ${d.classNumber || ''}반</td>
                         <td class="center">${d.studentNumber || ''}</td>
                         <td class="center"><strong>${d.studentName || ''}</strong></td>
                     </tr>
-                    <tr>
+                    <tr class="row-tall">
                         <th>결석기간</th>
                         <td colspan="3" class="center">
-                            ${d.startDate || '202 년  월  일'} ~ ${d.endDate || '202 년  월  일'} (${d.totalDays || ' '}일간)
+                            ${koreanDate(d.startDate)} ~ ${koreanDate(d.endDate)} ( ${days || '&nbsp;&nbsp;'} )일간
                         </td>
                     </tr>
                     <tr>
                         <th>결석사유<br>(학부모 의견)</th>
-                        <td colspan="3" style="height: 70px; vertical-align: top;">
-                            ${d.reasonDetail || ''}
-                        </td>
+                        <td colspan="3" class="reason-cell">${d.reasonDetail || ''}</td>
                     </tr>
                     <tr>
                         <th>증빙서류</th>
                         <td colspan="3" class="checkbox-group">
-                            <strong>*질병으로 인한 결석</strong><br>
-                            - 미세먼지 민감군 학생 결석: ${d.reasonType === 'dust' ? '☑' : '☐'} 의사 진단서 또는 소견서 (등교시간 '나쁨' 이상 일 때 사전연락)<br>
-                            - 2일 이내: ${d.reasonType === 'sick_2d' ? '☑' : '☐'} 위의 학부모의견서(결석계)로 갈음함<br>
-                            - 3일 이상: ${d.reasonType === 'sick_3d' ? '☑' : '☐'} 의사 소견서  ${d.reasonType === 'sick_3d' ? '☑' : '☐'} 진료 확인서<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;☐ 기타 병명, 진료기간 등이 기록된 증빙서류<br><br>
-                            <strong>*기타 결석</strong> : ${d.reasonType === 'other' ? '☑ 기타' : '☐ 기타'}<br><br>
-                            <strong>*출석인정결석</strong> : ☐ 뒷면 참조, ${d.reasonType === 'approved' ? '☑' : '☐'} 코로나19 관련 / 경조사 등
-                            ${d.evidenceUrl ? `<br><br><img src="${d.evidenceUrl}" class="photo-container" alt="증빙서류">` : ''}
+                            <div class="cg-title">* 질병으로 인한 결석</div>
+                            <div class="cg-line">- 미세먼지 민감군 학생 결석: ${box(isDust)} 의사 진단서 또는 소견서</div>
+                            <div class="cg-line cg-sub">(등교시간 '나쁨' 이상일 때 사전연락)</div>
+                            <div class="cg-line">- 2일 이내: ${box(isSick && days > 0 && days <= 2)} 위의 학부모의견서(결석계)로 갈음함</div>
+                            <div class="cg-line">- 3일 이상: ${box(isSick && days >= 3)} 의사 소견서 &nbsp;&nbsp; ☐ 진료 확인서</div>
+                            <div class="cg-line cg-sub">☐ 기타 병명, 진료기간 등이 기록된 증빙서류</div>
+                            <div class="cg-title">* 기타 결석: ${box(isOther)} 기타</div>
+                            <div class="cg-title">* 출석인정결석: ${box(isRecognized)} 뒷면 참조, ☐ 코로나19 관련</div>
+                            ${d.evidenceUrl ? '<img src="' + d.evidenceUrl + '" class="photo-container" alt="증빙서류">' : ''}
                         </td>
                     </tr>
                 </table>
 
                 <div class="signature-section">
-                    ${year} 년 &nbsp;&nbsp; ${month} 월 &nbsp;&nbsp; ${day} 일<br><br>
-                    보호자 : &nbsp;&nbsp; ${d.parentName || '학부모'} &nbsp;&nbsp; 
-                    ${d.parentSignature ? `<img src="${d.parentSignature}" class="sig-img" alt="서명">` : '(인)'}
+                    ${year}년 ( ${month} )월 ( ${day} )일<br>
+                    보호자 : &nbsp; ${d.parentName || ''} &nbsp;
+                    ${d.parentSignature ? '<img src="' + d.parentSignature + '" class="sig-img" alt="서명">' : '(서명)'}
                 </div>
 
-                <div class="school-principal">서울계상초등학교장 귀하</div>
+                <div class="school-principal">${school ? school + '장' : '학교장'} 귀하</div>
 
                 <div class="bottom-notice">
                     ※ 본 결석계는 학부모 의견서를 겸합니다.<br>
@@ -298,19 +347,19 @@
                 </div>
 
                 <div class="teacher-record-box">
-                    <p>▶ 아래 부분은 담임선생님이 확인 기록하는 것이니 가정에서는 기록하지 마시기 바랍니다.</p>
-                    <table class="form-table" style="margin: 0;">
+                    <p>▶ 아래 부분은 담임선생님이 확인 기록하는 것이니 <u>가정에서는 기록하지 마시기 바랍니다.</u></p>
+                    <table class="form-table" style="margin:0;">
                         <tr>
                             <th>질병결석</th>
                             <th>미인정결석</th>
                             <th>기타결석</th>
                             <th>출석인정결석<br><small>(천재지변, 감염병, 경조사 등)</small></th>
                         </tr>
-                        <tr style="height: 45px;">
-                            <td class="center">${d.teacherCheck === '질병결석' ? 'v' : ''}</td>
-                            <td class="center">${d.teacherCheck === '미인정결석' ? 'v' : ''}</td>
-                            <td class="center">${d.teacherCheck === '기타결석' ? 'v' : ''}</td>
-                            <td class="center">${d.teacherCheck === '출석인정결석' ? 'v' : ''}</td>
+                        <tr class="row-tall">
+                            <td class="center">${col === '질병' ? 'V' : ''}</td>
+                            <td class="center"></td>
+                            <td class="center">${col === '기타' ? 'V' : ''}</td>
+                            <td class="center">${col === '인정' ? 'V' : ''}</td>
                         </tr>
                     </table>
                 </div>
@@ -318,135 +367,108 @@
             `;
         }
 
-        function getExpAppHTML(d) {
+        function periodText(d) {
+            const days = Number(d.totalDays || 0);
+            return koreanDate(d.startDate) + ' ~ ' + koreanDate(d.endDate) + ' ( ' + (days || '&nbsp;&nbsp;') + ' )일간';
+        }
+        const BLANK_PERIOD = '202&nbsp;&nbsp;년 &nbsp;&nbsp;월 &nbsp;&nbsp;일 ~ 202&nbsp;&nbsp;년 &nbsp;&nbsp;월 &nbsp;&nbsp;일 ( &nbsp;&nbsp; )일간';
+
+        function personRows(d, withPhone) {
+            const gender = d.gender === '남' || d.gender === '여' ? '(' + d.gender + ')' : '(남 · 여)';
+            return `
+                    <tr>
+                        <th width="12%" ${withPhone ? 'rowspan="2"' : ''}>인 적<br>사 항</th>
+                        <th width="12%">성 명</th>
+                        <td width="36%"><strong>${d.studentName || ''}</strong> <span class="gender">${gender}</span></td>
+                        <th width="16%" class="nowrap">학년반번호</th>
+                        <td width="24%" class="nowrap">${d.grade || ''}학년 ${d.classNumber || ''}반 ${d.studentNumber || ''}번</td>
+                    </tr>
+                    ${withPhone ? '<tr><th>전화번호</th><td colspan="3">' + (d.parentPhone || '010-') + '</td></tr>' : ''}`;
+        }
+
+        // 학생은 서명하지 않는다. 학부모 서명만 받는다.
+        function closing(d, sentence) {
             const year = d.year || new Date().getFullYear();
             const month = d.month || (new Date().getMonth() + 1);
             const day = d.day || new Date().getDate();
+            const school = d.schoolName || '';
+            return `
+                <div class="signature-section">
+                    ${sentence}<br>
+                    ${year}년 ( ${month} )월 ( ${day} )일<br>
+                    학부모 : &nbsp; ${d.parentName || ''} &nbsp;
+                    ${d.parentSignature ? '<img src="' + d.parentSignature + '" class="sig-img" alt="서명">' : '(서명)'}
+                </div>
+                <div class="school-principal">${school ? school + '장' : '학교장'} 귀하</div>`;
+        }
 
+        function getExpAppHTML(d) {
+            // 감염병 위기경보 '심각' 단계에 한해 가정학습으로 신청할 수 있다.
+            const isHome = d.learningType === 'home';
             return `
             <div class="a4-page">
-                <table class="approval-box">
-                    <tr>
-                        <th rowspan="2" width="20">결<br>재</th>
-                        <th width="60">담임</th>
-                        <th width="60">교무<br>전결</th>
-                    </tr>
-                    <tr>
-                        <td class="stamp-cell"></td>
-                        <td class="stamp-cell"></td>
-                    </tr>
-                </table>
-                <div class="clear"></div>
-
-                <div class="title" style="letter-spacing: 6px;">교외체험학습 신청서</div>
+                <div class="title" style="letter-spacing:6px;">교외체험학습 신청서</div>
+                <div class="head-row">
+                    <div class="sub-note">※ 체험학습 실시 3일 전까지 제출</div>
+                    ${approvalBox(d)}
+                </div>
 
                 <table class="form-table">
-                    <tr>
-                        <th width="12%" rowspan="2">인 적<br>사 항</th>
-                        <th width="15%">성 명</th>
-                        <td width="35%"><strong>${d.studentName || ''}</strong> (${d.gender || '남/여'})</td>
-                        <th width="18%">학년반번호</th>
-                        <td width="20%">${d.grade || ''}학년 ${d.classNumber || ''}반 ${d.studentNumber || ''}번</td>
-                    </tr>
-                    <tr>
-                        <th>전화번호</th>
-                        <td colspan="3">${d.parentPhone || '010-'}</td>
-                    </tr>
+                    ${personRows(d, true)}
                     <tr>
                         <th rowspan="2">기 간</th>
-                        <td colspan="4">
-                            (일반 체험학습) ${d.startDate || '202 년  월  일'} ~ ${d.endDate || '202 년  월  일'} ( ${d.totalDays || ' '}일간 )
+                        <td colspan="4" class="period-cell">
+                            <span class="period-label">(일반 체험학습)</span> ${isHome ? BLANK_PERIOD : periodText(d)}
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4" style="color: blue; font-size: 12px;">
-                            (감염병위기경보 - 심각 단계인 경우에 한해, ‘가정학습’으로 신청 가능)
+                        <td colspan="4" class="period-cell">
+                            <span class="period-label">(감염병위기경보 - 심각 단계인 경우에 한해, '가정학습'으로 신청 가능)</span><br>
+                            <span class="period-sub">${isHome ? periodText(d) : BLANK_PERIOD}</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="row-tall">
                         <th>장 소</th>
                         <td colspan="4">${d.location || ''}</td>
                     </tr>
                     <tr>
                         <th>활동계획</th>
-                        <td colspan="4" style="height: 240px; vertical-align: top;">
-                            ${d.planDetail || ''}
-                        </td>
+                        <td colspan="4" class="plan-cell">${d.planDetail || ''}</td>
                     </tr>
                 </table>
-
-                <div class="signature-section">
-                    위와 같이 교외체험학습을 신청하오니 허락하여 주시기 바랍니다.<br><br>
-                    ${year} 년 &nbsp;&nbsp; ${month} 월 &nbsp;&nbsp; ${day} 일<br><br>
-                    학 생 : &nbsp;&nbsp; ${d.studentName || ''} &nbsp;&nbsp; (인)<br>
-                    학부모 : &nbsp;&nbsp; ${d.parentName || '보호자'} &nbsp;&nbsp; 
-                    ${d.parentSignature ? `<img src="${d.parentSignature}" class="sig-img" alt="서명">` : '(인)'}
-                </div>
-
-                <div class="school-principal">서울계상초등학교장 귀하</div>
+                ${closing(d, '위와 같이 교외체험학습을 신청하오니 허락하여 주시기 바랍니다.')}
             </div>
             `;
         }
 
         function getExpReportHTML(d) {
-            const year = d.year || new Date().getFullYear();
-            const month = d.month || (new Date().getMonth() + 1);
-            const day = d.day || new Date().getDate();
-
             return `
             <div class="a4-page">
-                <table class="approval-box">
-                    <tr>
-                        <th rowspan="2" width="20">결<br>재</th>
-                        <th width="60">담임</th>
-                        <th width="60">교무<br>전결</th>
-                    </tr>
-                    <tr>
-                        <td class="stamp-cell"></td>
-                        <td class="stamp-cell"></td>
-                    </tr>
-                </table>
-                <div class="clear"></div>
-
-                <div class="title" style="letter-spacing: 4px; font-size: 24px;">교외체험학습 결과 보고서</div>
-                <div class="sub-note" style="text-align: right;">※ 교외체험학습 실시 후 7일 이내 제출함</div>
+                <div class="title" style="letter-spacing:4px; font-size:24px;">교외체험학습 결과 보고서</div>
+                <div class="head-row">
+                    <div class="sub-note">※ 교외체험학습 실시 후 7일 이내 제출함</div>
+                    ${approvalBox(d)}
+                </div>
 
                 <table class="form-table">
-                    <tr>
-                        <th width="12%">인 적<br>사 항</th>
-                        <th width="15%">성 명</th>
-                        <td width="35%"><strong>${d.studentName || ''}</strong> (${d.gender || '남/여'})</td>
-                        <th width="18%">학년반번호</th>
-                        <td width="20%">${d.grade || ''}학년 ${d.classNumber || ''}반 ${d.studentNumber || ''}번</td>
-                    </tr>
-                    <tr>
+                    ${personRows(d, false)}
+                    <tr class="row-tall">
                         <th>기 간</th>
-                        <td colspan="4">
-                            (일반 체험학습) ${d.startDate || '202 년  월  일'} ~ ${d.endDate || '202 년  월  일'} ( ${d.totalDays || ' '}일간 )
-                        </td>
+                        <td colspan="4" class="period-cell"><span class="period-label">(일반 체험학습)</span> ${periodText(d)}</td>
                     </tr>
-                    <tr>
+                    <tr class="row-tall">
                         <th>장 소</th>
                         <td colspan="4">${d.location || ''}</td>
                     </tr>
                     <tr>
                         <th>현장학습<br>실천내용<br>및 효과</th>
-                        <td colspan="4" style="height: 240px; vertical-align: top;">
+                        <td colspan="4" class="plan-cell">
                             ${d.reportDetail || ''}
-                            ${d.photoUrl ? `<br><br><img src="${d.photoUrl}" class="photo-container" alt="현장사진">` : ''}
+                            ${d.photoUrl ? '<br><br><img src="' + d.photoUrl + '" class="photo-container" alt="현장사진">' : ''}
                         </td>
                     </tr>
                 </table>
-
-                <div class="signature-section">
-                    위와 같이 현장 학습 결과를 보고합니다.<br><br>
-                    ${year} 년 &nbsp;&nbsp; ${month} 월 &nbsp;&nbsp; ${day} 일<br><br>
-                    학 생 : &nbsp;&nbsp; ${d.studentName || ''} &nbsp;&nbsp; (인)<br>
-                    학부모 : &nbsp;&nbsp; ${d.parentName || '보호자'} &nbsp;&nbsp; 
-                    ${d.parentSignature ? `<img src="${d.parentSignature}" class="sig-img" alt="서명">` : '(인)'}
-                </div>
-
-                <div class="school-principal">서울계상초등학교장 귀하</div>
+                ${closing(d, '위와 같이 현장 학습 결과를 보고합니다.')}
             </div>
             `;
         }

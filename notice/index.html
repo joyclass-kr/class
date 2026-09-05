@@ -312,6 +312,24 @@
                 <button class="btn-secondary" onclick="openGuideModal()">ℹ️ 출석인정 기준 안내</button>
             </div>
 
+            <!-- 쓰기 전에 알아야 할 것. 자세한 표는 위 단추로. -->
+            <div class="card" style="padding:14px 16px; border-color:rgba(240,189,100,0.35);">
+                <p style="margin:0 0 8px; font-weight:700; color:var(--gold); font-size:14px;">결석계는 결석한 날부터 5일 이내에 내 주세요.</p>
+                <p style="margin:0 0 6px; font-size:13px; color:var(--text); line-height:1.6;">
+                    결석이지만 <strong>출석으로 인정</strong>되는 경우가 있습니다. 해당하면 결석 구분에서 <strong>출석인정결석</strong>을 고르고 증빙서류 사진을 붙여 주세요.
+                </p>
+                <ul style="margin:0 0 8px; padding-left:18px; font-size:13px; color:var(--muted); line-height:1.7;">
+                    <li>결혼 (형제·자매·부·모) — 1일, 청첩장</li>
+                    <li>입양 (본인) — 20일, 증명서</li>
+                    <li>사망 — 부모·조부모·외조부모 5일 / 증조부모·형제자매 3일 / 부모의 형제자매 1일, 사망진단서 또는 장례식장 확인서</li>
+                    <li>감염병 — 치료기간 전부, 의사 진단서 또는 소견서</li>
+                </ul>
+                <p style="margin:0; font-size:12px; color:var(--muted); line-height:1.5;">
+                    ※ 경조사 일수에 재량휴업일·공휴일·토요일은 넣지 않습니다. 연속된 결석 일수에 한해 인정됩니다.<br>
+                    ※ 질병 결석은 2일 이내면 이 결석계로 갈음하고, 3일 이상이면 의사 소견서나 진료 확인서를 붙여 주세요.
+                </p>
+            </div>
+
             <div class="card">
                 <form id="absenceForm" onsubmit="submitAbsenceNote(event)">
                     <div style="display:flex; gap:10px;">
@@ -364,6 +382,14 @@
         <!-- Tab 4: 교외체험학습 -->
         <section id="tab-exp-learning" class="hidden">
             <h2 style="font-size:18px; margin:0 0 14px;">✈️ 교외체험학습 신청 및 보고서</h2>
+            <!-- 언제까지 내야 하는지. 신청서는 가기 전, 보고서는 다녀온 뒤. -->
+            <div class="card" style="padding:12px 16px; border-color:rgba(240,189,100,0.35);">
+                <p style="margin:0; font-size:13px; line-height:1.7;">
+                    <strong style="color:var(--gold);">신청서</strong>는 체험학습 <strong>실시 3일 전까지</strong>,
+                    <strong style="color:var(--gold);">결과 보고서</strong>는 <strong>다녀온 뒤 7일 이내</strong>에 내 주세요.
+                    담임 → 교무부장 → 교감 → 교장 순으로 결재되며, 진행 상황은 📋 신청 내역에서 볼 수 있습니다.
+                </p>
+            </div>
             <div class="card">
                 <div style="display:flex; gap:8px; margin-bottom:14px;">
                     <button class="btn-secondary" style="flex:1;" onclick="showExpForm('app')">신청서 작성</button>
@@ -416,6 +442,29 @@
         </section>
 
         <!-- Tab 5: 내가 낸 신청 내역 -->
+        <!-- 내 서명: 한 번 등록해 두면 결석계·체험학습에 자동으로 찍힌다 -->
+        <section id="tab-signature" class="hidden">
+            <h2 style="font-size:18px; margin:0 0 14px;">✍️ 내 전자서명</h2>
+            <div class="card">
+                <p style="color:var(--muted); font-size:13px; margin:0 0 10px; line-height:1.5;">
+                    여기 한 번 서명해 두면 결석계·체험학습 신청서에 자동으로 찍힙니다.
+                    제출할 때 새로 그리면 그 서명이 우선입니다.
+                </p>
+                <div id="mySignaturePreview" style="display:none; margin-bottom:10px;">
+                    <div style="font-size:12px; color:var(--muted); margin-bottom:4px;">등록된 서명</div>
+                    <img id="mySignatureImg" alt="등록된 서명" style="max-height:70px; background:#fff; border-radius:8px; padding:4px;">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <label style="margin:0;">새로 서명하기</label>
+                    <button type="button" class="btn-secondary" style="padding:4px 10px; font-size:12px;" onclick="clearSignatureSetupCanvas()">🧹 지우기</button>
+                </div>
+                <canvas id="signatureSetupCanvas" class="sig-canvas"></canvas>
+                <button type="button" class="btn-primary" onclick="saveMySignature()">💾 이 서명으로 등록</button>
+                <button type="button" class="btn-secondary" style="width:100%; min-height:44px; margin-top:8px;" onclick="deleteMySignature()">등록된 서명 지우기</button>
+                <p id="signatureStatus" style="font-size:13px; margin:10px 0 0; min-height:18px;"></p>
+            </div>
+        </section>
+
         <section id="tab-my-submissions" class="hidden">
             <h2 style="font-size:18px; margin:0 0 14px;">📋 내가 낸 신청 내역</h2>
             <div class="card">
@@ -446,6 +495,10 @@
         <button class="nav-item" onclick="switchTab('my-submissions', this)">
             <span class="icon">📋</span>
             <span>신청 내역</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('signature', this); loadMySignature()">
+            <span class="icon">✍️</span>
+            <span>내 서명</span>
         </button>
     </nav>
 
@@ -581,6 +634,98 @@
             canvas.addEventListener('touchend', () => isDrawing = false);
         }
 
+        // ── 내 서명 등록 ──
+        // 캔버스에 뭔가 그렸는지. 빈 캔버스도 toDataURL 은 값을 내놓으므로 픽셀을 본다.
+        function canvasHasInk(cv) {
+            if (!cv) return false;
+            const c = cv.getContext('2d');
+            const data = c.getImageData(0, 0, cv.width, cv.height).data;
+            for (let i = 3; i < data.length; i += 4) if (data[i] !== 0) return true;
+            return false;
+        }
+
+        function setupSignatureCanvas(cv) {
+            if (!cv) return null;
+            cv.width = cv.offsetWidth || 320;
+            cv.height = cv.offsetHeight || 120;
+            const c = cv.getContext('2d');
+            c.lineWidth = 3; c.lineCap = 'round'; c.strokeStyle = '#000';
+            let drawing = false;
+            const pos = (e) => {
+                const r = cv.getBoundingClientRect();
+                const p = e.touches ? e.touches[0] : e;
+                return { x: p.clientX - r.left, y: p.clientY - r.top };
+            };
+            const start = (e) => { drawing = true; const p = pos(e); c.beginPath(); c.moveTo(p.x, p.y); };
+            const move = (e) => { if (!drawing) return; const p = pos(e); c.lineTo(p.x, p.y); c.stroke(); e.preventDefault(); };
+            const end = () => { drawing = false; };
+            cv.addEventListener('mousedown', start); cv.addEventListener('mousemove', move); cv.addEventListener('mouseup', end);
+            cv.addEventListener('touchstart', start, { passive: true }); cv.addEventListener('touchmove', move, { passive: false }); cv.addEventListener('touchend', end);
+            return c;
+        }
+
+        let storedSignatureData = null;
+        let signatureSetupCtx = null;
+
+        function clearSignatureSetupCanvas() {
+            const cv = document.getElementById('signatureSetupCanvas');
+            if (cv && signatureSetupCtx) signatureSetupCtx.clearRect(0, 0, cv.width, cv.height);
+        }
+
+        async function loadMySignature() {
+            const cv = document.getElementById('signatureSetupCanvas');
+            if (cv && !signatureSetupCtx) signatureSetupCtx = setupSignatureCanvas(cv);
+            try {
+                const res = await fetch('/api/me/signature');
+                if (!res.ok) return;
+                const data = await res.json();
+                storedSignatureData = data.signature || null;
+                const box = document.getElementById('mySignaturePreview');
+                const img = document.getElementById('mySignatureImg');
+                if (box && img) {
+                    box.style.display = storedSignatureData ? '' : 'none';
+                    if (storedSignatureData) img.src = storedSignatureData;
+                }
+            } catch (e) { console.error('signature load failed', e); }
+        }
+
+        async function saveMySignature() {
+            const cv = document.getElementById('signatureSetupCanvas');
+            const status = document.getElementById('signatureStatus');
+            if (!canvasHasInk(cv)) { status.style.color = 'var(--danger)'; status.textContent = '먼저 서명을 그려 주세요.'; return; }
+            try {
+                const res = await fetch('/api/me/signature', {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ signature: cv.toDataURL('image/png') })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '등록 실패');
+                status.style.color = 'var(--green)'; status.textContent = '서명을 등록했습니다.';
+                clearSignatureSetupCanvas();
+                await loadMySignature();
+            } catch (e) { status.style.color = 'var(--danger)'; status.textContent = e.message || '등록하지 못했습니다.'; }
+        }
+
+        async function deleteMySignature() {
+            if (!confirm('등록된 서명을 지울까요?')) return;
+            const status = document.getElementById('signatureStatus');
+            try {
+                const res = await fetch('/api/me/signature', {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ signature: '' })
+                });
+                if (!res.ok) throw new Error('지우지 못했습니다.');
+                status.style.color = 'var(--green)'; status.textContent = '등록된 서명을 지웠습니다.';
+                await loadMySignature();
+            } catch (e) { status.style.color = 'var(--danger)'; status.textContent = e.message; }
+        }
+
+        // 제출할 때 쓸 서명. 그 자리에서 그렸으면 그것, 아니면 등록해 둔 것.
+        function signatureForSubmit() {
+            if (canvas && canvasHasInk(canvas)) return canvas.toDataURL('image/png');
+            return storedSignatureData || '';
+        }
+
         function clearCanvas() {
             if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
@@ -689,9 +834,9 @@
                 evidenceUrl = await compressImageFile(fileInput.files[0], 1000, 0.7);
             }
 
-            const parentSignature = canvas ? canvas.toDataURL() : '';
-            if (!parentSignature || parentSignature.length < 100) {
-                alert('보호자 서명란에 캔버스 전자서명을 작성해 주세요.');
+            const parentSignature = signatureForSubmit();
+            if (!parentSignature) {
+                alert('보호자 서명란에 서명하거나, 아래 ✍️ 내 서명 탭에서 서명을 먼저 등록해 주세요.');
                 return;
             }
 
@@ -731,11 +876,16 @@
             const parentPhone = document.getElementById('eaPhone').value.trim();
             const parentName = document.getElementById('eaParentName').value.trim();
 
-            const parentSignature = canvas ? canvas.toDataURL() : '전자서명';
+            const parentSignature = signatureForSubmit();
+            if (!parentSignature) {
+                alert('결석계 탭의 서명란에 서명하거나, ✍️ 내 서명 탭에서 서명을 먼저 등록해 주세요.');
+                return;
+            }
 
             const payload = {
                 startDate, endDate, totalDays, location, planDetail,
                 parentPhone, parentName, parentSignature,
+                learningType: document.getElementById('expType')?.value || 'general',
                 schoolId: activeChild?.schoolId,
                 grade: activeChild?.grade,
                 classNumber: activeChild?.classNumber,
@@ -773,7 +923,11 @@
                 photoUrl = await compressImageFile(fileInput.files[0], 1000, 0.7);
             }
 
-            const parentSignature = canvas ? canvas.toDataURL() : '전자서명';
+            const parentSignature = signatureForSubmit();
+            if (!parentSignature) {
+                alert('결석계 탭의 서명란에 서명하거나, ✍️ 내 서명 탭에서 서명을 먼저 등록해 주세요.');
+                return;
+            }
 
             const payload = {
                 startDate, endDate, totalDays, location, reportDetail,
@@ -1059,10 +1213,22 @@
 
                 listEl.innerHTML = submissions.map(s => {
                     const typeLabel = s.type === 'absenceNote' ? '📝 결석계' : '✈️ 체험학습';
-                    const isApproved = s.status === 'approved';
-                    const statusBadge = isApproved
-                        ? '<span class="tag" style="background:#1f4730; color:#7CFFB2;">✅ 승인됨</span>'
-                        : '<span class="tag" style="background:#4a3a1f; color:#ffcf7c;">⏳ 검토 중</span>';
+                    // 결재선 진행. 담임 → 교무부장 → 교감 → 교장 순으로 어디까지 왔는지.
+                    const steps = Array.isArray(s.approvals) ? s.approvals : [];
+                    const statusBadge = s.status === 'approved'
+                        ? '<span class="tag" style="background:#1f4730; color:#7CFFB2;">✅ 결재 완료</span>'
+                        : s.status === 'rejected'
+                            ? '<span class="tag" style="background:#4a1f1f; color:#ff9b9b;">❌ 반려</span>'
+                            : `<span class="tag" style="background:#4a3a1f; color:#ffcf7c;">⏳ ${escNoticeHtml(s.currentStep || '검토')} 결재 중</span>`;
+                    const chain = steps.length === 0 ? '' : `
+                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
+                            ${steps.map(st => {
+                                const color = st.status === 'approved' ? 'var(--green)' : st.status === 'rejected' ? 'var(--danger)' : 'var(--muted)';
+                                const mark = st.status === 'approved' ? '✓' : st.status === 'rejected' ? '✕' : '·';
+                                return `<span style="font-size:12px; color:${color}; border:1px solid ${color}; border-radius:999px; padding:2px 8px;">${mark} ${escNoticeHtml(st.roleLabel)}</span>`;
+                            }).join('<span style="color:var(--muted);">→</span>')}
+                        </div>
+                        ${steps.filter(st => st.status === 'rejected' && st.comment).map(st => `<p style="color:var(--danger); font-size:13px; margin:6px 0 0;">반려 사유: ${escNoticeHtml(st.comment)}</p>`).join('')}`;
                     const period = s.startDate === s.endDate
                         ? escNoticeHtml(s.startDate)
                         : `${escNoticeHtml(s.startDate)} ~ ${escNoticeHtml(s.endDate)}`;
@@ -1073,6 +1239,7 @@
                                 ${statusBadge}
                             </div>
                             <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">${period} · ${escNoticeHtml(s.detail || '')}</p>
+                            ${chain}
                         </div>
                     `;
                 }).join('');

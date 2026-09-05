@@ -1025,6 +1025,51 @@ function createClassroomPlatform(options = {}) {
         last_read_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         PRIMARY KEY (user_id, board_key)
       )`,
+      /* ──────────────────────────────────────────────
+         전자결재. 학부모·교직원이 자기 전자서명을 한 번 등록해 두면, 결석계·체험학습
+         문서가 학교가 정한 결재선(담임→교무부장→교감→교장)을 따라 올라가며 각 단계에
+         그 서명이 찍힌다. 앞 단계가 승인돼야 다음 단계가 열린다.
+      ────────────────────────────────────────────── */
+      `CREATE TABLE IF NOT EXISTS classroom_user_signatures (
+        user_id BIGINT PRIMARY KEY REFERENCES classroom_users(id) ON DELETE CASCADE,
+        signature_data TEXT NOT NULL,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )`,
+      `CREATE TABLE IF NOT EXISTS school_approval_lines (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        doc_type TEXT NOT NULL CHECK (doc_type IN ('absence', 'exp_app', 'exp_report')),
+        step_order INTEGER NOT NULL,
+        role TEXT NOT NULL CHECK (role IN ('homeroom', 'head', 'vice', 'principal')),
+        is_final BOOLEAN NOT NULL DEFAULT FALSE,
+        UNIQUE (school_id, doc_type, step_order)
+      )`,
+      // 전결. 결재선 가운데 누가 최종 결재권을 위임받았는지. 결재란에 '전결'로 찍힌다.
+      `ALTER TABLE school_approval_lines
+        ADD COLUMN IF NOT EXISTS is_final BOOLEAN NOT NULL DEFAULT FALSE`,
+      `CREATE TABLE IF NOT EXISTS classroom_doc_approvals (
+        id BIGSERIAL PRIMARY KEY,
+        doc_type TEXT NOT NULL CHECK (doc_type IN ('absence', 'exp_app', 'exp_report')),
+        doc_id BIGINT NOT NULL,
+        school_id BIGINT,
+        step_order INTEGER NOT NULL,
+        role TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
+        approver_user_id BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
+        approver_name TEXT,
+        signature_data TEXT,
+        comment TEXT,
+        decided_at TIMESTAMPTZ,
+        is_final BOOLEAN NOT NULL DEFAULT FALSE,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (doc_type, doc_id, step_order)
+      )`,
+      `ALTER TABLE classroom_doc_approvals
+        ADD COLUMN IF NOT EXISTS is_final BOOLEAN NOT NULL DEFAULT FALSE`,
+      `CREATE INDEX IF NOT EXISTS classroom_doc_approvals_doc_idx
+        ON classroom_doc_approvals (doc_type, doc_id, step_order)`,
+      `CREATE INDEX IF NOT EXISTS classroom_doc_approvals_pending_idx
+        ON classroom_doc_approvals (school_id, role, status)`,
       `CREATE TABLE IF NOT EXISTS school_annual_schedules (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
@@ -4604,7 +4649,9 @@ function createClassroomPlatform(options = {}) {
     const reasonDetail = String(req.body?.reasonDetail || "").trim();
     const evidenceUrl = String(req.body?.evidenceUrl || "").trim();
     const parentName = String(req.body?.parentName || "").trim();
-    const parentSignature = String(req.body?.parentSignature || "").trim();
+    // 그 자리에서 그린 서명이 없으면 미리 등록해 둔 서명을 쓴다.
+    let parentSignature = String(req.body?.parentSignature || "").trim();
+    if (!parentSignature && user) parentSignature = await storedSignature(user.id);
 
     if (!startDate || !endDate || !reasonDetail || !parentName || !parentSignature) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 사유, 보호자 성명 및 전자서명)을 작성해 주세요.");
@@ -4619,6 +4666,7 @@ function createClassroomPlatform(options = {}) {
        RETURNING id, created_at`,
       [schoolId, grade, classNumber, studentNumber, studentName, startDate, endDate, totalDays, reasonType, reasonDetail, evidenceUrl, parentName, parentSignature]
     );
+    await startApprovalChain("absence", insertRes.rows[0].id, schoolId);
 
     res.status(201).json({ ok: true, id: String(insertRes.rows[0].id) });
   }));
@@ -4657,25 +4705,11 @@ function createClassroomPlatform(options = {}) {
     });
   }));
 
+  // 예전 주소. 결재선의 내 차례에 대한 승인/반려로 흘려보낸다.
   router.patch("/teacher/absence-notes/:id/approve", asyncRoute(async (req, res) => {
-    const teacher = await requireTeacher(req);
-    const id = Number(req.params.id);
-    const status = String(req.body?.status || "approved").trim();
-
-    const updateRes = await pool.query(
-      `UPDATE classroom_absence_notes a
-       SET status = $1, teacher_check = 'approved'
-       WHERE a.id = $2
-         AND EXISTS (
-           SELECT 1 FROM classroom_teachers t
-           WHERE t.user_id = $3 AND t.grade = a.grade AND t.class_number = a.class_number
-         )
-       RETURNING a.id, a.status`,
-      [status, id, teacher.id]
-    );
-
-    if (!updateRes.rows[0]) throw new HttpError(404, "NOT_FOUND", "결석계를 찾을 수 없습니다.");
-    res.json({ ok: true, id: String(updateRes.rows[0].id), status: updateRes.rows[0].status });
+    const decision = String(req.body?.status || "approved") === "rejected" ? "reject" : "approve";
+    const result = await decideApproval(req, "absence", Number(req.params.id), decision, String(req.body?.comment || ""));
+    res.json({ ok: true, id: String(req.params.id), status: result.status, approvals: result.approvals });
   }));
 
   // 7. Experiential Learning Application & Report API
@@ -4688,7 +4722,8 @@ function createClassroomPlatform(options = {}) {
     const planDetail = String(req.body?.planDetail || "").trim();
     const parentPhone = String(req.body?.parentPhone || "").trim();
     const parentName = String(req.body?.parentName || "").trim();
-    const parentSignature = String(req.body?.parentSignature || "").trim();
+    let parentSignature = String(req.body?.parentSignature || "").trim();
+    if (!parentSignature && user) parentSignature = await storedSignature(user.id);
 
     if (!startDate || !endDate || !destination || !planDetail || !parentName || !parentSignature) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 목적지, 학습계획, 보호자 성명 및 서명)을 입력하세요.");
@@ -4696,13 +4731,16 @@ function createClassroomPlatform(options = {}) {
 
     const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
 
+    // 일반 체험학습인지, 감염병 위기경보 때의 가정학습인지. 인쇄 서식의 기간 칸이 갈린다.
+    const learningType = String(req.body?.learningType || "general") === "home" ? "home" : "general";
     const insertRes = await pool.query(
       `INSERT INTO classroom_experiential_apps
-         (school_id, grade, class_number, student_number, student_name, parent_phone, start_date, end_date, total_days, location, plan_detail, parent_name, parent_signature, status)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, 'pending')
+         (school_id, grade, class_number, student_number, student_name, parent_phone, learning_type, start_date, end_date, total_days, location, plan_detail, parent_name, parent_signature, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, 'pending')
        RETURNING id, created_at`,
-      [schoolId, grade, classNumber, studentNumber, studentName, parentPhone, startDate, endDate, totalDays, destination, planDetail, parentName, parentSignature]
+      [schoolId, grade, classNumber, studentNumber, studentName, parentPhone, learningType, startDate, endDate, totalDays, destination, planDetail, parentName, parentSignature]
     );
+    await startApprovalChain("exp_app", insertRes.rows[0].id, schoolId);
 
     res.status(201).json({ ok: true, id: String(insertRes.rows[0].id) });
   }));
@@ -4716,7 +4754,8 @@ function createClassroomPlatform(options = {}) {
     const reportDetail = String(req.body?.reportDetail || "").trim();
     const photoUrl = String(req.body?.photoUrl || "").trim();
     const parentName = String(req.body?.parentName || "").trim();
-    const parentSignature = String(req.body?.parentSignature || "").trim();
+    let parentSignature = String(req.body?.parentSignature || "").trim();
+    if (!parentSignature && user) parentSignature = await storedSignature(user.id);
 
     if (!startDate || !endDate || !destination || !reportDetail || !parentName || !parentSignature) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 목적지, 보고서 내용, 보호자 서명)을 입력하세요.");
@@ -4731,6 +4770,7 @@ function createClassroomPlatform(options = {}) {
        RETURNING id, created_at`,
       [schoolId, grade, classNumber, studentNumber, studentName, startDate, endDate, totalDays, destination, reportDetail, photoUrl, parentName, parentSignature]
     );
+    await startApprovalChain("exp_report", insertRes.rows[0].id, schoolId);
 
     res.status(201).json({ ok: true, id: String(insertRes.rows[0].id) });
   }));
@@ -4774,6 +4814,18 @@ function createClassroomPlatform(options = {}) {
       }));
     }
     submissions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    // 학부모가 결재가 어디까지 왔는지 보게 단계를 붙인다.
+    const typeMap = { absenceNote: "absence", expApp: "exp_app", expReport: "exp_report" };
+    const chains = await readApprovalsBulk(
+      submissions.filter(s => typeMap[s.type]).map(s => ({ docType: typeMap[s.type], docId: Number(s.id) }))
+    );
+    for (const s of submissions) {
+      const docType = typeMap[s.type];
+      s.approvals = docType ? (chains.get(`${docType}:${s.id}`) || []) : [];
+      const summary = approvalSummary(s.approvals);
+      if (s.approvals.length > 0) s.status = summary.status;
+      s.currentStep = summary.current ? summary.current.roleLabel : null;
+    }
     res.json({ submissions });
   }));
 
@@ -4837,27 +4889,12 @@ function createClassroomPlatform(options = {}) {
     });
   }));
 
+  // 예전 주소. 결재선의 내 차례에 대한 승인/반려로 흘려보낸다.
   router.patch("/teacher/experiential-apps/:id/approve", asyncRoute(async (req, res) => {
-    const teacher = await requireTeacher(req);
-    const id = Number(req.params.id);
-    const type = String(req.query.type || "app");
-    const status = String(req.body?.status || "approved").trim();
-
-    const table = type === "report" ? "classroom_experiential_reports" : "classroom_experiential_apps";
-    const updateRes = await pool.query(
-      `UPDATE ${table} e
-       SET status = $1
-       WHERE e.id = $2
-         AND EXISTS (
-           SELECT 1 FROM classroom_teachers t
-           WHERE t.user_id = $3 AND t.grade = e.grade AND t.class_number = e.class_number
-         )
-       RETURNING e.id`,
-      [status, id, teacher.id]
-    );
-    if (!updateRes.rows[0]) throw new HttpError(404, "NOT_FOUND", "신청서를 찾을 수 없습니다.");
-
-    res.json({ ok: true, id: String(id), status });
+    const docType = String(req.query.type || "app") === "report" ? "exp_report" : "exp_app";
+    const decision = String(req.body?.status || "approved") === "rejected" ? "reject" : "approve";
+    const result = await decideApproval(req, docType, Number(req.params.id), decision, String(req.body?.comment || ""));
+    res.json({ ok: true, id: String(req.params.id), status: result.status, approvals: result.approvals });
   }));
 
   // 8. Official Form Print Data (Teacher / School Admin)
@@ -4866,6 +4903,355 @@ function createClassroomPlatform(options = {}) {
     exp_app: "classroom_experiential_apps",
     exp_report: "classroom_experiential_reports"
   };
+
+  // ── 전자결재 ──
+  const APPROVAL_DOC_TABLES = {
+    absence: "classroom_absence_notes",
+    exp_app: "classroom_experiential_apps",
+    exp_report: "classroom_experiential_reports"
+  };
+  const APPROVAL_ROLES = ["homeroom", "head", "vice", "principal"];
+  const APPROVAL_ROLE_LABELS = { homeroom: "담임", head: "교무부장", vice: "교감", principal: "교장" };
+  // 학교가 결재선을 아직 안 정했을 때. 담임부터 교장까지 다 거친다.
+  const DEFAULT_APPROVAL_LINE = ["homeroom", "head", "vice", "principal"];
+  // 교사 직책 → 결재 역할. 관리자는 담임 단계를 뺀 어느 단계든 대신 결재할 수 있다.
+  const TEACHER_TYPE_ROLE = { "담임": "homeroom", "homeroom": "homeroom", "교무부장": "head", "교감": "vice", "교장": "principal" };
+
+  async function storedSignature(userId) {
+    const res = await pool.query(
+      `SELECT signature_data FROM classroom_user_signatures WHERE user_id = $1`, [userId]);
+    return res.rows[0]?.signature_data || "";
+  }
+
+  // 전자서명은 그림(data:image/…)만 받는다. 크기도 막아 둔다.
+  function validSignatureData(value) {
+    const s = String(value || "");
+    return /^data:image\/(png|jpeg|webp);base64,/.test(s) && s.length <= 200000;
+  }
+
+  router.get("/me/signature", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    res.json({ signature: await storedSignature(user.id) || null });
+  }));
+
+  router.put("/me/signature", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const signature = String(req.body?.signature || "").trim();
+    if (!signature) {
+      await pool.query(`DELETE FROM classroom_user_signatures WHERE user_id = $1`, [user.id]);
+      return res.json({ ok: true, signature: null });
+    }
+    if (!validSignatureData(signature)) {
+      throw new HttpError(400, "INVALID_SIGNATURE", "서명 그림이 올바르지 않습니다.");
+    }
+    await pool.query(
+      `INSERT INTO classroom_user_signatures (user_id, signature_data, updated_at)
+       VALUES ($1, $2, NOW())
+       ON CONFLICT (user_id) DO UPDATE SET signature_data = EXCLUDED.signature_data, updated_at = NOW()`,
+      [user.id, signature]
+    );
+    res.json({ ok: true, signature });
+  }));
+
+  // 학교 결재선. 문서 종류마다 [{ role, isFinal }] 를 담임→교무부장→교감→교장 순으로.
+  // isFinal 이 전결자다. 결재선을 안 정한 학교는 네 사람을 다 거치고 전결은 없다.
+  async function readApprovalLines(schoolId) {
+    const lines = {};
+    if (schoolId) {
+      const res = await pool.query(
+        `SELECT doc_type, step_order, role, is_final FROM school_approval_lines
+         WHERE school_id = $1 ORDER BY doc_type, step_order`,
+        [schoolId]
+      );
+      for (const r of res.rows) {
+        if (!lines[r.doc_type]) lines[r.doc_type] = [];
+        lines[r.doc_type].push({ role: r.role, isFinal: Boolean(r.is_final) });
+      }
+    }
+    for (const t of Object.keys(APPROVAL_DOC_TABLES)) {
+      if (!lines[t] || lines[t].length === 0) {
+        lines[t] = DEFAULT_APPROVAL_LINE.map(role => ({ role, isFinal: false }));
+      }
+    }
+    return lines;
+  }
+
+  // 문서가 제출되면 학교 결재선대로 단계를 만들어 둔다.
+  async function startApprovalChain(docType, docId, schoolId) {
+    if (!APPROVAL_DOC_TABLES[docType] || !docId) return;
+    const lines = await readApprovalLines(schoolId);
+    let step = 1;
+    for (const entry of lines[docType]) {
+      await pool.query(
+        `INSERT INTO classroom_doc_approvals (doc_type, doc_id, school_id, step_order, role, is_final)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         ON CONFLICT (doc_type, doc_id, step_order) DO NOTHING`,
+        [docType, docId, schoolId || null, step, entry.role, Boolean(entry.isFinal)]
+      );
+      step += 1;
+    }
+  }
+
+  function shapeApprovalRow(r) {
+    return {
+      step: r.step_order,
+      role: r.role,
+      roleLabel: APPROVAL_ROLE_LABELS[r.role] || r.role,
+      isFinal: Boolean(r.is_final),
+      status: r.status,
+      approverName: r.approver_name,
+      signature: r.signature_data,
+      comment: r.comment,
+      decidedAt: r.decided_at
+    };
+  }
+
+  async function readApprovals(docType, docId) {
+    const res = await pool.query(
+      `SELECT step_order, role, is_final, status, approver_name, signature_data, comment, decided_at
+       FROM classroom_doc_approvals
+       WHERE doc_type = $1 AND doc_id = $2
+       ORDER BY step_order`,
+      [docType, docId]
+    );
+    return res.rows.map(shapeApprovalRow);
+  }
+
+  // 여러 문서의 단계를 한 번에. 키는 "doc_type:doc_id".
+  async function readApprovalsBulk(pairs) {
+    const map = new Map();
+    if (pairs.length === 0) return map;
+    const res = await pool.query(
+      `SELECT doc_type, doc_id, step_order, role, is_final, status, approver_name, signature_data, comment, decided_at
+       FROM classroom_doc_approvals
+       WHERE (doc_type, doc_id) IN (
+         SELECT t.doc_type, t.doc_id
+         FROM UNNEST($1::TEXT[], $2::BIGINT[]) AS t(doc_type, doc_id)
+       )
+       ORDER BY doc_type, doc_id, step_order`,
+      [pairs.map(p => p.docType), pairs.map(p => p.docId)]
+    );
+    for (const r of res.rows) {
+      const key = `${r.doc_type}:${r.doc_id}`;
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(shapeApprovalRow(r));
+    }
+    return map;
+  }
+
+  // 결재 단계에서 본 문서 상태. 반려가 하나라도 있으면 반려, 다 승인됐으면 승인, 아니면 진행 중.
+  function approvalSummary(steps) {
+    if (!steps || steps.length === 0) return { status: "pending", current: null };
+    if (steps.some(s => s.status === "rejected")) return { status: "rejected", current: null };
+    const next = steps.find(s => s.status === "pending");
+    if (!next) return { status: "approved", current: null };
+    return { status: "pending", current: next };
+  }
+
+  async function approverContext(req) {
+    const teacher = await requireTeacher(req);
+    const ctx = await getTeacherContext(teacher.id);
+    if (!ctx) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학급 등록 정보를 찾을 수 없습니다.");
+    return {
+      teacher,
+      ctx,
+      isAdmin: ctx.teacher_type === "관리자",
+      role: TEACHER_TYPE_ROLE[ctx.teacher_type] || null
+    };
+  }
+
+  // 담임 단계는 그 반 담임만. 학년·반이 classroom_teachers 에 있든 classroom_classes 에 있든 인정.
+  const HOMEROOM_OWNS_DOC_SQL = `(
+    EXISTS (SELECT 1 FROM classroom_teachers t
+            WHERE t.user_id = $2 AND t.grade = d.grade AND t.class_number = d.class_number)
+    OR EXISTS (SELECT 1 FROM classroom_classes c
+               WHERE c.teacher_user_id = $2 AND c.grade = d.grade AND c.class_number = d.class_number)
+  )`;
+
+  function shapeApprovalDoc(docType, d) {
+    const detail = docType === "absence"
+      ? `${d.reason_type || ""} · ${d.reason_detail || ""}`.trim()
+      : `${d.location || ""} · ${d.plan_detail || d.report_detail || ""}`.trim();
+    return {
+      docType,
+      docId: String(d.id),
+      grade: d.grade,
+      classNumber: d.class_number,
+      studentNumber: d.student_number,
+      studentName: d.student_name,
+      startDate: d.start_date,
+      endDate: d.end_date,
+      totalDays: d.total_days,
+      detail,
+      parentName: d.parent_name,
+      parentSignature: d.parent_signature,
+      attachment: d.evidence_url || d.photo_url || null,
+      status: d.status,
+      createdAt: d.created_at
+    };
+  }
+
+  // 내 차례인 문서만. 담임은 자기 반, 그 밖의 직책은 학교 전체. 관리자는 담임 단계를 뺀
+  // 어느 단계든 본다.
+  router.get("/teacher/approvals", asyncRoute(async (req, res) => {
+    const { teacher, ctx, isAdmin, role } = await approverContext(req);
+    if (!isAdmin && !role) return res.json({ role: null, items: [] });
+
+    const pendingRes = await pool.query(
+      `SELECT a.doc_type, a.doc_id, a.step_order, a.role
+       FROM classroom_doc_approvals a
+       WHERE a.school_id = $1 AND a.status = 'pending'
+         AND a.step_order = (SELECT MIN(b.step_order) FROM classroom_doc_approvals b
+                             WHERE b.doc_type = a.doc_type AND b.doc_id = a.doc_id AND b.status = 'pending')
+         AND NOT EXISTS (SELECT 1 FROM classroom_doc_approvals c
+                         WHERE c.doc_type = a.doc_type AND c.doc_id = a.doc_id AND c.status = 'rejected')
+         AND (($2::BOOLEAN AND a.role <> 'homeroom') OR a.role = $3)
+       ORDER BY a.created_at`,
+      [ctx.school_id, isAdmin, role]
+    );
+
+    const items = [];
+    for (const docType of Object.keys(APPROVAL_DOC_TABLES)) {
+      const ids = pendingRes.rows.filter(r => r.doc_type === docType).map(r => r.doc_id);
+      if (ids.length === 0) continue;
+      const homeroomOnly = role === "homeroom" && !isAdmin;
+      const docsRes = await pool.query(
+        `SELECT d.* FROM ${APPROVAL_DOC_TABLES[docType]} d
+         WHERE d.id = ANY($1::BIGINT[])
+           ${homeroomOnly ? `AND ${HOMEROOM_OWNS_DOC_SQL}` : ""}
+         ORDER BY d.created_at DESC`,
+        homeroomOnly ? [ids, teacher.id] : [ids]
+      );
+      for (const d of docsRes.rows) items.push(shapeApprovalDoc(docType, d));
+    }
+
+    const chains = await readApprovalsBulk(items.map(i => ({ docType: i.docType, docId: Number(i.docId) })));
+    for (const item of items) {
+      item.approvals = chains.get(`${item.docType}:${item.docId}`) || [];
+    }
+
+    res.json({
+      role,
+      roleLabel: isAdmin ? "관리자" : (APPROVAL_ROLE_LABELS[role] || role),
+      hasSignature: Boolean(await storedSignature(teacher.id)),
+      items
+    });
+  }));
+
+  // 승인 또는 반려. 승인에는 등록해 둔 서명이 찍힌다.
+  async function decideApproval(req, docType, docId, decision, comment) {
+    const { teacher, ctx, isAdmin, role } = await approverContext(req);
+    const table = APPROVAL_DOC_TABLES[docType];
+    if (!table || !Number.isInteger(docId)) throw new HttpError(400, "INVALID_DOC", "잘못된 요청입니다.");
+    if (!["approve", "reject"].includes(decision)) throw new HttpError(400, "INVALID_DECISION", "승인 또는 반려만 가능합니다.");
+
+    const steps = await readApprovals(docType, docId);
+    const summary = approvalSummary(steps);
+    if (summary.status === "rejected") throw new HttpError(409, "ALREADY_REJECTED", "이미 반려된 문서입니다.");
+    if (!summary.current) throw new HttpError(409, "NOTHING_TO_DECIDE", "결재할 단계가 없습니다.");
+    const cur = summary.current;
+
+    const mayDecide = isAdmin ? cur.role !== "homeroom" : cur.role === role;
+    if (!mayDecide) {
+      throw new HttpError(403, "NOT_YOUR_TURN", `지금은 ${APPROVAL_ROLE_LABELS[cur.role] || cur.role} 결재 차례입니다.`);
+    }
+    if (cur.role === "homeroom") {
+      const owns = await pool.query(
+        `SELECT 1 FROM ${table} d WHERE d.id = $1 AND ${HOMEROOM_OWNS_DOC_SQL}`,
+        [docId, teacher.id]
+      );
+      if (owns.rowCount === 0) throw new HttpError(403, "NOT_YOUR_CLASS", "담임 학급의 문서만 결재할 수 있습니다.");
+    }
+
+    let signature = null;
+    if (decision === "approve") {
+      signature = await storedSignature(teacher.id);
+      if (!signature) throw new HttpError(400, "SIGNATURE_REQUIRED", "먼저 결재함에서 내 서명을 등록해 주세요.");
+    }
+
+    await pool.query(
+      `UPDATE classroom_doc_approvals
+       SET status = $3, approver_user_id = $4, approver_name = $5, signature_data = $6,
+           comment = $7, decided_at = NOW()
+       WHERE doc_type = $1 AND doc_id = $2 AND step_order = $8 AND status = 'pending'`,
+      [docType, docId, decision === "approve" ? "approved" : "rejected",
+       teacher.id, ctx.teacher_name, signature, comment || null, cur.step]
+    );
+
+    const after = await readApprovals(docType, docId);
+    const done = approvalSummary(after);
+    if (done.status === "approved") {
+      await pool.query(`UPDATE ${table} SET status = 'approved' WHERE id = $1`, [docId]);
+      if (docType === "absence") {
+        await pool.query(`UPDATE classroom_absence_notes SET teacher_check = 'approved' WHERE id = $1`, [docId]);
+      }
+    } else if (done.status === "rejected") {
+      await pool.query(`UPDATE ${table} SET status = 'rejected' WHERE id = $1`, [docId]);
+    }
+    return { ok: true, status: done.status, approvals: after };
+  }
+
+  router.post("/teacher/approvals/:docType/:docId", asyncRoute(async (req, res) => {
+    const result = await decideApproval(
+      req,
+      String(req.params.docType || ""),
+      Number(req.params.docId),
+      String(req.body?.decision || "").trim(),
+      String(req.body?.comment || "").trim().slice(0, 500)
+    );
+    res.json(result);
+  }));
+
+  // 학교 결재선 설정. 문서 종류마다 역할 순서.
+  router.get("/school/approval-lines", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const ctx = await getTeacherContext(teacher.id);
+    if (!ctx) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학급 등록 정보를 찾을 수 없습니다.");
+    res.json({ lines: await readApprovalLines(ctx.school_id), roles: APPROVAL_ROLES, roleLabels: APPROVAL_ROLE_LABELS });
+  }));
+
+  router.put("/school/approval-lines", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const incoming = req.body?.lines || {};
+    const cleaned = {};
+    for (const docType of Object.keys(APPROVAL_DOC_TABLES)) {
+      // 화면에서는 네 역할을 체크하고 그중 전결자를 하나 고른다. 순서는 늘
+      // 담임→교무부장→교감→교장이므로 여기서 그 순서로 다시 세운다.
+      const raw = Array.isArray(incoming[docType]) ? incoming[docType] : [];
+      const picked = new Map();
+      for (const item of raw) {
+        const role = String((typeof item === "string" ? item : item?.role) || "").trim();
+        if (!APPROVAL_ROLES.includes(role)) continue;
+        picked.set(role, Boolean(typeof item === "object" && item?.isFinal));
+      }
+      const entries = APPROVAL_ROLES.filter(r => picked.has(r)).map(r => ({ role: r, isFinal: picked.get(r) }));
+      if (entries.length === 0) throw new HttpError(400, "EMPTY_LINE", "결재선에는 역할이 하나 이상 있어야 합니다.");
+      if (entries.filter(e => e.isFinal).length > 1) throw new HttpError(400, "MULTIPLE_FINAL", "전결자는 한 사람만 고를 수 있습니다.");
+      cleaned[docType] = entries;
+    }
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      await client.query(`DELETE FROM school_approval_lines WHERE school_id = $1`, [profile.school_id]);
+      for (const [docType, entries] of Object.entries(cleaned)) {
+        let step = 1;
+        for (const e of entries) {
+          await client.query(
+            `INSERT INTO school_approval_lines (school_id, doc_type, step_order, role, is_final) VALUES ($1, $2, $3, $4, $5)`,
+            [profile.school_id, docType, step, e.role, e.isFinal]
+          );
+          step += 1;
+        }
+      }
+      await client.query("COMMIT");
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
+    res.json({ ok: true, lines: cleaned });
+  }));
 
   function formatNoticeDocResponse(formType, row) {
     const created = new Date(row.created_at);
@@ -4894,7 +5280,13 @@ function createClassroomPlatform(options = {}) {
       };
     }
     if (formType === "exp_app") {
-      return { ...base, parentPhone: row.parent_phone, location: row.location, planDetail: row.plan_detail };
+      return {
+        ...base,
+        parentPhone: row.parent_phone,
+        learningType: row.learning_type || "general",
+        location: row.location,
+        planDetail: row.plan_detail
+      };
     }
     return { ...base, location: row.location, reportDetail: row.report_detail, photoUrl: row.photo_url };
   }
@@ -4928,7 +5320,13 @@ function createClassroomPlatform(options = {}) {
     const row = result.rows[0];
     if (!row) throw new HttpError(404, "NOT_FOUND", "문서를 찾을 수 없습니다.");
 
-    res.json(formatNoticeDocResponse(formType, row));
+    // 인쇄 서식에 학교 이름과, 결재란에 찍을 단계별 서명까지 함께.
+    const schoolRes = await pool.query(`SELECT name FROM classroom_schools WHERE id = $1`, [teacherInfo.school_id]);
+    res.json({
+      ...formatNoticeDocResponse(formType, row),
+      schoolName: schoolRes.rows[0]?.name || "",
+      approvals: await readApprovals(formType, docId)
+    });
   }));
 
   // --- Classboard (학급 알리미) API ---
@@ -6587,6 +6985,9 @@ function createClassroomPlatform(options = {}) {
       schoolName: tp.rows[0].school_name,
       columns,
       specialRooms: specialRooms.rows,
+      approvalLines: await readApprovalLines(schoolId),
+      approvalRoles: APPROVAL_ROLES,
+      approvalRoleLabels: APPROVAL_ROLE_LABELS,
       isAdmin,
       year
     });
