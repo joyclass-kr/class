@@ -136,8 +136,6 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
   margin-bottom: 10px;
 }
 .item-src { font-weight: 700; font-size: 0.95rem; }
-.item-unit { font-size: 0.82rem; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 1px 7px; }
-.item-topic { font-size: 0.85rem; color: var(--ink-soft); }
 .item-mark { margin-left: auto; font-size: 0.8rem; color: var(--ink-soft); }
 .item.is-done .item-mark { color: var(--right); font-weight: 600; }
 

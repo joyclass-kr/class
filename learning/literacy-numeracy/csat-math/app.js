@@ -5,7 +5,6 @@
   const STORE_KEY = "csat-math-done";
   const CIRCLED = ["①", "②", "③", "④", "⑤"];
 
-  const unitById = new Map(DATA.units.map((u) => [u.id, u]));
   const examById = new Map(DATA.exams.map((e) => [e.id, e]));
 
   const state = {
@@ -72,7 +71,7 @@
         tag.textContent = subject;
         box.appendChild(tag);
       }
-      const n = countBy((p) => p.unit === u.id);
+      const n = countBy((p) => p.units.indexOf(u.id) >= 0);
       box.appendChild(makeChip(u.name, u.id, state.unit === u.id, n));
     });
   }
@@ -95,7 +94,7 @@
   /* ── 문항 그리기 ── */
   function visibleProblems() {
     return DATA.problems.filter((p) => {
-      if (state.unit !== "all" && p.unit !== state.unit) return false;
+      if (state.unit !== "all" && p.units.indexOf(state.unit) < 0) return false;
       if (state.exam !== "all" && p.exam !== state.exam) return false;
       if (state.hideDone && state.done[p.id]) return false;
       return true;
@@ -239,11 +238,8 @@
     const head = document.createElement("div");
     head.className = "item-head";
     const exam = examById.get(problem.exam);
-    const unit = unitById.get(problem.unit);
     head.innerHTML =
       '<span class="item-src">' + exam.label + " " + problem.no + "번</span>" +
-      '<span class="item-unit">' + unit.subject + " · " + unit.name + "</span>" +
-      '<span class="item-topic">' + problem.topic + "</span>" +
       '<span class="item-mark">' + (mark === "right" ? "맞음" : mark === "wrong" ? "틀림" : "") + "</span>";
     li.appendChild(head);
 

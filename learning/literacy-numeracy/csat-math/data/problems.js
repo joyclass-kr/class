@@ -1,5 +1,7 @@
 // 평가원 기출 자료. 공통 과목(수학Ⅰ·수학Ⅱ)에서 유형이 되풀이되는 문항을 단원별로 담는다.
-// 배점은 문항을 건져 올린 그물일 뿐이라 화면에 내세우지 않는다. 고르는 기준은 유형(topic)이다.
+// 배점은 문항을 건져 올린 그물일 뿐이라 화면에 내세우지 않는다.
+// topic은 화면에 안 나온다. 비슷한 문항을 여럿 싣지 않으려고 만드는 사람이 보는 표시일 뿐이다.
+// 학생에게 유형 딱지를 보여 주면 문제를 읽는 대신 딱지부터 맞히려 든다.
 // 문제 본문은 평가원 문제지에서 옮긴 것이고, 저작권은 한국교육과정평가원에 있다.
 // source: 원본 문제지를 받은 곳. 화면에는 회차와 번호만 보이고 주소는 이 자료에만 남긴다.
 // start: 풀이의 첫 수 한 줄.  trap: 막히는 곳.
@@ -27,7 +29,7 @@
   const problems = [
     {
       id: "2026-suneung-9", exam: "2026-suneung", no: 9, score: 4,
-      unit: "m2-diff", topic: "삼차함수에 접하는 직선",
+      units: ["m2-diff"], memo: "삼차함수에 접하는 직선",
       body: R`양수 \(a\)에 대하여 함수 \(f(x)\)를
         \[f(x)=x^{3}+3ax^{2}-9a^{2}x+4\]
         라 하자. 직선 \(y=5\)가 곡선 \(y=f(x)\)에 접할 때, \(f(2)\)의 값은?`,
@@ -38,7 +40,7 @@
     },
     {
       id: "2026-suneung-10", exam: "2026-suneung", no: 10, score: 4,
-      unit: "m1-explog", topic: "지수함수 그래프와 도형의 넓이",
+      units: ["m1-explog"], memo: "지수함수 그래프와 도형의 넓이",
       body: R`상수 \(a\,(a>1)\)에 대하여 곡선 \(y=a^{x}-2\) 위의 점 중
         제1사분면에 있는 점 \(\mathrm{A}\)를 지나고 \(y\)축에 평행한 직선이 \(x\)축과
         만나는 점을 \(\mathrm{B}\), 곡선 \(y=a^{x}-2\)의 점근선과 만나는 점을 \(\mathrm{C}\)라
@@ -51,7 +53,7 @@
     },
     {
       id: "2026-suneung-11", exam: "2026-suneung", no: 11, score: 4,
-      unit: "m2-integ", topic: "속도와 위치, 움직인 거리",
+      units: ["m2-integ"], memo: "속도와 위치, 움직인 거리",
       body: R`시각 \(t=0\)일 때 원점을 출발하여 수직선 위를 움직이는
         점 \(\mathrm{P}\)가 있다. 실수 \(k\)에 대하여 시각이 \(t\,(t\ge 0)\)일 때 점 \(\mathrm{P}\)의
         속도 \(v(t)\)가
@@ -70,7 +72,7 @@
     },
     {
       id: "2026-suneung-12", exam: "2026-suneung", no: 12, score: 4,
-      unit: "m1-seq", topic: "등비수열의 항 사이 관계",
+      units: ["m1-seq"], memo: "등비수열의 항 사이 관계",
       body: R`등비수열 \(\{a_{n}\}\)이
         \[2\left(a_{1}+a_{4}+a_{7}\right)=a_{4}+a_{7}+a_{10}=6\]
         을 만족시킬 때, \(a_{10}\)의 값은?`,
@@ -81,7 +83,7 @@
     },
     {
       id: "2026-suneung-13", exam: "2026-suneung", no: 13, score: 4,
-      unit: "m2-integ", topic: "두 접선으로 둘러싸인 넓이",
+      units: ["m2-diff"], memo: "두 접선으로 둘러싸인 넓이",
       body: R`함수 \(f(x)=x^{2}-4x-3\)에 대하여
         곡선 \(y=f(x)\) 위의 점 \((1,\,-6)\)에서의 접선을 \(l\)이라 하고,
         함수 \(g(x)=\left(x^{3}-2x\right)f(x)\)에 대하여
@@ -94,7 +96,7 @@
     },
     {
       id: "2026-suneung-14", exam: "2026-suneung", no: 14, score: 4,
-      unit: "m1-trig", topic: "원과 삼각형에서 길이 구하기",
+      units: ["m1-trig"], memo: "원과 삼각형에서 길이 구하기",
       body: R`그림과 같이 \(\overline{\mathrm{AB}}=3\), \(\overline{\mathrm{BC}}=4\)이고 \(\angle\mathrm{B}=\dfrac{\pi}{2}\)인 직각삼각형
         \(\mathrm{ABC}\)가 있다. 선분 \(\mathrm{AB}\)를 \(2:1\)로 내분하는 점을 \(\mathrm{D}\),
         점 \(\mathrm{A}\)를 중심으로 하고 반지름의 길이가 \(\overline{\mathrm{AD}}\)인 원이 선분 \(\mathrm{AC}\)와
@@ -110,7 +112,7 @@
     },
     {
       id: "2026-suneung-15", exam: "2026-suneung", no: 15, score: 4,
-      unit: "m2-integ", topic: "정적분으로 정의된 함수의 극값",
+      units: ["m2-integ", "m2-diff"], memo: "정적분으로 정의된 함수의 극값",
       body: R`함수 \(f(x)\)가
         \[f(x)=\begin{cases}-x^{2} &amp; (x&lt;0)\\ x^{2}-x &amp; (x\ge 0)\end{cases}\]
         이고, 양수 \(a\)에 대하여 함수 \(g(x)\)를
@@ -125,7 +127,7 @@
     },
     {
       id: "2026-suneung-20", exam: "2026-suneung", no: 20, score: 4,
-      unit: "m1-seq", topic: "수열의 합과 귀납적 관계",
+      units: ["m1-seq"], memo: "수열의 합과 귀납적 관계",
       body: R`수열 \(\{a_{n}\}\)이 다음 조건을 만족시킨다.`,
       bullets: true,
       note: [
@@ -155,7 +157,7 @@
     },
     {
       id: "2026-suneung-21", exam: "2026-suneung", no: 21, score: 4,
-      unit: "m2-limit", topic: "연속과 극한 조건으로 함수 결정하기",
+      units: ["m2-limit", "m2-diff"], memo: "연속과 극한 조건으로 함수 결정하기",
       body: R`최고차항의 계수가 양수인 삼차함수 \(f(x)\)와 실수 \(t\)에
         대하여 함수
         \[g(x)=\begin{cases}-f(x) &amp; (x&lt;t)\\ \ \ f(x) &amp; (x\ge t)\end{cases}\]
@@ -172,7 +174,7 @@
     },
     {
       id: "2026-suneung-22", exam: "2026-suneung", no: 22, score: 4,
-      unit: "m1-explog", topic: "지수·로그 그래프의 대칭과 중점",
+      units: ["m1-explog"], memo: "지수·로그 그래프의 대칭과 중점",
       body: R`곡선 \(y=\log_{16}(8x+2)\) 위의 점 \(\mathrm{A}(a,\,b)\)와
         곡선 \(y=4^{\,x-1}-\dfrac{1}{2}\) 위의 점 \(\mathrm{B}\)가 제1사분면에 있다.
         점 \(\mathrm{A}\)를 직선 \(y=x\)에 대하여 대칭이동한 점이 직선 \(\mathrm{OB}\) 위에
