@@ -274,6 +274,511 @@ const HISTORY = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🥚",
+        art: "cover.webp",
+        title: "Bak Hyeokgeose",
+        intro: [
+            "The story of Bak Hyeokgeose is in both the Samguk Sagi and the Samguk Yusa. It is about the first king of Silla.",
+            "Hyeokgeose means the one who lights the world. The red egg looked like a gourd, so the family name became Bak.",
+            "People born from eggs are common in our founding stories. Jumong, Kim Suro and Seok Talhae all came out of eggs."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The White Horse at Najeong",
+            beats: [
+                {
+                    art: "01-six.webp",
+                    emoji: "🗣️",
+                    left: [
+                        "Long ago the land of Seorabeol had six villages.",
+                        "Each village had a chief of its own.",
+                        "The six were not on bad terms, but each lived apart.",
+                        "One day the six chiefs gathered on a hill and sat down.",
+                        { t: "\"We cannot go on like this.\"", v: "old" }
+                    ],
+                    right: [
+                        { t: "\"We need a king to bind the six of us together.\"", v: "old" },
+                        { t: "\"If a great force comes at us, six scattered villages cannot hold.\"", v: "man" },
+                        { t: "\"And where in the world is such a person?\"", v: "man" },
+                        "The chiefs folded their arms and only sighed.",
+                        "A heavy silence lay over the hill."
+                    ]
+                },
+                {
+                    art: "02-light.webp",
+                    emoji: "🌈",
+                    left: [
+                        "Then one chief sprang up and pointed south.",
+                        { t: "\"Look — look at that!\"", v: "man" },
+                        "Every head turned that way at once.",
+                        "Beyond the wood, over a well, a shaft of light stood up to the sky.",
+                        "It stood straight and did not waver at all."
+                    ],
+                    right: [
+                        "It was not lightning, and it was not a sunset.",
+                        "The six of them only looked at one another.",
+                        "Then all together they ran down the hill.",
+                        "They ran till their breath caught, and not one of them stopped.",
+                        "All that while the light went on standing there."
+                    ]
+                },
+                {
+                    art: "03-horse.webp",
+                    emoji: "🐴",
+                    left: [
+                        "The light was coming up over a well called Najeong.",
+                        "By that well there was a white horse.",
+                        "Its coat was white as snow and its mane hung long.",
+                        "The horse was down on its front knees, calling and calling.",
+                        { t: "\"Hiiiiii —\"", v: "beast" }
+                    ],
+                    right: [
+                        "The people stopped and held their breath.",
+                        "Nobody dared make any sound.",
+                        "They came one step nearer, and the horse lifted its head.",
+                        "Its eyes were very clear and gentle.",
+                        "It looked quietly at each of the six in turn."
+                    ]
+                },
+                {
+                    art: "04-egg.webp",
+                    emoji: "🥚",
+                    left: [
+                        "The horse sprang up into the sky and was gone.",
+                        "As it went, the light went out with it.",
+                        "But something was lying in that place.",
+                        "It was one great red egg.",
+                        "It was too big for a grown person to get both arms round."
+                    ],
+                    right: [
+                        { t: "\"What... what in the world is this?\"", v: "man" },
+                        "The six of them sat down in a ring round the egg.",
+                        "Not one of them would put a hand to it.",
+                        { t: "\"This is not a thing to touch lightly.\"", v: "old" },
+                        "That night the six sat wide awake beside the egg."
+                    ]
+                },
+                {
+                    art: "05-boy.webp",
+                    emoji: "👶",
+                    left: [
+                        "It was near daybreak. A crack ran across the egg.",
+                        "Nobody had put a hand to it. It had split of itself.",
+                        "Craaack, craaack —",
+                        "The cracks ran out every way across the shell.",
+                        "The six of them stepped back without meaning to."
+                    ],
+                    right: [
+                        "A boy came out of the broken egg.",
+                        "He did not cry. His eyes were wide open and clear.",
+                        "A soft light went round his body.",
+                        "The chiefs went flat on their faces where they stood.",
+                        { t: "\"Heaven has sent this to us.\"", v: "old" }
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Child at Aryeong Well",
+            beats: [
+                {
+                    art: "06-bath.webp",
+                    emoji: "💧",
+                    left: [
+                        "The chiefs took the child to the stream on the east and washed him.",
+                        "The water was shining in the morning sun.",
+                        "And then a very strange thing happened.",
+                        "The more they washed him, the brighter the light on him grew.",
+                        "Even the water went bright."
+                    ],
+                    right: [
+                        "And that was not all.",
+                        "Birds flew down and settled in a row at the water's edge.",
+                        "Animals came out of the wood and jumped about.",
+                        "The chiefs saw it and slapped their knees.",
+                        { t: "\"This child is the one we have been waiting for.\"", v: "old" }
+                    ]
+                },
+                {
+                    art: "07-name.webp",
+                    emoji: "📜",
+                    left: [
+                        { t: "\"What shall we call him?\"", v: "man" },
+                        "The chiefs thought a long time and nothing came to them.",
+                        "Then one chief held up a piece of the broken shell.",
+                        { t: "\"Look. Does it not look just like a gourd?\"", v: "old" },
+                        { t: "\"Well, so it does. A gourd cut in two.\"", v: "man" }
+                    ],
+                    right: [
+                        "So the family name became Bak.",
+                        "Bak is our word for a gourd.",
+                        "For his name they chose Hyeokgeose, the one who lights the world.",
+                        { t: "\"Bak Hyeokgeose. That is good.\"", v: "old" },
+                        "The chiefs said the name over several times."
+                    ]
+                },
+                {
+                    art: "08-dragon.webp",
+                    emoji: "🐉",
+                    left: [
+                        "That very day something happened at a well called Aryeong.",
+                        "Aryeong was a well east of Seorabeol.",
+                        "The water split apart and something rose out of it.",
+                        "It was a dragon with the head of a hen.",
+                        "The people drawing water stood stiff with fright."
+                    ],
+                    right: [
+                        "The dragon left a baby girl at the well and was gone.",
+                        "The people started and backed away.",
+                        "But the child's lips were long, like a bird's beak.",
+                        { t: "\"What are we to do with her...\"", v: "man" },
+                        "They did not know what to do, and stamped about."
+                    ]
+                },
+                {
+                    art: "09-beak.webp",
+                    emoji: "🕊️",
+                    left: [
+                        "Then an old woman took the child up in her arms.",
+                        { t: "\"Washing her may make it better.\"", v: "granny" },
+                        "The old woman carried her to the stream.",
+                        "The water was so clear you could see the pebbles at the bottom.",
+                        "The old woman washed the child's face very carefully."
+                    ],
+                    right: [
+                        "And the beak came off and floated away on the water.",
+                        "The old woman opened her eyes wide and looked at the child.",
+                        "The child looked up at her and smiled.",
+                        "The people named her Aryeong, after the well.",
+                        "It meant the child who came out of that well."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Seorabeol",
+            beats: [
+                {
+                    art: "10-grow.webp",
+                    emoji: "🌱",
+                    left: [
+                        "The six villages raised the two children between them.",
+                        "Today they ate at this house and tomorrow slept at that one.",
+                        "Not one person said they were not their own.",
+                        "All six villages were home to the two of them.",
+                        "Wherever they went they were made welcome."
+                    ],
+                    right: [
+                        "Hyeokgeose shot well and rode well.",
+                        "He hit a far mark at the first try.",
+                        "Aryeong knew all about growing grain and keeping silkworms.",
+                        "A silkworm is the creature that gives silk thread.",
+                        "The two grew up the closest of friends."
+                    ]
+                },
+                {
+                    art: "11-thirteen.webp",
+                    emoji: "👑",
+                    left: [
+                        "It was the year Hyeokgeose turned thirteen.",
+                        "He already stood a head taller than the grown men.",
+                        "The six chiefs gathered on that hill again.",
+                        { t: "\"The time has come.\"", v: "old" },
+                        { t: "\"Let us take this child as king of our six villages.\"", v: "old" }
+                    ],
+                    right: [
+                        "The six chiefs said yes with one voice.",
+                        "Every person of the six villages came to the hill, without exception.",
+                        "The chiefs set the boy in a high place on the hill.",
+                        { t: "\"From today you are our king.\"", v: "old" },
+                        "The people bowed all together."
+                    ]
+                },
+                {
+                    art: "12-queen.webp",
+                    emoji: "🤝",
+                    left: [
+                        "Hyeokgeose took Aryeong for his queen.",
+                        "She was the friend who had been beside him since childhood.",
+                        { t: "\"By myself I can do nothing at all.\"", v: "man" },
+                        "Hyeokgeose said that to Aryeong.",
+                        "The two went round the villages together, and never in a palanquin."
+                    ],
+                    right: [
+                        "Hyeokgeose looked at the fields and Aryeong looked at the mulberry trees.",
+                        "Aryeong taught the women how to keep silkworms.",
+                        "Because the two went together, no place was left out.",
+                        "People called them the Two Holy Ones.",
+                        "It was a name for the king and the queen together."
+                    ]
+                },
+                {
+                    art: "13-seorabeol.webp",
+                    emoji: "🏯",
+                    left: [
+                        "The country was named Seorabeol.",
+                        "Six villages had become one, so the name had to be one too.",
+                        "People pulled down the walls between village and village and made roads.",
+                        "In the middle they opened a market.",
+                        "There people traded one thing for another."
+                    ],
+                    right: [
+                        { t: "\"Now we are people of one country.\"", v: "man" },
+                        "Houses began marrying into the next village.",
+                        "Only then were the six villages truly one.",
+                        "This country became Silla in time.",
+                        "It lasted a thousand years, and it began as six villages."
+                    ]
+                },
+                {
+                    art: "14-people.webp",
+                    emoji: "🌾",
+                    left: [
+                        "In autumn all Seorabeol turned yellow.",
+                        "Rice ripened in the paddies and beans in the fields.",
+                        "When the harvest was in, the storehouses were full.",
+                        { t: "\"This is all thanks to our king.\"", v: "man" },
+                        "People smiled at their full storehouses."
+                    ],
+                    right: [
+                        "But Hyeokgeose shook his head.",
+                        "The king stood among the people and looked round at the six villages.",
+                        { t: "\"It is because the six villages came together.\"", v: "man" },
+                        { t: "\"I only stand in the middle of them.\"", v: "man" },
+                        "The people heard it and went quiet."
+                    ]
+                }
+            ]
+        }
+    ],
+    history: {
+        title: 'From Here On It Is Real History',
+        note: 'Everything up to here was the story. From here on it is what the records show.',
+        paras: [
+            "Silla really existed. The Samguk Sagi says it was founded in 57 BC, and scholars read that as the moment several villages joined together and took the shape of a country.",
+            "At Gyeongju the place called Najeong is still there. Digging turned up the remains of a well, and of a large building where offerings were made. That means the people of Silla made offerings there for a very long time.",
+            "In Silla the kings came in turn from three families, the Bak, the Seok and the Kim. It took a long time before it was taken for granted that one family passed the throne down.",
+            "Silla lasted from 57 BC to the year 935. That is close to a thousand years, the longest any country has lasted in our history."
+        ]
+    },
+    quiz: [
+        { q: "What did the six chiefs meet to talk about?", choices: ["Taking a king", "Pulling walls down for roads", "Digging a new well"], answer: 0 },
+        { q: "What was by the well at Najeong?", choices: ["A great white rock", "A ladder let down from the sky", "A white horse on its knees"], answer: 2 },
+        { q: "What was left where the horse had been?", choices: ["One red egg", "A box made of gold", "One blue bead"], answer: 0 },
+        { q: "What does the name Hyeokgeose mean?", choices: ["A gourd", "The one who lights the world", "The child from that well"], answer: 1 },
+        { q: "What appeared at the Aryeong well?", choices: ["A horse with a white coat", "A dragon with a hen's head", "One red egg"], answer: 1 },
+        { q: "What did people call the king and queen?", choices: ["The Two Holy Ones", "The Six Chiefs", "The Two Queens"], answer: 0 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The six chiefs kept their own places and still asked for a king, so they must have thought that scattered they could not hold.",
+                "The king and queen went round the villages on foot and not in a palanquin, so ruling then meant going and looking.",
+                "They pulled down the walls between the villages and made roads, so becoming one begins with opening a way.",
+                "The chiefs quarrelled over the egg, each wanting it for his own village, so a good thing divides people."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "in both ~ and ~", k: "~와 ~에 함께", s: "in both the Samguk Sagi and the Samguk Yusa" },
+            { w: "the first king", k: "첫 임금", s: "It is about the first king of Silla." },
+            { w: "lights (light)", k: "밝힌다", s: "Hyeokgeose means the one who lights the world." },
+            { w: "gourd", k: "박", s: "The red egg looked like a gourd" },
+            { w: "born from eggs", k: "알에서 태어난", s: "People born from eggs are common in our founding stories." },
+            { w: "founding stories", k: "건국 이야기", s: "People born from eggs are common in our founding stories." }
+        ],
+        "01-six.webp": [
+            { w: "chief", k: "촌장", s: "Each village had a chief of its own." },
+            { w: "on bad terms", k: "사이가 나쁜", s: "The six were not on bad terms, but each lived apart." },
+            { w: "lived apart", k: "따로 살았다", s: "The six were not on bad terms, but each lived apart." },
+            { w: "gathered (gather)", k: "모였다", s: "the six chiefs gathered on a hill and sat down" },
+            { w: "go on like this", k: "이대로 지내다", s: "We cannot go on like this." },
+            { w: "bind ~ together", k: "하나로 묶다", s: "We need a king to bind the six of us together." },
+            { w: "a great force", k: "큰 무리", s: "If a great force comes at us" },
+            { w: "scattered", k: "흩어진", s: "six scattered villages cannot hold" },
+            { w: "hold", k: "버티다", s: "six scattered villages cannot hold" },
+            { w: "sighed (sigh)", k: "한숨을 쉬었다", s: "The chiefs folded their arms and only sighed." }
+        ],
+        "02-light.webp": [
+            { w: "sprang up (spring)", k: "벌떡 일어났다", s: "Then one chief sprang up and pointed south." },
+            { w: "at once", k: "홱, 한꺼번에", s: "Every head turned that way at once." },
+            { w: "a shaft of light", k: "빛줄기", s: "over a well, a shaft of light stood up to the sky" },
+            { w: "waver", k: "흔들리다", s: "It stood straight and did not waver at all." },
+            { w: "lightning", k: "번개", s: "It was not lightning, and it was not a sunset." },
+            { w: "all together", k: "한꺼번에", s: "Then all together they ran down the hill." },
+            { w: "breath caught", k: "숨이 턱에 찼다", s: "They ran till their breath caught" },
+            { w: "All that while", k: "그동안에도", s: "All that while the light went on standing there." }
+        ],
+        "03-horse.webp": [
+            { w: "coming up over ~", k: "~ 위에서 뻗어 나오는", s: "The light was coming up over a well called Najeong." },
+            { w: "coat", k: "털", s: "Its coat was white as snow and its mane hung long." },
+            { w: "mane", k: "갈기", s: "Its coat was white as snow and its mane hung long." },
+            { w: "front knees", k: "앞무릎", s: "The horse was down on its front knees" },
+            { w: "held their breath", k: "숨을 죽였다", s: "The people stopped and held their breath." },
+            { w: "dared (dare)", k: "감히 ~했다", s: "Nobody dared make any sound." },
+            { w: "one step nearer", k: "한 발짝 가까이", s: "They came one step nearer, and the horse lifted its head." },
+            { w: "gentle", k: "순한", s: "Its eyes were very clear and gentle." },
+            { w: "in turn", k: "하나하나 차례로", s: "It looked quietly at each of the six in turn." }
+        ],
+        "04-egg.webp": [
+            { w: "sprang up into ~", k: "훌쩍 솟아올랐다", s: "The horse sprang up into the sky and was gone." },
+            { w: "went out (go out)", k: "스러졌다", s: "As it went, the light went out with it." },
+            { w: "was lying (lie)", k: "놓여 있었다", s: "But something was lying in that place." },
+            { w: "get both arms round ~", k: "두 팔로 안다", s: "too big for a grown person to get both arms round" },
+            { w: "in a ring", k: "빙 둘러", s: "The six of them sat down in a ring round the egg." },
+            { w: "put a hand to ~", k: "손을 대다", s: "Not one of them would put a hand to it." },
+            { w: "touch lightly", k: "함부로 건드리다", s: "This is not a thing to touch lightly." },
+            { w: "wide awake", k: "뜬눈으로", s: "That night the six sat wide awake beside the egg." }
+        ],
+        "05-boy.webp": [
+            { w: "near daybreak", k: "동이 틀 무렵", s: "It was near daybreak." },
+            { w: "crack", k: "금", s: "A crack ran across the egg." },
+            { w: "split of itself (split)", k: "저절로 갈라졌다", s: "It had split of itself." },
+            { w: "shell", k: "껍데기", s: "The cracks ran out every way across the shell." },
+            { w: "without meaning to", k: "저도 모르게", s: "The six of them stepped back without meaning to." },
+            { w: "wide open", k: "말똥말똥 뜬", s: "His eyes were wide open and clear." },
+            { w: "went round ~", k: "돌았다", s: "A soft light went round his body." },
+            { w: "went flat on their faces", k: "넙죽 엎드렸다", s: "The chiefs went flat on their faces where they stood." }
+        ],
+        "06-bath.webp": [
+            { w: "washed (wash)", k: "씻겼다", s: "The chiefs took the child to the stream and washed him." },
+            { w: "The more ~, the brighter ~", k: "~할수록 더 환해지는", s: "The more they washed him, the brighter the light grew." },
+            { w: "that was not all", k: "그것만이 아니었다", s: "And that was not all." },
+            { w: "settled (settle)", k: "내려앉았다", s: "Birds flew down and settled in a row at the water's edge." },
+            { w: "in a row", k: "나란히", s: "settled in a row at the water's edge" },
+            { w: "jumped about", k: "껑충껑충 뛰었다", s: "Animals came out of the wood and jumped about." },
+            { w: "slapped their knees", k: "무릎을 탁 쳤다", s: "The chiefs saw it and slapped their knees." },
+            { w: "have been waiting for", k: "기다려 온", s: "This child is the one we have been waiting for." }
+        ],
+        "07-name.webp": [
+            { w: "nothing came to them", k: "떠오르지 않았다", s: "The chiefs thought a long time and nothing came to them." },
+            { w: "held up (hold)", k: "들어 보였다", s: "Then one chief held up a piece of the broken shell." },
+            { w: "just like ~", k: "꼭 ~처럼", s: "Does it not look just like a gourd?" },
+            { w: "cut in two", k: "쪼갠", s: "Well, so it does. A gourd cut in two." },
+            { w: "our word for ~", k: "우리말로 ~를 뜻하는 말", s: "Bak is our word for a gourd." },
+            { w: "chose (choose)", k: "정했다", s: "For his name they chose Hyeokgeose" },
+            { w: "said ~ over", k: "되뇌었다", s: "The chiefs said the name over several times." }
+        ],
+        "08-dragon.webp": [
+            { w: "That very day", k: "바로 그날", s: "That very day something happened at a well called Aryeong." },
+            { w: "east of ~", k: "~ 동쪽에 있는", s: "Aryeong was a well east of Seorabeol." },
+            { w: "split apart", k: "쫙 갈라졌다", s: "The water split apart and something rose out of it." },
+            { w: "rose out of ~ (rise)", k: "솟아올랐다", s: "The water split apart and something rose out of it." },
+            { w: "the head of a hen", k: "닭 머리", s: "It was a dragon with the head of a hen." },
+            { w: "stood stiff", k: "그대로 굳었다", s: "The people drawing water stood stiff with fright." },
+            { w: "left ~ (leave)", k: "남기고 갔다", s: "The dragon left a baby girl at the well and was gone." },
+            { w: "backed away", k: "뒷걸음질 쳤다", s: "The people started and backed away." },
+            { w: "stamped about", k: "발을 굴렀다", s: "They did not know what to do, and stamped about." }
+        ],
+        "09-beak.webp": [
+            { w: "took ~ up in her arms", k: "안아 들었다", s: "Then an old woman took the child up in her arms." },
+            { w: "may make it better", k: "나아질지도 모른다", s: "Washing her may make it better." },
+            { w: "so clear that ~", k: "어찌나 맑은지", s: "The water was so clear you could see the pebbles." },
+            { w: "pebbles", k: "자갈", s: "you could see the pebbles at the bottom" },
+            { w: "came off (come off)", k: "툭 떨어졌다", s: "And the beak came off and floated away on the water." },
+            { w: "floated away (float)", k: "떠내려갔다", s: "the beak came off and floated away on the water" },
+            { w: "after ~", k: "~의 이름을 따서", s: "The people named her Aryeong, after the well." }
+        ],
+        "10-grow.webp": [
+            { w: "raised (raise)", k: "길렀다", s: "The six villages raised the two children between them." },
+            { w: "between them", k: "함께", s: "The six villages raised the two children between them." },
+            { w: "their own", k: "제 아이", s: "Not one person said they were not their own." },
+            { w: "were made welcome", k: "반겨 주었다", s: "Wherever they went they were made welcome." },
+            { w: "shot well (shoot)", k: "활을 잘 쏘았다", s: "Hyeokgeose shot well and rode well." },
+            { w: "mark", k: "과녁", s: "He hit a far mark at the first try." },
+            { w: "silkworms", k: "누에", s: "Aryeong knew all about growing grain and keeping silkworms." },
+            { w: "silk thread", k: "비단실", s: "A silkworm is the creature that gives silk thread." }
+        ],
+        "11-thirteen.webp": [
+            { w: "turned thirteen", k: "열세 살이 되었다", s: "It was the year Hyeokgeose turned thirteen." },
+            { w: "a head taller", k: "머리 하나가 더 큰", s: "He already stood a head taller than the grown men." },
+            { w: "The time has come", k: "때가 되었다", s: "The time has come." },
+            { w: "take ~ as king", k: "임금으로 모시다", s: "Let us take this child as king of our six villages." },
+            { w: "with one voice", k: "한목소리로", s: "The six chiefs said yes with one voice." },
+            { w: "without exception", k: "한 사람도 빠짐없이", s: "Every person of the six villages came, without exception." },
+            { w: "a high place", k: "높은 자리", s: "The chiefs set the boy in a high place on the hill." },
+            { w: "bowed all together", k: "한꺼번에 절했다", s: "The people bowed all together." }
+        ],
+        "12-queen.webp": [
+            { w: "took ~ for his queen", k: "왕비로 맞았다", s: "Hyeokgeose took Aryeong for his queen." },
+            { w: "since childhood", k: "어릴 적부터", s: "the friend who had been beside him since childhood" },
+            { w: "By myself", k: "나 혼자서는", s: "By myself I can do nothing at all." },
+            { w: "palanquin", k: "가마", s: "The two went round the villages together, and never in a palanquin." },
+            { w: "mulberry trees", k: "뽕나무", s: "Aryeong looked at the mulberry trees." },
+            { w: "keep silkworms", k: "누에를 치다", s: "Aryeong taught the women how to keep silkworms." },
+            { w: "left out", k: "빠진", s: "Because the two went together, no place was left out." },
+            { w: "the Two Holy Ones", k: "두 성인", s: "People called them the Two Holy Ones." }
+        ],
+        "13-seorabeol.webp": [
+            { w: "was named ~", k: "~라 했다", s: "The country was named Seorabeol." },
+            { w: "had to be ~", k: "~여야 했다", s: "Six villages had become one, so the name had to be one too." },
+            { w: "pulled down (pull)", k: "헐었다", s: "People pulled down the walls between village and village" },
+            { w: "made roads", k: "길을 냈다", s: "pulled down the walls and made roads" },
+            { w: "market", k: "저잣거리", s: "In the middle they opened a market." },
+            { w: "traded (trade)", k: "물건을 바꾸었다", s: "There people traded one thing for another." },
+            { w: "marrying into ~", k: "사돈을 맺는", s: "Houses began marrying into the next village." },
+            { w: "truly one", k: "정말로 하나인", s: "Only then were the six villages truly one." },
+            { w: "lasted (last)", k: "이어졌다", s: "It lasted a thousand years." }
+        ],
+        "14-people.webp": [
+            { w: "turned yellow", k: "누렇게 물들었다", s: "In autumn all Seorabeol turned yellow." },
+            { w: "ripened (ripen)", k: "익었다", s: "Rice ripened in the paddies and beans in the fields." },
+            { w: "the harvest was in", k: "가을걷이가 끝났다", s: "When the harvest was in, the storehouses were full." },
+            { w: "thanks to ~", k: "~ 덕분에", s: "This is all thanks to our king." },
+            { w: "shook his head (shake)", k: "고개를 저었다", s: "But Hyeokgeose shook his head." },
+            { w: "among ~", k: "~ 가운데", s: "The king stood among the people" },
+            { w: "looked round at ~", k: "죽 둘러보았다", s: "and looked round at the six villages" },
+            { w: "came together", k: "모였다", s: "It is because the six villages came together." },
+            { w: "went quiet", k: "조용해졌다", s: "The people heard it and went quiet." }
+        ],
+        "after": [
+            { w: "differ a little", k: "조금 다르다", s: "The two books differ a little in what they tell." },
+            { w: "plainly", k: "담담하게", s: "The Samguk Sagi begins plainly" },
+            { w: "having no father", k: "아버지가 없다는 것", s: "Coming out of an egg also means having no father." },
+            { w: "lean towards ~", k: "~에 치우치다", s: "only such a person could be a king who leaned towards none of the six" },
+            { w: "one odd thing", k: "이상한 것 하나", s: "Look again and there is one odd thing." },
+            { w: "It was people who chose", k: "고른 것은 사람이었다", s: "It was people who chose, not heaven." },
+            { w: "is read as ~", k: "~로 풀이한다", s: "The name Silla is read as gathering all sides like a net." },
+            { w: "made up their minds", k: "마음먹었다", s: "because the people made up their minds to be together" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🥚',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "The two books differ a little in what they tell. The Samguk Sagi begins plainly, with the chiefs finding the egg. The Samguk Yusa adds the white horse that knelt and called and then went up into the sky.",
+                    "Coming out of an egg also means having no father. Not the child of an earlier king but somebody sent straight from the sky: only such a person could be a king who leaned towards none of the six villages.",
+                    "Look again and there is one odd thing. Who decided to make the child from the egg their king was not heaven but the six chiefs. The books say heaven sent him down, but it was people who chose.",
+                    "Hyeokgeose means the one who lights the world. The name Silla is read as gathering all sides in like a net. Even the names were a promise to bind many into one."
+                ],
+                right: [
+                    "At Gyeongju the well called Najeong, where Hyeokgeose is said to have come out, is still there. To old people a well was the place where under the ground and the sky met.",
+                    "Each of the six chiefs might have held that his own village was best. Instead they wanted first to be bound together. The country began not because a child came out of an egg but because the people made up their minds to be together.",
+                    "Have you ever done something with other people that you could not have done alone?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "여섯 촌장이 모여 의논한 것은 무엇인가요?", choices: ["임금을 모실 일", "담을 헐고 길을 낼 일", "우물을 새로 팔 일"], answer: 0 },
     { q: "나정 우물가에 있던 것은 무엇인가요?", choices: ["커다란 흰 바위", "하늘에서 내린 사다리", "무릎 꿇고 우는 흰말"], answer: 2 },

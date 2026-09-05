@@ -307,6 +307,567 @@ const HISTORY = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🏹",
+        art: "cover.webp",
+        title: "Jumong",
+        intro: [
+            "The story of Jumong is in the Samguk Sagi and the Samguk Yusa. It is about the first king of Goguryeo.",
+            "Jumong is said to mean a good archer in the language of Buyeo. His name was really a nickname.",
+            "The story is carved on King Gwanggaeto's stele as well, a stone set up fifteen hundred years ago."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Child from the Egg",
+            beats: [
+                {
+                    art: "01-yuhwa.webp",
+                    emoji: "🌊",
+                    left: [
+                        "Long ago in the north, in Buyeo, there was a king called Geumwa.",
+                        "It was a strong country with wide plains and a great river.",
+                        "One day the king was hunting and stopped by the river.",
+                        "A woman stood there alone, in strange clothes."
+                    ],
+                    right: [
+                        { t: "\"Who is there?\"", v: "old" },
+                        { t: "\"I am Yuhwa, daughter of Habaek who rules the river.\"", v: "woman" },
+                        "The king took her back to his palace.",
+                        "People in the palace crowded round, all wondering at her.",
+                        "But from that day strange things began."
+                    ]
+                },
+                {
+                    art: "02-sunlight.webp",
+                    emoji: "☀️",
+                    left: [
+                        "A shaft of sunlight followed Yuhwa about.",
+                        "It was no use moving rooms or letting the blind down.",
+                        "Cloud or night, that light did not go away.",
+                        "The palace women were afraid to go near her.",
+                        "Yuhwa was always alone."
+                    ],
+                    right: [
+                        "Some while later Yuhwa gave birth to something.",
+                        "It was not a child but a great egg.",
+                        "An egg the size of a grown head lay there on the floor.",
+                        { t: "\"Was there ever anything so strange!\"", v: "old" },
+                        "The king pushed his table aside and got up shouting."
+                    ]
+                },
+                {
+                    art: "03-throw.webp",
+                    emoji: "🐖",
+                    left: [
+                        "The king threw that egg into the pigsty.",
+                        "He was afraid something bad would come of it.",
+                        "But the pigs did not tread on the egg. They went round it.",
+                        "They even nosed it gently over to a dry place.",
+                        "Not one of them touched it."
+                    ],
+                    right: [
+                        "Put out in the fields, and cattle and horses stepped aside.",
+                        "Left in the wood, and birds covered it with their wings.",
+                        "Hearing it, the king grew more and more afraid.",
+                        { t: "\"...Take it back to her.\"", v: "old" },
+                        "So the egg came back into Yuhwa's arms."
+                    ]
+                },
+                {
+                    art: "04-hatch.webp",
+                    emoji: "👶",
+                    left: [
+                        "Yuhwa held the egg and laid bedding in the warm spot.",
+                        "Then she set the egg down on it carefully.",
+                        "Before long there came a crack.",
+                        "The lines ran out every way across it.",
+                        "The shell split and a boy came out."
+                    ],
+                    right: [
+                        "He had big eyes and a wide clear forehead.",
+                        "For a newborn his look was very steady.",
+                        { t: "\"So you are my son.\"", v: "woman" },
+                        "Yuhwa held the child tight in both arms.",
+                        "The baby smiled at her, and the room seemed to brighten."
+                    ]
+                },
+                {
+                    art: "05-bow.webp",
+                    emoji: "🏹",
+                    left: [
+                        "At seven the boy made a bow with his own hands.",
+                        "He bent a branch and strung it tight.",
+                        "And with that bow he never missed.",
+                        "He could hit the very spot a fly had settled on.",
+                        "No grown man could shoot like that."
+                    ],
+                    right: [
+                        { t: "\"Just look at that boy!\"", v: "man" },
+                        "The older people all clicked their tongues over him.",
+                        "In the language of Buyeo a good archer was called a jumong.",
+                        "So that became the boy's name.",
+                        "The people of Buyeo said it with great pleasure."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · One Horse in the Stable",
+            beats: [
+                {
+                    art: "06-princes.webp",
+                    emoji: "😠",
+                    left: [
+                        "King Geumwa had seven sons of his own.",
+                        "They were princes who made much of their shooting.",
+                        "But shoot as they might, Jumong beat them every time.",
+                        "Whenever there was a contest the brothers could not lift their heads."
+                    ],
+                    right: [
+                        { t: "\"That one makes fools of the lot of us.\"", v: "man" },
+                        "Daeso, the eldest, ground his teeth.",
+                        "Inside his sleeve his fist was shaking.",
+                        { t: "\"We must speak to Father.\"", v: "man" },
+                        "All seven brothers nodded together."
+                    ]
+                },
+                {
+                    art: "07-stable.webp",
+                    emoji: "🐎",
+                    left: [
+                        "The princes pressed so hard that even the king gave way.",
+                        "Jumong was sent to the stable behind the palace.",
+                        "It was work of clearing dung and carrying feed, day after day.",
+                        "From dawn to night, and the smell went up your nose."
+                    ],
+                    right: [
+                        { t: "\"Let him grow old doing that.\"", v: "man" },
+                        "The princes sneered as they passed the stable.",
+                        "But Jumong worked without one word of complaint.",
+                        "Instead he watched every horse closely, one by one.",
+                        "He marked which of them ran well."
+                    ]
+                },
+                {
+                    art: "08-needle.webp",
+                    emoji: "📌",
+                    left: [
+                        "Then one day one horse caught Jumong's eye.",
+                        "It had long legs and a shine in its eye.",
+                        "Even while it ate, it held its neck straight up.",
+                        "That is the one, he thought.",
+                        "Nobody else had noticed it at all."
+                    ],
+                    right: [
+                        "Jumong set a very fine needle under that horse's tongue.",
+                        "The horse could not eat properly and grew thin.",
+                        "Its ribs began to show, one by one.",
+                        { t: "\"That one is a sick horse.\"", v: "man" },
+                        "People would not give it a second look."
+                    ]
+                },
+                {
+                    art: "09-gift.webp",
+                    emoji: "🎁",
+                    left: [
+                        "Some while later the king came out to look over the stable.",
+                        "Every horse was glossy and well filled out.",
+                        "The king shared the fat horses out among his sons.",
+                        "The princes argued over who should choose the good ones first."
+                    ],
+                    right: [
+                        "Then he pointed at the thin horse standing in the corner.",
+                        { t: "\"You may have that one.\"", v: "old" },
+                        "It was the horse with nothing but bones on it.",
+                        "Jumong bowed his head politely.",
+                        "That is it, he thought, and showed nothing on his face."
+                    ]
+                },
+                {
+                    art: "10-secret.webp",
+                    emoji: "🌙",
+                    left: [
+                        "That night, in the black dark with nobody looking,",
+                        "Jumong opened the horse's mouth and looked under its tongue.",
+                        "Then he drew out the needle he had put there.",
+                        "The horse lifted its head and called out once, loud.",
+                        "The sound rang round the stable."
+                    ],
+                    right: [
+                        "In a few days the horse began to fill out.",
+                        "Jumong tried it under the moonlight.",
+                        "It was faster than the wind.",
+                        "Jumong stroked its neck and smiled.",
+                        "In all Buyeo there was no horse to keep up with it."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · Crossing the River",
+            beats: [
+                {
+                    art: "11-flee.webp",
+                    emoji: "🌫️",
+                    left: [
+                        "One night his mother Yuhwa shook Jumong awake.",
+                        "Yuhwa's face was white.",
+                        { t: "\"Tonight they mean to do you harm.\"", v: "woman" },
+                        { t: "\"Go far away and make a country of your own.\"", v: "woman" },
+                        "She put a bag of seed grain into his arms.",
+                        "Barley and beans and millet were in it."
+                    ],
+                    right: [
+                        "In Buyeo there was a wife he had to leave behind.",
+                        "She was carrying a child.",
+                        "Jumong broke the sword at his side in two.",
+                        "He put one half into his wife's hand.",
+                        { t: "\"When the child is grown, send him with this.\"", v: "man" },
+                        "He said only that, and turned away."
+                    ]
+                },
+                {
+                    art: "12-river.webp",
+                    emoji: "🐟",
+                    left: [
+                        "Jumong left the fortress with three friends.",
+                        "They were Oi and Mari and Hyeopbo.",
+                        "Near dawn a great river blocked the way in front of them.",
+                        "The water ran hard and there was not one boat.",
+                        "Behind them the sound of hoofs was coming nearer."
+                    ],
+                    right: [
+                        "There was nowhere left to go back to.",
+                        "Jumong raised both arms and cried out to the water.",
+                        { t: "\"I am the grandson of heaven and of Habaek!\"", v: "man" },
+                        { t: "\"Open a road for me, I beg you!\"", v: "man" },
+                        "His voice rang across to the far bank."
+                    ]
+                },
+                {
+                    art: "13-bridge.webp",
+                    emoji: "🐢",
+                    left: [
+                        "Then the river began to boil up.",
+                        "The water parted and something rose in it.",
+                        "Fish and soft-shelled turtles came up in crowds and set their backs together.",
+                        "In no time a bridge lay right across the river.",
+                        "Their shells shone smooth."
+                    ],
+                    right: [
+                        "The hoofs were right behind them now.",
+                        "The four of them crossed on those backs.",
+                        "The moment they were over, the bridge slid apart.",
+                        "The soldiers who had chased them stamped on the bank.",
+                        "Not one of them ever crossed that river."
+                    ]
+                },
+                {
+                    art: "14-jolbon.webp",
+                    emoji: "🏕️",
+                    left: [
+                        "After many days' walking Jumong came to a land called Jolbon.",
+                        "The hills were steep and the water was clear.",
+                        "A wide plain lay open along the river.",
+                        "Grain would grow well there, it looked.",
+                        "Jumong took up a handful of the earth."
+                    ],
+                    right: [
+                        { t: "\"Here.\"", v: "man" },
+                        "Jumong took out the seed bag his mother had given him.",
+                        "And he scattered the seed evenly over the plain.",
+                        "He named the country Goguryeo.",
+                        "It meant may it be high and great. His three friends clapped."
+                    ]
+                },
+                {
+                    art: "15-yuri.webp",
+                    emoji: "🗡️",
+                    left: [
+                        "It was one day many years later.",
+                        "Goguryeo had grown into a fair country by then.",
+                        "A boy called Yuri came to the gate of the fortress.",
+                        "His eyes and his forehead were the very image of Jumong.",
+                        "The boy carefully took out half a broken sword."
+                    ],
+                    right: [
+                        { t: "\"My mother told me to go and find my father.\"", v: "boy" },
+                        "The boy's voice shook a little.",
+                        "Jumong got to his feet at once.",
+                        "Jumong looked at that boy a long while.",
+                        "It was the very child he had left behind in Buyeo."
+                    ]
+                },
+                {
+                    art: "16-sword.webp",
+                    emoji: "⚔️",
+                    left: [
+                        "Jumong took out his own half and held the two together.",
+                        "It was the half he had broken off the day he left Buyeo.",
+                        "Click — and the two pieces joined into one.",
+                        "The broken edges met without a mark out of place.",
+                        "No join could be seen."
+                    ],
+                    right: [
+                        { t: "\"So you are Yuri.\"", v: "man" },
+                        "The tears stood in Jumong's eyes.",
+                        "Jumong held his son by the shoulders a long while.",
+                        "So Goguryeo passed on to the son.",
+                        "Yuri became the second king of Goguryeo in time."
+                    ]
+                }
+            ]
+        }
+    ],
+    history: {
+        title: 'From Here On It Is Real History',
+        note: 'Everything up to here was the story. From here on it is what the records show.',
+        paras: [
+            "Goguryeo really existed. The Samguk Sagi says it was founded in 37 BC, and it lasted nearly seven hundred years, until it fell in the year 668.",
+            "At Ji'an in Jilin, in China, King Gwanggaeto's stele still stands. It is a stone over six metres high, set up in the year 414, and the story of Jumong calling out at the river is carved on it. There the reeds joined and a turtle rose; the Samguk Sagi says turtles and fish made the bridge. The same story came down a little differently.",
+            "Wall paintings in Goguryeo tombs often show people shooting from a galloping horse. Some show them turned right round, shooting backwards. It was a country that thought most of a good archer.",
+            "Jumong's son Onjo went south and founded Baekje. The royal house of Baekje also held that it came from Buyeo, and for a time the country was even called Nambuyeo, which means South Buyeo."
+        ]
+    },
+    quiz: [
+        { q: "What did Yuhwa give birth to?", choices: ["One golden bead", "One great egg", "Twin brothers"], answer: 1 },
+        { q: "What did the pigs do with the egg in the sty?", choices: ["Trod on it going past", "Nosed it over to a dry place", "Covered it with their wings"], answer: 1 },
+        { q: "What does the name Jumong mean?", choices: ["A good archer", "One come from the sky", "A good rider"], answer: 0 },
+        { q: "What did Jumong do about the good horse?", choices: ["Hid it in the stable", "Paid its price and bought it", "Put a needle under its tongue"], answer: 2 },
+        { q: "What helped Jumong across the river?", choices: ["Fish and turtles", "A boatman with a boat", "A bridge from the sky"], answer: 0 },
+        { q: "What did Yuri bring to find his father?", choices: ["A letter from his mother", "Half a broken sword", "A bow made of gold"], answer: 1 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Sent off to the stable he watched the horses instead of complaining, so what you look at matters more than where you are.",
+                "He made the good horse thin on purpose, so he was somebody who knew how to wait for the right moment.",
+                "A man being hunted called out at a river that he was heaven's grandson, so this is how founding stories get made.",
+                "Jumong beat the princes at shooting and won the king's love, so doing something well is always noticed."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "the first king", k: "첫 임금", s: "It is about the first king of Goguryeo." },
+            { w: "is said to mean ~", k: "~라는 뜻이라 전한다", s: "Jumong is said to mean a good archer" },
+            { w: "archer", k: "활 쏘는 사람", s: "Jumong is said to mean a good archer" },
+            { w: "nickname", k: "별명", s: "His name was really a nickname." },
+            { w: "is carved on ~ (carve)", k: "~에 새겨져 있다", s: "The story is carved on King Gwanggaeto's stele" },
+            { w: "stele", k: "비석", s: "carved on King Gwanggaeto's stele" },
+            { w: "set up (set)", k: "세운", s: "a stone set up fifteen hundred years ago" }
+        ],
+        "01-yuhwa.webp": [
+            { w: "in the north", k: "북쪽 땅에", s: "Long ago in the north, in Buyeo, there was a king called Geumwa." },
+            { w: "plains", k: "들", s: "a strong country with wide plains and a great river" },
+            { w: "was hunting (hunt)", k: "사냥을 나갔다", s: "One day the king was hunting and stopped by the river." },
+            { w: "strange", k: "여느 사람과 다른", s: "A woman stood there alone, in strange clothes." },
+            { w: "rules (rule)", k: "다스린다", s: "I am Yuhwa, daughter of Habaek who rules the river." },
+            { w: "crowded round", k: "몰려들었다", s: "People in the palace crowded round" },
+            { w: "wondering at ~", k: "신기해하며", s: "all wondering at her" }
+        ],
+        "02-sunlight.webp": [
+            { w: "a shaft of sunlight", k: "햇빛 한 줄기", s: "A shaft of sunlight followed Yuhwa about." },
+            { w: "followed ~ about", k: "졸졸 따라다녔다", s: "A shaft of sunlight followed Yuhwa about." },
+            { w: "It was no use ~", k: "소용이 없었다", s: "It was no use moving rooms or letting the blind down." },
+            { w: "blind", k: "발", s: "moving rooms or letting the blind down" },
+            { w: "go near ~", k: "곁에 가다", s: "The palace women were afraid to go near her." },
+            { w: "gave birth to ~ (give)", k: "낳았다", s: "Some while later Yuhwa gave birth to something." },
+            { w: "the size of ~", k: "~만 한", s: "An egg the size of a grown head lay there on the floor." },
+            { w: "pushed ~ aside", k: "밀쳤다", s: "The king pushed his table aside and got up shouting." }
+        ],
+        "03-throw.webp": [
+            { w: "pigsty", k: "돼지우리", s: "The king threw that egg into the pigsty." },
+            { w: "come of ~", k: "~에서 생기다", s: "He was afraid something bad would come of it." },
+            { w: "tread on ~", k: "밟다", s: "But the pigs did not tread on the egg." },
+            { w: "went round ~", k: "빙 둘러 피했다", s: "They went round it." },
+            { w: "nosed ~ over", k: "주둥이로 밀어 옮겼다", s: "They even nosed it gently over to a dry place." },
+            { w: "stepped aside", k: "비켜 갔다", s: "cattle and horses stepped aside" },
+            { w: "covered ~ with (cover)", k: "덮어 주었다", s: "birds covered it with their wings" },
+            { w: "Take it back", k: "도로 가져다주어라", s: "...Take it back to her." }
+        ],
+        "04-hatch.webp": [
+            { w: "bedding", k: "이불", s: "Yuhwa held the egg and laid bedding in the warm spot." },
+            { w: "the warm spot", k: "아랫목", s: "laid bedding in the warm spot" },
+            { w: "Before long", k: "얼마 지나지 않아", s: "Before long there came a crack." },
+            { w: "ran out every way", k: "사방으로 뻗었다", s: "The lines ran out every way across it." },
+            { w: "split (split)", k: "갈라졌다", s: "The shell split and a boy came out." },
+            { w: "forehead", k: "이마", s: "He had big eyes and a wide clear forehead." },
+            { w: "newborn", k: "갓난아이", s: "For a newborn his look was very steady." },
+            { w: "seemed to brighten", k: "환해지는 것 같았다", s: "the room seemed to brighten" }
+        ],
+        "05-bow.webp": [
+            { w: "with his own hands", k: "제 손으로", s: "At seven the boy made a bow with his own hands." },
+            { w: "bent (bend)", k: "휘었다", s: "He bent a branch and strung it tight." },
+            { w: "strung ~ tight (string)", k: "시위를 팽팽히 맸다", s: "He bent a branch and strung it tight." },
+            { w: "never missed", k: "백발백중이었다", s: "And with that bow he never missed." },
+            { w: "the very spot", k: "바로 그 자리", s: "He could hit the very spot a fly had settled on." },
+            { w: "clicked their tongues", k: "혀를 내둘렀다", s: "The older people all clicked their tongues over him." },
+            { w: "the language of ~", k: "~ 말", s: "In the language of Buyeo a good archer was called a jumong." },
+            { w: "with great pleasure", k: "무척 좋아하며", s: "The people of Buyeo said it with great pleasure." }
+        ],
+        "06-princes.webp": [
+            { w: "of his own", k: "제 아들로", s: "King Geumwa had seven sons of his own." },
+            { w: "made much of ~", k: "뽐냈다", s: "They were princes who made much of their shooting." },
+            { w: "shoot as they might", k: "쏘았다 하면", s: "But shoot as they might, Jumong beat them every time." },
+            { w: "lift their heads", k: "얼굴을 들다", s: "the brothers could not lift their heads" },
+            { w: "makes fools of ~", k: "우습게 만든다", s: "That one makes fools of the lot of us." },
+            { w: "the lot of us", k: "우리 모두", s: "That one makes fools of the lot of us." },
+            { w: "ground his teeth (grind)", k: "이를 갈았다", s: "Daeso, the eldest, ground his teeth." },
+            { w: "nodded together", k: "하나같이 고개를 끄덕였다", s: "All seven brothers nodded together." }
+        ],
+        "07-stable.webp": [
+            { w: "pressed so hard", k: "어찌나 조르는지", s: "The princes pressed so hard that even the king gave way." },
+            { w: "gave way (give)", k: "당해 내지 못했다", s: "even the king gave way" },
+            { w: "stable", k: "마구간", s: "Jumong was sent to the stable behind the palace." },
+            { w: "dung", k: "말똥", s: "It was work of clearing dung and carrying feed." },
+            { w: "feed", k: "먹이", s: "clearing dung and carrying feed" },
+            { w: "sneered (sneer)", k: "비웃었다", s: "The princes sneered as they passed the stable." },
+            { w: "without complaint", k: "군말 없이", s: "But Jumong worked without one word of complaint." },
+            { w: "marked (mark)", k: "눈여겨보았다", s: "He marked which of them ran well." }
+        ],
+        "08-needle.webp": [
+            { w: "caught ~ eye", k: "눈에 띄었다", s: "Then one day one horse caught Jumong's eye." },
+            { w: "a shine in its eye", k: "반짝이는 눈빛", s: "It had long legs and a shine in its eye." },
+            { w: "straight up", k: "꼿꼿이", s: "Even while it ate, it held its neck straight up." },
+            { w: "fine", k: "아주 가는", s: "Jumong set a very fine needle under that horse's tongue." },
+            { w: "needle", k: "바늘", s: "Jumong set a very fine needle under that horse's tongue." },
+            { w: "properly", k: "제대로", s: "The horse could not eat properly and grew thin." },
+            { w: "ribs", k: "갈비뼈", s: "Its ribs began to show, one by one." },
+            { w: "a second look", k: "거들떠보기", s: "People would not give it a second look." }
+        ],
+        "09-gift.webp": [
+            { w: "look over ~", k: "둘러보다", s: "the king came out to look over the stable" },
+            { w: "glossy", k: "윤이 나는", s: "Every horse was glossy and well filled out." },
+            { w: "filled out (fill)", k: "살이 올랐다", s: "Every horse was glossy and well filled out." },
+            { w: "shared ~ out", k: "나누어 주었다", s: "The king shared the fat horses out among his sons." },
+            { w: "argued over ~", k: "다투었다", s: "The princes argued over who should choose first." },
+            { w: "nothing but bones", k: "뼈만 앙상한", s: "It was the horse with nothing but bones on it." },
+            { w: "politely", k: "공손히", s: "Jumong bowed his head politely." },
+            { w: "showed nothing", k: "내색하지 않았다", s: "and showed nothing on his face" }
+        ],
+        "10-secret.webp": [
+            { w: "the black dark", k: "캄캄한 어둠", s: "That night, in the black dark with nobody looking" },
+            { w: "under its tongue", k: "혀 밑을", s: "Jumong opened the horse's mouth and looked under its tongue." },
+            { w: "drew out (draw)", k: "쏙 뽑았다", s: "Then he drew out the needle he had put there." },
+            { w: "called out once", k: "크게 한 번 울었다", s: "The horse lifted its head and called out once, loud." },
+            { w: "rang round ~ (ring)", k: "쩌렁쩌렁 울렸다", s: "The sound rang round the stable." },
+            { w: "fill out", k: "살이 오르다", s: "In a few days the horse began to fill out." },
+            { w: "tried (try)", k: "시험 삼아 달려 보았다", s: "Jumong tried it under the moonlight." },
+            { w: "keep up with ~", k: "따라오다", s: "In all Buyeo there was no horse to keep up with it." }
+        ],
+        "11-flee.webp": [
+            { w: "shook ~ awake (shake)", k: "흔들어 깨웠다", s: "his mother Yuhwa shook Jumong awake" },
+            { w: "do you harm", k: "너를 해치다", s: "Tonight they mean to do you harm." },
+            { w: "of your own", k: "네 나라", s: "Go far away and make a country of your own." },
+            { w: "seed grain", k: "곡식 씨앗", s: "She put a bag of seed grain into his arms." },
+            { w: "millet", k: "조", s: "Barley and beans and millet were in it." },
+            { w: "leave behind", k: "두고 가다", s: "In Buyeo there was a wife he had to leave behind." },
+            { w: "carrying a child", k: "아이를 가진", s: "She was carrying a child." },
+            { w: "broke ~ in two (break)", k: "반으로 꺾었다", s: "Jumong broke the sword at his side in two." },
+            { w: "is grown", k: "자라거든", s: "When the child is grown, send him with this." }
+        ],
+        "12-river.webp": [
+            { w: "fortress", k: "성", s: "Jumong left the fortress with three friends." },
+            { w: "Near dawn", k: "새벽녘", s: "Near dawn a great river blocked the way in front of them." },
+            { w: "blocked (block)", k: "가로막았다", s: "a great river blocked the way in front of them" },
+            { w: "ran hard", k: "물살이 사나웠다", s: "The water ran hard and there was not one boat." },
+            { w: "hoofs", k: "말발굽", s: "Behind them the sound of hoofs was coming nearer." },
+            { w: "nowhere left", k: "더 물러설 데가 없는", s: "There was nowhere left to go back to." },
+            { w: "cried out to ~", k: "~를 향해 외쳤다", s: "Jumong raised both arms and cried out to the water." },
+            { w: "grandson", k: "손자", s: "I am the grandson of heaven and of Habaek!" },
+            { w: "the far bank", k: "강 건너", s: "His voice rang across to the far bank." }
+        ],
+        "13-bridge.webp": [
+            { w: "boil up", k: "부글부글 끓다", s: "Then the river began to boil up." },
+            { w: "parted (part)", k: "쫙 갈라졌다", s: "The water parted and something rose in it." },
+            { w: "soft-shelled turtles", k: "자라", s: "Fish and soft-shelled turtles came up in crowds" },
+            { w: "in crowds", k: "떼로", s: "Fish and turtles came up in crowds" },
+            { w: "set ~ together", k: "척척 맞대었다", s: "and set their backs together" },
+            { w: "shells", k: "등딱지", s: "Their shells shone smooth." },
+            { w: "right behind", k: "바로 등 뒤에", s: "The hoofs were right behind them now." },
+            { w: "slid apart (slide)", k: "스르르 흩어졌다", s: "The moment they were over, the bridge slid apart." },
+            { w: "stamped (stamp)", k: "발을 굴렀다", s: "The soldiers who had chased them stamped on the bank." }
+        ],
+        "14-jolbon.webp": [
+            { w: "many days' walking", k: "여러 날 걷기", s: "After many days' walking Jumong came to a land called Jolbon." },
+            { w: "steep", k: "험한", s: "The hills were steep and the water was clear." },
+            { w: "lay open (lie)", k: "펼쳐져 있었다", s: "A wide plain lay open along the river." },
+            { w: "it looked", k: "~ 같았다", s: "Grain would grow well there, it looked." },
+            { w: "a handful of ~", k: "한 줌의", s: "Jumong took up a handful of the earth." },
+            { w: "scattered (scatter)", k: "뿌렸다", s: "And he scattered the seed evenly over the plain." },
+            { w: "evenly", k: "골고루", s: "he scattered the seed evenly over the plain" },
+            { w: "named (name)", k: "이름 지었다", s: "He named the country Goguryeo." },
+            { w: "high and great", k: "높고 큰", s: "It meant may it be high and great." }
+        ],
+        "15-yuri.webp": [
+            { w: "many years later", k: "여러 해가 지나", s: "It was one day many years later." },
+            { w: "a fair country", k: "제법 큰 나라", s: "Goguryeo had grown into a fair country by then." },
+            { w: "the very image of ~", k: "꼭 닮은", s: "His eyes and his forehead were the very image of Jumong." },
+            { w: "took out (take)", k: "꺼냈다", s: "The boy carefully took out half a broken sword." },
+            { w: "half a ~", k: "~ 반쪽", s: "The boy carefully took out half a broken sword." },
+            { w: "told me to ~", k: "~하라고 하셨다", s: "My mother told me to go and find my father." },
+            { w: "got to his feet", k: "벌떡 일어났다", s: "Jumong got to his feet at once." },
+            { w: "the very child", k: "바로 그 아이", s: "It was the very child he had left behind in Buyeo." }
+        ],
+        "16-sword.webp": [
+            { w: "held ~ together", k: "마주 대었다", s: "Jumong took out his own half and held the two together." },
+            { w: "broken off (break)", k: "꺾어 둔", s: "It was the half he had broken off the day he left Buyeo." },
+            { w: "joined into one", k: "하나로 붙었다", s: "Click — and the two pieces joined into one." },
+            { w: "edges", k: "꺾인 자리", s: "The broken edges met without a mark out of place." },
+            { w: "out of place", k: "어긋난", s: "without a mark out of place" },
+            { w: "join", k: "틈", s: "No join could be seen." },
+            { w: "stood (stand)", k: "그렁그렁 맺혔다", s: "The tears stood in Jumong's eyes." },
+            { w: "passed on to ~", k: "이어졌다", s: "So Goguryeo passed on to the son." },
+            { w: "in time", k: "뒷날", s: "Yuri became the second king of Goguryeo in time." }
+        ],
+        "after": [
+            { w: "not only in writing", k: "글로만이 아니라", s: "It comes down not only in writing." },
+            { w: "sixteen hundred years old", k: "천육백 년 된", s: "on a stone sixteen hundred years old" },
+            { w: "from birth", k: "태어날 때부터", s: "Jumong was not called that from birth." },
+            { w: "gave him (give)", k: "붙여 주었다", s: "the word people gave him for his shooting became his name" },
+            { w: "on purpose", k: "일부러", s: "He made one good horse thin on purpose" },
+            { w: "what was left", k: "고르고 남은 것", s: "so he was given what was left after the king chose" },
+            { w: "a sign", k: "표시", s: "It became the sign by which the grown son found his father." },
+            { w: "the lowest place", k: "가장 낮은 자리", s: "While he was in the lowest place he found the best horse." },
+            { w: "makes your next place", k: "다음 자리를 만든다", s: "what you are looking at there makes your next place" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🏹',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "It comes down not only in writing. The story of Jumong is carved on King Gwanggaeto's stele too. The story of the man who founded the country was cut into a stone sixteen hundred years old.",
+                    "Jumong was not called that from birth. The word people gave him for his shooting became his name and stayed.",
+                    "He made one good horse thin on purpose and fed all the rest fat. So he was given what was left after the king had chosen.",
+                    "The half sword he left with his wife is worth noticing too. It became the sign by which the grown son found his father."
+                ],
+                right: [
+                    "When Jumong was sent off to the stable he watched the horses instead of complaining. While he was in the lowest place he was the one who found the best horse.",
+                    "Where you are matters less than what you are looking at there. That is what makes your next place.",
+                    "When you are given work you would rather not do, what is there in it worth learning?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "유화가 낳은 것은 무엇인가요?", choices: ["금빛 구슬 하나", "커다란 알 하나", "쌍둥이 형제"], answer: 1 },
     { q: "알을 돼지우리에 던졌더니 돼지들은 어떻게 했나요?", choices: ["알을 밟고 지나갔다", "주둥이로 밀어 옮겼다", "날개로 덮어 주었다"], answer: 1 },
