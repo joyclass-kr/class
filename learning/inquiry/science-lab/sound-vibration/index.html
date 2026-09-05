@@ -81,34 +81,71 @@
                     <div class="bars-view" aria-label="음판이 떨리는 모습">
                         <div class="view-title">음판의 떨림 <span class="slow-badge">느리게 표현</span></div>
                         <svg class="bars-svg" viewBox="0 0 480 240" aria-hidden="true">
-                            <!-- Bar lengths follow L ∝ 1/√f, the real relation for a
-                                 transversely vibrating bar, so the shortest bar really is
-                                 the one with the highest pitch. Rows are 75 apart so the
-                                 raised mallet clears the bar above its target instead of
-                                 hovering ambiguously between two bars. -->
+                            <defs>
+                                <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#4ea8b6"/>
+                                    <stop offset="18%" stop-color="#337887"/>
+                                    <stop offset="65%" stop-color="#1f515d"/>
+                                    <stop offset="100%" stop-color="#13363f"/>
+                                </linearGradient>
+                                <linearGradient id="barGradActive" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#6ee7f7"/>
+                                    <stop offset="22%" stop-color="#38bdf8"/>
+                                    <stop offset="70%" stop-color="#0284c7"/>
+                                    <stop offset="100%" stop-color="#0369a1"/>
+                                </linearGradient>
+                                <radialGradient id="malletHeadGrad" cx="36%" cy="32%" r="68%">
+                                    <stop offset="0%" stop-color="#fff8db"/>
+                                    <stop offset="35%" stop-color="#ffd166"/>
+                                    <stop offset="75%" stop-color="#d99824"/>
+                                    <stop offset="100%" stop-color="#8a5307"/>
+                                </radialGradient>
+                                <linearGradient id="stickGrad" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#f1f5f9"/>
+                                    <stop offset="50%" stop-color="#cbd5e1"/>
+                                    <stop offset="100%" stop-color="#94a3b8"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 도: 262 Hz (width: 180, x: 160, y: 55) -->
                             <g id="barDo" class="bar-row">
-                                <rect class="bar" x="160" y="55" width="180" height="20" rx="5"/>
+                                <rect class="bar-shadow" x="160" y="58" width="180" height="20" rx="6"/>
+                                <rect class="bar" x="160" y="55" width="180" height="20" rx="6"/>
+                                <rect class="bar-shine" x="162" y="56" width="176" height="3" rx="1.5"/>
+                                <circle class="bar-pin" cx="200" cy="65" r="3.2"/>
+                                <circle class="bar-pin-center" cx="200" cy="65" r="1.3"/>
+                                <circle class="bar-pin" cx="300" cy="65" r="3.2"/>
+                                <circle class="bar-pin-center" cx="300" cy="65" r="1.3"/>
                             </g>
                             <text class="bar-label" x="150" y="70" text-anchor="end">도 262 Hz</text>
 
+                            <!-- 솔: 392 Hz (width: 147, x: 176, y: 130) -->
                             <g id="barSol" class="bar-row">
-                                <rect class="bar" x="176" y="130" width="147" height="20" rx="5"/>
+                                <rect class="bar-shadow" x="176" y="133" width="147" height="20" rx="6"/>
+                                <rect class="bar" x="176" y="130" width="147" height="20" rx="6"/>
+                                <rect class="bar-shine" x="178" y="131" width="143" height="3" rx="1.5"/>
+                                <circle class="bar-pin" cx="209" cy="140" r="3.2"/>
+                                <circle class="bar-pin-center" cx="209" cy="140" r="1.3"/>
+                                <circle class="bar-pin" cx="290" cy="140" r="3.2"/>
+                                <circle class="bar-pin-center" cx="290" cy="140" r="1.3"/>
                             </g>
                             <text class="bar-label" x="166" y="145" text-anchor="end">솔 392 Hz</text>
 
+                            <!-- 높은 도: 523 Hz (width: 127, x: 186, y: 205) -->
                             <g id="barHido" class="bar-row">
-                                <rect class="bar" x="186" y="205" width="127" height="20" rx="5"/>
+                                <rect class="bar-shadow" x="186" y="208" width="127" height="20" rx="6"/>
+                                <rect class="bar" x="186" y="205" width="127" height="20" rx="6"/>
+                                <rect class="bar-shine" x="188" y="206" width="123" height="3" rx="1.5"/>
+                                <circle class="bar-pin" cx="214" cy="215" r="3.2"/>
+                                <circle class="bar-pin-center" cx="214" cy="215" r="1.3"/>
+                                <circle class="bar-pin" cx="285" cy="215" r="3.2"/>
+                                <circle class="bar-pin-center" cx="285" cy="215" r="1.3"/>
                             </g>
                             <text class="bar-label" x="176" y="220" text-anchor="end">높은 도 523 Hz</text>
 
-                            <!-- Outer group carries the vertical placement (which bar we're
-                                 about to hit) as an SVG attribute; the inner group carries the
-                                 CSS strike animation. Keeping them on separate elements avoids
-                                 the CSS `transform` property overriding the attribute, which
-                                 would pin the mallet over the top bar no matter what. -->
                             <g id="malletAnchor">
                                 <g id="mallet" class="mallet">
-                                    <line class="mallet-stick" x1="250" y1="10" x2="250" y2="28"/>
+                                    <line class="mallet-stick" x1="250" y1="8" x2="250" y2="28"/>
+                                    <circle class="mallet-head-shadow" cx="250" cy="35" r="9.5"/>
                                     <circle class="mallet-head" cx="250" cy="34" r="9"/>
                                 </g>
                             </g>
@@ -118,11 +155,25 @@
                     <div class="scope-view" aria-label="소리의 파형">
                         <div class="view-title">소리의 파형 <span class="slow-badge">같은 시간 동안</span></div>
                         <svg class="scope-svg" viewBox="0 0 420 170" aria-hidden="true">
-                            <rect class="scope-bg" x="4" y="4" width="412" height="152" rx="8"/>
+                            <defs>
+                                <pattern id="scopeGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(82, 199, 255, 0.08)" stroke-width="0.8"/>
+                                </pattern>
+                                <filter id="phosphorGlow" x="-15%" y="-25%" width="130%" height="150%">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+                                    <feMerge>
+                                        <feMergeNode in="blur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect class="scope-bg" x="4" y="4" width="412" height="152" rx="10"/>
+                            <rect x="5" y="5" width="410" height="150" rx="9" fill="url(#scopeGrid)"/>
                             <line class="scope-axis" x1="10" y1="80" x2="410" y2="80"/>
+                            <line class="scope-axis-v" x1="210" y1="10" x2="210" y2="150"/>
                             <path id="envelopeTop" class="scope-envelope" d=""/>
                             <path id="envelopeBottom" class="scope-envelope" d=""/>
-                            <path id="wavePath" class="scope-wave" d=""/>
+                            <path id="wavePath" class="scope-wave" filter="url(#phosphorGlow)" d=""/>
                             <text class="scope-caption" x="210" y="167" text-anchor="middle">왼쪽이 먼저, 오른쪽이 지금</text>
                         </svg>
                         <p class="scope-note">위아래로 벌어진 정도 = 소리의 크기, 물결의 촘촘한 정도 = 소리의 높낮이</p>

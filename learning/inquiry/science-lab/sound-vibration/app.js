@@ -114,10 +114,98 @@ document.addEventListener('DOMContentLoaded', () => {
         rafId = requestAnimationFrame(frame);
     }
 
+    let audioCtx = null;
+    let currentToneNodes = [];
+    let strikeAudioTimer = null;
+
+    function stopTone() {
+        if (!audioCtx) return;
+        currentToneNodes.forEach(({ gain, osc }) => {
+            try {
+                gain.gain.cancelScheduledValues(audioCtx.currentTime);
+                gain.gain.setValueAtTime(gain.gain.value, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+                setTimeout(() => {
+                    try { osc.stop(); osc.disconnect(); } catch (_) {}
+                }, 50);
+            } catch (_) {}
+        });
+        currentToneNodes = [];
+    }
+
+    function playTone(freq, strength) {
+        try {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            stopTone();
+
+            const startTime = audioCtx.currentTime;
+            const duration = 2.0;
+
+            // Amplitude scaled by strike strength (1~10)
+            const masterGain = Math.max(0.06, Math.min(0.85, (strength / 10) * 0.7));
+
+            // Fundamental tone
+            const fundGain = audioCtx.createGain();
+            fundGain.connect(audioCtx.destination);
+            fundGain.gain.setValueAtTime(0.001, startTime);
+            fundGain.gain.exponentialRampToValueAtTime(masterGain, startTime + 0.008);
+            fundGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+            const fundOsc = audioCtx.createOscillator();
+            fundOsc.type = 'sine';
+            fundOsc.frequency.setValueAtTime(freq, startTime);
+            fundOsc.connect(fundGain);
+            fundOsc.start(startTime);
+            fundOsc.stop(startTime + duration);
+            currentToneNodes.push({ gain: fundGain, osc: fundOsc });
+
+            // Metallic chime inharmonic overtone (~2.756f for transverse metal bar)
+            const overtoneGain = audioCtx.createGain();
+            overtoneGain.connect(audioCtx.destination);
+            overtoneGain.gain.setValueAtTime(0.001, startTime);
+            overtoneGain.gain.exponentialRampToValueAtTime(masterGain * 0.35, startTime + 0.004);
+            overtoneGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.55);
+
+            const overtoneOsc = audioCtx.createOscillator();
+            overtoneOsc.type = 'sine';
+            overtoneOsc.frequency.setValueAtTime(freq * 2.756, startTime);
+            overtoneOsc.connect(overtoneGain);
+            overtoneOsc.start(startTime);
+            overtoneOsc.stop(startTime + 0.55);
+            currentToneNodes.push({ gain: overtoneGain, osc: overtoneOsc });
+
+            // High strike transient sparkle (5.4x)
+            const sparkleGain = audioCtx.createGain();
+            sparkleGain.connect(audioCtx.destination);
+            sparkleGain.gain.setValueAtTime(0.001, startTime);
+            sparkleGain.gain.exponentialRampToValueAtTime(masterGain * 0.1, startTime + 0.002);
+            sparkleGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.2);
+
+            const sparkleOsc = audioCtx.createOscillator();
+            sparkleOsc.type = 'sine';
+            sparkleOsc.frequency.setValueAtTime(freq * 5.4, startTime);
+            sparkleOsc.connect(sparkleGain);
+            sparkleOsc.start(startTime);
+            sparkleOsc.stop(startTime + 0.2);
+            currentToneNodes.push({ gain: sparkleGain, osc: sparkleOsc });
+        } catch (_) {}
+    }
+
     function stopRing() {
         if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
         strikeAt = null;
+        clearTimeout(strikeAudioTimer);
         Object.keys(BARS).forEach(key => moveBar(key, 0));
+        Object.values(BARS).forEach(info => {
+            const el = document.getElementById(info.group);
+            if (el) el.classList.remove('vibrating');
+        });
         drawScope(now());
         stageCaption.textContent = '떨림이 멈추면서 소리도 멈췄습니다. 다시 쳐 보세요.';
     }
@@ -125,7 +213,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function silence() {
         if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
         strikeAt = null;
+        clearTimeout(strikeAudioTimer);
+        stopTone();
         Object.keys(BARS).forEach(key => moveBar(key, 0));
+        Object.values(BARS).forEach(info => {
+            const el = document.getElementById(info.group);
+            if (el) el.classList.remove('vibrating');
+        });
         drawScope(now());
     }
 
@@ -161,6 +255,17 @@ document.addEventListener('DOMContentLoaded', () => {
         strikeAt = now() + contactDelay;
         stageCaption.textContent = `${data.note} 음판이 떨리면서 소리가 납니다.`;
         rafId = requestAnimationFrame(frame);
+
+        clearTimeout(strikeAudioTimer);
+        strikeAudioTimer = setTimeout(() => {
+            playTone(data.hz, strength);
+            const activeGroup = document.getElementById(data.group);
+            if (activeGroup) {
+                activeGroup.classList.remove('vibrating');
+                void activeGroup.getBoundingClientRect();
+                activeGroup.classList.add('vibrating');
+            }
+        }, contactDelay * 1000);
 
         const actual = data.hz > BARS[REFERENCE].hz ? 'higher' : data.hz < BARS[REFERENCE].hz ? 'lower' : 'same';
         resultPitch.textContent = `${data.hz} Hz (${data.note})`;
@@ -198,6 +303,18 @@ document.addEventListener('DOMContentLoaded', () => {
         stageCaption.textContent = '음판을 치면 떨림이 시작됩니다.';
     });
     strikeButton.addEventListener('click', strike);
+
+    Object.entries(BARS).forEach(([key, info]) => {
+        const groupEl = document.getElementById(info.group);
+        if (groupEl) {
+            groupEl.style.cursor = 'pointer';
+            groupEl.addEventListener('click', () => {
+                selectedBar = key;
+                syncSelection();
+                strike();
+            });
+        }
+    });
 
     function shuffleQuizOptions(card) {
         const optionGroup = card.querySelector('.quiz-options');
