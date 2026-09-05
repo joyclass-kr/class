@@ -1271,7 +1271,7 @@ const EN = {
         { q: "How did the Dragon King fall ill?", choices: ["He was badly hurt in a fight", "After a feast that ran three days and nights", "He stayed too long in a cold current"], answer: 1 },
         { q: "Who told him what medicine would cure him?", choices: ["Minister Octopus", "The carp minister", "An immortal who was passing"], answer: 2 },
         { q: "Who offered to go up on land?", choices: ["Byeoljubu the turtle", "Minister Octopus", "The carp minister"], answer: 0 },
-        { q: "What did the turtle take with him to the land?", choices: ["A bead the Dragon King gave him", "One picture", "A sea herb for medicine"], answer: 1 },
+        { q: "What did the turtle take with him to the land?", choices: ["A bead the Dragon King gave him", "A picture of the rabbit", "A sea herb for medicine"], answer: 1 },
         { q: "What did the turtle hold out to tempt the rabbit?", choices: ["An office in the sea palace", "A sack of gold and silver", "A wide piece of land in the hills"], answer: 0 },
         { q: "Who tried to stop the rabbit from going?", choices: ["The fox", "The crow", "The roe deer"], answer: 1 },
         { q: "What did the rabbit tell the Dragon King?", choices: ["That he had never had a liver at all", "That he had left his liver in a cleft of rock", "That he would not give up his liver"], answer: 1 },

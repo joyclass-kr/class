@@ -1457,7 +1457,7 @@ const EN = {
         { q: "What did Gildong's band agree never to touch?", choices: ["The wealth of temples", "Anything belonging to the common people", "The grain in town offices"], answer: 1 },
         { q: "How did Gildong get into the governor of Hamgyeong's storehouse?", choices: ["They went over the wall in secret at night", "They paid the gatekeeper to open it", "They lit a fire outside to draw the soldiers away"], answer: 2 },
         { q: "What did Minister Hong see through the crack of the door?", choices: ["A sword cut in the bedding", "Eight identical faces", "A room full of mist"], answer: 1 },
-        { q: "What happened to the Gildongs who were brought in together?", choices: ["They all ran away", "All but one disappeared", "They turned into straw figures"], answer: 2 },
+        { q: "What happened to the Gildongs who were brought in together?", choices: ["They all ran away", "All but one disappeared", "They turned into paper figures"], answer: 2 },
         { q: "What did Gildong ask the king for?", choices: ["The post of Minister of War", "A great deal of money", "To be forgiven his crimes"], answer: 0 },
         { q: "What did Gildong do after he was given the post?", choices: ["He served in it for many years", "He gave it up after one day and left", "He went back to being a bandit"], answer: 1 },
         { q: "Where did Gildong lead his people?", choices: ["Deep into the northern mountains", "Across the sea to Yuldoguk", "To a large town in the south"], answer: 1 },

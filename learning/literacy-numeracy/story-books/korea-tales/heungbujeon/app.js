@@ -1080,7 +1080,7 @@ const EN = {
         { q: "Who came out of Nolbu's first gourd?", choices: ["People with ledgers", "A shaman holding a rite", "Insects eating the grain"], answer: 0 },
         { q: "What came out of Nolbu's last gourd?", choices: ["Soldiers in armour", "A huge snake", "Muddy water"], answer: 0 },
         { q: "What did Nolbu have to do each time a gourd split?", choices: ["Put down the saw", "Call the onlookers together", "Open the storehouse door"], answer: 2 },
-        { q: "How did Heungbu treat the brother who came to him?", choices: ["He took him in and laid a meal", "He shut the gate and sent him away", "He gave him half of everything"], answer: 0 },
+        { q: "How did Heungbu treat the brother who came to him?", choices: ["He ran out in his stocking feet to meet him", "He brought up the past first", "He built him a new house"], answer: 0 },
         { q: "What did Nolbu make out of the gourds at the end?", choices: ["A mat", "A straw cape", "Water dippers"], answer: 2 },
         {
             q: "Which reaction to this book does NOT fit?",
