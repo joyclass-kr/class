@@ -6,6 +6,7 @@
   const CIRCLED = ["①", "②", "③", "④", "⑤"];
 
   const examById = new Map(DATA.exams.map((e) => [e.id, e]));
+  const unitById = new Map(DATA.units.map((u) => [u.id, u]));
 
   const state = {
     unit: "all",
@@ -241,8 +242,10 @@
     const head = document.createElement("div");
     head.className = "item-head";
     const exam = examById.get(problem.exam);
+    const u = problem.units && problem.units.length ? unitById.get(problem.units[0]) : null;
+    const subjPrefix = u && (u.subject === "확률과 통계" || u.subject === "미적분" || u.subject === "기하") ? u.subject + " " : "";
     head.innerHTML =
-      '<span class="item-src">' + exam.label + " " + problem.no + "번</span>" +
+      '<span class="item-src">' + exam.label + " " + subjPrefix + problem.no + "번</span>" +
       '<span class="item-mark">' + (mark === "right" ? "맞음" : mark === "wrong" ? "틀림" : "") + "</span>";
     li.appendChild(head);
 

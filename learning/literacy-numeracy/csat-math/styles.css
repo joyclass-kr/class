@@ -129,8 +129,9 @@ main { max-width: 940px; margin: 0 auto; padding: 16px 16px 48px; }
 .chip-group-label {
   align-self: center;
   font-size: 0.8rem;
-  color: var(--ink-soft);
-  padding: 0 2px 0 6px;
+  font-weight: 700;
+  color: var(--ink);
+  padding: 0 4px 0 10px;
 }
 .chip-group-label:first-child { padding-left: 0; }
 
