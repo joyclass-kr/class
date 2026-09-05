@@ -37,12 +37,22 @@ frightening.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-The diligent girl: a plain-dressed girl with a kerchief and busy hands, calm and
-willing. The lazy stepsister: a plump girl in a frilled dress who is always
-yawning. The stepmother: a sharp-faced woman with a wooden spoon. Mother Holle:
-a large kindly old woman with enormous teeth and a huge feather quilt, drawn as
-warm and grandmotherly, never witch-like.
+The diligent girl: a girl about 13 with chestnut-brown hair tied back under a
+PALE GREEN kerchief, in a blue pinafore over a white long-sleeved blouse with
+a white apron and brown ankle boots. Calm and willing, busy hands. Keep the
+green kerchief and the blue pinafore in every picture.
+The lazy stepsister: a plump girl with reddish curls and a PINK ribbon, in a
+frilled pink-and-white dress, always yawning.
+The stepmother: a sharp-faced woman with a wooden spoon.
+Mother Holle: a large kindly old woman with enormous teeth and a huge feather
+quilt, drawn as warm and grandmotherly, never witch-like.
+Everyone must look like the same person from picture to picture — same hair,
+same clothes, same face.
 ```
+
+> **아직 여섯 장만 그려졌습니다.** 01·02·03 세 장씩이에요. 남은 열두 장
+> (`04-apples`부터 `end`까지)을 그릴 때 위 설명을 그대로 붙여 넣으면
+> 앞의 여섯 장과 같은 아이가 나옵니다.
 
 ## 표지 · 마무리
 

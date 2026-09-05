@@ -36,12 +36,25 @@ composition, funny and warm.
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-The prince: an earnest young man in a plain blue coat, weary from travelling.
-The old queen: a small brisk woman in a lace cap with very sharp eyes. The old
-king: a round man in a nightgown holding a candle. The princess: a soaked girl in
-a dripping travelling cloak with water running out of her shoes, polite and
-tired.
+The prince: an earnest young man with short brown hair and blue eyes, in a
+blue coat with gold trim and a white cravat, weary from travelling.
+The old queen: a small brisk woman in a purple gown and a gold coronet over
+grey hair, with very sharp eyes.
+The old king: a slim old man with a GREY moustache and NO beard, thinning grey
+hair under a small gold crown. In the storm he is in a white nightgown holding
+a candle; by day he wears a red robe. He is never a brown-bearded man — keep
+the grey moustache and the clean chin in every picture.
+The princess: a girl about 16 with wavy golden-blonde hair falling to her
+shoulders and blue eyes, polite and tired. On the night she arrives she is
+soaked, in a dripping travelling cloak with water running out of her shoes;
+in bed she is in a white nightgown; by day she is in a pink gown. Her hair
+colour and length stay the same in every picture.
+Everyone must look like the same person from picture to picture.
 ```
+
+> **요와 이불은 마흔 장입니다.** 그림에서는 여덟 장쯤으로 그려져 침대가
+> 낮아 보였어요. 방문보다 높아 사다리를 대야 올라갈 만큼 **탑처럼 쌓아**
+> 주세요. 사다리도 함께 그려 주시고요.
 
 ## 표지 · 마무리
 
