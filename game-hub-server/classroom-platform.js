@@ -4943,15 +4943,74 @@ function createClassroomPlatform(options = {}) {
   // actually teach in the master timetable listed first. Posts are keyed only by
   // class, so a subject teacher's post lands on the same board the homeroom
   // teacher posts to and every student in that class sees both.
+  // '내 학급·그룹'의 담임 학급 그룹으로만 배정된 담임에게 학급 행을 찾아 준다.
+  // 학생 쪽은 school_students 의 학년·반으로 classroom_classes 를 찾으므로, 같은
+  // 학년·반 행을 쓰면 담임과 학생이 한 게시판에 모인다. 이미 있는 행은 주인을
+  // 바꾸지 않는다(다른 담임의 반을 가로채지 않도록).
+  async function classIdFromHomeroomGroup(user, info) {
+    const groupRes = await pool.query(
+      `SELECT school_id, academic_year, grade, class_number
+       FROM teacher_groups
+       WHERE teacher_user_id = $1 AND group_type = 'homeroom'
+         AND grade IS NOT NULL AND class_number IS NOT NULL
+       ORDER BY academic_year DESC, sort_order, id
+       LIMIT 1`,
+      [user.id]
+    );
+    const g = groupRes.rows[0];
+    if (!g) return null;
+
+    const existing = await pool.query(
+      `SELECT id FROM classroom_classes
+       WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4`,
+      [g.school_id, g.academic_year, g.grade, g.class_number]
+    );
+    if (existing.rows[0]) return existing.rows[0].id;
+
+    try {
+      const created = await pool.query(
+        `INSERT INTO classroom_classes (school_id, academic_year, grade, class_number, teacher_user_id, teacher_name, join_code)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         RETURNING id`,
+        [g.school_id, g.academic_year, g.grade, g.class_number, user.id,
+         info.teacher_name || `${g.grade}학년 ${g.class_number}반`, makeJoinCode()]
+      );
+      return created.rows[0]?.id || null;
+    } catch (error) {
+      // 이 교사가 예전 학급 행을 아직 쥐고 있으면(teacher_user_id UNIQUE) 새로 못
+      // 만든다. 게시판을 비워 두는 편이 남의 반을 가로채는 것보다 낫다.
+      console.error("classIdFromHomeroomGroup insert failed:", error.message);
+      return null;
+    }
+  }
+
   async function classboardScope(user) {
+    // 교사 등록은 user_id 로도, 관리자가 미리 적어 둔 구글 이메일로도 연결된다.
+    // userClassId 와 같은 규칙으로 찾는다. 여기만 user_id 로 좁히면 이메일로 연결된
+    // 담임에게 게시판은 보이는데 글쓰기 칸은 안 보이는 상태가 된다.
     const teacherRes = await pool.query(
-      `SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      `SELECT t.school_id, t.teacher_type, t.teacher_name
+       FROM classroom_teachers t
+       WHERE t.active = TRUE
+         AND (t.user_id = $1
+              OR (t.google_email IS NOT NULL
+                  AND LOWER(t.google_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1)))
+       LIMIT 1`,
       [user.id]
     );
     const info = teacherRes.rows[0];
 
     if (!info || !CLASSBOARD_WIDE_SCOPE.has(info.teacher_type)) {
-      const classId = await userClassId(user);
+      let classId = await userClassId(user);
+
+      // 담임 배정이 classroom_teachers 의 학년·반이 아니라 '내 학급·그룹'의 담임 학급
+      // 그룹에만 있는 교사가 있다. 대시보드는 그 그룹(groupId)으로 열리는데 게시판만
+      // 빈 채였다. 그룹의 학년·반에 해당하는 학급 행을 찾아(없으면 만들어) 학생과
+      // 같은 게시판을 쓰게 한다.
+      if (!classId && info) {
+        classId = await classIdFromHomeroomGroup(user, info);
+      }
+
       if (!classId) return { canPost: false, classes: [] };
       const own = await pool.query(
         `SELECT id, grade, class_number FROM classroom_classes WHERE id = $1`,
