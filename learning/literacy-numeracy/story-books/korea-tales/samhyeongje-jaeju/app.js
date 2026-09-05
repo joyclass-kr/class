@@ -235,6 +235,449 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🏹",
+        art: "cover.webp",
+        title: "The Three Brothers' Skills",
+        intro: [
+            "This is an oral tale with no known author. Each brother learns a different skill, and only all three together can do the job.",
+            "Stories built this way are found everywhere. The Grimm brothers collected one, and Arabia has one of its own.",
+            "Three is the number that works. Two skills make a contest and four get tangled. Only three lock together so that none can be dropped."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · Three Roads Out",
+            beats: [
+                {
+                    art: "01-brothers.webp",
+                    emoji: "👨‍👨‍👦",
+                    left: [
+                        "Long ago three brothers lived in a mountain village.",
+                        "Their father was old and their mother had died early.",
+                        "The house was poor, with nothing to hand down.",
+                        "Plough as they might, the sons were always hungry.",
+                        "In winter they stripped bark off trees to eat."
+                    ],
+                    right: [
+                        "One day the father called his three sons and sat them down.",
+                        "His voice was heavy.",
+                        { t: "\"I have no land and no money. Go and learn a skill each.\"", v: "old" },
+                        { t: "\"In three years we meet here again.\"", v: "old" },
+                        "The three sons bowed their heads and said nothing."
+                    ]
+                },
+                {
+                    art: "02-depart.webp",
+                    emoji: "🛤️",
+                    left: [
+                        "Next morning the brothers stood at the fork at the edge of the village.",
+                        "Each had set out with a single bundle.",
+                        { t: "\"Take care of yourself, brother.\"", v: "man" },
+                        { t: "\"And you. In three years.\"", v: "man" },
+                        "They stood a long time at the fork, looking at one another."
+                    ],
+                    right: [
+                        "The eldest went east, the second west, the youngest south.",
+                        "Three backs grew smaller down three different roads.",
+                        "Their father waved from the yard.",
+                        "He waved till none of the three could be seen.",
+                        "And then he stood there a long while."
+                    ]
+                },
+                {
+                    art: "03-return.webp",
+                    emoji: "🏡",
+                    left: [
+                        "Three years went by, and the brothers gathered at home.",
+                        "All three were burnt black by the sun. Their hands had knots at every joint.",
+                        { t: "\"What skills have you learned?\"", v: "old" },
+                        "Their father looked round at his three sons.",
+                        "The eldest stepped forward first."
+                    ],
+                    right: [
+                        { t: "\"I learned ears. I hear sounds a hundred li away.\"", v: "man" },
+                        "The eldest put his ear to the ground and shut his eyes.",
+                        { t: "\"Kim's cow in the next village is calving right now.\"", v: "man" },
+                        "Somebody was sent, and it was so. Their father's eyes went wide."
+                    ]
+                },
+                {
+                    art: "04-skills.webp",
+                    emoji: "🏹",
+                    left: [
+                        { t: "\"I learned the bow.\"", v: "man" },
+                        "The second lifted the bow off his shoulder. He drew, and a leaf a hundred paces off fell with a tap.",
+                        "He drew again and the leaf beside it fell too.",
+                        "Their father slapped his knee and laughed out loud."
+                    ],
+                    right: [
+                        { t: "\"I learned... how to catch things.\"", v: "boy" },
+                        "The youngest said it hesitantly, and his brothers burst out laughing.",
+                        { t: "\"Catching? What kind of skill is that!\"", v: "man" },
+                        { t: "\"Three years to catch what falls?\"", v: "man" },
+                        "The youngest only went red in the face."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · Crying a Hundred Li Away",
+            beats: [
+                {
+                    art: "05-hear.webp",
+                    emoji: "👂",
+                    left: [
+                        "Just then the eldest threw up a hand.",
+                        "The laughing stopped dead.",
+                        { t: "\"Hush. Everybody be quiet.\"", v: "man" },
+                        "The eldest's face had gone hard. It was the face of somebody who had heard something.",
+                        "Brothers and father froze where they stood."
+                    ],
+                    right: [
+                        "The eldest shut his eyes and listened a long while. Nobody breathed.",
+                        { t: "\"A child crying.\"", v: "man" },
+                        { t: "\"High up. On a cliff a hundred li off.\"", v: "man" },
+                        "The eldest pointed north with his finger.",
+                        "His brothers turned to look that way."
+                    ]
+                },
+                {
+                    art: "06-village.webp",
+                    emoji: "😰",
+                    left: [
+                        "As it happened, there was trouble in the village.",
+                        "The whole district had been turned upside down.",
+                        "An imugi, a huge serpent, had carried off the magistrate's child.",
+                        "For three days nobody had found the child.",
+                        "The people had searched every mountain for nothing."
+                    ],
+                    right: [
+                        { t: "\"They do not even know which way it went.\"", v: "man" },
+                        "The villagers muttered among themselves.",
+                        { t: "\"Whoever finds the child may have anything, he says.\"", v: "man" },
+                        { t: "\"The serpent will have swallowed it long since...\"", v: "man" },
+                        "The brothers looked at one another. No words were needed."
+                    ]
+                },
+                {
+                    art: "07-run.webp",
+                    emoji: "🏃",
+                    left: [
+                        "The brothers ran from that moment.",
+                        "They tightened their shoe strings and set off at a run.",
+                        "The eldest led and pointed the way.",
+                        { t: "\"A little more left. Straight on now.\"", v: "man" },
+                        "He kept stopping to listen, and his brothers stopped with him."
+                    ],
+                    right: [
+                        "Over hills and across valleys they ran for half a day.",
+                        "Their breath caught and their legs shook.",
+                        "At last they reached a cliff that stabbed the sky.",
+                        "The crying was near enough now for all three to hear.",
+                        "It was a thin, tired sound."
+                    ]
+                },
+                {
+                    art: "08-cliff.webp",
+                    emoji: "🐉",
+                    left: [
+                        "They tipped their heads back, and the top of the cliff was far off.",
+                        "It was high enough to hide the sky, and their necks ached.",
+                        "At the top a great serpent lay coiled round in a ring.",
+                        "In the middle of the coils the child was crying."
+                    ],
+                    right: [
+                        { t: "\"There! At the very top!\"", v: "man" },
+                        "The second pointed up with his finger.",
+                        "But no one could climb a height like that.",
+                        "Rope was no use, and a ladder was no use.",
+                        "The brothers stood under the cliff and stamped, helpless."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · A Job That Needs Three",
+            beats: [
+                {
+                    art: "09-aim.webp",
+                    emoji: "🎯",
+                    left: [
+                        "The second raised his bow. He drew it tight and aimed at the serpent.",
+                        { t: "\"I will have him with one shot.\"", v: "man" },
+                        { t: "\"No, brother!\"", v: "man" },
+                        "The eldest caught his arm in alarm.",
+                        "His voice was urgent and his face had gone white."
+                    ],
+                    right: [
+                        { t: "\"If it starts and uncoils, the child falls straight down.\"", v: "man" },
+                        "The second slowly let the bow down.",
+                        { t: "\"...Then what would you have us do?\"", v: "man" },
+                        "The three looked up at the cliff without a word.",
+                        "And all the while the crying was growing thinner."
+                    ]
+                },
+                {
+                    art: "10-ready.webp",
+                    emoji: "🤲",
+                    left: [
+                        "Then the youngest stepped quietly forward.",
+                        "His brothers turned to look at him.",
+                        { t: "\"Shoot, brother.\"", v: "boy" },
+                        { t: "\"What falls, I will catch.\"", v: "boy" },
+                        "There was not a shake in his voice. Three years he had done nothing but catch."
+                    ],
+                    right: [
+                        "The youngest took his place right under the middle of the cliff.",
+                        "He set his legs firm and opened both arms wide.",
+                        "The eldest shut his eyes and listened.",
+                        { t: "\"The wind is from the right. Half a hand to the left.\"", v: "man" },
+                        "The second drew the string again."
+                    ]
+                },
+                {
+                    art: "11-catch.webp",
+                    emoji: "💫",
+                    left: [
+                        "Twang —",
+                        "The arrow flew straight up to the far top of the cliff.",
+                        "It grazed the very tip of the serpent's tail.",
+                        "The serpent started and threw its body about.",
+                        "The coils slid loose and the child slipped out."
+                    ],
+                    right: [
+                        "The child fell head first down the cliff.",
+                        "The youngest moved three or four steps, both arms open.",
+                        "He kept his eyes wide and watched the sky.",
+                        "Whump —",
+                        "The child landed light in his arms. The crying stopped dead."
+                    ]
+                },
+                {
+                    art: "12-reward.webp",
+                    emoji: "🏅",
+                    left: [
+                        "The magistrate held the child and cried for a long while.",
+                        "The child was not hurt anywhere.",
+                        "He called the three brothers up into his house.",
+                        { t: "\"Whose part was the greatest? A reward is due.\"", v: "old" },
+                        "The brothers looked at one another and shook their heads together."
+                    ],
+                    right: [
+                        { t: "\"Take one of us three away and the child was lost.\"", v: "man" },
+                        "The eldest put an arm round each of his brothers.",
+                        { t: "\"Ears alone would not do, and the bow alone would not.\"", v: "man" },
+                        "The magistrate gave all three the same reward.",
+                        "The brothers gave every bit of it to their father."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What skill did the eldest bring back?", choices: ["Strength to hold a serpent", "Ears that hear far off", "Catching what falls down"], answer: 1 },
+        { q: "What skill did the second bring back?", choices: ["Catching whatever falls", "Climbing up a cliff face", "A bow that never misses"], answer: 2 },
+        { q: "What skill did the youngest bring back?", choices: ["Catching what falls", "Lifting heavy things", "Holding his breath long"], answer: 0 },
+        { q: "Who did the brothers set out to save?", choices: ["A traveller who was lost", "A fisherman in the water", "A child the serpent took"], answer: 2 },
+        { q: "How did the magistrate give the reward?", choices: ["Only to the youngest", "The same to all three", "Only to the eldest"], answer: 1 },
+        { q: "What did the brothers say about whose part was greatest?", choices: ["That the eldest was best", "That the second was best", "That none could be spared"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "The one they laughed at for catching was the one who caught the child, so there is no such thing as a useless skill.",
+                "The eldest caught his brother's arm before he shot, so seeing what comes next is harder than hitting the mark.",
+                "All three took the same reward, so it was work that could not have been done with any one of them missing.",
+                "The second knocked the serpent down with a single shot, so his skill with a bow must have been remarkable."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "oral tale", k: "구전 설화", s: "This is an oral tale with no known author." },
+            { w: "skill", k: "재주", s: "Each brother learns a different skill" },
+            { w: "built this way", k: "이런 짜임의", s: "Stories built this way are found everywhere." },
+            { w: "collected (collect)", k: "모았다", s: "The Grimm brothers collected one" },
+            { w: "a contest", k: "겨루기", s: "Two skills make a contest and four get tangled." },
+            { w: "get tangled", k: "복잡해지다", s: "Two skills make a contest and four get tangled." },
+            { w: "lock together", k: "서로 물고 물린다", s: "Only three lock together so that none can be dropped." },
+            { w: "be dropped", k: "빠지다", s: "so that none can be dropped" }
+        ],
+        "01-brothers.webp": [
+            { w: "mountain village", k: "산골 마을", s: "Long ago three brothers lived in a mountain village." },
+            { w: "died early", k: "일찍 세상을 떠났다", s: "their mother had died early" },
+            { w: "hand down", k: "물려주다", s: "The house was poor, with nothing to hand down." },
+            { w: "Plough as they might", k: "밭을 갈아도", s: "Plough as they might, the sons were always hungry." },
+            { w: "stripped bark (strip)", k: "나무껍질을 벗겼다", s: "In winter they stripped bark off trees to eat." },
+            { w: "sat them down", k: "불러 앉혔다", s: "the father called his three sons and sat them down" },
+            { w: "heavy", k: "무거운", s: "His voice was heavy." },
+            { w: "bowed their heads", k: "고개를 숙였다", s: "The three sons bowed their heads and said nothing." }
+        ],
+        "02-depart.webp": [
+            { w: "fork", k: "갈림길", s: "the brothers stood at the fork at the edge of the village" },
+            { w: "at the edge of ~", k: "~ 어귀에", s: "the fork at the edge of the village" },
+            { w: "bundle", k: "보따리", s: "Each had set out with a single bundle." },
+            { w: "Take care of yourself", k: "몸조심하시오", s: "Take care of yourself, brother." },
+            { w: "the eldest", k: "첫째", s: "The eldest went east, the second west, the youngest south." },
+            { w: "grew smaller", k: "멀어져 갔다", s: "Three backs grew smaller down three different roads." },
+            { w: "waved (wave)", k: "손을 흔들었다", s: "Their father waved from the yard." },
+            { w: "a long while", k: "오래", s: "And then he stood there a long while." }
+        ],
+        "03-return.webp": [
+            { w: "gathered (gather)", k: "모였다", s: "Three years went by, and the brothers gathered at home." },
+            { w: "burnt black", k: "새까맣게 탄", s: "All three were burnt black by the sun." },
+            { w: "knots", k: "굵은 마디", s: "Their hands had knots at every joint." },
+            { w: "joint", k: "마디", s: "Their hands had knots at every joint." },
+            { w: "looked round at ~", k: "둘러보았다", s: "Their father looked round at his three sons." },
+            { w: "a hundred li", k: "백 리", s: "I hear sounds a hundred li away." },
+            { w: "put his ear to ~", k: "귀를 댔다", s: "The eldest put his ear to the ground" },
+            { w: "calving (calve)", k: "새끼를 낳는", s: "Kim's cow in the next village is calving right now." },
+            { w: "it was so", k: "정말 그러했다", s: "Somebody was sent, and it was so." }
+        ],
+        "04-skills.webp": [
+            { w: "the bow", k: "활", s: "I learned the bow." },
+            { w: "drew (draw)", k: "시위를 당겼다", s: "He drew, and a leaf a hundred paces off fell with a tap." },
+            { w: "paces", k: "걸음", s: "a leaf a hundred paces off" },
+            { w: "with a tap", k: "딱 하고", s: "a leaf a hundred paces off fell with a tap" },
+            { w: "slapped his knee", k: "무릎을 탁 쳤다", s: "Their father slapped his knee and laughed out loud." },
+            { w: "hesitantly", k: "머뭇거리며", s: "The youngest said it hesitantly" },
+            { w: "burst out laughing", k: "웃음을 터뜨렸다", s: "his brothers burst out laughing" },
+            { w: "went red in the face", k: "얼굴을 붉혔다", s: "The youngest only went red in the face." }
+        ],
+        "05-hear.webp": [
+            { w: "threw up a hand", k: "손을 번쩍 들었다", s: "Just then the eldest threw up a hand." },
+            { w: "stopped dead", k: "뚝 그쳤다", s: "The laughing stopped dead." },
+            { w: "Hush", k: "쉿", s: "Hush. Everybody be quiet." },
+            { w: "gone hard (go)", k: "딱딱하게 굳었다", s: "The eldest's face had gone hard." },
+            { w: "froze (freeze)", k: "얼어붙었다", s: "Brothers and father froze where they stood." },
+            { w: "listened (listen)", k: "귀를 기울였다", s: "The eldest shut his eyes and listened a long while." },
+            { w: "Nobody breathed", k: "아무도 숨을 못 쉬었다", s: "The eldest shut his eyes and listened. Nobody breathed." },
+            { w: "cliff", k: "절벽", s: "High up. On a cliff a hundred li off." },
+            { w: "pointed north", k: "북쪽을 가리켰다", s: "The eldest pointed north with his finger." }
+        ],
+        "06-village.webp": [
+            { w: "As it happened", k: "마침", s: "As it happened, there was trouble in the village." },
+            { w: "district", k: "고을", s: "The whole district had been turned upside down." },
+            { w: "serpent", k: "커다란 뱀", s: "An imugi, a huge serpent, had carried off the child." },
+            { w: "carried off (carry)", k: "채어 갔다", s: "had carried off the magistrate's child" },
+            { w: "for nothing", k: "헛일로", s: "The people had searched every mountain for nothing." },
+            { w: "muttered (mutter)", k: "웅성거렸다", s: "The villagers muttered among themselves." },
+            { w: "Whoever ~", k: "~하는 사람은 누구든", s: "Whoever finds the child may have anything, he says." },
+            { w: "long since", k: "오래전에", s: "The serpent will have swallowed it long since." },
+            { w: "No words were needed", k: "말이 필요 없었다", s: "The brothers looked at one another. No words were needed." }
+        ],
+        "07-run.webp": [
+            { w: "from that moment", k: "그길로", s: "The brothers ran from that moment." },
+            { w: "tightened (tighten)", k: "조여 맸다", s: "They tightened their shoe strings and set off at a run." },
+            { w: "at a run", k: "내달려", s: "set off at a run" },
+            { w: "led (lead)", k: "앞장섰다", s: "The eldest led and pointed the way." },
+            { w: "Straight on", k: "곧장", s: "A little more left. Straight on now." },
+            { w: "kept stopping (keep)", k: "자꾸 멈췄다", s: "He kept stopping to listen" },
+            { w: "valleys", k: "골짜기", s: "Over hills and across valleys they ran for half a day." },
+            { w: "breath caught", k: "숨이 턱에 찼다", s: "Their breath caught and their legs shook." },
+            { w: "stabbed the sky", k: "하늘을 찌를 듯한", s: "At last they reached a cliff that stabbed the sky." }
+        ],
+        "08-cliff.webp": [
+            { w: "tipped their heads back", k: "고개를 젖혔다", s: "They tipped their heads back" },
+            { w: "far off", k: "아득한", s: "the top of the cliff was far off" },
+            { w: "high enough to ~", k: "~할 만큼 높은", s: "It was high enough to hide the sky" },
+            { w: "necks ached", k: "목이 아팠다", s: "It was high enough to hide the sky, and their necks ached." },
+            { w: "coiled (coil)", k: "몸을 감은", s: "a great serpent lay coiled round in a ring" },
+            { w: "coils", k: "감긴 몸", s: "In the middle of the coils the child was crying." },
+            { w: "a height like that", k: "그런 높이", s: "But no one could climb a height like that." },
+            { w: "no use", k: "소용없는", s: "Rope was no use, and a ladder was no use." },
+            { w: "helpless", k: "발만 동동 구르는", s: "The brothers stood under the cliff and stamped, helpless." }
+        ],
+        "09-aim.webp": [
+            { w: "aimed at ~", k: "겨누었다", s: "He drew it tight and aimed at the serpent." },
+            { w: "with one shot", k: "한 방에", s: "I will have him with one shot." },
+            { w: "in alarm", k: "화들짝 놀라", s: "The eldest caught his arm in alarm." },
+            { w: "urgent", k: "다급한", s: "His voice was urgent and his face had gone white." },
+            { w: "starts (start)", k: "놀란다", s: "If it starts and uncoils, the child falls straight down." },
+            { w: "uncoils (uncoil)", k: "몸을 푼다", s: "If it starts and uncoils, the child falls straight down." },
+            { w: "let ~ down", k: "내렸다", s: "The second slowly let the bow down." },
+            { w: "would you have us ~", k: "어쩌자는 말이오", s: "Then what would you have us do?" },
+            { w: "growing thinner", k: "점점 가늘어지는", s: "And all the while the crying was growing thinner." }
+        ],
+        "10-ready.webp": [
+            { w: "stepped forward", k: "앞으로 나섰다", s: "Then the youngest stepped quietly forward." },
+            { w: "Shoot", k: "쏘십시오", s: "Shoot, brother." },
+            { w: "not a shake", k: "조금도 떨림이 없는", s: "There was not a shake in his voice." },
+            { w: "nothing but ~", k: "~만", s: "Three years he had done nothing but catch." },
+            { w: "took his place", k: "자리를 잡았다", s: "The youngest took his place right under the middle of the cliff." },
+            { w: "set his legs firm", k: "다리를 단단히 벌렸다", s: "He set his legs firm and opened both arms wide." },
+            { w: "Half a hand", k: "반 뼘만", s: "The wind is from the right. Half a hand to the left." },
+            { w: "the string", k: "시위", s: "The second drew the string again." }
+        ],
+        "11-catch.webp": [
+            { w: "Twang", k: "피융", s: "Twang — the arrow flew straight up." },
+            { w: "arrow", k: "화살", s: "The arrow flew straight up to the far top of the cliff." },
+            { w: "grazed (graze)", k: "아슬아슬하게 스쳤다", s: "It grazed the very tip of the serpent's tail." },
+            { w: "the very tip", k: "끝 부분", s: "It grazed the very tip of the serpent's tail." },
+            { w: "threw its body about", k: "몸을 크게 뒤척였다", s: "The serpent started and threw its body about." },
+            { w: "slid loose (slide)", k: "스르르 풀렸다", s: "The coils slid loose and the child slipped out." },
+            { w: "head first", k: "곤두박질쳐", s: "The child fell head first down the cliff." },
+            { w: "Whump", k: "폭", s: "Whump — the child landed light in his arms." },
+            { w: "landed light", k: "사뿐히 안겼다", s: "The child landed light in his arms." }
+        ],
+        "12-reward.webp": [
+            { w: "magistrate", k: "원님", s: "The magistrate held the child and cried for a long while." },
+            { w: "not hurt anywhere", k: "어디도 다치지 않은", s: "The child was not hurt anywhere." },
+            { w: "part", k: "공", s: "Whose part was the greatest? A reward is due." },
+            { w: "is due", k: "내려야 한다", s: "Whose part was the greatest? A reward is due." },
+            { w: "shook their heads (shake)", k: "고개를 저었다", s: "The brothers looked at one another and shook their heads together." },
+            { w: "Take ~ away", k: "빠지면", s: "Take one of us three away and the child was lost." },
+            { w: "put an arm round ~", k: "어깨를 감쌌다", s: "The eldest put an arm round each of his brothers." },
+            { w: "alone", k: "~만으로는", s: "Ears alone would not do, and the bow alone would not." },
+            { w: "every bit of it", k: "고스란히", s: "The brothers gave every bit of it to their father." }
+        ],
+        "after": [
+            { w: "always three", k: "늘 셋", s: "In stories like this the skills are always three." },
+            { w: "the least of them", k: "가장 시시한 것", s: "and the last one always looks the least of them" },
+            { w: "turn it over", k: "뒤집다", s: "That is so the ending can turn it over." },
+            { w: "an old craft", k: "오래된 솜씨", s: "It is an old craft of story-making." },
+            { w: "the order", k: "순서", s: "The order cannot be changed either." },
+            { w: "compared with ~", k: "~에 견주면", s: "Compared with shooting or lifting, it looks like nothing." },
+            { w: "for nothing", k: "헛일로", s: "the first two work for nothing" },
+            { w: "the very skill", k: "바로 그 재주", s: "the very skill they had laughed at" },
+            { w: "a use for it", k: "쓰일 자리", s: "A skill that looks useless has only not met a use for it yet." }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🎯',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "In stories like this the skills are always three, and the last one always looks the least of them. That is so the ending can turn it over. It is an old craft of story-making.",
+                    "The way the job gets done is always the same too. Take away any one of the three and it fails. The order cannot be changed either.",
+                    "The youngest brother's skill was catching whatever came. Compared with shooting a bow or lifting a weight, it looks like nothing at all.",
+                    "And yet, however well the first two do their part, the first two work for nothing if there is nobody to catch."
+                ],
+                right: [
+                    "His brothers laughed when they heard what he had learned. That day the child was caught by the very skill they had laughed at.",
+                    "A skill that looks useless has only not met a use for it yet.",
+                    "What are you good at that other people think little of?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "첫째가 익혀 온 재주는 무엇인가요?", choices: ["이무기를 잡는 힘", "백 리 밖 듣는 귀", "떨어지는 것 받기"], answer: 1 },
     { q: "둘째가 익혀 온 재주는 무엇인가요?", choices: ["떨어지는 것 받는 재주", "절벽을 오르는 재주", "백발백중 활 솜씨"], answer: 2 },

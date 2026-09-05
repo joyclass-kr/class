@@ -233,6 +233,458 @@ const COVER = {
     ]
 };
 
+/* 영어판 — 줄 단위 번역이 아니라 영어로 다시 썼다.
+   읽기를 앞세운다. 줄임말을 쓰고, 옛 관용구는 쉬운 말로 바꾼다.
+   왼쪽·오른쪽 나눔은 영어 길이에 맞춰 따로 잡았다. */
+const EN = {
+    lang: 'en',
+    cover: {
+        emoji: "🐍",
+        art: "cover.webp",
+        title: "The Snake Bridegroom",
+        intro: [
+            "The Snake Bridegroom is an oral tale with no known author. A bridegroom is born a snake, and his wife sets out to find him.",
+            "Every district tells it with a slightly different name. Gureongdeongdeong is simply the sound of the word for a big snake.",
+            "A husband in animal shape, a rule broken, a long walk to win him back: Beauty and the Beast is the same kind of story."
+        ]
+    },
+    chapters: [
+        {
+            num: 1,
+            title: "Chapter 1 · The Snake Son",
+            beats: [
+                {
+                    art: "01-birth.webp",
+                    emoji: "🐍",
+                    left: [
+                        "Long ago in a village there lived an old woman with no children.",
+                        "Only when she was old did she have one.",
+                        "The whole village was turned upside down by the news.",
+                        "What she had borne was a great snake.",
+                        "People crowded outside the wall and whispered."
+                    ],
+                    right: [
+                        "Still the old woman wrapped the child neatly in a quilt and laid it in the warm spot.",
+                        "Not once did she think it ugly.",
+                        { t: "\"I bore it, so it is my child.\"", v: "granny" },
+                        "She fed it and gave it a name.",
+                        "The snake slid into sleep in the warm spot."
+                    ]
+                },
+                {
+                    art: "02-neighbors.webp",
+                    emoji: "👀",
+                    left: [
+                        "The three daughters next door heard and came to look.",
+                        "They could not hold their curiosity in.",
+                        "The eldest put her eye to the crack of the door first.",
+                        { t: "\"Ugh! How horrible!\"", v: "girl" },
+                        "She fell back from the door and sat down hard."
+                    ],
+                    right: [
+                        { t: "\"That is no child, that is a snake!\"", v: "girl" },
+                        "The second looked through the crack and screwed up her face.",
+                        "The two of them spat in the yard and ran off, holding up their skirts.",
+                        "They did not look back once.",
+                        "The old woman shut the door and turned round."
+                    ]
+                },
+                {
+                    art: "03-third.webp",
+                    emoji: "🌸",
+                    left: [
+                        "But the third daughter stayed where she was.",
+                        "She opened the door, came in, and looked quietly at the snake.",
+                        "Far from frightened, she thought it lovely.",
+                        "The scales had a smooth shine on them.",
+                        "After a long while the third daughter spoke."
+                    ],
+                    right: [
+                        { t: "\"Oh! You have borne Gureongdeongdeong Shinseonbi.\"", v: "girl" },
+                        "There was warmth in the third daughter's voice.",
+                        "Hearing it, the snake quietly lifted its head.",
+                        "Tears came to the old woman's eyes. Ugly was all anyone had called this child.",
+                        "The old woman took the third daughter's hand."
+                    ]
+                },
+                {
+                    art: "04-marry.webp",
+                    emoji: "🎊",
+                    left: [
+                        "That night the snake spoke to the old woman, in a clear human voice.",
+                        { t: "\"Mother, I wish to marry the third daughter next door.\"", v: "man" },
+                        "The old woman looked down at her child in astonishment.",
+                        "That was the first she knew he could speak."
+                    ],
+                    right: [
+                        "The old woman went next door and asked for the marriage.",
+                        "The eldest and the second both jumped up at that.",
+                        { t: "\"Marry a snake? Us?\"", v: "girl" },
+                        "But the third daughter said quietly:",
+                        { t: "\"I will go.\"", v: "girl" },
+                        "Her sisters held on to her and tried to stop her."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 2,
+            title: "Chapter 2 · The Skin Left at Night",
+            beats: [
+                {
+                    art: "05-shed.webp",
+                    emoji: "✨",
+                    left: [
+                        "It was the night of the wedding day.",
+                        "The bride could not sleep and lay turning over.",
+                        "Then came a sound of something sliding.",
+                        "She opened her eyes, and the room was strangely bright.",
+                        "And nobody had lit a lamp."
+                    ],
+                    right: [
+                        "A snake skin lay neatly shed at one side of the room.",
+                        "Beside it sat a tall, fine young man.",
+                        "The bride hardly dared to breathe.",
+                        { t: "\"Do not be startled. It is me.\"", v: "man" },
+                        "The young man laughed low. It was the voice she had heard by day."
+                    ]
+                },
+                {
+                    art: "06-promise.webp",
+                    emoji: "🤝",
+                    left: [
+                        "From that day he was in human shape by day as well.",
+                        "Only the shed skin he kept quietly put away.",
+                        "The two of them lived like that for several years.",
+                        "Then he had to go to Hanyang for the state examination.",
+                        "It chose the country's officers, a journey of months."
+                    ],
+                    right: [
+                        "The night before he left, Shinseonbi folded the skin neatly and handed it over.",
+                        "His face was very serious.",
+                        { t: "\"Keep this where nobody can see it.\"", v: "man" },
+                        { t: "\"If it touches fire, I cannot come back.\"", v: "man" },
+                        "His wife put it deep in a chest and locked it."
+                    ]
+                },
+                {
+                    art: "07-burn.webp",
+                    emoji: "🔥",
+                    left: [
+                        "But the two sisters overheard that from outside the door.",
+                        "It had always galled them that the third one lived so well.",
+                        { t: "\"With the skin gone, might that handsome man be ours?\"", v: "girl" },
+                        "All night the two schemed together."
+                    ],
+                    right: [
+                        "Next day, while their sister was away drawing water, they opened the chest.",
+                        "The skin lay folded neatly at the bottom.",
+                        "They threw it into the kitchen fire, and a blue flame shot up.",
+                        "Bitter smoke went crowding up the chimney.",
+                        "The sisters slipped out of the kitchen at once."
+                    ]
+                },
+                {
+                    art: "08-gone.webp",
+                    emoji: "🌫️",
+                    left: [
+                        "That night Shinseonbi did not come home, however long she waited.",
+                        "His wife sat in front of the door all night.",
+                        "The next day too, and the day after that.",
+                        "Then in the empty room she found a single letter.",
+                        "It lay on top of the chest that had held the skin."
+                    ],
+                    right: [
+                        "\"If you would find me, come towards the setting sun.\" It was his hand, past mistaking.",
+                        "His wife put the paper inside her dress and got her straw shoes.",
+                        "She asked her sisters nothing at all.",
+                        "She set off that moment towards the setting sun."
+                    ]
+                }
+            ]
+        },
+        {
+            num: 3,
+            title: "Chapter 3 · How Many Pairs of Shoes",
+            beats: [
+                {
+                    art: "09-magpie.webp",
+                    emoji: "🐦",
+                    left: [
+                        "After days of walking she met a flock of magpies.",
+                        "It was a bitter cold day, with the snow lying deep and white.",
+                        "The magpies sat on the branches, shivering.",
+                        { t: "\"Do you know the road Shinseonbi took?\"", v: "girl" },
+                        "She looked up into the branches and asked them carefully."
+                    ],
+                    right: [
+                        { t: "\"We do. But we are cold just now.\"", v: "boy" },
+                        "Without hesitating she took off her outer coat.",
+                        "She spread it over the branches to cover the magpies.",
+                        "The magpies beat their wings and pointed west.",
+                        "His wife turned her steps that way."
+                    ]
+                },
+                {
+                    art: "10-boar.webp",
+                    emoji: "🐗",
+                    left: [
+                        "Next she met a wild boar rooting up a field.",
+                        "It was digging the soil with its snout, and the field was all torn about.",
+                        { t: "\"Do you know the road Shinseonbi took?\"", v: "girl" },
+                        "She asked it carefully.",
+                        "The boar did not even lift its head."
+                    ],
+                    right: [
+                        { t: "\"I do. But this field is far too wide.\"", v: "beast" },
+                        "She rolled up her sleeves and turned the field with it.",
+                        "Her nails all broke, and still she did not stop all night.",
+                        "Only at daybreak did they reach the far end.",
+                        "The boar told her of a pass over the hills."
+                    ]
+                },
+                {
+                    art: "11-washer.webp",
+                    emoji: "🧺",
+                    left: [
+                        "Last she met an old woman washing clothes at a stream.",
+                        "Her back was so bent she could hardly stand up.",
+                        "The wife was already on her fourth pair of straw shoes.",
+                        "Without a word she stepped into the washing tub.",
+                        "And she trod the washing down with her feet."
+                    ],
+                    right: [
+                        "The old woman looked at her feet and clicked her tongue.",
+                        { t: "\"Where are you going, to wear your shoes through?\"", v: "granny" },
+                        "When the washing was done, the old woman spoke.",
+                        { t: "\"Over that hill there is a big tiled house.\"", v: "granny" },
+                        { t: "\"They say today is the wedding there.\"", v: "granny" },
+                        "Strength came back into the wife's legs."
+                    ]
+                },
+                {
+                    art: "12-reunion.webp",
+                    emoji: "💛",
+                    left: [
+                        "The wife stood outside the wall and sang.",
+                        "Inside the wall the wedding music was loud.",
+                        { t: "\"Gureongdeongdeong Shinseonbi, Gureongdeongdeong Shinseonbi.\"", v: "girl" },
+                        "She sang it till her voice went hoarse, over and over.",
+                        "Then the music stopped dead."
+                    ],
+                    right: [
+                        "Shinseonbi sprang to his feet at the feast table.",
+                        "There was only one person in the world who called him by that name.",
+                        "He ran out without even putting his shoes on.",
+                        "Outside the gate stood his wife, her shoes worn through.",
+                        "The two held each other there and then."
+                    ]
+                }
+            ]
+        }
+    ],
+    quiz: [
+        { q: "What did the old woman say as she held her child?", choices: ["I bore it, so it is my child", "Whatever am I to do about this", "Do not tell anybody about it"], answer: 0 },
+        { q: "What did the third daughter say when she saw the snake?", choices: ["You have borne Shinseonbi", "What a big snake it is", "How will you raise this child"], answer: 0 },
+        { q: "What did the bride see in the room on the wedding night?", choices: ["A skin laid at one side", "A letter inside a chest", "A blue flame in the fire"], answer: 0 },
+        { q: "How did Shinseonbi ask her to guard the skin?", choices: ["Keep it from fire", "Keep it from water", "Keep it from earth"], answer: 0 },
+        { q: "What did the sisters do with the skin?", choices: ["Burned it in the fire", "Put it deep in a chest", "Folded it away neatly"], answer: 0 },
+        { q: "What did the wife meet at the field?", choices: ["A flock of magpies", "A wild boar", "An old woman washing"], answer: 1 },
+        { q: "What did the wife do for the cold magpies?", choices: ["Gave them her coat", "Shared her food", "Mended their nest"], answer: 0 },
+        { q: "How did the wife find Shinseonbi?", choices: ["By treading washing and asking", "By asking the magpies", "By singing outside the wall"], answer: 2 },
+        {
+            q: "Which reaction to this book does NOT fit?",
+            wide: true,
+            choices: [
+                "Only the third one called him Gureongdeongdeong Shinseonbi, so what a thing is depends on what you call it.",
+                "She helped the magpies and the boar while asking her way, so a long road is not one you walk on your own.",
+                "She put the skin in a chest and locked it, so the thing you must guard always ends up in someone else's hands.",
+                "The sisters burned the skin, so they must have been ashamed of how ugly it looked to other people."
+            ],
+            answer: 3
+        }
+    ],
+    /* 단어장 — 펼침면마다 그 쪽에 나온 낱말과 숙어를 거의 다 담았다.
+       초등학생이 막힐 만한 것은 쉬워 보여도 넣는다. 줄임말도 넣는다.
+       본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
+    words: {
+        "cover": [
+            { w: "bridegroom", k: "신랑", s: "A bridegroom is born a snake" },
+            { w: "oral tale", k: "구전 설화", s: "The Snake Bridegroom is an oral tale with no known author." },
+            { w: "sets out (set out)", k: "길을 나서다", s: "his wife sets out to find him" },
+            { w: "district", k: "고을", s: "Every district tells it with a slightly different name." },
+            { w: "simply the sound of ~", k: "소리 나는 대로 부른 말", s: "Gureongdeongdeong is simply the sound of the word for a big snake." },
+            { w: "in animal shape", k: "짐승 모습으로", s: "A husband in animal shape, a rule broken" },
+            { w: "win him back", k: "되찾아 오다", s: "a long walk to win him back" },
+            { w: "the same kind of story", k: "같은 갈래", s: "Beauty and the Beast is the same kind of story" }
+        ],
+        "01-birth.webp": [
+            { w: "with no children", k: "아이 없는", s: "there lived an old woman with no children" },
+            { w: "turned upside down", k: "발칵 뒤집혔다", s: "The whole village was turned upside down by the news." },
+            { w: "borne (bear)", k: "낳았다", s: "What she had borne was a great snake." },
+            { w: "crowded (crowd)", k: "몰려들었다", s: "People crowded outside the wall and whispered." },
+            { w: "quilt", k: "이불", s: "the old woman wrapped the child neatly in a quilt" },
+            { w: "the warm spot", k: "아랫목", s: "laid it in the warm spot" },
+            { w: "Not once", k: "한 번도 ~ 않았다", s: "Not once did she think it ugly." },
+            { w: "slid into sleep (slide)", k: "스르르 잠들었다", s: "The snake slid into sleep in the warm spot." }
+        ],
+        "02-neighbors.webp": [
+            { w: "next door", k: "이웃집", s: "The three daughters next door heard and came to look." },
+            { w: "hold ~ in", k: "참다", s: "They could not hold their curiosity in." },
+            { w: "curiosity", k: "호기심", s: "They could not hold their curiosity in." },
+            { w: "the eldest", k: "첫째", s: "The eldest put her eye to the crack of the door first." },
+            { w: "the crack of the door", k: "문틈", s: "put her eye to the crack of the door" },
+            { w: "Ugh", k: "으악", s: "Ugh! How horrible!" },
+            { w: "screwed up her face", k: "얼굴을 찡그렸다", s: "The second looked through the crack and screwed up her face." },
+            { w: "spat (spit)", k: "침을 뱉었다", s: "The two of them spat in the yard and ran off." },
+            { w: "holding up their skirts", k: "치맛자락을 움켜쥐고", s: "ran off, holding up their skirts" }
+        ],
+        "03-third.webp": [
+            { w: "stayed where she was", k: "그 자리에 남았다", s: "But the third daughter stayed where she was." },
+            { w: "Far from ~", k: "~하기는커녕", s: "Far from frightened, she thought it lovely." },
+            { w: "frightened", k: "무서워하는", s: "Far from frightened, she thought it lovely." },
+            { w: "scales", k: "비늘", s: "The scales had a smooth shine on them." },
+            { w: "shine", k: "윤", s: "The scales had a smooth shine on them." },
+            { w: "After a long while", k: "한참 만에", s: "After a long while the third daughter spoke." },
+            { w: "warmth", k: "다정함", s: "There was warmth in the third daughter's voice." },
+            { w: "lifted its head", k: "고개를 들었다", s: "Hearing it, the snake quietly lifted its head." },
+            { w: "was all anyone had called ~", k: "~라는 말만 들었다", s: "Ugly was all anyone had called this child." }
+        ],
+        "04-marry.webp": [
+            { w: "human voice", k: "사람의 목소리", s: "the snake spoke to the old woman, in a clear human voice" },
+            { w: "wish to ~", k: "~하고 싶다", s: "Mother, I wish to marry the third daughter next door." },
+            { w: "in astonishment", k: "깜짝 놀라서", s: "The old woman looked down at her child in astonishment." },
+            { w: "That was the first she knew", k: "그날 처음 알았다", s: "That was the first she knew he could speak." },
+            { w: "asked for the marriage", k: "혼인을 청했다", s: "The old woman went next door and asked for the marriage." },
+            { w: "jumped up", k: "펄쩍 뛰었다", s: "The eldest and the second both jumped up at that." },
+            { w: "held on to ~", k: "붙들었다", s: "Her sisters held on to her and tried to stop her." }
+        ],
+        "05-shed.webp": [
+            { w: "lay turning over (lie)", k: "뒤척였다", s: "The bride could not sleep and lay turning over." },
+            { w: "sliding (slide)", k: "미끄러지는", s: "Then came a sound of something sliding." },
+            { w: "strangely bright", k: "이상하게 환한", s: "She opened her eyes, and the room was strangely bright." },
+            { w: "lit a lamp (light)", k: "등잔을 켰다", s: "And nobody had lit a lamp." },
+            { w: "shed (shed)", k: "벗어 놓은", s: "A snake skin lay neatly shed at one side of the room." },
+            { w: "tall, fine", k: "훤칠한", s: "Beside it sat a tall, fine young man." },
+            { w: "hardly dared to ~", k: "감히 ~하지 못했다", s: "The bride hardly dared to breathe." },
+            { w: "startled", k: "놀란", s: "Do not be startled. It is me." },
+            { w: "laughed low", k: "나직이 웃었다", s: "The young man laughed low." }
+        ],
+        "06-promise.webp": [
+            { w: "in human shape", k: "사람의 모습으로", s: "From that day he was in human shape by day as well." },
+            { w: "put away", k: "간직해 둔", s: "Only the shed skin he kept quietly put away." },
+            { w: "state examination", k: "과거", s: "Then he had to go to Hanyang for the state examination." },
+            { w: "officers", k: "벼슬아치", s: "It chose the country's officers, a journey of months." },
+            { w: "a journey of months", k: "여러 달 걸리는 길", s: "It chose the country's officers, a journey of months." },
+            { w: "handed it over", k: "건넸다", s: "Shinseonbi folded the skin neatly and handed it over." },
+            { w: "serious", k: "진지한", s: "His face was very serious." },
+            { w: "touches fire", k: "불에 닿다", s: "If it touches fire, I cannot come back." },
+            { w: "chest", k: "궤", s: "His wife put it deep in a chest and locked it." }
+        ],
+        "07-burn.webp": [
+            { w: "overheard (overhear)", k: "엿들었다", s: "But the two sisters overheard that from outside the door." },
+            { w: "galled them (gall)", k: "배가 아팠다", s: "It had always galled them that the third one lived so well." },
+            { w: "With ~ gone", k: "~만 없으면", s: "With the skin gone, might that handsome man be ours?" },
+            { w: "schemed (scheme)", k: "궁리했다", s: "All night the two schemed together." },
+            { w: "drawing water", k: "물을 긷는", s: "while their sister was away drawing water" },
+            { w: "at the bottom", k: "밑바닥에", s: "The skin lay folded neatly at the bottom." },
+            { w: "shot up (shoot)", k: "확 솟았다", s: "a blue flame shot up" },
+            { w: "Bitter smoke", k: "매캐한 연기", s: "Bitter smoke went crowding up the chimney." },
+            { w: "chimney", k: "굴뚝", s: "Bitter smoke went crowding up the chimney." },
+            { w: "slipped out (slip)", k: "빠져나갔다", s: "The sisters slipped out of the kitchen at once." }
+        ],
+        "08-gone.webp": [
+            { w: "however long", k: "아무리 오래", s: "Shinseonbi did not come home, however long she waited" },
+            { w: "the day after that", k: "그다음 날", s: "The next day too, and the day after that." },
+            { w: "a single letter", k: "편지 한 장", s: "Then in the empty room she found a single letter." },
+            { w: "on top of ~", k: "~ 위에", s: "It lay on top of the chest that had held the skin." },
+            { w: "If you would ~", k: "~하려거든", s: "If you would find me, come towards the setting sun." },
+            { w: "the setting sun", k: "해 지는 쪽", s: "come towards the setting sun" },
+            { w: "his hand", k: "그의 글씨", s: "It was his hand, past mistaking." },
+            { w: "past mistaking", k: "틀림없는", s: "It was his hand, past mistaking." },
+            { w: "straw shoes", k: "짚신", s: "His wife put the paper inside her dress and got her straw shoes." }
+        ],
+        "09-magpie.webp": [
+            { w: "a flock of ~", k: "~ 떼", s: "she met a flock of magpies" },
+            { w: "bitter cold", k: "몹시 추운", s: "It was a bitter cold day, with the snow lying deep." },
+            { w: "lying deep (lie)", k: "소복이 쌓인", s: "with the snow lying deep and white" },
+            { w: "shivering (shiver)", k: "오들오들 떠는", s: "The magpies sat on the branches, shivering." },
+            { w: "branches", k: "나뭇가지", s: "She looked up into the branches and asked them carefully." },
+            { w: "Without hesitating", k: "망설이지 않고", s: "Without hesitating she took off her outer coat." },
+            { w: "outer coat", k: "겉옷", s: "she took off her outer coat" },
+            { w: "spread ~ over (spread)", k: "덮어 주었다", s: "She spread it over the branches to cover the magpies." },
+            { w: "turned her steps", k: "걸음을 옮겼다", s: "His wife turned her steps that way." }
+        ],
+        "10-boar.webp": [
+            { w: "wild boar", k: "멧돼지", s: "Next she met a wild boar rooting up a field." },
+            { w: "rooting up (root)", k: "파헤치는", s: "a wild boar rooting up a field" },
+            { w: "snout", k: "코", s: "It was digging the soil with its snout" },
+            { w: "torn about (tear)", k: "들쑤셔진", s: "the field was all torn about" },
+            { w: "far too wide", k: "너무 넓은", s: "I do. But this field is far too wide." },
+            { w: "rolled up her sleeves", k: "소매를 걷어붙였다", s: "She rolled up her sleeves and turned the field with it." },
+            { w: "turned the field", k: "밭을 뒤집었다", s: "She rolled up her sleeves and turned the field with it." },
+            { w: "nails", k: "손톱", s: "Her nails all broke, and still she did not stop all night." },
+            { w: "daybreak", k: "동이 틀 무렵", s: "Only at daybreak did they reach the far end." },
+            { w: "a pass", k: "고갯길", s: "The boar told her of a pass over the hills." }
+        ],
+        "11-washer.webp": [
+            { w: "stream", k: "냇가", s: "Last she met an old woman washing clothes at a stream." },
+            { w: "so bent", k: "몹시 굽은", s: "Her back was so bent she could hardly stand up." },
+            { w: "her fourth pair", k: "네 켤레째", s: "The wife was already on her fourth pair of straw shoes." },
+            { w: "Without a word", k: "말없이", s: "Without a word she stepped into the washing tub." },
+            { w: "washing tub", k: "빨래통", s: "she stepped into the washing tub" },
+            { w: "trod ~ down (tread)", k: "꾹꾹 밟았다", s: "And she trod the washing down with her feet." },
+            { w: "clicked her tongue", k: "혀를 찼다", s: "The old woman looked at her feet and clicked her tongue." },
+            { w: "wear ~ through", k: "다 닳도록 신다", s: "Where are you going, to wear your shoes through?" },
+            { w: "tiled house", k: "기와집", s: "Over that hill there is a big tiled house." },
+            { w: "Strength came back", k: "힘이 솟았다", s: "Strength came back into the wife's legs." }
+        ],
+        "12-reunion.webp": [
+            { w: "outside the wall", k: "담 밖에서", s: "The wife stood outside the wall and sang." },
+            { w: "wedding music", k: "풍악", s: "Inside the wall the wedding music was loud." },
+            { w: "went hoarse (go)", k: "목이 쉬었다", s: "She sang it till her voice went hoarse, over and over." },
+            { w: "stopped dead", k: "뚝 그쳤다", s: "Then the music stopped dead." },
+            { w: "sprang to his feet (spring)", k: "벌떡 일어섰다", s: "Shinseonbi sprang to his feet at the feast table." },
+            { w: "feast table", k: "잔칫상", s: "Shinseonbi sprang to his feet at the feast table." },
+            { w: "by that name", k: "그 이름으로", s: "There was only one person in the world who called him by that name." },
+            { w: "worn through (wear)", k: "다 닳은", s: "Outside the gate stood his wife, her shoes worn through." },
+            { w: "there and then", k: "그 자리에서", s: "The two held each other there and then." }
+        ],
+        "after": [
+            { w: "turns out to be (turn out)", k: "알고 보니 ~이다", s: "an ugly-looking bridegroom turns out to be somebody rare" },
+            { w: "go back further", k: "더 거슬러 가다", s: "Go back further and it reaches an old Greek tale." },
+            { w: "resemble each other", k: "서로 닮았다", s: "The later halves of those stories resemble each other too." },
+            { w: "a rule is broken", k: "금기가 깨진다", s: "A rule is broken, the bridegroom is lost" },
+            { w: "cast-off skin", k: "벗어 놓은 껍질", s: "A skin is a cast-off skin" },
+            { w: "carelessly", k: "함부로", s: "old people held that it must not be treated carelessly" },
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "It is worth noticing that the sisters were the ones who burned it." },
+            { w: "in the end", k: "끝내", s: "The side that called it ugly was the side that tried in the end to be rid of it." },
+            { w: "be rid of ~", k: "없애 버리다", s: "the side that tried in the end to be rid of it" },
+            { w: "what follows", k: "그 뒤", s: "what follows changes with the name you give it" }
+        ]
+    },
+    afterword: {
+        title: 'After Reading',
+        emoji: '🐍',
+        spreads: [
+            {
+                art: 'end.webp',
+                left: [
+                    "Stories where an ugly-looking bridegroom turns out to be somebody rare are found all over the world. Beauty and the Beast is one. Go back further and it reaches an old Greek tale.",
+                    "The later halves of those stories resemble each other too. A rule is broken, the bridegroom is lost, and the bride sets off on a long road to win him back. It is always the bride who goes.",
+                    "Here the rule was not to burn the skin. A skin is a cast-off skin, and old people held that it must not be treated carelessly.",
+                    "It is worth noticing that the sisters were the ones who burned it. The side that called it ugly was the side that tried in the end to be rid of it."
+                ],
+                right: [
+                    "The sisters spat and called the skin horrible. The third daughter called the same creature Gureongdeongdeong Shinseonbi.",
+                    "They were looking at one thing, and what followed was different for each of them. There is that much power in what you choose to call something.",
+                    "Have you ever seen differently something everyone else called ugly?"
+                ]
+            }
+        ]
+    }
+};
+
 const QUIZ = [
     { q: "할머니가 아이를 안고 한 말은 무엇인가요?", choices: ["내가 낳았으니 내 자식이지", "이 일을 어쩌면 좋단 말이냐", "아무에게도 알리지 말아라"], answer: 0 },
     { q: "셋째가 구렁이를 보고 한 말은 무엇인가요?", choices: ["구렁덩덩 신선비를 낳으셨네요", "구렁이가 참 크기도 하네요", "이 아이를 어찌 기르시려고요"], answer: 0 },

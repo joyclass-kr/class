@@ -61,8 +61,12 @@ for (const b of fs.readdirSync(ROOT).sort()) {
     const ch = grab(src, '\n    chapters: [');
     if (!en || !ch) { skip.push(b + ' — 영어 ' + (!en ? '문항' : '본문') + '을 못 읽었다'); continue; }
     /* 소설틀은 paras, 그림책틀은 beats 의 left/right 다. 좁쌀 한 톨만 그림책틀이라
-       paras 만 읽다가 본문을 통째로 빈 것으로 잡고도 아무 말이 없었다. */
-    const flat = v => Array.isArray(v) ? v.flatMap(flat) : (typeof v === 'string' ? [v] : []);
+       paras 만 읽다가 본문을 통째로 빈 것으로 잡고도 아무 말이 없었다.
+       대사는 { t, v } 꼴이라 글줄만 줍다가 통째로 빠졌다. 대사에만 나오는 말을
+       정답에 쓰면 「본문에 안 보임」이라고 잘못 일렀다. t 도 같이 줍는다. */
+    const flat = v => Array.isArray(v) ? v.flatMap(flat)
+        : (typeof v === 'string' ? [v]
+        : (v && typeof v.t === 'string' ? [v.t] : []));
     const lines = ch.flatMap(c => c.paras ? flat(c.paras) : (c.beats || []).flatMap(x => flat([x.left, x.right])));
     const bodyW = lines.join(' ').replace(/<[^>]*>/g, ' ');
     const body = ' ' + words(bodyW).join(' ') + ' ';
