@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="두 물체를 같은 거리에서 걸린 시간으로, 같은 시간에 간 거리로 견주어 어느 쪽이 빠른지 알아내고, 간 거리를 걸린 시간으로 나누어 속력을 구해 보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="speed-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>빠르기 비교와 속력</h1>
+            </div>
+            <div class="grade-tags"><span>초등 6학년</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>같은 거리를 가게 할지, 같은 시간을 가게 할지 고릅니다.</li>
+            <li>1번 길과 2번 길에 세울 물체를 고릅니다.</li>
+            <li>누가 더 빠를지 먼저 예상해 봅니다.</li>
+            <li>출발시켜 초시계와 거리를 읽고, 속력을 구해 견줍니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">같은 거리를 가는 데 걸린 시간이 짧을수록 빠릅니다</p>
+                <fieldset class="mode-field">
+                    <legend>재는 방법</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="distance">같은 거리 100 m<small>누가 먼저 도착할까</small></button>
+                        <button type="button" data-mode="time">같은 시간 10초<small>누가 더 멀리 갈까</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">출발!</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 출발시켜 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">1번 길</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">2번 길</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">두 물체가 100 m 결승선에 닿는 순간 초시계가 멈춥니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>빠르기를 견주는 두 방법</strong> 같은 거리를 가게 하면 걸린 시간이 짧은 쪽이 빠르고, 같은 시간을 가게 하면 간 거리가 긴 쪽이 빠릅니다. 달리기 경기는 앞의 방법, 자동차 속력계는 뒤의 방법과 같습니다.</p>
+                <p><strong>속력</strong> 간 거리를 걸린 시간으로 나눈 것이 속력입니다. 100 m를 20초에 달리면 속력은 100 ÷ 20 = 5 m/s, 곧 1초에 5 m를 가는 빠르기입니다. 거리도 시간도 다른 물체들은 속력으로 바꾸면 한눈에 견줄 수 있습니다.</p>
+                <p><strong>단위 바꾸기</strong> 1시간은 3600초, 1 km는 1000 m이므로 1 m/s는 3.6 km/h입니다. 사람이 달리는 5 m/s는 18 km/h, 시내 자동차 50 km/h는 약 14 m/s입니다.</p>
+                <p><strong>속력과 안전</strong> 속력이 클수록 같은 시간에 훨씬 멀리 가므로 멈추기까지 더 긴 거리가 필요합니다. 자동차가 다니는 길에서는 이 점을 늘 생각해야 합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>100 m를 가는 데 ㄱ은 25초, ㄴ은 20초 걸렸습니다. 더 빠른 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> ㄱ — 시간이 더 많이 걸렸으니까</label>
+                        <label><input type="radio" name="q1" value="b"> ㄴ — 같은 거리를 더 짧은 시간에 갔으니까</label>
+                        <label><input type="radio" name="q1" value="c"> 같다</label>
+                        <label><input type="radio" name="q1" value="d"> 알 수 없다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>같은 거리를 가는 데 걸린 시간이 짧을수록 빠릅니다. 20초 걸린 ㄴ이 더 빠릅니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>10초 동안 자전거는 60 m, 달리는 사람은 50 m를 갔습니다. 더 빠른 것과 그 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 사람 — 거리가 짧아 힘이 덜 들어서</label>
+                        <label><input type="radio" name="q2" value="b"> 같다 — 같은 시간을 갔으니까</label>
+                        <label><input type="radio" name="q2" value="c"> 자전거 — 같은 시간에 더 먼 거리를 갔으니까</label>
+                        <label><input type="radio" name="q2" value="d"> 알 수 없다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>같은 시간에 간 거리가 길수록 빠릅니다. 자전거는 1초에 6 m, 사람은 1초에 5 m를 간 것입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>어떤 물체가 200 m를 40초에 갔습니다. 속력은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 5 m/s</label>
+                        <label><input type="radio" name="q3" value="b"> 8 m/s</label>
+                        <label><input type="radio" name="q3" value="c"> 160 m/s</label>
+                        <label><input type="radio" name="q3" value="d"> 8000 m/s</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>속력은 간 거리를 걸린 시간으로 나눕니다. 200 ÷ 40 = 5이므로 1초에 5 m를 가는 5 m/s입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>자동차가 시속 72 km로 달립니다. 1초에 몇 m를 갈까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 72 m</label>
+                        <label><input type="radio" name="q4" value="b"> 7.2 m</label>
+                        <label><input type="radio" name="q4" value="c"> 2 m</label>
+                        <label><input type="radio" name="q4" value="d"> 20 m</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>72 km는 72000 m이고 1시간은 3600초입니다. 72000 ÷ 3600 = 20이므로 1초에 20 m를 갑니다. 횡단보도 하나를 한 걸음에 지나는 빠르기입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
