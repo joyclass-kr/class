@@ -99,6 +99,8 @@
         const width = COLUMN_X + Math.max(1, columns.length) * COLUMN_GAP + 24;
         const svg = make("svg", {
             class: "sheet",
+            /* 칸 수가 달라도 음표 크기가 같아 보이도록 한 눈금을 2px로 맞춘다. */
+            style: "width:" + (width * 2) + "px",
             viewBox: "0 0 " + width + " 98",
             role: "img",
             "aria-label": settings.label || "악보"

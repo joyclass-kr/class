@@ -247,7 +247,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     overflow-x: auto;
 }
 
-.sheet { width: 100%; max-width: 460px; height: auto; color: #1b2029; }
+.sheet { max-width: 100%; height: auto; color: #1b2029; }
 .sheet-staff line { stroke: #6d7078; stroke-width: 1.2; }
 .sheet-clef { font-family: "Noto Music", "Segoe UI Symbol", Georgia, serif; font-size: 58px; fill: #1b2029; }
 .sheet-unknown { font-family: Georgia, serif; font-size: 30px; font-weight: 700; fill: #8a6a22; text-anchor: middle; }
@@ -397,7 +397,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 }
 
 .example-play:hover { border-color: var(--gold); }
-.example-play .sheet { width: 100%; max-width: none; }
+.example-play .sheet { width: 100% !important; max-width: none; }
 .example-play span { color: #4a5160; font-size: 14px; font-weight: 750; }
 
 @media (max-width: 520px) {
@@ -520,3 +520,9 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
     #wheelCadence { grid-column: 2; grid-row: 3; align-self: start; }
     .wheel-chords { grid-template-columns: 1fr 1fr; }
 }
+
+/* 성질과 도수를 한 줄씩 고르는 답 */
+.pair-wrap { display: grid; gap: 9px; }
+.choice-quality { background: var(--panel-2); }
+.choice.is-picked { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+.lesson-actions { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: center; }

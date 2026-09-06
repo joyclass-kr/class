@@ -22,15 +22,23 @@
     const ACCIDENTALS = [-1, 0, 1];
     const rootCache = {};
 
+    /* E♯·B♯·C♭·F♭은 F·C·B·E로 적는 자리라 기준음으로 쓰지 않는다. */
+    function oddSpelling(letter, accidental) {
+        return (accidental === 1 && (letter === 2 || letter === 6))
+            || (accidental === -1 && (letter === 0 || letter === 3));
+    }
+
     function collectRoots(key, lowAbs, highAbs, build) {
         if (rootCache[key]) return rootCache[key];
         const list = [];
         for (let letterAbs = lowAbs; letterAbs <= highAbs; letterAbs += 1) {
             ACCIDENTALS.forEach(accidental => {
                 const root = N.spell(letterAbs, accidental);
+                if (oddSpelling(root.letter, accidental)) return;
                 const notes = build(root);
                 if (!notes) return;
                 if (notes.some(note => Math.abs(note.accidental) > 1)) return;
+                if (notes.some(note => oddSpelling(note.letter, note.accidental))) return;
                 list.push(root);
             });
         }
@@ -74,6 +82,29 @@
         { id: "d5", en: "d5", ko: "감5도", degree: 4, semis: 6 }
     ];
 
+    /* 악보를 보고 이름을 말하는 문제에서 따로 고르는 두 가지 */
+    const QUALITIES = [
+        { id: "P", en: "Perfect", ko: "완전" },
+        { id: "M", en: "Major", ko: "장" },
+        { id: "m", en: "Minor", ko: "단" },
+        { id: "d", en: "Diminished", ko: "감" },
+        { id: "A", en: "Augmented", ko: "증" }
+    ];
+
+    const NUMBERS = [
+        { id: 1, en: "2nd", ko: "2도" },
+        { id: 2, en: "3rd", ko: "3도" },
+        { id: 3, en: "4th", ko: "4도" },
+        { id: 4, en: "5th", ko: "5도" },
+        { id: 5, en: "6th", ko: "6도" },
+        { id: 6, en: "7th", ko: "7도" },
+        { id: 7, en: "Octave", ko: "8도" },
+        { id: 8, en: "9th", ko: "9도" },
+        { id: 9, en: "10th", ko: "10도" },
+        { id: 10, en: "11th", ko: "11도" },
+        { id: 11, en: "12th", ko: "12도" }
+    ];
+
     const SIMPLE_INTERVAL_IDS = ["m2", "M2", "m3", "M3", "P4", "A4", "P5", "m6", "M6", "m7", "M7", "P8"];
     const COMPOUND_INTERVAL_IDS = ["m9", "M9", "m10", "M10", "P11", "A11", "P12"];
 
@@ -105,19 +136,19 @@
 
     /* 음계 -------------------------------------------------------------- */
     const SCALES = [
-        { id: "major", en: "major", ko: "장음계", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
-        { id: "nminor", en: "nat. minor", ko: "자연단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
-        { id: "hminor", en: "harm. minor", ko: "화성단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 11], [7, 12]] },
-        { id: "mminor", en: "mel. minor", ko: "가락단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
-        { id: "pmaj", en: "maj. pent.", ko: "장5음음계", tones: [[0, 0], [1, 2], [2, 4], [4, 7], [5, 9], [7, 12]] },
-        { id: "pmin", en: "min. pent.", ko: "단5음음계", tones: [[0, 0], [2, 3], [3, 5], [4, 7], [6, 10], [7, 12]] },
-        { id: "blues", en: "blues", ko: "블루스음계", tones: [[0, 0], [2, 3], [3, 5], [3, 6], [4, 7], [6, 10], [7, 12]] },
-        { id: "dorian", en: "dorian", ko: "도리아", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
-        { id: "phrygian", en: "phrygian", ko: "프리지아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
-        { id: "lydian", en: "lydian", ko: "리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 7], [5, 9], [6, 11], [7, 12]] },
-        { id: "mixolydian", en: "mixolydian", ko: "믹솔리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
-        { id: "locrian", en: "locrian", ko: "로크리아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 6], [5, 8], [6, 10], [7, 12]] },
-        { id: "whole", en: "whole tone", ko: "온음음계", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 8], [5, 10], [7, 12]] }
+        { id: "major", en: "Major", ko: "장음계", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "nminor", en: "Natural Minor", ko: "자연단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
+        { id: "hminor", en: "Harmonic Minor", ko: "화성단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 11], [7, 12]] },
+        { id: "mminor", en: "Melodic Minor", ko: "가락단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "pmaj", en: "Major Pentatonic", ko: "장5음음계", tones: [[0, 0], [1, 2], [2, 4], [4, 7], [5, 9], [7, 12]] },
+        { id: "pmin", en: "Minor Pentatonic", ko: "단5음음계", tones: [[0, 0], [2, 3], [3, 5], [4, 7], [6, 10], [7, 12]] },
+        { id: "blues", en: "Blues", ko: "블루스음계", tones: [[0, 0], [2, 3], [3, 5], [3, 6], [4, 7], [6, 10], [7, 12]] },
+        { id: "dorian", en: "Dorian", ko: "도리아", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
+        { id: "phrygian", en: "Phrygian", ko: "프리지아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
+        { id: "lydian", en: "Lydian", ko: "리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "mixolydian", en: "Mixolydian", ko: "믹솔리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
+        { id: "locrian", en: "Locrian", ko: "로크리아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 6], [5, 8], [6, 10], [7, 12]] },
+        { id: "whole", en: "Whole Tone", ko: "온음음계", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 8], [5, 10], [7, 12]] }
     ];
 
     /* 화음 진행 ---------------------------------------------------------- */
@@ -137,9 +168,23 @@
         ["ii", "V", "I", "vi"]
     ].map(chords => ({ id: chords.join("-"), label: chords.join("–"), chords: chords }));
 
-    [INTERVALS, DISPLAY_INTERVALS, CHORDS, SCALES, POSITIONS].forEach(list => {
+    [INTERVALS, DISPLAY_INTERVALS, CHORDS, SCALES, POSITIONS, QUALITIES, NUMBERS].forEach(list => {
         list.forEach(item => { item.label = label(item.en, item.ko); });
     });
+
+    /* 음정 이름의 앞 글자가 성질, 도수는 음이름을 센 수다. */
+    const READ_ITEMS = INTERVALS.concat(DISPLAY_INTERVALS).map(item => ({
+        id: item.id,
+        label: item.label,
+        degree: item.degree,
+        semis: item.semis,
+        roots: item.roots,
+        quality: item.en.replace(/[0-9]/g, ""),
+        number: item.degree
+    }));
+
+    const READ_BY_ID = {};
+    READ_ITEMS.forEach(item => { READ_BY_ID[item.id] = item; });
 
     const MAJOR_TONES = [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11]];
 
@@ -181,6 +226,28 @@
             list = list.map(note => N.spell(note.letterAbs - 7, note.accidental));
         }
         return list.slice().sort((a, b) => a.midi - b.midi);
+    }
+
+    function readingRoots(item) {
+        return collectRoots("r:" + item.id, 28, 34, root => {
+            const other = N.step(root, item.degree, item.semis);
+            const notes = [root, other];
+            return inRange(notes, 55, 84) ? notes : null;
+        });
+    }
+
+    /* 악보를 보여 주고 소리도 들려주면서 성질과 도수를 고르게 하는 문제 */
+    function readingQuestion(item) {
+        const low = pick(readingRoots(item));
+        const high = N.step(low, item.degree, item.semis);
+        return {
+            playback: { groups: [[low.midi, high.midi]], beat: 2 },
+            staffBefore: [{ notes: [low, high] }],
+            staffAfter: [{ notes: [low, high] }],
+            keyboard: null,
+            pair: { quality: item.quality, number: item.number },
+            detail: N.name(low) + " – " + N.name(high)
+        };
     }
 
     function chordTones(root, item) {
@@ -302,7 +369,7 @@
             const scale = majorScale(root);
             /* 조표가 일곱 개인 조(C♭·C♯ 장조)까지는 가지 않는다. */
             if (scale.filter(note => note.accidental !== 0).length > 6) return null;
-            return inRange(scale, 52, 76) ? scale : null;
+            return inRange(scale, 52, 79) ? scale : null;
         });
     }
 
@@ -375,6 +442,20 @@
                 { id: "mixed", label: label("Mixed", "섞어서") }
             ],
             make: intervalQuestion
+        },
+        {
+            id: "reading",
+            name: label("Interval Reading", "음정 읽기"),
+            ask: "무슨 음정인가요?",
+            items: READ_ITEMS,
+            inputs: ["pair"],
+            pairAnswer: true,
+            levels: [
+                { id: "easy", label: label("Simple", "한 옥타브 안"), ids: SIMPLE_INTERVAL_IDS.concat(["d5"]) },
+                { id: "hard", label: label("All", "겹음정까지"), ids: READ_ITEMS.map(item => item.id) }
+            ],
+            modes: [],
+            make: readingQuestion
         },
         {
             id: "chord",
@@ -834,6 +915,8 @@
             typeof entry === "string" ? intervalExample(entry) : chordExample(entry)
         ));
         els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
+        els.lessonQuiz.hidden = !lesson.quiz;
+        if (lesson.quiz) els.lessonQuiz.dataset.items = lesson.quiz.join(",");
         setLessonMark(course.id, lesson.id, { read: true });
         showScreen("lesson");
     }
@@ -921,6 +1004,19 @@
         });
         block.append(button);
         return block;
+    }
+
+    /* 이론 차시에서 그 차시가 다룬 음정만 읽기 문제로 낸다. */
+    function startLessonQuiz() {
+        const ids = (els.lessonQuiz.dataset.items || "").split(",").filter(Boolean);
+        if (!ids.length) return;
+        session.drill = DRILL_BY_ID.reading;
+        session.mode = "";
+        session.input = "pair";
+        session.limit = ids.length * 2;
+        session.enabled = new Set(ids);
+        session.fromLesson = { courseId: course.id, lessonId: course.lessons[lessonIndex].id };
+        beginRound();
     }
 
     function startLessonDrill(lesson) {
@@ -1075,6 +1171,11 @@
     }
 
     function setupInput(question) {
+        if (session.drill.pairAnswer) {
+            setupPairInput(question);
+            return;
+        }
+        els.pairWrap.hidden = true;
         const useKeyboard = session.input === "keyboard" && question.keyboard;
         els.keyboardWrap.hidden = !useKeyboard;
         els.choices.hidden = useKeyboard;
@@ -1100,6 +1201,57 @@
             els.choices.append(button);
         });
         els.typedCount.hidden = true;
+    }
+
+    /* 성질과 도수를 한 줄씩 고른다. 둘 다 고르면 채점한다. */
+    function setupPairInput(question) {
+        els.keyboardWrap.hidden = true;
+        els.choices.hidden = true;
+        els.typedCount.hidden = true;
+        els.pairWrap.hidden = false;
+        session.picked = { quality: null, number: null };
+
+        const usedNumbers = session.pool.map(item => item.number);
+        fillPairRow(els.qualityRow, QUALITIES, "quality");
+        fillPairRow(els.numberRow, NUMBERS.filter(entry => usedNumbers.indexOf(entry.id) >= 0), "number");
+    }
+
+    function fillPairRow(row, options, kind) {
+        row.innerHTML = "";
+        options.forEach(option => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "choice choice-" + kind;
+            button.textContent = option.label;
+            button.dataset.pick = String(option.id);
+            button.addEventListener("click", () => pickPair(kind, option.id, button));
+            row.append(button);
+        });
+    }
+
+    function pickPair(kind, value, button) {
+        if (session.answered) return;
+        const row = kind === "quality" ? els.qualityRow : els.numberRow;
+        Array.from(row.children).forEach(node => node.classList.remove("is-picked"));
+        button.classList.add("is-picked");
+        session.picked[kind] = value;
+        if (session.picked.quality === null || session.picked.number === null) return;
+
+        const want = session.current.pair;
+        const correct = session.picked.quality === want.quality && session.picked.number === want.number;
+        markPairRow(els.qualityRow, String(want.quality), String(session.picked.quality));
+        markPairRow(els.numberRow, String(want.number), String(session.picked.number));
+        settle(correct);
+    }
+
+    function markPairRow(row, wantId, pickedId) {
+        Array.from(row.children).forEach(node => {
+            node.disabled = true;
+            node.classList.remove("is-picked");
+            if (node.dataset.pick === wantId) node.classList.add("right");
+            else if (node.dataset.pick === pickedId) node.classList.add("wrong");
+            else node.classList.add("dim");
+        });
     }
 
     function play() {
@@ -1203,7 +1355,10 @@
         drawStaff(session.current.staffAfter);
         els.feedback.textContent = "정답은 " + answerText(session.current.item) + "입니다";
         els.feedback.className = "feedback wrong";
-        if (session.input === "keyboard" && session.current.keyboard) {
+        if (session.drill.pairAnswer) {
+            markPairRow(els.qualityRow, String(session.current.pair.quality), "");
+            markPairRow(els.numberRow, String(session.current.pair.number), "");
+        } else if (session.input === "keyboard" && session.current.keyboard) {
             keyboard.setEnabled(false);
             session.current.keyboard.answer.forEach((midi, index) => keyboard.mark(midi, "right", String(index + 2)));
         } else {
@@ -1297,12 +1452,13 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "setupScreen", "drillScreen", "resultScreen",
             "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "drillList", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
+            "lessonNext", "lessonQuiz", "drillList", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence", "setupTitle", "inversionField", "inversionRow",
             "helpRow", "arpButton", "rootButton",
             "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",
             "itemPicker", "startButton", "setupWarning", "askText", "staff", "scoreText", "stopButton",
-            "replayButton", "skipButton", "choices", "keyboardWrap", "pianoKeys", "typedCount",
+            "replayButton", "skipButton", "choices", "pairWrap", "qualityRow", "numberRow",
+            "keyboardWrap", "pianoKeys", "typedCount",
             "feedback", "nextButton", "resultScore", "resultTable", "againButton",
             "toMenuButton"].forEach(id => { els[id] = byId(id); });
 
@@ -1328,6 +1484,7 @@
         });
         els.toMenuButton.addEventListener("click", backToHub);
         els.lessonNext.addEventListener("click", nextLesson);
+        els.lessonQuiz.addEventListener("click", startLessonQuiz);
         els.wheelPrev.addEventListener("click", () => wheel.step(-1));
         els.wheelNext.addEventListener("click", () => wheel.step(1));
         els.wheelFlat.addEventListener("click", () => wheel.toggleFlat());

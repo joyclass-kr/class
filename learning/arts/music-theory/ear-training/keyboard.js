@@ -63,7 +63,7 @@
             keys: keys,
             clearMarks: function () {
                 keys.forEach(key => {
-                    key.classList.remove("is-given", "is-right", "is-wrong");
+                    key.classList.remove("is-given", "is-right", "is-wrong", "is-typed");
                     key.querySelector(".key-mark").textContent = "";
                 });
             },

@@ -7,13 +7,13 @@
     <title>청음</title>
     <meta name="description" content="음정·화음 성질·음계·화음 진행·가락 받아쓰기를 소리로 듣고 맞히는 청음 훈련">
     <link rel="preload" href="assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260907-34">
+    <link rel="stylesheet" href="styles.css?v=20260907-42">
     <script src="piano-engine.js?v=20260907-1" defer></script>
-    <script src="notation.js?v=20260907-34" defer></script>
-    <script src="keyboard.js?v=20260907-34" defer></script>
-    <script src="wheel.js?v=20260907-34" defer></script>
-    <script src="course.js?v=20260907-36" defer></script>
-    <script src="app.js?v=20260907-34" defer></script>
+    <script src="notation.js?v=20260907-42" defer></script>
+    <script src="keyboard.js?v=20260907-42" defer></script>
+    <script src="wheel.js?v=20260907-42" defer></script>
+    <script src="course.js?v=20260907-42" defer></script>
+    <script src="app.js?v=20260907-42" defer></script>
 </head>
 <body>
     <main class="shell">
@@ -57,7 +57,10 @@
             <h1 id="lessonTitle" class="screen-title"></h1>
             <div id="lessonBody" class="lesson-body"></div>
             <div id="lessonExamples" class="examples"></div>
-            <button id="lessonNext" class="primary-button" type="button">다음 차시</button>
+            <div class="lesson-actions">
+                <button id="lessonQuiz" class="quiet-button" type="button" hidden>읽기 문제</button>
+                <button id="lessonNext" class="primary-button" type="button">다음 차시</button>
+            </div>
         </section>
 
         <section id="setupScreen" class="screen" hidden>
@@ -117,6 +120,11 @@
             </div>
 
             <div id="choices" class="choices" role="group" aria-label="정답 고르기"></div>
+
+            <div id="pairWrap" class="pair-wrap" hidden>
+                <div id="qualityRow" class="choices" role="group" aria-label="성질 고르기"></div>
+                <div id="numberRow" class="choices" role="group" aria-label="도수 고르기"></div>
+            </div>
 
             <div id="keyboardWrap" class="keyboard-wrap" hidden>
                 <div id="pianoKeys"></div>
