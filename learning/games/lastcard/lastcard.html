@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="game.css">
     <link rel="stylesheet" href="../../../assets/device-game.css">
     <script src="../../../assets/network/game-network.js?v=20260821"></script>
-    <script src="../../../assets/network/multiplayer-lobby.js?v=20260906"></script>
+    <script src="../../../assets/network/multiplayer-lobby.js?v=20260906b"></script>
 </head>
 <body>
     <audio id="bgm" src="/learning/games/lastcard/assets/sound/bgm.ogg" loop preload="metadata"></audio>
@@ -51,7 +51,7 @@
             <section id="joinPane" class="screen-panel lobby-card hidden">
                 <div class="mp-lobby-row">
                     <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS">
-                    <button id="joinBtn" class="primary-button" type="button" aria-label="입력한 방 번호로 참가">참가</button>
+                    <button id="joinBtn" class="primary-button" type="button" aria-label="입력한 방 번호로 참가">JOIN</button>
                 </div>
                 <p id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</p>
             </section>
@@ -65,7 +65,7 @@
                 <div class="lobby-actions">
                     <button id="startBtn" class="primary-button" type="button" disabled>WAITING FOR PLAYERS</button>
                     <div class="button-row">
-                        <button id="rulesBtnLobby" class="secondary-button" type="button">RULES</button>
+                        <button id="rulesBtnLobby" class="secondary-button" type="button">HOW TO PLAY</button>
                         <button id="leaveBtnLobby" class="secondary-button" type="button">메인 화면</button>
                     </div>
                 </div>

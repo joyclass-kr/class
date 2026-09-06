@@ -112,7 +112,7 @@
                 if (joinPane?.id) joinTab.setAttribute("aria-controls", joinPane.id);
             }
             if (joinButton) {
-                joinButton.textContent = "참가";
+                joinButton.textContent = "JOIN";
                 joinButton.setAttribute("aria-label", "입력한 방 번호로 참가");
             }
 
