@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <style>
+      /* 2D Flat Standard Korean Science Textbook / Exam Paper Style */
+      .cortex-medulla-line { stroke: #475569; stroke-width: 1.5; stroke-dasharray: 6,8; fill: none; opacity: 0.8; }
+      
+      /* Nephron Tubules: Flat solid warm yellow with amber outline */
+      .tubule-fill { fill: #fef08a; stroke: #ca8a04; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+      .duct-fill { fill: #fde68a; stroke: #b45309; stroke-width: 2.8; stroke-linejoin: round; stroke-linecap: round; }
+      
+      /* Arterial Blood Vessels: Flat solid red with clean outline */
+      .artery-thick { fill: #ef4444; stroke: #991b1b; stroke-width: 2.6; stroke-linejoin: round; }
+      .artery-thin { fill: #f87171; stroke: #b91c1c; stroke-width: 2.0; stroke-linejoin: round; }
+      .glomerulus-loop { fill: none; stroke: #dc2626; stroke-width: 4.6; stroke-linecap: round; stroke-linejoin: round; }
+      
+      /* Venous Blood Vessels: Flat solid blue with clean outline */
+      .vein-thick { fill: #3b82f6; stroke: #1d4ed8; stroke-width: 2.6; stroke-linejoin: round; }
+      
+      /* Peritubular Capillary Network */
+      .cap-art { fill: none; stroke: #ef4444; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+      .cap-trans { fill: none; stroke: #a855f7; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+      .cap-ven { fill: none; stroke: #3b82f6; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- Clean Dark Background Canvas -->
+  <rect width="1000" height="700" fill="#070d1e" />
+
+  <!-- Cortex / Medulla Demarcation Line (피질 / 수질 경계선: y=350) -->
+  <line x1="30" y1="350" x2="970" y2="350" class="cortex-medulla-line" />
+
+  <!-- ================================================================= -->
+  <!-- 1. COLLECTING DUCT (집합관) - 오른쪽 아래로 굵게 빠져나감         -->
+  <!-- ================================================================= -->
+  <g id="collectingDuct">
+    <!-- Main Broad Collecting Duct Trunk (Width = 42px) -->
+    <path class="duct-fill"
+          d="M 765,65
+             L 807,65
+             C 807,130 808,210 812,275
+             C 816,375 830,505 852,660
+             L 808,660
+             C 786,505 776,375 765,275
+             L 765,264
+             C 765,264 765,236 765,236
+             L 765,236
+             C 765,180 765,120 765,65 Z" />
+
+    <!-- Tributary branches from adjacent nephrons (교과서 집합관 가지들) -->
+    <path class="duct-fill" d="M 720,118 L 748,134 L 765,130 L 765,148 L 744,152 L 715,136 Z" />
+    <path class="duct-fill" d="M 720,365 L 748,380 L 768,376 L 769,396 L 744,398 L 715,384 Z" />
+    <path class="duct-fill" d="M 807,160 L 840,146 L 848,166 L 808,182 Z" />
+    <path class="duct-fill" d="M 812,320 L 844,308 L 852,328 L 814,342 Z" />
+
+    <!-- Center Guidance Urine Flow Line -->
+    <path d="M 786,70 C 786,200 792,380 830,655" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6,6" opacity="0.65" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 2. LOOP OF HENLE (헨레고리) - U자로 아래로 내려갔다 올라옴        -->
+  <!-- ================================================================= -->
+  <g id="loopOfHenle">
+    <!-- Continuous U-Shape Tubule (Descending thin limb, Hairpin U-turn, Ascending thick limb) -->
+    <path class="tubule-fill"
+          d="M 420,350
+             L 420,575
+             C 420,632 520,632 520,575
+             L 520,350
+             L 492,350
+             L 492,575
+             C 492,604 444,604 444,575
+             L 444,350 Z" />
+
+    <!-- Thin Segment Demarcation Ring (내림다리 얇은 분절 마커) -->
+    <ellipse cx="432" cy="460" rx="12" ry="3.5" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.2" opacity="0.8" />
+    <!-- Ascending Thick Segment Ring (올림다리 굵은 분절 마커) -->
+    <ellipse cx="506" cy="460" rx="14" ry="3.5" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.2" opacity="0.8" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 3. PROXIMAL TUBULE (세뇨관 앞부분 - 근위세뇨관)                  -->
+  <!-- ================================================================= -->
+  <g id="proximalTubule">
+    <!-- Continuous convoluted tubular path in the renal cortex -->
+    <!-- Connects seamlessly from Bowman's urinary pole into Loop of Henle -->
+    <path class="tubule-fill"
+          d="M 306,202
+             C 334,176 348,154 374,134
+             C 404,108 452,110 470,148
+             C 486,184 464,226 426,242
+             C 394,254 392,295 420,350
+             L 444,350
+             C 422,305 426,274 450,264
+             C 498,242 514,178 490,132
+             C 462,78 392,78 352,116
+             C 328,138 312,168 286,182 Z" />
+
+    <!-- Internal Flow Guide Dash -->
+    <path d="M 296,192 C 330,166 370,104 424,120 C 474,136 484,204 434,250 C 404,274 412,312 432,350"
+          fill="none" stroke="#ca8a04" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.45" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 4. DISTAL TUBULE (세뇨관 뒷부분 - 원위세뇨관)                    -->
+  <!-- ================================================================= -->
+  <g id="distalTubule">
+    <!-- Winding tubular path connecting Loop of Henle to Collecting Duct -->
+    <path class="tubule-fill"
+          d="M 492,350
+             C 492,292 516,238 546,198
+             C 578,156 636,142 676,172
+             C 712,198 728,236 765,236
+             L 765,264
+             C 716,264 698,218 668,194
+             C 634,170 592,182 568,214
+             C 538,252 520,298 520,350 Z" />
+
+    <!-- Internal Flow Guide Dash -->
+    <path d="M 506,350 C 506,275 532,215 572,190 C 622,158 672,184 702,238 C 720,250 742,250 765,250"
+          fill="none" stroke="#ca8a04" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.45" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 5. BOWMAN'S CAPSULE (보먼주머니) - 사구체를 감싼 컵 모양         -->
+  <!-- ================================================================= -->
+  <g id="bowmanCapsule">
+    <!-- Double-walled C-shaped crescent cup enclosing the glomerulus -->
+    <!-- Left notch (vascular pole) open for afferent & efferent arterioles -->
+    <!-- Right neck (urinary pole) connects to proximal tubule at (286, 182) and (306, 202) -->
+    <path class="tubule-fill"
+          d="M 194,142
+             C 270,108 334,136 332,206
+             C 330,256 292,290 234,286
+             C 212,284 198,270 194,252
+             L 216,246
+             C 220,256 228,262 242,263
+             C 282,265 308,240 306,202
+             L 286,182
+             C 292,168 280,148 244,140
+             C 230,138 214,146 194,142 Z" />
+
+    <!-- Capsular Space (보먼강 - 여과액이 모이는 공간) -->
+    <path d="M 212,146 C 270,120 318,148 316,204 C 314,244 284,272 238,271 C 218,270 210,258 204,248"
+          fill="none" stroke="#fef08a" stroke-width="8" opacity="0.5" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 6. GLOMERULUS (사구체) - 실뭉치처럼 뭉친 모세혈관                 -->
+  <!-- ================================================================= -->
+  <g id="glomerulus">
+    <!-- Capillary tuft background tone inside the cup -->
+    <circle cx="248" cy="202" r="38" fill="#7f1d1d" opacity="0.35" />
+
+    <!-- Dense anastomosing capillary loops (실뭉치 형태) -->
+    <path class="glomerulus-loop"
+          d="M 194,156
+             C 220,144 250,146 264,164
+             C 278,180 274,206 254,220
+             C 234,230 218,216 222,196
+             C 225,176 246,174 258,186
+             C 268,198 258,216 238,222
+             C 222,224 206,216 196,208" />
+
+    <!-- Interlacing capillary loops -->
+    <path d="M 226,160 C 246,166 268,178 270,198" fill="none" stroke="#fca5a5" stroke-width="2.6" stroke-linecap="round" />
+    <path d="M 232,226 C 254,228 272,216 272,196" fill="none" stroke="#ef4444" stroke-width="2.4" stroke-linecap="round" />
+    <path d="M 218,188 C 228,208 246,222 260,216" fill="none" stroke="#b91c1c" stroke-width="2.4" stroke-linecap="round" />
+    <circle cx="248" cy="202" r="4.5" fill="#fef08a" opacity="0.9" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 7. AFFERENT ARTERIOLE (들세동맥) - 사구체로 들어감 (굵게!)         -->
+  <!-- ================================================================= -->
+  <!-- Width = 32px! Noticeably thicker than efferent arteriole (high pressure) -->
+  <g id="afferentArteriole">
+    <path class="artery-thick"
+          d="M 35,120
+             L 142,124
+             C 172,128 184,136 194,144
+             L 194,176
+             C 182,168 166,160 142,156
+             L 35,152 Z" />
+
+    <!-- Lumen Central Line -->
+    <path d="M 35,136 L 142,140 C 170,143 184,150 194,160"
+          fill="none" stroke="#fca5a5" stroke-width="4.5" stroke-linecap="round" opacity="0.65" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 8. EFFERENT ARTERIOLE (날세동맥) - 사구체에서 나감 (들세동맥보다 가늘게!) -->
+  <!-- ================================================================= -->
+  <!-- Width = 14px! Less than half the thickness of afferent arteriole -->
+  <g id="efferentArteriole">
+    <path class="artery-thin"
+          d="M 194,200
+             L 220,212
+             C 248,224 270,252 282,272
+             L 270,280
+             C 260,262 240,238 216,226
+             L 194,214 Z" />
+
+    <!-- Lumen Central Line -->
+    <path d="M 194,207 C 230,220 256,246 276,276"
+          fill="none" stroke="#fca5a5" stroke-width="2.2" stroke-linecap="round" opacity="0.65" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 9. PERITUBULAR CAPILLARY (세뇨관을 휘감은 모세혈관)                -->
+  <!-- ================================================================= -->
+  <g id="peritubularCapillary">
+    <!-- Proximal Convoluted Tubule Capillary Wrap (Closed Circuit) -->
+    <path class="cap-art"
+          d="M 276,276
+             C 310,270 340,240 370,190
+             C 400,150 440,150 470,180
+             C 485,205 480,245 450,260" />
+
+    <path class="cap-art"
+          d="M 276,276
+             C 300,315 340,315 375,285
+             C 405,260 430,265 450,260" />
+
+    <!-- Vasa Recta: Descending branch along Henle's loop -->
+    <path class="cap-art"
+          d="M 450,260
+             C 430,280 400,315 400,350
+             L 400,575
+             C 400,622 468,622 468,575" />
+
+    <!-- Vasa Recta: Ascending branch along Henle's loop -->
+    <path class="cap-ven"
+          d="M 468,575 L 468,350" />
+
+    <!-- Horizontal Anastomoses across Henle's loop (Vasa recta ladder) -->
+    <path class="cap-trans"
+          d="M 400,415 C 426,420 442,410 468,415
+             M 400,485 C 426,490 442,480 468,485
+             M 400,545 C 426,550 442,540 468,545" />
+
+    <!-- Distal Tubule Capillary Wrap (Transition Purple to Blue) -->
+    <path class="cap-trans"
+          d="M 468,350
+             C 468,310 500,260 540,220
+             C 580,175 630,165 665,195
+             C 695,225 715,260 740,250" />
+
+    <path class="cap-trans"
+          d="M 540,220
+             C 570,280 620,290 665,270
+             L 740,250" />
+
+    <!-- Venous Capillary Convergence into Renal Vein -->
+    <path class="cap-ven"
+          d="M 740,250
+             C 700,295 640,340 560,345
+             C 480,350 410,345 330,348
+             C 280,352 250,358 238,366" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 10. RENAL VEIN (콩팥정맥) - 정맥혈 회수 (굵게!)                   -->
+  <!-- ================================================================= -->
+  <!-- Width = 32px! Matching thickness to afferent arteriole -->
+  <g id="renalVein">
+    <!-- Venous Vessel Trunk with Flared Confluence from Capillaries -->
+    <path class="vein-thick"
+          d="M 238,350
+             C 198,350 148,356 35,356
+             L 35,388
+             C 148,388 198,382 238,382 Z" />
+
+    <!-- Venous Lumen Center Highlight -->
+    <path d="M 238,366 C 192,366 142,372 35,372"
+          fill="none" stroke="#93c5fd" stroke-width="4.5" stroke-linecap="round" opacity="0.65" />
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- 11. INVISIBLE MOTION FLOW PATHS (stroke="none" fill="none")       -->
+  <!-- ================================================================= -->
+
+  <!-- #flowBlood : 들세동맥 → 사구체 → 날세동맥 → 세뇨관 주위 모세혈관 → 콩팥정맥 -->
+  <path id="flowBlood" fill="none" stroke="none"
+        d="M 35,136
+           L 142,140
+           C 170,143 184,150 194,158
+           C 220,144 250,146 264,164
+           C 278,180 274,206 254,220
+           C 234,230 218,216 222,196
+           C 225,176 246,174 258,186
+           C 268,198 258,216 238,222
+           C 222,224 206,216 194,207
+           C 230,220 256,246 276,276
+           C 310,270 340,240 370,190
+           C 400,150 440,150 470,180
+           C 485,205 480,245 450,260
+           C 430,280 400,315 400,350
+           L 400,575
+           C 400,622 468,622 468,575
+           L 468,350
+           C 468,310 500,260 540,220
+           C 580,175 630,165 665,195
+           C 695,225 715,260 740,250
+           C 700,295 640,340 560,345
+           C 480,350 410,345 330,348
+           C 280,352 250,358 238,366
+           C 192,366 142,372 35,372" />
+
+  <!-- #flowFiltrate : 사구체 → 보먼주머니 → 세뇨관 앞부분 → 헨레고리 → 세뇨관 뒷부분 → 집합관 -->
+  <path id="flowFiltrate" fill="none" stroke="none"
+        d="M 248,202
+           C 268,194 284,188 296,192
+           C 330,166 370,104 424,120
+           C 474,136 484,204 434,250
+           C 404,274 412,312 432,350
+           L 432,575
+           C 432,618 506,618 506,575
+           L 506,350
+           C 506,275 532,215 572,190
+           C 622,158 672,184 702,238
+           C 720,250 742,250 765,250
+           L 786,250
+           C 786,300 792,380 802,480
+           C 812,560 822,620 830,660" />
+
+  <!-- #flowReabsorb : 세뇨관 → 주위 모세혈관 (되흡수되는 짧은 길) -->
+  <path id="flowReabsorb" fill="none" stroke="none"
+        d="M 434,250 C 440,253 445,256 450,260" />
+</svg>
