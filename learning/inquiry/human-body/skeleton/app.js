@@ -182,15 +182,12 @@
 
             // Draw Dimmed Background Image
             ctx.save();
-            ctx.globalAlpha = 0.45;
+            ctx.globalAlpha = 0.22;
             ctx.drawImage(img, dx, dy, dw, dh);
             ctx.restore();
 
             // Draw Dynamic Kinematic Arm or Sarcomere Sliding Model
             drawSarcomereRig(dx, dy, dw, dh, time);
-
-            // Draw Interactive Hotspots
-            drawHotspots(dx, dy, dw, dh, time);
         } else {
             ctx.fillStyle = '#0a0f1d';
             ctx.fillRect(0, 0, width, height);
@@ -205,6 +202,7 @@
     // Scene 2: Sarcomere Sliding Filament Theory (근절 활주설)
     // ------------------------------------------------------------------------
     function drawSarcomereRig(dx, dy, dw, dh, time) {
+        smartTagBoxes = [];
         var cx = dx + 0.50 * dw;
         var cy = dy + 0.44 * dh;
 
@@ -430,6 +428,31 @@
             '🔥 수축: 마이오신 머리가 액틴을 끌어당겨 H대와 I대가 함께 감소' :
             '↔️ 이완: 액틴이 바깥으로 밀려나며 H대와 I대가 함께 증가',
             cx, hudY + 70
+        );
+
+        // ── 7. 스마트 라벨 태그 (Z선, A대, H대, I대 클릭 연동) ────
+        drawSmartTag(
+            leftZ, cy - 75,
+            leftZ - 0.12 * dw, cy - 0.14 * dh,
+            'Z선 (Z-disc)', '근절 경계 (수축 시 접근)', '#38bdf8', 0
+        );
+
+        drawSmartTag(
+            myoRight, cy,
+            myoRight + 0.12 * dw, cy + 0.05 * dh,
+            'A대 (암대)', '1.60μm (길이 절대 불변!)', '#f43f5e', 1
+        );
+
+        drawSmartTag(
+            cx, cy - 10,
+            cx + 0.12 * dw, cy - 0.12 * dh,
+            'H대 (H-zone)', '수축 시 감소 (마이오신만)', '#facc15', 2
+        );
+
+        drawSmartTag(
+            (leftZ + myoLeft) / 2, cy - 32,
+            (leftZ + myoLeft) / 2 - 0.08 * dw, cy + 0.06 * dh,
+            'I대 (명대)', '수축 시 감소 (액틴만)', '#bae6fd', 3
         );
 
         ctx.restore();
@@ -929,14 +952,15 @@
         ctx.font = 'bold 11px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(isDraggingHand ? '✊ 당기는 중...' : '✋ 마우스로 끌기', lx, ly + 0.5);
+        ctx.fillText(isDraggingHand ? '✊ 당기는 중...' : '✋ 잡고 당기기', lx, ly + 0.5);
         ctx.textBaseline = 'alphabetic';
 
         ctx.restore();
     }
 
     /** 8. 겹치지 않는 스마트 리더선 라벨 태그 */
-    function drawSmartTag(anchorX, anchorY, tagX, tagY, title, subtext, color) {
+    var smartTagBoxes = [];
+    function drawSmartTag(anchorX, anchorY, tagX, tagY, title, subtext, color, hotspotKey) {
         ctx.save();
         ctx.font = 'bold 12px Pretendard, sans-serif';
         var tw = ctx.measureText(title).width;
@@ -948,6 +972,10 @@
         var boxH = subtext ? 36 : 24;
         var bx = Math.min(Math.max(tagX - boxW / 2, 8), width - 8 - boxW);
         var by = Math.min(Math.max(tagY - boxH / 2, 88), height - 8 - boxH);
+
+        if (typeof hotspotKey !== 'undefined') {
+            smartTagBoxes.push({ x: bx, y: by, w: boxW, h: boxH, key: hotspotKey });
+        }
 
         // 앵커 닷
         ctx.fillStyle = color;
@@ -1021,6 +1049,7 @@
     }
 
     function drawArmSchematic(dx, dy, dw, dh, time) {
+        smartTagBoxes = [];
         var g = armGeometry(dx, dy, dw, dh);
         var flex = g.flex;
         var isFlexed = jointAngle < 100;
@@ -1070,43 +1099,45 @@
         // 9. 손잡이 및 드래그 조작계
         drawHandHandle(g, dh, time, isDraggingHand);
 
-        // 10. 스마트 리더선 라벨 (위치 분산으로 겹침 완벽 방지)
+        // 10. 스마트 리더선 라벨 (위치 분산으로 겹침 완벽 방지 & 클릭 연동)
         drawSmartTag(
             g.sx + 0.01 * dw, g.sy + g.upperLen * 0.35,
             g.sx + 0.16 * dw, g.sy + g.upperLen * 0.10,
-            '위팔뼈 (상완골)', '이두·삼두근의 뼈대', '#bae6fd'
+            '위팔뼈 (상완골)', '이두·삼두근의 뼈대', '#bae6fd', 0
         );
 
         drawSmartTag(
             bicMid.mx, bicMid.my,
-            bicMid.mx + 0.16 * dw, bicMid.my - 0.04 * dh,
-            '이두근 (위팔두갈래근)', isFlexed ? '수축 🔥 (두꺼워짐)' : '이완 (늘어남)', '#f43f5e'
+            bicMid.mx + 0.16 * dw, bicMid.my - 0.05 * dh,
+            '이두근 (위팔두갈래근)', isFlexed ? '수축 🔥 (두꺼워짐)' : '이완 (늘어남)', '#f43f5e', 1
         );
 
         drawSmartTag(
             triMid.mx, triMid.my,
             triMid.mx - 0.16 * dw, triMid.my,
-            '삼두근 (위팔세갈래근)', isFlexed ? '이완 (늘어남)' : '수축 🔥 (두꺼워짐)', '#38bdf8'
+            '삼두근 (위팔세갈래근)', isFlexed ? '이완 (늘어남)' : '수축 🔥 (두꺼워짐)', '#38bdf8', 2
         );
 
         drawSmartTag(
             bicepsEndX, bicepsEndY,
-            bicepsEndX + 0.14 * dw, bicepsEndY + 0.08 * dh,
-            '힘줄 (건, Tendon)', '근육 ➔ 뼈 고정·힘 전달', '#e2e8f0'
+            bicepsEndX + 0.14 * dw, bicepsEndY - 0.02 * dh,
+            '힘줄 (건, Tendon)', '근육 ➔ 뼈 고정·힘 전달', '#e2e8f0', 4
         );
 
         drawSmartTag(
             g.ex, g.ey,
             g.ex - 0.15 * dw, g.ey + 0.08 * dh,
-            '팔꿈치 관절 & 윤활액', '경첩관절 · 연골 마찰방지', '#0ea5e9'
+            '팔꿈치 관절 & 윤활액', '경첩관절 · 연골 마찰방지', '#0ea5e9', 3
         );
 
         var midForeX = (g.ex + g.wx) / 2;
         var midForeY = (g.ey + g.wy) / 2;
+        var pxFore = -g.fy, pyFore = g.fx;
+        var foreTagDist = 0.11 * dh;
         drawSmartTag(
             midForeX, midForeY,
-            midForeX + 0.12 * dw, midForeY + 0.10 * dh,
-            '노뼈(앞) · 자뼈(뒤)', '이두근 ➔ 노뼈 당김', '#93c5fd'
+            midForeX + pxFore * foreTagDist, midForeY + pyFore * foreTagDist,
+            '노뼈(앞) · 자뼈(뒤)', '이두근 ➔ 노뼈 당김', '#93c5fd', 5
         );
 
         // 11. 좌측 상단 상태 판 (클램핑 적용)
@@ -1251,6 +1282,25 @@
                 var clickX = event.clientX - rect.left;
                 var clickY = event.clientY - rect.top;
 
+                // 1. 공통: 스마트 리더선 라벨 카드 클릭 확인
+                for (var ti = 0; ti < smartTagBoxes.length; ti++) {
+                    var tb = smartTagBoxes[ti];
+                    if (clickX >= tb.x && clickX <= tb.x + tb.w && clickY >= tb.y && clickY <= tb.y + tb.h) {
+                        var spotTag = hotspots[currentSceneKey] && hotspots[currentSceneKey][tb.key];
+                        if (spotTag) {
+                            if (organTitleEl) organTitleEl.textContent = spotTag.title;
+                            if (organDescEl) organDescEl.innerHTML = spotTag.desc;
+                            if (organDetailCard) {
+                                organDetailCard.style.display = 'block';
+                                organDetailCard.style.borderColor = '#38bdf8';
+                                organDetailCard.style.boxShadow = '0 0 16px rgba(56, 189, 248, 0.35)';
+                            }
+                            if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
+                        }
+                        return;
+                    }
+                }
+
                 if (currentSceneKey === 'joint') {
                     var g = armGeometry(0, 0, width, height);
                     if (Math.hypot(clickX - g.wx, clickY - g.wy) <= 0.085 * height) {
@@ -1263,7 +1313,7 @@
                         return;
                     }
 
-                    // 도식 위의 부위를 누르면 오른쪽 설명이 바뀐다
+                    // 도식 위의 해부학적 랜드마크 핀 클릭 확인
                     for (var pi = 0; pi < jointPins.length; pi++) {
                         var pin = jointPins[pi];
                         if (Math.hypot(clickX - pin.x, clickY - pin.y) <= pin.r) {
@@ -1271,7 +1321,11 @@
                             if (info) {
                                 if (organTitleEl) organTitleEl.textContent = info.title;
                                 if (organDescEl) organDescEl.innerHTML = info.desc;
-                                if (organDetailCard) organDetailCard.style.display = 'block';
+                                if (organDetailCard) {
+                                    organDetailCard.style.display = 'block';
+                                    organDetailCard.style.borderColor = '#38bdf8';
+                                    organDetailCard.style.boxShadow = '0 0 16px rgba(56, 189, 248, 0.35)';
+                                }
                                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
                             }
                             return;
@@ -1332,7 +1386,16 @@
                     return;
                 }
 
-                // Hover cursor feedback
+                // 스마트 태그 카드 호버
+                for (var ti = 0; ti < smartTagBoxes.length; ti++) {
+                    var tb = smartTagBoxes[ti];
+                    if (moveX >= tb.x && moveX <= tb.x + tb.w && moveY >= tb.y && moveY <= tb.y + tb.h) {
+                        canvas.style.cursor = 'pointer';
+                        return;
+                    }
+                }
+
+                // 관절 드래그 핸들 및 핀 호버
                 if (currentSceneKey === 'joint') {
                     var g = armGeometry(0, 0, width, height);
                     if (Math.hypot(moveX - g.wx, moveY - g.wy) <= 0.085 * height) {
@@ -1346,8 +1409,8 @@
                             return;
                         }
                     }
-                    canvas.style.cursor = 'default';
                 }
+                canvas.style.cursor = 'default';
             });
 
             canvas.addEventListener('pointerup', function (event) {
