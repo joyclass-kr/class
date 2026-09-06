@@ -65,8 +65,20 @@
         { id: "maj7", label: "장7화음", tones: [[0, 0], [2, 4], [4, 7], [6, 11]] },
         { id: "dom7", label: "속7화음", tones: [[0, 0], [2, 4], [4, 7], [6, 10]] },
         { id: "min7", label: "단7화음", tones: [[0, 0], [2, 3], [4, 7], [6, 10]] },
+        { id: "mmaj7", label: "단장7화음", tones: [[0, 0], [2, 3], [4, 7], [6, 11]] },
         { id: "m7b5", label: "반감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 10]] },
-        { id: "dim7", label: "감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 9]] }
+        { id: "dim7", label: "감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 9]] },
+        { id: "maj7s5", label: "증장7화음", tones: [[0, 0], [2, 4], [4, 8], [6, 11]] }
+    ];
+
+    const TRIAD_IDS = ["maj", "min", "dim", "aug"];
+    const SEVENTH_IDS = ["dom7", "maj7", "min7", "mmaj7", "m7b5", "dim7", "maj7s5"];
+
+    /* 화음 자리 */
+    const POSITIONS = [
+        { id: "root", label: "근음 자리", inversion: 0 },
+        { id: "first", label: "첫째 자리바꿈", inversion: 1 },
+        { id: "second", label: "둘째 자리바꿈", inversion: 2 }
     ];
 
     /* 음계 -------------------------------------------------------------- */
@@ -129,6 +141,27 @@
         });
     }
 
+    /* 증3화음은 자리를 바꿔도 구조가 같아 귀로 가릴 수 없으므로 뺀다. */
+    const POSITION_QUALITIES = CHORDS.filter(item => ["maj", "min", "dim"].indexOf(item.id) >= 0);
+
+    /* 화음을 자리바꿈하고, 베이스가 너무 높아지면 한 옥타브 내린다. */
+    function invertChord(notes, inversion) {
+        let list = notes.slice();
+        for (let step = 0; step < inversion; step += 1) {
+            const low = list.shift();
+            list.push(N.spell(low.letterAbs + 7, low.accidental));
+        }
+        while (Math.min.apply(null, list.map(note => note.midi)) >= 72) {
+            list = list.map(note => N.spell(note.letterAbs - 7, note.accidental));
+        }
+        return list.slice().sort((a, b) => a.midi - b.midi);
+    }
+
+    function chordNotes(rootAbs, item, inversion) {
+        const root = N.natural(rootAbs);
+        return invertChord(item.tones.map(tone => N.step(root, tone[0], tone[1])), inversion || 0);
+    }
+
     /* 문제 만들기 --------------------------------------------------------- */
 
     function intervalQuestion(item, mode) {
@@ -155,16 +188,44 @@
 
     function chordQuestion(item, mode) {
         const shape = mode === "mixed" ? pick(["harmony", "arp"]) : mode;
-        const root = N.natural(pick(item.id === "aug" ? [28, 29, 30, 31, 32] : LOW_ROOTS));
-        const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
+        const rootAbs = pick(LOW_ROOTS);
+        /* 증3화음은 자리를 바꿔도 구조가 같아 귀로 가릴 수 없다. */
+        const allowed = item.id === "aug" || item.id === "dim7" ? [0] : (session.inversions || [0]);
+        const inversion = pick(allowed);
+        const notes = chordNotes(rootAbs, item, inversion);
         const midis = notes.map(note => note.midi);
+        const rootNotes = chordNotes(rootAbs, item, 0);
         return {
             playback: shape === "arp"
                 ? { groups: midis.map(midi => [midi]), beat: .5 }
                 : { groups: [midis], beat: 2.2 },
+            arpeggio: { groups: midis.map(midi => [midi]), beat: .5 },
+            rootPlay: { groups: [rootNotes.map(note => note.midi)], beat: 2.2 },
             staffBefore: [null],
             staffAfter: [{ notes: notes }],
             keyboard: null,
+            detail: N.name(notes[0]) + " …  " + notes.map(N.name).join(" · ")
+        };
+    }
+
+    /* 화음 자리 알아맞히기: 화음 이름을 알려 주고 어느 자리인지 묻는다. */
+    function positionQuestion(item, mode) {
+        const shape = mode === "arp" ? "arp" : "harmony";
+        const quality = pick(POSITION_QUALITIES);
+        const rootAbs = pick(LOW_ROOTS);
+        const notes = chordNotes(rootAbs, quality, item.inversion);
+        const midis = notes.map(note => note.midi);
+        const rootNotes = chordNotes(rootAbs, quality, 0);
+        return {
+            playback: shape === "arp"
+                ? { groups: midis.map(midi => [midi]), beat: .5 }
+                : { groups: [midis], beat: 2.2 },
+            arpeggio: { groups: midis.map(midi => [midi]), beat: .5 },
+            rootPlay: { groups: [rootNotes.map(note => note.midi)], beat: 2.2 },
+            staffBefore: [null],
+            staffAfter: [{ notes: notes }],
+            keyboard: null,
+            ask: N.LETTER_NAMES[N.natural(rootAbs).letter] + " " + quality.label + "은 어느 자리인가요?",
             detail: notes.map(N.name).join(" · ")
         };
     }
@@ -260,16 +321,34 @@
             items: CHORDS,
             inputs: ["buttons"],
             levels: [
-                { id: "easy", label: "쉬움", ids: ["maj", "min"] },
-                { id: "mid", label: "보통", ids: ["maj", "min", "dim", "aug"] },
+                { id: "easy", label: "장·단", ids: ["maj", "min"] },
+                { id: "mid", label: "3화음", ids: TRIAD_IDS },
+                { id: "seventh", label: "7화음", ids: SEVENTH_IDS },
                 { id: "hard", label: "전부", ids: CHORDS.map(item => item.id) }
             ],
+            inversionOption: true,
             modes: [
                 { id: "harmony", label: "함께" },
                 { id: "arp", label: "펼쳐서" },
                 { id: "mixed", label: "섞어서" }
             ],
             make: chordQuestion
+        },
+        {
+            id: "position",
+            name: "화음 자리",
+            ask: "어느 자리인가요?",
+            items: POSITIONS,
+            inputs: ["buttons"],
+            levels: [
+                { id: "easy", label: "근음 자리·첫째", ids: ["root", "first"] },
+                { id: "hard", label: "셋 다", ids: POSITIONS.map(item => item.id) }
+            ],
+            modes: [
+                { id: "harmony", label: "함께" },
+                { id: "arp", label: "펼쳐서" }
+            ],
+            make: positionQuestion
         },
         {
             id: "scale",
@@ -380,6 +459,7 @@
         mode: "",
         input: "buttons",
         limit: 10,
+        inversions: [0],
         enabled: new Set(),
         pool: [],
         current: null,
@@ -449,6 +529,7 @@
             : "";
         session.input = drill.inputs.indexOf(remembered.input) >= 0 ? remembered.input : drill.inputs[0];
         session.limit = [10, 20, 0].indexOf(remembered.limit) >= 0 ? remembered.limit : 10;
+        session.inversions = remembered.inversions === "all" ? [0, 1, 2] : [0];
         const kept = Array.isArray(remembered.items)
             ? remembered.items.filter(id => drill.items.some(item => item.id === id))
             : [];
@@ -456,6 +537,7 @@
         els.setupTitle.textContent = drill.name;
         els.modeField.hidden = drill.modes.length === 0;
         els.inputField.hidden = drill.inputs.length < 2;
+        els.inversionField.hidden = !drill.inversionOption;
         els.itemField.hidden = drill.pickable === false;
         renderSetup();
         showScreen("setup");
@@ -493,6 +575,14 @@
             { id: "keyboard", label: "건반" }
         ].filter(option => drill.inputs.indexOf(option.id) >= 0), session.input, id => {
             session.input = id;
+            renderSetup();
+        });
+
+        chipRow(els.inversionRow, [
+            { id: "root", label: "근음 자리만" },
+            { id: "all", label: "자리바꿈까지" }
+        ], session.inversions.length > 1 ? "all" : "root", id => {
+            session.inversions = id === "all" ? [0, 1, 2] : [0];
             renderSetup();
         });
 
@@ -598,7 +688,9 @@
             els.lessonBody.append(node);
         });
         els.lessonExamples.innerHTML = "";
-        lesson.examples.forEach(id => els.lessonExamples.append(exampleBlock(id)));
+        lesson.examples.forEach(entry => els.lessonExamples.append(
+            typeof entry === "string" ? intervalExample(entry) : chordExample(entry)
+        ));
         els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
         setLessonMark(course.id, lesson.id, { read: true });
         showScreen("lesson");
@@ -610,9 +702,9 @@
         { id: "harmony", label: "함께" }
     ];
 
-    function exampleBlock(intervalId) {
+    function intervalExample(intervalId) {
         const item = INTERVALS.find(entry => entry.id === intervalId);
-        const root = N.natural(item.semis > 12 ? 28 : 30);
+        const root = N.natural(28);
         const top = N.step(root, item.degree, item.semis);
         const block = document.createElement("div");
         block.className = "example";
@@ -655,12 +747,49 @@
         return block;
     }
 
+    const POSITION_LABEL = ["근음 자리", "첫째 자리바꿈", "둘째 자리바꿈", "셋째 자리바꿈"];
+
+    function chordExample(entry) {
+        const item = CHORDS.find(chord => chord.id === entry.chord);
+        const inversion = entry.inversion || 0;
+        const notes = chordNotes(28, item, inversion);
+        const midis = notes.map(note => note.midi);
+
+        const block = document.createElement("div");
+        block.className = "example";
+
+        const caption = document.createElement("p");
+        caption.className = "example-caption";
+        caption.textContent = item.label + (entry.inversion === undefined ? "" : " · " + POSITION_LABEL[inversion]);
+        block.append(caption);
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "example-play is-wide";
+        button.append(N.render(
+            [{ notes: notes }].concat(notes.map(note => ({ notes: [note] }))),
+            { label: item.label }
+        ));
+        const tag = document.createElement("span");
+        tag.textContent = "함께 · 펼쳐서";
+        button.append(tag);
+        button.addEventListener("click", () => {
+            window.PianoEngine.playSequence([midis], 1.6).catch(() => {});
+            window.setTimeout(() => {
+                window.PianoEngine.playSequence(midis.map(midi => [midi]), .48).catch(() => {});
+            }, 1500);
+        });
+        block.append(button);
+        return block;
+    }
+
     function startLessonDrill(lesson) {
         const drill = DRILL_BY_ID[lesson.drill.drillId || "interval"];
         session.drill = drill;
         session.mode = lesson.drill.mode || (drill.modes[0] && drill.modes[0].id) || "";
         session.input = lesson.drill.input || "buttons";
         session.limit = lesson.drill.limit || 10;
+        session.inversions = lesson.drill.inversions || [0];
         session.enabled = new Set(lesson.drill.items);
         session.fromLesson = { courseId: course.id, lessonId: lesson.id };
         beginRound();
@@ -684,6 +813,7 @@
             mode: session.mode,
             input: session.input,
             limit: session.limit,
+            inversions: session.inversions.length > 1 ? "all" : "root",
             items: Array.from(session.enabled)
         };
         persist();
@@ -720,13 +850,14 @@
         session.typed = [];
         session.answered = false;
 
-        els.askText.textContent = drill.ask;
+        els.askText.textContent = question.ask || drill.ask;
         els.feedback.textContent = "";
         els.feedback.className = "feedback";
         els.nextButton.hidden = true;
         els.songHint.hidden = true;
         els.songHint.textContent = "";
 
+        els.helpRow.hidden = !question.arpeggio;
         drawStaff(question.staffBefore);
         setupInput(question);
         updateScore();
@@ -747,6 +878,7 @@
             keyboard.clearMarks();
             keyboard.setEnabled(true);
             question.keyboard.given.forEach(given => keyboard.mark(given.midi, "given", given.text));
+            keyboard.centerOn(question.keyboard.given[0].midi);
             els.typedCount.hidden = question.keyboard.answer.length < 2;
             els.typedCount.textContent = "0 / " + question.keyboard.answer.length;
             return;
@@ -777,6 +909,12 @@
             els.feedback.textContent = "소리를 낼 수 없습니다. 소리 설정을 확인해 주세요.";
             els.feedback.className = "feedback wrong";
         });
+    }
+
+    function playExtra(which) {
+        const source = session.current && session.current[which];
+        if (!source || !window.PianoEngine) return;
+        window.PianoEngine.playSequence(source.groups, source.beat).catch(() => {});
     }
 
     function answerByName(chosen) {
@@ -963,7 +1101,8 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "setupScreen", "drillScreen", "resultScreen",
             "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "drillList", "setupTitle",
+            "lessonNext", "drillList", "setupTitle", "inversionField", "inversionRow",
+            "helpRow", "arpButton", "rootButton",
             "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",
             "itemPicker", "startButton", "setupWarning", "askText", "staff", "scoreText", "stopButton",
             "replayButton", "skipButton", "choices", "keyboardWrap", "pianoKeys", "typedCount",
@@ -979,6 +1118,8 @@
         els.startButton.addEventListener("click", startDrill);
         els.replayButton.addEventListener("click", play);
         els.skipButton.addEventListener("click", skipQuestion);
+        els.arpButton.addEventListener("click", () => playExtra("arpeggio"));
+        els.rootButton.addEventListener("click", () => playExtra("rootPlay"));
         els.nextButton.addEventListener("click", nextQuestion);
         els.stopButton.addEventListener("click", finishDrill);
         els.againButton.addEventListener("click", () => {

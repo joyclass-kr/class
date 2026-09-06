@@ -147,5 +147,144 @@
         ]
     };
 
-    window.EarCourses = [INTERVAL_COURSE];
+
+    const CHORD_COURSE = {
+        id: "chord",
+        name: "화음",
+        lessons: [
+            {
+                id: "triads",
+                kind: "text",
+                title: "3화음",
+                body: [
+                    "3화음은 음 세 개로 된 가장 기본이 되는 화음입니다. 밑음, 그 위 3도, 다시 그 위 3도로 쌓으면 맨 아래와 맨 위가 5도가 됩니다.",
+                    "아래 3도가 장3도인지 단3도인지, 그리고 바깥 5도가 완전5도인지 아닌지에 따라 장·단·감·증 네 가지로 갈립니다. 화음이 통째로 안 들리면 펼쳐 듣기로 한 음씩 확인해 보세요."
+                ],
+                examples: [
+                    { chord: "maj" },
+                    { chord: "min" },
+                    { chord: "dim" },
+                    { chord: "aug" }
+                ]
+            },
+            {
+                id: "major-minor-drill",
+                kind: "drill",
+                title: "장3화음과 단3화음 가리기",
+                drill: { drillId: "chord", items: ["maj", "min"], mode: "harmony", limit: 10 }
+            },
+            {
+                id: "triads-drill",
+                kind: "drill",
+                title: "3화음 네 가지 가려듣기",
+                drill: { drillId: "chord", items: ["maj", "min", "dim", "aug"], mode: "mixed", limit: 15 }
+            },
+            {
+                id: "inversions",
+                kind: "text",
+                title: "화음 자리바꿈",
+                body: [
+                    "실제 음악에서는 밑음이 맨 아래 있는 근음 자리만 쓰지 않습니다. 맨 아래 음을 한 옥타브 올리면 첫째 자리바꿈, 아래 두 음을 올리면 둘째 자리바꿈이 됩니다.",
+                    "첫째 자리바꿈은 바깥 두 음이 6도가 되고, 둘째 자리바꿈은 아래 두 음이 완전4도가 됩니다. 이 두 소리를 먼저 익히면 자리를 가릴 수 있습니다.",
+                    "증3화음은 자리를 바꿔도 쌓인 모양이 그대로여서 귀로는 가릴 수 없습니다. 그래서 자리 문제에는 넣지 않습니다."
+                ],
+                examples: [
+                    { chord: "maj", inversion: 0 },
+                    { chord: "maj", inversion: 1 },
+                    { chord: "maj", inversion: 2 },
+                    { chord: "min", inversion: 1 },
+                    { chord: "min", inversion: 2 }
+                ]
+            },
+            {
+                id: "position-drill",
+                kind: "drill",
+                title: "화음 자리 가려듣기",
+                drill: { drillId: "position", items: ["root", "first", "second"], mode: "harmony", limit: 15 }
+            },
+            {
+                id: "triads-inv-drill",
+                kind: "drill",
+                title: "자리바꿈까지 섞은 3화음",
+                drill: {
+                    drillId: "chord",
+                    items: ["maj", "min", "dim", "aug"],
+                    mode: "mixed",
+                    inversions: [0, 1, 2],
+                    limit: 15
+                }
+            },
+            {
+                id: "dom7-maj7",
+                kind: "text",
+                title: "속7화음과 장7화음",
+                body: [
+                    "3화음 위에 3도를 하나 더 쌓으면 7화음이 됩니다. 장3화음 위에 단3도를 얹으면 속7화음, 장3도를 얹으면 장7화음입니다.",
+                    "속7화음은 어딘가로 풀려야 할 것처럼 들리고, 장7화음은 그 자리에 머무는 부드러운 소리입니다. 맨 아래 음과 맨 위 음이 단7도인지 장7도인지를 들으면 갈립니다."
+                ],
+                examples: [
+                    { chord: "dom7" },
+                    { chord: "maj7" }
+                ]
+            },
+            {
+                id: "dom7-maj7-drill",
+                kind: "drill",
+                title: "속7화음과 장7화음 가리기",
+                drill: { drillId: "chord", items: ["dom7", "maj7"], mode: "mixed", limit: 10 }
+            },
+            {
+                id: "min7-mmaj7",
+                kind: "text",
+                title: "단7화음과 단장7화음",
+                body: [
+                    "단3화음 위에 단3도를 얹으면 단7화음, 장3도를 얹으면 단장7화음입니다. 단7화음은 흔하게 쓰이고, 단장7화음은 아래는 어둡고 위는 팽팽한 독특한 소리가 납니다.",
+                    "아래 3화음이 장인지 단인지를 먼저 듣고, 그다음 맨 위 7음이 단7도인지 장7도인지를 듣는 순서로 가리면 헷갈리지 않습니다."
+                ],
+                examples: [
+                    { chord: "min7" },
+                    { chord: "mmaj7" }
+                ]
+            },
+            {
+                id: "min7-mmaj7-drill",
+                kind: "drill",
+                title: "단7화음과 단장7화음 가리기",
+                drill: { drillId: "chord", items: ["min7", "mmaj7"], mode: "mixed", limit: 10 }
+            },
+            {
+                id: "other7",
+                kind: "text",
+                title: "나머지 7화음",
+                body: [
+                    "감3화음 위에 단3도를 얹으면 감7화음, 장3도를 얹으면 반감7화음입니다. 감7화음은 단3도만 세 번 쌓여 어디가 밑음인지 알 수 없는 소리가 납니다.",
+                    "증3화음 위에 단3도를 얹으면 증장7화음입니다. 셋 다 흔하지는 않지만 소리가 뚜렷해서 한 번 익히면 잘 잊히지 않습니다."
+                ],
+                examples: [
+                    { chord: "m7b5" },
+                    { chord: "dim7" },
+                    { chord: "maj7s5" }
+                ]
+            },
+            {
+                id: "other7-drill",
+                kind: "drill",
+                title: "나머지 7화음 가려듣기",
+                drill: { drillId: "chord", items: ["m7b5", "dim7", "maj7s5"], mode: "mixed", limit: 12 }
+            },
+            {
+                id: "all7-drill",
+                kind: "drill",
+                title: "7화음 일곱 가지 전부",
+                drill: {
+                    drillId: "chord",
+                    items: ["dom7", "maj7", "min7", "mmaj7", "m7b5", "dim7", "maj7s5"],
+                    mode: "mixed",
+                    limit: 20
+                }
+            }
+        ]
+    };
+
+    window.EarCourses = [INTERVAL_COURSE, CHORD_COURSE];
 })();

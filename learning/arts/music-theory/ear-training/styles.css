@@ -262,10 +262,12 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     border-top-color: #566475;
     border-radius: 8px;
     background: #070a0e;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    touch-action: pan-x;
 }
 
-.keyboard-whites { position: relative; display: flex; height: 100%; }
+.keyboard-whites { position: relative; display: flex; height: 100%; min-width: 460px; }
 
 .key { position: relative; padding: 0; border: 1px solid #aab2bc; cursor: pointer; }
 
@@ -308,7 +310,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     line-height: 1;
 }
 
-.key-black .key-mark { bottom: 5px; width: 21px; height: 21px; font-size: 13px; }
+.key-black .key-mark { bottom: 5px; width: 19px; height: 19px; font-size: 12px; }
 .key.is-given .key-mark { background: #46d38b; clip-path: polygon(50% 4%, 96% 96%, 4% 96%); }
 .key.is-right .key-mark { background: #46d38b; }
 .key.is-typed .key-mark { background: #e7c774; }
@@ -320,8 +322,9 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 @media (max-width: 520px) {
     .ask { font-size: 18px; }
-    .keyboard { height: 128px; }
-    .key-mark { width: 21px; height: 21px; font-size: 13px; }
+    .keyboard { height: 132px; }
+    .key-mark { width: 20px; height: 20px; font-size: 13px; }
+    .help-row { grid-template-columns: 1fr; }
 }
 
 /* 차시 목록 */
@@ -385,3 +388,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     .lesson-row .lesson-mark { grid-row: 1 / 3; }
     .example-staves { grid-template-columns: 1fr; }
 }
+
+.help-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.example-play.is-wide { width: 100%; }

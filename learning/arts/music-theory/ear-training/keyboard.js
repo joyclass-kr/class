@@ -73,6 +73,12 @@
                 key.classList.add("is-" + kind);
                 key.querySelector(".key-mark").textContent = text || "";
             },
+            centerOn: function (midi) {
+                const key = keys.get(midi);
+                if (!key) return;
+                const target = key.offsetLeft + key.offsetWidth / 2 - container.clientWidth / 2;
+                container.scrollLeft = Math.max(0, target);
+            },
             setEnabled: function (enabled) {
                 keys.forEach(key => { key.disabled = !enabled; });
             }
