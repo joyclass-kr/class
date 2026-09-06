@@ -45,6 +45,8 @@
         N: 4, J: 8, W: 0, V: 0, A: 0, K: 4, Pa: 8, Hz: 0,         // 뉴턴 줄 와트 볼트 암페어 켈빈 파스칼 헤르츠
         kW: 0, kJ: 8, kPa: 8, kHz: 0, cal: 0, kcal: 0,            // 칼로리
         '℃': 0, '%': 0, 'Ω': 16, 'mol': 8,                        // 도 퍼센트 옴 몰(ㄹ)
+        C: 21, 'μC': 21, 'µC': 21, nC: 21, pC: 21, mC: 21,          // 쿨롱(ㅇ)
+        F: 19, pF: 19, nF: 19, 'μF': 19, 'µF': 19, eV: 0, T: 0,   // 패럿(ㅅ) 전자볼트 테슬라
     };
     const UNIT_RE = new RegExp('(' + Object.keys(UNIT_JONG)
         .sort((a, b) => b.length - a.length)
