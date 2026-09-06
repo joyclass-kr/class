@@ -5,7 +5,7 @@
 .mode-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
 .mode-buttons.three { grid-template-columns: repeat(3, 1fr); }
 .mode-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 13px; cursor: pointer; }
-.mode-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
+.mode-buttons button small { color: #334155; font-size: 14px; font-weight: 800; }
 .mode-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
 .mode-buttons button.selected small { color: #0369a1; }
 
@@ -13,7 +13,7 @@
 .pick-buttons.cols2 { grid-template-columns: 1fr 1fr; }
 .pick-buttons.cols3 { grid-template-columns: repeat(3, 1fr); }
 .pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
+.pick-buttons button small { color: #334155; font-size: 14px; font-weight: 800; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -79,9 +79,9 @@
 .data-row.match .data-val { color: var(--mint); }
 
 /* the sky and the ground */
-.sky { fill: #0d2a44; stroke: rgba(148, 163, 184, 0.35); stroke-width: 1; }
-.sky.cloudy { fill: #2a3a48; }
-.ground { fill: #3a4a3a; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.sky { fill: #f0f9ff; stroke: #bae6fd; stroke-width: 1.4; rx: 12; }
+.sky.cloudy { fill: #f1f5f9; stroke: #cbd5e1; }
+.ground { fill: #f0fdf4; stroke: #bbf7d0; stroke-width: 1.4; rx: 8; }
 .sun-arc { fill: none; stroke-width: 1.4; stroke: rgba(217, 119, 6, .28); }
 .sun-arc.now { stroke: rgba(217, 119, 6, .85); stroke-width: 1.8; }
 .sun { fill: #c2410c; stroke: #fff3c4; stroke-width: 1.2; }
@@ -99,15 +99,15 @@
 .power-bar { stroke: rgba(255, 255, 255, .25); stroke-width: .8; }
 
 /* the energy road */
-.box { fill: #10222c; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1.2; }
-.box.lit { stroke: var(--mint); }
-.box-text { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.4; rx: 10; filter: drop-shadow(0 2px 6px rgba(15, 23, 42, 0.05)); }
+.box.lit { stroke: var(--primary); fill: #f0f9ff; }
+.box-text { fill: #0f172a; font-size: 14.5px; font-weight: 900; }
 .box-sub { fill: #334155; font-size: 13.5px; font-weight: 800; }
 .band { fill: #ffb347; opacity: .85; }
 .band.elec { fill: #0284c7; }
 .band.light { fill: #c2410c; }
-.heat { stroke: #ff7a59; stroke-width: 1.8; fill: none; }
-.heat-text { fill: #ff9a7a; font-size: 14px; font-weight: 900; }
+.heat { stroke: #ea580c; stroke-width: 2; fill: none; }
+.heat-text { fill: #c2410c; font-size: 14px; font-weight: 900; }
 .glow { fill: #c2410c; }
 .stack-seg { stroke: rgba(255, 255, 255, .3); stroke-width: .8; }
 .seg-text { font-size: 13.5px; font-weight: 900; }

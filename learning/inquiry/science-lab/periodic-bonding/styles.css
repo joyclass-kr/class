@@ -2,7 +2,7 @@
     --ink: #0f172a;
     --ink-heading: #0f172a;
     --muted: #475569;
-    --muted-light: #64748b;
+    --muted-light: #334155;
     --panel: #ffffff;
     --panel-card: #f8fafc;
     --line: #cbd5e1;
@@ -618,4 +618,22 @@ input[type=range]::-moz-range-thumb {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+
+/* High-contrast readable button subtext */
+button small {
+    display: block;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.3;
+    transition: color 0.15s ease;
+}
+button:hover small {
+    color: #0f172a;
+}
+button.selected small {
+    color: inherit;
+    font-weight: 850;
 }

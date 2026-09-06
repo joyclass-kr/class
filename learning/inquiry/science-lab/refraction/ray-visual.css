@@ -5,7 +5,7 @@
 .medium-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 9px; }
 .dir-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
 .medium-buttons button, .dir-buttons button { padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; cursor: pointer; font-size: 13px; }
-.medium-buttons button small { display: block; margin-top: 2px; color: var(--muted-light); font-size: 14px; font-weight: 800; }
+.medium-buttons button small { display: block; margin-top: 2px; color: #334155; font-size: 14px; font-weight: 800; }
 .medium-buttons button.selected, .dir-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
 .medium-buttons button.selected small { color: #0369a1; }
 

@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // vapour rising, more from a warmer sea
         const nV = Math.round(a.es / 6), rise = clamp(p / 0.35, 0, 1);
         for (let i = 0; i < nV; i += 1) { const x = 50 + i * (200 / Math.max(1, nV - 1)), y0 = 138, y1 = 138 - 26 * rise - ((i * 7) % 12); out += arrow(x, y0, x, y1, 'vapor', 'vapor-head', 2.5); }
-        out += `<text class="small-label" style="fill:#97dad3" x="160" y="134" text-anchor="middle">수증기 ${a.es.toFixed(0)} hPa (${a.heat ? '넉넉함' : '모자람'})</text>`;
+        out += `<text class="small-label" style="fill:#0369a1" x="160" y="134" text-anchor="middle">수증기 ${a.es.toFixed(0)} hPa (${a.heat ? '넉넉함' : '모자람'})</text>`;
         const cx = 150, cy = 82;
         if (!a.heat) { for (let i = 0; i < 3; i += 1) out += cloud(90 + i * 70, 96 - (i % 2) * 8, 9, 'cloud-weak'); out += `<text class="trait-text" style="fill:#dc2626" x="${cx}" y="46" text-anchor="middle">수증기가 모자라 구름이 자라지 못함</text>`; }
         else if (!a.cor) { const g = clamp((p - 0.3) / 0.5, 0, 1); for (let i = 0; i < 5; i += 1) out += cloud(cx - 60 + i * 30, cy + 8 - (i % 2) * 12, 8 + 6 * g); out += `<text class="trait-text" style="fill:#dc2626" x="${cx}" y="42" text-anchor="middle">구름은 크게 자라지만 전향력이 0 — 소용돌이로 감기지 않음</text>`; }
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // trade wind
         const len = 40 + 30 * (1 + t);
         out += arrow(230 + len / 2, 40, 230 - len / 2, 40, 'trade', 'trade-head', 4);
-        out += `<text class="small-label" style="fill:#97dad3" x="230" y="54" text-anchor="middle">무역풍 ${TRADES[state.trade].label} (동 → 서)</text>`;
+        out += `<text class="small-label" style="fill:#0369a1" x="230" y="54" text-anchor="middle">무역풍 ${TRADES[state.trade].label} (동 → 서)</text>`;
         // rain over the warm side
         const rainAt = (x, amt) => { let s = ''; for (let i = 0; i < Math.round(amt * 4); i += 1) s += `<line class="rain" x1="${x - 16 + i * 8}" y1="${34 + (i % 2) * 4}" x2="${x - 19 + i * 8}" y2="${44 + (i % 2) * 4}"/>`; return s; };
         out += cloud(70, 32, 7 * Math.min(1.6, 0.5 + rainW * 0.5)) + rainAt(70, rainW);

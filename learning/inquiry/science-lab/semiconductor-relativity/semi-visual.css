@@ -5,7 +5,7 @@
 .mode-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
 .mode-buttons.three { grid-template-columns: repeat(3, 1fr); }
 .mode-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 13px; cursor: pointer; }
-.mode-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
+.mode-buttons button small { color: #334155; font-size: 14px; font-weight: 800; }
 .mode-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
 .mode-buttons button.selected small { color: #0369a1; }
 
@@ -14,7 +14,7 @@
 .pick-buttons.cols3 { grid-template-columns: repeat(3, 1fr); }
 .pick-buttons.cols3 button { font-size: 13px; padding: 8px 3px; }
 .pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
+.pick-buttons button small { color: #334155; font-size: 14px; font-weight: 800; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -97,16 +97,16 @@
 .depl { fill: rgba(148, 163, 184, 0.22); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; stroke-dasharray: 3 3; }
 .hole { fill: none; stroke: #dc2626; stroke-width: 1.2; }
 .electron { fill: #0284c7; }
-.meter { fill: #0a1c24; stroke: #0f172a; stroke-width: 1.6; }
+.meter { fill: #ffffff; stroke: #475569; stroke-width: 1.8; }
 
 /* muons */
-.column { fill: rgba(82, 199, 255, .06); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.column { fill: rgba(2, 132, 199, .06); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
 .ground { fill: rgba(148, 163, 184, 0.35); }
 .detector { fill: #c2410c; }
 .muon { fill: #dc2626; }
 .muon.dead { fill: rgba(255, 159, 138, .18); }
-.clock { fill: #0a1c24; stroke: #0f172a; stroke-width: 1.2; }
-.clock-hand { stroke: #d97706; stroke-width: 1.6; }
+.clock { fill: #ffffff; stroke: #475569; stroke-width: 1.6; }
+.clock-hand { stroke: #d97706; stroke-width: 2; }
 
 /* ship and energy */
 .ship-rest { fill: none; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1.2; stroke-dasharray: 4 3; }

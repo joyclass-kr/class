@@ -218,7 +218,7 @@ html, body {
         /* 아래 칸을 auto로 두면 사이드바가 제 내용 높이(700px 남짓)만큼
            늘어나서 정작 봐야 할 시뮬레이션이 띠처럼 눌린다.
            위 칸에 화면 절반을 보장하고, 사이드바는 스스로 스크롤하게 한다. */
-        grid-template-rows: minmax(300px, 52vh) minmax(0, 1fr);
+        grid-template-rows: minmax(340px, 58vh) minmax(0, 1fr);
     }
 
     /* 그리드 칸 안에서 스크롤이 생기려면 min-height를 풀어 줘야 한다 */

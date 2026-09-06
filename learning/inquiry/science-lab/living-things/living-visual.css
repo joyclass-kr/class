@@ -4,7 +4,7 @@
 .mode-field legend, .pick-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .mode-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
 .mode-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 13px; cursor: pointer; }
-.mode-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
+.mode-buttons button small { color: #334155; font-size: 14px; font-weight: 800; }
 .mode-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
 .mode-buttons button.selected small { color: #0369a1; }
 
@@ -15,7 +15,7 @@
 .pick-buttons.cols4 button { font-size: 13px; padding: 8px 2px; }
 .pick-buttons.cols5 { grid-template-columns: repeat(5, 1fr); }
 .pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
+.pick-buttons button small { color: #334155; font-size: 14px; font-weight: 800; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -83,24 +83,24 @@
 .data-val { color: #0f172a; font-weight: 850; }
 .data-row.match .data-val { color: var(--mint); }
 /* cards and boxes */
-.box { fill: rgba(150, 210, 235, .05); stroke: rgba(177, 226, 230, .45); stroke-width: 1.2; stroke-dasharray: 5 4; }
-.box.filled { stroke-dasharray: none; }
-.box-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
-.card { fill: #10202a; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
-.card.hit { stroke: #059669; stroke-width: 1.6; }
-.card-icon { font-size: 18px; }
-.card-name { fill: #0f172a; font-size: 13.5px; font-weight: 800; }
-.count-text { fill: #059669; font-size: 14px; font-weight: 900; }
+.box { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.4; stroke-dasharray: 5 4; rx: 12; }
+.box.filled { stroke-dasharray: none; stroke: #94a3b8; }
+.box-title { fill: #0f172a; font-size: 14.5px; font-weight: 900; }
+.card { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.4; rx: 10; filter: drop-shadow(0 2px 5px rgba(15, 23, 42, 0.05)); }
+.card.hit { stroke: #059669; stroke-width: 2; fill: #f0fdf4; }
+.card-icon { font-size: 20px; }
+.card-name { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.count-text { fill: #059669; font-size: 14.5px; font-weight: 900; }
 .rule-text { fill: #c2410c; font-size: 14px; font-weight: 900; }
 
 /* habitat */
-.scene { fill: #0b1a2a; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
-.scene.desert { fill: #4a3a1e; }
-.scene.polar { fill: #1d3a63; }
-.scene.water { fill: #123a5a; }
-.scene.forest { fill: #14321c; }
-.trait-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.scene { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.4; rx: 12; }
+.scene.desert { fill: #fef3c7; stroke: #fde68a; }
+.scene.polar { fill: #eff6ff; stroke: #bfdbfe; }
+.scene.water { fill: #e0f2fe; stroke: #bae6fd; }
+.scene.forest { fill: #ecfdf5; stroke: #a7f3d0; }
+.trait-text { fill: #0f172a; font-size: 14px; font-weight: 850; }
 .trait-good { fill: #059669; }
-.trait-bad { fill: #ff7d6b; }
+.trait-bad { fill: #dc2626; }
 .bar { stroke: rgba(255, 255, 255, .25); stroke-width: .8; }
 .bar-text { font-size: 14px; font-weight: 900; }

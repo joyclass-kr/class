@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const divPx = r.div * PX;
         if (divPx >= 1.5) for (let mm = 0; mm <= 135; mm += r.div) { const x = SX + mm * PX, cm = Math.abs(mm % 10) < 1e-9, five = Math.abs(mm % 5) < 1e-9; out += `<line class="ruler-tick" x1="${x.toFixed(1)}" y1="${SY + 18}" x2="${x.toFixed(1)}" y2="${SY + 18 + (cm ? 12 : five ? 8 : 5)}"/>`; }
         else for (let mm = 0; mm <= 135; mm += 1) { const x = SX + mm * PX, cm = mm % 10 === 0; out += `<line class="ruler-tick" x1="${x.toFixed(1)}" y1="${SY + 18}" x2="${x.toFixed(1)}" y2="${SY + 18 + (cm ? 12 : 5)}"/>`; }
-        for (let cm = 0; cm <= 13; cm += 1) out += `<text class="axis-text" style="fill:#3a3a3a;font-size:8.5px" x="${(SX + cm * 10 * PX).toFixed(1)}" y="${SY + 42}" text-anchor="middle">${cm}</text>`;
+        for (let cm = 0; cm <= 13; cm += 1) out += `<text class="axis-text" style="fill:#0f172a;font-size:11px;font-weight:700" x="${(SX + cm * 10 * PX).toFixed(1)}" y="${SY + 43}" text-anchor="middle">${cm}</text>`;
         out += `<line class="marker" x1="${endX.toFixed(1)}" y1="${SY - 6}" x2="${endX.toFixed(1)}" y2="${SY + 46}"/>`;
         // zoom on the end of the stick: one division either side
         const ZX = 300, ZY = 34, ZW = 140, ZH = 50;

@@ -242,13 +242,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // counts at the right
         out += `<text class="part-label" x="318" y="60">${Math.floor(q.t)}달째</text>`;
-        out += `<text class="count-text" fill="#6fbf73" x="318" y="88">풀 ${Math.round(q.G)}</text>`;
-        out += `<text class="count-text" fill="#d8d3c8" x="318" y="112">토끼 ${Math.round(q.R)}마리</text>`;
-        out += `<text class="count-text" fill="#e0782f" x="318" y="136">여우 ${Math.round(q.F)}마리</text>`;
+        out += `<text class="count-text" fill="#059669" x="318" y="88">풀 ${Math.round(q.G)}</text>`;
+        out += `<text class="count-text" fill="#334155" x="318" y="112">토끼 ${Math.round(q.R)}마리</text>`;
+        out += `<text class="count-text" fill="#ea580c" x="318" y="136">여우 ${Math.round(q.F)}마리</text>`;
         out += `<text class="note-text" x="318" y="160">처음: 풀 ${START.G} · 토끼 ${START.R} · 여우 ${START.F}</text>`;
         if (a.ev.note && q.t >= EVENT_MONTH) out += `<text class="event-text" x="318" y="180">${EVENT_MONTH}달째 ${a.ev.note}</text>`;
         const VERD = { 'rabbit-up': '토끼가 늘어난다', 'rabbit-down': '토끼가 줄어든다', steady: '거의 변하지 않는다' };
-        out += `<text class="verdict-text" fill="#d8d3c8" x="20" y="16">${a.ev.label} → 그 뒤 ${VERD[a.verdict]}</text>`;
+        out += `<text class="verdict-text" fill="#0f172a" x="20" y="16">${a.ev.label} → 그 뒤 ${VERD[a.verdict]}</text>`;
         out += `<text class="note-text" x="20" y="206">그림의 풀 한 포기 = 풀 3 · 토끼 한 마리 그림 = 2마리 · 여우는 한 마리씩</text>`;
         return out;
     }

@@ -21,7 +21,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.bar-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; transition: color 0.15s ease; }
+.bar-buttons button small { color: #334155; font-size: 14px; font-weight: 800; transition: color 0.15s ease; }
 .bar-buttons button:hover {
     border-color: var(--line-bright);
     color: var(--ink);
@@ -104,12 +104,12 @@
 .mallet.striking { animation: malletStrike 0.52s cubic-bezier(0.34, 0.8, 0.5, 1); }
 
 /* Oscilloscope screen */
-.scope-bg { fill: #030910; stroke: rgba(56, 189, 248, 0.3); stroke-width: 1.5; }
-.scope-axis { stroke: rgba(56, 189, 248, 0.35); stroke-width: 1; stroke-dasharray: 4 4; }
-.scope-axis-v { stroke: rgba(56, 189, 248, 0.2); stroke-width: 1; stroke-dasharray: 2 4; }
-.scope-wave { fill: none; stroke: #34d399; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.scope-envelope { fill: none; stroke: rgba(251, 191, 36, 0.75); stroke-width: 1.4; stroke-dasharray: 4 3; }
-.scope-caption { fill: #7e9fa0; font-size: 14px; font-weight: 800; }
+.scope-bg { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; rx: 8; }
+.scope-axis { stroke: #cbd5e1; stroke-width: 1; stroke-dasharray: 4 4; }
+.scope-axis-v { stroke: #e2e8f0; stroke-width: 1; stroke-dasharray: 2 4; }
+.scope-wave { fill: none; stroke: #0284c7; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+.scope-envelope { fill: none; stroke: #ea580c; stroke-width: 1.6; stroke-dasharray: 4 3; }
+.scope-caption { fill: #0f172a; font-size: 14px; font-weight: 850; }
 
 @media (max-width: 600px) {
     .bar-buttons { grid-template-columns: 1fr; }

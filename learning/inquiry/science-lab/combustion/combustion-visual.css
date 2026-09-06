@@ -7,7 +7,7 @@
 .pick-buttons.cols2 { grid-template-columns: 1fr 1fr; }
 .pick-buttons.cols3 { grid-template-columns: repeat(3, 1fr); }
 .pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
+.pick-buttons button small { color: #334155; font-size: 14px; font-weight: 800; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -52,37 +52,37 @@
 .main-svg, .graph-svg { width: 100%; max-width: 560px; margin: 0 auto; height: auto; display: block; }
 
 .glass { fill: rgba(150, 210, 235, .08); stroke: rgba(177, 226, 230, .7); stroke-width: 2.2; }
-.stand { fill: #4a5a63; stroke: rgba(190, 235, 242, .45); stroke-width: 1.2; }
-.steel { stroke: #9aa6ad; stroke-width: 1.6; fill: none; }
-.steel.burnt { stroke: #7a4a30; }
-.wood { fill: #a9803f; stroke: #d9b070; stroke-width: 1.4; }
-.wood.ash { fill: #6b6b6b; stroke: #9a9a9a; }
-.flame { fill: #ff9d4d; }
-.flame.inner { fill: #c2410c; }
-.burner-flame { fill: #0284c7; opacity: .8; }
-.smoke { stroke: rgba(200, 210, 215, .35); stroke-width: 2; fill: none; }
+.stand { fill: #64748b; stroke: #475569; stroke-width: 1.4; }
+.steel { stroke: #64748b; stroke-width: 1.8; fill: none; }
+.steel.burnt { stroke: #78350f; }
+.wood { fill: #b45309; stroke: #78350f; stroke-width: 1.4; }
+.wood.ash { fill: #64748b; stroke: #475569; }
+.flame { fill: #f59e0b; }
+.flame.inner { fill: #dc2626; }
+.burner-flame { fill: #0284c7; opacity: .9; }
+.smoke { stroke: rgba(100, 116, 139, .5); stroke-width: 2; fill: none; }
 .gas-arrow { stroke-width: 2.2; fill: none; stroke-linecap: round; }
 .gas-in { stroke: #0284c7; }
 .gas-out { stroke: #ea580c; }
-.balance { fill: #26333c; stroke: rgba(190, 235, 242, .45); stroke-width: 1.4; }
-.balance-screen { fill: #0d1b16; stroke: rgba(84, 230, 193, .5); stroke-width: 1.2; }
-.balance-read { fill: var(--mint); font-size: 15px; font-weight: 900; }
+.balance { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.8; rx: 8px; }
+.balance-screen { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.6; rx: 4px; }
+.balance-read { fill: #059669; font-size: 16px; font-weight: 900; }
 
-.part-label { fill: #334155; font-size: 14px; font-weight: 800; }
-.small-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
-.read-text { fill: var(--mint); font-size: 14px; font-weight: 900; }
-.note-text { fill: #475569; font-size: 14px; font-weight: 800; }
+.part-label { fill: #0f172a; font-size: 14px; font-weight: 800; }
+.small-label { fill: #334155; font-size: 13.5px; font-weight: 800; }
+.read-text { fill: #059669; font-size: 14px; font-weight: 900; }
+.note-text { fill: #334155; font-size: 14px; font-weight: 800; }
 .verdict-text { font-size: 14px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
 .axis-text { fill: #334155; font-size: 14px; font-weight: 800; }
 .axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
-.bar { stroke: rgba(255, 255, 255, .25); stroke-width: .8; }
+.bar { stroke: rgba(0, 0, 0, .2); stroke-width: .8; }
 .bar-text { font-size: 14px; font-weight: 900; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 122px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
 .data-name { color: #475569; font-weight: 750; }
 .data-val { color: #0f172a; font-weight: 850; }
-.data-row.match .data-val { color: var(--mint); }
+.data-row.match .data-val { color: #059669; }
