@@ -1,5 +1,5 @@
 // PWA Service Worker for 가정통신문 & 출결 알림
-const CACHE_NAME = 'gyesang-notice-v2';
+const CACHE_NAME = 'notice-forms-v3';
 const ASSETS_TO_CACHE = [
   '/notice/index.html',
   '/notice/manifest.json',

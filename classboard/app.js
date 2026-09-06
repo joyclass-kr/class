@@ -1,5 +1,11 @@
 const API_BASE = '/api';
 
+// 홈 화면에 깔아 두고 쓰는 학부모가 있다. 껍데기만이라도 캐시에 둔다.
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/classboard/sw.js')
+        .catch(error => console.error('SW 등록 실패', error));
+}
+
 // DOM Elements
 const userInfoEl = document.getElementById('userInfo');
 const composerSection = document.getElementById('composerSection');
@@ -86,6 +92,15 @@ async function initApp() {
             settingsLink.className = 'settings-link';
             settingsLink.innerHTML = '<span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle;">settings</span> 내 정보 설정';
             userInfoEl.appendChild(settingsLink);
+        }
+        if (viewerRole === 'teacher') {
+            // 여기서 쓰는 글은 자기 반·그룹 게시판에 붙는다. 전교나 동아리처럼
+            // 고른 사람에게 보내는 가정통신문은 발송 화면에서 낸다.
+            const sendLink = document.createElement('a');
+            sendLink.href = '/teacher/';
+            sendLink.className = 'settings-link';
+            sendLink.innerHTML = '<span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle;">send</span> 가정통신문 보내기';
+            userInfoEl.appendChild(sendLink);
         }
 
         await loadBoards();
