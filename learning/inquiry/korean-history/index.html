@@ -6,26 +6,28 @@
 <title>한능검 기본 기출</title>
 <meta name="description" content="한국사능력검정시험 기본 기출문제를 시대 단원과 회차로 골라 한 화면에서 이어 풉니다.">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-<link rel="stylesheet" href="styles.css?v=20260906-1">
+<link rel="stylesheet" href="styles.css?v=20260906-3">
 </head>
 <body>
 
-<header class="topbar">
-  <a class="back" href="../../../index.html" aria-label="메인 화면으로 돌아가기">←</a>
-  <h1 class="topbar-title">한능검 기본 기출</h1>
-</header>
+<a class="home-back" href="../../../index.html" aria-label="메인 화면으로 돌아가기">←</a>
 
 <main>
-  <!-- 단원 카드 그리드 (기존의 아이콘 분류 화면) -->
-  <section class="unit-section" aria-label="시대 단원별 기출">
-    <div class="unit-grid" id="unit-grid"></div>
-  </section>
-
-  <!-- 보조 필터 및 제어 바 -->
-  <section class="picker" aria-label="회차 및 학습 옵션">
-    <div class="picker-row picker-row--exam">
-      <span class="picker-label" id="exam-label">회차</span>
-      <div class="chips" role="group" aria-labelledby="exam-label" id="exam-chips"></div>
+  <!-- 고르기 (수학기출 2단계 탭 & 회차 선택 UI) -->
+  <section class="picker" aria-label="고르기">
+    <div class="picker-row picker-row--era">
+      <span class="picker-label" id="era-label">시대</span>
+      <div class="era-tabs" role="tablist" aria-labelledby="era-label" id="era-tabs"></div>
+    </div>
+    <div class="picker-row picker-row--unit" id="unit-row" hidden>
+      <span class="picker-label" id="unit-label">단원</span>
+      <div class="chips" role="group" aria-labelledby="unit-label" id="unit-chips"></div>
+    </div>
+    <div class="picker-row picker-row--select">
+      <label class="picker-label" for="exam-select">회차</label>
+      <div class="picker-select-wrap">
+        <select class="picker-select" id="exam-select" aria-label="회차 선택"></select>
+      </div>
     </div>
     <div class="picker-row picker-row--tail">
       <p class="count" id="count" role="status"></p>
@@ -35,7 +37,7 @@
     </div>
   </section>
 
-  <!-- 문제 목록 (단원/회차 선택 시 노출) -->
+  <!-- 문제 목록 (크롬북/아이패드 2열 및 최적 시험지 배율) -->
   <ol class="list" id="list"></ol>
   <div class="more-wrap" id="more-wrap" hidden>
     <button type="button" class="btn-more" id="btn-more">더 보기</button>
@@ -47,8 +49,8 @@
   <p>문제지의 저작권은 국사편찬위원회에 있습니다. 이곳은 학습용으로 문항을 옮겨 싣고 회차와 번호를 밝힙니다.</p>
 </footer>
 
-<script src="data/questions.js?v=20260906-1"></script>
-<script src="data/explanations.js?v=20260906-1"></script>
-<script src="app.js?v=20260906-1"></script>
+<script src="data/questions.js?v=20260906-3"></script>
+<script src="data/explanations.js?v=20260906-3"></script>
+<script src="app.js?v=20260906-3"></script>
 </body>
 </html>
