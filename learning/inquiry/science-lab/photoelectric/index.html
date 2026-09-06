@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="금속과 빛의 색·밝기를 바꾸어 광전자가 나오는지와 그 에너지를 광자 에너지 hf − 일함수로 계산하고, 수소 원자의 전자가 어느 에너지 준위에서 어느 준위로 내려올 때 어떤 파장의 빛이 나오는지 보어 모형으로 구하고, 가속된 전자와 야구공의 물질파 파장을 드브로이 식으로 견주어 전자 현미경의 원리를 확인하는 고등학교 물리학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="photo-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>광전 효과·에너지 준위·물질파</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 2~3학년</span><span>물리학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>광전 효과, 수소 원자의 빛, 물질파 가운데 하나를 고릅니다.</li>
+            <li>금속과 빛의 색·밝기, 전자가 내려오는 두 준위, 파장을 잴 물체를 정합니다.</li>
+            <li>전자가 튀어나올지와 그 에너지, 나오는 빛이 눈에 보일지, 파장이 원자보다 클지 예상합니다.</li>
+            <li>시작해서 광자와 전자의 움직임, 준위 사이의 뜀과 빛, 물결의 파장을 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">광자 하나의 에너지 hf가 일함수를 넘어야 전자가 나옵니다. 밝기는 개수만 바꿉니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="photo">광전 효과<small>전자가 튀어나올까</small></button>
+                        <button type="button" data-mode="hydrogen">수소 원자의 빛<small>어떤 색이 나올까</small></button>
+                        <button type="button" data-mode="matter">물질파<small>파장은 얼마나 짧을까</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">빛 비추기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">진공관 왼쪽의 금속판에 빛(물결)을 비춥니다. 파란 점이 튀어나온 전자이고 오른쪽 판에 닿으면 전류계 바늘이 움직입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>광전 효과와 광자</strong> 빛은 hf(h = 6.63×10⁻³⁴ J·s, f는 진동수)의 에너지를 가진 알갱이, 곧 광자의 흐름입니다. 금속 속 전자를 떼어내는 데 드는 최소 에너지가 일함수 W이고, 광자 하나의 에너지가 W보다 커야 전자가 튀어나옵니다. 남는 에너지 hf − W가 전자의 최대 운동 에너지입니다. 빛을 밝게 하면 광자 수가 늘어 전자 수(전류)만 늘고 전자 한 개의 에너지는 그대로이며, 진동수가 문턱보다 낮으면 아무리 밝아도 전자가 나오지 않습니다. 파동 이론으로는 설명이 안 되는 이 사실을 아인슈타인이 광자로 설명했습니다.</p>
+                <p><strong>보어 모형과 선 스펙트럼</strong> 수소 원자의 전자는 E = −13.6/n² eV의 정해진 에너지 준위에만 있을 수 있습니다. 높은 준위에서 낮은 준위로 내려올 때 두 준위의 차이만큼의 에너지를 광자 하나로 내놓으므로 파장은 λ = 1240 nm·eV ÷ ΔE입니다. n = 2로 내려오는 발머 계열(656·486·434·410 nm)만 눈에 보이고, n = 1로 가는 라이먼 계열은 자외선, n = 3으로 가는 파셴 계열은 적외선입니다. 원소마다 준위가 달라 스펙트럼선이 지문처럼 다르고, 별빛의 선으로 별의 성분을 알아냅니다.</p>
+                <p><strong>물질파</strong> 드브로이는 빛이 알갱이이기도 하다면 전자 같은 알갱이도 파동이라고 보았습니다. 파장은 λ = h/p(p = 질량 × 속력)입니다. 100 V로 가속한 전자의 파장은 0.12 nm로 원자 크기와 비슷해 결정에서 회절하고, 야구공의 파장은 10⁻³⁴ m라서 파동성을 볼 길이 없습니다. 전자 현미경은 수만 V로 가속해 파장을 0.01 nm 아래로 줄여, 파장이 500 nm쯤인 빛으로는 볼 수 없는 원자 배열까지 봅니다.</p>
+                <p><strong>이중성</strong> 빛은 간섭·회절에서는 파동으로, 광전 효과에서는 알갱이로 행동하고, 전자도 마찬가지입니다. 어느 한쪽이 진짜가 아니라, 실험이 무엇을 묻느냐에 따라 두 얼굴이 나타납니다. 이것이 양자 물리의 출발점입니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>광전 효과에서 같은 색의 빛을 더 밝게 비추면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 전자 한 개의 에너지가 커진다</label>
+                        <label><input type="radio" name="q1" value="b"> 튀어나오는 전자 수만 늘고 전자 한 개의 에너지는 그대로다</label>
+                        <label><input type="radio" name="q1" value="c"> 안 나오던 전자가 나오기 시작한다</label>
+                        <label><input type="radio" name="q1" value="d"> 전자가 더 오래 걸려 나온다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>밝기는 광자의 개수입니다. 전자 하나는 광자 하나를 받아 튀어나오므로 전자 수(전류)만 늘고, 전자 한 개의 최대 에너지 hf − W는 진동수로만 정해집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>빨간 빛을 아무리 밝게 비춰도 전자가 안 나오는 금속에 어두운 보라 빛을 비추면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 광자 하나의 에너지가 일함수를 넘으면 어두워도 곧바로 전자가 나온다</label>
+                        <label><input type="radio" name="q2" value="b"> 어두우면 에너지가 모자라 안 나온다</label>
+                        <label><input type="radio" name="q2" value="c"> 한참 기다려 에너지가 쌓여야 나온다</label>
+                        <label><input type="radio" name="q2" value="d"> 색은 상관없고 밝기만 문제다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>보라 빛의 광자(3.1 eV)는 빨간 빛의 광자(1.9 eV)보다 에너지가 큽니다. 일함수를 넘는 광자는 하나만 부딪혀도 전자를 떼어내므로 밝기와 상관없이 즉시 나옵니다. 에너지가 쌓이기를 기다린다는 것은 파동 이론의 예상이고 실험과 맞지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>수소 원자의 전자가 n = 3에서 n = 2로 내려올 때 나오는 빛은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 자외선</label>
+                        <label><input type="radio" name="q3" value="b"> 파란빛 486 nm</label>
+                        <label><input type="radio" name="q3" value="c"> 빨간빛 656 nm</label>
+                        <label><input type="radio" name="q3" value="d"> 적외선</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>ΔE = 13.6 × (1/4 − 1/9) = 1.89 eV이고 λ = 1240 ÷ 1.89 = 656 nm입니다. 발머 계열의 첫 선으로 수소 방전관이 붉게 보이는 까닭입니다. 4→2가 486 nm 파란빛입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>전자 현미경이 빛 현미경보다 훨씬 작은 것을 볼 수 있는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 전자가 빛보다 빠르기 때문에</label>
+                        <label><input type="radio" name="q4" value="b"> 전자가 전기를 띠어 물체에 달라붙기 때문에</label>
+                        <label><input type="radio" name="q4" value="c"> 전자가 빛보다 밝기 때문에</label>
+                        <label><input type="radio" name="q4" value="d"> 가속된 전자의 물질파 파장이 빛의 파장보다 훨씬 짧기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>파장보다 작은 것은 파동으로 구별할 수 없습니다. 빛은 파장이 500 nm쯤이지만 10,000 V로 가속한 전자의 물질파 파장은 0.012 nm라 4만 배 작은 것까지 구별합니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
