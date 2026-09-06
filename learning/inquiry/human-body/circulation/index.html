@@ -92,22 +92,22 @@
                         <div class="meter-card-title">
                             <span>생체 변수 실시간 조절</span>
                         </div>
-                        <div style="display:flex; flex-direction:column; gap:12px; margin-top:6px;">
-                            <div class="sim-slider-wrapper">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                        <div class="circulation-slider-group">
+                            <div class="circulation-slider-item">
+                                <div class="circulation-slider-header">
                                     <span class="sim-slider-label">심박수 (BPM)</span>
                                     <span id="bpmSliderVal" class="sim-slider-value" style="color:#ef4444; font-weight:700;">72 BPM</span>
                                 </div>
                                 <input id="bpmSlider" class="sim-slider" type="range" min="50" max="130" value="72" step="1">
-                                <div id="bpmStateDesc" style="font-size:11px; color:#22c55e; margin-top:3px;">안정 시 정상 (표준 60~80)</div>
+                                <div id="bpmStateDesc" class="circulation-slider-desc" style="color:#22c55e;">안정 시 정상 (표준 60~80)</div>
                             </div>
-                            <div class="sim-slider-wrapper">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <div class="circulation-slider-item">
+                                <div class="circulation-slider-header">
                                     <span class="sim-slider-label">산소 포화도 (SpO2)</span>
                                     <span id="o2Val" class="sim-slider-value" style="color:#38bdf8; font-weight:700;">98 %</span>
                                 </div>
                                 <input id="o2Slider" class="sim-slider" type="range" min="70" max="100" value="98" step="1">
-                                <div id="o2StateDesc" style="font-size:11px; color:#22c55e; margin-top:3px;">🟢 정상 산소 (선홍색 동맥혈)</div>
+                                <div id="o2StateDesc" class="circulation-slider-desc" style="color:#22c55e;">🟢 정상 산소 (선홍색 동맥혈)</div>
                             </div>
                         </div>
                     </div>
@@ -159,9 +159,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260906u"></script>
-    <script src="../shared/exam-data.js?v=20260906u"></script>
-    <script src="app.js?v=20260906u"></script>
-    <script src="heart-flow.js?v=20260906u"></script>
+    <script src="../shared/engine-core.js?v=20260906v"></script>
+    <script src="../shared/exam-data.js?v=20260906v"></script>
+    <script src="app.js?v=20260906v"></script>
+    <script src="heart-flow.js?v=20260906v"></script>
 </body>
 </html>

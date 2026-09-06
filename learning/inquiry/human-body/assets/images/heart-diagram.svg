@@ -1,105 +1,92 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
   <!--
-    심장·폐·온몸 순환 도식 (2022 개정 / 시험 그림 기준)
-    ※ 이것은 뼈대용 밑그림이다. 더 예쁘게 다시 그려도 좋으나 아래 약속은 지켜야 한다.
-
-    1. viewBox 는 "0 0 1000 700" 그대로.
-    2. 다음 id 를 가진 요소를 모두 남길 것. 코드가 이름으로 찾아 쓴다.
-       lungs  bodyCapillaries
-       rightAtrium  rightVentricle  leftAtrium  leftVentricle  septum
-       valveTricuspid  valveMitral  valvePulmonary  valveAortic
-       vesselVenaCava  vesselPulmonaryArtery  vesselPulmonaryVein  vesselAorta
-    3. 피가 흐르는 길 #flowPulmonary, #flowSystemic 을 새 그림에 맞게 다시 그을 것.
-       보이지 않는 안내선이며 피 알갱이가 이 길을 따라 흐른다. 방향(그리는 순서)도 그대로:
-         flowPulmonary : 우심방 ➔ 우심실 ➔ 폐동맥 ➔ 폐 ➔ 폐정맥 ➔ 좌심방
-         flowSystemic  : 좌심방 ➔ 좌심실 ➔ 대동맥 ➔ 온몸 ➔ 대정맥 ➔ 우심방
-       길의 딱 절반 지점이 폐(또는 온몸)여야 한다. 거기서 피 색이 바뀐다.
-    4. 글자(<text>)는 넣지 않는다. 이름표는 코드가 우리말로 붙인다.
-    5. 화면 왼쪽이 우심방·우심실(환자 기준 오른쪽). 좌심실 벽은 우심실보다 두껍게.
-    6. 방과 큰 혈관의 fill 은 코드가 다시 칠하므로 단색으로 둘 것.
+    심장·폐·온몸 순환 도식 (2022 개정 / 시험 표준 해부학 고화질 벡터)
   -->
 
   <defs>
     <!-- 폐 음영 그라데이션 -->
     <linearGradient id="lungGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#334155"/>
-      <stop offset="50%" stop-color="#1e293b"/>
-      <stop offset="100%" stop-color="#0f172a"/>
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#070a12"/>
     </linearGradient>
     <linearGradient id="lungGradRight" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#334155"/>
-      <stop offset="50%" stop-color="#1e293b"/>
-      <stop offset="100%" stop-color="#0f172a"/>
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#070a12"/>
     </linearGradient>
 
     <!-- 모세혈관 베드 그라데이션 -->
     <linearGradient id="capillaryBedGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#0369a1" stop-opacity="0.35"/>
-      <stop offset="50%" stop-color="#475569" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#be123c" stop-opacity="0.35"/>
+      <stop offset="0%" stop-color="#0369a1" stop-opacity="0.30"/>
+      <stop offset="50%" stop-color="#334155" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#be123c" stop-opacity="0.30"/>
     </linearGradient>
 
     <!-- 심장 외벽 근육 그라데이션 -->
     <linearGradient id="myoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
       <stop offset="50%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#070a12"/>
     </linearGradient>
 
+    <!-- 판막 전용 소프트 필터 -->
+    <filter id="valveGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
     <style>
-      .organ-outline { stroke: #64748b; stroke-width: 2.2; stroke-linejoin: round; }
-      .chamber { stroke: #cbd5e1; stroke-width: 2.5; stroke-linejoin: round; }
+      .organ-outline { stroke: #475569; stroke-width: 2.2; stroke-linejoin: round; }
+      .chamber { stroke: #cbd5e1; stroke-width: 2.4; stroke-linejoin: round; }
       .vessel { stroke: #cbd5e1; stroke-width: 2.5; stroke-linejoin: round; }
-      .valve { stroke: #ffffff; stroke-width: 2.2; fill: #f8fafc; filter: drop-shadow(0 0 3px rgba(255,255,255,0.6)); }
-      .chordae { stroke: #f1f5f9; stroke-width: 1.4; stroke-dasharray: 2,2; opacity: 0.8; }
+      .valve-leaflet { fill: #f8fafc; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; filter: url(#valveGlow); }
+      .chordae { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 2,3; stroke-linecap: round; opacity: 0.75; }
+      .papillary { fill: #334155; stroke: #475569; stroke-width: 1.2; }
       .bronchial { stroke: #38bdf8; stroke-width: 1.8; fill: none; opacity: 0.45; stroke-linecap: round; }
-      .alveoli { fill: #38bdf8; opacity: 0.25; }
+      .alveoli { fill: #38bdf8; opacity: 0.35; }
       .cap-net { fill: none; stroke-linecap: round; }
     </style>
   </defs>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- 1. 배경 연결 가이드 및 흉강 구조선                            -->
+  <!-- 1. 배경 흉강 및 척추 해부학 가이드                              -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <g id="thoracicContext" opacity="0.3">
-    <!-- 흉곽 실루엣 가이드 -->
-    <path d="M120 180 C120 40 880 40 880 180 C880 450 820 620 500 680 C180 620 120 450 120 180 Z"
+  <g id="thoracicContext" opacity="0.25">
+    <path d="M120 180 C120 35 880 35 880 180 C880 460 820 625 500 680 C180 625 120 460 120 180 Z"
           fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="6,6"/>
-    <!-- 척추 중심선 -->
-    <line x1="500" y1="40" x2="500" y2="670" stroke="#1e293b" stroke-width="2" stroke-dasharray="4,8"/>
+    <line x1="500" y1="35" x2="500" y2="675" stroke="#1e293b" stroke-width="2" stroke-dasharray="4,8"/>
   </g>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <!-- 2. 폐 (Lungs, 위쪽)                                            -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <g id="lungs">
-    <!-- 왼쪽 폐 (환자 기준 우폐 - 3엽 구조: 상엽, 중엽, 하엽) -->
-    <!-- BBox: x: 196..340, y: 32..180 -->
+    <!-- 우폐 (환자 기준 우폐 - 3엽 구조) BBox: x: 196..344, y: 36..180 -->
     <path class="organ-outline" fill="url(#lungGradLeft)"
-          d="M298 34 C245 36 200 68 196 112 C194 138 206 166 235 178 C266 182 296 178 322 165 C340 142 344 105 340 68 C336 45 320 34 298 34 Z"/>
+          d="M295 36 C245 38 200 68 196 112 C194 138 208 168 238 178 C270 182 300 176 324 162 C342 140 346 102 342 66 C338 46 320 36 295 36 Z"/>
     <!-- 우폐 엽 분할선 (수평열 & 사열) -->
-    <path d="M202 118 C238 122 284 116 338 102 M218 152 C255 148 290 140 326 128"
-          fill="none" stroke="#475569" stroke-width="1.8" stroke-dasharray="3,3"/>
-    
-    <!-- 오른쪽 폐 (환자 기준 좌폐 - 2엽 구조 & 심장패임 Cardiac Notch) -->
-    <!-- BBox: x: 660..804, y: 32..180 -->
-    <path class="organ-outline" fill="url(#lungGradRight)"
-          d="M702 34 C724 34 740 45 744 68 C748 105 744 142 726 165 C700 178 670 182 639 178 C668 166 680 138 678 112 C674 68 629 36 702 34 Z"/>
-    <!-- 좌폐 엽 분할선 (사열) & 심장패임 -->
-    <path d="M676 102 C720 118 762 136 794 150"
-          fill="none" stroke="#475569" stroke-width="1.8" stroke-dasharray="3,3"/>
+    <path d="M202 118 C242 122 288 116 340 100 M220 152 C258 148 294 138 328 126"
+          fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="3,3"/>
 
-    <!-- 기관(Trachea) 및 좌우 기관지(Bronchial Trees) -->
+    <!-- 좌폐 (환자 기준 좌폐 - 2엽 구조 & 심장패임) BBox: x: 656..804, y: 36..180 -->
+    <path class="organ-outline" fill="url(#lungGradRight)"
+          d="M705 36 C728 36 746 46 750 66 C754 102 750 140 732 162 C706 176 676 182 644 178 C674 168 688 138 686 112 C682 68 637 38 705 36 Z"/>
+    <!-- 좌폐 엽 분할선 & 심장패임선 -->
+    <path d="M682 100 C724 116 768 134 798 148"
+          fill="none" stroke="#475569" stroke-width="1.6" stroke-dasharray="3,3"/>
+
+    <!-- 기관(Trachea) & 좌우 기관지 수형도 -->
     <g class="bronchial">
-      <!-- 중앙 기관지 분기 -->
-      <path d="M500 30 L500 58 L460 84 L410 102 M500 58 L540 84 L590 102"/>
-      <!-- 좌측 기관지 가지 -->
-      <path d="M298 56 L298 152 M298 84 L258 106 M298 112 L260 136 M298 132 L274 150 M320 92 L332 118"/>
-      <!-- 우측 기관지 가지 -->
-      <path d="M702 56 L702 152 M702 84 L742 106 M702 112 L740 136 M702 132 L726 150 M680 92 L668 118"/>
+      <path d="M500 32 L500 58 L460 84 L410 102 M500 58 L540 84 L590 102"/>
+      <path d="M295 56 L295 152 M295 86 L255 108 M295 114 L258 138 M295 132 L272 150 M318 92 L330 118"/>
+      <path d="M705 56 L705 152 M705 86 L745 108 M705 114 L742 138 M705 132 L728 150 M682 92 L670 118"/>
     </g>
 
-    <!-- 폐포 모세혈관망 (Alveolar Capillary Plexus) 미세 비드 -->
+    <!-- 폐포 모세혈관망 미세 비드 -->
     <g class="alveoli">
       <circle cx="248" cy="88" r="7"/><circle cx="236" cy="116" r="8"/>
       <circle cx="252" cy="142" r="7"/><circle cx="320" cy="140" r="7"/>
@@ -107,141 +94,139 @@
       <circle cx="748" cy="142" r="7"/><circle cx="680" cy="140" r="7"/>
     </g>
 
-    <!-- 폐 모세혈관 가스교환 브릿지 (기체 교환 루프: CO2 방출 ➔ O2 흡수) -->
-    <path d="M322 168 C350 140 380 95 440 95 L560 95 C620 95 650 140 678 168"
-          fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,4" opacity="0.4"/>
+    <!-- 폐 가스교환 모세혈관 연결 루프 -->
+    <path d="M322 165 C350 138 385 92 450 92 L550 92 C615 92 650 138 678 165"
+          fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,4" opacity="0.45"/>
   </g>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <!-- 3. 온몸 모세혈관 (Body Capillaries, 아래쪽)                     -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <g id="bodyCapillaries">
-    <!-- 베이스 컨테이너 캡슐 (x: 360, y: 596, w: 280, h: 72, rx: 24) -->
     <rect class="organ-outline" fill="url(#capillaryBedGrad)"
-          x="360" y="596" width="280" height="72" rx="24"/>
+          x="340" y="594" width="320" height="74" rx="24"/>
     
-    <!-- 조직 세포들 (Somatic Tissue Cells - 육각형/원형 실루엣) -->
+    <!-- 조직 세포들 (Somatic Tissue Cells) -->
     <g fill="#1e293b" stroke="#334155" stroke-width="1.2" opacity="0.6">
-      <circle cx="430" cy="624" r="11"/>
-      <circle cx="465" cy="640" r="10"/>
-      <circle cx="500" cy="622" r="11"/>
-      <circle cx="535" cy="640" r="10"/>
-      <circle cx="570" cy="624" r="11"/>
-      <circle cx="500" cy="648" r="9"/>
+      <circle cx="410" cy="622" r="10"/><circle cx="445" cy="640" r="9"/>
+      <circle cx="480" cy="622" r="10"/><circle cx="520" cy="640" r="9"/>
+      <circle cx="555" cy="622" r="10"/><circle cx="590" cy="640" r="9"/>
     </g>
 
-    <!-- 모세혈관 그물망 (동맥소혈관 ➔ 모세혈관망 ➔ 정맥소혈관 교환망) -->
-    <path class="cap-net" stroke="#fda4af" stroke-width="2" opacity="0.75"
-          d="M620 620 C580 610 560 618 535 624 C510 630 480 622 450 624 C420 626 395 620 375 620"/>
-    <path class="cap-net" stroke="#7dd3fc" stroke-width="2" opacity="0.75"
-          d="M620 644 C585 644 565 636 535 638 C505 640 480 646 450 640 C420 634 395 644 375 644"/>
-    <!-- 교차 문합지 (Anastomotic loops) -->
+    <!-- 모세혈관 교환망 -->
+    <path class="cap-net" stroke="#fda4af" stroke-width="2" opacity="0.8"
+          d="M640 618 C600 610 575 618 545 624 C515 630 480 622 450 624 C415 626 385 618 360 618"/>
+    <path class="cap-net" stroke="#7dd3fc" stroke-width="2" opacity="0.8"
+          d="M640 644 C605 644 580 636 545 638 C510 640 480 646 450 640 C420 634 385 644 360 644"/>
     <path class="cap-net" stroke="#94a3b8" stroke-width="1.6" opacity="0.65"
-          d="M440 616 L440 650 M475 616 L475 650 M510 614 L510 652 M545 616 L545 650 M580 616 L580 650"/>
+          d="M425 614 L425 650 M465 614 L465 650 M505 614 L505 650 M545 614 L545 650 M585 614 L585 650"/>
   </g>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- 4. 큰 혈관들 (심장 뒷편에 먼저 배치)                           -->
+  <!-- 4. 주요 혈관들 (심장 뒷편 & 유기적 곡선 배치)                     -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
 
-  <!-- 대정맥 (Vena Cava): 온몸 ➔ 우심방 (좌측 외곽 주행) -->
-  <!-- BBox: x: 140..350, y: 248..604 -->
+  <!-- 대정맥 (Vessel Vena Cava): 온몸 ➔ 우심방 (좌측 유선형 주행) -->
+  <!-- BBox: x: 190..358, y: 248..605 -->
   <path id="vesselVenaCava" class="vessel" fill="#0284c7"
-        d="M360 604 L300 604 C210 604 140 570 140 500 L140 300 C140 268 168 248 205 248 L324 248 L324 296 L205 296
-           C196 296 190 300 190 310 L190 496 C190 536 240 556 300 556 L360 556 Z"/>
+        d="M340 605 C250 605 200 555 200 485 L200 310 C200 265 240 248 335 248 L335 294
+           C260 294 246 308 246 335 L246 475 C246 515 285 558 340 558 Z"/>
 
-  <!-- 폐동맥 (Pulmonary Artery): 우심실 ➔ 폐 (전면 교차하여 좌측 폐로) -->
-  <!-- BBox: x: 322..440, y: 168..236 -->
-  <path id="vesselPulmonaryArtery" class="vessel" fill="#0284c7"
-        d="M392 236 L440 236 L440 190 C440 176 424 168 402 168 L322 168 L322 214 L392 214 Z"/>
-
-  <!-- 폐정맥 (Pulmonary Vein): 폐 ➔ 좌심방 (우측 폐에서 좌심방 후면으로 진입) -->
-  <!-- BBox: x: 560..678, y: 168..236 -->
-  <path id="vesselPulmonaryVein" class="vessel" fill="#e11d48"
-        d="M560 236 L560 190 C560 176 576 168 598 168 L678 168 L678 214 L610 214 L610 236 Z"/>
-
-  <!-- 대동맥 (Aorta): 좌심실 ➔ 온몸 (대동맥궁 ➔ 우측 외곽 주행 하행 대동맥) -->
-  <!-- BBox: x: 640..860, y: 202..604 -->
+  <!-- 대동맥 (Vessel Aorta): 좌심실 ➔ 대동맥궁 ➔ 온몸 (우측 유선형 주행) -->
+  <!-- BBox: x: 644..800, y: 178..605 -->
   <path id="vesselAorta" class="vessel" fill="#e11d48"
-        d="M640 604 L700 604 C790 604 860 570 860 500 L860 260 C860 222 826 202 782 202 L646 202 L646 250 L782 250
-           C800 250 810 254 810 268 L810 496 C810 536 760 556 700 556 L640 556 Z"/>
+        d="M644 248 C644 215 675 198 720 198 L720 178 L734 178 L734 198 L750 198 L750 178 L764 178 L764 200
+           C790 206 800 230 800 270 L800 485 C800 555 750 605 660 605 L660 558
+           C715 558 754 515 754 475 L754 305 C754 265 738 248 680 248 Z"/>
+
+  <!-- 폐동맥 (Vessel Pulmonary Artery): 우심실 ➔ 폐 -->
+  <!-- BBox: x: 330..442, y: 172..245 -->
+  <path id="vesselPulmonaryArtery" class="vessel" fill="#0284c7"
+        d="M394 245 L442 245 L442 196 C442 180 422 172 396 172 L330 172 L330 216 L394 216 Z"/>
+
+  <!-- 폐정맥 (Vessel Pulmonary Vein): 폐 ➔ 좌심방 -->
+  <!-- BBox: x: 558..670, y: 172..245 -->
+  <path id="vesselPulmonaryVein" class="vessel" fill="#e11d48"
+        d="M558 245 L558 216 L622 216 L622 172 L670 172 C644 172 624 180 624 196 L624 245 Z"/>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <!-- 5. 심장 본체 (Myocardium & Chambers)                          -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
 
-  <!-- 심장 외벽 윤곽 베이스 (해부학적 원추형 심근체) -->
-  <path id="heartOutline" fill="url(#myoGrad)" stroke="#64748b" stroke-width="3"
-        d="M330 240 C330 226 342 218 358 218 L642 218 C658 218 670 226 670 240
-           L670 425 C670 515 605 572 505 576 C400 572 330 515 330 425 Z"/>
+  <!-- 심장 외벽 윤곽 (원추형 심첨부 해부학 라인) -->
+  <path id="heartOutline" fill="url(#myoGrad)" stroke="#475569" stroke-width="3"
+        d="M338 238 C338 222 355 214 374 214 L626 214 C645 214 662 222 662 238
+           L662 420 C662 505 600 568 512 574 C410 568 338 505 338 420 Z"/>
 
-  <!-- 심장 4개 방 (Chambers) -->
-  <!-- 우심방 (Right Atrium): BBox: x: 338..482, y: 244..330 -->
+  <!-- 심장 4개 방실 (Chambers) -->
+  <!-- 우심방 (Right Atrium): BBox: x: 342..484, y: 244..330 -->
   <path id="rightAtrium" class="chamber" fill="#0284c7"
-        d="M348 244 L482 244 L482 330 L348 330 C340 330 338 320 338 306 L338 268 C338 252 340 244 348 244 Z"/>
+        d="M352 244 L484 244 L484 330 L352 330 C344 330 342 320 342 304 L342 268 C342 250 344 244 352 244 Z"/>
 
-  <!-- 좌심방 (Left Atrium): BBox: x: 518..662, y: 244..330 -->
+  <!-- 좌심방 (Left Atrium): BBox: x: 516..658, y: 244..330 -->
   <path id="leftAtrium" class="chamber" fill="#e11d48"
-        d="M518 244 L652 244 C660 244 662 252 662 268 L662 306 C662 320 660 330 652 330 L518 330 Z"/>
+        d="M516 244 L648 244 C656 244 658 250 658 268 L658 304 C658 320 656 330 648 330 L516 330 Z"/>
 
-  <!-- 우심실 (Right Ventricle): BBox: x: 348..482, y: 356..546 -->
+  <!-- 우심실 (Right Ventricle): BBox: x: 352..484, y: 356..546 -->
   <path id="rightVentricle" class="chamber" fill="#0284c7"
-        d="M356 356 L482 356 L482 546 C424 542 378 512 358 468 C348 444 350 396 356 356 Z"/>
+        d="M358 356 L484 356 L484 544 C426 540 382 510 362 468 C352 444 354 396 358 356 Z"/>
 
-  <!-- 좌심실 (Left Ventricle): BBox: x: 518..646, y: 356..548 -->
+  <!-- 좌심실 (Left Ventricle): BBox: x: 516..648, y: 356..552 -->
   <path id="leftVentricle" class="chamber" fill="#e11d48"
-        d="M518 356 L638 356 C646 398 642 442 626 472 C602 516 566 542 518 548 Z"/>
+        d="M516 356 L642 356 C650 398 646 444 628 474 C604 518 568 544 516 552 Z"/>
 
-  <!-- ── 심실벽 두께 대비 (좌심실벽 3배 두꺼움 - 시험 핵심) ────────── -->
-  <!-- 좌심실 두꺼운 심근벽 (고압력 체순환 펌프) -->
+  <!-- ── 심실벽 두께 대비 (좌심실 3배 두꺼움) ───────────────────── -->
+  <!-- 좌심실 두꺼운 심근벽 (고압 펌프) -->
   <path id="leftVentricleWall" fill="none" stroke="#fda4af" stroke-width="22" stroke-linecap="round" opacity="0.65"
-        d="M646 358 C660 402 654 448 634 480 C606 524 562 552 512 560"/>
-  <!-- 우심실 얇은 심근벽 (저압력 폐순환 펌프) -->
+        d="M648 358 C662 402 656 450 636 482 C608 526 564 554 512 562"/>
+  <!-- 우심실 얇은 심근벽 (저압 펌프) -->
   <path id="rightVentricleWall" fill="none" stroke="#7dd3fc" stroke-width="8" stroke-linecap="round" opacity="0.55"
-        d="M350 358 C342 402 348 446 364 476 C392 522 440 552 490 560"/>
+        d="M352 358 C344 402 350 446 366 476 C394 522 442 552 492 562"/>
 
-  <!-- ── 심실 사이막 (Septum): 정맥혈과 동맥혈 완벽 분리 ─────────── -->
+  <!-- ── 심실 사이막 (Septum): 정맥혈과 동맥혈 분리 ──────────────── -->
   <!-- BBox: x: 488..512, y: 244..556 -->
   <path id="septum" fill="#334155" stroke="#cbd5e1" stroke-width="2.5"
         d="M488 244 L512 244 L512 556 C504 562 496 562 488 556 Z"/>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- 6. 판막 넷 (Valves - 혈액 역류 방지)                           -->
+  <!-- 6. 판막 넷 (Valves - 부드러운 해부학적 첨판 및 건삭)               -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- 삼첨판 (Tricuspid Valve: 우심방 ➔ 우심실 단방향) -->
+
+  <!-- 삼첨판 (Tricuspid Valve: 우심방 ➔ 우심실) BBox: x: 366..474, y: 336..386 -->
   <g id="valveTricuspid" class="valve">
-    <path d="M358 338 L412 364 L360 352 Z"/>
-    <path d="M466 338 L420 364 L464 352 Z"/>
-    <line x1="412" y1="364" x2="416" y2="400" class="chordae"/>
-    <line x1="420" y1="364" x2="424" y2="400" class="chordae"/>
+    <path class="valve-leaflet" d="M366 336 C382 352 402 352 418 340 C434 352 456 352 474 336"/>
+    <line x1="392" y1="348" x2="396" y2="384" class="chordae"/>
+    <line x1="418" y1="342" x2="420" y2="384" class="chordae"/>
+    <line x1="446" y1="348" x2="442" y2="384" class="chordae"/>
+    <circle cx="396" cy="385" r="3" class="papillary"/>
+    <circle cx="420" cy="385" r="3" class="papillary"/>
+    <circle cx="442" cy="385" r="3" class="papillary"/>
   </g>
 
-  <!-- 이첨판 (Mitral Valve: 좌심방 ➔ 좌심실 단방향) -->
+  <!-- 이첨판 (Mitral Valve: 좌심방 ➔ 좌심실) BBox: x: 526..644, y: 336..386 -->
   <g id="valveMitral" class="valve">
-    <path d="M534 338 L584 364 L536 352 Z"/>
-    <path d="M642 338 L592 364 L640 352 Z"/>
-    <line x1="584" y1="364" x2="580" y2="400" class="chordae"/>
-    <line x1="592" y1="364" x2="588" y2="400" class="chordae"/>
+    <path class="valve-leaflet" d="M526 336 C548 352 572 352 590 340 C608 352 628 352 644 336"/>
+    <line x1="556" y1="348" x2="560" y2="384" class="chordae"/>
+    <line x1="590" y1="342" x2="592" y2="384" class="chordae"/>
+    <line x1="616" y1="348" x2="614" y2="384" class="chordae"/>
+    <circle cx="560" cy="385" r="3" class="papillary"/>
+    <circle cx="592" cy="385" r="3" class="papillary"/>
+    <circle cx="614" cy="385" r="3" class="papillary"/>
   </g>
 
-  <!-- 폐동맥판 (Pulmonary Valve: 우심실 ➔ 폐동맥 반월판) -->
+  <!-- 폐동맥판 (Pulmonary Valve: 우심실 ➔ 폐동맥) BBox: x: 390..434, y: 224..240 -->
   <g id="valvePulmonary" class="valve">
-    <path d="M382 244 L410 218 L438 244 L410 234 Z"/>
+    <path class="valve-leaflet" d="M390 240 C390 224 434 224 434 240 C420 234 404 234 390 240 Z"/>
   </g>
 
-  <!-- 대동맥판 (Aortic Valve: 좌심실 ➔ 대동맥 반월판) -->
+  <!-- 대동맥판 (Aortic Valve: 좌심실 ➔ 대동맥) BBox: x: 566..610, y: 224..240 -->
   <g id="valveAortic" class="valve">
-    <path d="M562 244 L590 218 L618 244 L590 234 Z"/>
+    <path class="valve-leaflet" d="M566 240 C566 224 610 224 610 240 C596 234 580 234 566 240 Z"/>
   </g>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- 7. 혈류 안내선 (보이지 않는 패스, d.t=0.5에서 기관 중심 통과) -->
+  <!-- 7. 혈류 안내선 (보이지 않는 패스, 50% 분기점 정밀 일치)           -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- 폐순환: 우심방 ➔ 우심실 ➔ 폐동맥 ➔ 폐(50%) ➔ 폐정맥 ➔ 좌심방 -->
-  <path id="flowPulmonary" fill="none" stroke="none"
-        d="M400 286 L400 320 C400 380 404 440 412 490 C414 504 420 500 420 484 L420 300 L420 236 L416 200 C412 186 396 186 370 188 L322 190 C300 168 300 120 300 100 C300 78 340 68 420 68 L500 68 L580 68 C660 68 705 78 705 100 C705 125 700 165 675 188 L615 192 C595 192 588 200 588 214 L588 359 C588 394 565 394 540 290 C490 290 440 288 400 286 Z"/>
-
-  <!-- 체순환: 좌심방 ➔ 좌심실 ➔ 대동맥 ➔ 온몸(50%) ➔ 대정맥 ➔ 우심방 -->
-  <path id="flowSystemic" fill="none" stroke="none"
-        d="M590 286 C590 325 588 365 585 415 C582 465 575 510 568 525 C560 535 554 525 554 505 C554 445 565 350 576 295 C580 260 585 240 588 230 C594 185 660 182 730 184 C810 188 842 225 842 285 L842 485 C842 540 800 580 720 598 C660 612 580 626 500 632 C420 626 340 612 280 598 C200 580 158 540 158 485 L158 285 C158 225 190 188 270 184 C340 180 385 220 395 245 C405 270 410 295 412 320.6 C412 360.6 405 430.6 396 470.6 C390 495.6 380 485.6 380 460.6 C380 400.6 395 330 400 290 C405 260 450 265 520 275 C555 280 580 284 590 286 Z"/>
+  <path id="flowPulmonary" fill="none" stroke="none" d="M400 286 L400 320 C400 375 404 435 412 485 C414 498 420 495 420 480 L420 295 L420 236 L414 200 C410 186 394 186 368 188 L320 190 C295 168 295 120 295 95 C295 72 340 68 420 68 L500 68 L580 68 C660 68 705 72 705 95 C705 120 705 168 680 190 L620 188 C596 186 590 198 590 214 L590 350 C590 385 565 385 540 290 C490 290 440 288 400 286 Z"/>
+  <path id="flowSystemic" fill="none" stroke="none" d="M590 286 C590 325 588 365 585 415 C582 465 575 510 568 525 C560 535 554 525 554 505 C554 445 565 350 576 295 C580 260 585 240 588 230 C594 188 660 185 730 186 C790 190 780 225 780 285 L780 480 C780 535 740 575 660 595 C610 608 550 622 476 626 C426 630 390 618 340 598 C260 575 220 535 220 480 L220 285 C220 230 250 200 320 200 C365 200 395 230 405 255 C412 275 415 298 416 325 C416 365 408 435 398 472 C392 495 382 485 382 460 C382 400 396 330 400 290 C405 260 450 265 520 275 C555 280 580 284 590 286 Z"/>
 </svg>

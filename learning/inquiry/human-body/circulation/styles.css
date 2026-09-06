@@ -194,3 +194,35 @@
 #bloodDots circle { filter: drop-shadow(0 0 5px currentColor); }
 
 .part-on { stroke: #facc15 !important; stroke-width: 5 !important; }
+
+/* ── Sidebar Slider Layout Fix ───────────────────────────── */
+.circulation-slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.circulation-slider-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.circulation-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.circulation-slider-item .sim-slider {
+    width: 100%;
+    margin: 0;
+}
+
+.circulation-slider-desc {
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.2px;
+}
