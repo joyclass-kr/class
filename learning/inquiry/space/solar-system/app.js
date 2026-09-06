@@ -3650,81 +3650,45 @@
                 { cat: "자연위성", q: "자연위성에 대한 설명으로 옳은 것은?", ans: "행성이나 왜소행성의 중력에 묶여 그 주위를 공전한다.", opts: ["행성이나 왜소행성의 중력에 묶여 그 주위를 공전한다.", "반드시 스스로 빛을 낸다.", "모두 지구의 달과 크기가 같다.", "태양 주위를 직접 공전하지 않는다."], exp: "자연위성은 행성 또는 왜소행성 주위를 공전하며, 그 천체와 함께 태양 주위를 이동합니다." }
             ];
 
-            var totalCountEl = document.getElementById('quizTotalCount');
-            if (totalCountEl) totalCountEl.textContent = quizPool.length + '문제';
-
-            var grid = document.getElementById('quizGrid');
-            if (!grid) return;
-            grid.innerHTML = '';
-
-            quizPool.forEach(function (item, qIndex) {
-                var correctIndex = typeof item.ans === 'number' ? item.ans : item.opts.indexOf(item.ans);
-                var options = item.opts.map(function (text, index) { return { text: text, correct: index === correctIndex }; });
-                for (var i = options.length - 1; i > 0; i--) {
-                    var j = Math.floor(Math.random() * (i + 1));
-                    var temp = options[i]; options[i] = options[j]; options[j] = temp;
+            var quizTopics = [
+                {
+                    name: '태양과 행성',
+                    subs: [
+                        { name: '태양계의 구성', cats: ['태양계의 중심', '행성 순서', '태양의 에너지원'] },
+                        { name: '행성의 분류', cats: ['지구형 행성', '목성형 행성', '지구형 vs 목성형', '지구형·목성형 분포', '행성의 밀도', '행성의 고리'] },
+                        { name: '행성별 특징', cats: ['수성', '금성', '지구', '화성', '해왕성', '행성의 자전', '자전축 기울기'] }
+                    ]
+                },
+                {
+                    name: '공전과 관측',
+                    subs: [
+                        { name: '공전 운동', cats: ['공전 주기', '공전 속도', '행성의 공전 방향', '행성의 공전 궤도'] },
+                        { name: '행성의 관측', cats: ['내행성 관측', '외행성 관측', '행성의 역행'] }
+                    ]
+                },
+                {
+                    name: '작은 천체',
+                    subs: [
+                        { name: '소행성과 위성', cats: ['소행성대', '소행성과 혜성', '왜소행성', '왜소행성 재분류', '자연위성', '태양계 외곽', '태양계 형성'] },
+                        { name: '혜성과 유성', cats: ['혜성의 특성', '혜성의 구성', '혜성 꼬리', '유성과 운석', '유성체·유성·운석'] }
+                    ]
                 }
+            ];
 
-                var card = document.createElement('article');
-                card.className = 'quiz-card';
-
-                var h3 = document.createElement('h3');
-                h3.textContent = '[' + item.cat + '] ' + item.q;
-                card.appendChild(h3);
-
-                var optionsWrap = document.createElement('div');
-                optionsWrap.className = 'quiz-options';
-                options.forEach(function (opt, optIndex) {
-                    var label = document.createElement('label');
-                    if (opt.correct) label.dataset.correct = 'true';
-                    var input = document.createElement('input');
-                    input.type = 'radio';
-                    input.name = 'quiz-q' + qIndex;
-                    input.value = String(optIndex);
-                    label.appendChild(input);
-                    label.appendChild(document.createTextNode(' ' + opt.text));
-                    optionsWrap.appendChild(label);
-                });
-                card.appendChild(optionsWrap);
-
-                var checkBtn = document.createElement('button');
-                checkBtn.type = 'button';
-                checkBtn.className = 'answer-button';
-                checkBtn.textContent = '정답 확인';
-                card.appendChild(checkBtn);
-
-                var resultEl = document.createElement('p');
-                resultEl.className = 'answer-result';
-                card.appendChild(resultEl);
-
-                var expEl = document.createElement('p');
-                expEl.className = 'answer-explanation';
-                expEl.hidden = true;
-                expEl.textContent = item.exp;
-                card.appendChild(expEl);
-
-                checkBtn.addEventListener('click', function () {
-                    var selected = optionsWrap.querySelector('input:checked');
-                    if (!selected) {
-                        delete card.dataset.state;
-                        resultEl.textContent = '답을 먼저 선택하세요.';
-                        return;
-                    }
-                    var correct = selected.closest('label').dataset.correct === 'true';
-                    card.dataset.state = correct ? 'correct' : 'incorrect';
-                    if (correct) {
-                        resultEl.textContent = '정답입니다.';
-                        expEl.hidden = false;
-                        Array.prototype.forEach.call(optionsWrap.querySelectorAll('input'), function (input) { input.disabled = true; });
-                        checkBtn.disabled = true;
-                    } else {
-                        resultEl.textContent = '다시 생각하고 다른 답을 골라보세요.';
-                        selected.checked = false;
-                        selected.disabled = true;
-                    }
-                });
-
-                grid.appendChild(card);
+            window.SpaceQuizBoard.mount({
+                questions: quizPool,
+                topics: quizTopics,
+                namePrefix: 'solar-quiz',
+                ids: {
+                    total: 'quizTotalCount',
+                    tabs: 'quizTopicTabs',
+                    subRow: 'quizSubRow',
+                    subChips: 'quizSubChips',
+                    guide: 'quizGuide',
+                    grid: 'quizGrid',
+                    moreWrap: 'quizMoreWrap',
+                    moreBtn: 'quizMoreBtn'
+                }
             });
         }
     }

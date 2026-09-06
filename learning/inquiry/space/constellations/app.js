@@ -1285,79 +1285,53 @@
                 { cat: "별자리", q: "별자리에서 서로 이웃해 보이는 두 별에 대한 설명으로 옳은 것은?", ans: 3, opts: ["반드시 서로 공전한다", "실제 거리도 반드시 가깝다", "온도와 크기가 반드시 같다", "시선 방향이 비슷할 뿐 실제 거리는 크게 다를 수 있다"], exp: "해설: 별자리는 천구에 투영된 겉보기 모양이므로 이웃해 보이는 별들의 실제 거리는 서로 다를 수 있습니다." }
             ];
 
-            const totalCountEl = document.getElementById('stQuizTotalCount');
-            if (totalCountEl) totalCountEl.textContent = `${quizData.length}문제`;
-
-            const grid = document.getElementById('stQuizGrid');
-            if (!grid) return;
-
-            quizData.forEach((item, qIndex) => {
-                const options = item.opts.map((text, index) => ({ text, correct: index === item.ans }));
-                for (let i = options.length - 1; i > 0; i -= 1) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [options[i], options[j]] = [options[j], options[i]];
+            const quizTopics = [
+                {
+                    name: '일주 운동과 연주 운동',
+                    subs: [
+                        { name: '일주 운동', cats: ['일주 운동', '북쪽 하늘'] },
+                        { name: '연주 운동', cats: ['연주 운동', '계절 별자리'] },
+                        { name: '일주·연주 비교', cats: ['일주·연주 비교'] }
+                    ]
+                },
+                {
+                    name: '북극성과 방향 찾기',
+                    subs: [
+                        { name: '북극성', cats: ['북극성'] },
+                        { name: '북극성 찾기', cats: ['북극성 찾기', '남쪽 하늘'] }
+                    ]
+                },
+                {
+                    name: '천구와 황도 12궁',
+                    subs: [
+                        { name: '천구', cats: ['천구'] },
+                        { name: '황도 12궁', cats: ['황도 12궁'] }
+                    ]
+                },
+                {
+                    name: '별의 성질과 일생',
+                    subs: [
+                        { name: '별의 밝기와 색', cats: ['별의 밝기', '별의 색과 온도'] },
+                        { name: '별의 일생', cats: ['별의 일생'] },
+                        { name: '별자리', cats: ['별자리'] }
+                    ]
                 }
+            ];
 
-                const card = document.createElement('article');
-                card.className = 'quiz-card';
-
-                const h3 = document.createElement('h3');
-                h3.textContent = `[${item.cat}] ${item.q}`;
-                card.appendChild(h3);
-
-                const optionsWrap = document.createElement('div');
-                optionsWrap.className = 'quiz-options';
-                options.forEach((opt, optIndex) => {
-                    const label = document.createElement('label');
-                    if (opt.correct) label.dataset.correct = 'true';
-                    const input = document.createElement('input');
-                    input.type = 'radio';
-                    input.name = `st-quiz-q${qIndex}`;
-                    input.value = String(optIndex);
-                    label.appendChild(input);
-                    label.appendChild(document.createTextNode(` ${opt.text}`));
-                    optionsWrap.appendChild(label);
-                });
-                card.appendChild(optionsWrap);
-
-                const checkBtn = document.createElement('button');
-                checkBtn.type = 'button';
-                checkBtn.className = 'answer-button';
-                checkBtn.textContent = '정답 확인';
-                card.appendChild(checkBtn);
-
-                const resultEl = document.createElement('p');
-                resultEl.className = 'answer-result';
-                card.appendChild(resultEl);
-
-                const expEl = document.createElement('p');
-                expEl.className = 'answer-explanation';
-                expEl.hidden = true;
-                expEl.textContent = item.exp;
-                card.appendChild(expEl);
-
-                checkBtn.addEventListener('click', () => {
-                    const selected = optionsWrap.querySelector('input:checked');
-                    if (!selected) {
-                        delete card.dataset.state;
-                        resultEl.textContent = '답을 먼저 선택하세요.';
-                        return;
-                    }
-                    const correct = selected.closest('label').dataset.correct === 'true';
-                    card.dataset.state = correct ? 'correct' : 'incorrect';
-                    if (correct) {
-                        resultEl.textContent = '정답입니다.';
-                        expEl.hidden = false;
-                        optionsWrap.querySelectorAll('input').forEach(input => { input.disabled = true; });
-                        checkBtn.disabled = true;
-                    } else {
-                        resultEl.textContent = '다시 생각하고 다른 답을 골라보세요.';
-                        selected.checked = false;
-                        selected.disabled = true;
-                    }
-                });
-
-                grid.appendChild(card);
+            window.SpaceQuizBoard.mount({
+                questions: quizData,
+                topics: quizTopics,
+                namePrefix: 'st-quiz',
+                ids: {
+                    total: 'stQuizTotalCount',
+                    tabs: 'stQuizTopicTabs',
+                    subRow: 'stQuizSubRow',
+                    subChips: 'stQuizSubChips',
+                    guide: 'stQuizGuide',
+                    grid: 'stQuizGrid',
+                    moreWrap: 'stQuizMoreWrap',
+                    moreBtn: 'stQuizMoreBtn'
+                }
             });
         })();
 

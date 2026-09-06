@@ -9,7 +9,8 @@
     <!-- Three.js & OrbitControls for 3D Celestial Sphere -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <link rel="stylesheet" href="styles.css?v=floating-nav-full-quiz-20260906">
+    <link rel="stylesheet" href="../quiz-board.css?v=quiz-topic-picker-20260906c">
+    <link rel="stylesheet" href="styles.css?v=quiz-topic-picker-20260906c">
     <script src="navigation.js"></script>
     <script src="../../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
 </head>
@@ -741,12 +742,29 @@
                     <h2>⭐ 별과 별자리 확인 문제</h2>
                     <span id="stQuizTotalCount"></span>
                 </div>
+
+                <div class="quiz-picker">
+                    <div class="quiz-picker-row">
+                        <span class="quiz-picker-label" id="stQuizTopicLabel">큰 주제</span>
+                        <div class="quiz-topic-tabs" role="tablist" aria-labelledby="stQuizTopicLabel" id="stQuizTopicTabs"></div>
+                    </div>
+                    <div class="quiz-picker-row" id="stQuizSubRow" hidden>
+                        <span class="quiz-picker-label" id="stQuizSubLabel">작은 주제</span>
+                        <div class="quiz-sub-chips" role="group" aria-labelledby="stQuizSubLabel" id="stQuizSubChips"></div>
+                    </div>
+                </div>
+
+                <p class="quiz-guide" id="stQuizGuide" role="status"></p>
                 <div class="quiz-grid" id="stQuizGrid"></div>
+                <div class="quiz-more" id="stQuizMoreWrap" hidden>
+                    <button type="button" class="quiz-more-btn" id="stQuizMoreBtn">더 보기</button>
+                </div>
             </div>
         </section>
     </main>
 
-    <script src="app.js?v=floating-nav-full-quiz-20260906"></script>
+    <script src="../quiz-board.js?v=quiz-topic-picker-20260906c"></script>
+    <script src="app.js?v=quiz-topic-picker-20260906c"></script>
 
 </body>
 </html>

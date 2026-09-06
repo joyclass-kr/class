@@ -2829,78 +2829,50 @@
                 { cat: "위도와 낮의 길이", q: "북극 지방의 여름에 태양이 지평선 아래로 지지 않는 현상을 무엇이라 하는가?", ans: 2, opts: ["월식", "극야", "백야", "남중"], exp: "해설: 자전축이 기울어진 지구에서 북극 지방의 여름에는 태양이 하루 종일 지평선 위에 머무는 백야가 나타날 수 있습니다." }
             ];
 
-            const totalCountEl = document.getElementById('emQuizTotalCount');
-            if (totalCountEl) totalCountEl.textContent = `${quizData.length}문제`;
-
-            const grid = document.getElementById('emQuizGrid');
-            if (!grid) return;
-
-            quizData.forEach((item, qIndex) => {
-                const options = item.opts.map((text, index) => ({ text, correct: index === item.ans }));
-                for (let i = options.length - 1; i > 0; i -= 1) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [options[i], options[j]] = [options[j], options[i]];
+            const quizTopics = [
+                {
+                    name: '지구의 운동과 계절',
+                    subs: [
+                        { name: '자전과 공전', cats: ['지구의 자전', '지구의 공전'] },
+                        { name: '계절 변화', cats: ['계절 변화', '계절의 원인', '계절과 에너지', '계절과 낮의 길이'] }
+                    ]
+                },
+                {
+                    name: '태양의 고도와 일주',
+                    subs: [
+                        { name: '남중 고도', cats: ['태양의 남중 고도', '태양의 남중', '위도와 태양 고도'] },
+                        { name: '일주 경로', cats: ['태양의 일주 운동', '일출·일몰', '하지', '동지', '춘분·추분', '적도의 태양 경로', '위도와 낮의 길이'] },
+                        { name: '고도와 그림자', cats: ['태양 고도와 그림자'] }
+                    ]
+                },
+                {
+                    name: '달의 위상과 관측',
+                    subs: [
+                        { name: '위상 변화', cats: ['달의 위상', '달의 위상과 위치', '달의 주기', '달의 공전'] },
+                        { name: '위상별 관측', cats: ['달의 관측', '삭의 관측', '상현달의 관측', '보름달의 관측', '하현달의 관측'] }
+                    ]
+                },
+                {
+                    name: '일식과 월식',
+                    subs: [
+                        { name: '일식과 월식', cats: ['일식', '월식', '식 현상'] }
+                    ]
                 }
+            ];
 
-                const card = document.createElement('article');
-                card.className = 'quiz-card';
-
-                const h3 = document.createElement('h3');
-                h3.textContent = `[${item.cat}] ${item.q}`;
-                card.appendChild(h3);
-
-                const optionsWrap = document.createElement('div');
-                optionsWrap.className = 'quiz-options';
-                options.forEach((opt, optIndex) => {
-                    const label = document.createElement('label');
-                    if (opt.correct) label.dataset.correct = 'true';
-                    const input = document.createElement('input');
-                    input.type = 'radio';
-                    input.name = `em-quiz-q${qIndex}`;
-                    input.value = String(optIndex);
-                    label.appendChild(input);
-                    label.appendChild(document.createTextNode(` ${opt.text}`));
-                    optionsWrap.appendChild(label);
-                });
-                card.appendChild(optionsWrap);
-
-                const checkBtn = document.createElement('button');
-                checkBtn.type = 'button';
-                checkBtn.className = 'answer-button';
-                checkBtn.textContent = '정답 확인';
-                card.appendChild(checkBtn);
-
-                const resultEl = document.createElement('p');
-                resultEl.className = 'answer-result';
-                card.appendChild(resultEl);
-
-                const expEl = document.createElement('p');
-                expEl.className = 'answer-explanation';
-                expEl.hidden = true;
-                expEl.textContent = item.exp;
-                card.appendChild(expEl);
-
-                checkBtn.addEventListener('click', () => {
-                    const selected = optionsWrap.querySelector('input:checked');
-                    if (!selected) {
-                        delete card.dataset.state;
-                        resultEl.textContent = '답을 먼저 선택하세요.';
-                        return;
-                    }
-                    const correct = selected.closest('label').dataset.correct === 'true';
-                    card.dataset.state = correct ? 'correct' : 'incorrect';
-                    if (correct) {
-                        resultEl.textContent = '정답입니다.';
-                        expEl.hidden = false;
-                        optionsWrap.querySelectorAll('input').forEach(input => { input.disabled = true; });
-                        checkBtn.disabled = true;
-                    } else {
-                        resultEl.textContent = '다시 생각하고 다른 답을 골라보세요.';
-                        selected.checked = false;
-                        selected.disabled = true;
-                    }
-                });
-
-                grid.appendChild(card);
+            window.SpaceQuizBoard.mount({
+                questions: quizData,
+                topics: quizTopics,
+                namePrefix: 'em-quiz',
+                ids: {
+                    total: 'emQuizTotalCount',
+                    tabs: 'emQuizTopicTabs',
+                    subRow: 'emQuizSubRow',
+                    subChips: 'emQuizSubChips',
+                    guide: 'emQuizGuide',
+                    grid: 'emQuizGrid',
+                    moreWrap: 'emQuizMoreWrap',
+                    moreBtn: 'emQuizMoreBtn'
+                }
             });
         })();

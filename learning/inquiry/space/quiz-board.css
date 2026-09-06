@@ -1,0 +1,302 @@
+/* 우주관찰 세 앱이 함께 쓰는 확인 문제 화면
+   (큰 주제 탭 → 작은 주제 칩 → 문항 목록 · 더 보기)
+   앱마다 --quiz-accent 만 바꿔 색을 맞춘다. */
+.quiz-panel {
+    --quiz-accent: #38bdf8;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.quiz-panel-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.quiz-panel-heading h2 {
+    font-size: 20px;
+    color: #fff;
+}
+
+.quiz-panel-heading span {
+    color: var(--text-muted, #64748b);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+/* 고르기 */
+.quiz-picker {
+    background: var(--bg-card, rgba(15, 23, 42, 0.85));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: var(--radius-lg, 16px);
+    padding: 6px 16px;
+    margin-bottom: 16px;
+}
+
+.quiz-picker-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.quiz-picker-row + .quiz-picker-row {
+    border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+}
+
+.quiz-picker-row[hidden] {
+    display: none;
+}
+
+.quiz-picker-label {
+    flex: 0 0 56px;
+    padding-top: 7px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-secondary, #94a3b8);
+}
+
+.quiz-topic-tabs,
+.quiz-sub-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.quiz-topic-tab {
+    min-height: 36px;
+    padding: 7px 14px;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.quiz-topic-tab:hover {
+    border-color: var(--quiz-accent);
+    color: #fff;
+}
+
+.quiz-topic-tab[aria-selected="true"] {
+    border-color: var(--quiz-accent);
+    background: var(--quiz-accent);
+    color: #030712;
+}
+
+.quiz-topic-tab .quiz-n {
+    margin-left: 5px;
+    font-size: 0.84em;
+    font-weight: 700;
+    color: var(--text-muted, #64748b);
+}
+
+.quiz-topic-tab[aria-selected="true"] .quiz-n {
+    color: rgba(3, 7, 18, 0.66);
+}
+
+.quiz-sub-chip {
+    min-height: 34px;
+    padding: 6px 13px;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #cbd5e1;
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.quiz-sub-chip:hover {
+    border-color: var(--quiz-accent);
+    color: #fff;
+}
+
+.quiz-sub-chip[aria-pressed="true"] {
+    border-color: var(--quiz-accent);
+    background: color-mix(in srgb, var(--quiz-accent) 16%, transparent);
+    color: var(--quiz-accent);
+    font-weight: 800;
+}
+
+.quiz-sub-chip .quiz-n {
+    margin-left: 4px;
+    font-size: 0.84em;
+    font-weight: 600;
+    color: var(--text-muted, #64748b);
+}
+
+.quiz-sub-chip[aria-pressed="true"] .quiz-n {
+    color: var(--quiz-accent);
+}
+
+.quiz-guide {
+    margin: 22px 0;
+    text-align: center;
+    color: var(--text-secondary, #94a3b8);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* 문항 목록 */
+.quiz-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.quiz-card {
+    background: var(--bg-card, rgba(15, 23, 42, 0.85));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: var(--radius-lg, 16px);
+    padding: 20px 22px;
+}
+
+.quiz-card-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.quiz-card-no {
+    color: var(--quiz-accent);
+}
+
+.quiz-card-cat {
+    color: var(--text-muted, #64748b);
+}
+
+.quiz-card h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quiz-card label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    border-radius: var(--radius-md, 10px);
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.quiz-card label:hover {
+    border-color: var(--quiz-accent);
+    color: #fff;
+}
+
+.quiz-card label:has(input:checked) {
+    border-color: var(--quiz-accent);
+    background: color-mix(in srgb, var(--quiz-accent) 14%, transparent);
+    color: var(--quiz-accent);
+}
+
+.quiz-card input {
+    flex: none;
+    accent-color: var(--quiz-accent);
+    width: 16px;
+    height: 16px;
+}
+
+.answer-button {
+    align-self: flex-start;
+    min-height: 44px;
+    margin-top: 14px;
+    padding: 10px 20px;
+    border: 1px solid color-mix(in srgb, var(--quiz-accent) 40%, transparent);
+    border-radius: var(--radius-md, 10px);
+    background: color-mix(in srgb, var(--quiz-accent) 14%, transparent);
+    color: var(--quiz-accent);
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.answer-button:hover {
+    background: color-mix(in srgb, var(--quiz-accent) 24%, transparent);
+    color: #fff;
+}
+
+.answer-result {
+    min-height: 20px;
+    margin-top: 10px;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.answer-explanation {
+    margin-top: 8px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--quiz-accent);
+    border-radius: 0 10px 10px 0;
+    background: color-mix(in srgb, var(--quiz-accent) 8%, transparent);
+    color: #e2e8f0;
+    font-size: 13.5px;
+    line-height: 1.55;
+}
+
+.quiz-card[data-state="correct"] .answer-result { color: #6ee7b7; }
+.quiz-card[data-state="incorrect"] .answer-result { color: #fca5a5; }
+
+/* 더 보기 */
+.quiz-more {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.quiz-more[hidden] {
+    display: none;
+}
+
+.quiz-more-btn {
+    min-height: 46px;
+    padding: 12px 26px;
+    border: 1px solid color-mix(in srgb, var(--quiz-accent) 45%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--quiz-accent) 12%, transparent);
+    color: var(--quiz-accent);
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.quiz-more-btn:hover {
+    background: color-mix(in srgb, var(--quiz-accent) 22%, transparent);
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .quiz-picker { padding: 4px 12px; }
+    .quiz-picker-row { flex-direction: column; gap: 6px; }
+    .quiz-picker-label { flex: none; padding-top: 0; }
+    .quiz-card { padding: 16px; }
+    .quiz-card h3 { font-size: 15px; }
+}

@@ -7,7 +7,8 @@
     <title>지구와 달의 운동</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <link rel="stylesheet" href="styles.css?v=floating-nav-full-quiz-20260906">
+    <link rel="stylesheet" href="../quiz-board.css?v=quiz-topic-picker-20260906c">
+    <link rel="stylesheet" href="styles.css?v=quiz-topic-picker-20260906c">
     <script src="../../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
 </head>
 <body>
@@ -296,12 +297,29 @@
                     <h2>🌕 지구와 달 확인 문제</h2>
                     <span id="emQuizTotalCount"></span>
                 </div>
+
+                <div class="quiz-picker">
+                    <div class="quiz-picker-row">
+                        <span class="quiz-picker-label" id="emQuizTopicLabel">큰 주제</span>
+                        <div class="quiz-topic-tabs" role="tablist" aria-labelledby="emQuizTopicLabel" id="emQuizTopicTabs"></div>
+                    </div>
+                    <div class="quiz-picker-row" id="emQuizSubRow" hidden>
+                        <span class="quiz-picker-label" id="emQuizSubLabel">작은 주제</span>
+                        <div class="quiz-sub-chips" role="group" aria-labelledby="emQuizSubLabel" id="emQuizSubChips"></div>
+                    </div>
+                </div>
+
+                <p class="quiz-guide" id="emQuizGuide" role="status"></p>
                 <div class="quiz-grid" id="emQuizGrid"></div>
+                <div class="quiz-more" id="emQuizMoreWrap" hidden>
+                    <button type="button" class="quiz-more-btn" id="emQuizMoreBtn">더 보기</button>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- Heliocentric 3D Earth-Moon Physics Simulation Engine -->
-    <script src="app.js?v=floating-nav-full-quiz-20260906"></script>
+    <script src="../quiz-board.js?v=quiz-topic-picker-20260906c"></script>
+    <script src="app.js?v=quiz-topic-picker-20260906c"></script>
 </body>
 </html>
