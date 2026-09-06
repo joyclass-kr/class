@@ -91,45 +91,25 @@ MOTION: speed lines, dust clouds at the feet, impact stars, flying sweat drops,
 objects tumbling through the air, hair and clothes streaming.
 LIGHT: strong and graphic - hard shadows, warm light from one side, a bright rim
 where the light hits, deep saturated darks at night.
-Every picture should make a child want to turn the page.
-Villains and unkind characters must be FUN to look at - comic, lively and cute,
-with big round expressive eyes and big exaggerated expressions. Exaggerate
-freely: puffed-up cheeks, enormous grins, comic sweat drops, tiny pupils when
-startled, whole body leaning into the gag. But never repulsive - no wrinkled
-scowling faces, no warts, no bared yellow teeth, no mean squinting slits, no
-ugly caricature. The reader should enjoy watching them and laugh at them, never
-be disgusted by them. A greedy character can be adorable; what is wrong with
-them shows in what they DO, not in an ugly face.
-Two things that keep going wrong. First, PLUMP IS NOT UGLY. A well-fed character
-is round AND good-looking: soft round face, smooth clear skin, big bright eyes,
-rosy cheeks, glossy hair. Roundness is charm, never the joke. Second, DRAW PEOPLE
-YOUNG unless the story says otherwise. Parents of small children are in their
-twenties or thirties - smooth faces, thick black hair, no wrinkles, no balding,
-no stoop. Only grandparents and village elders are old.
-The same goes for monsters and beasts - they must be FUN to look at too, drawn
-like the monsters in 1980s-90s Korean TV animation. BOLD, SIMPLE and BOUNCY: big
-flat areas of saturated colour, thick clean outlines, rounded cartoon masses,
-springy exaggerated poses. Huge fangs, a wide roaring mouth, googly eyes out on
-stalks, enormous claws are all GOOD - they read as playful because the shapes are
-simple and the colours are bright. A monster may fill the whole frame and roar.
-What makes a monster disgusting is not its teeth but its TEXTURE and DETAIL: wet
-glistening skin, slime, drool, bristles, veins, swarms of small eyes, finely
-segmented insect legs, realistic anatomy. Never draw those. Keep every monster a
-big bold cartoon shape that a child would want to draw themselves.
 ```
 
-## 인물 설명 (일관성을 위해 매번 붙이세요)
+## 인물 설명 (일관성을 위해 매번 붙이세요 — 등장인물 3명 명확히 구분)
 
 ```
-The traveller: a man of about forty in a plain undyed hemp hanbok with a small
-cloth bundle and a walking staff, a calm gentle face with steady eyes. His
-expression stays serene in every single picture - even tied to the post he looks
-untroubled, never angry, never pleading. The master of the house: a
-well-dressed man in a fine grey silk overcoat and horsehair hat, round face, warm
-and proud at first, then suspicious and red-faced, then deeply ashamed at the end.
-The goose: a plump white domestic goose with an orange beak and feet, drawn
-innocent and slightly comic, waddling. The pearl: a single luminous white pearl
-the size of a large bean.
+1. 손님 / 나그네 (The Traveller):
+   30~40대, 온화하고 차분한 얼굴, 단정한 턱수염, 흰색/미색 삼베옷과 머리띠, 봇짐과 지팡이.
+   어떤 상황에서도(묶여 있을 때도) 결코 화내거나 억울해하지 않고 깊고 평온한 눈빛을 유지합니다.
+
+2. 집주인 (The Master):
+   60대 양반 어르신, 백발 상투와 흰 수염(콧수염+턱수염), 고급 회색 비단 도포 차림.
+   1장~5장에서 진주를 보여주고 의심하다가, 6장에서 하인에게 묶으라 명하고, 8장(진주 발견)·9장(눈물 흘리며 밧줄 풂)·10장(사과하며 고개 숙임)에 모두 등장하는 핵심 인물입니다.
+
+3. 하인 (The Servant):
+   20~30대 젊은 남성, 검은 머리 상투, 수염 없음, 거친 갈색/베옷 차림.
+   오직 6장(나그네를 기둥에 묶고 거위를 말뚝에 매는 장면)에만 등장하며 8, 9, 10장에는 나오지 않습니다.
+
+4. 거위 (The Goose): 통통하고 순진한 흰 거위, 주황색 부리와 발.
+5. 진주 (The Pearl): 은은하게 빛나는 콩알만 한 흰색 진주.
 ```
 
 ---
@@ -151,7 +131,7 @@ on the ground near the goose's feet. Quiet, still, gently mysterious.
 ```
 Wide scene at the gate of a fine tiled-roof Korean house at dusk. On the left,
 the traveller in plain hemp hanbok stands with his staff and small bundle, bowing
-slightly with both hands together. On the right, the master of the house holds
+slightly with both hands together. On the right, the old master of the house (elderly man, white hair and beard, grey silk robe) holds
 the gate open, smiling broadly and gesturing him in. Warm lantern light spilling
 out, deep blue evening sky behind.
 ```
@@ -159,7 +139,7 @@ out, deep blue evening sky behind.
 ### `02-pearl.webp` — 손바닥 위의 진주
 
 ```
-Wide interior of a warm Korean room. On the right, the master sits cross-legged
+Wide interior of a warm Korean room. On the right, the old master (white hair and beard, grey robe) sits cross-legged
 holding out one open palm with a single luminous pearl on it, chest puffed with
 pride, a silk pouch beside him. On the left, the traveller leans in politely to
 look, hands on his knees. At the bottom left edge, a white goose has just waddled
@@ -169,7 +149,7 @@ into the open doorway, unnoticed. Amber lamplight.
 ### `03-swallow.webp` — 꿀꺽 삼킨 거위
 
 ```
-Wide interior scene, the key moment. On the right, the master has turned away to
+Wide interior scene, the key moment. On the right, the old master (white hair and beard, grey robe) has turned away to
 open the silk pouch, his back to the room. In the centre, the pearl bounces on
 the wooden floor mid-roll. On the left, the white goose stretches its neck down
 and takes it in its beak, eyes wide and innocent. The traveller sits behind,
@@ -179,7 +159,7 @@ mouth slightly open, having just seen it. Nobody else has.
 ### `04-accuse.webp` — 향하는 눈길
 
 ```
-Wide interior scene. On the left, the master is on his knees with a quilt thrown
+Wide interior scene. On the left, the old master (white hair and beard, grey robe) is on his knees with a quilt thrown
 back and a drawer pulled out, papers scattered, searching frantically. On the
 right, the traveller sits perfectly still and calm on the floor. Between them,
 the master's head has turned and his eyes have locked onto the traveller. Tense,
@@ -189,8 +169,8 @@ quiet, no shouting yet.
 ### `05-silent.webp` — 아무 말도 하지 않는 나그네
 
 ```
-Wide interior scene. On the left, the master leans forward with one hand
-outstretched demanding, face flushed red, veins on his neck. On the right, the
+Wide interior scene. On the left, the old master (white hair and beard, grey robe) leans forward with one hand
+outstretched demanding, face flushed red, furious. On the right, the
 traveller shakes his head gently, eyes lowered, hands resting on his knees,
 utterly composed. The white goose is visible through the open door in the
 background, preening quietly. Strong contrast between fury and calm.
@@ -200,9 +180,9 @@ background, preening quietly. Strong contrast between fury and calm.
 
 ```
 Wide night scene in the courtyard. In the centre, the traveller kneels bound with
-rope to a thick wooden pillar, still calm, head slightly bowed. He is looking
-toward the right, where a servant is tying the white goose to a stake beside him
-with a puzzled expression. On the left, the master watches with folded arms, still
+rope to a thick wooden pillar, still calm, head slightly bowed. On the right, a
+young servant with black hair and brown clothes ties the white goose to a small stake beside him
+with a puzzled expression. On the left, the old master (white hair and beard, grey robe) watches with folded arms, still
 angry. One lantern, deep indigo night.
 ```
 
@@ -219,9 +199,9 @@ happens - the stillness is the point.
 ### `08-morning.webp` — 똥 속에서 반짝인 것
 
 ```
-Wide courtyard scene at dawn. On the right, the master crouches low with both
-hands on his knees, staring at the ground where a single pearl glints among the
-straw. On the left, the goose has stood up and waddles away, entirely unconcerned.
+Wide courtyard scene at dawn. On the right, the old master (elderly gentleman, white hair in topknot, long white beard, grey silk hanbok) crouches low with both
+hands on his knees, staring in shock and realization at the ground where a single pearl glints among the
+goose droppings. On the left, the goose has stood up and waddles away cheerfully.
 The traveller is still tied to the pillar behind, watching quietly. Pale pink
 morning light.
 ```
@@ -229,10 +209,10 @@ morning light.
 ### `09-untie.webp` — 밧줄을 푸는 주인
 
 ```
-Wide courtyard scene in morning light. In the centre, the master kneels in front
+Wide courtyard scene in morning light. In the centre, the old master (elderly gentleman, white hair in topknot, long white beard, grey silk hanbok) kneels in front
 of the pillar, hands busy loosening the rope from the traveller's arms, his face
-crumpled with shame, head bowed low. The traveller looks down at him with a
-gentle expression, no anger at all. The pearl sits on a cloth on the ground
+crumpled with shame and tears, head bowed low. The traveller looks down at him with a
+gentle expression, no anger at all. The pearl sits on a red cloth on the ground
 beside them. Warm and forgiving.
 ```
 
@@ -240,8 +220,8 @@ beside them. Warm and forgiving.
 
 ```
 Wide courtyard scene. On the right, the traveller stands rubbing one stiff arm,
-speaking quietly, his staff and bundle already picked up. On the left, the master
-stands with his head bowed deeply, hat brim hiding his eyes, both hands at his
+speaking quietly, his staff and bundle already picked up. On the left, the old master
+(elderly gentleman, white hair and beard, grey silk hanbok) stands with his head bowed deeply in sincere apology, both hands at his
 sides. Between them, the white goose waddles past, oblivious. Soft golden morning
 light. Still and moving.
 ```
