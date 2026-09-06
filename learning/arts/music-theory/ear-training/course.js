@@ -23,7 +23,7 @@
             {
                 id: "perfect-drill",
                 kind: "drill",
-                title: "Perfect Intervals​(완전음정) 듣고 맞히기",
+                title: "Perfect Intervals​(완전음정) 듣기",
                 drill: { items: ["P4", "P5", "P8"], mode: "mixed", limit: 10 }
             },
             {
@@ -39,13 +39,13 @@
             {
                 id: "thirds-drill",
                 kind: "drill",
-                title: "Thirds​(3도) 듣고 맞히기",
+                title: "Thirds​(3도) 듣기",
                 drill: { items: ["m3", "M3"], mode: "mixed", limit: 10 }
             },
             {
                 id: "perfect-thirds-drill",
                 kind: "drill",
-                title: "Perfect​(완전음정)과 Thirds​(3도) 섞어서 맞히기",
+                title: "Perfect​(완전음정)과 Thirds​(3도) 섞어 듣기",
                 drill: { items: ["m3", "M3", "P4", "P5", "P8"], mode: "mixed", limit: 15 }
             },
             {
@@ -61,13 +61,13 @@
             {
                 id: "seconds-drill",
                 kind: "drill",
-                title: "Seconds​(2도) 듣고 맞히기",
+                title: "Seconds​(2도) 듣기",
                 drill: { items: ["m2", "M2"], mode: "mixed", limit: 10 }
             },
             {
                 id: "narrow-drill",
                 kind: "drill",
-                title: "여기까지 모아서 맞히기",
+                title: "여기까지 듣기",
                 drill: { items: ["m2", "M2", "m3", "M3", "P4", "P5", "P8"], mode: "mixed", limit: 15 }
             },
             {
@@ -83,7 +83,7 @@
             {
                 id: "sixths-drill",
                 kind: "drill",
-                title: "Sixths​(6도) 듣고 맞히기",
+                title: "Sixths​(6도) 듣기",
                 drill: { items: ["m6", "M6"], mode: "mixed", limit: 10 }
             },
             {
@@ -99,7 +99,7 @@
             {
                 id: "sevenths-drill",
                 kind: "drill",
-                title: "Sevenths​(7도) 듣고 맞히기",
+                title: "Sevenths​(7도) 듣기",
                 drill: { items: ["m7", "M7"], mode: "mixed", limit: 10 }
             },
             {
@@ -127,13 +127,13 @@
             {
                 id: "tritone-drill",
                 kind: "drill",
-                title: "P4·A4·P5 듣고 맞히기",
+                title: "P4·A4·P5 듣기",
                 drill: { items: ["P4", "A4", "P5"], mode: "mixed", limit: 10 }
             },
             {
                 id: "all-simple-drill",
                 kind: "drill",
-                title: "Simple Intervals​(한 옥타브 안 음정) 전부 맞히기",
+                title: "Simple Intervals​(한 옥타브 안 음정) 듣기",
                 drill: {
                     items: ["m2", "M2", "m3", "M3", "P4", "A4", "P5", "m6", "M6", "m7", "M7", "P8"],
                     mode: "mixed",
@@ -153,7 +153,7 @@
             {
                 id: "compound-drill",
                 kind: "drill",
-                title: "Compound Intervals​(겹음정) 듣고 맞히기",
+                title: "Compound Intervals​(겹음정) 듣기",
                 drill: { items: ["m9", "M9", "m10", "M10", "P11", "A11", "P12"], mode: "mixed", limit: 15 }
             }
         ]
@@ -169,7 +169,7 @@
                 kind: "text",
                 title: "Triads​(3화음)",
                 body: [
-                    "Triad​(3화음)은 음 세 개로 된 가장 기본이 되는 화음입니다. Root​(밑음), 그 위 Third​(3도), 다시 그 위 3도로 쌓으면 맨 아래와 맨 위가 Fifth​(5도)가 됩니다.",
+                    "Triad​(3화음)은 음 세 개로 된 화음입니다. Root​(밑음), 그 위 Third​(3도), 다시 그 위 3도로 쌓으면 맨 아래와 맨 위가 Fifth​(5도)가 됩니다.",
                     "아래 3도가 M3​(장3도)인지 m3​(단3도)인지, 그리고 바깥 5도가 P5​(완전5도)인지 아닌지에 따라 maj​(장)·min​(단)·dim​(감)·aug​(증) 네 가지로 갈립니다."
                 ],
                 examples: [
@@ -182,13 +182,13 @@
             {
                 id: "major-minor-drill",
                 kind: "drill",
-                title: "maj·min 듣고 맞히기",
+                title: "maj·min 듣기",
                 drill: { drillId: "chord", items: ["maj", "min"], mode: "harmony", limit: 10 }
             },
             {
                 id: "triads-drill",
                 kind: "drill",
-                title: "Triads​(3화음) 네 가지 듣고 맞히기",
+                title: "Triads​(3화음) 듣기",
                 drill: { drillId: "chord", items: ["maj", "min", "dim", "aug"], mode: "mixed", limit: 15 }
             },
             {
@@ -211,13 +211,13 @@
             {
                 id: "position-drill",
                 kind: "drill",
-                title: "Chord Inversions​(화음 자리) 듣고 맞히기",
+                title: "Chord Inversions​(화음 자리) 듣기",
                 drill: { drillId: "position", items: ["root", "first", "second"], mode: "harmony", limit: 15 }
             },
             {
                 id: "triads-inv-drill",
                 kind: "drill",
-                title: "자리바꿈까지 섞어서 맞히기",
+                title: "자리바꿈까지 섞어 듣기",
                 drill: {
                     drillId: "chord",
                     items: ["maj", "min", "dim", "aug"],
@@ -242,7 +242,7 @@
             {
                 id: "dom7-maj7-drill",
                 kind: "drill",
-                title: "dom7·maj7 듣고 맞히기",
+                title: "dom7·maj7 듣기",
                 drill: { drillId: "chord", items: ["dom7", "maj7"], mode: "mixed", limit: 10 }
             },
             {
@@ -250,7 +250,7 @@
                 kind: "text",
                 title: "m7​(단7화음)과 mMaj7​(단장7화음)",
                 body: [
-                    "Minor Triad​(단3화음) 위에 m3​(단3도)를 얹으면 Minor 7th​(단7화음), M3​(장3도)를 얹으면 Minor Major 7th​(단장7화음)입니다. 단7화음은 흔하게 쓰이고, 단장7화음은 아래는 어둡고 위는 팽팽한 독특한 소리가 납니다.",
+                    "Minor Triad​(단3화음) 위에 m3​(단3도)를 얹으면 Minor 7th​(단7화음), M3​(장3도)를 얹으면 Minor Major 7th​(단장7화음)입니다. 단7화음은 흔하게 쓰이고, 단장7화음은 아래는 어둡고 위는 팽팽한 소리가 납니다.",
                     "아래 3화음이 장인지 단인지를 먼저 듣고, 그다음 맨 위 7음이 m7​(단7도)인지 M7​(장7도)인지를 듣습니다."
                 ],
                 examples: [
@@ -261,7 +261,7 @@
             {
                 id: "min7-mmaj7-drill",
                 kind: "drill",
-                title: "m7·mMaj7 듣고 맞히기",
+                title: "m7·mMaj7 듣기",
                 drill: { drillId: "chord", items: ["min7", "mmaj7"], mode: "mixed", limit: 10 }
             },
             {
@@ -270,7 +270,7 @@
                 title: "Other 7th Chords​(나머지 7화음)",
                 body: [
                     "Diminished Triad​(감3화음) 위에 m3​(단3도)를 얹으면 Diminished 7th​(감7화음), M3​(장3도)를 얹으면 Half-diminished 7th​(반감7화음)입니다. 감7화음은 단3도만 세 번 쌓여 어디가 밑음인지 알 수 없는 소리가 납니다.",
-                    "Augmented Triad​(증3화음) 위에 M3​(장3도)를 얹으면 Augmented Major 7th​(증장7화음)입니다. 셋 다 자주 쓰이지는 않지만 소리가 뚜렷합니다."
+                    "Augmented Triad​(증3화음) 위에 M3​(장3도)를 얹으면 Augmented Major 7th​(증장7화음)입니다. 셋 다 자주 쓰이지는 않습니다."
                 ],
                 examples: [
                     { chord: "m7b5" },
@@ -281,13 +281,13 @@
             {
                 id: "other7-drill",
                 kind: "drill",
-                title: "Other 7th Chords​(나머지 7화음) 듣고 맞히기",
+                title: "Other 7th Chords​(나머지 7화음) 듣기",
                 drill: { drillId: "chord", items: ["m7b5", "dim7", "maj7s5"], mode: "mixed", limit: 12 }
             },
             {
                 id: "all7-drill",
                 kind: "drill",
-                title: "7th Chords​(7화음) 일곱 가지 전부 맞히기",
+                title: "7th Chords​(7화음) 듣기",
                 drill: {
                     drillId: "chord",
                     items: ["dom7", "maj7", "min7", "mmaj7", "m7b5", "dim7", "maj7s5"],
