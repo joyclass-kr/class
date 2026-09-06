@@ -35,7 +35,7 @@
             loaded: false
         },
         sensory: {
-            src: '../assets/images/nervous-eye.jpg',
+            src: '../assets/images/eye-diagram.svg',
             img: null,
             loaded: false
         },
