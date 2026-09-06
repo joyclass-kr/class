@@ -151,6 +151,33 @@
         .badge.approved { background: var(--green); color: #000; }
 
         .hidden { display: none !important; }
+
+        /* 주소록 3단. 좁은 화면에서는 가운데 명단이 손가락만큼 좁아져 이름이 잘렸다. */
+        .ab-grid {
+            display: grid;
+            grid-template-columns: 220px 1fr 240px;
+            gap: 1px;
+            background: var(--line);
+            height: 540px;
+            overflow: hidden;
+        }
+
+        .ab-toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 860px) {
+            .ab-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+                max-height: 72vh;
+                overflow-y: auto;
+            }
+            .ab-grid > div { max-height: 40vh; }
+        }
     </style>
 </head>
 <body>
@@ -239,7 +266,7 @@
                 </div>
 
                 <!-- Modal 3-Pane Body -->
-                <div style="display:grid; grid-template-columns: 220px 1fr 240px; gap:1px; background:var(--line); height:540px; overflow:hidden;">
+                <div class="ab-grid">
                     <!-- Pane 1: 회원그룹 트리 -->
                     <div style="background:#111713; padding:14px; overflow-y:auto;">
                         <h4 style="margin:0 0 10px; font-size:13px; color:var(--green);">📁 회원 그룹</h4>
@@ -250,9 +277,13 @@
 
                     <!-- Pane 2: 회원 목록 & 검색 -->
                     <div style="background:#141b16; padding:14px; display:flex; flex-direction:column; overflow:hidden;">
-                        <div style="display:flex; gap:8px; margin-bottom:10px;">
+                        <div class="ab-toolbar">
                             <input type="text" id="abSearchInput" placeholder="이름 / 학부모 검색..." style="height:38px; font-size:13px; flex:1;" oninput="filterAddressBookStudents()">
-                            <button type="button" class="btn-secondary" style="height:38px; padding:0 12px;" onclick="selectAllCurrentList()">전체선택</button>
+                            <select id="abSortSelect" onchange="filterAddressBookStudents()" style="height:38px; font-size:13px; width:auto;">
+                                <option value="roster">번호순</option>
+                                <option value="name">이름순</option>
+                            </select>
+                            <button type="button" class="btn-secondary" id="abSelectAllBtn" style="height:38px; padding:0 12px; white-space:nowrap;" onclick="selectAllCurrentList()">전체선택</button>
                         </div>
                         <div id="abStudentList" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:4px;">
                             <!-- Students loaded by JS -->
@@ -594,18 +625,83 @@
             document.getElementById('addressBookModal').style.display = 'none';
         }
 
+        // 나무의 한 가지에 드는 학생들. 체크 한 번으로 그 무리를 통째로 담기 위해
+        // 필요하다. 예전에는 가지를 눌러도 가운데 명단이 걸러질 뿐이라, 담으려면
+        // 가운데서 전체선택을 또 눌러야 했다.
+        function studentsOfNode(key) {
+            const all = rawAddressBook.students || [];
+            if (key === 'ALL') return all;
+            if (key.startsWith('GRADE_')) {
+                const g = Number(key.split('_')[1]);
+                return all.filter(s => s.grade === g);
+            }
+            if (key.startsWith('CLASS_')) {
+                const [, g, c] = key.split('_');
+                return all.filter(s => s.grade === Number(g) && s.class_number === Number(c));
+            }
+            if (key.startsWith('GROUP_')) {
+                const id = key.slice('GROUP_'.length);
+                const group = (rawAddressBook.groups || []).find(x => String(x.id) === id);
+                return group ? all.filter(s => inGroup(s, group)) : [];
+            }
+            return [];
+        }
+
+        // 다 담겼는지, 일부만인지, 하나도 아닌지.
+        function nodeState(key) {
+            const members = studentsOfNode(key);
+            if (members.length === 0) return 'none';
+            const picked = members.filter(s => isPicked(s.student_id)).length;
+            if (picked === 0) return 'none';
+            return picked === members.length ? 'all' : 'some';
+        }
+
+        function isPicked(studentId) {
+            return selectedTargets.some(t => t.id === studentId);
+        }
+
+        function pickStudent(s) {
+            if (isPicked(s.student_id)) return;
+            selectedTargets.push({
+                type: 'student', id: s.student_id,
+                label: `${s.grade}학년 ${s.class_number}반 ${s.student_number}번 ${s.name}`
+            });
+        }
+
+        function toggleNode(key, checked) {
+            const members = studentsOfNode(key);
+            if (checked) {
+                members.forEach(pickStudent);
+            } else {
+                const drop = new Set(members.map(s => s.student_id));
+                selectedTargets = selectedTargets.filter(t => !drop.has(t.id));
+            }
+            renderAddressBookTree();
+            renderSelectedBasket();
+            filterAddressBookStudents();
+        }
+
+        function treeRow(key, label, indent, color) {
+            const state = nodeState(key);
+            const active = activeFilterType === key;
+            return `
+                <div style="display:flex; align-items:center; gap:7px; padding:3px 6px 3px ${indent}px; border-radius:6px; ${active ? 'background:#1b3d2b;' : ''}">
+                    <input type="checkbox" ${state === 'all' ? 'checked' : ''}
+                           data-indeterminate="${state === 'some'}"
+                           onchange="toggleNode('${key}', this.checked)"
+                           style="width:15px; height:15px; flex:none; margin:0; cursor:pointer;">
+                    <span onclick="selectGroupFilter('${key}')" style="cursor:pointer; color:${color}; font-size:13px;">${label}</span>
+                </div>`;
+        }
+
         function renderAddressBookTree() {
             const treeEl = document.getElementById('abGroupTreeList');
             if (!treeEl) return;
-            let totalCount = rawAddressBook.students.length || 0;
+            const totalCount = (rawAddressBook.students || []).length;
             document.getElementById('abTotalCount').textContent = totalCount;
 
-            let html = `
-                <div class="tree-item" onclick="selectGroupFilter('ALL')" style="padding:6px 10px; border-radius:6px; cursor:pointer; font-weight:bold; background:#1b3d2b; color:#fff; margin-bottom:6px;">
-                    🌐 전교생 (전체 ${totalCount}명)
-                </div>
-                <div style="font-weight:bold; color:var(--green); margin:8px 0 4px; font-size:12px;">🏫 학년 / 반</div>
-            `;
+            let html = treeRow('ALL', `🌐 전교생 (${totalCount}명)`, 6, '#fff');
+            html += `<div style="font-weight:bold; color:var(--green); margin:8px 0 4px; font-size:12px;">🏫 학년 / 반</div>`;
 
             const gradeMap = {};
             (rawAddressBook.classes || []).forEach(c => {
@@ -613,37 +709,29 @@
                 gradeMap[c.grade].push(c);
             });
 
-            Object.keys(gradeMap).sort().forEach(g => {
+            Object.keys(gradeMap).sort((a, b) => Number(a) - Number(b)).forEach(g => {
                 const classes = gradeMap[g];
                 const gradeCount = classes.reduce((sum, cl) => sum + (cl.student_count || 0), 0);
-                html += `
-                    <div style="margin-left:4px; margin-bottom:4px;">
-                        <div onclick="selectGroupFilter('GRADE_${g}')" style="cursor:pointer; color:#7ce4ff; font-weight:bold; padding:3px 6px;">
-                            📁 ${g}학년 (${gradeCount}명)
-                        </div>
-                `;
+                html += treeRow(`GRADE_${g}`, `📁 ${g}학년 (${gradeCount}명)`, 6, '#7ce4ff');
                 classes.forEach(cl => {
-                    html += `
-                        <div onclick="selectGroupFilter('CLASS_${cl.grade}_${cl.class_number}')" style="cursor:pointer; padding:3px 6px 3px 18px; color:#ccc;">
-                            └ ${cl.class_number}반 (${cl.student_count}명)
-                        </div>
-                    `;
+                    html += treeRow(`CLASS_${cl.grade}_${cl.class_number}`,
+                        `└ ${cl.class_number}반 (${cl.student_count}명)`, 20, '#ccc');
                 });
-                html += `</div>`;
             });
 
             if (rawAddressBook.groups && rawAddressBook.groups.length > 0) {
-                html += `<div style="font-weight:bold; color:var(--green); margin:10px 0 4px; font-size:12px;">🤖 추가 그룹</div>`;
+                html += `<div style="font-weight:bold; color:var(--green); margin:10px 0 4px; font-size:12px;">📌 추가 그룹</div>`;
                 rawAddressBook.groups.forEach(gr => {
-                    html += `
-                        <div onclick="selectGroupFilter('GROUP_${gr.id}')" style="cursor:pointer; padding:4px 8px; color:#ffe8b3;">
-                            📌 ${gr.group_name} (${gr.student_count || 0}명)
-                        </div>
-                    `;
+                    html += treeRow(`GROUP_${gr.id}`,
+                        `${gr.group_name} (${gr.student_count || 0}명)`, 6, '#ffe8b3');
                 });
             }
 
             treeEl.innerHTML = html;
+            // 반만 담긴 가지는 '－' 로 보여 준다. HTML 속성으로는 못 하는 상태다.
+            treeEl.querySelectorAll('input[data-indeterminate="true"]').forEach(box => {
+                box.indeterminate = true;
+            });
         }
 
         let activeFilterType = 'ALL';
@@ -667,34 +755,35 @@
             return Object.values(fields).some(v => String(v) === group.group_name);
         }
 
-        function filterAddressBookStudents() {
-            const listEl = document.getElementById('abStudentList');
-            const search = document.getElementById('abSearchInput').value.trim().toLowerCase();
-            if (!listEl) return;
-
-            let filtered = rawAddressBook.students || [];
-
-            if (activeFilterType.startsWith('GRADE_')) {
-                const g = Number(activeFilterType.split('_')[1]);
-                filtered = filtered.filter(s => s.grade === g);
-            } else if (activeFilterType.startsWith('CLASS_')) {
-                const parts = activeFilterType.split('_');
-                const g = Number(parts[1]);
-                const c = Number(parts[2]);
-                filtered = filtered.filter(s => s.grade === g && s.class_number === c);
-            } else if (activeFilterType.startsWith('GROUP_')) {
-                // 그룹은 눌러도 아무것도 걸러지지 않고 전교생이 그대로 나왔다.
-                const id = activeFilterType.slice('GROUP_'.length);
-                const group = (rawAddressBook.groups || []).find(g => String(g.id) === id);
-                filtered = group ? filtered.filter(s => inGroup(s, group)) : [];
-            }
-
+        // 지금 고른 가지 + 검색어에 걸리는 사람들. 명단 그리기와 전체선택이 같은
+        // 것을 봐야 눌렀을 때 보이는 대로 담긴다.
+        function currentFilteredStudents() {
+            const searchEl = document.getElementById('abSearchInput');
+            const search = searchEl ? searchEl.value.trim().toLowerCase() : '';
+            let filtered = studentsOfNode(activeFilterType);
             if (search) {
-                filtered = filtered.filter(s => 
-                    s.name.toLowerCase().includes(search) || 
+                filtered = filtered.filter(s =>
+                    s.name.toLowerCase().includes(search) ||
                     String(s.student_number).includes(search) ||
                     (s.guardian1_email && s.guardian1_email.toLowerCase().includes(search))
                 );
+            }
+            const dir = (document.getElementById('abSortSelect') || {}).value || 'roster';
+            return [...filtered].sort((a, b) => dir === 'name'
+                ? a.name.localeCompare(b.name, 'ko')
+                : (a.grade - b.grade) || (a.class_number - b.class_number)
+                  || (Number(a.student_number) - Number(b.student_number)));
+        }
+
+        function filterAddressBookStudents() {
+            const listEl = document.getElementById('abStudentList');
+            if (!listEl) return;
+            const filtered = currentFilteredStudents();
+
+            const allBtn = document.getElementById('abSelectAllBtn');
+            if (allBtn) {
+                const allPicked = filtered.length > 0 && filtered.every(s => isPicked(s.student_id));
+                allBtn.textContent = allPicked ? '전체해제' : '전체선택';
             }
 
             if (filtered.length === 0) {
@@ -703,7 +792,7 @@
             }
 
             listEl.innerHTML = filtered.map(s => {
-                const isSelected = selectedTargets.some(t => t.type === 'student' && t.id === s.student_id);
+                const isSelected = isPicked(s.student_id);
                 return `
                     <label style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px; background:#0e1410; border:1px solid var(--line); border-radius:8px; cursor:pointer; margin:0;">
                         <div style="display:flex; align-items:center; gap:8px;">
@@ -719,38 +808,42 @@
             }).join('');
         }
 
+        // 그룹으로 통째로 담았어도 한 명씩 뺄 수 있다. 그게 이 주소록의 요점이다.
+        // 한 명을 빼면 그 그룹 체크는 '일부만 담김'으로 내려간다.
         function toggleStudentTarget(studentId, label, isChecked) {
             if (isChecked) {
-                if (!selectedTargets.some(t => t.id === studentId)) {
+                if (!isPicked(studentId)) {
                     selectedTargets.push({ type: 'student', id: studentId, label });
                 }
             } else {
                 selectedTargets = selectedTargets.filter(t => t.id !== studentId);
             }
+            afterSelectionChanged();
+        }
+
+        function afterSelectionChanged() {
+            renderAddressBookTree();
             renderSelectedBasket();
             filterAddressBookStudents();
         }
 
+        // 지금 가운데에 보이는 사람들만. 예전에는 이 단추가 걸러 보기를 무시하고
+        // 전교생을 담았다 -- 1학년만 보면서 눌렀는데 전교생이 담기는 식.
         function selectAllCurrentList() {
-            const search = document.getElementById('abSearchInput').value.trim().toLowerCase();
-            let filtered = rawAddressBook.students || [];
-            if (search) {
-                filtered = filtered.filter(s => s.name.toLowerCase().includes(search) || String(s.student_number).includes(search));
+            const shown = currentFilteredStudents();
+            const allPicked = shown.length > 0 && shown.every(s => isPicked(s.student_id));
+            if (allPicked) {
+                const drop = new Set(shown.map(s => s.student_id));
+                selectedTargets = selectedTargets.filter(t => !drop.has(t.id));
+            } else {
+                shown.forEach(pickStudent);
             }
-            filtered.forEach(s => {
-                const label = `${s.grade}학년 ${s.class_number}반 ${s.student_number}번 ${s.name}`;
-                if (!selectedTargets.some(t => t.id === s.student_id)) {
-                    selectedTargets.push({ type: 'student', id: s.student_id, label });
-                }
-            });
-            renderSelectedBasket();
-            filterAddressBookStudents();
+            afterSelectionChanged();
         }
 
         function clearAllSelectedTargets() {
             selectedTargets = [];
-            renderSelectedBasket();
-            filterAddressBookStudents();
+            afterSelectionChanged();
         }
 
         function renderSelectedBasket() {
@@ -774,8 +867,7 @@
 
         function removeSelectedTarget(index) {
             selectedTargets.splice(index, 1);
-            renderSelectedBasket();
-            filterAddressBookStudents();
+            afterSelectionChanged();
         }
 
         function confirmAddressBookSelection() {
