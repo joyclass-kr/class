@@ -5345,18 +5345,12 @@ function createClassroomPlatform(options = {}) {
   // 학생 쪽은 school_students 의 학년·반으로 classroom_classes 를 찾으므로, 같은
   // 학년·반 행을 쓰면 담임과 학생이 한 게시판에 모인다. 이미 있는 행은 주인을
   // 바꾸지 않는다(다른 담임의 반을 가로채지 않도록).
-  async function classIdFromHomeroomGroup(user, info) {
-    const groupRes = await pool.query(
-      `SELECT school_id, academic_year, grade, class_number
-       FROM teacher_groups
-       WHERE teacher_user_id = $1 AND group_type = 'homeroom'
-         AND grade IS NOT NULL AND class_number IS NOT NULL
-       ORDER BY academic_year DESC, sort_order, id
-       LIMIT 1`,
-      [user.id]
-    );
-    const g = groupRes.rows[0];
-    if (!g) return null;
+  // 담임 학급 그룹 하나를 학생과 같은 학급 게시판으로 이어 준다. 학생 쪽은
+  // school_students 의 학년·반으로 classroom_classes 를 찾으므로, 같은 학년·반 행을
+  // 쓰면 담임과 학생이 한 게시판에 모인다. 이미 있는 행은 주인을 바꾸지 않는다
+  // (다른 담임의 반을 가로채지 않도록).
+  async function classIdForHomeroomGroup(g, user, info) {
+    if (!g || g.grade == null || g.class_number == null) return null;
 
     const existing = await pool.query(
       `SELECT id FROM classroom_classes
@@ -5371,15 +5365,28 @@ function createClassroomPlatform(options = {}) {
          VALUES ($1, $2, $3, $4, $5, $6, $7)
          RETURNING id`,
         [g.school_id, g.academic_year, g.grade, g.class_number, user.id,
-         info.teacher_name || `${g.grade}학년 ${g.class_number}반`, makeJoinCode()]
+         info?.teacher_name || `${g.grade}학년 ${g.class_number}반`, makeJoinCode()]
       );
       return created.rows[0]?.id || null;
     } catch (error) {
       // 이 교사가 예전 학급 행을 아직 쥐고 있으면(teacher_user_id UNIQUE) 새로 못
-      // 만든다. 게시판을 비워 두는 편이 남의 반을 가로채는 것보다 낫다.
-      console.error("classIdFromHomeroomGroup insert failed:", error.message);
+      // 만든다. 그래도 게시판은 줘야 하므로 부르는 쪽에서 그룹 게시판으로 넘긴다.
+      console.error("classIdForHomeroomGroup insert failed:", error.message);
       return null;
     }
+  }
+
+  async function classIdFromHomeroomGroup(user, info) {
+    const groupRes = await pool.query(
+      `SELECT school_id, academic_year, grade, class_number
+       FROM teacher_groups
+       WHERE teacher_user_id = $1 AND group_type = 'homeroom'
+         AND grade IS NOT NULL AND class_number IS NOT NULL
+       ORDER BY academic_year DESC, sort_order, id
+       LIMIT 1`,
+      [user.id]
+    );
+    return classIdForHomeroomGroup(groupRes.rows[0], user, info);
   }
 
   async function classboardScope(user) {
@@ -5409,13 +5416,17 @@ function createClassroomPlatform(options = {}) {
         classId = await classIdFromHomeroomGroup(user, info);
       }
 
-      if (!classId) return { canPost: false, classes: [] };
+      // 학급이 안 잡혀도 등록된 교사면 글은 쓸 수 있어야 한다. 자기가 연 그룹
+      // 게시판이 남아 있기 때문이다. 여기서 canPost 를 false 로 내리면 그룹까지
+      // 학생 규칙으로 조회돼 게시판이 하나도 안 남는다.
+      if (!classId) return { canPost: Boolean(info), classes: [], info };
       const own = await pool.query(
         `SELECT id, grade, class_number FROM classroom_classes WHERE id = $1`,
         [classId]
       );
       return {
         canPost: Boolean(info),
+        info,
         classes: own.rows.map(c => ({
           id: String(c.id), grade: c.grade, classNumber: c.class_number, teaching: true
         }))
@@ -5437,6 +5448,7 @@ function createClassroomPlatform(options = {}) {
     );
     return {
       canPost: true,
+      info,
       classes: listRes.rows.map(c => ({
         id: String(c.id), grade: c.grade, classNumber: c.class_number, teaching: c.teaching
       }))
@@ -5444,6 +5456,9 @@ function createClassroomPlatform(options = {}) {
   }
 
   const GROUP_TYPE_LABELS = {
+    // 담임 학급 그룹은 보통 학급 게시판으로 이어지지만, 학년·반이 없어 잇지 못하면
+    // 그룹 게시판으로 남는다. 그때 쓰는 이름.
+    homeroom: "학급",
     subject: "전담 교과",
     club: "동아리",
     afterschool: "방과후부",
@@ -5491,14 +5506,35 @@ function createClassroomPlatform(options = {}) {
 
     let groupRows;
     if (scope.canPost) {
-      // Teachers get the groups they opened.
-      groupRows = await pool.query(
-        `SELECT g.id, g.group_name, g.group_type
+      // 교사는 자기가 연 그룹 전부를 받는다. 담임 학급 그룹도 뺄 수 없다 —
+      // 담임 배정이 그룹에만 있는 교사는 그걸 빼면 게시판이 하나도 안 남는다.
+      const owned = await pool.query(
+        `SELECT g.id, g.group_name, g.group_type, g.school_id, g.academic_year, g.grade, g.class_number
          FROM teacher_groups g
-         WHERE g.teacher_user_id = $1 AND g.group_type <> 'homeroom'
+         WHERE g.teacher_user_id = $1
          ORDER BY g.sort_order, g.id`,
         [user.id]
       );
+
+      const rest = [];
+      for (const g of owned.rows) {
+        if (g.group_type !== "homeroom") { rest.push(g); continue; }
+        // 담임 학급 그룹은 학생과 같은 학급 게시판으로 잇는다. 잇지 못하면
+        // 그룹 게시판으로라도 준다(글 쓸 곳이 아예 없는 것보다 낫다).
+        const classId = await classIdForHomeroomGroup(g, user, scope.info);
+        if (!classId) { rest.push(g); continue; }
+        if (boards.some(b => b.kind === "class" && String(b.id) === String(classId))) continue;
+        boards.push({
+          key: `class:${classId}`,
+          kind: "class",
+          id: String(classId),
+          label: `${g.grade}학년 ${g.class_number}반`,
+          typeLabel: "학급",
+          teaching: true,
+          canPost: true
+        });
+      }
+      groupRows = { rows: rest };
     } else {
       groupRows = await pool.query(
         `SELECT DISTINCT g.id, g.group_name, g.group_type

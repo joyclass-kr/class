@@ -228,6 +228,28 @@ const asGroupOnlyHomeroom = () => { sessionRows = [{ id: 4, email: "new@x.kr", r
     assert.equal(String(insertedPosts[0][0]), "200", "글은 학생이 보는 같은 학급 행에 달려야 한다.");
     homeroomGroupRows = [];
     existingClassRows = [];
+
+    // 3a-2. 같은 담임인데 '담임 학급' 그룹이 자기가 연 그룹 목록으로만 잡히는 경우.
+    //       예전에는 교사 게시판 목록이 담임 그룹을 통째로 빼서 게시판이 0개였고,
+    //       "담임이 여기 글 어떻게 쓰냐"가 됐다.
+    teacherGroups = [{
+      id: 56, group_name: "6학년 3반", group_type: "homeroom",
+      school_id: 5, academic_year: 2026, grade: 6, class_number: 3
+    }];
+    existingClassRows = [{ id: 300 }];
+    const ob = await get("/api/classboard/boards");
+    const obBody = await ob.json();
+    assert.equal(obBody.boards.length, 1, "자기가 연 담임 학급 그룹도 게시판이 되어야 한다.");
+    assert.equal(obBody.boards[0].kind, "class", "학생이 보는 학급 게시판으로 이어야 한다.");
+    assert.equal(obBody.boards[0].label, "6학년 3반");
+    assert.equal(obBody.boards[0].canPost, true);
+    insertedPosts.length = 0;
+    const op = await post("/api/classboard/posts", { content: "알림장" });
+    assert.equal(op.status, 200, `Expected 200, got ${op.status}: ${await op.clone().text()}`);
+    assert.equal(String(insertedPosts[0][0]), "300", "글은 그 학급 행에 달려야 한다.");
+    assert.equal(insertedPosts[0][1], null, "학급 게시판 글에 그룹을 달면 안 된다.");
+    teacherGroups = [];
+    existingClassRows = [];
     asHomeroom();
 
     // 3b. 동아리·방과후 게시판. 그룹을 연 교사는 그 게시판에 글을 쓸 수 있고,

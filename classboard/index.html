@@ -9,20 +9,19 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 </head>
 <body>
+    <!-- 게시판 탭을 제목 줄에 함께 둔다. 제목만으로 한 줄을 쓰지 않도록. -->
     <header class="header">
         <a href="/" class="header-title">
             <span class="material-symbols-outlined">campaign</span>
             학급 알리미
         </a>
+        <nav id="boardPickerSection" class="board-picker hidden"></nav>
         <div class="user-info" id="userInfo">
             <!-- 사용자 정보 표시 -->
         </div>
     </header>
 
     <main class="container">
-        <!-- 게시판 선택: 우리 반 / 동아리 / 방과후 … -->
-        <section id="boardPickerSection" class="board-picker hidden"></section>
-
         <!-- 과목별 보기 -->
         <section id="filterSection" class="board-filters hidden"></section>
 

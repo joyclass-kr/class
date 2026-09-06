@@ -44,21 +44,25 @@ body::before {
     position: sticky;
     top: 0;
     z-index: 100;
-    padding: 1rem 2rem;
+    padding: 0.6rem 2rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 1.25rem;
 }
 
 .header-title {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     text-decoration: none;
+    white-space: nowrap;
+    flex: none;
 }
+
+.header .user-info { margin-left: auto; white-space: nowrap; }
 
 .user-info {
     font-size: 0.9rem;
@@ -86,7 +90,7 @@ body::before {
 
 .container {
     max-width: 800px;
-    margin: 2rem auto;
+    margin: 1.25rem auto;
     padding: 0 1rem;
 }
 
@@ -135,25 +139,31 @@ body::before {
 }
 
 /* 게시판 고르기: 우리 반 / 동아리 / 방과후 … */
+/* 제목 줄 안에서 가로로 흐른다. 게시판이 많으면 옆으로 밀린다. */
 .board-picker {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 1.25rem;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
 }
+.board-picker::-webkit-scrollbar { display: none; }
 
 .board-tab {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    border-radius: 12px;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 10px;
     border: 1px solid var(--border-color);
     background: var(--bg-card);
     color: var(--text-muted);
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex: none;
     cursor: pointer;
 }
 
@@ -455,4 +465,17 @@ body::before {
     text-align: center;
     padding: 3rem;
     color: var(--text-muted);
+}
+
+/* 좁은 화면에서는 게시판 탭이 옆으로 숨는 대신 아랫줄로 내려간다. */
+@media (max-width: 720px) {
+    .header {
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        padding: 0.6rem 1rem;
+    }
+    .board-picker {
+        order: 3;
+        flex-basis: 100%;
+    }
 }
