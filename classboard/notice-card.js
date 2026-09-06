@@ -22,6 +22,26 @@
         survey: '설문·신청'
     };
 
+    function hasQuestions(notice) {
+        return Array.isArray(notice.questions) && notice.questions.length > 0;
+    }
+
+    // 회신 방법과 문항은 따로 붙는다. 동의를 받으면서 문항까지 묻는 글이 있으므로
+    // 딱지도 둘을 합쳐 보여 준다.
+    function kindLabel(notice) {
+        const asked = hasQuestions(notice);
+        if (notice.replyType === 'none' || !notice.replyType) {
+            return asked ? '설문·신청' : '가정통신문';
+        }
+        const base = KIND_LABELS[notice.replyType] || '가정통신문';
+        return asked ? `${base} · 문항` : base;
+    }
+
+    // 이 사람이 무엇이든 답해야 하는 글인지.
+    function wantsAnswer(notice) {
+        return (notice.replyType && notice.replyType !== 'none') || hasQuestions(notice);
+    }
+
     function esc(value) {
         return String(value == null ? '' : value)
             .replace(/&/g, '&amp;')
@@ -40,7 +60,7 @@
 
     // 이 사람이 이 통신문에 대해 아직 할 일이 남았는지. '할 일' 거르개가 이걸 쓴다.
     function needsAction(notice, viewerRole) {
-        return viewerRole === 'guardian' && notice.replyType !== 'none' && !notice.myReply;
+        return viewerRole === 'guardian' && wantsAnswer(notice) && !notice.myReply;
     }
 
     function surveyFormHtml(notice) {
@@ -76,14 +96,28 @@
             </div>`;
         }).join('');
 
-        return `${body}<button type="button" class="btn" data-act="survey">${
-            notice.myReply ? '설문 다시 제출' : '설문 제출'
-        }</button>`;
+        return body;
     }
 
-    // 회신 칸. 보호자에게는 단추, 학생에게는 안내만.
+    // 무엇을 물어보는 글인지 한 줄로. 조각을 이어 붙이면 '여부과' 같은 말이 나와서
+    // 경우마다 문장을 그대로 적는다.
+    function askLine(notice) {
+        const asked = hasQuestions(notice);
+        if (notice.replyType === 'confirm') {
+            return asked ? '확인 회신과 아래 문항에 답해 주세요.' : '읽으셨는지 확인 회신을 해 주세요.';
+        }
+        if (notice.replyType === 'agree') {
+            return asked ? '동의 여부와 아래 문항에 답해 주세요.' : '보호자 동의 여부를 회신해 주세요.';
+        }
+        return '아래 문항에 답해 주세요.';
+    }
+
+    // 회신 칸. 보호자에게는 답하는 자리, 학생에게는 안내만.
+    //
+    // 회신 방법과 문항은 따로 붙는다 -- 동의를 받으면서 알레르기를 묻는 글이 있다.
+    // 그래서 단추와 문항을 함께 그리고, 한 번에 보낸다.
     function replyBoxHtml(notice, viewerRole) {
-        if (notice.replyType === 'none') return '';
+        if (!wantsAnswer(notice)) return '';
 
         if (viewerRole !== 'guardian') {
             const done = notice.myReply
@@ -93,16 +127,7 @@
             return `<div class="reply-box">${done}</div>`;
         }
 
-        if (notice.replyType === 'survey') {
-            const done = notice.myReply
-                ? `<span class="reply-done">${esc(formatWhen(notice.myReply.repliedAt))} 제출함</span>`
-                : '';
-            return `<div class="reply-box">
-                <p class="reply-need">설문에 답해 주세요 ${done}</p>
-                ${surveyFormHtml(notice)}
-            </div>`;
-        }
-
+        // 이미 답했으면 요약만. 고치려면 다시 열어야 한다.
         if (notice.myReply) {
             return `<div class="reply-box replied">
                 <span class="reply-done">${esc(REPLY_LABELS[notice.myReply.choice] || notice.myReply.choice)}</span>
@@ -113,11 +138,14 @@
 
         const buttons = notice.replyType === 'confirm'
             ? '<button type="button" class="btn" data-act="reply" data-choice="confirmed">확인했습니다</button>'
-            : '<button type="button" class="btn" data-act="reply" data-choice="agree">동의합니다</button>'
-              + '<button type="button" class="btn-secondary" data-act="reply" data-choice="disagree">동의하지 않습니다</button>';
+            : notice.replyType === 'agree'
+                ? '<button type="button" class="btn" data-act="reply" data-choice="agree">동의합니다</button>'
+                  + '<button type="button" class="btn-secondary" data-act="reply" data-choice="disagree">동의하지 않습니다</button>'
+                : '<button type="button" class="btn" data-act="reply" data-choice="submitted">제출하기</button>';
 
         return `<div class="reply-box">
-            <p class="reply-need">${notice.replyType === 'confirm' ? '확인 회신이 필요합니다.' : '보호자 동의 여부를 회신해 주세요.'}</p>
+            <p class="reply-need">${esc(askLine(notice))}</p>
+            ${hasQuestions(notice) ? surveyFormHtml(notice) : ''}
             <div class="reply-actions">${buttons}</div>
         </div>`;
     }
@@ -129,7 +157,7 @@
         article.className = 'post-card notice-card';
         article.dataset.noticeId = String(notice.id);
 
-        const kind = KIND_LABELS[notice.replyType] || '가정통신문';
+        const kind = kindLabel(notice);
         article.innerHTML = `
             <header class="post-header">
                 <div class="post-author-info">
@@ -168,12 +196,15 @@
                 return;
             }
 
+            if (act !== 'reply') return;
+
+            // 고른 것과 문항 답을 한 번에 보낸다. 회신만 있는 글이면 답이 빈 채로,
+            // 문항만 있는 글이면 choice 가 'submitted' 로 간다.
             const payload = { noticeId: notice.id, ...(ctx.child || {}) };
-            if (act === 'reply') {
-                payload.choice = button.dataset.choice;
-            } else if (act === 'survey') {
-                payload.choice = 'submitted';
-                payload.answers = Array.from(article.querySelectorAll('.survey-q')).map(box => {
+            payload.choice = button.dataset.choice;
+            const boxes = Array.from(article.querySelectorAll('.survey-q'));
+            if (boxes.length > 0) {
+                payload.answers = boxes.map(box => {
                     const questionId = box.dataset.questionId;
                     if (box.dataset.type === 'text') {
                         return { questionId, text: box.querySelector('.survey-text').value.trim() };
@@ -183,8 +214,6 @@
                         choiceIndexes: Array.from(box.querySelectorAll('input:checked')).map(i => Number(i.value))
                     };
                 });
-            } else {
-                return;
             }
 
             button.disabled = true;

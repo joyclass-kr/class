@@ -384,6 +384,42 @@ app.use((error, _req, res, _next) => {
     assert.equal(teacherView.status, 200, `Expected 200, got ${teacherView.status}: ${await teacherView.clone().text()}`);
     assert.ok(Array.isArray((await teacherView.json()).notices), "The collection view must return a list.");
 
+    // ── 회신과 문항은 따로 붙는다 ────────────────────────────────────────
+    // 넷 중 하나를 고르는 게 아니다. 체험학습이면 동의를 받으면서 알레르기까지
+    // 묻는다. 예전에는 reply_type 하나로 갈라서, 동의서에 문항을 달면 문항이
+    // 통째로 사라지거나 회신이 거절됐다.
+    noticeTargetRows = [{ id: 5, reply_type: "agree" }];
+    surveyQuestionRows = [
+      { id: 91, notice_id: 5, position: 0, question_text: "알레르기가 있나요?", question_type: "single", options: ["없음", "있음"], is_required: true }
+    ];
+    upsertCalls = [];
+    answerInserts = [];
+    const both = await post("/api/notice/replies", {
+      noticeId: 5, choice: "agree",
+      answers: [{ questionId: "91", choiceIndexes: [1] }]
+    }, cookie);
+    assert.equal(both.status, 201, `Expected 201, got ${both.status}: ${await both.clone().text()}`);
+    assert.equal(upsertCalls.length, 1, "동의는 회신 줄에 남아야 한다.");
+    assert.equal(upsertCalls[0][7], "agree");
+    assert.equal(answerInserts.length, 1, "같은 회신에 문항 답도 함께 남아야 한다.");
+    assert.deepEqual(answerInserts[0][2], [1], "고른 보기가 그대로 저장돼야 한다.");
+
+    // 동의를 받는 글에 'submitted' 로 답할 수는 없다. 동의 여부를 골라야 한다.
+    upsertCalls = [];
+    const wrongOnBoth = await post("/api/notice/replies", { noticeId: 5, choice: "submitted" }, cookie);
+    assert.equal(wrongOnBoth.status, 400, "동의를 받는 글은 동의 여부를 골라야 한다.");
+    assert.equal(upsertCalls.length, 0);
+
+    // 필수 문항을 비운 채로는 동의도 저장되지 않는다. 반쪽만 남으면 안 되니까.
+    upsertCalls = [];
+    answerInserts = [];
+    const missingAnswer = await post("/api/notice/replies", {
+      noticeId: 5, choice: "agree", answers: []
+    }, cookie);
+    assert.equal(missingAnswer.status, 400, "필수 문항을 비우면 거절해야 한다.");
+    assert.equal(upsertCalls.length, 0, "거절된 회신은 동의만 따로 저장되면 안 된다.");
+    surveyQuestionRows = [];
+
     // ── 학생 계정의 한계 ────────────────────────────────────────────────
     // 알림장과 가정통신문을 한 곳으로 합치면 학생도 가정통신문을 보게 된다.
     // 보는 것은 되지만, 회신·동의와 학부모 서류 제출은 학생이 대신할 수 없다.

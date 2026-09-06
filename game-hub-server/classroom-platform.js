@@ -3898,9 +3898,13 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "INVALID_REPLY_TYPE", "회신 방식이 올바르지 않습니다.");
     }
 
-    const questions = replyType === "survey" ? normalizeSurveyQuestions(req.body?.questions) : [];
+    // 회신 방법과 문항은 따로 논다. 넷 중 하나를 고르는 게 아니라 -- 확인만 받을
+    // 수도, 동의를 받으면서 문항까지 물을 수도 있다(체험학습 동의 + 알레르기 조사).
+    // 'survey' 는 문항만 받던 예전 값이라, 문항을 붙인 '회신 없음'으로 읽는다.
+    const questions = normalizeSurveyQuestions(req.body?.questions);
+    const storedReplyType = replyType === "survey" ? "none" : replyType;
     if (replyType === "survey" && questions.length === 0) {
-      throw new HttpError(400, "QUESTIONS_REQUIRED", "설문 문항을 하나 이상 만들어 주세요.");
+      throw new HttpError(400, "QUESTIONS_REQUIRED", "문항을 하나 이상 만들어 주세요.");
     }
 
     // 주소록에서 고른 사람들. 반이 섞여 있어도 상관없다.
@@ -3933,7 +3937,7 @@ function createClassroomPlatform(options = {}) {
            (school_id, sender_teacher_name, sender_user_id, title, content_type, content_body, target_type, target_grade, target_class_number, target_student_numbers, requires_signature, reply_type)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
          RETURNING id, created_at`,
-        [schoolId, senderName, teacher.id, title, contentType, contentBody, targetType, targetGrade, targetClassNumber, targetStudentNumbers, requiresSignature, replyType]
+        [schoolId, senderName, teacher.id, title, contentType, contentBody, targetType, targetGrade, targetClassNumber, targetStudentNumbers, requiresSignature, storedReplyType]
       );
       noticeId = insertRes.rows[0].id;
 
@@ -4219,8 +4223,10 @@ function createClassroomPlatform(options = {}) {
       [target.schoolId, target.grade, target.classNumber, target.studentNumber]
     );
 
-    // Surveys need their questions, plus whatever this child already answered.
-    const surveyIds = noticesRes.rows.filter(n => n.reply_type === "survey").map(n => n.id);
+    // 문항은 회신 방법과 따로 붙는다. 확인을 받으면서 물어볼 수도 있으므로
+    // reply_type 이 'survey' 인 것만 보면 안 된다 -- 그러면 동의서에 딸린 문항이
+    // 학부모 화면에서 통째로 사라진다.
+    const surveyIds = noticesRes.rows.map(n => n.id);
     const questionsByNotice = new Map();
     const answersByQuestion = new Map();
     if (surveyIds.length > 0) {
@@ -4367,33 +4373,34 @@ function createClassroomPlatform(options = {}) {
     );
     const notice = noticeRes.rows[0];
     if (!notice) throw new HttpError(404, "NOTICE_NOT_FOUND", "가정통신문을 찾을 수 없습니다.");
-    if (notice.reply_type === "none") {
+    // 회신 방법과 문항은 따로 논다. 확인만 받을 수도, 동의를 받으면서 문항까지
+    // 물을 수도 있다. 그래서 '무엇을 골랐나'와 '문항에 답했나'를 따로 본다.
+    const questionsRes = await pool.query(
+      `SELECT id, position, question_text, question_type, options, is_required
+       FROM classroom_notice_questions
+       WHERE notice_id = $1
+       ORDER BY position`,
+      [noticeId]
+    );
+    const hasQuestions = questionsRes.rows.length > 0;
+
+    if (notice.reply_type === "none" && !hasQuestions) {
       throw new HttpError(400, "REPLY_NOT_REQUESTED", "회신을 받지 않는 가정통신문입니다.");
     }
-    if (notice.reply_type === "confirm" && choice !== "confirmed") {
-      throw new HttpError(400, "INVALID_CHOICE", "확인 회신만 받는 가정통신문입니다.");
-    }
-    if (notice.reply_type === "agree" && choice === "confirmed") {
-      throw new HttpError(400, "INVALID_CHOICE", "동의 여부를 선택해 주세요.");
-    }
-    if (notice.reply_type === "survey" && choice !== "submitted") {
-      throw new HttpError(400, "INVALID_CHOICE", "설문은 문항에 답해 제출해 주세요.");
-    }
-    if (notice.reply_type !== "survey" && choice === "submitted") {
-      throw new HttpError(400, "INVALID_CHOICE", "설문이 아닌 가정통신문입니다.");
+    // 회신을 안 받고 문항만 있는 글은 'submitted' 로 답한다.
+    const allowed = notice.reply_type === "confirm" ? ["confirmed"]
+      : notice.reply_type === "agree" ? ["agree", "disagree"]
+      : ["submitted"];
+    if (!allowed.includes(choice)) {
+      throw new HttpError(400, "INVALID_CHOICE",
+        notice.reply_type === "confirm" ? "확인 회신만 받는 가정통신문입니다."
+        : notice.reply_type === "agree" ? "동의 여부를 선택해 주세요."
+        : "문항에 답해 제출해 주세요.");
     }
 
-    // For a survey, check the submitted answers against the real questions
-    // before writing anything.
+    // 답을 쓰기 전에 실제 문항과 맞는지 본다.
     let preparedAnswers = [];
-    if (notice.reply_type === "survey") {
-      const questionsRes = await pool.query(
-        `SELECT id, position, question_text, question_type, options, is_required
-         FROM classroom_notice_questions
-         WHERE notice_id = $1
-         ORDER BY position`,
-        [noticeId]
-      );
+    if (hasQuestions) {
       preparedAnswers = validateSurveyAnswers(questionsRes.rows, req.body?.answers);
     }
 
@@ -4416,7 +4423,7 @@ function createClassroomPlatform(options = {}) {
       );
       const replyId = replyRes.rows[0].id;
 
-      if (notice.reply_type === "survey") {
+      if (hasQuestions) {
         // Re-answering replaces the previous set outright.
         await client.query("DELETE FROM classroom_notice_answers WHERE reply_id = $1", [replyId]);
         for (const a of preparedAnswers) {
