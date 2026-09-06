@@ -139,7 +139,7 @@ window.ELEMENTS_DATA = [
         shells: [1], valency: 1, block: 's',
         desc: '우주에서 가장 가볍고 가장 풍부한 원소입니다. 별들의 에너지원이 되며 물(H₂O)의 구성 성분입니다.',
         trivia: '우주 전체 질량의 약 75%를 차지하고 있습니다!',
-        uses: ['수소 연료전지 차', '물 생성', '아모니아 합성'],
+        uses: ['수소 연료전지 차', '물 생성', '암모니아 합성'],
         discovery: '1766년 (헨리 캐번디시)'
     },
     {
@@ -164,7 +164,7 @@ window.ELEMENTS_DATA = [
         number: 4, symbol: 'Be', name: '베릴륨', enName: 'Beryllium', mass: 9.0122,
         category: 'alkaline-earth', group: 2, period: 2, state: 'solid',
         shells: [2, 2], valency: 2, block: 's',
-        desc: '단단하고 가벼운 훔속으로 에메랄드 보석의 푸른빛을 만드는 주성분입니다.',
+        desc: '단단하고 가벼운 금속으로 에메랄드 보석의 푸른빛을 만드는 주성분입니다.',
         trivia: '제임스 웹 우주 망원경의 거울이 베릴륨으로 제작되었습니다.',
         uses: ['우주망원경 거울', '항공우주 합금', 'X선 관 창문'],
         discovery: '1798년 (루이 니콜라 보클랭)'
@@ -174,7 +174,7 @@ window.ELEMENTS_DATA = [
         category: 'metalloid', group: 13, period: 2, state: 'solid',
         shells: [2, 3], valency: 3, block: 'p',
         desc: '금속과 비금속의 성질을 모두 가진 준금속 원소입니다.',
-        trivia: '내열 내열유리(파이렉스) 및 눈세척 소독약에 쓰입니다.',
+        trivia: '내열유리(파이렉스) 및 눈세척 소독약에 쓰입니다.',
         uses: ['내열 유리', '반도체 도핑', '세제 보조제'],
         discovery: '1808년 (조셉 루이 게이뤼삭)'
     },
