@@ -353,6 +353,12 @@
         { left: "\\[", right: "\\]", display: true },
         { left: "\\(", right: "\\)", display: false }
       ],
+      preProcess: function (math) {
+        if (/\\(int|iint|iiint|oint|sum|prod|lim|bigcap|bigcup)\b/.test(math) && !math.includes("\\displaystyle") && !math.includes("\\textstyle")) {
+          return "\\displaystyle " + math;
+        }
+        return math;
+      },
       throwOnError: false
     });
   }

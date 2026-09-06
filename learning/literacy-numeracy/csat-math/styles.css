@@ -34,38 +34,33 @@ body {
   line-height: 1.7;
 }
 
-/* ── 머리 ── */
-.topbar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 20px;
+/* ── 뒤로가기 버튼 ── */
+.home-back {
+  position: fixed;
+  z-index: 40;
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
   background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-}
-.topbar-title {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 700;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--ink);
-  letter-spacing: -0.02em;
-}
-.back {
-  color: var(--ink-soft);
-  text-decoration: none;
-  font-size: 1.25rem;
+  font-size: 19px;
   font-weight: 700;
   line-height: 1;
-  padding: 6px 10px;
-  border-radius: 8px;
-  transition: color 0.15s ease, background 0.15s ease;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
-.back:hover {
-  color: var(--ink);
-  background: var(--line-soft);
+.home-back:hover {
+  background: #ffffff;
+  transform: scale(1.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 main { max-width: 940px; margin: 0 auto; padding: 18px 16px 48px; }
@@ -239,7 +234,14 @@ main { max-width: 940px; margin: 0 auto; padding: 18px 16px 48px; }
 .item-mark { margin-left: auto; font-size: 0.8rem; color: var(--ink-soft); }
 .item.is-done .item-mark { color: var(--right); font-weight: 600; }
 
-.body { margin: 0 0 4px; }
+.body {
+  margin: 0 0 4px;
+  font-family: "KoPubWorld Batang", "Noto Serif KR", "Batang", "Times New Roman", serif;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
 .body p { margin: 0 0 8px; }
 
 .note-box {
@@ -248,6 +250,9 @@ main { max-width: 940px; margin: 0 auto; padding: 18px 16px 48px; }
   padding: 10px 14px;
   margin: 12px 0;
   position: relative;
+  font-family: "KoPubWorld Batang", "Noto Serif KR", "Batang", "Times New Roman", serif;
+  font-size: 1.02rem;
+  line-height: 1.8;
 }
 .note-box.has-title { margin-top: 20px; }
 .note-title {
@@ -256,7 +261,9 @@ main { max-width: 940px; margin: 0 auto; padding: 18px 16px 48px; }
   left: 16px;
   background: var(--card);
   padding: 0 8px;
+  font-family: Pretendard, -apple-system, sans-serif;
   font-size: 0.84rem;
+  font-weight: 700;
   letter-spacing: 0.3em;
 }
 .note-box ul { margin: 0; padding-left: 0; list-style: none; }
@@ -270,6 +277,9 @@ main { max-width: 940px; margin: 0 auto; padding: 18px 16px 48px; }
   padding: 8px 14px;
   margin: 12px 0;
   background: #fbfcfd;
+  font-family: "KoPubWorld Batang", "Noto Serif KR", "Batang", "Times New Roman", serif;
+  font-size: 1.02rem;
+  line-height: 1.8;
 }
 .proof-box p { margin: 6px 0; }
 
@@ -289,11 +299,13 @@ main { max-width: 940px; margin: 0 auto; padding: 18px 16px 48px; }
   background: #fff;
   border-radius: 8px;
   padding: 7px 12px;
-  font: inherit;
+  font-family: "KoPubWorld Batang", "Noto Serif KR", "Batang", "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1.6;
   cursor: pointer;
 }
 .choice:hover:not(:disabled) { border-color: #b9c3cf; }
-.choice-n { color: var(--ink-soft); flex: 0 0 auto; }
+.choice-n { font-family: Pretendard, -apple-system, sans-serif; color: var(--ink-soft); flex: 0 0 auto; }
 .choice.is-right { background: var(--right-soft); border-color: var(--right); }
 .choice.is-right .choice-n { color: var(--right); font-weight: 700; }
 .choice.is-wrong { background: var(--wrong-soft); border-color: var(--wrong); }
@@ -396,8 +408,20 @@ main { max-width: 940px; margin: 0 auto; padding: 18px 16px 48px; }
 .foot p { margin: 0; }
 
 /* 수식 */
-.katex { font-size: 1.03em; }
-.katex-display { margin: 10px 0; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.katex {
+  font-size: 1.08em;
+  text-rendering: optimizeLegibility;
+  letter-spacing: normal;
+}
+.katex-display {
+  margin: 12px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+}
+.katex .mop {
+  font-feature-settings: normal;
+}
 
 @media (max-width: 560px) {
   body { font-size: 15px; }
