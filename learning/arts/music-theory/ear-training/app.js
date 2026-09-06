@@ -15,9 +15,33 @@
     const KEY_LOW = 60;
     const KEY_HIGH = 81;
 
-    /* 기준음은 임시표가 붙지 않는 자리에서 고른다. C4=28, G4=32, C5=35, G5=39 */
-    const LOW_ROOTS = [28, 29, 30, 31, 32];
-    const HIGH_ROOTS = [35, 36, 37, 38, 39];
+    /*
+     * 기준음은 검은건반도 나와야 한다. 다만 겹임시표(F♯♯, B♭♭)가 생기는 자리는
+     * 읽기 어려우니, 구성음이 모두 홑임시표로 적히는 기준음만 모아 두고 그중에서 고른다.
+     */
+    const ACCIDENTALS = [-1, 0, 1];
+    const rootCache = {};
+
+    function collectRoots(key, lowAbs, highAbs, build) {
+        if (rootCache[key]) return rootCache[key];
+        const list = [];
+        for (let letterAbs = lowAbs; letterAbs <= highAbs; letterAbs += 1) {
+            ACCIDENTALS.forEach(accidental => {
+                const root = N.spell(letterAbs, accidental);
+                const notes = build(root);
+                if (!notes) return;
+                if (notes.some(note => Math.abs(note.accidental) > 1)) return;
+                list.push(root);
+            });
+        }
+        rootCache[key] = list.length ? list : [N.natural(lowAbs)];
+        return rootCache[key];
+    }
+
+    function inRange(notes, low, high) {
+        const midis = notes.map(note => note.midi);
+        return Math.min.apply(null, midis) >= low && Math.max.apply(null, midis) <= high;
+    }
 
     /* 음정 ------------------------------------------------------------- */
     const INTERVALS = [
@@ -66,9 +90,9 @@
 
     /* 화음 자리 */
     const POSITIONS = [
-        { id: "root", en: "root pos.", ko: "근음 자리", inversion: 0 },
-        { id: "first", en: "1st inv.", ko: "첫째 자리바꿈", inversion: 1 },
-        { id: "second", en: "2nd inv.", ko: "둘째 자리바꿈", inversion: 2 }
+        { id: "root", en: "Root Position", ko: "근음 자리", inversion: 0 },
+        { id: "first", en: "1st Inversion", ko: "첫째 자리바꿈", inversion: 1 },
+        { id: "second", en: "2nd Inversion", ko: "둘째 자리바꿈", inversion: 2 }
     ];
 
     /* 음계 -------------------------------------------------------------- */
@@ -151,18 +175,38 @@
         return list.slice().sort((a, b) => a.midi - b.midi);
     }
 
-    function chordNotes(rootAbs, item, inversion) {
-        const root = N.natural(rootAbs);
-        return invertChord(item.tones.map(tone => N.step(root, tone[0], tone[1])), inversion || 0);
+    function chordTones(root, item) {
+        return item.tones.map(tone => N.step(root, tone[0], tone[1]));
+    }
+
+    function chordRoots(item) {
+        return collectRoots("c:" + item.id, 28, 34, root => {
+            const notes = chordTones(root, item);
+            return inRange(notes, 55, 79) ? notes : null;
+        });
+    }
+
+    function chordNotes(root, item, inversion) {
+        return invertChord(chordTones(root, item), inversion || 0);
     }
 
     /* 문제 만들기 --------------------------------------------------------- */
 
+    function intervalRoots(item, descending) {
+        const low = descending ? 35 : 28;
+        return collectRoots("i:" + item.id + (descending ? "d" : "u"), low, low + 6, root => {
+            const other = descending
+                ? N.step(root, -item.degree, -item.semis)
+                : N.step(root, item.degree, item.semis);
+            const notes = [root, other];
+            return inRange(notes, KEY_LOW, KEY_HIGH) ? notes : null;
+        });
+    }
+
     function intervalQuestion(item, mode) {
         const shape = mode === "mixed" ? pick(["harmony", "up", "down"]) : mode;
         const descending = shape === "down" && item.semis <= 12;
-        const roots = item.roots || (descending ? HIGH_ROOTS : LOW_ROOTS);
-        const given = N.natural(pick(roots));
+        const given = pick(intervalRoots(item, descending));
         const other = descending
             ? N.step(given, -item.degree, -item.semis)
             : N.step(given, item.degree, item.semis);
@@ -182,13 +226,13 @@
 
     function chordQuestion(item, mode) {
         const shape = mode === "mixed" ? pick(["harmony", "arp"]) : mode;
-        const rootAbs = pick(LOW_ROOTS);
-        /* 증3화음은 자리를 바꿔도 구조가 같아 귀로 가릴 수 없다. */
+        const root = pick(chordRoots(item));
+        /* 증3화음과 감7화음은 자리를 바꿔도 구조가 같아 귀로 가릴 수 없다. */
         const allowed = item.id === "aug" || item.id === "dim7" ? [0] : (session.inversions || [0]);
         const inversion = pick(allowed);
-        const notes = chordNotes(rootAbs, item, inversion);
+        const notes = chordNotes(root, item, inversion);
         const midis = notes.map(note => note.midi);
-        const rootNotes = chordNotes(rootAbs, item, 0);
+        const rootNotes = chordNotes(root, item, 0);
         return {
             playback: shape === "arp"
                 ? { groups: midis.map(midi => [midi]), beat: .5 }
@@ -206,10 +250,10 @@
     function positionQuestion(item, mode) {
         const shape = mode === "arp" ? "arp" : "harmony";
         const quality = pick(POSITION_QUALITIES);
-        const rootAbs = pick(LOW_ROOTS);
-        const notes = chordNotes(rootAbs, quality, item.inversion);
+        const root = pick(chordRoots(quality));
+        const notes = chordNotes(root, quality, item.inversion);
         const midis = notes.map(note => note.midi);
-        const rootNotes = chordNotes(rootAbs, quality, 0);
+        const rootNotes = chordNotes(root, quality, 0);
         return {
             playback: shape === "arp"
                 ? { groups: midis.map(midi => [midi]), beat: .5 }
@@ -219,14 +263,21 @@
             staffBefore: [null],
             staffAfter: [{ notes: notes }],
             keyboard: null,
-            ask: N.LETTER_NAMES[N.natural(rootAbs).letter] + quality.en + " — 어느 자리인가요?",
+            ask: N.name(root).slice(0, -1) + " " + quality.en + " — 어느 자리인가요?",
             detail: notes.map(N.name).join(" · ")
         };
     }
 
+    function scaleRoots(item) {
+        return collectRoots("s:" + item.id, 28, 34, root => {
+            const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
+            return inRange(notes, 55, 81) ? notes : null;
+        });
+    }
+
     function scaleQuestion(item, mode) {
         const shape = mode === "mixed" ? pick(["up", "down"]) : mode;
-        const root = N.natural(pick(LOW_ROOTS));
+        const root = pick(scaleRoots(item));
         const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
         const line = shape === "down" ? notes.slice().reverse() : notes;
         return {
@@ -238,8 +289,17 @@
         };
     }
 
+    function keyRoots(low, high) {
+        return collectRoots("k:" + low + "-" + high, low, high, root => {
+            const scale = majorScale(root);
+            /* 조표가 일곱 개인 조(C♭·C♯ 장조)까지는 가지 않는다. */
+            if (scale.filter(note => note.accidental !== 0).length > 6) return null;
+            return inRange(scale, 52, 76) ? scale : null;
+        });
+    }
+
     function progressionQuestion(item) {
-        const tonic = N.natural(pick([28, 29, 31, 32]));
+        const tonic = pick(keyRoots(28, 34));
         const scale = majorScale(tonic);
         const groups = item.chords.map(symbol => {
             const triad = degreeTriad(scale, symbol);
@@ -256,7 +316,7 @@
     }
 
     function melodyQuestion(item) {
-        const tonic = N.natural(pick([28, 31, 32]));
+        const tonic = pick(keyRoots(28, 33));
         const scale = majorScale(tonic);
         const wide = item.reach;
         let degree = randomInt(0, 2);
@@ -290,47 +350,47 @@
     const DRILLS = [
         {
             id: "interval",
-            name: "음정",
+            name: label("Intervals", "음정"),
             ask: "무슨 음정인가요?",
             items: INTERVALS,
             inputs: ["buttons", "keyboard"],
             levels: [
                 { id: "easy", label: "쉬움", ids: ["M2", "M3", "P5", "P8"] },
                 { id: "mid", label: "보통", ids: ["m2", "M2", "m3", "M3", "P4", "P5", "M6", "m7", "P8"] },
-                { id: "hard", label: "한 옥타브 전부", ids: SIMPLE_INTERVAL_IDS },
-                { id: "compound", label: "겹음정", ids: COMPOUND_INTERVAL_IDS }
+                { id: "hard", label: label("Simple", "한 옥타브 전부"), ids: SIMPLE_INTERVAL_IDS },
+                { id: "compound", label: label("Compound", "겹음정"), ids: COMPOUND_INTERVAL_IDS }
             ],
             modes: [
-                { id: "harmony", label: "함께" },
-                { id: "up", label: "위로" },
-                { id: "down", label: "아래로" },
-                { id: "mixed", label: "섞어서" }
+                { id: "harmony", label: label("Harmonic", "화성") },
+                { id: "up", label: label("Ascending", "상행") },
+                { id: "down", label: label("Descending", "하행") },
+                { id: "mixed", label: label("Mixed", "섞어서") }
             ],
             make: intervalQuestion
         },
         {
             id: "chord",
-            name: "화음 성질",
+            name: label("Chord Quality", "화음 성질"),
             ask: "무슨 화음인가요?",
             items: CHORDS,
             inputs: ["buttons"],
             levels: [
-                { id: "easy", label: "maj·min", ids: ["maj", "min"] },
-                { id: "mid", label: "3화음", ids: TRIAD_IDS },
-                { id: "seventh", label: "7화음", ids: SEVENTH_IDS },
+                { id: "easy", label: label("maj·min", "장·단"), ids: ["maj", "min"] },
+                { id: "mid", label: label("Triads", "3화음"), ids: TRIAD_IDS },
+                { id: "seventh", label: label("7ths", "7화음"), ids: SEVENTH_IDS },
                 { id: "hard", label: "전부", ids: CHORDS.map(item => item.id) }
             ],
             inversionOption: true,
             modes: [
-                { id: "harmony", label: "함께" },
-                { id: "arp", label: "펼쳐서" },
-                { id: "mixed", label: "섞어서" }
+                { id: "harmony", label: label("Harmonic", "화성") },
+                { id: "arp", label: label("Arpeggio", "분산") },
+                { id: "mixed", label: label("Mixed", "섞어서") }
             ],
             make: chordQuestion
         },
         {
             id: "position",
-            name: "화음 자리",
+            name: label("Chord Inversions", "화음 자리"),
             ask: "어느 자리인가요?",
             items: POSITIONS,
             inputs: ["buttons"],
@@ -339,14 +399,14 @@
                 { id: "hard", label: "셋 다", ids: POSITIONS.map(item => item.id) }
             ],
             modes: [
-                { id: "harmony", label: "함께" },
-                { id: "arp", label: "펼쳐서" }
+                { id: "harmony", label: label("Harmonic", "화성") },
+                { id: "arp", label: label("Arpeggio", "분산") }
             ],
             make: positionQuestion
         },
         {
             id: "scale",
-            name: "음계",
+            name: label("Scales", "음계"),
             ask: "무슨 음계인가요?",
             items: SCALES,
             inputs: ["buttons"],
@@ -356,15 +416,15 @@
                 { id: "hard", label: "전부", ids: SCALES.map(item => item.id) }
             ],
             modes: [
-                { id: "up", label: "올라가며" },
-                { id: "down", label: "내려가며" },
-                { id: "mixed", label: "섞어서" }
+                { id: "up", label: label("Ascending", "상행") },
+                { id: "down", label: label("Descending", "하행") },
+                { id: "mixed", label: label("Mixed", "섞어서") }
             ],
             make: scaleQuestion
         },
         {
             id: "progression",
-            name: "화음 진행",
+            name: label("Chord Progressions", "화음 진행"),
             ask: "무슨 진행인가요?",
             items: PROGRESSIONS,
             inputs: ["buttons"],
@@ -378,15 +438,15 @@
         },
         {
             id: "melody",
-            name: "가락 받아쓰기",
+            name: label("Melodic Dictation", "가락 받아쓰기"),
             ask: "들은 차례대로 누르세요",
             answerIsLabel: false,
             pickable: false,
             inputs: ["keyboard"],
             items: [
-                { id: "m3", label: label("3 notes", "세 음"), count: 3, reach: 2 },
-                { id: "m4", label: label("4 notes", "네 음"), count: 4, reach: 3 },
-                { id: "m5", label: label("5 notes", "다섯 음"), count: 5, reach: 5 }
+                { id: "m3", label: label("3 Notes", "세 음"), count: 3, reach: 2 },
+                { id: "m4", label: label("4 Notes", "네 음"), count: 4, reach: 3 },
+                { id: "m5", label: label("5 Notes", "다섯 음"), count: 5, reach: 5 }
             ],
             levels: [
                 { id: "easy", label: "세 음", ids: ["m3"] },
@@ -499,7 +559,8 @@
         const wheelCard = document.createElement("button");
         wheelCard.type = "button";
         wheelCard.className = "drill-card";
-        wheelCard.innerHTML = "<b>오도권 원판</b>";
+        wheelCard.innerHTML = "<b></b>";
+        wheelCard.querySelector("b").textContent = label("Circle of Fifths", "오도권 원판");
         wheelCard.addEventListener("click", openWheel);
         els.toolList.append(wheelCard);
 
@@ -582,8 +643,8 @@
         });
 
         chipRow(els.inversionRow, [
-            { id: "root", label: "근음 자리만" },
-            { id: "all", label: "자리바꿈까지" }
+            { id: "root", label: label("Root Position", "근음 자리만") },
+            { id: "all", label: label("With Inversions", "자리바꿈까지") }
         ], session.inversions.length > 1 ? "all" : "root", id => {
             session.inversions = id === "all" ? [0, 1, 2] : [0];
             renderSetup();
@@ -770,9 +831,9 @@
     }
 
     const EXAMPLE_SHAPES = [
-        { id: "up", label: "올라가며" },
-        { id: "down", label: "내려가며" },
-        { id: "harmony", label: "함께" }
+        { id: "up", label: label("Ascending", "상행") },
+        { id: "down", label: label("Descending", "하행") },
+        { id: "harmony", label: label("Harmonic", "화성") }
     ];
 
     function intervalExample(intervalId) {
@@ -814,10 +875,10 @@
     }
 
     const POSITION_LABEL = [
-        label("root pos.", "근음 자리"),
-        label("1st inv.", "첫째 자리바꿈"),
-        label("2nd inv.", "둘째 자리바꿈"),
-        label("3rd inv.", "셋째 자리바꿈")
+        label("Root Position", "근음 자리"),
+        label("1st Inversion", "첫째 자리바꿈"),
+        label("2nd Inversion", "둘째 자리바꿈"),
+        label("3rd Inversion", "셋째 자리바꿈")
     ];
 
     function chordExample(entry) {
@@ -842,7 +903,7 @@
             { label: item.label }
         ));
         const tag = document.createElement("span");
-        tag.textContent = "함께 · 펼쳐서";
+        tag.textContent = label("Harmonic", "화성") + " · " + label("Arpeggio", "분산");
         button.append(tag);
         button.addEventListener("click", () => {
             window.PianoEngine.playSequence([midis], 1.6).catch(() => {});
