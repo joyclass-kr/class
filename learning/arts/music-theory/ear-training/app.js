@@ -595,6 +595,14 @@
     /* 화면 ---------------------------------------------------------------- */
     const els = {};
     let keyboard = null;
+    let lessonKeyboard = null;
+    let wheelKeyboard = null;
+
+    /* 눌러 보는 건반. 문제를 푸는 자리가 아니면 그냥 소리만 낸다. */
+    function soundOnly(midi) {
+        if (!window.PianoEngine) return;
+        window.PianoEngine.playSequence([[midi]], .9).catch(() => {});
+    }
     const session = {
         screen: "menu",
         drill: null,
@@ -603,6 +611,7 @@
         input: "buttons",
         limit: 10,
         inversions: [0],
+        reveal: false,
         enabled: new Set(),
         pool: [],
         current: null,
@@ -916,7 +925,11 @@
         ));
         els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
         els.lessonQuiz.hidden = !lesson.quiz;
-        if (lesson.quiz) els.lessonQuiz.dataset.items = lesson.quiz.join(",");
+        if (lesson.quiz) {
+            els.lessonQuiz.dataset.items = lesson.quiz.join(",");
+            els.lessonQuiz.dataset.drill = lesson.quizDrill || "reading";
+            els.lessonQuiz.dataset.inversions = lesson.quizInversions ? "all" : "root";
+        }
         setLessonMark(course.id, lesson.id, { read: true });
         showScreen("lesson");
     }
@@ -1010,9 +1023,12 @@
     function startLessonQuiz() {
         const ids = (els.lessonQuiz.dataset.items || "").split(",").filter(Boolean);
         if (!ids.length) return;
-        session.drill = DRILL_BY_ID.reading;
-        session.mode = "";
-        session.input = "pair";
+        const drillId = els.lessonQuiz.dataset.drill || "reading";
+        session.drill = DRILL_BY_ID[drillId];
+        session.mode = session.drill.modes.length ? session.drill.modes[0].id : "";
+        session.input = drillId === "reading" ? "pair" : "buttons";
+        session.inversions = els.lessonQuiz.dataset.inversions === "all" ? [0, 1, 2] : [0];
+        session.reveal = drillId !== "reading";
         session.limit = ids.length * 2;
         session.enabled = new Set(ids);
         session.fromLesson = { courseId: course.id, lessonId: course.lessons[lessonIndex].id };
@@ -1026,6 +1042,7 @@
         session.input = lesson.drill.input || "buttons";
         session.limit = lesson.drill.limit || 10;
         session.inversions = lesson.drill.inversions || [0];
+        session.reveal = false;
         session.enabled = new Set(lesson.drill.items);
         session.fromLesson = { courseId: course.id, lessonId: lesson.id };
         beginRound();
@@ -1122,6 +1139,7 @@
         };
         persist();
         session.fromLesson = null;
+        session.reveal = false;
         beginRound();
     }
 
@@ -1150,6 +1168,8 @@
 
         const question = drill.make(item, session.mode);
         question.item = item;
+        /* 읽기 문제에서는 악보를 처음부터 보여 준다. */
+        if (session.reveal) question.staffBefore = question.staffAfter;
         session.current = question;
         session.typed = [];
         session.answered = false;
@@ -1171,18 +1191,17 @@
     }
 
     function setupInput(question) {
+        keyboard.clearMarks();
+        keyboard.setEnabled(true);
         if (session.drill.pairAnswer) {
             setupPairInput(question);
             return;
         }
         els.pairWrap.hidden = true;
         const useKeyboard = session.input === "keyboard" && question.keyboard;
-        els.keyboardWrap.hidden = !useKeyboard;
         els.choices.hidden = useKeyboard;
 
         if (useKeyboard) {
-            keyboard.clearMarks();
-            keyboard.setEnabled(true);
             question.keyboard.given.forEach(given => keyboard.mark(given.midi, "given", given.text));
             keyboard.centerOn(question.keyboard.given[0].midi);
             els.typedCount.hidden = question.keyboard.answer.length < 2;
@@ -1205,7 +1224,6 @@
 
     /* 성질과 도수를 한 줄씩 고른다. 둘 다 고르면 채점한다. */
     function setupPairInput(question) {
-        els.keyboardWrap.hidden = true;
         els.choices.hidden = true;
         els.typedCount.hidden = true;
         els.pairWrap.hidden = false;
@@ -1452,7 +1470,7 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "setupScreen", "drillScreen", "resultScreen",
             "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "lessonQuiz", "drillList", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
+            "lessonNext", "lessonQuiz", "lessonKeys", "wheelKeys", "drillList", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence", "setupTitle", "inversionField", "inversionRow",
             "helpRow", "arpButton", "rootButton",
             "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",
@@ -1463,7 +1481,14 @@
             "toMenuButton"].forEach(id => { els[id] = byId(id); });
 
         loadSaved();
-        keyboard = window.Keyboard.build(els.pianoKeys, KEY_LOW, KEY_HIGH, answerByKey);
+        keyboard = window.Keyboard.build(els.pianoKeys, KEY_LOW, KEY_HIGH, midi => {
+            const answering = session.input === "keyboard"
+                && session.current && session.current.keyboard && !session.answered;
+            if (answering) answerByKey(midi);
+            else soundOnly(midi);
+        });
+        lessonKeyboard = window.Keyboard.build(els.lessonKeys, KEY_LOW, KEY_HIGH, soundOnly);
+        wheelKeyboard = window.Keyboard.build(els.wheelKeys, KEY_LOW, KEY_HIGH, soundOnly);
 
         renderMenu();
         showScreen("menu");

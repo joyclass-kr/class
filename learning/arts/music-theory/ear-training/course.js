@@ -185,7 +185,9 @@
                     { chord: "min" },
                     { chord: "dim" },
                     { chord: "aug" }
-                ]
+                ],
+                quiz: ["maj", "min", "dim", "aug"],
+                quizDrill: "chord"
             },
             {
                 id: "major-minor-drill",
@@ -214,7 +216,9 @@
                     { chord: "maj", inversion: 2 },
                     { chord: "min", inversion: 1 },
                     { chord: "min", inversion: 2 }
-                ]
+                ],
+                quiz: ["root", "first", "second"],
+                quizDrill: "position"
             },
             {
                 id: "position-drill",
@@ -245,7 +249,9 @@
                 examples: [
                     { chord: "dom7" },
                     { chord: "maj7" }
-                ]
+                ],
+                quiz: ["dom7", "maj7"],
+                quizDrill: "chord"
             },
             {
                 id: "dom7-maj7-drill",
@@ -264,7 +270,9 @@
                 examples: [
                     { chord: "min7" },
                     { chord: "mmaj7" }
-                ]
+                ],
+                quiz: ["min7", "mmaj7"],
+                quizDrill: "chord"
             },
             {
                 id: "min7-mmaj7-drill",
@@ -284,7 +292,9 @@
                     { chord: "m7b5" },
                     { chord: "dim7" },
                     { chord: "maj7s5" }
-                ]
+                ],
+                quiz: ["m7b5", "dim7", "maj7s5"],
+                quizDrill: "chord"
             },
             {
                 id: "other7-drill",

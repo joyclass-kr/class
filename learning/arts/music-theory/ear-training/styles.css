@@ -51,7 +51,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     .shell { padding-top: 52px; }
 }
 
-.screen { display: grid; gap: 20px; }
+.screen { display: grid; gap: 13px; }
 
 .app-name {
     margin: 0;
@@ -73,7 +73,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .drill-list { display: grid; gap: 12px; }
 
 .drill-card {
-    min-height: 78px;
+    min-height: 62px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
@@ -131,7 +131,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .item-toggle .rate { color: var(--muted); font-size: 14px; font-weight: 700; }
 
 .primary-button {
-    min-height: 54px;
+    min-height: 46px;
     width: 100%;
     padding: 0 18px;
     border: 0;
@@ -160,13 +160,13 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .score { color: var(--muted); font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
 
 .replay-button {
-    min-height: 92px;
+    min-height: 58px;
     width: 100%;
     border: 1px solid #6b5a2c;
     border-radius: 16px;
     color: var(--gold);
     background: linear-gradient(160deg, #2a3550, #1b2436);
-    font-size: 22px;
+    font-size: 19px;
     font-weight: 850;
     letter-spacing: .02em;
 }
@@ -174,17 +174,17 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .replay-button:active { transform: scale(.99); }
 .replay-button.playing { border-color: var(--gold); color: #241a05; background: var(--gold); }
 
-.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 9px; }
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 7px; }
 
 .choice {
-    min-height: 58px;
-    padding: 10px 14px;
+    min-height: 46px;
+    padding: 7px 11px;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 10px;
     background: var(--panel);
-    font-size: 17px;
+    font-size: 15.5px;
     font-weight: 800;
-    line-height: 1.35;
+    line-height: 1.3;
     word-break: keep-all;
     overflow-wrap: break-word;
 }
@@ -195,7 +195,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .choice.wrong { border-color: var(--wrong); color: #33100f; background: var(--wrong); }
 .choice.dim:disabled { opacity: .42; }
 
-.feedback { margin: 0; min-height: 26px; font-size: 17px; font-weight: 750; text-align: center; word-break: keep-all; }
+.feedback { margin: 0; min-height: 22px; font-size: 16px; font-weight: 750; text-align: center; word-break: keep-all; }
 .feedback.right { color: var(--right); }
 .feedback.wrong { color: var(--wrong); }
 
@@ -235,12 +235,12 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 }
 
 /* 문제 화면: 물음 · 악보 */
-.ask { margin: 0; font-size: 19px; font-weight: 800; text-align: center; word-break: keep-all; }
+.ask { margin: 0; font-size: 17px; font-weight: 800; text-align: center; word-break: keep-all; }
 
 .staff-wrap {
     display: grid;
     place-items: center;
-    padding: 6px;
+    padding: 4px;
     border: 1px solid var(--line);
     border-radius: 14px;
     background: #f6f4ee;
@@ -249,10 +249,10 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .sheet { max-width: 100%; height: auto; color: #1b2029; }
 .sheet-staff line { stroke: #6d7078; stroke-width: 1.2; }
-.sheet-clef { font-family: "Noto Music", "Segoe UI Symbol", Georgia, serif; font-size: 58px; fill: #1b2029; }
-.sheet-unknown { font-family: Georgia, serif; font-size: 30px; font-weight: 700; fill: #8a6a22; text-anchor: middle; }
+.sheet-clef { font-family: "Noto Music", "Segoe UI Symbol", Georgia, serif; font-size: 48px; fill: #1b2029; }
+.sheet-unknown { font-family: Georgia, serif; font-size: 26px; font-weight: 700; fill: #8a6a22; text-anchor: middle; }
 .sheet-ink { stroke: #1b2029; fill: #1b2029; }
-.sheet-ink .sheet-head { fill: none; stroke-width: 2.1; }
+.sheet-ink .sheet-head { fill: none; stroke-width: 1.9; }
 .sheet-ink .sheet-ledger { stroke: #6d7078; stroke-width: 1.2; }
 .sheet-ink.is-right { stroke: #17714f; fill: #17714f; }
 .sheet-ink.is-wrong { stroke: #ab3b3b; fill: #ab3b3b; }
@@ -276,7 +276,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .keyboard {
     position: relative;
-    height: 150px;
+    height: 116px;
     padding: 8px 8px 10px;
     border: 5px solid #10151d;
     border-top-color: #566475;
@@ -350,12 +350,12 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .lesson-list { display: grid; gap: 7px; }
 
 .lesson-row {
-    min-height: 58px;
+    min-height: 50px;
     display: grid;
-    grid-template-columns: 62px minmax(0, 1fr) auto auto;
+    grid-template-columns: 58px minmax(0, 1fr) auto auto;
     align-items: center;
-    gap: 12px;
-    padding: 10px 15px;
+    gap: 10px;
+    padding: 7px 14px;
     border: 1px solid var(--line);
     border-radius: 11px;
     background: var(--panel);
@@ -371,14 +371,14 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 /* 설명 차시 */
 .lesson-body { display: grid; gap: 14px; }
-.lesson-body p { margin: 0; font-size: 17px; line-height: 1.8; word-break: keep-all; }
+.lesson-body p { margin: 0; font-size: 16px; line-height: 1.7; word-break: keep-all; }
 
-.examples { display: grid; gap: 18px; }
+.examples { display: grid; gap: 12px; }
 
 .example {
     display: grid;
-    gap: 9px;
-    padding: 14px;
+    gap: 7px;
+    padding: 11px;
     border: 1px solid var(--line);
     border-radius: 13px;
     background: var(--panel);
@@ -420,7 +420,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     overflow-x: auto;
 }
 
-.chain { display: block; width: 100%; min-width: 480px; height: auto; }
+.chain { display: block; width: 100%; min-width: 400px; height: auto; }
 .chain-box rect { fill: #fffdf8; stroke: #2c3340; stroke-width: 2; }
 .chain-box.is-perfect rect { stroke: #c2413c; stroke-width: 2.4; }
 .chain-box.is-majmin rect { stroke: #2f4f9b; stroke-width: 2.4; }
@@ -510,7 +510,7 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
         grid-column: 1;
         grid-row: 1 / span 3;
         justify-self: center;
-        height: min(86vh, 800px);
+        height: min(70vh, 700px);
         aspect-ratio: 1;
         padding: 10px;
     }
@@ -518,11 +518,49 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
     .wheel-controls { grid-column: 2; grid-row: 1; }
     #wheelScreen > .field { grid-column: 2; grid-row: 2; }
     #wheelCadence { grid-column: 2; grid-row: 3; align-self: start; }
+    #wheelKeys { grid-column: 2; grid-row: 4; }
     .wheel-chords { grid-template-columns: 1fr 1fr; }
 }
 
 /* 성질과 도수를 한 줄씩 고르는 답 */
-.pair-wrap { display: grid; gap: 9px; }
+.pair-wrap { display: grid; gap: 7px; }
 .choice-quality { background: var(--panel-2); }
 .choice.is-picked { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
 .lesson-actions { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: center; }
+
+/* 눌러 보는 건반 */
+.free-keys { margin-top: 2px; }
+
+/* 크롬북 1366×768, 아이패드 1024×768·1180×820 가로 화면에 한 판이 들어오게 나눈다. */
+@media (min-width: 900px) {
+    #drillScreen {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-rows: auto auto auto auto auto auto auto;
+        column-gap: 20px;
+        row-gap: 11px;
+        align-content: start;
+    }
+
+    #drillScreen .drill-bar { grid-column: 1 / -1; grid-row: 1; }
+    #drillScreen .ask { grid-column: 1; grid-row: 2; }
+    #drillScreen .staff-wrap { grid-column: 1; grid-row: 3; }
+    #drillScreen .play-row { grid-column: 1; grid-row: 4; }
+    #drillScreen .help-row { grid-column: 1; grid-row: 5; }
+    #drillScreen #choices,
+    #drillScreen #pairWrap { grid-column: 2; grid-row: 2 / span 4; align-content: start; }
+    #drillScreen #keyboardWrap { grid-column: 1 / -1; grid-row: 6; }
+    #drillScreen .feedback { grid-column: 1 / -1; grid-row: 7; }
+    #drillScreen #nextButton { grid-column: 1 / -1; grid-row: 8; }
+
+    /* 이론 차시도 글과 보기를 나란히 둔다. */
+    #lessonScreen {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+        column-gap: 22px;
+        align-content: start;
+    }
+
+    #lessonScreen .lesson-body { grid-column: 1; }
+    #lessonScreen .examples { grid-column: 2; grid-row: 1 / span 3; }
+    #lessonScreen .free-keys { grid-column: 1; }
+    #lessonScreen .lesson-actions { grid-column: 1; }
+}
