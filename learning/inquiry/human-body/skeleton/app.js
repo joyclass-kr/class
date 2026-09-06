@@ -161,7 +161,12 @@
             stage.addColorStop(1, '#05070f');
             ctx.fillStyle = stage;
             ctx.fillRect(0, 0, width, height);
-            drawArmSchematic(0, 0, width, height, time);
+            var box = stageBox();
+            ctx.save();
+            ctx.translate(box.ox, box.oy);
+            ctx.scale(box.k, box.k);
+            drawArmSchematic(0, 0, VW, VH, time);
+            ctx.restore();
             return;
         }
 
@@ -463,6 +468,26 @@
     // ------------------------------------------------------------------------
 
     var jointPins = []; // 클릭 판정 랜드마크 핀
+
+    // 팔 도식은 이 크기의 가상 화면에 그린 뒤 통째로 줄여 넣는다.
+    // 그래야 화면이 좁아져도 그림과 글자가 같은 비율로 작아진다.
+    var VW = 1000, VH = 560;
+
+    function stageBox() {
+        var k = Math.min(width / VW, height / VH);
+        return { k: k, ox: (width - VW * k) / 2, oy: (height - VH * k) / 2 };
+    }
+
+    /** 위쪽 장면 단추 줄이 가리는 높이를 가상 좌표로 환산한다 */
+    function topGuard() {
+        var k = stageBox().k || 1;
+        return Math.min(92 / k, VH * 0.35);
+    }
+
+    function toVirtual(x, y) {
+        var b = stageBox();
+        return { x: (x - b.ox) / b.k, y: (y - b.oy) / b.k };
+    }
 
     /** 어깨·팔꿈치·손목 관절 좌표 및 굽힘도 계산 */
     function armGeometry(dx, dy, dw, dh) {
@@ -970,8 +995,8 @@
         }
         var boxW = tw + 22;
         var boxH = subtext ? 36 : 24;
-        var bx = Math.min(Math.max(tagX - boxW / 2, 8), width - 8 - boxW);
-        var by = Math.min(Math.max(tagY - boxH / 2, 88), height - 8 - boxH);
+        var bx = Math.min(Math.max(tagX - boxW / 2, 8), VW - 8 - boxW);
+        var by = Math.min(Math.max(tagY - boxH / 2, topGuard()), VH - 8 - boxH);
 
         if (typeof hotspotKey !== 'undefined') {
             smartTagBoxes.push({ x: bx, y: by, w: boxW, h: boxH, key: hotspotKey });
@@ -1025,7 +1050,7 @@
     function drawStatePlate(px, py, lines, accent) {
         ctx.save();
         px = Math.max(16, px);
-        py = Math.max(py, 86);
+        py = Math.max(py, topGuard());
         ctx.font = 'bold 12px Pretendard, sans-serif';
         var maxW = 0;
         lines.forEach(function (l) { maxW = Math.max(maxW, ctx.measureText(l.t).width); });
@@ -1141,7 +1166,8 @@
         );
 
         // 11. 좌측 상단 상태 판 (클램핑 적용)
-        drawStatePlate(Math.max(16, dx + 16), dy + 16, [
+        // 화면이 낮으면 판이 그림을 덮는다. 오른쪽 사이드바에 같은 내용이 이미 있으므로 건너뛴다.
+        if (height >= 420) drawStatePlate(Math.max(16, dx + 16), dy + 16, [
             { t: (isFlexed ? '팔을 굽힘 [굴곡 Flexion] (' : '팔을 폄 [신전 Extension] (') + Math.round(jointAngle) + '°)' },
             { t: '• 이두근(주동근): ' + (isFlexed ? '수축 🔥 — 두꺼워지고 짧아짐' : '이완 — 얇아지고 길어짐'), c: isFlexed ? '#fca5a5' : '#94a3b8' },
             { t: '• 삼두근(길항근): ' + (isFlexed ? '이완 — 얇아지고 길어짐' : '수축 🔥 — 두꺼워지고 짧아짐'), c: isFlexed ? '#94a3b8' : '#7dd3fc' },
@@ -1302,8 +1328,10 @@
                 }
 
                 if (currentSceneKey === 'joint') {
-                    var g = armGeometry(0, 0, width, height);
-                    if (Math.hypot(clickX - g.wx, clickY - g.wy) <= 0.085 * height) {
+                    var cv = toVirtual(clickX, clickY);
+                    clickX = cv.x; clickY = cv.y;
+                    var g = armGeometry(0, 0, VW, VH);
+                    if (Math.hypot(clickX - g.wx, clickY - g.wy) <= 0.085 * VH) {
                         isDraggingHand = true;
                         isFlexing = false;
                         isExtending = false;
@@ -1372,7 +1400,9 @@
                 var moveY = event.clientY - rect.top;
 
                 if (isDraggingHand) {
-                    var geo = armGeometry(0, 0, width, height);
+                    var mv = toVirtual(moveX, moveY);
+                    moveX = mv.x; moveY = mv.y;
+                    var geo = armGeometry(0, 0, VW, VH);
                     var vx = moveX - geo.ex, vy = moveY - geo.ey;
                     var vlen = Math.hypot(vx, vy) || 1;
                     var dot = (vx * 0 + vy * -1) / vlen;
@@ -1397,8 +1427,10 @@
 
                 // 관절 드래그 핸들 및 핀 호버
                 if (currentSceneKey === 'joint') {
-                    var g = armGeometry(0, 0, width, height);
-                    if (Math.hypot(moveX - g.wx, moveY - g.wy) <= 0.085 * height) {
+                    var hv = toVirtual(moveX, moveY);
+                    moveX = hv.x; moveY = hv.y;
+                    var g = armGeometry(0, 0, VW, VH);
+                    if (Math.hypot(moveX - g.wx, moveY - g.wy) <= 0.085 * VH) {
                         canvas.style.cursor = 'grab';
                         return;
                     }
