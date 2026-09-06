@@ -76,7 +76,7 @@
         var b = document.createElement('button');
         b.className = 'scene-btn';
         b.dataset.scene = 'nephron';
-        b.textContent = '💧 2. 여과·재흡수·분비 (네프론)';
+        b.textContent = '💧 3. 여과·재흡수·분비 (네프론)';
         bar.appendChild(b);
 
         bar.querySelectorAll('.scene-btn').forEach(function (btn) {

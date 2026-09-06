@@ -243,3 +243,15 @@
 }
 
 #nephronDots circle { filter: drop-shadow(0 0 4px currentColor); }
+
+/* ── 오줌이 나가는 길 (urine-path.js) ─────────────────────── */
+.urine-layer {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, #101a2e 0%, #05070f 100%);
+    z-index: 3;
+    padding: 46px 10px 8px;
+}
+
+.urine-layer[hidden] { display: none !important; }
+.urine-layer svg { width: 100%; height: 100%; display: block; }
