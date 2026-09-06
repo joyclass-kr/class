@@ -26,8 +26,8 @@ assert.doesNotMatch(
 );
 assert.match(
   html,
-  /href="learning\/inquiry\/body-explorer\/"[\s\S]*?<strong>인체의 구조<\/strong><small>\(Human Body Structure\)<\/small>/,
-  "The body-learning menu must describe the anatomy focus.",
+  /href="learning\/inquiry\/human-body\/"[\s\S]*?<strong>인체 모형<\/strong><small>\(Human Body Model\)<\/small>/,
+  "The body-learning menu must describe the interactive model focus.",
 );
 assert.doesNotMatch(
   html,
