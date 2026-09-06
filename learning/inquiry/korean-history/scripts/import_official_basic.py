@@ -27,7 +27,11 @@ OFFICIAL_ORIGIN = "https://www.historyexam.go.kr"
 # 2,000px쯤은 있어야 글씨가 번지지 않는다. PDF는 글자가 선이라 해상도를 올려도 공짜다.
 RENDER_RESOLUTION = 400
 DETECTION_RESOLUTION = 140
-MAX_QUESTION_WIDTH = 2_080
+# 문항 그림은 너비가 반드시 이 값 하나여야 한다. 회차마다 PDF 쪽 크기와
+# 좌우 단 폭이 조금씩 달라 그대로 두면 1,812~1,890으로 제각각이 되고,
+# 화면이 같은 폭으로 늘여 보이므로 문항마다 글씨 크기가 4%씩 달라진다.
+# 화면에 최대 620px으로 보이니 그 두 배를 원본으로 둔다.
+QUESTION_WIDTH = 1_240
 WEBP_QUALITY = 85
 
 
@@ -611,10 +615,12 @@ def split_questions(question_path: Path, source: ExamSource, answers: dict[int, 
                     bbox = (x0, top, x1, bottom)
                     crop = rendered.crop(tuple(round(value * scale) for value in bbox))
                     crop = trim_trailing_whitespace(crop, resolution)
-                    if crop.width > MAX_QUESTION_WIDTH:
-                        ratio = MAX_QUESTION_WIDTH / crop.width
+                    # 크든 작든 무조건 같은 너비로 맞춘다. 400dpi로 크게 뽑아
+                    # 두었다가 줄이는 것이라 곧바로 낮은 해상도로 뽑는 것보다 곱다.
+                    if crop.width != QUESTION_WIDTH:
+                        ratio = QUESTION_WIDTH / crop.width
                         crop = crop.resize(
-                            (MAX_QUESTION_WIDTH, round(crop.height * ratio)),
+                            (QUESTION_WIDTH, round(crop.height * ratio)),
                             Image.Resampling.LANCZOS,
                         )
                     image_name = f"q{number:02d}.webp"
