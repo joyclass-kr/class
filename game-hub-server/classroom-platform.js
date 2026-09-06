@@ -7660,14 +7660,20 @@ function createClassroomPlatform(options = {}) {
   }));
 
   // PUT: 그룹 학생 구성 저장
+  //
+  // 학교 관리자만 할 수 있다. 그룹에 든 학생은 그 그룹 게시판을 보게 되므로,
+  // 아무 교사나 남의 반 학생을 자기 그룹에 넣을 수 있으면 그 학생이 볼 게시판을
+  // 그 교사가 혼자 정하는 셈이 된다. 누가 어느 무리에 드는지는 전교생 명단을
+  // 쥔 학교 관리자가 정한다.
   router.put("/teacher/groups/:groupId/students", asyncRoute(async (req, res) => {
-    const teacher = await requireTeacher(req);
+    const { profile } = await requireSchoolAdmin(req);
     const groupId = Number(req.params.groupId);
     const studentIds = (req.body.studentIds || []).map(Number).filter(n => n > 0);
 
+    // 우리 학교 그룹이어야 한다. 만든 교사가 누구든 관리자는 고칠 수 있다.
     const groupCheck = await pool.query(
-      `SELECT id FROM teacher_groups WHERE id = $1 AND teacher_user_id = $2`,
-      [groupId, teacher.id]
+      `SELECT id FROM teacher_groups WHERE id = $1 AND school_id = $2`,
+      [groupId, profile.school_id]
     );
     if (groupCheck.rowCount === 0) throw new HttpError(404, "GROUP_NOT_FOUND", "그룹을 찾을 수 없습니다.");
 
@@ -7676,9 +7682,13 @@ function createClassroomPlatform(options = {}) {
       await client.query("BEGIN");
       await client.query(`DELETE FROM teacher_group_students WHERE group_id = $1`, [groupId]);
       for (let i = 0; i < studentIds.length; i++) {
+        // 우리 학교 학생인지 넣을 때 확인한다. 번호만 보고 넣으면 남의 학교 학생을
+        // 우리 그룹에 앉힐 수 있고, 그러면 그 학생에게 이 게시판이 열린다.
         await client.query(
-          `INSERT INTO teacher_group_students (group_id, student_id, sort_order) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`,
-          [groupId, studentIds[i], i]
+          `INSERT INTO teacher_group_students (group_id, student_id, sort_order)
+           SELECT $1, s.id, $3 FROM school_students s WHERE s.id = $2 AND s.school_id = $4
+           ON CONFLICT DO NOTHING`,
+          [groupId, studentIds[i], i, profile.school_id]
         );
       }
       await client.query("COMMIT");
