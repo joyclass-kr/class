@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>한자 진도표 | 기초학력</title>
 <style>
-@font-face{font-family:KleeHanja;src:url("../../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");font-display:swap}:root{--paper:#f7f5ef;--card:#fffdf8;--ink:#202630;--muted:#68717a;--line:#d8d4ca;--blue:#245f8d;--soft:#eaf2f7}*{box-sizing:border-box}body{margin:0;min-width:320px;color:var(--ink);background:#ded8ca url("../assets/hanja-background.webp") center/cover fixed no-repeat;font-family:"Noto Serif KR","Batang",serif}body:before{content:"";position:fixed;inset:0;background:rgba(247,245,239,.84);pointer-events:none}.page{position:relative;width:min(1060px,100%);min-height:100svh;margin:auto;padding:8px clamp(16px,3vw,36px) 32px}.utility{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px}.back{min-height:44px;display:inline-flex;align-items:center;color:var(--blue);font:700 14px system-ui,sans-serif;text-decoration:none}.count{color:var(--muted);font:700 14px system-ui,sans-serif;white-space:nowrap}.music-toggle{min-height:44px;margin-left:auto;padding:0 13px;border:1px solid #b9cbd8;border-radius:8px;color:var(--blue);background:rgba(255,253,248,.92);font:800 13px system-ui,sans-serif;cursor:pointer;white-space:nowrap}.music-toggle[aria-pressed=true]{color:#fff;background:var(--blue);border-color:var(--blue)}.stages{display:grid;gap:9px}.stage{overflow:hidden;border:1px solid var(--line);border-radius:9px;background:rgba(255,253,248,.96)}.stage-head{min-height:54px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:4px 8px 4px 0}.stage-toggle{min-height:46px;padding:0 14px;border:0;background:transparent;color:var(--ink);font:800 17px "Noto Serif KR","Batang",serif;text-align:left;cursor:pointer}.stage-toggle:after{content:"⌄";display:inline-block;margin-left:8px;color:var(--muted);font-family:system-ui,sans-serif;transform:rotate(-90deg)}.stage-toggle[aria-expanded=true]:after{transform:rotate(0)}.stage-quiz{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 16px;border-radius:7px;color:white;background:var(--blue);font:800 14px system-ui,sans-serif;text-decoration:none}.lesson-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0 10px 10px;list-style:none;border-top:1px solid var(--line)}.lesson-list[hidden]{display:none}.lesson-item{min-height:68px;color:inherit;text-decoration:none;display:grid;grid-template-columns:38px 76px minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 9px;border-bottom:1px solid #e4e0d7}.lesson-item:nth-child(odd){border-right:1px solid var(--line)}.lesson-number{color:var(--muted);font:800 12px system-ui,sans-serif}.lesson-term{color:var(--blue);font:600 27px KleeHanja,serif;white-space:nowrap}.lesson-copy{min-width:0;display:grid;gap:2px}.lesson-copy strong{font-size:15px}.lesson-copy small{overflow:hidden;color:var(--muted);font-size:13px;text-overflow:ellipsis;white-space:nowrap}.new-characters{padding:4px 7px;border-radius:999px;color:#3d5e76;background:var(--soft);font:700 11px system-ui,sans-serif;white-space:nowrap}.stage-toggle:focus-visible,.stage-quiz:focus-visible,.back:focus-visible,.music-toggle:focus-visible,.lesson-item:focus-visible{outline:3px solid #77a9cb;outline-offset:2px}@media(max-width:720px){.lesson-list{grid-template-columns:1fr}.lesson-item:nth-child(odd){border-right:0}}@media(max-width:500px){.count{display:none}.lesson-item{grid-template-columns:34px 68px minmax(0,1fr)}.new-characters{grid-column:3;justify-self:start}.stage-quiz{padding:0 12px}}
-@media(min-width:720px) and (max-width:1180px){.page{padding-inline:64px}}@media(max-width:719px){.page{padding-top:64px}}
-</style></head><body><main class="page"><section class="stages" aria-label="단계별 한자 진도, 196차시 522자">
+@font-face{font-family:KleeHanja;src:url("../../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");font-display:swap}:root{--paper:#f7f5ef;--card:#fffdf8;--ink:#202630;--muted:#68717a;--line:#d8d4ca;--blue:#245f8d;--soft:#eaf2f7}*{box-sizing:border-box}body{margin:0;min-width:320px;color:var(--ink);background:#ded8ca url("../assets/hanja-background.webp") center/cover fixed no-repeat;font-family:"Noto Serif KR","Batang",serif}body:before{content:"";position:fixed;inset:0;background:rgba(247,245,239,.84);pointer-events:none}.page{position:relative;width:min(1060px,100%);min-height:100svh;margin:auto;padding:8px clamp(16px,3vw,36px) 32px}.utility{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px}.back{min-height:44px;display:inline-flex;align-items:center;color:var(--blue);font:700 14px system-ui,sans-serif;text-decoration:none}.count{color:var(--muted);font:700 14px system-ui,sans-serif;white-space:nowrap}.stages{display:grid;gap:9px}.stage{overflow:hidden;border:1px solid var(--line);border-radius:9px;background:rgba(255,253,248,.96)}.stage-head{min-height:54px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:4px 8px 4px 0}.stage-toggle{min-height:46px;padding:0 14px;border:0;background:transparent;color:var(--ink);font:800 17px "Noto Serif KR","Batang",serif;text-align:left;cursor:pointer}.stage-toggle:after{content:"⌄";display:inline-block;margin-left:8px;color:var(--muted);font-family:system-ui,sans-serif;transform:rotate(-90deg)}.stage-toggle[aria-expanded=true]:after{transform:rotate(0)}.stage-quiz{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 16px;border-radius:7px;color:white;background:var(--blue);font:800 14px system-ui,sans-serif;text-decoration:none}.lesson-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0 10px 10px;list-style:none;border-top:1px solid var(--line)}.lesson-list[hidden]{display:none}.lesson-item{min-height:68px;color:inherit;text-decoration:none;display:grid;grid-template-columns:36px auto minmax(0,1fr);align-items:center;gap:14px;padding:9px 12px;border-bottom:1px solid #e4e0d7;transition:background-color .15s ease}.lesson-item:hover{background:rgba(36,95,141,.05)}.lesson-item:nth-child(odd){border-right:1px solid var(--line)}.lesson-number{color:var(--muted);font:800 12px system-ui,sans-serif}.lesson-term{color:var(--blue);font:600 26px/1.1 KleeHanja,serif;letter-spacing:0.06em;white-space:nowrap}.lesson-copy{min-width:0;display:grid;gap:3px}.lesson-copy strong{font-size:15px;color:var(--ink);line-height:1.3}.lesson-copy small{overflow:hidden;color:var(--muted);font-size:13px;line-height:1.3;text-overflow:ellipsis;white-space:nowrap}.stage-toggle:focus-visible,.stage-quiz:focus-visible,.back:focus-visible,.lesson-item:focus-visible{outline:3px solid #77a9cb;outline-offset:2px}@media(max-width:720px){.lesson-list{grid-template-columns:1fr}.lesson-item:nth-child(odd){border-right:0}}@media(max-width:500px){.lesson-item{grid-template-columns:30px auto minmax(0,1fr);gap:10px;padding:8px}.lesson-term{font-size:22px}.stage-quiz{padding:0 12px}}
+</style></head><body><main class="page"><nav class="utility" aria-label="진도표 도구"><span class="count">196차시 · 522자</span><a class="back" href="../../../../">학습 홈</a></nav><section class="stages" aria-label="단계별 진도">
       <section class="stage">
         <div class="stage-head">
           <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-1">1단계</button>
@@ -12,87 +11,73 @@
         <ol class="lesson-list" id="stage-list-1" start="1" hidden>
           <a class="lesson-item" href="./001/">
             <span class="lesson-number">001</span>
-            <span class="lesson-term" aria-label="인 · 생">人生</span>
+            <span class="lesson-term" aria-label="인 · 생">人 生</span>
             <span class="lesson-copy"><strong>인 · 생</strong><small>사람 · 날</small></span>
-            <span class="new-characters">人 · 生</span>
           </a>
           <a class="lesson-item" href="./002/">
             <span class="lesson-number">002</span>
-            <span class="lesson-term" aria-label="남 · 녀·여">男女</span>
+            <span class="lesson-term" aria-label="남 · 녀·여">男 女</span>
             <span class="lesson-copy"><strong>남 · 녀·여</strong><small>사내 · 여자</small></span>
-            <span class="new-characters">男 · 女</span>
           </a>
           <a class="lesson-item" href="./003/">
             <span class="lesson-number">003</span>
-            <span class="lesson-term" aria-label="대 · 소">大小</span>
+            <span class="lesson-term" aria-label="대 · 소">大 小</span>
             <span class="lesson-copy"><strong>대 · 소</strong><small>큰 · 작을</small></span>
-            <span class="new-characters">大 · 小</span>
           </a>
           <a class="lesson-item" href="./004/">
             <span class="lesson-number">004</span>
-            <span class="lesson-term" aria-label="다 · 소">多少</span>
+            <span class="lesson-term" aria-label="다 · 소">多 少</span>
             <span class="lesson-copy"><strong>다 · 소</strong><small>많을 · 적을</small></span>
-            <span class="new-characters">多 · 少</span>
           </a>
           <a class="lesson-item" href="./005/">
             <span class="lesson-number">005</span>
-            <span class="lesson-term" aria-label="상 · 하">上下</span>
+            <span class="lesson-term" aria-label="상 · 하">上 下</span>
             <span class="lesson-copy"><strong>상 · 하</strong><small>위 · 아래</small></span>
-            <span class="new-characters">上 · 下</span>
           </a>
           <a class="lesson-item" href="./006/">
             <span class="lesson-number">006</span>
-            <span class="lesson-term" aria-label="좌 · 우">左右</span>
+            <span class="lesson-term" aria-label="좌 · 우">左 右</span>
             <span class="lesson-copy"><strong>좌 · 우</strong><small>왼 · 오른</small></span>
-            <span class="new-characters">左 · 右</span>
           </a>
           <a class="lesson-item" href="./007/">
             <span class="lesson-number">007</span>
-            <span class="lesson-term" aria-label="동 · 서">東西</span>
+            <span class="lesson-term" aria-label="동 · 서">東 西</span>
             <span class="lesson-copy"><strong>동 · 서</strong><small>동녘 · 서녘</small></span>
-            <span class="new-characters">東 · 西</span>
           </a>
           <a class="lesson-item" href="./008/">
             <span class="lesson-number">008</span>
-            <span class="lesson-term" aria-label="남 · 북">南北</span>
+            <span class="lesson-term" aria-label="남 · 북">南 北</span>
             <span class="lesson-copy"><strong>남 · 북</strong><small>남녘 · 북녘</small></span>
-            <span class="new-characters">南 · 北</span>
           </a>
           <a class="lesson-item" href="./009/">
             <span class="lesson-number">009</span>
-            <span class="lesson-term" aria-label="일 · 월 · 년·연">日月年</span>
+            <span class="lesson-term" aria-label="일 · 월 · 년·연">日 月 年</span>
             <span class="lesson-copy"><strong>일 · 월 · 년·연</strong><small>날 · 달 · 해</small></span>
-            <span class="new-characters">日 · 月 · 年</span>
           </a>
           <a class="lesson-item" href="./010/">
             <span class="lesson-number">010</span>
-            <span class="lesson-term" aria-label="일 · 이 · 삼">一二三</span>
+            <span class="lesson-term" aria-label="일 · 이 · 삼">一 二 三</span>
             <span class="lesson-copy"><strong>일 · 이 · 삼</strong><small>한 · 두 · 석</small></span>
-            <span class="new-characters">一 · 二 · 三</span>
           </a>
           <a class="lesson-item" href="./011/">
             <span class="lesson-number">011</span>
-            <span class="lesson-term" aria-label="사 · 오">四五</span>
+            <span class="lesson-term" aria-label="사 · 오">四 五</span>
             <span class="lesson-copy"><strong>사 · 오</strong><small>넉 · 다섯</small></span>
-            <span class="new-characters">四 · 五</span>
           </a>
           <a class="lesson-item" href="./012/">
             <span class="lesson-number">012</span>
-            <span class="lesson-term" aria-label="육·유 · 칠">六七</span>
+            <span class="lesson-term" aria-label="육·유 · 칠">六 七</span>
             <span class="lesson-copy"><strong>육·유 · 칠</strong><small>여섯 · 일곱</small></span>
-            <span class="new-characters">六 · 七</span>
           </a>
           <a class="lesson-item" href="./013/">
             <span class="lesson-number">013</span>
-            <span class="lesson-term" aria-label="팔 · 구 · 십">八九十</span>
+            <span class="lesson-term" aria-label="팔 · 구 · 십">八 九 十</span>
             <span class="lesson-copy"><strong>팔 · 구 · 십</strong><small>여덟 · 아홉 · 열</small></span>
-            <span class="new-characters">八 · 九 · 十</span>
           </a>
           <a class="lesson-item" href="./014/">
             <span class="lesson-number">014</span>
-            <span class="lesson-term" aria-label="백 · 천 · 만">百千萬</span>
+            <span class="lesson-term" aria-label="백 · 천 · 만">百 千 萬</span>
             <span class="lesson-copy"><strong>백 · 천 · 만</strong><small>일백 · 일천 · 일만</small></span>
-            <span class="new-characters">百 · 千 · 萬</span>
           </a>
         </ol>
       </section>
@@ -104,87 +89,73 @@
         <ol class="lesson-list" id="stage-list-2" start="15" hidden>
           <a class="lesson-item" href="./015/">
             <span class="lesson-number">015</span>
-            <span class="lesson-term" aria-label="시 · 분">時分</span>
+            <span class="lesson-term" aria-label="시 · 분">時 分</span>
             <span class="lesson-copy"><strong>시 · 분</strong><small>때 · 나눌</small></span>
-            <span class="new-characters">時 · 分</span>
           </a>
           <a class="lesson-item" href="./016/">
             <span class="lesson-number">016</span>
-            <span class="lesson-term" aria-label="정 · 오">正午</span>
+            <span class="lesson-term" aria-label="정 · 오">正 午</span>
             <span class="lesson-copy"><strong>정 · 오</strong><small>바를 · 낮</small></span>
-            <span class="new-characters">正 · 午</span>
           </a>
           <a class="lesson-item" href="./017/">
             <span class="lesson-number">017</span>
-            <span class="lesson-term" aria-label="고 · 금">古今</span>
+            <span class="lesson-term" aria-label="고 · 금">古 今</span>
             <span class="lesson-copy"><strong>고 · 금</strong><small>옛 · 이제</small></span>
-            <span class="new-characters">古 · 今</span>
           </a>
           <a class="lesson-item" href="./018/">
             <span class="lesson-number">018</span>
-            <span class="lesson-term" aria-label="춘 · 하">春夏</span>
+            <span class="lesson-term" aria-label="춘 · 하">春 夏</span>
             <span class="lesson-copy"><strong>춘 · 하</strong><small>봄 · 여름</small></span>
-            <span class="new-characters">春 · 夏</span>
           </a>
           <a class="lesson-item" href="./019/">
             <span class="lesson-number">019</span>
-            <span class="lesson-term" aria-label="추 · 동">秋冬</span>
+            <span class="lesson-term" aria-label="추 · 동">秋 冬</span>
             <span class="lesson-copy"><strong>추 · 동</strong><small>가을 · 겨울</small></span>
-            <span class="new-characters">秋 · 冬</span>
           </a>
           <a class="lesson-item" href="./020/">
             <span class="lesson-number">020</span>
-            <span class="lesson-term" aria-label="부 · 모">父母</span>
+            <span class="lesson-term" aria-label="부 · 모">父 母</span>
             <span class="lesson-copy"><strong>부 · 모</strong><small>아비 · 어미</small></span>
-            <span class="new-characters">父 · 母</span>
           </a>
           <a class="lesson-item" href="./021/">
             <span class="lesson-number">021</span>
-            <span class="lesson-term" aria-label="자 · 우">子友</span>
+            <span class="lesson-term" aria-label="자 · 우">子 友</span>
             <span class="lesson-copy"><strong>자 · 우</strong><small>아들 · 벗</small></span>
-            <span class="new-characters">子 · 友</span>
           </a>
           <a class="lesson-item" href="./022/">
             <span class="lesson-number">022</span>
-            <span class="lesson-term" aria-label="학 · 교">學校</span>
+            <span class="lesson-term" aria-label="학 · 교">學 校</span>
             <span class="lesson-copy"><strong>학 · 교</strong><small>배울 · 학교</small></span>
-            <span class="new-characters">學 · 校</span>
           </a>
           <a class="lesson-item" href="./023/">
             <span class="lesson-number">023</span>
-            <span class="lesson-term" aria-label="선 · 전 · 후">先前後</span>
+            <span class="lesson-term" aria-label="선 · 전 · 후">先 前 後</span>
             <span class="lesson-copy"><strong>선 · 전 · 후</strong><small>먼저 · 앞 · 뒤</small></span>
-            <span class="new-characters">先 · 前 · 後</span>
           </a>
           <a class="lesson-item" href="./024/">
             <span class="lesson-number">024</span>
-            <span class="lesson-term" aria-label="중 · 내 · 외">中內外</span>
+            <span class="lesson-term" aria-label="중 · 내 · 외">中 內 外</span>
             <span class="lesson-copy"><strong>중 · 내 · 외</strong><small>가운데 · 안 · 밖</small></span>
-            <span class="new-characters">中 · 內 · 外</span>
           </a>
           <a class="lesson-item" href="./025/">
             <span class="lesson-number">025</span>
-            <span class="lesson-term" aria-label="입 · 출 · 문">入出門</span>
+            <span class="lesson-term" aria-label="입 · 출 · 문">入 出 門</span>
             <span class="lesson-copy"><strong>입 · 출 · 문</strong><small>들 · 날 · 문</small></span>
-            <span class="new-characters">入 · 出 · 門</span>
           </a>
           <a class="lesson-item" href="./026/">
             <span class="lesson-number">026</span>
-            <span class="lesson-term" aria-label="천 · 지">天地</span>
+            <span class="lesson-term" aria-label="천 · 지">天 地</span>
             <span class="lesson-copy"><strong>천 · 지</strong><small>하늘 · 땅</small></span>
-            <span class="new-characters">天 · 地</span>
           </a>
           <a class="lesson-item" href="./027/">
             <span class="lesson-number">027</span>
-            <span class="lesson-term" aria-label="산 · 천 · 토">山川土</span>
+            <span class="lesson-term" aria-label="산 · 천 · 토">山 川 土</span>
             <span class="lesson-copy"><strong>산 · 천 · 토</strong><small>메 · 내 · 흙</small></span>
-            <span class="new-characters">山 · 川 · 土</span>
           </a>
           <a class="lesson-item" href="./028/">
             <span class="lesson-number">028</span>
-            <span class="lesson-term" aria-label="수 · 화">水火</span>
+            <span class="lesson-term" aria-label="수 · 화">水 火</span>
             <span class="lesson-copy"><strong>수 · 화</strong><small>물 · 불</small></span>
-            <span class="new-characters">水 · 火</span>
           </a>
         </ol>
       </section>
@@ -196,87 +167,73 @@
         <ol class="lesson-list" id="stage-list-3" start="29" hidden>
           <a class="lesson-item" href="./029/">
             <span class="lesson-number">029</span>
-            <span class="lesson-term" aria-label="목 · 재">木材</span>
+            <span class="lesson-term" aria-label="목 · 재">木 材</span>
             <span class="lesson-copy"><strong>목 · 재</strong><small>나무 · 재목</small></span>
-            <span class="new-characters">木 · 材</span>
           </a>
           <a class="lesson-item" href="./030/">
             <span class="lesson-number">030</span>
-            <span class="lesson-term" aria-label="금 · 속">金屬</span>
+            <span class="lesson-term" aria-label="금 · 속">金 屬</span>
             <span class="lesson-copy"><strong>금 · 속</strong><small>쇠 · 무리</small></span>
-            <span class="new-characters">金 · 屬</span>
           </a>
           <a class="lesson-item" href="./031/">
             <span class="lesson-number">031</span>
-            <span class="lesson-term" aria-label="풍 · 우">風雨</span>
+            <span class="lesson-term" aria-label="풍 · 우">風 雨</span>
             <span class="lesson-copy"><strong>풍 · 우</strong><small>바람 · 비</small></span>
-            <span class="new-characters">風 · 雨</span>
           </a>
           <a class="lesson-item" href="./032/">
             <span class="lesson-number">032</span>
-            <span class="lesson-term" aria-label="강 · 설">降雪</span>
+            <span class="lesson-term" aria-label="강 · 설">降 雪</span>
             <span class="lesson-copy"><strong>강 · 설</strong><small>내릴 · 눈</small></span>
-            <span class="new-characters">降 · 雪</span>
           </a>
           <a class="lesson-item" href="./033/">
             <span class="lesson-number">033</span>
-            <span class="lesson-term" aria-label="목 · 적">目的</span>
+            <span class="lesson-term" aria-label="목 · 적">目 的</span>
             <span class="lesson-copy"><strong>목 · 적</strong><small>눈 · 과녁</small></span>
-            <span class="new-characters">目 · 的</span>
           </a>
           <a class="lesson-item" href="./034/">
             <span class="lesson-number">034</span>
-            <span class="lesson-term" aria-label="구 · 수 · 족">口手足</span>
+            <span class="lesson-term" aria-label="구 · 수 · 족">口 手 足</span>
             <span class="lesson-copy"><strong>구 · 수 · 족</strong><small>입 · 손 · 발</small></span>
-            <span class="new-characters">口 · 手 · 足</span>
           </a>
           <a class="lesson-item" href="./035/">
             <span class="lesson-number">035</span>
-            <span class="lesson-term" aria-label="심 · 신">心身</span>
+            <span class="lesson-term" aria-label="심 · 신">心 身</span>
             <span class="lesson-copy"><strong>심 · 신</strong><small>마음 · 몸</small></span>
-            <span class="new-characters">心 · 身</span>
           </a>
           <a class="lesson-item" href="./036/">
             <span class="lesson-number">036</span>
-            <span class="lesson-term" aria-label="체 · 력">體力</span>
+            <span class="lesson-term" aria-label="체 · 력">體 力</span>
             <span class="lesson-copy"><strong>체 · 력</strong><small>몸 · 힘</small></span>
-            <span class="new-characters">體 · 力</span>
           </a>
           <a class="lesson-item" href="./037/">
             <span class="lesson-number">037</span>
-            <span class="lesson-term" aria-label="문 · 자">文字</span>
+            <span class="lesson-term" aria-label="문 · 자">文 字</span>
             <span class="lesson-copy"><strong>문 · 자</strong><small>글월 · 글자</small></span>
-            <span class="new-characters">文 · 字</span>
           </a>
           <a class="lesson-item" href="./038/">
             <span class="lesson-number">038</span>
-            <span class="lesson-term" aria-label="국 · 어 · 민">國語民</span>
+            <span class="lesson-term" aria-label="국 · 어 · 민">國 語 民</span>
             <span class="lesson-copy"><strong>국 · 어 · 민</strong><small>나라 · 말씀 · 백성</small></span>
-            <span class="new-characters">國 · 語 · 民</span>
           </a>
           <a class="lesson-item" href="./039/">
             <span class="lesson-number">039</span>
-            <span class="lesson-term" aria-label="대 · 화">對話</span>
+            <span class="lesson-term" aria-label="대 · 화">對 話</span>
             <span class="lesson-copy"><strong>대 · 화</strong><small>대할 · 말씀</small></span>
-            <span class="new-characters">對 · 話</span>
           </a>
           <a class="lesson-item" href="./040/">
             <span class="lesson-number">040</span>
-            <span class="lesson-term" aria-label="독 · 서">讀書</span>
+            <span class="lesson-term" aria-label="독 · 서">讀 書</span>
             <span class="lesson-copy"><strong>독 · 서</strong><small>읽을 · 글</small></span>
-            <span class="new-characters">讀 · 書</span>
           </a>
           <a class="lesson-item" href="./041/">
             <span class="lesson-number">041</span>
-            <span class="lesson-term" aria-label="문 · 답">問答</span>
+            <span class="lesson-term" aria-label="문 · 답">問 答</span>
             <span class="lesson-copy"><strong>문 · 답</strong><small>물을 · 대답</small></span>
-            <span class="new-characters">問 · 答</span>
           </a>
           <a class="lesson-item" href="./042/">
             <span class="lesson-number">042</span>
-            <span class="lesson-term" aria-label="가 · 정">家庭</span>
+            <span class="lesson-term" aria-label="가 · 정">家 庭</span>
             <span class="lesson-copy"><strong>가 · 정</strong><small>집 · 뜰</small></span>
-            <span class="new-characters">家 · 庭</span>
           </a>
         </ol>
       </section>
@@ -288,87 +245,73 @@
         <ol class="lesson-list" id="stage-list-4" start="43" hidden>
           <a class="lesson-item" href="./043/">
             <span class="lesson-number">043</span>
-            <span class="lesson-term" aria-label="교 · 실">敎室</span>
+            <span class="lesson-term" aria-label="교 · 실">敎 室</span>
             <span class="lesson-copy"><strong>교 · 실</strong><small>가르칠 · 집</small></span>
-            <span class="new-characters">敎 · 室</span>
           </a>
           <a class="lesson-item" href="./044/">
             <span class="lesson-number">044</span>
-            <span class="lesson-term" aria-label="장 · 소">場所</span>
+            <span class="lesson-term" aria-label="장 · 소">場 所</span>
             <span class="lesson-copy"><strong>장 · 소</strong><small>마당 · 바</small></span>
-            <span class="new-characters">場 · 所</span>
           </a>
           <a class="lesson-item" href="./045/">
             <span class="lesson-number">045</span>
-            <span class="lesson-term" aria-label="도 · 로">道路</span>
+            <span class="lesson-term" aria-label="도 · 로">道 路</span>
             <span class="lesson-copy"><strong>도 · 로</strong><small>길 · 길</small></span>
-            <span class="new-characters">道 · 路</span>
           </a>
           <a class="lesson-item" href="./046/">
             <span class="lesson-number">046</span>
-            <span class="lesson-term" aria-label="도 · 시">都市</span>
+            <span class="lesson-term" aria-label="도 · 시">都 市</span>
             <span class="lesson-copy"><strong>도 · 시</strong><small>도읍 · 저자</small></span>
-            <span class="new-characters">都 · 市</span>
           </a>
           <a class="lesson-item" href="./047/">
             <span class="lesson-number">047</span>
-            <span class="lesson-term" aria-label="농 · 촌">農村</span>
+            <span class="lesson-term" aria-label="농 · 촌">農 村</span>
             <span class="lesson-copy"><strong>농 · 촌</strong><small>농사 · 마을</small></span>
-            <span class="new-characters">農 · 村</span>
           </a>
           <a class="lesson-item" href="./048/">
             <span class="lesson-number">048</span>
-            <span class="lesson-term" aria-label="장 · 단 · 반">長短反</span>
+            <span class="lesson-term" aria-label="장 · 단 · 반">長 短 反</span>
             <span class="lesson-copy"><strong>장 · 단 · 반</strong><small>길 · 짧을 · 돌이킬</small></span>
-            <span class="new-characters">長 · 短 · 反</span>
           </a>
           <a class="lesson-item" href="./049/">
             <span class="lesson-number">049</span>
-            <span class="lesson-term" aria-label="고 · 저">高低</span>
+            <span class="lesson-term" aria-label="고 · 저">高 低</span>
             <span class="lesson-copy"><strong>고 · 저</strong><small>높을 · 낮을</small></span>
-            <span class="new-characters">高 · 低</span>
           </a>
           <a class="lesson-item" href="./050/">
             <span class="lesson-number">050</span>
-            <span class="lesson-term" aria-label="신 · 문">新聞</span>
+            <span class="lesson-term" aria-label="신 · 문">新 聞</span>
             <span class="lesson-copy"><strong>신 · 문</strong><small>새 · 들을</small></span>
-            <span class="new-characters">新 · 聞</span>
           </a>
           <a class="lesson-item" href="./051/">
             <span class="lesson-number">051</span>
-            <span class="lesson-term" aria-label="동 · 별">同別</span>
+            <span class="lesson-term" aria-label="동 · 별">同 別</span>
             <span class="lesson-copy"><strong>동 · 별</strong><small>한가지 · 나눌</small></span>
-            <span class="new-characters">同 · 別</span>
           </a>
           <a class="lesson-item" href="./052/">
             <span class="lesson-number">052</span>
-            <span class="lesson-term" aria-label="동 · 물 · 식">動物植</span>
+            <span class="lesson-term" aria-label="동 · 물 · 식">動 物 植</span>
             <span class="lesson-copy"><strong>동 · 물 · 식</strong><small>움직일 · 물건 · 심을</small></span>
-            <span class="new-characters">動 · 物 · 植</span>
           </a>
           <a class="lesson-item" href="./053/">
             <span class="lesson-number">053</span>
-            <span class="lesson-term" aria-label="전 · 광">電光</span>
+            <span class="lesson-term" aria-label="전 · 광">電 光</span>
             <span class="lesson-copy"><strong>전 · 광</strong><small>번개 · 빛</small></span>
-            <span class="new-characters">電 · 光</span>
           </a>
           <a class="lesson-item" href="./054/">
             <span class="lesson-number">054</span>
-            <span class="lesson-term" aria-label="음 · 성">音聲</span>
+            <span class="lesson-term" aria-label="음 · 성">音 聲</span>
             <span class="lesson-copy"><strong>음 · 성</strong><small>소리 · 소리</small></span>
-            <span class="new-characters">音 · 聲</span>
           </a>
           <a class="lesson-item" href="./055/">
             <span class="lesson-number">055</span>
-            <span class="lesson-term" aria-label="공 · 기">空氣</span>
+            <span class="lesson-term" aria-label="공 · 기">空 氣</span>
             <span class="lesson-copy"><strong>공 · 기</strong><small>빌 · 기운</small></span>
-            <span class="new-characters">空 · 氣</span>
           </a>
           <a class="lesson-item" href="./056/">
             <span class="lesson-number">056</span>
-            <span class="lesson-term" aria-label="자 · 전 · 차·거">自轉車</span>
+            <span class="lesson-term" aria-label="자 · 전 · 차·거">自 轉 車</span>
             <span class="lesson-copy"><strong>자 · 전 · 차·거</strong><small>스스로 · 구를 · 수레</small></span>
-            <span class="new-characters">自 · 轉 · 車</span>
           </a>
         </ol>
       </section>
@@ -380,87 +323,73 @@
         <ol class="lesson-list" id="stage-list-5" start="57" hidden>
           <a class="lesson-item" href="./057/">
             <span class="lesson-number">057</span>
-            <span class="lesson-term" aria-label="가 · 각 · 각">歌各角</span>
+            <span class="lesson-term" aria-label="가 · 각 · 각">歌 各 角</span>
             <span class="lesson-copy"><strong>가 · 각 · 각</strong><small>노래 · 각각 · 뿔</small></span>
-            <span class="new-characters">歌 · 各 · 角</span>
           </a>
           <a class="lesson-item" href="./058/">
             <span class="lesson-number">058</span>
-            <span class="lesson-term" aria-label="간 · 감">間感</span>
+            <span class="lesson-term" aria-label="간 · 감">間 感</span>
             <span class="lesson-copy"><strong>간 · 감</strong><small>사이 · 느낄</small></span>
-            <span class="new-characters">間 · 感</span>
           </a>
           <a class="lesson-item" href="./059/">
             <span class="lesson-number">059</span>
-            <span class="lesson-term" aria-label="강 · 강 · 개">強江開</span>
+            <span class="lesson-term" aria-label="강 · 강 · 개">強 江 開</span>
             <span class="lesson-copy"><strong>강 · 강 · 개</strong><small>강할 · 강 · 열</small></span>
-            <span class="new-characters">強 · 江 · 開</span>
           </a>
           <a class="lesson-item" href="./060/">
             <span class="lesson-number">060</span>
-            <span class="lesson-term" aria-label="경 · 계 · 계">京界計</span>
+            <span class="lesson-term" aria-label="경 · 계 · 계">京 界 計</span>
             <span class="lesson-copy"><strong>경 · 계 · 계</strong><small>서울 · 지경 · 셀</small></span>
-            <span class="new-characters">京 · 界 · 計</span>
           </a>
           <a class="lesson-item" href="./061/">
             <span class="lesson-number">061</span>
-            <span class="lesson-term" aria-label="고 · 공">苦公</span>
+            <span class="lesson-term" aria-label="고 · 공">苦 公</span>
             <span class="lesson-copy"><strong>고 · 공</strong><small>쓸 · 공평할</small></span>
-            <span class="new-characters">苦 · 公</span>
           </a>
           <a class="lesson-item" href="./062/">
             <span class="lesson-number">062</span>
-            <span class="lesson-term" aria-label="공 · 공 · 공">共功工</span>
+            <span class="lesson-term" aria-label="공 · 공 · 공">共 功 工</span>
             <span class="lesson-copy"><strong>공 · 공 · 공</strong><small>한가지 · 공 · 장인</small></span>
-            <span class="new-characters">共 · 功 · 工</span>
           </a>
           <a class="lesson-item" href="./063/">
             <span class="lesson-number">063</span>
-            <span class="lesson-term" aria-label="과 · 과 · 교">果科交</span>
+            <span class="lesson-term" aria-label="과 · 과 · 교">果 科 交</span>
             <span class="lesson-copy"><strong>과 · 과 · 교</strong><small>실과 · 과목 · 사귈</small></span>
-            <span class="new-characters">果 · 科 · 交</span>
           </a>
           <a class="lesson-item" href="./064/">
             <span class="lesson-number">064</span>
-            <span class="lesson-term" aria-label="구 · 구">區球</span>
+            <span class="lesson-term" aria-label="구 · 구">區 球</span>
             <span class="lesson-copy"><strong>구 · 구</strong><small>구분할·지경 · 공</small></span>
-            <span class="new-characters">區 · 球</span>
           </a>
           <a class="lesson-item" href="./065/">
             <span class="lesson-number">065</span>
-            <span class="lesson-term" aria-label="군 · 군">軍郡</span>
+            <span class="lesson-term" aria-label="군 · 군">軍 郡</span>
             <span class="lesson-copy"><strong>군 · 군</strong><small>군사 · 고을</small></span>
-            <span class="new-characters">軍 · 郡</span>
           </a>
           <a class="lesson-item" href="./066/">
             <span class="lesson-number">066</span>
-            <span class="lesson-term" aria-label="근 · 근">根近</span>
+            <span class="lesson-term" aria-label="근 · 근">根 近</span>
             <span class="lesson-copy"><strong>근 · 근</strong><small>뿌리 · 가까울</small></span>
-            <span class="new-characters">根 · 近</span>
           </a>
           <a class="lesson-item" href="./067/">
             <span class="lesson-number">067</span>
-            <span class="lesson-term" aria-label="급 · 급">急級</span>
+            <span class="lesson-term" aria-label="급 · 급">急 級</span>
             <span class="lesson-copy"><strong>급 · 급</strong><small>급할 · 등급</small></span>
-            <span class="new-characters">急 · 級</span>
           </a>
           <a class="lesson-item" href="./068/">
             <span class="lesson-number">068</span>
-            <span class="lesson-term" aria-label="기 · 기 · 당">旗記堂</span>
+            <span class="lesson-term" aria-label="기 · 기 · 당">旗 記 堂</span>
             <span class="lesson-copy"><strong>기 · 기 · 당</strong><small>기 · 기록할 · 집</small></span>
-            <span class="new-characters">旗 · 記 · 堂</span>
           </a>
           <a class="lesson-item" href="./069/">
             <span class="lesson-number">069</span>
-            <span class="lesson-term" aria-label="대 · 대">代待</span>
+            <span class="lesson-term" aria-label="대 · 대">代 待</span>
             <span class="lesson-copy"><strong>대 · 대</strong><small>대신할 · 기다릴</small></span>
-            <span class="new-characters">代 · 待</span>
           </a>
           <a class="lesson-item" href="./070/">
             <span class="lesson-number">070</span>
-            <span class="lesson-term" aria-label="도 · 도·탁">圖度</span>
+            <span class="lesson-term" aria-label="도 · 도·탁">圖 度</span>
             <span class="lesson-copy"><strong>도 · 도·탁</strong><small>그림 · 법도·헤아릴</small></span>
-            <span class="new-characters">圖 · 度</span>
           </a>
         </ol>
       </section>
@@ -472,87 +401,73 @@
         <ol class="lesson-list" id="stage-list-6" start="71" hidden>
           <a class="lesson-item" href="./071/">
             <span class="lesson-number">071</span>
-            <span class="lesson-term" aria-label="동·통 · 동 · 두">洞童頭</span>
+            <span class="lesson-term" aria-label="동·통 · 동 · 두">洞 童 頭</span>
             <span class="lesson-copy"><strong>동·통 · 동 · 두</strong><small>골·밝을 · 아이 · 머리</small></span>
-            <span class="new-characters">洞 · 童 · 頭</span>
           </a>
           <a class="lesson-item" href="./072/">
             <span class="lesson-number">072</span>
-            <span class="lesson-term" aria-label="등 · 등 · 락·악·요·낙">登等樂</span>
+            <span class="lesson-term" aria-label="등 · 등 · 락·악·요·낙">登 等 樂</span>
             <span class="lesson-copy"><strong>등 · 등 · 락·악·요·낙</strong><small>오를 · 무리 · 즐길·노래·좋아할</small></span>
-            <span class="new-characters">登 · 等 · 樂</span>
           </a>
           <a class="lesson-item" href="./073/">
             <span class="lesson-number">073</span>
-            <span class="lesson-term" aria-label="래·내 · 례·예 · 례·예">來例禮</span>
+            <span class="lesson-term" aria-label="래·내 · 례·예 · 례·예">來 例 禮</span>
             <span class="lesson-copy"><strong>래·내 · 례·예 · 례·예</strong><small>올 · 법식 · 예도</small></span>
-            <span class="new-characters">來 · 例 · 禮</span>
           </a>
           <a class="lesson-item" href="./074/">
             <span class="lesson-number">074</span>
-            <span class="lesson-term" aria-label="로·노 · 록·녹">老綠</span>
+            <span class="lesson-term" aria-label="로·노 · 록·녹">老 綠</span>
             <span class="lesson-copy"><strong>로·노 · 록·녹</strong><small>늙을 · 푸를</small></span>
-            <span class="new-characters">老 · 綠</span>
           </a>
           <a class="lesson-item" href="./075/">
             <span class="lesson-number">075</span>
-            <span class="lesson-term" aria-label="리·이 · 리·이">利李</span>
+            <span class="lesson-term" aria-label="리·이 · 리·이">利 李</span>
             <span class="lesson-copy"><strong>리·이 · 리·이</strong><small>이할 · 오얏·성</small></span>
-            <span class="new-characters">利 · 李</span>
           </a>
           <a class="lesson-item" href="./076/">
             <span class="lesson-number">076</span>
-            <span class="lesson-term" aria-label="리·이 · 리·이 · 림·임">理里林</span>
+            <span class="lesson-term" aria-label="리·이 · 리·이 · 림·임">理 里 林</span>
             <span class="lesson-copy"><strong>리·이 · 리·이 · 림·임</strong><small>다스릴 · 마을 · 수풀</small></span>
-            <span class="new-characters">理 · 里 · 林</span>
           </a>
           <a class="lesson-item" href="./077/">
             <span class="lesson-number">077</span>
-            <span class="lesson-term" aria-label="립·입 · 매 · 면">立每面</span>
+            <span class="lesson-term" aria-label="립·입 · 매 · 면">立 每 面</span>
             <span class="lesson-copy"><strong>립·입 · 매 · 면</strong><small>설 · 매양 · 낯</small></span>
-            <span class="new-characters">立 · 每 · 面</span>
           </a>
           <a class="lesson-item" href="./078/">
             <span class="lesson-number">078</span>
-            <span class="lesson-term" aria-label="명 · 명 · 명">名命明</span>
+            <span class="lesson-term" aria-label="명 · 명 · 명">名 命 明</span>
             <span class="lesson-copy"><strong>명 · 명 · 명</strong><small>이름 · 목숨 · 밝을</small></span>
-            <span class="new-characters">名 · 命 · 明</span>
           </a>
           <a class="lesson-item" href="./079/">
             <span class="lesson-number">079</span>
-            <span class="lesson-term" aria-label="미 · 미 · 박">米美朴</span>
+            <span class="lesson-term" aria-label="미 · 미 · 박">米 美 朴</span>
             <span class="lesson-copy"><strong>미 · 미 · 박</strong><small>쌀 · 아름다울 · 성</small></span>
-            <span class="new-characters">米 · 美 · 朴</span>
           </a>
           <a class="lesson-item" href="./080/">
             <span class="lesson-number">080</span>
-            <span class="lesson-term" aria-label="반 · 반 · 발">半班發</span>
+            <span class="lesson-term" aria-label="반 · 반 · 발">半 班 發</span>
             <span class="lesson-copy"><strong>반 · 반 · 발</strong><small>반 · 나눌 · 필</small></span>
-            <span class="new-characters">半 · 班 · 發</span>
           </a>
           <a class="lesson-item" href="./081/">
             <span class="lesson-number">081</span>
-            <span class="lesson-term" aria-label="방 · 방 · 백">放方白</span>
+            <span class="lesson-term" aria-label="방 · 방 · 백">放 方 白</span>
             <span class="lesson-copy"><strong>방 · 방 · 백</strong><small>놓을 · 모 · 흰</small></span>
-            <span class="new-characters">放 · 方 · 白</span>
           </a>
           <a class="lesson-item" href="./082/">
             <span class="lesson-number">082</span>
-            <span class="lesson-term" aria-label="번 · 병 · 복">番病服</span>
+            <span class="lesson-term" aria-label="번 · 병 · 복">番 病 服</span>
             <span class="lesson-copy"><strong>번 · 병 · 복</strong><small>차례 · 병 · 옷</small></span>
-            <span class="new-characters">番 · 病 · 服</span>
           </a>
           <a class="lesson-item" href="./083/">
             <span class="lesson-number">083</span>
-            <span class="lesson-term" aria-label="본 · 부 · 부">本夫部</span>
+            <span class="lesson-term" aria-label="본 · 부 · 부">本 夫 部</span>
             <span class="lesson-copy"><strong>본 · 부 · 부</strong><small>근본 · 지아비 · 떼</small></span>
-            <span class="new-characters">本 · 夫 · 部</span>
           </a>
           <a class="lesson-item" href="./084/">
             <span class="lesson-number">084</span>
-            <span class="lesson-term" aria-label="불 · 사">不事</span>
+            <span class="lesson-term" aria-label="불 · 사">不 事</span>
             <span class="lesson-copy"><strong>불 · 사</strong><small>아닐 · 일</small></span>
-            <span class="new-characters">不 · 事</span>
           </a>
         </ol>
       </section>
@@ -564,87 +479,73 @@
         <ol class="lesson-list" id="stage-list-7" start="85" hidden>
           <a class="lesson-item" href="./085/">
             <span class="lesson-number">085</span>
-            <span class="lesson-term" aria-label="사 · 사 · 사">使死社</span>
+            <span class="lesson-term" aria-label="사 · 사 · 사">使 死 社</span>
             <span class="lesson-copy"><strong>사 · 사 · 사</strong><small>하여금·부릴 · 죽을 · 모일</small></span>
-            <span class="new-characters">使 · 死 · 社</span>
           </a>
           <a class="lesson-item" href="./086/">
             <span class="lesson-number">086</span>
-            <span class="lesson-term" aria-label="산 · 색">算色</span>
+            <span class="lesson-term" aria-label="산 · 색">算 色</span>
             <span class="lesson-copy"><strong>산 · 색</strong><small>셈 · 빛</small></span>
-            <span class="new-characters">算 · 色</span>
           </a>
           <a class="lesson-item" href="./087/">
             <span class="lesson-number">087</span>
-            <span class="lesson-term" aria-label="석 · 석 · 석">夕席石</span>
+            <span class="lesson-term" aria-label="석 · 석 · 석">夕 席 石</span>
             <span class="lesson-copy"><strong>석 · 석 · 석</strong><small>저녁 · 자리 · 돌</small></span>
-            <span class="new-characters">夕 · 席 · 石</span>
           </a>
           <a class="lesson-item" href="./088/">
             <span class="lesson-number">088</span>
-            <span class="lesson-term" aria-label="선 · 성">線姓</span>
+            <span class="lesson-term" aria-label="선 · 성">線 姓</span>
             <span class="lesson-copy"><strong>선 · 성</strong><small>줄 · 성</small></span>
-            <span class="new-characters">線 · 姓</span>
           </a>
           <a class="lesson-item" href="./089/">
             <span class="lesson-number">089</span>
-            <span class="lesson-term" aria-label="성 · 성·생 · 세">成省世</span>
+            <span class="lesson-term" aria-label="성 · 성·생 · 세">成 省 世</span>
             <span class="lesson-copy"><strong>성 · 성·생 · 세</strong><small>이룰 · 살필·덜 · 인간</small></span>
-            <span class="new-characters">成 · 省 · 世</span>
           </a>
           <a class="lesson-item" href="./090/">
             <span class="lesson-number">090</span>
-            <span class="lesson-term" aria-label="소 · 속 · 손">消速孫</span>
+            <span class="lesson-term" aria-label="소 · 속 · 손">消 速 孫</span>
             <span class="lesson-copy"><strong>소 · 속 · 손</strong><small>사라질 · 빠를 · 손자</small></span>
-            <span class="new-characters">消 · 速 · 孫</span>
           </a>
           <a class="lesson-item" href="./091/">
             <span class="lesson-number">091</span>
-            <span class="lesson-term" aria-label="수 · 수 · 술">數樹術</span>
+            <span class="lesson-term" aria-label="수 · 수 · 술">數 樹 術</span>
             <span class="lesson-copy"><strong>수 · 수 · 술</strong><small>셈 · 나무 · 재주</small></span>
-            <span class="new-characters">數 · 樹 · 術</span>
           </a>
           <a class="lesson-item" href="./092/">
             <span class="lesson-number">092</span>
-            <span class="lesson-term" aria-label="습 · 승 · 시">習勝始</span>
+            <span class="lesson-term" aria-label="습 · 승 · 시">習 勝 始</span>
             <span class="lesson-copy"><strong>습 · 승 · 시</strong><small>익힐 · 이길 · 비로소</small></span>
-            <span class="new-characters">習 · 勝 · 始</span>
           </a>
           <a class="lesson-item" href="./093/">
             <span class="lesson-number">093</span>
-            <span class="lesson-term" aria-label="식 · 식">式食</span>
+            <span class="lesson-term" aria-label="식 · 식">式 食</span>
             <span class="lesson-copy"><strong>식 · 식</strong><small>법 · 밥·먹을</small></span>
-            <span class="new-characters">式 · 食</span>
           </a>
           <a class="lesson-item" href="./094/">
             <span class="lesson-number">094</span>
-            <span class="lesson-term" aria-label="신 · 신 · 실">信神失</span>
+            <span class="lesson-term" aria-label="신 · 신 · 실">信 神 失</span>
             <span class="lesson-copy"><strong>신 · 신 · 실</strong><small>믿을 · 귀신 · 잃을</small></span>
-            <span class="new-characters">信 · 神 · 失</span>
           </a>
           <a class="lesson-item" href="./095/">
             <span class="lesson-number">095</span>
-            <span class="lesson-term" aria-label="안 · 애">安愛</span>
+            <span class="lesson-term" aria-label="안 · 애">安 愛</span>
             <span class="lesson-copy"><strong>안 · 애</strong><small>편안 · 사랑</small></span>
-            <span class="new-characters">安 · 愛</span>
           </a>
           <a class="lesson-item" href="./096/">
             <span class="lesson-number">096</span>
-            <span class="lesson-term" aria-label="야 · 야">夜野</span>
+            <span class="lesson-term" aria-label="야 · 야">夜 野</span>
             <span class="lesson-copy"><strong>야 · 야</strong><small>밤 · 들</small></span>
-            <span class="new-characters">夜 · 野</span>
           </a>
           <a class="lesson-item" href="./097/">
             <span class="lesson-number">097</span>
-            <span class="lesson-term" aria-label="약 · 약">弱藥</span>
+            <span class="lesson-term" aria-label="약 · 약">弱 藥</span>
             <span class="lesson-copy"><strong>약 · 약</strong><small>약할 · 약</small></span>
-            <span class="new-characters">弱 · 藥</span>
           </a>
           <a class="lesson-item" href="./098/">
             <span class="lesson-number">098</span>
-            <span class="lesson-term" aria-label="양 · 양 · 언">洋陽言</span>
+            <span class="lesson-term" aria-label="양 · 양 · 언">洋 陽 言</span>
             <span class="lesson-copy"><strong>양 · 양 · 언</strong><small>큰바다 · 볕 · 말씀</small></span>
-            <span class="new-characters">洋 · 陽 · 言</span>
           </a>
         </ol>
       </section>
@@ -656,87 +557,73 @@
         <ol class="lesson-list" id="stage-list-8" start="99" hidden>
           <a class="lesson-item" href="./099/">
             <span class="lesson-number">099</span>
-            <span class="lesson-term" aria-label="업 · 연">業然</span>
+            <span class="lesson-term" aria-label="업 · 연">業 然</span>
             <span class="lesson-copy"><strong>업 · 연</strong><small>업 · 그럴</small></span>
-            <span class="new-characters">業 · 然</span>
           </a>
           <a class="lesson-item" href="./100/">
             <span class="lesson-number">100</span>
-            <span class="lesson-term" aria-label="영 · 영 · 온">永英溫</span>
+            <span class="lesson-term" aria-label="영 · 영 · 온">永 英 溫</span>
             <span class="lesson-copy"><strong>영 · 영 · 온</strong><small>길 · 꽃부리 · 따뜻할</small></span>
-            <span class="new-characters">永 · 英 · 溫</span>
           </a>
           <a class="lesson-item" href="./101/">
             <span class="lesson-number">101</span>
-            <span class="lesson-term" aria-label="왕 · 용 · 용">王勇用</span>
+            <span class="lesson-term" aria-label="왕 · 용 · 용">王 勇 用</span>
             <span class="lesson-copy"><strong>왕 · 용 · 용</strong><small>임금 · 날랠 · 쓸</small></span>
-            <span class="new-characters">王 · 勇 · 用</span>
           </a>
           <a class="lesson-item" href="./102/">
             <span class="lesson-number">102</span>
-            <span class="lesson-term" aria-label="운 · 원 · 원">運園遠</span>
+            <span class="lesson-term" aria-label="운 · 원 · 원">運 園 遠</span>
             <span class="lesson-copy"><strong>운 · 원 · 원</strong><small>옮길 · 동산 · 멀</small></span>
-            <span class="new-characters">運 · 園 · 遠</span>
           </a>
           <a class="lesson-item" href="./103/">
             <span class="lesson-number">103</span>
-            <span class="lesson-term" aria-label="유 · 유 · 유">有油由</span>
+            <span class="lesson-term" aria-label="유 · 유 · 유">有 油 由</span>
             <span class="lesson-copy"><strong>유 · 유 · 유</strong><small>있을 · 기름 · 말미암을</small></span>
-            <span class="new-characters">有 · 油 · 由</span>
           </a>
           <a class="lesson-item" href="./104/">
             <span class="lesson-number">104</span>
-            <span class="lesson-term" aria-label="육 · 은 · 음">育銀飮</span>
+            <span class="lesson-term" aria-label="육 · 은 · 음">育 銀 飮</span>
             <span class="lesson-copy"><strong>육 · 은 · 음</strong><small>기를 · 은 · 마실</small></span>
-            <span class="new-characters">育 · 銀 · 飮</span>
           </a>
           <a class="lesson-item" href="./105/">
             <span class="lesson-number">105</span>
-            <span class="lesson-term" aria-label="읍 · 의">邑意</span>
+            <span class="lesson-term" aria-label="읍 · 의">邑 意</span>
             <span class="lesson-copy"><strong>읍 · 의</strong><small>고을 · 뜻</small></span>
-            <span class="new-characters">邑 · 意</span>
           </a>
           <a class="lesson-item" href="./106/">
             <span class="lesson-number">106</span>
-            <span class="lesson-term" aria-label="의 · 의 · 자">衣醫者</span>
+            <span class="lesson-term" aria-label="의 · 의 · 자">衣 醫 者</span>
             <span class="lesson-copy"><strong>의 · 의 · 자</strong><small>옷 · 의원 · 놈</small></span>
-            <span class="new-characters">衣 · 醫 · 者</span>
           </a>
           <a class="lesson-item" href="./107/">
             <span class="lesson-number">107</span>
-            <span class="lesson-term" aria-label="작 · 작 · 장">作昨章</span>
+            <span class="lesson-term" aria-label="작 · 작 · 장">作 昨 章</span>
             <span class="lesson-copy"><strong>작 · 작 · 장</strong><small>지을 · 어제 · 글</small></span>
-            <span class="new-characters">作 · 昨 · 章</span>
           </a>
           <a class="lesson-item" href="./108/">
             <span class="lesson-number">108</span>
-            <span class="lesson-term" aria-label="재 · 재">在才</span>
+            <span class="lesson-term" aria-label="재 · 재">在 才</span>
             <span class="lesson-copy"><strong>재 · 재</strong><small>있을 · 재주</small></span>
-            <span class="new-characters">在 · 才</span>
           </a>
           <a class="lesson-item" href="./109/">
             <span class="lesson-number">109</span>
-            <span class="lesson-term" aria-label="전 · 전 · 정">全戰定</span>
+            <span class="lesson-term" aria-label="전 · 전 · 정">全 戰 定</span>
             <span class="lesson-copy"><strong>전 · 전 · 정</strong><small>온전 · 싸움 · 정할</small></span>
-            <span class="new-characters">全 · 戰 · 定</span>
           </a>
           <a class="lesson-item" href="./110/">
             <span class="lesson-number">110</span>
-            <span class="lesson-term" aria-label="제 · 제 · 제">弟第題</span>
+            <span class="lesson-term" aria-label="제 · 제 · 제">弟 第 題</span>
             <span class="lesson-copy"><strong>제 · 제 · 제</strong><small>아우 · 차례 · 제목</small></span>
-            <span class="new-characters">弟 · 第 · 題</span>
           </a>
           <a class="lesson-item" href="./111/">
             <span class="lesson-number">111</span>
-            <span class="lesson-term" aria-label="조 · 조 · 족">朝祖族</span>
+            <span class="lesson-term" aria-label="조 · 조 · 족">朝 祖 族</span>
             <span class="lesson-copy"><strong>조 · 조 · 족</strong><small>아침 · 할아비 · 겨레</small></span>
-            <span class="new-characters">朝 · 祖 · 族</span>
           </a>
           <a class="lesson-item" href="./112/">
             <span class="lesson-number">112</span>
-            <span class="lesson-term" aria-label="주 · 주">主住</span>
+            <span class="lesson-term" aria-label="주 · 주">主 住</span>
             <span class="lesson-copy"><strong>주 · 주</strong><small>임금·주인 · 살</small></span>
-            <span class="new-characters">主 · 住</span>
           </a>
         </ol>
       </section>
@@ -748,87 +635,73 @@
         <ol class="lesson-list" id="stage-list-9" start="113" hidden>
           <a class="lesson-item" href="./113/">
             <span class="lesson-number">113</span>
-            <span class="lesson-term" aria-label="주 · 주 · 중">晝注重</span>
+            <span class="lesson-term" aria-label="주 · 주 · 중">晝 注 重</span>
             <span class="lesson-copy"><strong>주 · 주 · 중</strong><small>낮 · 부을 · 무거울</small></span>
-            <span class="new-characters">晝 · 注 · 重</span>
           </a>
           <a class="lesson-item" href="./114/">
             <span class="lesson-number">114</span>
-            <span class="lesson-term" aria-label="지 · 직 · 집">紙直集</span>
+            <span class="lesson-term" aria-label="지 · 직 · 집">紙 直 集</span>
             <span class="lesson-copy"><strong>지 · 직 · 집</strong><small>종이 · 곧을 · 모을</small></span>
-            <span class="new-characters">紙 · 直 · 集</span>
           </a>
           <a class="lesson-item" href="./115/">
             <span class="lesson-number">115</span>
-            <span class="lesson-term" aria-label="창 · 청 · 청">窓淸靑</span>
+            <span class="lesson-term" aria-label="창 · 청 · 청">窓 淸 靑</span>
             <span class="lesson-copy"><strong>창 · 청 · 청</strong><small>창 · 맑을 · 푸를</small></span>
-            <span class="new-characters">窓 · 淸 · 靑</span>
           </a>
           <a class="lesson-item" href="./116/">
             <span class="lesson-number">116</span>
-            <span class="lesson-term" aria-label="초 · 촌 · 친">草寸親</span>
+            <span class="lesson-term" aria-label="초 · 촌 · 친">草 寸 親</span>
             <span class="lesson-copy"><strong>초 · 촌 · 친</strong><small>풀 · 마디 · 친할</small></span>
-            <span class="new-characters">草 · 寸 · 親</span>
           </a>
           <a class="lesson-item" href="./117/">
             <span class="lesson-number">117</span>
-            <span class="lesson-term" aria-label="태 · 통 · 특">太通特</span>
+            <span class="lesson-term" aria-label="태 · 통 · 특">太 通 特</span>
             <span class="lesson-copy"><strong>태 · 통 · 특</strong><small>클 · 통할 · 특별할</small></span>
-            <span class="new-characters">太 · 通 · 特</span>
           </a>
           <a class="lesson-item" href="./118/">
             <span class="lesson-number">118</span>
-            <span class="lesson-term" aria-label="편·변 · 평 · 표">便平表</span>
+            <span class="lesson-term" aria-label="편·변 · 평 · 표">便 平 表</span>
             <span class="lesson-copy"><strong>편·변 · 평 · 표</strong><small>편할·똥오줌 · 평평할 · 겉</small></span>
-            <span class="new-characters">便 · 平 · 表</span>
           </a>
           <a class="lesson-item" href="./119/">
             <span class="lesson-number">119</span>
-            <span class="lesson-term" aria-label="한 · 한 · 합">漢韓合</span>
+            <span class="lesson-term" aria-label="한 · 한 · 합">漢 韓 合</span>
             <span class="lesson-copy"><strong>한 · 한 · 합</strong><small>한수·한나라 · 한국·나라 · 합할</small></span>
-            <span class="new-characters">漢 · 韓 · 合</span>
           </a>
           <a class="lesson-item" href="./120/">
             <span class="lesson-number">120</span>
-            <span class="lesson-term" aria-label="해 · 행 · 행·항">海幸行</span>
+            <span class="lesson-term" aria-label="해 · 행 · 행·항">海 幸 行</span>
             <span class="lesson-copy"><strong>해 · 행 · 행·항</strong><small>바다 · 다행 · 다닐·항렬</small></span>
-            <span class="new-characters">海 · 幸 · 行</span>
           </a>
           <a class="lesson-item" href="./121/">
             <span class="lesson-number">121</span>
-            <span class="lesson-term" aria-label="향 · 현">向現</span>
+            <span class="lesson-term" aria-label="향 · 현">向 現</span>
             <span class="lesson-copy"><strong>향 · 현</strong><small>향할 · 나타날</small></span>
-            <span class="new-characters">向 · 現</span>
           </a>
           <a class="lesson-item" href="./122/">
             <span class="lesson-number">122</span>
-            <span class="lesson-term" aria-label="형 · 형 · 호">兄形號</span>
+            <span class="lesson-term" aria-label="형 · 형 · 호">兄 形 號</span>
             <span class="lesson-copy"><strong>형 · 형 · 호</strong><small>형 · 모양 · 이름</small></span>
-            <span class="new-characters">兄 · 形 · 號</span>
           </a>
           <a class="lesson-item" href="./123/">
             <span class="lesson-number">123</span>
-            <span class="lesson-term" aria-label="화 · 화 · 화·획">和花畫</span>
+            <span class="lesson-term" aria-label="화 · 화 · 화·획">和 花 畫</span>
             <span class="lesson-copy"><strong>화 · 화 · 화·획</strong><small>화할 · 꽃 · 그림·그을</small></span>
-            <span class="new-characters">和 · 花 · 畫</span>
           </a>
           <a class="lesson-item" href="./124/">
             <span class="lesson-number">124</span>
-            <span class="lesson-term" aria-label="활 · 황 · 회">活黃會</span>
+            <span class="lesson-term" aria-label="활 · 황 · 회">活 黃 會</span>
             <span class="lesson-copy"><strong>활 · 황 · 회</strong><small>살 · 누를 · 모일</small></span>
-            <span class="new-characters">活 · 黃 · 會</span>
           </a>
           <a class="lesson-item" href="./125/">
             <span class="lesson-number">125</span>
-            <span class="lesson-term" aria-label="효 · 훈 · 휴">孝訓休</span>
+            <span class="lesson-term" aria-label="효 · 훈 · 휴">孝 訓 休</span>
             <span class="lesson-copy"><strong>효 · 훈 · 휴</strong><small>효도 · 가르칠 · 쉴</small></span>
-            <span class="new-characters">孝 · 訓 · 休</span>
           </a>
           <a class="lesson-item" href="./126/">
             <span class="lesson-number">126</span>
-            <span class="lesson-term" aria-label="상 · 상">商象</span>
+            <span class="lesson-term" aria-label="상 · 상">商 象</span>
             <span class="lesson-copy"><strong>상 · 상</strong><small>장사 · 코끼리</small></span>
-            <span class="new-characters">商 · 象</span>
           </a>
         </ol>
       </section>
@@ -840,87 +713,73 @@
         <ol class="lesson-list" id="stage-list-10" start="127" hidden>
           <a class="lesson-item" href="./127/">
             <span class="lesson-number">127</span>
-            <span class="lesson-term" aria-label="결 · 당 · 정">結當政</span>
+            <span class="lesson-term" aria-label="결 · 당 · 정">結 當 政</span>
             <span class="lesson-copy"><strong>결 · 당 · 정</strong><small>맺을 · 마땅 · 정사</small></span>
-            <span class="new-characters">結 · 當 · 政</span>
           </a>
           <a class="lesson-item" href="./128/">
             <span class="lesson-number">128</span>
-            <span class="lesson-term" aria-label="요 · 최 · 치">要最置</span>
+            <span class="lesson-term" aria-label="요 · 최 · 치">要 最 置</span>
             <span class="lesson-copy"><strong>요 · 최 · 치</strong><small>요긴할 · 가장 · 둘</small></span>
-            <span class="new-characters">要 · 最 · 置</span>
           </a>
           <a class="lesson-item" href="./129/">
             <span class="lesson-number">129</span>
-            <span class="lesson-term" aria-label="인 · 선 · 가">認選價</span>
+            <span class="lesson-term" aria-label="인 · 선 · 가">認 選 價</span>
             <span class="lesson-copy"><strong>인 · 선 · 가</strong><small>알 · 가릴 · 값</small></span>
-            <span class="new-characters">認 · 選 · 價</span>
           </a>
           <a class="lesson-item" href="./130/">
             <span class="lesson-number">130</span>
-            <span class="lesson-term" aria-label="사 · 실 · 설">査實設</span>
+            <span class="lesson-term" aria-label="사 · 실 · 설">査 實 設</span>
             <span class="lesson-copy"><strong>사 · 실 · 설</strong><small>조사할 · 열매 · 베풀</small></span>
-            <span class="new-characters">査 · 實 · 設</span>
           </a>
           <a class="lesson-item" href="./131/">
             <span class="lesson-number">131</span>
-            <span class="lesson-term" aria-label="정 · 원 · 준">程院準</span>
+            <span class="lesson-term" aria-label="정 · 원 · 준">程 院 準</span>
             <span class="lesson-copy"><strong>정 · 원 · 준</strong><small>한도·길 · 집 · 준할</small></span>
-            <span class="new-characters">程 · 院 · 準</span>
           </a>
           <a class="lesson-item" href="./132/">
             <span class="lesson-number">132</span>
-            <span class="lesson-term" aria-label="기 · 참 · 통">基參統</span>
+            <span class="lesson-term" aria-label="기 · 참 · 통">基 參 統</span>
             <span class="lesson-copy"><strong>기 · 참 · 통</strong><small>터 · 참여할 · 거느릴</small></span>
-            <span class="new-characters">基 · 參 · 統</span>
           </a>
           <a class="lesson-item" href="./133/">
             <span class="lesson-number">133</span>
-            <span class="lesson-term" aria-label="가 · 료·요 · 과">加料過</span>
+            <span class="lesson-term" aria-label="가 · 료·요 · 과">加 料 過</span>
             <span class="lesson-copy"><strong>가 · 료·요 · 과</strong><small>더할 · 헤아릴 · 지날</small></span>
-            <span class="new-characters">加 · 料 · 過</span>
           </a>
           <a class="lesson-item" href="./134/">
             <span class="lesson-number">134</span>
-            <span class="lesson-term" aria-label="능 · 경 · 기">能經機</span>
+            <span class="lesson-term" aria-label="능 · 경 · 기">能 經 機</span>
             <span class="lesson-copy"><strong>능 · 경 · 기</strong><small>능할 · 지날·글 · 틀</small></span>
-            <span class="new-characters">能 · 經 · 機</span>
           </a>
           <a class="lesson-item" href="./135/">
             <span class="lesson-number">135</span>
-            <span class="lesson-term" aria-label="험 · 약 · 거">驗約去</span>
+            <span class="lesson-term" aria-label="험 · 약 · 거">驗 約 去</span>
             <span class="lesson-copy"><strong>험 · 약 · 거</strong><small>시험 · 맺을 · 갈</small></span>
-            <span class="new-characters">驗 · 約 · 去</span>
           </a>
           <a class="lesson-item" href="./136/">
             <span class="lesson-number">136</span>
-            <span class="lesson-term" aria-label="성 · 원 · 지">性員指</span>
+            <span class="lesson-term" aria-label="성 · 원 · 지">性 員 指</span>
             <span class="lesson-copy"><strong>성 · 원 · 지</strong><small>성품 · 인원 · 가리킬</small></span>
-            <span class="new-characters">性 · 員 · 指</span>
           </a>
           <a class="lesson-item" href="./137/">
             <span class="lesson-number">137</span>
-            <span class="lesson-term" aria-label="감 · 관 · 완">監關完</span>
+            <span class="lesson-term" aria-label="감 · 관 · 완">監 關 完</span>
             <span class="lesson-copy"><strong>감 · 관 · 완</strong><small>볼 · 관계할 · 완전할</small></span>
-            <span class="new-characters">監 · 關 · 完</span>
           </a>
           <a class="lesson-item" href="./138/">
             <span class="lesson-number">138</span>
-            <span class="lesson-term" aria-label="위 · 해 · 예">委解豫</span>
+            <span class="lesson-term" aria-label="위 · 해 · 예">委 解 豫</span>
             <span class="lesson-copy"><strong>위 · 해 · 예</strong><small>맡길 · 풀 · 미리</small></span>
-            <span class="new-characters">委 · 解 · 豫</span>
           </a>
           <a class="lesson-item" href="./139/">
             <span class="lesson-number">139</span>
-            <span class="lesson-term" aria-label="상 · 경 · 규">想境規</span>
+            <span class="lesson-term" aria-label="상 · 경 · 규">想 境 規</span>
             <span class="lesson-copy"><strong>상 · 경 · 규</strong><small>생각 · 지경 · 법</small></span>
-            <span class="new-characters">想 · 境 · 規</span>
           </a>
           <a class="lesson-item" href="./140/">
             <span class="lesson-number">140</span>
-            <span class="lesson-term" aria-label="장 · 기 · 격">裝期格</span>
+            <span class="lesson-term" aria-label="장 · 기 · 격">裝 期 格</span>
             <span class="lesson-copy"><strong>장 · 기 · 격</strong><small>꾸밀 · 기약할 · 격식</small></span>
-            <span class="new-characters">裝 · 期 · 格</span>
           </a>
         </ol>
       </section>
@@ -932,87 +791,73 @@
         <ol class="lesson-list" id="stage-list-11" start="141" hidden>
           <a class="lesson-item" href="./141/">
             <span class="lesson-number">141</span>
-            <span class="lesson-term" aria-label="상 · 제 · 이">像提以</span>
+            <span class="lesson-term" aria-label="상 · 제 · 이">像 提 以</span>
             <span class="lesson-copy"><strong>상 · 제 · 이</strong><small>모양 · 끌 · 써</small></span>
-            <span class="new-characters">像 · 提 · 以</span>
           </a>
           <a class="lesson-item" href="./142/">
             <span class="lesson-number">142</span>
-            <span class="lesson-term" aria-label="제 · 진 · 해">制眞害</span>
+            <span class="lesson-term" aria-label="제 · 진 · 해">制 眞 害</span>
             <span class="lesson-copy"><strong>제 · 진 · 해</strong><small>절제할 · 참 · 해할</small></span>
-            <span class="new-characters">制 · 眞 · 害</span>
           </a>
           <a class="lesson-item" href="./143/">
             <span class="lesson-number">143</span>
-            <span class="lesson-term" aria-label="무 · 격 · 속">無擊續</span>
+            <span class="lesson-term" aria-label="무 · 격 · 속">無 擊 續</span>
             <span class="lesson-copy"><strong>무 · 격 · 속</strong><small>없을 · 칠 · 이을</small></span>
-            <span class="new-characters">無 · 擊 · 續</span>
           </a>
           <a class="lesson-item" href="./144/">
             <span class="lesson-number">144</span>
-            <span class="lesson-term" aria-label="영 · 보 · 장">營保張</span>
+            <span class="lesson-term" aria-label="영 · 보 · 장">營 保 張</span>
             <span class="lesson-copy"><strong>영 · 보 · 장</strong><small>경영할 · 지킬 · 베풀</small></span>
-            <span class="new-characters">營 · 保 · 張</span>
           </a>
           <a class="lesson-item" href="./145/">
             <span class="lesson-number">145</span>
-            <span class="lesson-term" aria-label="법 · 역 · 건">法域件</span>
+            <span class="lesson-term" aria-label="법 · 역 · 건">法 域 件</span>
             <span class="lesson-copy"><strong>법 · 역 · 건</strong><small>법 · 지경 · 물건</small></span>
-            <span class="new-characters">法 · 域 · 件</span>
           </a>
           <a class="lesson-item" href="./146/">
             <span class="lesson-number">146</span>
-            <span class="lesson-term" aria-label="도 · 제 · 상">導製常</span>
+            <span class="lesson-term" aria-label="도 · 제 · 상">導 製 常</span>
             <span class="lesson-copy"><strong>도 · 제 · 상</strong><small>인도할 · 지을 · 떳떳할</small></span>
-            <span class="new-characters">導 · 製 · 常</span>
           </a>
           <a class="lesson-item" href="./147/">
             <span class="lesson-number">147</span>
-            <span class="lesson-term" aria-label="자 · 초 · 소">資初素</span>
+            <span class="lesson-term" aria-label="자 · 초 · 소">資 初 素</span>
             <span class="lesson-copy"><strong>자 · 초 · 소</strong><small>재물 · 처음 · 본디·흴</small></span>
-            <span class="new-characters">資 · 初 · 素</span>
           </a>
           <a class="lesson-item" href="./148/">
             <span class="lesson-number">148</span>
-            <span class="lesson-term" aria-label="진 · 지 · 화">進持化</span>
+            <span class="lesson-term" aria-label="진 · 지 · 화">進 持 化</span>
             <span class="lesson-copy"><strong>진 · 지 · 화</strong><small>나아갈 · 가질 · 될</small></span>
-            <span class="new-characters">進 · 持 · 化</span>
           </a>
           <a class="lesson-item" href="./149/">
             <span class="lesson-number">149</span>
-            <span class="lesson-term" aria-label="증 · 권 · 위">證權危</span>
+            <span class="lesson-term" aria-label="증 · 권 · 위">證 權 危</span>
             <span class="lesson-copy"><strong>증 · 권 · 위</strong><small>증거 · 권세 · 위태할</small></span>
-            <span class="new-characters">證 · 權 · 危</span>
           </a>
           <a class="lesson-item" href="./150/">
             <span class="lesson-number">150</span>
-            <span class="lesson-term" aria-label="접 · 의 · 정">接議情</span>
+            <span class="lesson-term" aria-label="접 · 의 · 정">接 議 情</span>
             <span class="lesson-copy"><strong>접 · 의 · 정</strong><small>이을 · 의논할 · 뜻</small></span>
-            <span class="new-characters">接 · 議 · 情</span>
           </a>
           <a class="lesson-item" href="./151/">
             <span class="lesson-number">151</span>
-            <span class="lesson-term" aria-label="기 · 사 · 단">技士團</span>
+            <span class="lesson-term" aria-label="기 · 사 · 단">技 士 團</span>
             <span class="lesson-copy"><strong>기 · 사 · 단</strong><small>재주 · 선비 · 둥글</small></span>
-            <span class="new-characters">技 · 士 · 團</span>
           </a>
           <a class="lesson-item" href="./152/">
             <span class="lesson-number">152</span>
-            <span class="lesson-term" aria-label="건 · 고 · 확">建考確</span>
+            <span class="lesson-term" aria-label="건 · 고 · 확">建 考 確</span>
             <span class="lesson-copy"><strong>건 · 고 · 확</strong><small>세울 · 생각할 · 굳을</small></span>
-            <span class="new-characters">建 · 考 · 確</span>
           </a>
           <a class="lesson-item" href="./153/">
             <span class="lesson-number">153</span>
-            <span class="lesson-term" aria-label="검 · 직 · 식">檢職識</span>
+            <span class="lesson-term" aria-label="검 · 직 · 식">檢 職 識</span>
             <span class="lesson-copy"><strong>검 · 직 · 식</strong><small>검사할 · 직분 · 알</small></span>
-            <span class="new-characters">檢 · 職 · 識</span>
           </a>
           <a class="lesson-item" href="./154/">
             <span class="lesson-number">154</span>
-            <span class="lesson-term" aria-label="론 · 처 · 연">論處演</span>
+            <span class="lesson-term" aria-label="론 · 처 · 연">論 處 演</span>
             <span class="lesson-copy"><strong>론 · 처 · 연</strong><small>논할 · 곳 · 펼</small></span>
-            <span class="new-characters">論 · 處 · 演</span>
           </a>
         </ol>
       </section>
@@ -1024,87 +869,73 @@
         <ol class="lesson-list" id="stage-list-12" start="155" hidden>
           <a class="lesson-item" href="./155/">
             <span class="lesson-number">155</span>
-            <span class="lesson-term" aria-label="시 · 제 · 산">示除産</span>
+            <span class="lesson-term" aria-label="시 · 제 · 산">示 除 産</span>
             <span class="lesson-copy"><strong>시 · 제 · 산</strong><small>보일 · 덜 · 낳을</small></span>
-            <span class="new-characters">示 · 除 · 産</span>
           </a>
           <a class="lesson-item" href="./156/">
             <span class="lesson-number">156</span>
-            <span class="lesson-term" aria-label="이 · 상 · 류·유">移相類</span>
+            <span class="lesson-term" aria-label="이 · 상 · 류·유">移 相 類</span>
             <span class="lesson-copy"><strong>이 · 상 · 류·유</strong><small>옮길 · 서로 · 무리</small></span>
-            <span class="new-characters">移 · 相 · 類</span>
           </a>
           <a class="lesson-item" href="./157/">
             <span class="lesson-number">157</span>
-            <span class="lesson-term" aria-label="단 · 독 · 의">單獨疑</span>
+            <span class="lesson-term" aria-label="단 · 독 · 의">單 獨 疑</span>
             <span class="lesson-copy"><strong>단 · 독 · 의</strong><small>홑 · 홀로 · 의심할</small></span>
-            <span class="new-characters">單 · 獨 · 疑</span>
           </a>
           <a class="lesson-item" href="./158/">
             <span class="lesson-number">158</span>
-            <span class="lesson-term" aria-label="협 · 무 · 구">協務構</span>
+            <span class="lesson-term" aria-label="협 · 무 · 구">協 務 構</span>
             <span class="lesson-copy"><strong>협 · 무 · 구</strong><small>화할 · 힘쓸 · 얽을</small></span>
-            <span class="new-characters">協 · 務 · 構</span>
           </a>
           <a class="lesson-item" href="./159/">
             <span class="lesson-number">159</span>
-            <span class="lesson-term" aria-label="지 · 조 · 가">支造可</span>
+            <span class="lesson-term" aria-label="지 · 조 · 가">支 造 可</span>
             <span class="lesson-copy"><strong>지 · 조 · 가</strong><small>지탱할 · 지을 · 옳을</small></span>
-            <span class="new-characters">支 · 造 · 可</span>
           </a>
           <a class="lesson-item" href="./160/">
             <span class="lesson-number">160</span>
-            <span class="lesson-term" aria-label="위 · 우 · 치">位優治</span>
+            <span class="lesson-term" aria-label="위 · 우 · 치">位 優 治</span>
             <span class="lesson-copy"><strong>위 · 우 · 치</strong><small>자리 · 넉넉할 · 다스릴</small></span>
-            <span class="new-characters">位 · 優 · 治</span>
           </a>
           <a class="lesson-item" href="./161/">
             <span class="lesson-number">161</span>
-            <span class="lesson-term" aria-label="력·역 · 한 · 위">歷限圍</span>
+            <span class="lesson-term" aria-label="력·역 · 한 · 위">歷 限 圍</span>
             <span class="lesson-copy"><strong>력·역 · 한 · 위</strong><small>지날 · 한할 · 에워쌀</small></span>
-            <span class="new-characters">歷 · 限 · 圍</span>
           </a>
           <a class="lesson-item" href="./162/">
             <span class="lesson-number">162</span>
-            <span class="lesson-term" aria-label="품 · 상·장 · 관">品狀官</span>
+            <span class="lesson-term" aria-label="품 · 상·장 · 관">品 狀 官</span>
             <span class="lesson-copy"><strong>품 · 상·장 · 관</strong><small>물건 · 형상·문서 · 벼슬</small></span>
-            <span class="new-characters">品 · 狀 · 官</span>
           </a>
           <a class="lesson-item" href="./163/">
             <span class="lesson-number">163</span>
-            <span class="lesson-term" aria-label="지 · 보 · 시">志報視</span>
+            <span class="lesson-term" aria-label="지 · 보 · 시">志 報 視</span>
             <span class="lesson-copy"><strong>지 · 보 · 시</strong><small>뜻 · 갚을·알릴 · 볼</small></span>
-            <span class="new-characters">志 · 報 · 視</span>
           </a>
           <a class="lesson-item" href="./164/">
             <span class="lesson-number">164</span>
-            <span class="lesson-term" aria-label="살·쇄 · 록 · 달">殺錄達</span>
+            <span class="lesson-term" aria-label="살·쇄 · 록 · 달">殺 錄 達</span>
             <span class="lesson-copy"><strong>살·쇄 · 록 · 달</strong><small>죽일·감할·빠를 · 기록할 · 통달할</small></span>
-            <span class="new-characters">殺 · 錄 · 達</span>
           </a>
           <a class="lesson-item" href="./165/">
             <span class="lesson-number">165</span>
-            <span class="lesson-term" aria-label="시 · 결 · 설·세">施決說</span>
+            <span class="lesson-term" aria-label="시 · 결 · 설·세">施 決 說</span>
             <span class="lesson-copy"><strong>시 · 결 · 설·세</strong><small>베풀 · 결단할 · 말씀·달랠</small></span>
-            <span class="new-characters">施 · 決 · 說</span>
           </a>
           <a class="lesson-item" href="./166/">
             <span class="lesson-number">166</span>
-            <span class="lesson-term" aria-label="판 · 전 · 취">判傳取</span>
+            <span class="lesson-term" aria-label="판 · 전 · 취">判 傳 取</span>
             <span class="lesson-copy"><strong>판 · 전 · 취</strong><small>판단할 · 전할 · 가질</small></span>
-            <span class="new-characters">判 · 傳 · 取</span>
           </a>
           <a class="lesson-item" href="./167/">
             <span class="lesson-number">167</span>
-            <span class="lesson-term" aria-label="차 · 경 · 고">次競告</span>
+            <span class="lesson-term" aria-label="차 · 경 · 고">次 競 告</span>
             <span class="lesson-copy"><strong>차 · 경 · 고</strong><small>버금 · 다툴 · 고할</small></span>
-            <span class="new-characters">次 · 競 · 告</span>
           </a>
           <a class="lesson-item" href="./168/">
             <span class="lesson-number">168</span>
-            <span class="lesson-term" aria-label="여 · 태 · 추">與態推</span>
+            <span class="lesson-term" aria-label="여 · 태 · 추">與 態 推</span>
             <span class="lesson-copy"><strong>여 · 태 · 추</strong><small>더불·줄 · 모습 · 밀</small></span>
-            <span class="new-characters">與 · 態 · 推</span>
           </a>
         </ol>
       </section>
@@ -1116,87 +947,73 @@
         <ol class="lesson-list" id="stage-list-13" start="169" hidden>
           <a class="lesson-item" href="./169/">
             <span class="lesson-number">169</span>
-            <span class="lesson-term" aria-label="종 · 주 · 표">種週標</span>
+            <span class="lesson-term" aria-label="종 · 주 · 표">種 週 標</span>
             <span class="lesson-copy"><strong>종 · 주 · 표</strong><small>씨 · 주일 · 표할</small></span>
-            <span class="new-characters">種 · 週 · 標</span>
           </a>
           <a class="lesson-item" href="./170/">
             <span class="lesson-number">170</span>
-            <span class="lesson-term" aria-label="존 · 추 · 절">存追節</span>
+            <span class="lesson-term" aria-label="존 · 추 · 절">存 追 節</span>
             <span class="lesson-copy"><strong>존 · 추 · 절</strong><small>있을 · 쫓을·따를 · 마디</small></span>
-            <span class="new-characters">存 · 追 · 節</span>
           </a>
           <a class="lesson-item" href="./171/">
             <span class="lesson-number">171</span>
-            <span class="lesson-term" aria-label="종 · 의 · 리·이">終義離</span>
+            <span class="lesson-term" aria-label="종 · 의 · 리·이">終 義 離</span>
             <span class="lesson-copy"><strong>종 · 의 · 리·이</strong><small>마칠 · 옳을 · 떠날</small></span>
-            <span class="new-characters">終 · 義 · 離</span>
           </a>
           <a class="lesson-item" href="./172/">
             <span class="lesson-number">172</span>
-            <span class="lesson-term" aria-label="찰 · 관 · 투">察觀投</span>
+            <span class="lesson-term" aria-label="찰 · 관 · 투">察 觀 投</span>
             <span class="lesson-copy"><strong>찰 · 관 · 투</strong><small>살필 · 볼 · 던질</small></span>
-            <span class="new-characters">察 · 觀 · 投</span>
           </a>
           <a class="lesson-item" href="./173/">
             <span class="lesson-number">173</span>
-            <span class="lesson-term" aria-label="전 · 단 · 제">專斷濟</span>
+            <span class="lesson-term" aria-label="전 · 단 · 제">專 斷 濟</span>
             <span class="lesson-copy"><strong>전 · 단 · 제</strong><small>오로지 · 끊을 · 건널</small></span>
-            <span class="new-characters">專 · 斷 · 濟</span>
           </a>
           <a class="lesson-item" href="./174/">
             <span class="lesson-number">174</span>
-            <span class="lesson-term" aria-label="지 · 비 · 인">知備引</span>
+            <span class="lesson-term" aria-label="지 · 비 · 인">知 備 引</span>
             <span class="lesson-copy"><strong>지 · 비 · 인</strong><small>알 · 갖출 · 끌</small></span>
-            <span class="new-characters">知 · 備 · 引</span>
           </a>
           <a class="lesson-item" href="./175/">
             <span class="lesson-number">175</span>
-            <span class="lesson-term" aria-label="변 · 응 · 쟁">變應爭</span>
+            <span class="lesson-term" aria-label="변 · 응 · 쟁">變 應 爭</span>
             <span class="lesson-copy"><strong>변 · 응 · 쟁</strong><small>변할 · 응할 · 다툴</small></span>
-            <span class="new-characters">變 · 應 · 爭</span>
           </a>
           <a class="lesson-item" href="./176/">
             <span class="lesson-number">176</span>
-            <span class="lesson-term" aria-label="원 · 점 · 지">援點止</span>
+            <span class="lesson-term" aria-label="원 · 점 · 지">援 點 止</span>
             <span class="lesson-copy"><strong>원 · 점 · 지</strong><small>도울 · 점 · 그칠</small></span>
-            <span class="new-characters">援 · 點 · 止</span>
           </a>
           <a class="lesson-item" href="./177/">
             <span class="lesson-number">177</span>
-            <span class="lesson-term" aria-label="관 · 변 · 가">館邊假</span>
+            <span class="lesson-term" aria-label="관 · 변 · 가">館 邊 假</span>
             <span class="lesson-copy"><strong>관 · 변 · 가</strong><small>집 · 가 · 거짓</small></span>
-            <span class="new-characters">館 · 邊 · 假</span>
           </a>
           <a class="lesson-item" href="./178/">
             <span class="lesson-number">178</span>
-            <span class="lesson-term" aria-label="혁 · 률·솔·율 · 선">革率善</span>
+            <span class="lesson-term" aria-label="혁 · 률·솔·율 · 선">革 率 善</span>
             <span class="lesson-copy"><strong>혁 · 률·솔·율 · 선</strong><small>가죽 · 비율·거느릴 · 착할</small></span>
-            <span class="new-characters">革 · 率 · 善</span>
           </a>
           <a class="lesson-item" href="./179/">
             <span class="lesson-number">179</span>
-            <span class="lesson-term" aria-label="용 · 영 · 경">容映警</span>
+            <span class="lesson-term" aria-label="용 · 영 · 경">容 映 警</span>
             <span class="lesson-copy"><strong>용 · 영 · 경</strong><small>얼굴 · 비칠 · 깨우칠</small></span>
-            <span class="new-characters">容 · 映 · 警</span>
           </a>
           <a class="lesson-item" href="./180/">
             <span class="lesson-number">180</span>
-            <span class="lesson-term" aria-label="예 · 통 · 서">藝痛署</span>
+            <span class="lesson-term" aria-label="예 · 통 · 서">藝 痛 署</span>
             <span class="lesson-copy"><strong>예 · 통 · 서</strong><small>재주 · 아플 · 마을</small></span>
-            <span class="new-characters">藝 · 痛 · 署</span>
           </a>
           <a class="lesson-item" href="./181/">
             <span class="lesson-number">181</span>
-            <span class="lesson-term" aria-label="부 · 조 · 노·로">否助勞</span>
+            <span class="lesson-term" aria-label="부 · 조 · 노·로">否 助 勞</span>
             <span class="lesson-copy"><strong>부 · 조 · 노·로</strong><small>아닐 · 도울 · 일할</small></span>
-            <span class="new-characters">否 · 助 · 勞</span>
           </a>
           <a class="lesson-item" href="./182/">
             <span class="lesson-number">182</span>
-            <span class="lesson-term" aria-label="조 · 청 · 원">調請原</span>
+            <span class="lesson-term" aria-label="조 · 청 · 원">調 請 原</span>
             <span class="lesson-copy"><strong>조 · 청 · 원</strong><small>고를 · 청할 · 언덕</small></span>
-            <span class="new-characters">調 · 請 · 原</span>
           </a>
         </ol>
       </section>
@@ -1208,87 +1025,73 @@
         <ol class="lesson-list" id="stage-list-14" start="183" hidden>
           <a class="lesson-item" href="./183/">
             <span class="lesson-number">183</span>
-            <span class="lesson-term" aria-label="책 · 단 · 착">策段着</span>
+            <span class="lesson-term" aria-label="책 · 단 · 착">策 段 着</span>
             <span class="lesson-copy"><strong>책 · 단 · 착</strong><small>꾀 · 층계 · 붙을</small></span>
-            <span class="new-characters">策 · 段 · 着</span>
           </a>
           <a class="lesson-item" href="./184/">
             <span class="lesson-number">184</span>
-            <span class="lesson-term" aria-label="려·여 · 복·부 · 비">慮復比</span>
+            <span class="lesson-term" aria-label="려·여 · 복·부 · 비">慮 復 比</span>
             <span class="lesson-copy"><strong>려·여 · 복·부 · 비</strong><small>생각할 · 회복할·다시 · 견줄</small></span>
-            <span class="new-characters">慮 · 復 · 比</span>
           </a>
           <a class="lesson-item" href="./185/">
             <span class="lesson-number">185</span>
-            <span class="lesson-term" aria-label="요 · 담 · 전">曜談展</span>
+            <span class="lesson-term" aria-label="요 · 담 · 전">曜 談 展</span>
             <span class="lesson-copy"><strong>요 · 담 · 전</strong><small>빛날 · 말씀 · 펼</small></span>
-            <span class="new-characters">曜 · 談 · 展</span>
           </a>
           <a class="lesson-item" href="./186/">
             <span class="lesson-number">186</span>
-            <span class="lesson-term" aria-label="개 · 득 · 정">改得整</span>
+            <span class="lesson-term" aria-label="개 · 득 · 정">改 得 整</span>
             <span class="lesson-copy"><strong>개 · 득 · 정</strong><small>고칠 · 얻을 · 가지런할</small></span>
-            <span class="new-characters">改 · 得 · 整</span>
           </a>
           <a class="lesson-item" href="./187/">
             <span class="lesson-number">187</span>
-            <span class="lesson-term" aria-label="총 · 호 · 사">總護師</span>
+            <span class="lesson-term" aria-label="총 · 호 · 사">總 護 師</span>
             <span class="lesson-copy"><strong>총 · 호 · 사</strong><small>다 · 도울 · 스승</small></span>
-            <span class="new-characters">總 · 護 · 師</span>
           </a>
           <a class="lesson-item" href="./188/">
             <span class="lesson-number">188</span>
-            <span class="lesson-term" aria-label="수 · 방 · 악·오">收防惡</span>
+            <span class="lesson-term" aria-label="수 · 방 · 악·오">收 防 惡</span>
             <span class="lesson-copy"><strong>수 · 방 · 악·오</strong><small>거둘 · 막을 · 악할·미워할</small></span>
-            <span class="new-characters">收 · 防 · 惡</span>
           </a>
           <a class="lesson-item" href="./189/">
             <span class="lesson-number">189</span>
-            <span class="lesson-term" aria-label="재 · 대 · 성">財隊星</span>
+            <span class="lesson-term" aria-label="재 · 대 · 성">財 隊 星</span>
             <span class="lesson-copy"><strong>재 · 대 · 성</strong><small>재물 · 무리 · 별</small></span>
-            <span class="new-characters">財 · 隊 · 星</span>
           </a>
           <a class="lesson-item" href="./190/">
             <span class="lesson-number">190</span>
-            <span class="lesson-term" aria-label="반 · 류·유 · 기">盤流器</span>
+            <span class="lesson-term" aria-label="반 · 류·유 · 기">盤 流 器</span>
             <span class="lesson-copy"><strong>반 · 류·유 · 기</strong><small>소반 · 흐를 · 그릇</small></span>
-            <span class="new-characters">盤 · 流 · 器</span>
           </a>
           <a class="lesson-item" href="./191/">
             <span class="lesson-number">191</span>
-            <span class="lesson-term" aria-label="이 · 개 · 험">異個險</span>
+            <span class="lesson-term" aria-label="이 · 개 · 험">異 個 險</span>
             <span class="lesson-copy"><strong>이 · 개 · 험</strong><small>다를 · 낱 · 험할</small></span>
-            <span class="new-characters">異 · 個 · 險</span>
           </a>
           <a class="lesson-item" href="./192/">
             <span class="lesson-number">192</span>
-            <span class="lesson-term" aria-label="배 · 부 · 미">配婦味</span>
+            <span class="lesson-term" aria-label="배 · 부 · 미">配 婦 味</span>
             <span class="lesson-copy"><strong>배 · 부 · 미</strong><small>나눌·짝 · 며느리 · 맛</small></span>
-            <span class="new-characters">配 · 婦 · 味</span>
           </a>
           <a class="lesson-item" href="./193/">
             <span class="lesson-number">193</span>
-            <span class="lesson-term" aria-label="구 · 인 · 적">求因適</span>
+            <span class="lesson-term" aria-label="구 · 인 · 적">求 因 適</span>
             <span class="lesson-copy"><strong>구 · 인 · 적</strong><small>구할 · 인할 · 맞을</small></span>
-            <span class="new-characters">求 · 因 · 適</span>
           </a>
           <a class="lesson-item" href="./194/">
             <span class="lesson-number">194</span>
-            <span class="lesson-term" aria-label="포·폭 · 흥 · 치">暴興致</span>
+            <span class="lesson-term" aria-label="포·폭 · 흥 · 치">暴 興 致</span>
             <span class="lesson-copy"><strong>포·폭 · 흥 · 치</strong><small>사나울·모질 · 일 · 이를</small></span>
-            <span class="new-characters">暴 · 興 · 致</span>
           </a>
           <a class="lesson-item" href="./195/">
             <span class="lesson-number">195</span>
-            <span class="lesson-term" aria-label="사 · 질 · 유">寫質遺</span>
+            <span class="lesson-term" aria-label="사 · 질 · 유">寫 質 遺</span>
             <span class="lesson-copy"><strong>사 · 질 · 유</strong><small>베낄 · 바탕 · 남길</small></span>
-            <span class="new-characters">寫 · 質 · 遺</span>
           </a>
           <a class="lesson-item" href="./196/">
             <span class="lesson-number">196</span>
-            <span class="lesson-term" aria-label="비 · 칙 · 우">費則憂</span>
+            <span class="lesson-term" aria-label="비 · 칙 · 우">費 則 憂</span>
             <span class="lesson-copy"><strong>비 · 칙 · 우</strong><small>쓸 · 법칙 · 근심</small></span>
-            <span class="new-characters">費 · 則 · 憂</span>
           </a>
         </ol>
-      </section></section></main><audio id="bgm" preload="metadata" loop aria-label="달빛 서재 배경음악"><source src="../assets/audio/moonlit-library.ogg" type="audio/ogg"><source src="../assets/audio/moonlit-library.m4a" type="audio/mp4"></audio><script>document.querySelectorAll('.stage-toggle').forEach((button)=>button.addEventListener('click',()=>{const list=document.getElementById(button.getAttribute('aria-controls'));const expanded=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!expanded));list.toggleAttribute('hidden',expanded)}));</script><script src="../../../../assets/sound/music-control.js?v=20260825-compact-vertical-1"></script></body></html>
+      </section></section></main><script>document.querySelectorAll('.stage-toggle').forEach((button)=>button.addEventListener('click',()=>{const list=document.getElementById(button.getAttribute('aria-controls'));const expanded=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!expanded));list.toggleAttribute('hidden',expanded)}));</script></body></html>
