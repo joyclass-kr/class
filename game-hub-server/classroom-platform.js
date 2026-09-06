@@ -3804,6 +3804,25 @@ function createClassroomPlatform(options = {}) {
       [schoolId, year]
     );
 
+    // 2b. 추가 그룹은 학교 관리자가 전교생 명단에 만든 열에서 온다.
+    //     열(동아리)마다 값(오케스트라·로봇코딩부…)이 있고, 그 값 하나하나가 그룹이다.
+    //     교사가 따로 개설한 그룹만 보여 주면 관리자가 만든 열이 통째로 빠진다.
+    const optionsRes = await pool.query(
+      `SELECT c.column_name, o.option_name,
+              (SELECT COUNT(*)::INTEGER
+                 FROM school_students ss
+                WHERE ss.school_id = c.school_id AND ss.academic_year = c.academic_year
+                  AND (jsonb_exists(ss.custom_fields, o.option_name)
+                       OR EXISTS (SELECT 1 FROM jsonb_each_text(ss.custom_fields) f
+                                  WHERE f.value = o.option_name))
+              ) AS student_count
+       FROM school_roster_columns c
+       JOIN school_roster_column_options o ON o.column_id = c.id
+       WHERE c.school_id = $1 AND c.academic_year = $2
+       ORDER BY c.sort_order, c.column_name, o.sort_order, o.option_name`,
+      [schoolId, year]
+    );
+
     // 3. All Students & Guardians from school_students
     const studentsRes = await pool.query(
       `SELECT s.id::TEXT AS student_id, s.grade, s.class_number, s.student_number, s.roster_name AS name,
@@ -3814,9 +3833,26 @@ function createClassroomPlatform(options = {}) {
       [schoolId, year]
     );
 
+    // 열별로 묶어 내려 준다. 화면에서 '동아리 > 오케스트라'처럼 접어 보여 주기 위해서.
+    const columns = [];
+    for (const row of optionsRes.rows) {
+      let column = columns.find(c => c.name === row.column_name);
+      if (!column) {
+        column = { name: row.column_name, options: [] };
+        columns.push(column);
+      }
+      column.options.push({ name: row.option_name, studentCount: Number(row.student_count) });
+    }
+
+    // 명단 열에 없는데 교사가 따로 개설한 그룹은 그대로 남긴다. 없애면 그 그룹에만
+    // 사람이 담겨 있던 경우에 보낼 길이 사라진다.
+    const optionNames = new Set(optionsRes.rows.map(r => r.option_name));
+    const extraGroups = groupsRes.rows.filter(g => !optionNames.has(g.group_name));
+
     res.json({
       classes: classesRes.rows,
-      groups: groupsRes.rows,
+      columns,
+      groups: extraGroups,
       students: studentsRes.rows
     });
   }));

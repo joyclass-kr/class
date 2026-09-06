@@ -536,7 +536,10 @@
 
         // What this notice asks of guardians: 'none' | 'confirm' | 'agree'.
         let noticeReplyType = 'none';
-        let rawAddressBook = { classes: [], groups: [], students: [] };
+        let rawAddressBook = { classes: [], columns: [], groups: [], students: [] };
+        // 명단 열의 값들을 한 줄로 펴 둔다. 나무의 체크상자가 이름 대신 이 번호를
+        // 쓰게 해서, 항목 이름에 따옴표가 들어가도 깨지지 않게 한다.
+        let abOptions = [];
         let selectedTargets = [];
 
         function switchNoticeCategory(cat, btn) {
@@ -613,6 +616,8 @@
                     const res = await fetch('/api/teacher/addressbook');
                     if (res.ok) {
                         rawAddressBook = await res.json();
+                        abOptions = (rawAddressBook.columns || []).flatMap(col =>
+                            col.options.map(o => ({ column: col.name, name: o.name })));
                     }
                 } catch(e) { console.error('Addressbook fetch failed:', e); }
             }
@@ -644,7 +649,28 @@
                 const group = (rawAddressBook.groups || []).find(x => String(x.id) === id);
                 return group ? all.filter(s => inGroup(s, group)) : [];
             }
+            // 명단 열의 값 하나(동아리 > 오케스트라). 열 전체(OPTCOL_)를 고르면
+            // 그 열에 값이 적힌 학생 전부.
+            if (key.startsWith('OPT_')) {
+                const opt = abOptions[Number(key.slice('OPT_'.length))];
+                return opt ? all.filter(s => hasOption(s, opt.name)) : [];
+            }
+            if (key.startsWith('OPTCOL_')) {
+                const column = (rawAddressBook.columns || [])[Number(key.slice('OPTCOL_'.length))];
+                if (!column) return [];
+                return all.filter(s => column.options.some(o => hasOption(s, o.name)));
+            }
             return [];
+        }
+
+        // 명단 열의 값이 이 학생에게 적혀 있는지. 학교마다 명단을 두 모양으로 쓴다.
+        //   1) 열 하나에 값 적기:  {"동아리": "오케스트라"}  -> 값이 항목 이름
+        //   2) 항목마다 열 하나:   {"오케스트라": "O"}       -> 열 이름이 항목 이름
+        // 칸이 여러 개인 열은 열 이름 뒤에 표가 붙지만(방과후①), 값은 그대로다.
+        function hasOption(student, optionName) {
+            const fields = student.custom_fields || {};
+            if (Object.prototype.hasOwnProperty.call(fields, optionName)) return true;
+            return Object.values(fields).some(v => String(v) === optionName);
         }
 
         // 다 담겼는지, 일부만인지, 하나도 아닌지.
@@ -719,8 +745,24 @@
                 });
             });
 
+            // 추가 그룹은 학교 관리자가 전교생 명단에 만든 열에서 온다.
+            const columns = rawAddressBook.columns || [];
+            if (columns.length > 0) {
+                html += `<div style="font-weight:bold; color:var(--green); margin:10px 0 4px; font-size:12px;">📌 추가 그룹 (명단 열)</div>`;
+                columns.forEach((col, ci) => {
+                    const total = col.options.reduce((sum, o) => sum + (o.studentCount || 0), 0);
+                    html += treeRow(`OPTCOL_${ci}`, `📁 ${col.name} (${total}명)`, 6, '#ffe8b3');
+                    col.options.forEach(o => {
+                        const idx = abOptions.findIndex(x => x.column === col.name && x.name === o.name);
+                        html += treeRow(`OPT_${idx}`,
+                            `└ ${o.name} (${o.studentCount || 0}명)`, 20, '#ccc');
+                    });
+                });
+            }
+
+            // 명단 열에 없는데 교사가 따로 개설한 그룹.
             if (rawAddressBook.groups && rawAddressBook.groups.length > 0) {
-                html += `<div style="font-weight:bold; color:var(--green); margin:10px 0 4px; font-size:12px;">📌 추가 그룹</div>`;
+                html += `<div style="font-weight:bold; color:var(--green); margin:10px 0 4px; font-size:12px;">👥 그 밖의 그룹</div>`;
                 rawAddressBook.groups.forEach(gr => {
                     html += treeRow(`GROUP_${gr.id}`,
                         `${gr.group_name} (${gr.student_count || 0}명)`, 6, '#ffe8b3');
