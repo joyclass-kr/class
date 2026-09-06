@@ -479,3 +479,53 @@ body::before {
         flex-basis: 100%;
     }
 }
+
+/* 가정통신문 카드. 알림장 글과 같은 흐름에 서지만 한눈에 구별돼야 한다. */
+.notice-card { border-left: 3px solid var(--accent); }
+.notice-kind { background: rgba(77, 166, 255, 0.18); color: var(--accent); }
+.notice-content { white-space: normal; }
+.notice-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; }
+.notice-body { white-space: pre-wrap; word-break: break-word; }
+.notice-hint { color: var(--text-muted); font-size: 0.85rem; }
+
+/* 회신 칸 */
+.reply-slot:empty { display: none; }
+.reply-box {
+    margin: 0 1.5rem 1.25rem;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+}
+.reply-need { margin: 0 0 0.7rem; font-weight: 700; color: #ffcf7c; font-size: 0.9rem; }
+.reply-waiting { color: #ffcf7c; font-weight: 700; font-size: 0.9rem; }
+.reply-done { color: #75d69f; font-weight: 700; font-size: 0.9rem; }
+.reply-box.replied { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.reply-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* 설문 문항 */
+.survey-q { margin-bottom: 1rem; }
+.survey-q-title { margin: 0 0 0.5rem; font-weight: 700; font-size: 0.95rem; }
+.survey-required { color: var(--danger); font-size: 0.8rem; }
+.survey-option { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; cursor: pointer; }
+.survey-option input { width: 18px; height: 18px; margin: 0; }
+.survey-text {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: #fff;
+    padding: 0.6rem 0.8rem;
+    font-family: inherit;
+    resize: vertical;
+}
+
+/* 아직 답하지 않은 것이 몇 개인지 알려 주는 거르개 */
+.filter-chip-todo { border-color: var(--danger); color: #ff9d9d; }
+.filter-chip-todo.active { background: var(--danger); border-color: var(--danger); color: #fff; }
+.filter-divider {
+    width: 1px;
+    align-self: stretch;
+    margin: 2px 4px;
+    background: var(--border-color);
+}

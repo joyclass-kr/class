@@ -19,7 +19,13 @@ let activeBoardKey = null;
 let canPost = false;
 // 과목별 보기. null이면 전체.
 let activeSubjectFilter = null;
+// 종류별 보기: null(전체) | 'post'(알림장) | 'notice'(가정통신문) | 'todo'(할 일)
+let activeKindFilter = null;
 let loadedPosts = [];
+// 같은 흐름에 함께 서는 가정통신문. 학급 게시판에만 있다.
+let loadedNotices = [];
+// 'student' | 'guardian' | 'teacher'. 무엇을 누를 수 있는지가 여기서 갈린다.
+let viewerRole = 'student';
 
 // Utility: Autolink URL conversion
 function linkify(text) {
@@ -56,13 +62,25 @@ async function initApp() {
         }
 
         currentUser = data.user;
+        // 보호자 계정은 명단에 자녀가 걸려 있는 사람이다. role 만으로는 못 가른다.
+        const hasChildren = Array.isArray(data.guardianChildren) && data.guardianChildren.length > 0;
+        viewerRole = data.isTeacher ? 'teacher' : (hasChildren && !data.membership ? 'guardian' : 'student');
 
         // Setup Header
         userInfoEl.textContent = '';
+        const roleLabel = { teacher: '교사', guardian: '학부모', student: '학생' }[viewerRole];
         const nameLabel = document.createElement('span');
-        nameLabel.textContent = `${currentUser.name} (${currentUser.role === 'teacher' ? '교사' : '학생'})`;
+        nameLabel.textContent = `${currentUser.name} (${roleLabel})`;
         userInfoEl.appendChild(nameLabel);
-        if (currentUser.role === 'student') {
+        if (viewerRole === 'guardian') {
+            // 결석계·체험학습 같은 서류는 아직 학부모 쪽 화면에 있다.
+            const formsLink = document.createElement('a');
+            formsLink.href = '/notice/';
+            formsLink.className = 'settings-link';
+            formsLink.innerHTML = '<span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle;">description</span> 서류 내기';
+            userInfoEl.appendChild(formsLink);
+        }
+        if (viewerRole === 'student') {
             const settingsLink = document.createElement('a');
             settingsLink.href = '/classtools/profile.html';
             settingsLink.className = 'settings-link';
@@ -148,43 +166,70 @@ function updateComposerTarget() {
     composerSection.classList.toggle('hidden', !(target && target.canPost));
 }
 
-// 한 게시판에 담임과 여러 전담이 함께 쓰므로, 누가 쓴 글만 볼지 고를 수 있게 한다.
+// 거르개 두 줄이 한 줄에 있다.
+//   앞: 종류 — 전체 / 알림장 / 가정통신문 / 할 일
+//   뒤: 누가 썼는지 — 담임, 과목 전담들 (한 게시판에 여럿이 쓰니까)
 function renderFilters() {
-    const labels = [...new Set(loadedPosts.map(p => p.authorLabel).filter(Boolean))];
-    if (labels.length < 2) {
-        filterSection.classList.add('hidden');
-        filterSection.replaceChildren();
-        return;
-    }
-    filterSection.classList.remove('hidden');
-    filterSection.replaceChildren(...['전체', ...labels].map(label => {
+    const chips = [];
+    const add = (label, active, onClick, extraClass) => {
         const btn = document.createElement('button');
-        btn.className = 'filter-chip';
-        const isActive = label === '전체' ? activeSubjectFilter === null : activeSubjectFilter === label;
-        if (isActive) btn.classList.add('active');
+        btn.className = 'filter-chip' + (extraClass ? ` ${extraClass}` : '');
+        if (active) btn.classList.add('active');
         btn.textContent = label;
-        btn.addEventListener('click', () => {
-            activeSubjectFilter = label === '전체' ? null : label;
+        btn.addEventListener('click', onClick);
+        chips.push(btn);
+    };
+
+    const todoCount = loadedNotices.filter(n => NoticeCard.needsAction(n, viewerRole)).length;
+    // 알림장과 가정통신문이 섞여 있을 때만 종류를 나눌 뜻이 있다.
+    if (loadedNotices.length > 0 && loadedPosts.length > 0) {
+        add('전체', activeKindFilter === null, () => { activeKindFilter = null; renderFeed(); });
+        add('알림장', activeKindFilter === 'post', () => { activeKindFilter = 'post'; renderFeed(); });
+        add('가정통신문', activeKindFilter === 'notice', () => { activeKindFilter = 'notice'; renderFeed(); });
+    }
+    if (todoCount > 0) {
+        add(`할 일 ${todoCount}`, activeKindFilter === 'todo',
+            () => { activeKindFilter = activeKindFilter === 'todo' ? null : 'todo'; renderFeed(); },
+            'filter-chip-todo');
+    }
+
+    // 선생님 이름표는 한 번 더 누르면 풀린다. '전체' 칩을 또 두면 위의 것과
+    // 나란히 놓여 어느 쪽 전체인지 알 수 없다.
+    const labels = [...new Set(loadedPosts.map(p => p.authorLabel).filter(Boolean))];
+    if (labels.length >= 2 && activeKindFilter !== 'notice' && activeKindFilter !== 'todo') {
+        if (chips.length > 0) {
+            const divider = document.createElement('span');
+            divider.className = 'filter-divider';
+            chips.push(divider);
+        }
+        labels.forEach(label => add(label, activeSubjectFilter === label, () => {
+            activeSubjectFilter = activeSubjectFilter === label ? null : label;
             renderFeed();
-        });
-        return btn;
-    }));
+        }));
+    } else if (activeSubjectFilter) {
+        activeSubjectFilter = null;
+    }
+
+    filterSection.classList.toggle('hidden', chips.length === 0);
+    filterSection.replaceChildren(...chips);
 }
 
 async function loadPosts() {
+    const board = boards.find(b => b.key === activeBoardKey);
     try {
         const query = activeBoardKey ? `?board=${encodeURIComponent(activeBoardKey)}` : '';
-        const res = await fetch(`${API_BASE}/classboard/posts${query}`);
-        const data = await res.json();
-
-        if (!res.ok) throw new Error(data.error || 'Failed to load posts');
+        const [postsRes, notices] = await Promise.all([
+            fetch(`${API_BASE}/classboard/posts${query}`),
+            loadNotices(board)
+        ]);
+        const data = await postsRes.json();
+        if (!postsRes.ok) throw new Error(data.error || 'Failed to load posts');
 
         loadedPosts = data.posts || [];
-        renderFilters();
+        loadedNotices = notices;
         renderFeed();
 
         // 방금 이 게시판을 읽었으니 표시를 지운다.
-        const board = boards.find(b => b.key === activeBoardKey);
         if (board && board.unreadCount) {
             board.unreadCount = 0;
             renderBoardPicker();
@@ -195,20 +240,72 @@ async function loadPosts() {
     }
 }
 
+// 가정통신문은 학급으로 오지 동아리로 오지 않는다. 학부모는 어느 아이 것인지
+// 함께 보내고, 학생 본인은 서버가 알아서 자기 것을 찾는다.
+async function loadNotices(board) {
+    if (!board || board.kind !== 'class' || !board.hasNotices) return [];
+    try {
+        const params = new URLSearchParams();
+        if (board.child) {
+            params.set('grade', board.child.grade);
+            params.set('classNumber', board.child.classNumber);
+            params.set('studentNumber', board.child.studentNumber);
+        }
+        const qs = params.toString();
+        const res = await fetch(`${API_BASE}/notice/list${qs ? `?${qs}` : ''}`);
+        if (!res.ok) return [];
+        const data = await res.json();
+        return data.notices || [];
+    } catch (e) {
+        console.error('Failed to load notices', e);
+        return [];
+    }
+}
+
 function renderFeed() {
     renderFilters();
     feedSection.innerHTML = '';
-    const shown = activeSubjectFilter
-        ? loadedPosts.filter(p => p.authorLabel === activeSubjectFilter)
-        : loadedPosts;
 
-    if (shown.length === 0) {
-        feedSection.innerHTML = `<div class="loader" style="color: #666;">${
-            loadedPosts.length === 0 ? '아직 게시물이 없습니다.' : '이 과목의 게시물이 없습니다.'
-        }</div>`;
+    const board = boards.find(b => b.key === activeBoardKey);
+    const noticeCtx = {
+        viewerRole,
+        child: board && board.child ? {
+            grade: board.child.grade,
+            classNumber: board.child.classNumber,
+            studentNumber: board.child.studentNumber
+        } : null,
+        onChanged: loadPosts
+    };
+
+    // 두 줄기를 시간순으로 하나로 엮는다.
+    let items = [
+        ...loadedPosts.map(p => ({ kind: 'post', at: p.createdAt, data: p })),
+        ...loadedNotices.map(n => ({ kind: 'notice', at: n.createdAt, data: n }))
+    ];
+
+    if (activeKindFilter === 'post') items = items.filter(i => i.kind === 'post');
+    else if (activeKindFilter === 'notice') items = items.filter(i => i.kind === 'notice');
+    else if (activeKindFilter === 'todo') {
+        items = items.filter(i => i.kind === 'notice' && NoticeCard.needsAction(i.data, viewerRole));
+    }
+    if (activeSubjectFilter && activeKindFilter !== 'notice' && activeKindFilter !== 'todo') {
+        items = items.filter(i => i.kind !== 'post' || i.data.authorLabel === activeSubjectFilter);
+    }
+
+    items.sort((a, b) => new Date(b.at) - new Date(a.at));
+
+    if (items.length === 0) {
+        const empty = (loadedPosts.length + loadedNotices.length) === 0
+            ? '아직 올라온 글이 없습니다.'
+            : '고른 조건에 맞는 글이 없습니다.';
+        feedSection.innerHTML = `<div class="loader" style="color: #666;">${empty}</div>`;
         return;
     }
-    shown.forEach(post => renderPost(post));
+
+    items.forEach(item => {
+        if (item.kind === 'post') renderPost(item.data);
+        else feedSection.appendChild(NoticeCard.render(item.data, noticeCtx));
+    });
 }
 
 function renderPost(post) {
@@ -251,7 +348,17 @@ function renderPost(post) {
     // Add Comment
     const commentInput = clone.querySelector('[data-type="comment-input"]');
     const commentSubmitBtn = clone.querySelector('[data-type="comment-submit"]');
-    
+
+    // 학부모는 읽기만 한다. 서버가 막고 있으니 쓸 수 없는 칸을 보여 주면 안 된다.
+    if (viewerRole === 'guardian') {
+        commentInput.closest('.comment-input-area').remove();
+        if (post.comments.length === 0) {
+            clone.querySelector('.comments-section').remove();
+        }
+        feedSection.appendChild(clone);
+        return;
+    }
+
     // Auto resize comment textarea
     commentInput.addEventListener('input', function() {
         this.style.height = 'auto';

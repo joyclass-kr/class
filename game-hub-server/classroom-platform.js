@@ -5462,6 +5462,14 @@ function createClassroomPlatform(options = {}) {
             if (classes.some(x => x.id === id)) continue;
             classes.push({
               id, grade: c.grade, classNumber: c.classNumber, teaching: false,
+              // 가정통신문은 학급이 아니라 '이 아이'에게 온 것이라, 게시판이
+              // 어느 아이 것인지 화면이 알아야 그 아이의 통신문을 부를 수 있다.
+              child: {
+                grade: c.grade,
+                classNumber: c.classNumber,
+                studentNumber: c.studentNumber,
+                name: c.studentName
+              },
               childName: c.studentName
             });
           }
@@ -5558,7 +5566,11 @@ function createClassroomPlatform(options = {}) {
         : `${c.grade}학년 ${c.classNumber}반`,
       typeLabel: "학급",
       teaching: c.teaching,
-      canPost: scope.canPost
+      canPost: scope.canPost,
+      // 학급 게시판에는 가정통신문이 같이 흐른다. 학부모는 어느 아이 것인지
+      // 실어 보내고, 학생 본인은 서버가 알아서 자기 것을 찾는다.
+      child: c.child || null,
+      hasNotices: true
     }));
 
     let groupRows;
