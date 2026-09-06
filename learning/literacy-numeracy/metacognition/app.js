@@ -53,13 +53,26 @@
     );
   }
 
+  // itemOrder[displayIndex]는 그 화면 순서에 실제로 보여줄 '원래 문항 번호'다.
+  // 응답·채점은 언제나 원래 문항 번호(items 배열 순서)로 하므로 metrics.js는 이 섞기를 몰라도 된다.
+  function validItemOrder(candidate) {
+    return (
+      Array.isArray(candidate) &&
+      candidate.length === items.length &&
+      candidate.slice().sort((a, b) => a - b).every((value, position) => value === position)
+    );
+  }
+
   const state = {
     index: 0,
     responses: items.map((item) => ({ id: item.id, choice: null, confidence: null, ms: 0 })),
     orders: freshOrders(),
+    itemOrder: shuffledOrder(items.length),
     shownAt: 0,
     analysis: null
   };
+
+  const currentItemIndex = () => state.itemOrder[state.index];
 
   const el = (id) => document.getElementById(id);
   const view = {
@@ -77,7 +90,8 @@
           version: ITEM_SET_VERSION,
           index: state.index,
           responses: state.responses,
-          orders: state.orders
+          orders: state.orders,
+          itemOrder: state.itemOrder
         })
       );
     } catch (_) {
@@ -106,8 +120,9 @@
 
   /* ── 문항 렌더링 ───────────────────────────────────────── */
   function renderQuestion() {
-    const item = items[state.index];
-    const response = state.responses[state.index];
+    const itemIndex = currentItemIndex();
+    const item = items[itemIndex];
+    const response = state.responses[itemIndex];
 
     el("qIndex").textContent = String(state.index + 1);
     el("qTotal").textContent = String(items.length);
@@ -122,7 +137,7 @@
     const choiceGroup = el("choiceGroup");
     choiceGroup.innerHTML = "";
     // 화면 순서는 섞여 있지만, 저장하는 값은 언제나 원래 선택지 번호다
-    state.orders[state.index].forEach((originalIndex, displayIndex) => {
+    state.orders[itemIndex].forEach((originalIndex, displayIndex) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "choice-btn";
@@ -174,7 +189,7 @@
 
   function recordTime() {
     if (!state.shownAt) return;
-    state.responses[state.index].ms += Date.now() - state.shownAt;
+    state.responses[currentItemIndex()].ms += Date.now() - state.shownAt;
     state.shownAt = 0;
   }
 
@@ -911,6 +926,7 @@ padding:22px;margin-bottom:16px}
     state.index = 0;
     state.responses = items.map((item) => ({ id: item.id, choice: null, confidence: null, ms: 0 }));
     state.orders = freshOrders();
+    state.itemOrder = shuffledOrder(items.length);
     state.analysis = null;
     clearProgress();
     show("intro");
@@ -930,8 +946,9 @@ padding:22px;margin-bottom:16px}
         note.textContent = "지난번에 " + answered + "문항까지 풀었습니다. ‘진단 시작하기’를 누르면 이어서 진행합니다.";
         state.responses = saved.responses;
         state.index = Math.min(saved.index, items.length - 1);
-        // 이어서 풀 때 선택지가 다시 섞이면 학생이 혼란스럽다. 저장된 순서를 그대로 쓴다.
+        // 이어서 풀 때 선택지·문항 순서가 다시 섞이면 학생이 혼란스럽다. 저장된 순서를 그대로 쓴다.
         if (validOrders(saved.orders)) state.orders = saved.orders;
+        if (validItemOrder(saved.itemOrder)) state.itemOrder = saved.itemOrder;
       } else {
         clearProgress();
       }

@@ -22,11 +22,10 @@ body {
     min-height: 100svh;
     color: var(--text);
     background-color: #070c0e;
-    background-image: 
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(142, 240, 198, 0.1) 0%, transparent 65%),
-        radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-        linear-gradient(180deg, #070e10 0%, #0c1518 45%, #060a0c 100%);
-    background-size: 100% 100%, 24px 24px, 100% 100%;
+    background-image: url('bg.webp');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
     background-attachment: fixed;
 }
 button, input { font: inherit; }
