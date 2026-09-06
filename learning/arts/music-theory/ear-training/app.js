@@ -471,6 +471,7 @@
             els[key + "Screen"].hidden = key !== name;
         });
         session.screen = name;
+        document.body.classList.toggle("wheel-open", name === "wheel");
         window.scrollTo({ top: 0 });
     }
 

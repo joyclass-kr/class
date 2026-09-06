@@ -84,10 +84,16 @@
             + "Z";
     }
 
+    const SPIN_MS = 480;
+    const slowMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     function create(container, options) {
         const settings = options || {};
         let index = 0;
         let flat = false;
+        let turn = 0;
+        let spin = 0;
+        let settle = 0;
 
         const svg = make("svg", {
             class: "wheel",
@@ -184,36 +190,84 @@
             };
         }
 
-        function layout() {
-            const turn = -index * SECTOR;
-            disc.setAttribute("transform", "rotate(" + turn + ")");
-
+        /* 원판을 돌린 만큼만 다시 그린다. 글자는 되돌려 돌려 늘 바로 세워 둔다. */
+        function applyTurn(value) {
+            disc.setAttribute("transform", "rotate(" + value + ")");
+            const upright = " rotate(" + (-value) + ")";
             KEYS.forEach((key, position) => {
-                const shown = keyAt(position);
                 const center = position * SECTOR;
-                const upright = " rotate(" + (-turn) + ")";
-
                 const [mx, my] = point((R_MAJ_IN + R_MAJ_OUT) / 2 + 9, center);
                 majorTexts[position].setAttribute("transform", "translate(" + mx + "," + my + ")" + upright);
-                majorTexts[position].textContent = shown.major;
-
                 const [sx, sy] = point((R_MAJ_IN + R_MAJ_OUT) / 2 - 14, center);
                 signTexts[position].setAttribute("transform", "translate(" + sx + "," + sy + ")" + upright);
-                signTexts[position].textContent = shown.signature;
-
                 const [nx, ny] = point((R_MIN_IN + R_MIN_OUT) / 2, center);
                 minorTexts[position].setAttribute("transform", "translate(" + nx + "," + ny + ")" + upright);
-                minorTexts[position].textContent = shown.minor;
+            });
+        }
 
+        /* 글자와 가운데 표시를 다시 적는다. */
+        function relabel() {
+            KEYS.forEach((key, position) => {
+                const shown = keyAt(position);
+                majorTexts[position].textContent = shown.major;
+                signTexts[position].textContent = shown.signature;
+                minorTexts[position].textContent = shown.minor;
                 majorCells[position].classList.toggle("is-tonic", position === index);
             });
-
             const home = keyAt(index);
             hubMajor.textContent = home.major + " 장조";
             hubMinor.textContent = home.minor.replace("m", "") + " 단조";
             hubSign.textContent = home.signature === "0" ? "♯♭ 없음" : "조표 " + home.signature;
-
             if (settings.onChange) settings.onChange(chords(), home);
+        }
+
+        function spinTo(target) {
+            window.cancelAnimationFrame(spin);
+            window.clearTimeout(settle);
+            if (slowMotion || document.visibilityState === "hidden") {
+                turn = target;
+                applyTurn(turn);
+                return;
+            }
+            /* 다른 탭으로 넘어가 애니메이션이 멈춰도 제자리에 앉도록 한다. */
+            settle = window.setTimeout(() => {
+                window.cancelAnimationFrame(spin);
+                turn = target;
+                applyTurn(turn);
+            }, SPIN_MS + 120);
+            const from = turn;
+            const delta = target - from;
+            const started = window.performance.now();
+            const frame = now => {
+                const ratio = Math.min(1, (now - started) / SPIN_MS);
+                const eased = 1 - Math.pow(1 - ratio, 3);
+                turn = from + delta * eased;
+                applyTurn(turn);
+                if (ratio < 1) spin = window.requestAnimationFrame(frame);
+                else { window.clearTimeout(settle); turn = target; applyTurn(turn); }
+            };
+            spin = window.requestAnimationFrame(frame);
+        }
+
+        /* 반 바퀴가 넘게 돌지 않도록 가까운 쪽으로 돌린다. */
+        function nearestAngle(position) {
+            let target = -position * SECTOR;
+            while (target - turn > 180) target -= 360;
+            while (target - turn < -180) target += 360;
+            return target;
+        }
+
+        function select(position, animate) {
+            index = ((position % 12) + 12) % 12;
+            relabel();
+            const target = nearestAngle(index);
+            if (animate === false) { turn = target; applyTurn(turn); }
+            else spinTo(target);
+        }
+
+        function layout() {
+            relabel();
+            applyTurn(turn);
         }
 
         function chords() {
@@ -227,11 +281,56 @@
                 }));
         }
 
+        /* 손으로 잡아 돌리기 */
+        let drag = null;
+        let spunAt = 0;
+
+        function pointerAngle(event) {
+            const box = svg.getBoundingClientRect();
+            const dx = event.clientX - (box.left + box.width / 2);
+            const dy = event.clientY - (box.top + box.height / 2);
+            return Math.atan2(dy, dx) * 180 / Math.PI;
+        }
+
+        disc.addEventListener("pointerdown", event => {
+            window.cancelAnimationFrame(spin);
+            drag = { from: pointerAngle(event), turn: turn, moved: 0 };
+            disc.classList.add("is-dragging");
+            disc.setPointerCapture(event.pointerId);
+        });
+
+        disc.addEventListener("pointermove", event => {
+            if (!drag) return;
+            let delta = pointerAngle(event) - drag.from;
+            while (delta > 180) delta -= 360;
+            while (delta < -180) delta += 360;
+            drag.moved = Math.max(drag.moved, Math.abs(delta));
+            turn = drag.turn + delta;
+            applyTurn(turn);
+        });
+
+        function endDrag(event) {
+            if (!drag) return;
+            const spun = drag.moved;
+            drag = null;
+            disc.classList.remove("is-dragging");
+            if (disc.hasPointerCapture(event.pointerId)) disc.releasePointerCapture(event.pointerId);
+            const landed = Math.round(-turn / SECTOR);
+            index = ((landed % 12) + 12) % 12;
+            relabel();
+            spinTo(-landed * SECTOR);
+            /* 돌리고 손을 뗄 때 따라 나오는 클릭 하나만 걸러 낸다. */
+            spunAt = spun > 6 ? window.performance.now() : 0;
+        }
+
+        disc.addEventListener("pointerup", endDrag);
+        disc.addEventListener("pointercancel", endDrag);
+
         svg.addEventListener("click", event => {
+            if (spunAt && window.performance.now() - spunAt < 300) return;
             const cell = event.target.closest(".wheel-cell");
             if (cell) {
-                index = Number(cell.dataset.position);
-                layout();
+                select(Number(cell.dataset.position));
                 return;
             }
             const funcCell = event.target.closest(".wheel-func-cell");
@@ -250,8 +349,7 @@
 
         return {
             step: function (delta) {
-                index = ((index + delta) % 12 + 12) % 12;
-                layout();
+                select(index + delta);
             },
             toggleFlat: function () {
                 flat = !flat;

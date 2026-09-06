@@ -28,10 +28,27 @@ button { font: inherit; color: inherit; cursor: pointer; }
 button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 [hidden] { display: none !important; }
 
+/* 눌러서 들어온 이름을 되풀이하는 제목은 화면에서 빼고 읽는 프로그램에만 남긴다. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
 .shell {
     width: min(760px, calc(100% - 28px));
     margin: 0 auto;
-    padding-top: 72px;
+    padding-top: 14px;
+}
+
+/* 화면이 좁아 왼쪽 위 뒤로가기 단추와 첫 줄이 겹칠 때만 자리를 비운다. */
+@media (max-width: 900px) {
+    .shell { padding-top: 52px; }
 }
 
 .screen { display: grid; gap: 20px; }
@@ -207,7 +224,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .result-actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
 
 @media (max-width: 520px) {
-    .shell { width: calc(100% - 20px); padding-top: 66px; }
+    .shell { width: calc(100% - 20px); padding-top: 52px; }
     .choices { grid-template-columns: 1fr 1fr; }
     .item-picker { grid-template-columns: 1fr 1fr; }
     .replay-button { min-height: 80px; font-size: 20px; }
@@ -426,7 +443,9 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     background: #f6f4ee;
 }
 
-.wheel { display: block; width: 100%; max-width: 460px; height: auto; }
+.wheel { display: block; width: 100%; max-width: 520px; height: auto; touch-action: none; }
+.wheel-disc { cursor: grab; }
+.wheel-disc.is-dragging { cursor: grabbing; }
 
 .wheel-mode-cell { fill: #e6e2d8; stroke: #cdc6b6; stroke-width: 1; cursor: pointer; }
 .wheel-mode-cell:hover { fill: #d8d2c2; }
@@ -473,3 +492,30 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .wheel-chord b { color: var(--gold); font-size: 15px; font-weight: 850; }
 .wheel-chord span { font-size: 16px; font-weight: 800; }
 .wheel-chord small { color: var(--muted); font-size: 13px; font-weight: 700; }
+
+/* 원판 화면은 가로를 넓게 쓰고, 원판을 화면 높이에 맞춘다. */
+body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
+
+@media (min-width: 960px) {
+    #wheelScreen {
+        grid-template-columns: minmax(0, 1fr) 340px;
+        grid-template-rows: auto auto auto;
+        align-content: start;
+        column-gap: 24px;
+        row-gap: 14px;
+    }
+
+    .wheel-board {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+        justify-self: center;
+        height: min(86vh, 800px);
+        aspect-ratio: 1;
+        padding: 10px;
+    }
+    .wheel { width: auto; max-width: 100%; height: 100%; }
+    .wheel-controls { grid-column: 2; grid-row: 1; }
+    #wheelScreen > .field { grid-column: 2; grid-row: 2; }
+    #wheelCadence { grid-column: 2; grid-row: 3; align-self: start; }
+    .wheel-chords { grid-template-columns: 1fr 1fr; }
+}
