@@ -94,6 +94,14 @@
         var canvas = document.getElementById('excretionCanvas');
         if (canvas) canvas.style.visibility = on ? 'hidden' : 'visible';
         if (on) placeLabels();
+        toggleHud(on);
+    }
+
+    /** 떠 있는 안내 띠는 우리 장면의 표와 그림을 덮으므로 감춘다 */
+    function toggleHud(hide) {
+        if (!wrap) return;
+        var hud = wrap.querySelector('.sim-hud-overlay');
+        if (hud) hud.style.display = hide ? 'none' : '';
     }
 
     function buildLayer() {

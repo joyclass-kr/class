@@ -230,3 +230,68 @@
 
 .pupil-layer[hidden] { display: none !important; }
 .pupil-layer svg { width: 100%; height: 100%; display: block; }
+
+/* ── 눈 광학 (eye-optics.js) ──────────────────────────────── */
+.eye-optics-layer {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, #0b1329 0%, #020409 100%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.eye-optics-layer[hidden] { display: none !important; }
+
+.eye-optics-stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 50px 10px 0;
+}
+
+.eye-optics-stage svg { width: 100%; height: 100%; display: block; }
+
+.eye-optics-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.eye-optics-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    color: #f8fafc;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.eye-optics-tag:hover { border-color: #facc15; }
+
+.eye-optics-caption {
+    display: flex;
+    gap: 10px;
+    margin: 0 10px 40px;
+}
+
+.eye-optics-caption span {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(6, 10, 24, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    color: #cbd5e1;
+    font-size: 12.5px;
+    font-weight: 700;
+}
+
+.eye-optics-caption b { color: #facc15; }
+
+.eye-optics-error {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fca5a5; font-weight: 700;
+}

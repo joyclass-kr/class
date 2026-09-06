@@ -738,3 +738,56 @@ canvas.sim-canvas {
 .sim-quiz-next-btn:hover, .sim-quiz-next-btn:active {
     background: rgba(56, 189, 248, 0.3);
 }
+
+/* ── 위쪽 띠가 빈 줄을 통째로 먹지 않게 한다 ─────────────────
+   뒤로가기와 조작 단추 둘뿐인데 56px 한 줄을 차지하고 있었다.
+   화면 위에 띄워 놓고, 그 줄만큼 시뮬레이션을 넓힌다. */
+.sim-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 372px;          /* 오른쪽 사이드바를 덮지 않게 */
+    height: auto;
+    min-height: 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: none;
+    padding: 9px 12px;
+    z-index: 120;
+    pointer-events: none;
+}
+
+.sim-header > * { pointer-events: auto; }
+
+.sim-header .sim-btn,
+.sim-header .tool-toggle-btn {
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 13px;
+}
+
+.sim-app-container {
+    height: 100%;
+}
+
+/* 장면 단추 줄은 뒤로가기 오른쪽에서 시작해 조작 단추 앞에서 멈춘다.
+   가운데 정렬로 두면 오른쪽 단추 밑으로 숨는다.
+   방마다 제 styles.css 가 뒤에 실리므로 선택자를 한 겹 더 준다. */
+.sim-stage-area .scene-switcher {
+    left: 62px;
+    transform: none;
+    max-width: calc(100% - 390px);
+    overflow-x: auto;
+}
+
+@media (max-width: 900px) {
+    .sim-header { right: 12px; }
+
+    /* 좁은 화면에서는 단추 줄을 한 칸 아래로 내린다 */
+    .sim-stage-area .scene-switcher {
+        left: 12px;
+        top: 54px;
+        max-width: calc(100% - 24px);
+    }
+}

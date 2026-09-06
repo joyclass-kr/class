@@ -69,6 +69,14 @@
             var tab = document.querySelector('.sidebar-tab-btn[data-tab="sensory"]');
             if (tab && !tab.classList.contains('active')) tab.click();
         }
+        toggleHud(on);
+    }
+
+    /** 떠 있는 안내 띠는 우리 장면의 표와 그림을 덮으므로 감춘다 */
+    function toggleHud(hide) {
+        if (!wrap) return;
+        var hud = wrap.querySelector('.sim-hud-overlay');
+        if (hud) hud.style.display = hide ? 'none' : '';
     }
 
     function brightness() {
