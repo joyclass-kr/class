@@ -5,21 +5,21 @@
 
     /* 오도권을 시계 방향으로 늘어놓는다. */
     const KEYS = [
-        { major: "C", minor: "Am", signature: "0", tonic: 0, letter: 0, acc: 0 },
-        { major: "G", minor: "Em", signature: "♯1", tonic: 7, letter: 4, acc: 0 },
-        { major: "D", minor: "Bm", signature: "♯2", tonic: 2, letter: 1, acc: 0 },
-        { major: "A", minor: "F♯m", signature: "♯3", tonic: 9, letter: 5, acc: 0 },
-        { major: "E", minor: "C♯m", signature: "♯4", tonic: 4, letter: 2, acc: 0 },
-        { major: "B", minor: "G♯m", signature: "♯5", tonic: 11, letter: 6, acc: 0 },
+        { major: "C", minor: "Am", count: 0, sharp: true, tonic: 0, letter: 0, acc: 0 },
+        { major: "G", minor: "Em", count: 1, sharp: true, tonic: 7, letter: 4, acc: 0 },
+        { major: "D", minor: "Bm", count: 2, sharp: true, tonic: 2, letter: 1, acc: 0 },
+        { major: "A", minor: "F♯m", count: 3, sharp: true, tonic: 9, letter: 5, acc: 0 },
+        { major: "E", minor: "C♯m", count: 4, sharp: true, tonic: 4, letter: 2, acc: 0 },
+        { major: "B", minor: "G♯m", count: 5, sharp: true, tonic: 11, letter: 6, acc: 0 },
         {
-            major: "F♯", minor: "D♯m", signature: "♯6", tonic: 6, letter: 3, acc: 1,
-            alt: "G♭", altMinor: "E♭m", altSignature: "♭6", altLetter: 4, altAcc: -1
+            major: "F♯", minor: "D♯m", count: 6, sharp: true, tonic: 6, letter: 3, acc: 1,
+            alt: "G♭", altMinor: "E♭m", altCount: 6, altSharp: false, altLetter: 4, altAcc: -1
         },
-        { major: "D♭", minor: "B♭m", signature: "♭5", tonic: 1, letter: 1, acc: -1 },
-        { major: "A♭", minor: "Fm", signature: "♭4", tonic: 8, letter: 5, acc: -1 },
-        { major: "E♭", minor: "Cm", signature: "♭3", tonic: 3, letter: 2, acc: -1 },
-        { major: "B♭", minor: "Gm", signature: "♭2", tonic: 10, letter: 6, acc: -1 },
-        { major: "F", minor: "Dm", signature: "♭1", tonic: 5, letter: 3, acc: 0 }
+        { major: "D♭", minor: "B♭m", count: 5, sharp: false, tonic: 1, letter: 1, acc: -1 },
+        { major: "A♭", minor: "Fm", count: 4, sharp: false, tonic: 8, letter: 5, acc: -1 },
+        { major: "E♭", minor: "Cm", count: 3, sharp: false, tonic: 3, letter: 2, acc: -1 },
+        { major: "B♭", minor: "Gm", count: 2, sharp: false, tonic: 10, letter: 6, acc: -1 },
+        { major: "F", minor: "Dm", count: 1, sharp: false, tonic: 5, letter: 3, acc: 0 }
     ];
 
     /*
@@ -37,17 +37,18 @@
     ];
 
     /*
-     * 같은 으뜸음에 조표만 한 자리씩 옮기면 선법이 바뀐다.
-     * 시계로 갈수록 밝고(리디아), 반시계로 갈수록 어둡다(로크리아).
+     * 한 조의 음을 그대로 두고 어느 음에서 시작하느냐에 따라 선법이 정해진다.
+     * 그래서 화음 기능 고리와 같은 일곱 자리에 같은 차례로 놓인다.
+     * 예를 들어 다장조에서 ii 자리인 D에서 시작하면 D Dorian이다.
      */
     const MODES = [
-        { step: 1, name: "Lydian", steps: [0, 2, 4, 6, 7, 9, 11, 12] },
+        { step: -1, name: "Lydian", steps: [0, 2, 4, 6, 7, 9, 11, 12] },
         { step: 0, name: "Ionian", steps: [0, 2, 4, 5, 7, 9, 11, 12] },
-        { step: -1, name: "Mixolydian", steps: [0, 2, 4, 5, 7, 9, 10, 12] },
-        { step: -2, name: "Dorian", steps: [0, 2, 3, 5, 7, 9, 10, 12] },
-        { step: -3, name: "Aeolian", steps: [0, 2, 3, 5, 7, 8, 10, 12] },
-        { step: -4, name: "Phrygian", steps: [0, 1, 3, 5, 7, 8, 10, 12] },
-        { step: -5, name: "Locrian", steps: [0, 1, 3, 5, 6, 8, 10, 12] }
+        { step: 1, name: "Mixolydian", steps: [0, 2, 4, 5, 7, 9, 10, 12] },
+        { step: 2, name: "Dorian", steps: [0, 2, 3, 5, 7, 9, 10, 12] },
+        { step: 3, name: "Aeolian", steps: [0, 2, 3, 5, 7, 8, 10, 12] },
+        { step: 4, name: "Phrygian", steps: [0, 1, 3, 5, 7, 8, 10, 12] },
+        { step: 5, name: "Locrian", steps: [0, 1, 3, 5, 6, 8, 10, 12] }
     ];
 
     const R_MODE_OUT = 208;
@@ -70,6 +71,37 @@
     function point(radius, degrees) {
         const radians = (degrees - 90) * Math.PI / 180;
         return [radius * Math.cos(radians), radius * Math.sin(radians)];
+    }
+
+    /* 높은음자리표에서 조표가 붙는 자리. E4를 30으로 둔 음자리 번호다. */
+    const SHARP_SEATS = [38, 35, 39, 36, 33, 37, 34];
+    const FLAT_SEATS = [34, 37, 33, 36, 32, 35, 31];
+
+    /* 가운데에 그리는 작은 조표. */
+    function keySignature(count, sharp) {
+        const gap = 5;
+        const height = gap * 4;
+        const seats = sharp ? SHARP_SEATS : FLAT_SEATS;
+        const width = 30 + Math.max(count, 1) * 7;
+        const group = make("g", { class: "wheel-key-sig" });
+
+        for (let line = 0; line < 5; line += 1) {
+            const y = line * gap;
+            group.append(make("line", { x1: 0, y1: y, x2: width, y2: y }));
+        }
+        const clef = make("text", { class: "wheel-sig-clef", x: 4, y: height + 4 });
+        clef.textContent = "𝄞";
+        group.append(clef);
+
+        for (let mark = 0; mark < count; mark += 1) {
+            const seat = seats[mark];
+            const y = height - (seat - 30) * (gap / 2);
+            const glyph = make("text", { class: "wheel-sig-mark", x: 28 + mark * 7, y: y + (sharp ? 3.5 : 2.5) });
+            glyph.textContent = sharp ? "♯" : "♭";
+            group.append(glyph);
+        }
+        group.setAttribute("transform", "translate(" + (-width / 2) + ",8)");
+        return group;
     }
 
     function sectorPath(rIn, rOut, from, to) {
@@ -114,7 +146,11 @@
             cell.dataset.mode = mode.name;
             modeLayer.append(cell);
             const [x, y] = point((R_MODE_IN + R_MODE_OUT) / 2, center);
-            modeLayer.append(make("text", { class: "wheel-mode-name", x: x, y: y }, mode.name));
+            /* 글자를 고리 방향으로 눕히되, 뒤집히는 자리에서는 180도 돌려 바로 읽히게 한다. */
+            const lean = Math.abs(center) <= 90 ? center : center + 180;
+            const name = make("text", { class: "wheel-mode-name" }, mode.name);
+            name.setAttribute("transform", "translate(" + x + "," + y + ") rotate(" + lean + ")");
+            modeLayer.append(name);
         });
 
         /* 고정 고리: 화음 기능 */
@@ -138,7 +174,6 @@
         svg.append(disc);
         const majorCells = [];
         const majorTexts = [];
-        const signTexts = [];
         const minorTexts = [];
 
         KEYS.forEach((key, position) => {
@@ -159,18 +194,17 @@
             disc.append(minor);
 
             majorTexts.push(make("text", { class: "wheel-major-name" }));
-            signTexts.push(make("text", { class: "wheel-sign" }));
             minorTexts.push(make("text", { class: "wheel-minor-name" }));
         });
-        majorTexts.concat(signTexts, minorTexts).forEach(node => disc.append(node));
+        majorTexts.concat(minorTexts).forEach(node => disc.append(node));
 
         /* 가운데 */
         const hub = make("g", { class: "wheel-hub" });
         svg.append(hub);
         hub.append(make("circle", { class: "wheel-hub-face", cx: 0, cy: 0, r: R_MIN_IN }));
-        const hubMajor = make("text", { class: "wheel-hub-major", x: 0, y: -10 });
-        const hubMinor = make("text", { class: "wheel-hub-minor", x: 0, y: 12 });
-        const hubSign = make("text", { class: "wheel-hub-sign", x: 0, y: 32 });
+        const hubMajor = make("text", { class: "wheel-hub-major", x: 0, y: -30 });
+        const hubMinor = make("text", { class: "wheel-hub-minor", x: 0, y: -8 });
+        const hubSign = make("g", { class: "wheel-hub-sig" });
         hub.append(hubMajor, hubMinor, hubSign);
 
         container.innerHTML = "";
@@ -180,12 +214,12 @@
             const key = KEYS[((position % 12) + 12) % 12];
             if (!flat || !key.alt) {
                 return {
-                    major: key.major, minor: key.minor, signature: key.signature,
+                    major: key.major, minor: key.minor, count: key.count, sharp: key.sharp,
                     tonic: key.tonic, letter: key.letter, acc: key.acc
                 };
             }
             return {
-                major: key.alt, minor: key.altMinor, signature: key.altSignature,
+                major: key.alt, minor: key.altMinor, count: key.altCount, sharp: key.altSharp,
                 tonic: key.tonic, letter: key.altLetter, acc: key.altAcc
             };
         }
@@ -196,10 +230,8 @@
             const upright = " rotate(" + (-value) + ")";
             KEYS.forEach((key, position) => {
                 const center = position * SECTOR;
-                const [mx, my] = point((R_MAJ_IN + R_MAJ_OUT) / 2 + 9, center);
+                const [mx, my] = point((R_MAJ_IN + R_MAJ_OUT) / 2, center);
                 majorTexts[position].setAttribute("transform", "translate(" + mx + "," + my + ")" + upright);
-                const [sx, sy] = point((R_MAJ_IN + R_MAJ_OUT) / 2 - 14, center);
-                signTexts[position].setAttribute("transform", "translate(" + sx + "," + sy + ")" + upright);
                 const [nx, ny] = point((R_MIN_IN + R_MIN_OUT) / 2, center);
                 minorTexts[position].setAttribute("transform", "translate(" + nx + "," + ny + ")" + upright);
             });
@@ -210,14 +242,14 @@
             KEYS.forEach((key, position) => {
                 const shown = keyAt(position);
                 majorTexts[position].textContent = shown.major;
-                signTexts[position].textContent = shown.signature;
                 minorTexts[position].textContent = shown.minor;
                 majorCells[position].classList.toggle("is-tonic", position === index);
             });
             const home = keyAt(index);
-            hubMajor.textContent = home.major + " 장조";
-            hubMinor.textContent = home.minor.replace("m", "") + " 단조";
-            hubSign.textContent = home.signature === "0" ? "♯♭ 없음" : "조표 " + home.signature;
+            hubMajor.textContent = home.major + " Major";
+            hubMinor.textContent = home.minor.replace("m", "") + " Minor";
+            hubSign.innerHTML = "";
+            hubSign.append(keySignature(home.count, home.sharp));
             if (settings.onChange) settings.onChange(chords(), home);
         }
 
@@ -341,7 +373,7 @@
             const modeCell = event.target.closest(".wheel-mode-cell");
             if (modeCell && settings.onPlayMode) {
                 const mode = MODES.find(entry => entry.name === modeCell.dataset.mode);
-                settings.onPlayMode(mode, keyAt(index));
+                settings.onPlayMode(mode, keyAt(index + mode.step));
             }
         });
 
