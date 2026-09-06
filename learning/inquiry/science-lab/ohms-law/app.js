@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
 
     const V_MAX = 12;
-    const GRAPH = { x0: 60, x1: 430, y0: 170, y1: 20 };
+    const GRAPH = { x0: 60, x1: 430, y0: 168, y1: 30 };
 
     let wiring = 'series';
     let prediction = null;
@@ -75,48 +75,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const SVG_DEFS = `
     <defs>
-        <linearGradient id="dcBody" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#1e293b"/>
-            <stop offset="100%" stop-color="#0f172a"/>
+        <!-- DC Power Supply Gradients -->
+        <linearGradient id="dcChassis" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f8fafc"/>
+            <stop offset="100%" stop-color="#e2e8f0"/>
         </linearGradient>
         <linearGradient id="dcScreen" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#021a12"/>
-            <stop offset="100%" stop-color="#042f24"/>
+            <stop offset="0%" stop-color="#021f15"/>
+            <stop offset="100%" stop-color="#053e2d"/>
         </linearGradient>
+        <linearGradient id="knobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#cbd5e1"/>
+        </linearGradient>
+
+        <!-- Ceramic Resistor Gradient -->
         <linearGradient id="ceramicBody" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#d6cbbe"/>
-            <stop offset="25%" stop-color="#f5ede3"/>
-            <stop offset="65%" stop-color="#d1c4b4"/>
-            <stop offset="100%" stop-color="#9c8e7e"/>
+            <stop offset="0%" stop-color="#fef3c7"/>
+            <stop offset="25%" stop-color="#ffffff"/>
+            <stop offset="70%" stop-color="#fde68a"/>
+            <stop offset="100%" stop-color="#d97706"/>
         </linearGradient>
         <linearGradient id="metalCap" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#475569"/>
-            <stop offset="40%" stop-color="#cbd5e1"/>
+            <stop offset="0%" stop-color="#64748b"/>
+            <stop offset="35%" stop-color="#f1f5f9"/>
             <stop offset="70%" stop-color="#94a3b8"/>
-            <stop offset="100%" stop-color="#334155"/>
+            <stop offset="100%" stop-color="#475569"/>
         </linearGradient>
+
+        <!-- Digital Multimeter / Ammeter -->
         <linearGradient id="dmmBody" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#164e63"/>
-            <stop offset="100%" stop-color="#082f49"/>
+            <stop offset="0%" stop-color="#0284c7"/>
+            <stop offset="100%" stop-color="#0369a1"/>
         </linearGradient>
         <linearGradient id="dmmLcd" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stop-color="#022c22"/>
             <stop offset="100%" stop-color="#064e3b"/>
         </linearGradient>
+
+        <!-- Brass Nodes -->
         <radialGradient id="brassNode" cx="35%" cy="35%" r="65%">
             <stop offset="0%" stop-color="#fef08a"/>
             <stop offset="50%" stop-color="#eab308"/>
             <stop offset="100%" stop-color="#854d0e"/>
         </radialGradient>
-        <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+
+        <!-- Light Theme Component Drop Shadow -->
+        <filter id="compDrop" x="-15%" y="-15%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="2.5" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.12"/>
+        </filter>
+        <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="1.5" result="blur"/>
             <feMerge>
                 <feMergeNode in="blur"/>
                 <feMergeNode in="SourceGraphic"/>
             </feMerge>
-        </filter>
-        <filter id="compDrop" x="-15%" y="-15%" width="130%" height="130%">
-            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
         </filter>
     </defs>`;
 
@@ -125,10 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
         <g class="resistor-component" filter="url(#compDrop)">
             <!-- Metallic Leads -->
-            <line x1="${cx - 36}" y1="${cy}" x2="${cx - 24}" y2="${cy}" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="${cx + 24}" y1="${cy}" x2="${cx + 36}" y2="${cy}" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="${cx - 38}" y1="${cy}" x2="${cx - 24}" y2="${cy}" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="${cx + 24}" y1="${cy}" x2="${cx + 38}" y2="${cy}" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>
             <!-- Ceramic Body -->
-            <rect x="${cx - 24}" y="${cy - 10}" width="48" height="20" rx="6" fill="url(#ceramicBody)"/>
+            <rect x="${cx - 24}" y="${cy - 10}" width="48" height="20" rx="6" fill="url(#ceramicBody)" stroke="#d97706" stroke-width="0.8"/>
             <!-- 4-Band Color Code -->
             <rect x="${cx - 15}" y="${cy - 10}" width="3.5" height="20" fill="${bands[0]}"/>
             <rect x="${cx - 8}" y="${cy - 10}" width="3.5" height="20" fill="${bands[1]}"/>
@@ -138,17 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
             <rect x="${cx - 25}" y="${cy - 10}" width="4" height="20" rx="2" fill="url(#metalCap)"/>
             <rect x="${cx + 21}" y="${cy - 10}" width="4" height="20" rx="2" fill="url(#metalCap)"/>
             <!-- Specular Sheen -->
-            <line x1="${cx - 23}" y1="${cy - 6}" x2="${cx + 23}" y2="${cy - 6}" stroke="rgba(255,255,255,0.45)" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="${cx - 23}" y1="${cy - 6}" x2="${cx + 23}" y2="${cy - 6}" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" stroke-linecap="round"/>
         </g>
         <!-- Resistance Badge -->
-        <g>
-            <rect x="${cx - 38}" y="${cy - 31}" width="76" height="17" rx="8.5" fill="#091824" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1"/>
-            <text x="${cx}" y="${cy - 19}" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-weight="850" font-family="Pretendard, sans-serif">${label}</text>
+        <g filter="url(#compDrop)">
+            <rect x="${cx - 42}" y="${cy - 33}" width="84" height="20" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+            <text x="${cx}" y="${cy - 19}" text-anchor="middle" fill="#1d4ed8" font-size="12.5" font-weight="900" font-family="Pretendard, sans-serif">${label}</text>
         </g>
         <!-- Live Measurement Badge -->
-        <g>
-            <rect x="${cx - 48}" y="${cy + 15}" width="96" height="17" rx="8.5" fill="#05121c" stroke="rgba(148, 163, 184, 0.28)" stroke-width="1"/>
-            <text x="${cx}" y="${cy + 27}" text-anchor="middle" fill="#cbd5e1" font-size="10" font-weight="800" font-family="Pretendard, monospace">${sub}</text>
+        <g filter="url(#compDrop)">
+            <rect x="${cx - 56}" y="${cy + 15}" width="112" height="20" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+            <text x="${cx}" y="${cy + 29}" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="800" font-family="Pretendard, monospace">${sub}</text>
         </g>`;
     }
 
@@ -158,58 +171,58 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
         <g class="dc-power-supply" filter="url(#compDrop)">
             <!-- Main Chassis -->
-            <rect x="${x - 39}" y="72" width="78" height="96" rx="8" fill="url(#dcBody)" stroke="rgba(148, 163, 184, 0.25)" stroke-width="1.2"/>
+            <rect x="${x - 40}" y="68" width="80" height="102" rx="8" fill="url(#dcChassis)" stroke="#94a3b8" stroke-width="1.5"/>
             <!-- Header bar -->
-            <rect x="${x - 39}" y="72" width="78" height="16" rx="8" fill="#0f172a"/>
-            <rect x="${x - 39}" y="80" width="78" height="8" fill="#0f172a"/>
-            <text x="${x}" y="83.5" text-anchor="middle" fill="#94a3b8" font-size="7.5" font-weight="900" letter-spacing="0.8">DC POWER 12V</text>
+            <rect x="${x - 40}" y="68" width="80" height="20" rx="8" fill="#334155"/>
+            <rect x="${x - 40}" y="78" width="80" height="10" fill="#334155"/>
+            <text x="${x}" y="82" text-anchor="middle" fill="#ffffff" font-size="11.5" font-weight="900" letter-spacing="0.5">DC 전원장치</text>
             <!-- LED Display Bezel & Screen -->
-            <rect x="${x - 33}" y="92" width="66" height="28" rx="4" fill="#09131a" stroke="#1e293b" stroke-width="1.2"/>
-            <rect x="${x - 30}" y="95" width="60" height="22" rx="2" fill="url(#dcScreen)"/>
-            <text x="${x}" y="111" text-anchor="middle" fill="#34d399" font-size="13.5" font-weight="900" font-family="'Courier New', monospace" filter="url(#neonGlow)">${v.toFixed(1)} V</text>
+            <rect x="${x - 34}" y="92" width="68" height="28" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1.2"/>
+            <rect x="${x - 31}" y="95" width="62" height="22" rx="2" fill="url(#dcScreen)"/>
+            <text x="${x}" y="112" text-anchor="middle" fill="#4ade80" font-size="14.5" font-weight="900" font-family="'Pretendard', monospace" filter="url(#glowGreen)">${v.toFixed(1)} V</text>
             <!-- Rotary Knob -->
-            <circle cx="${x - 15}" cy="142" r="10" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
-            <circle cx="${x - 15}" cy="142" r="7" fill="#334155"/>
-            <line x1="${x - 15}" y1="142" x2="${(x - 15 + 5 * Math.cos(angle * Math.PI / 180)).toFixed(1)}" y2="${(142 + 5 * Math.sin(angle * Math.PI / 180)).toFixed(1)}" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
-            <text x="${x - 15}" y="159" text-anchor="middle" fill="#64748b" font-size="6.5" font-weight="800">VOLT</text>
+            <circle cx="${x - 16}" cy="142" r="11" fill="url(#knobGrad)" stroke="#64748b" stroke-width="1.5"/>
+            <circle cx="${x - 16}" cy="142" r="7.5" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+            <line x1="${x - 16}" y1="142" x2="${(x - 16 + 6 * Math.cos(angle * Math.PI / 180)).toFixed(1)}" y2="${(142 + 6 * Math.sin(angle * Math.PI / 180)).toFixed(1)}" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
+            <text x="${x - 16}" y="161" text-anchor="middle" fill="#334155" font-size="10.5" font-weight="850">전압 조절</text>
             <!-- Power Indicator LED -->
-            <circle cx="${x + 18}" cy="138" r="3.5" fill="${v > 0 ? '#22c55e' : '#64748b'}" filter="${v > 0 ? 'url(#neonGlow)' : 'none'}"/>
-            <text x="${x + 18}" y="152" text-anchor="middle" fill="#64748b" font-size="6.5" font-weight="800">PWR</text>
+            <circle cx="${x + 18}" cy="138" r="4" fill="${v > 0 ? '#16a34a' : '#94a3b8'}" stroke="${v > 0 ? '#15803d' : '#64748b'}" stroke-width="1"/>
+            <text x="${x + 18}" y="154" text-anchor="middle" fill="#334155" font-size="10.5" font-weight="850">전원</text>
             <!-- Red Binding Post (+) -->
-            <circle cx="${x}" cy="64" r="5.5" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.2"/>
-            <circle cx="${x}" cy="64" r="2.2" fill="#fca5a5"/>
-            <text x="${x - 10}" y="67" text-anchor="end" fill="#ef4444" font-size="10" font-weight="900">+</text>
+            <circle cx="${x}" cy="64" r="6" fill="#dc2626" stroke="#991b1b" stroke-width="1.5"/>
+            <circle cx="${x}" cy="64" r="2.5" fill="#fecaca"/>
+            <text x="${x - 11}" y="68" text-anchor="end" fill="#dc2626" font-size="14" font-weight="900">+</text>
             <!-- Black Binding Post (-) -->
-            <circle cx="${x}" cy="176" r="5.5" fill="#1e293b" stroke="#0f172a" stroke-width="1.2"/>
-            <circle cx="${x}" cy="176" r="2.2" fill="#64748b"/>
-            <text x="${x - 10}" y="179" text-anchor="end" fill="#94a3b8" font-size="12" font-weight="900">−</text>
+            <circle cx="${x}" cy="176" r="6" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+            <circle cx="${x}" cy="176" r="2.5" fill="#94a3b8"/>
+            <text x="${x - 11}" y="180" text-anchor="end" fill="#1e293b" font-size="16" font-weight="900">−</text>
         </g>`;
     }
 
     function meterSymbol(cx, cy, currentVal, orientation = 'h') {
         const isH = orientation === 'h';
-        const w = isH ? 84 : 76;
-        const h = isH ? 36 : 40;
+        const w = isH ? 92 : 82;
+        const h = isH ? 40 : 44;
         return `
         <g class="digital-multimeter" filter="url(#compDrop)">
             <!-- DMM Casing -->
-            <rect x="${cx - w / 2}" y="${cy - h / 2}" width="${w}" height="${h}" rx="7" fill="url(#dmmBody)" stroke="#0e7490" stroke-width="1.5"/>
+            <rect x="${cx - w / 2}" y="${cy - h / 2}" width="${w}" height="${h}" rx="8" fill="url(#dmmBody)" stroke="#0369a1" stroke-width="1.5"/>
             <!-- Protective Bumper Corners -->
-            <path d="M${cx - w / 2 + 6},${cy - h / 2} L${cx - w / 2},${cy - h / 2} L${cx - w / 2},${cy - h / 2 + 6}" stroke="#eab308" stroke-width="2.5" fill="none"/>
-            <path d="M${cx + w / 2 - 6},${cy - h / 2} L${cx + w / 2},${cy - h / 2} L${cx + w / 2},${cy - h / 2 + 6}" stroke="#eab308" stroke-width="2.5" fill="none"/>
-            <path d="M${cx - w / 2},${cy + h / 2 - 6} L${cx - w / 2},${cy + h / 2} L${cx - w / 2 + 6},${cy + h / 2}" stroke="#eab308" stroke-width="2.5" fill="none"/>
-            <path d="M${cx + w / 2 - 6},${cy + h / 2} L${cx + w / 2},${cy + h / 2} L${cx + w / 2},${cy + h / 2 - 6}" stroke="#eab308" stroke-width="2.5" fill="none"/>
+            <path d="M${cx - w / 2 + 7},${cy - h / 2} L${cx - w / 2},${cy - h / 2} L${cx - w / 2},${cy - h / 2 + 7}" stroke="#f59e0b" stroke-width="3" fill="none"/>
+            <path d="M${cx + w / 2 - 7},${cy - h / 2} L${cx + w / 2},${cy - h / 2} L${cx + w / 2},${cy - h / 2 + 7}" stroke="#f59e0b" stroke-width="3" fill="none"/>
+            <path d="M${cx - w / 2},${cy + h / 2 - 7} L${cx - w / 2},${cy + h / 2} L${cx - w / 2 + 7},${cy + h / 2}" stroke="#f59e0b" stroke-width="3" fill="none"/>
+            <path d="M${cx + w / 2 - 7},${cy + h / 2} L${cx + w / 2},${cy + h / 2} L${cx + w / 2},${cy + h / 2 - 7}" stroke="#f59e0b" stroke-width="3" fill="none"/>
             <!-- LCD Screen Bezel & Display -->
-            <rect x="${cx - w / 2 + 8}" y="${cy - h / 2 + 6}" width="${w - 16}" height="${h - 12}" rx="3" fill="#041c19" stroke="#064e3b" stroke-width="1"/>
-            <rect x="${cx - w / 2 + 10}" y="${cy - h / 2 + 8}" width="${w - 20}" height="${h - 16}" rx="2" fill="url(#dmmLcd)"/>
-            <text x="${cx - w / 2 + 13}" y="${cy + 3}" fill="#059669" font-size="7.5" font-weight="900" font-family="Pretendard, sans-serif">DMM</text>
-            <text x="${cx + 8}" y="${cy + 5}" text-anchor="middle" fill="#34d399" font-size="12.5" font-weight="900" font-family="'Courier New', monospace" filter="url(#neonGlow)">${currentVal.toFixed(2)} A</text>
+            <rect x="${cx - w / 2 + 8}" y="${cy - h / 2 + 6}" width="${w - 16}" height="${h - 12}" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+            <rect x="${cx - w / 2 + 10}" y="${cy - h / 2 + 8}" width="${w - 20}" height="${h - 16}" rx="3" fill="url(#dmmLcd)"/>
+            <text x="${cx - w / 2 + 13}" y="${cy + 4}" fill="#34d399" font-size="10" font-weight="900" font-family="Pretendard, sans-serif">전류계</text>
+            <text x="${cx + 12}" y="${cy + 6}" text-anchor="middle" fill="#4ade80" font-size="14.5" font-weight="900" font-family="'Pretendard', monospace" filter="url(#glowGreen)">${currentVal.toFixed(2)} A</text>
             ${isH ? `
             <!-- Binding Terminal Jacks -->
-            <circle cx="${cx - w / 2}" cy="${cy}" r="3" fill="#ef4444"/>
+            <circle cx="${cx - w / 2}" cy="${cy}" r="3" fill="#dc2626"/>
             <circle cx="${cx + w / 2}" cy="${cy}" r="3" fill="#1e293b"/>
             ` : `
-            <circle cx="${cx}" cy="${cy - h / 2}" r="3" fill="#ef4444"/>
+            <circle cx="${cx}" cy="${cy - h / 2}" r="3" fill="#dc2626"/>
             <circle cx="${cx}" cy="${cy + h / 2}" r="3" fill="#1e293b"/>
             `}
         </g>`;
@@ -249,7 +262,11 @@ document.addEventListener('DOMContentLoaded', () => {
             out += resistorSymbol(180, T, `R₁ ${R1()} Ω`, `${a.v1.toFixed(2)} V · ${a.i1.toFixed(2)} A`, R1());
             out += resistorSymbol(300, T, `R₂ ${R2()} Ω`, `${a.v2.toFixed(2)} V · ${a.i2.toFixed(2)} A`, R2());
             out += meterSymbol(235, B, a.I, 'h');
-            out += `<text class="comp-sub" x="235" y="210" text-anchor="middle">직렬: 두 저항에 같은 전류(${a.I.toFixed(2)} A)가 흐르고 전압이 나뉩니다</text>`;
+            out += `
+            <g transform="translate(230, 208)">
+                <rect x="-195" y="-12" width="390" height="24" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+                <text x="0" y="4.5" text-anchor="middle" fill="#0f172a" font-size="12.5" font-weight="800" font-family="Pretendard, sans-serif">직렬: 두 저항에 같은 전류(${a.I.toFixed(2)} A)가 흐르고 전압이 나뉩니다</text>
+            </g>`;
         } else {
             const L = 65, LR = 165, RR = 350, T = 62, B = 176;
             const lead = `M${L},64 L${L},38 L${LR},38 L${LR},${T}`;
@@ -278,7 +295,11 @@ document.addEventListener('DOMContentLoaded', () => {
             out += resistorSymbol(257, T, `R₁ ${R1()} Ω`, `${a.v1.toFixed(2)} V · ${a.i1.toFixed(2)} A`, R1());
             out += resistorSymbol(257, B, `R₂ ${R2()} Ω`, `${a.v2.toFixed(2)} V · ${a.i2.toFixed(2)} A`, R2());
             out += meterSymbol(405, 119, a.I, 'h');
-            out += `<text class="comp-sub" x="257" y="20" text-anchor="middle">병렬: 두 저항에 같은 전압(${V().toFixed(1)} V)이 걸리고 전류가 나뉩니다</text>`;
+            out += `
+            <g transform="translate(230, 18)">
+                <rect x="-195" y="-12" width="390" height="24" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+                <text x="0" y="4.5" text-anchor="middle" fill="#0f172a" font-size="12.5" font-weight="800" font-family="Pretendard, sans-serif">병렬: 두 저항에 같은 전압(${V().toFixed(1)} V)이 걸리고 전류가 나뉩니다</text>
+            </g>`;
         }
         circuitGroup.innerHTML = out;
     }
@@ -290,24 +311,24 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = `
         <defs>
             <linearGradient id="graphAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#34d399" stop-opacity="0.32"/>
-                <stop offset="100%" stop-color="#34d399" stop-opacity="0.02"/>
+                <stop offset="0%" stop-color="#059669" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#059669" stop-opacity="0.02"/>
             </linearGradient>
         </defs>`;
 
         for (let k = 0; k <= 4; k += 1) {
             const y = GRAPH.y0 - (k / 4) * (GRAPH.y0 - GRAPH.y1);
             out += `<line class="grid-line" x1="${GRAPH.x0}" y1="${y}" x2="${GRAPH.x1}" y2="${y}"/>`;
-            out += `<text class="axis-text" x="${GRAPH.x0 - 8}" y="${y + 3}" text-anchor="end">${((iMax * k) / 4).toFixed(2)}</text>`;
+            out += `<text class="axis-text" x="${GRAPH.x0 - 8}" y="${y + 4}" text-anchor="end">${((iMax * k) / 4).toFixed(2)}</text>`;
         }
         for (let v = 0; v <= V_MAX; v += 3) {
             out += `<line class="grid-line" x1="${gx(v)}" y1="${GRAPH.y1}" x2="${gx(v)}" y2="${GRAPH.y0}"/>`;
-            out += `<text class="axis-text" x="${gx(v)}" y="${GRAPH.y0 + 15}" text-anchor="middle">${v}</text>`;
+            out += `<text class="axis-text" x="${gx(v)}" y="${GRAPH.y0 + 17}" text-anchor="middle">${v}</text>`;
         }
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
-        out += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 31}" text-anchor="middle">전압 (V)</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 + 2}">전류 (A)</text>`;
+        out += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 34}" text-anchor="middle">전압 (V)</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 10}" text-anchor="start">전류 (A)</text>`;
 
         const px = gx(V()), py = gy(a.I, iMax);
         const flip = px > (GRAPH.x0 + GRAPH.x1) / 2;
@@ -316,17 +337,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const polyPoints = `${gx(0)},${GRAPH.y0} ${gx(0)},${gy(0, iMax)} ${px.toFixed(1)},${py.toFixed(1)} ${px.toFixed(1)},${GRAPH.y0}`;
         out += `<polygon points="${polyPoints}" fill="url(#graphAreaGrad)"/>`;
 
-        // Slope badge in upper left
+        // Slope badge at top - perfectly aligned away from Y-axis labels
         out += `
-        <g transform="translate(68, 26)">
-            <rect width="186" height="20" rx="10" fill="rgba(5, 21, 32, 0.85)" stroke="rgba(52, 211, 153, 0.4)" stroke-width="1"/>
-            <text x="93" y="14" text-anchor="middle" fill="#34d399" font-size="10.5" font-weight="850" font-family="Pretendard, monospace">합성 R: ${a.R.toFixed(1)} Ω · 기울기 ${(1 / a.R).toFixed(3)} A/V</text>
+        <g transform="translate(180, 8)" filter="url(#compDrop)">
+            <rect width="240" height="22" rx="11" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2"/>
+            <text x="120" y="15.5" text-anchor="middle" fill="#065f46" font-size="12" font-weight="900" font-family="Pretendard, monospace">합성 R: ${a.R.toFixed(1)} Ω · 기울기 ${(1 / a.R).toFixed(3)} A/V</text>
         </g>`;
 
         // R1 alone for comparison
         const r1Y = gy(V_MAX / R1(), iMax);
         out += `<path class="iv-line ghost" d="M${gx(0)},${gy(0, iMax)} L${gx(V_MAX)},${r1Y}"/>`;
-        out += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${Math.min(GRAPH.y0 - 4, r1Y - 6).toFixed(1)}" text-anchor="end">R₁만</text>`;
+        out += `
+        <g transform="translate(${GRAPH.x1 - 46}, ${Math.max(GRAPH.y1 + 8, Math.min(GRAPH.y0 - 20, r1Y - 10))})">
+            <rect width="44" height="20" rx="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+            <text x="22" y="14.5" text-anchor="middle" fill="#1d4ed8" font-size="12.5" font-weight="900" font-family="Pretendard, sans-serif">R₁만</text>
+        </g>`;
 
         // Combined resistance I-V line
         out += `<path class="iv-line" d="M${gx(0)},${gy(0, iMax)} L${gx(V_MAX)},${gy(iAtMax, iMax)}"/>`;
@@ -336,17 +361,17 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="op-guide" x1="${GRAPH.x0}" y1="${py.toFixed(1)}" x2="${px}" y2="${py.toFixed(1)}"/>`;
 
         // Pulsing radar ring & operating point
-        out += `<circle class="pulse-ring" cx="${px}" cy="${py.toFixed(1)}" r="7" fill="none" stroke="#fbbf24" stroke-width="2"/>`;
+        out += `<circle class="pulse-ring" cx="${px}" cy="${py.toFixed(1)}" r="7" fill="none" stroke="#ea580c" stroke-width="2"/>`;
         out += `<circle class="op-point" cx="${px}" cy="${py.toFixed(1)}" r="5"/>`;
 
         // Operating point pill badge
-        const bw = 104, bh = 20;
-        const bx = flip ? px - bw - 8 : px + 8;
-        const by = Math.max(GRAPH.y1 - 2, py - bh / 2);
+        const bw = 112, bh = 22;
+        const bx = flip ? px - bw - 10 : px + 10;
+        const by = Math.max(GRAPH.y1 + 4, Math.min(GRAPH.y0 - 24, py - bh / 2));
         out += `
-        <g transform="translate(${bx.toFixed(1)}, ${by.toFixed(1)})">
-            <rect width="${bw}" height="${bh}" rx="10" fill="rgba(9, 24, 36, 0.92)" stroke="rgba(251, 191, 36, 0.6)" stroke-width="1.2"/>
-            <text x="${bw / 2}" y="14" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="900" font-family="Pretendard, monospace">${V().toFixed(1)} V, ${a.I.toFixed(2)} A</text>
+        <g transform="translate(${bx.toFixed(1)}, ${by.toFixed(1)})" filter="url(#compDrop)">
+            <rect width="${bw}" height="${bh}" rx="11" fill="#fff7ed" stroke="#f97316" stroke-width="1.2"/>
+            <text x="${bw / 2}" y="15" text-anchor="middle" fill="#c2410c" font-size="12.5" font-weight="900" font-family="Pretendard, monospace">${V().toFixed(1)} V, ${a.I.toFixed(2)} A</text>
         </g>`;
 
         graphGroup.innerHTML = out;

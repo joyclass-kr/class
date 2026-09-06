@@ -36,55 +36,95 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
-    border-color: rgba(56, 189, 248, 0.26);
-    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.06), 0 24px 48px -30px rgba(56, 189, 248, 0.3);
+    border-color: #cbd5e1;
+    border-radius: 16px;
+    background-color: #f8fafc;
     background-image:
-        radial-gradient(700px 450px at 50% 30%, rgba(56, 189, 248, 0.08), transparent 70%),
-        linear-gradient(rgba(109, 174, 181, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(109, 174, 181, 0.06) 1px, transparent 1px);
+        radial-gradient(700px 450px at 50% 30%, rgba(2, 132, 199, 0.05), transparent 70%),
+        linear-gradient(#e2e8f0 1px, transparent 1px),
+        linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
     background-size: 100% 100%, 24px 24px, 24px 24px;
+    box-shadow: 0 4px 14px -4px rgba(15, 23, 42, 0.08);
 }
-.stage-views { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 6px 0 2px; }
+.stage-views {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 6px 0 2px;
+}
 .circuit-view, .graph-view {
     width: 100%;
     border-radius: 14px;
-    background: #081520;
-    border: 1px solid #1e293b;
-    padding: 10px 8px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 12px 14px 14px;
     box-sizing: border-box;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.03);
 }
 .view-title {
-    margin-bottom: 6px;
-    color: #0369a1;
-    font-size: 13px;
-    font-weight: 900;
-    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 850;
+    letter-spacing: -0.01em;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
 }
-.circuit-svg, .graph-svg { width: 100%; max-width: 560px; margin: 0 auto; height: auto; display: block; overflow: visible; }
+.view-title::before,
+.view-title::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: #cbd5e1;
+}
+.circuit-svg, .graph-svg {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
 
-/* Multi-layer insulated wires */
-.wire-base { stroke: #0b1e2a; stroke-width: 8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.wire-core { stroke: #38bdf8; stroke-width: 3.5; fill: none; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.45)); }
+/* Multi-layer insulated wires in crisp light theme */
+.wire-base {
+    stroke: #334155;
+    stroke-width: 7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.wire-core {
+    stroke: #38bdf8;
+    stroke-width: 3.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
 /* Animated Current Flow Pulses */
 @keyframes currentFlow { to { stroke-dashoffset: -32; } }
 .current-pulse {
-    stroke: #fbbf24;
+    stroke: #f59e0b;
     stroke-width: 3.5;
     fill: none;
     stroke-linecap: round;
-    stroke-dasharray: 10 22;
+    stroke-dasharray: 8 18;
     animation: currentFlow 1s linear infinite;
-    filter: drop-shadow(0 0 6px #f59e0b);
+    filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.7));
 }
 
-.comp-sub { fill: #94a3b8; font-size: 13px; font-weight: 850; font-family: Pretendard, sans-serif; }
+.comp-sub {
+    fill: #0f172a;
+    font-size: 13px;
+    font-weight: 800;
+    font-family: Pretendard, sans-serif;
+}
 
 /* Pulse animation for operating point on graph */
 @keyframes ringPulse {
@@ -97,15 +137,15 @@
     transform-origin: center;
 }
 
-.axis { stroke: #64748b; stroke-width: 1.8; }
-.grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 14px; font-weight: 800; font-family: Pretendard, monospace; }
-.axis-title { fill: #0f172a; font-size: 13px; font-weight: 900; }
-.iv-line { stroke: #34d399; stroke-width: 3; fill: none; filter: drop-shadow(0 0 6px rgba(52, 211, 153, 0.6)); }
-.iv-line.ghost { stroke: rgba(56, 189, 248, 0.45); stroke-width: 1.8; stroke-dasharray: 6 5; }
-.op-point { fill: #fbbf24; stroke: #ffffff; stroke-width: 2; filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.8)); }
-.op-guide { stroke: rgba(251, 191, 36, 0.5); stroke-width: 1.2; stroke-dasharray: 4 3; }
-.op-text { fill: #fbbf24; font-size: 13px; font-weight: 950; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.8)); font-family: Pretendard, sans-serif; }
+.axis { stroke: #334155; stroke-width: 2; stroke-linecap: square; }
+.grid-line { stroke: #e2e8f0; stroke-width: 1; }
+.axis-text { fill: #1e293b; font-size: 13px; font-weight: 800; font-family: Pretendard, monospace; }
+.axis-title { fill: #0f172a; font-size: 13.5px; font-weight: 900; }
+.iv-line { stroke: #059669; stroke-width: 3.5; fill: none; stroke-linecap: round; }
+.iv-line.ghost { stroke: #2563eb; stroke-width: 2; stroke-dasharray: 6 4; fill: none; }
+.op-point { fill: #ea580c; stroke: #ffffff; stroke-width: 2.5; filter: drop-shadow(0 2px 4px rgba(234, 88, 12, 0.4)); }
+.op-guide { stroke: #f97316; stroke-width: 1.5; stroke-dasharray: 4 3; }
+.op-text { fill: #c2410c; font-size: 12.5px; font-weight: 950; font-family: Pretendard, sans-serif; }
 
 @media (prefers-reduced-motion: reduce) {
     .current-pulse { animation: none; }
