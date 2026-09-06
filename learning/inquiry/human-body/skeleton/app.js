@@ -31,7 +31,7 @@
     var isDraggingHand = false;
 
     // Sarcomere Length State
-    var sarcomereLength = 2.20; // 1.60 ~ 2.80 um
+    var sarcomereLength = 2.24; // 2.00 ~ 2.80 μm (A대 1.60 + 액틴 한쪽 1.00 기준)
 
     // Hotspots per Scene
     var hotspots = {
@@ -126,7 +126,7 @@
         var isBicepsContracted = jointAngle < 100;
 
         // Map joint angle to sarcomere length (170° = 2.80um relaxed, 40° = 1.60um contracted)
-        sarcomereLength = 1.60 + ((jointAngle - 40) / 130) * 1.20;
+        sarcomereLength = 2.00 + ((jointAngle - 30) / 150) * 0.80;
 
         if (angleValEl) angleValEl.textContent = Math.round(jointAngle) + '° (' + (jointAngle < 90 ? '굽힘 Flexion 🔥' : '폄 Extension ↔️') + ')';
         if (romGaugeEl) romGaugeEl.textContent = Math.round(jointAngle) + '°';
@@ -144,6 +144,18 @@
 
     function drawScene(time) {
         ctx.clearRect(0, 0, width, height);
+
+        // 팔 장면은 사진을 쓰지 않는다. 사진은 비스듬한 데다 영어 이름이 박혀 있어
+        // 팔을 펴도 'BICEPS (CONTRACTED)'라고 적힌 채로 남는다.
+        if (currentSceneKey === 'joint') {
+            var stage = ctx.createRadialGradient(width * 0.5, height * 0.45, 20, width * 0.5, height * 0.5, width * 0.75);
+            stage.addColorStop(0, '#0d1730');
+            stage.addColorStop(1, '#05070f');
+            ctx.fillStyle = stage;
+            ctx.fillRect(0, 0, width, height);
+            drawArmSchematic(0, 0, width, height, time);
+            return;
+        }
 
         var current = scenes[currentSceneKey];
         if (current && current.loaded && current.img) {
@@ -167,11 +179,7 @@
             ctx.restore();
 
             // Draw Dynamic Kinematic Arm or Sarcomere Sliding Model
-            if (currentSceneKey === 'sarcomere') {
-                drawSarcomereRig(dx, dy, dw, dh, time);
-            } else {
-                drawKinematicArmRig(dx, dy, dw, dh, time);
-            }
+            drawSarcomereRig(dx, dy, dw, dh, time);
 
             // Draw Interactive Hotspots
             drawHotspots(dx, dy, dw, dh, time);
@@ -244,161 +252,308 @@
 
         // Telemetry HUD Card on Canvas
         ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
-        ctx.fillRect(cx - 150, cy + 100, 300, 60);
-        ctx.strokeStyle = '#f43f5e';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(cx - 150, cy + 100, 300, 60);
+        var aBand = 1.60;                                   // 마이오신 길이 - 언제나 그대로
+        var hZone = Math.max(0, sarcomereLength - 2.00);     // 액틴이 겹치지 않는 가운데
+        var iBand = Math.max(0, (sarcomereLength - aBand) / 2); // 한쪽 I대
+        var isContracting = sarcomereLength < 2.40;
 
-        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(cx - 190, cy + 100, 380, 74);
+        ctx.strokeStyle = isContracting ? '#f43f5e' : '#38bdf8';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(cx - 190, cy + 100, 380, 74);
+
         ctx.font = 'bold 13px Pretendard, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('근절 길이(X): ' + sarcomereLength.toFixed(2) + ' μm | A대(불변): 1.60 μm', cx, cy + 124);
-        ctx.fillStyle = sarcomereLength < 2.0 ? '#f43f5e' : '#38bdf8';
-        ctx.fillText(sarcomereLength < 2.0 ? '🔥 활주설 수축 (I대·H대 감소, 겹치는 구간 증가)' : '↔️ 활주설 이완 상태', cx, cy + 146);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText('근절 길이(X) ' + sarcomereLength.toFixed(2) + ' μm', cx, cy + 122);
+
+        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.fillStyle = '#facc15';
+        ctx.fillText('A대 ' + aBand.toFixed(2) + ' (불변)   H대 ' + hZone.toFixed(2) + '   I대(한쪽) ' + iBand.toFixed(2), cx, cy + 142);
+
+        ctx.fillStyle = isContracting ? '#fca5a5' : '#7dd3fc';
+        ctx.fillText(isContracting ? '수축 - H대와 I대가 함께 줄고 A대는 그대로' : '이완 - H대와 I대가 함께 늘고 A대는 그대로', cx, cy + 162);
         ctx.restore();
     }
 
     // ------------------------------------------------------------------------
-    // Real Kinematic Arm Rig: Bones, Rotating Forearm, and Bulging Muscles
+    // 팔 굽힘·폄 도식 (시험 그림 그대로: 옆에서 본 평면 그림)
     // ------------------------------------------------------------------------
-    function drawKinematicArmRig(dx, dy, dw, dh, time) {
-        var shoulderX = dx + 0.18 * dw;
-        var shoulderY = dy + 0.28 * dh;
-        var elbowX = dx + 0.45 * dw;
-        var elbowY = dy + 0.65 * dh;
 
-        var forearmLength = 0.38 * dw;
-        // Joint angle mapping (170° = straight right, 40° = bent toward shoulder)
-        var forearmAngleRad = -Math.PI * (1 - (jointAngle / 180));
-        var wristX = elbowX + Math.cos(forearmAngleRad) * forearmLength;
-        var wristY = elbowY + Math.sin(forearmAngleRad) * forearmLength;
+    var jointPins = []; // 화면 좌표로 계산해 두는 클릭 자리
 
-        // Biceps attachment on Radius
-        var radiusAttachX = elbowX + Math.cos(forearmAngleRad) * (forearmLength * 0.28);
-        var radiusAttachY = elbowY + Math.sin(forearmAngleRad) * (forearmLength * 0.28);
+    /** 어깨·팔꿈치·손목 자리와 굽힌 정도를 한 곳에서 계산한다 */
+    function armGeometry(dx, dy, dw, dh) {
+        var sx = dx + 0.40 * dw;
+        var sy = dy + 0.15 * dh;
+        var upperLen = 0.35 * dh;
+        var ex = sx, ey = sy + upperLen;
+        var foreLen = 0.35 * dh;
 
-        var flexRatio = (180 - jointAngle) / 140; // 0.0 (Extended) ~ 1.0 (Flexed)
+        var th = jointAngle * Math.PI / 180;
+        var fx = Math.sin(th), fy = -Math.cos(th); // 팔꿈치에서 손목으로 가는 방향
+        var wx = ex + fx * foreLen, wy = ey + fy * foreLen;
 
-        // 1. Triceps Muscle (Back of Upper Arm - Extensor)
-        var tricepsThickness = 14 + (1 - flexRatio) * 22; // Thicker when extended
-        var tricepsMidX = (shoulderX + elbowX) / 2 - 25 * (dw / 800);
-        var tricepsMidY = (shoulderY + elbowY) / 2 + 10 * (dh / 600);
+        return {
+            sx: sx, sy: sy, ex: ex, ey: ey, wx: wx, wy: wy,
+            fx: fx, fy: fy, upperLen: upperLen, foreLen: foreLen,
+            flex: (180 - jointAngle) / 150   // 0 = 곧게 폄, 1 = 다 굽힘
+        };
+    }
 
-        ctx.save();
-        ctx.strokeStyle = flexRatio < 0.4 ? '#38bdf8' : 'rgba(56, 189, 248, 0.4)';
-        ctx.lineWidth = tricepsThickness;
-        ctx.lineCap = 'round';
-        ctx.shadowBlur = flexRatio < 0.4 ? 18 : 6;
-        ctx.shadowColor = '#38bdf8';
-        ctx.beginPath();
-        ctx.moveTo(shoulderX - 10, shoulderY + 15);
-        ctx.quadraticCurveTo(tricepsMidX, tricepsMidY, elbowX - 8, elbowY + 8);
-        ctx.stroke();
-        ctx.restore();
+    /** 방추 모양 근육 하나. 양 끝은 힘줄, 가운데 배가 불룩하다 */
+    function drawMuscleBelly(ax, ay, bx, by, bellyW, color, glow, side) {
+        var vx = bx - ax, vy = by - ay;
+        var len = Math.hypot(vx, vy) || 1;
+        var ux = vx / len, uy = vy / len;
+        var px = -uy * side, py = ux * side;   // 배가 부풀어 오르는 쪽
 
-        // 2. Humerus Bone (Upper Arm)
-        ctx.save();
-        ctx.strokeStyle = 'rgba(224, 242, 254, 0.85)';
-        ctx.lineWidth = 18;
-        ctx.lineCap = 'round';
-        ctx.shadowBlur = 14;
-        ctx.shadowColor = '#38bdf8';
-        ctx.beginPath();
-        ctx.moveTo(shoulderX, shoulderY);
-        ctx.lineTo(elbowX, elbowY);
-        ctx.stroke();
-        ctx.restore();
-
-        // 3. Biceps Muscle (Front of Upper Arm - Flexor, Bulges on Flexion!)
-        var bicepsThickness = 16 + flexRatio * 32; // 16px (thin) ~ 48px (bulging peak!)
-        var bicepsMidX = (shoulderX + radiusAttachX) / 2 + (flexRatio * 18 - 8) * (dw / 800);
-        var bicepsMidY = (shoulderY + radiusAttachY) / 2 - (15 + flexRatio * 20) * (dh / 600);
+        var tendon = Math.min(len * 0.17, 26);
+        var a2x = ax + ux * tendon, a2y = ay + uy * tendon;
+        var b2x = bx - ux * tendon, b2y = by - uy * tendon;
+        var mx = (a2x + b2x) / 2, my = (a2y + b2y) / 2;
 
         ctx.save();
-        var bicepsColor = flexRatio > 0.5 ? '#f43f5e' : 'rgba(244, 63, 94, 0.5)';
-        ctx.strokeStyle = bicepsColor;
-        ctx.lineWidth = bicepsThickness;
+
+        // 힘줄 (양 끝의 흰 끈)
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 5;
         ctx.lineCap = 'round';
-        ctx.shadowBlur = flexRatio > 0.5 ? 24 : 8;
-        ctx.shadowColor = '#f43f5e';
         ctx.beginPath();
-        ctx.moveTo(shoulderX + 5, shoulderY - 5);
-        ctx.quadraticCurveTo(bicepsMidX, bicepsMidY, radiusAttachX, radiusAttachY);
+        ctx.moveTo(ax, ay); ctx.lineTo(a2x, a2y);
+        ctx.moveTo(b2x, b2y); ctx.lineTo(bx, by);
         ctx.stroke();
 
-        // Muscle striation lines on peak bulge
-        if (flexRatio > 0.6) {
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 2;
+        // 근육 배
+        ctx.fillStyle = color;
+        ctx.strokeStyle = glow;
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 16;
+        ctx.shadowColor = glow;
+        ctx.beginPath();
+        ctx.moveTo(a2x, a2y);
+        ctx.quadraticCurveTo(mx + px * bellyW, my + py * bellyW, b2x, b2y);
+        ctx.quadraticCurveTo(mx - px * bellyW * 0.38, my - py * bellyW * 0.38, a2x, a2y);
+        ctx.fill();
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // 결 무늬
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.32)';
+        ctx.lineWidth = 1.2;
+        for (var i = 1; i <= 3; i++) {
+            var t = i / 4;
+            var qx = a2x + (b2x - a2x) * t, qy = a2y + (b2y - a2y) * t;
+            var d = bellyW * 0.55 * Math.sin(Math.PI * t);
             ctx.beginPath();
-            ctx.moveTo(bicepsMidX - 10, bicepsMidY - 8);
-            ctx.lineTo(bicepsMidX + 10, bicepsMidY + 8);
+            ctx.moveTo(qx + px * d * 0.25, qy + py * d * 0.25);
+            ctx.lineTo(qx + px * d, qy + py * d);
             ctx.stroke();
         }
         ctx.restore();
 
-        // 4. White Tendon Attachments
+        return { mx: mx + px * bellyW * 0.55, my: my + py * bellyW * 0.55 };
+    }
+
+    /** 뼈 하나: 굵은 몸통에 양 끝이 볼록하다 */
+    function drawBone(ax, ay, bx, by, thick) {
         ctx.save();
-        ctx.strokeStyle = '#f8fafc';
-        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#e8f4ff';
+        ctx.lineWidth = thick;
+        ctx.lineCap = 'round';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(148, 197, 255, 0.75)';
         ctx.beginPath();
-        ctx.moveTo(radiusAttachX, radiusAttachY);
-        ctx.lineTo(elbowX + Math.cos(forearmAngleRad) * 15, elbowY + Math.sin(forearmAngleRad) * 15);
+        ctx.moveTo(ax, ay); ctx.lineTo(bx, by);
+        ctx.stroke();
+
+        ctx.fillStyle = '#f8fbff';
+        ctx.beginPath(); ctx.arc(ax, ay, thick * 0.72, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(bx, by, thick * 0.72, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+    }
+
+    /** 부위 이름표 + 가리키는 선 */
+    function drawTag(anchorX, anchorY, tagX, tagY, text, color) {
+        ctx.save();
+        ctx.font = 'bold 12px Pretendard, sans-serif';
+        var tw = ctx.measureText(text).width;
+        var boxW = tw + 18, boxH = 24;
+        var bx = Math.min(Math.max(tagX - boxW / 2, 4), width - 4 - boxW);
+        var by = Math.min(Math.max(tagY - boxH / 2, 90), height - 4 - boxH);
+
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = 0.6;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(anchorX, anchorY);
+        ctx.lineTo(bx + (anchorX > bx ? boxW : 0), by + boxH / 2);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+        ctx.fillStyle = 'rgba(6, 10, 24, 0.88)';
+        ctx.beginPath();
+        ctx.roundRect(bx, by, boxW, boxH, 7);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, bx + boxW / 2, by + boxH / 2 + 0.5);
+        ctx.textBaseline = 'alphabetic';
+        ctx.restore();
+    }
+
+    /** 왼쪽 위 상태 판 */
+    function drawStatePlate(px, py, lines, accent) {
+        ctx.save();
+        py = Math.max(py, 86); // 위쪽 장면 단추 줄 아래
+        ctx.font = 'bold 12px Pretendard, sans-serif';
+        var maxW = 0;
+        lines.forEach(function (l) { maxW = Math.max(maxW, ctx.measureText(l.t).width); });
+        var boxW = maxW + 24, boxH = 14 + lines.length * 19;
+
+        ctx.fillStyle = 'rgba(6, 10, 24, 0.85)';
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.roundRect(px, py, boxW, boxH, 8);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.textAlign = 'left';
+        lines.forEach(function (l, i) {
+            ctx.fillStyle = l.c || '#f8fafc';
+            ctx.fillText(l.t, px + 12, py + 21 + i * 19);
+        });
+        ctx.restore();
+    }
+
+    function drawArmSchematic(dx, dy, dw, dh, time) {
+        var g = armGeometry(dx, dy, dw, dh);
+        var flex = g.flex;
+        var isFlexed = jointAngle < 100;
+
+        // 근육이 붙는 자리
+        var bicepsTopX = g.sx + 0.035 * dw, bicepsTopY = g.sy + 0.04 * dh;
+        var bicepsEndX = g.ex + g.fx * (g.foreLen * 0.26) + (-g.fy) * 0.022 * dw;
+        var bicepsEndY = g.ey + g.fy * (g.foreLen * 0.26) + (g.fx) * 0.022 * dw;
+
+        var tricepsTopX = g.sx - 0.038 * dw, tricepsTopY = g.sy + 0.05 * dh;
+        var olecranonX = g.ex - g.fx * (g.foreLen * 0.16) - 0.026 * dw;
+        var olecranonY = g.ey - g.fy * (g.foreLen * 0.16);
+
+        // 두께: 굽힐수록 이두근이 두꺼워지고 삼두근이 얇아진다
+        var bicepsW = (0.055 + flex * 0.075) * dh;
+        var tricepsW = (0.115 - flex * 0.070) * dh;
+
+        ctx.save();
+
+        // 몸통 쪽 어깨
+        ctx.fillStyle = 'rgba(148, 197, 255, 0.09)';
+        ctx.strokeStyle = 'rgba(148, 197, 255, 0.40)';
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.ellipse(g.sx - 0.012 * dw, g.sy - 0.02 * dh, 0.052 * dw, 0.075 * dh, -0.25, 0, Math.PI * 2);
+        ctx.fill();
         ctx.stroke();
         ctx.restore();
 
-        // 5. Forearm Bones (Radius & Ulna) Rotates in Real-Time!
+        // 삼두근(뒤) ➔ 뼈 ➔ 이두근(앞) 차례로 겹쳐 그린다
+        var triMid = drawMuscleBelly(
+            tricepsTopX, tricepsTopY, olecranonX, olecranonY, tricepsW,
+            isFlexed ? 'rgba(56, 189, 248, 0.40)' : 'rgba(56, 189, 248, 0.92)',
+            '#38bdf8', -1
+        );
+
+        drawBone(g.sx, g.sy, g.ex, g.ey, 0.042 * dh);   // 위팔뼈
+        drawBone(g.ex + (-g.fy) * 0.018 * dw, g.ey + g.fx * 0.018 * dw,
+                 g.wx + (-g.fy) * 0.018 * dw, g.wy + g.fx * 0.018 * dw, 0.024 * dh); // 자뼈
+        drawBone(g.ex, g.ey, g.wx, g.wy, 0.030 * dh);   // 노뼈
+
+        var bicMid = drawMuscleBelly(
+            bicepsTopX, bicepsTopY, bicepsEndX, bicepsEndY, bicepsW,
+            isFlexed ? 'rgba(244, 63, 94, 0.92)' : 'rgba(244, 63, 94, 0.40)',
+            '#f43f5e', 1
+        );
+
         ctx.save();
-        ctx.strokeStyle = '#bae6fd';
-        ctx.lineWidth = 14;
-        ctx.lineCap = 'round';
+
+        // 팔꿈치 관절
+        ctx.fillStyle = '#0ea5e9';
+        ctx.strokeStyle = '#e0f2fe';
+        ctx.lineWidth = 2;
         ctx.shadowBlur = 14;
         ctx.shadowColor = '#38bdf8';
         ctx.beginPath();
-        ctx.moveTo(elbowX, elbowY);
-        ctx.lineTo(wristX, wristY);
-        ctx.stroke();
-        ctx.restore();
-
-        // 6. Elbow Joint Cartilage & Synovial Capsule
-        ctx.save();
-        ctx.fillStyle = '#38bdf8';
-        ctx.shadowBlur = 16;
-        ctx.shadowColor = '#38bdf8';
-        ctx.beginPath();
-        ctx.arc(elbowX, elbowY, 16, 0, Math.PI * 2);
+        ctx.arc(g.ex, g.ey, 0.030 * dh, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
+        ctx.stroke();
+        ctx.shadowBlur = 0;
 
-        // 7. Interactive Draggable Hand/Wrist Handle
-        ctx.save();
+        // 각도 호와 숫자
+        var upAngle = -Math.PI / 2;
+        var foreAngle = Math.atan2(g.fy, g.fx);
+        ctx.strokeStyle = '#facc15';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 4]);
+        ctx.beginPath();
+        ctx.arc(g.ex, g.ey, 0.105 * dh, upAngle, foreAngle);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        var midAngle = (upAngle + foreAngle) / 2;
+        ctx.fillStyle = '#facc15';
+        ctx.font = 'bold 13px Pretendard, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(jointAngle + '°', g.ex + Math.cos(midAngle) * 0.15 * dh, g.ey + Math.sin(midAngle) * 0.15 * dh + 4);
+
+        // 손잡이
         ctx.fillStyle = '#0284c7';
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 3;
-        ctx.shadowBlur = 20;
+        ctx.shadowBlur = 18;
         ctx.shadowColor = '#38bdf8';
         ctx.beginPath();
-        ctx.arc(wristX, wristY, 20, 0, Math.PI * 2);
+        ctx.arc(g.wx, g.wy, 0.038 * dh, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
-
+        ctx.shadowBlur = 0;
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 11px Pretendard, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('✋ 잡고 당기기', g.wx + 0.055 * dh, g.wy + 4);
         ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('✋ 잡고 당기기', wristX, wristY + 32);
+
         ctx.restore();
 
-        // 8. Range of Motion Arc
-        ctx.save();
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([4, 4]);
-        ctx.beginPath();
-        ctx.arc(elbowX, elbowY, 50, -Math.PI * 0.9, 0);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.restore();
+        // 이름표
+        drawTag(g.sx, g.sy + g.upperLen * 0.30, g.sx + 0.105 * dw, g.sy + g.upperLen * 0.06, '위팔뼈', '#bae6fd');
+        drawTag(triMid.mx, triMid.my, triMid.mx - 0.135 * dw, triMid.my, '삼두근 (팔을 펴는 근육)', '#38bdf8');
+        drawTag(bicMid.mx, bicMid.my, bicMid.mx + 0.145 * dw, bicMid.my - 0.03 * dh, '이두근 (팔을 굽히는 근육)', '#f43f5e');
+        drawTag(bicepsEndX, bicepsEndY, bicepsEndX + 0.075 * dw, bicepsEndY + 0.07 * dh, '힘줄', '#e2e8f0');
+        drawTag(g.ex, g.ey, g.ex - 0.115 * dw, g.ey + 0.10 * dh, '팔꿈치 관절', '#0ea5e9');
+        drawTag((g.ex + g.wx) / 2, (g.ey + g.wy) / 2,
+                (g.ex + g.wx) / 2 + 0.105 * dw, (g.ey + g.wy) / 2 + 0.06 * dh, '노뼈 · 자뼈', '#bae6fd');
+
+        // 상태 판
+        drawStatePlate(dx + 12, dy + 12, [
+            { t: (isFlexed ? '팔을 굽힘 (' : '팔을 폄 (') + jointAngle + '°)' },
+            { t: '이두근: ' + (isFlexed ? '수축 — 두꺼워지고 짧아짐' : '이완 — 얇아지고 길어짐'), c: isFlexed ? '#fca5a5' : '#94a3b8' },
+            { t: '삼두근: ' + (isFlexed ? '이완 — 얇아지고 길어짐' : '수축 — 두꺼워지고 짧아짐'), c: isFlexed ? '#94a3b8' : '#7dd3fc' },
+            { t: '두 근육은 언제나 반대로 움직입니다 (길항 작용)', c: '#cbd5e1' }
+        ], isFlexed ? '#f43f5e' : '#38bdf8');
+
+        // 클릭 자리 갱신
+        jointPins = [
+            { x: g.sx, y: g.sy + g.upperLen * 0.32, r: 26, key: 0 },
+            { x: bicMid.mx, y: bicMid.my, r: 30, key: 1 },
+            { x: triMid.mx, y: triMid.my, r: 30, key: 2 },
+            { x: g.ex, y: g.ey, r: 26, key: 3 },
+            { x: bicepsEndX, y: bicepsEndY, r: 22, key: 4 },
+            { x: (g.ex + g.wx) / 2, y: (g.ey + g.wy) / 2, r: 28, key: 5 }
+        ];
     }
 
     function drawHotspots(dx, dy, dw, dh, time) {
@@ -537,19 +692,29 @@
                     dx = 0; dy = (height - dh) / 2;
                 }
 
-                // Check Wrist/Hand Handle Drag
-                var elbowX = dx + 0.45 * dw;
-                var elbowY = dy + 0.65 * dh;
-                var forearmLength = 0.38 * dw;
-                var forearmAngleRad = -Math.PI * (1 - (jointAngle / 180));
-                var wristX = elbowX + Math.cos(forearmAngleRad) * forearmLength;
-                var wristY = elbowY + Math.sin(forearmAngleRad) * forearmLength;
+                if (currentSceneKey === 'joint') {
+                    var g = armGeometry(0, 0, width, height);
+                    if (Math.hypot(clickX - g.wx, clickY - g.wy) <= 0.075 * height) {
+                        isDraggingHand = true;
+                        canvas.setPointerCapture(event.pointerId);
+                        if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playPulse();
+                        return;
+                    }
 
-                var distHand = Math.hypot(clickX - wristX, clickY - wristY);
-                if (distHand <= 45) {
-                    isDraggingHand = true;
-                    canvas.setPointerCapture(event.pointerId);
-                    if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playPulse();
+                    // 도식 위의 부위를 누르면 오른쪽 설명이 바뀐다
+                    for (var pi = 0; pi < jointPins.length; pi++) {
+                        var pin = jointPins[pi];
+                        if (Math.hypot(clickX - pin.x, clickY - pin.y) <= pin.r) {
+                            var info = hotspots.joint[pin.key];
+                            if (info) {
+                                if (organTitleEl) organTitleEl.textContent = info.title;
+                                if (organDescEl) organDescEl.innerHTML = info.desc;
+                                if (organDetailCard) organDetailCard.style.display = 'block';
+                                if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
+                            }
+                            return;
+                        }
+                    }
                     return;
                 }
 
@@ -576,26 +741,15 @@
                 var clickX = event.clientX - rect.left;
                 var clickY = event.clientY - rect.top;
 
-                var current = scenes[currentSceneKey];
-                if (!current || !current.img) return;
+                var geo = armGeometry(0, 0, width, height);
 
-                var imgAspect = current.img.width / current.img.height;
-                var canvasAspect = width / height;
-                var dw = canvasAspect > imgAspect ? height * imgAspect : width;
-                var dh = canvasAspect > imgAspect ? height : width / imgAspect;
-                var dx = canvasAspect > imgAspect ? (width - dw) / 2 : 0;
-                var dy = canvasAspect > imgAspect ? 0 : (height - dh) / 2;
+                // 위팔뼈(팔꿈치에서 어깨로)와 손끝 방향 사이의 각을 그대로 관절 각도로 쓴다
+                var vx = clickX - geo.ex, vy = clickY - geo.ey;
+                var vlen = Math.hypot(vx, vy) || 1;
+                var dot = (vx * 0 + vy * -1) / vlen;      // 어깨 방향은 (0, -1)
+                var deg = Math.acos(Math.max(-1, Math.min(1, dot))) * 180 / Math.PI;
 
-                var elbowX = dx + 0.45 * dw;
-                var elbowY = dy + 0.65 * dh;
-
-                // Calculate angle from elbow to mouse cursor
-                var angleToCursor = Math.atan2(clickY - elbowY, clickX - elbowX); // -PI ~ PI
-                // Map to Joint ROM: 40° ~ 170°
-                var rawDeg = (1 + angleToCursor / Math.PI) * 180;
-                var clampedAngle = Math.max(35, Math.min(175, rawDeg));
-
-                jointAngle = Math.round(clampedAngle);
+                jointAngle = Math.round(Math.max(30, Math.min(180, deg)));
                 if (angleSlider) angleSlider.value = jointAngle;
             });
 
