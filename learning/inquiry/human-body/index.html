@@ -6,60 +6,104 @@
     <title>인체의 구조</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        html, body.hub-page {
+            width: 100%;
+            min-height: 100vh;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #070913 url('assets/images/anatomy-gallery-room-v2.webp') center center / cover no-repeat fixed;
+            color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Ambient Dark Vignette Overlay */
+        body.hub-page::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(10, 15, 30, 0.55) 0%, rgba(7, 9, 19, 0.88) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating Top Left Back Button */
+        .floating-back-btn {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .floating-back-btn:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(56, 189, 248, 0.6);
+            transform: scale(1.06);
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+        }
+
         .hub-container {
             width: 100%;
-            height: calc(100% - var(--header-height));
-            overflow-y: auto;
-            padding: 24px 20px 60px;
-            max-width: 1240px;
-            margin: 0 auto;
-        }
-
-        .hub-hero {
-            margin-bottom: 24px;
-        }
-
-        .hub-heading {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
-        }
-
-        .hub-desc {
-            font-size: 14px;
-            color: var(--text-secondary);
+            max-width: 980px;
+            margin: auto;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
         }
 
         .hub-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            width: 100%;
+            max-width: 920px;
+            justify-content: center;
         }
 
         .hub-card {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(14px);
-            border: 1.5px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 22px;
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(255, 255, 255, 0.11);
+            border-radius: 12px;
+            padding: 12px 16px;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
             text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.2s ease-out;
+            color: #f8fafc;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
-        }
-
-        .hub-card:hover, .hub-card:focus-visible {
-            border-color: var(--card-accent, #38bdf8);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.25);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
         }
 
         .hub-card::before {
@@ -68,342 +112,187 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3.5px;
+            height: 3px;
             background: var(--card-accent, #38bdf8);
+        }
+
+        .hub-card:hover, .hub-card:focus-visible {
+            border-color: var(--card-accent, #38bdf8);
+            background: rgba(15, 23, 42, 0.92);
+            transform: translateY(-2.5px);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.6), 0 0 16px var(--card-accent, #38bdf8);
         }
 
         .card-top {
             display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            margin-bottom: 14px;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
         }
 
         .card-icon-box {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-sm);
-            background: rgba(255, 255, 255, 0.06) !important;
-            border: 1px solid var(--card-accent, #38bdf8) !important;
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-accent, #38bdf8);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 19px;
             flex-shrink: 0;
         }
 
         .card-title-group {
             flex: 1;
+            min-width: 0;
         }
 
         .card-title {
-            font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-            font-size: 17px;
-            font-weight: 800;
+            font-size: 14.5px;
+            font-weight: 750;
             color: #ffffff;
-            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: -0.2px;
+            line-height: 1.3;
         }
 
         .card-title-en {
-            margin-top: 5px;
-            font-family: Inter, Arial, sans-serif;
-            font-size: 11px;
-            font-weight: 650;
-            line-height: 1.35;
+            margin-top: 2px;
+            font-size: 10.5px;
+            font-weight: 600;
             color: #94a3b8;
-            letter-spacing: 0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: 0.01em;
+            line-height: 1.2;
         }
 
-        .card-sub {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--card-accent, #38bdf8);
-            letter-spacing: 0.3px;
+        /* Responsive Layout Optimization */
+        /* PC & Chromebook: 3 Columns, 7th Card Centered */
+        @media (min-width: 861px) {
+            .hub-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .hub-card:nth-child(7) {
+                grid-column: 2;
+            }
         }
 
-        .card-features {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-bottom: 18px;
+        /* iPad / Tablet: 2 Columns, 7th Card Centered */
+        @media (min-width: 581px) and (max-width: 860px) {
+            .hub-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                max-width: 600px;
+            }
+            .hub-card:nth-child(7) {
+                grid-column: 1 / -1;
+                max-width: 290px;
+                margin: 0 auto;
+                width: 100%;
+            }
         }
 
-        .card-feature-item {
-            font-size: 12px;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        /* Mobile Viewport */
+        @media (max-width: 580px) {
+            .hub-container {
+                padding: 60px 16px 24px;
+            }
+            .hub-grid {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+            }
         }
-
-        .card-feature-item .dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--card-accent, #38bdf8);
-            flex-shrink: 0;
-        }
-
-        .card-btn {
-            min-height: 44px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #ffffff;
-            transition: all 0.15s;
-        }
-
-        .hub-card:hover .card-btn {
-            background: var(--card-accent, #0284c7);
-            border-color: transparent;
-            color: #ffffff;
-        }
-
-        .hub-page .hub-container { height: 100%; }
-        .hub-page .hub-hero,
-        .hub-page .card-sub,
-        .hub-page .card-features,
-        .hub-page .card-btn { display: none; }
-
-        .hub-page .hub-card {
-            grid-column: auto !important;
-            background: rgba(15, 23, 42, 0.8) !important;
-            border-color: var(--border-subtle) !important;
-            box-shadow: none !important;
-        }
-
-        .hub-page .hub-card[href="circulation/"] { order: 1; }
-        .hub-page .hub-card[href="respiration/"] { order: 2; }
-        .hub-page .hub-card[href="digestion/"] { order: 3; }
-        .hub-page .hub-card[href="excretion/"] { order: 4; }
-        .hub-page .hub-card[href="nervous/"] { order: 5; }
-        .hub-page .hub-card[href="homeostasis/"] { order: 6; }
-        .hub-page .hub-card[href="skeleton/"] { order: 7; }
-        .hub-page .hub-card[href="muscle/"] { order: 8; }
-        .hub-page .hub-card[href="synapse/"] { order: 9; }
-        .hub-page .hub-card[href="3d-atlas/"] { order: 10; }
-        .hub-page .hub-card[href="exam-challenge/"] { order: 11; }
     </style>
 </head>
 <body class="hub-page">
 
-    <!-- Content Hub -->
+    <!-- Floating Back Button -->
+    <a href="../../" class="floating-back-btn" aria-label="이전 목록으로">
+        <span>←</span>
+    </a>
+
+    <!-- Content Hub (Centered) -->
     <main class="hub-container">
         <div class="hub-grid">
             
-            <!-- 1. 뉴런 시냅스 & 분자 시뮬레이터 (Bespoke AI High-Res) -->
             <!-- 1. 소화계 -->
             <a href="digestion/" class="hub-card" style="--card-accent: #f59e0b;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">🥪</div>
-                        <div class="card-title-group">
-                            <div class="card-title">소화계와 영양소 검출</div>
-                            <div class="card-title-en" lang="en">Digestive System &amp; Nutrient Tests</div>
-                            <div class="card-sub">초등 [6과04-02] · 중등 [9과14-01] 소화와 효소</div>
-                        </div>
+                <div class="card-top">
+                    <div class="card-icon-box">🥪</div>
+                    <div class="card-title-group">
+                        <div class="card-title">소화계와 영양소 검출</div>
+                        <div class="card-title-en" lang="en">Digestive System &amp; Nutrient Tests</div>
                     </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> 음식물 삼키기 연동 운동(꿈틀운동) 물리 이동</li>
-                        <li class="card-feature-item"><span class="dot"></span> 가상 시험관: 온도·pH에 따른 효소 활성도 곡선</li>
-                        <li class="card-feature-item"><span class="dot"></span> 4대 영양소 검출 시약(아이오딘·베네딕트·뷰렛·수단Ⅲ)</li>
-                    </ul>
                 </div>
             </a>
 
             <!-- 2. 순환계 -->
             <a href="circulation/" class="hub-card" style="--card-accent: #ef4444;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">❤️</div>
-                        <div class="card-title-group">
-                            <div class="card-title">순환계와 심장 펌프</div>
-                            <div class="card-title-en" lang="en">Circulatory System &amp; Heart Pump</div>
-                            <div class="card-sub">초등 [6과04-03] · 중등 [9과14-02] 심장과 순환</div>
-                        </div>
+                <div class="card-top">
+                    <div class="card-icon-box">❤️</div>
+                    <div class="card-title-group">
+                        <div class="card-title">순환계와 심장 펌프</div>
+                        <div class="card-title-en" lang="en">Circulatory System &amp; Heart Pump</div>
                     </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> 4개 방실 판막 개폐 및 BPM 연동 실시간 펌핑</li>
-                        <li class="card-feature-item"><span class="dot"></span> 산소포화도(SpO2) 연동 동맥혈·정맥혈 실시간 변색</li>
-                        <li class="card-feature-item"><span class="dot"></span> 모세혈관 백혈구 식균 작용 &amp; Y자 항체 결합</li>
-                    </ul>
                 </div>
             </a>
 
             <!-- 3. 호흡계 -->
             <a href="respiration/" class="hub-card" style="--card-accent: #0284c7;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">🫁</div>
-                        <div class="card-title-group">
-                            <div class="card-title">호흡계와 기체 교환</div>
-                            <div class="card-title-en" lang="en">Respiratory System &amp; Gas Exchange</div>
-                            <div class="card-sub">초등 [6과04-04] · 중등 [9과14-03] 호흡과 확산</div>
-                        </div>
+                <div class="card-top">
+                    <div class="card-icon-box">🫁</div>
+                    <div class="card-title-group">
+                        <div class="card-title">호흡계와 기체 교환</div>
+                        <div class="card-title-en" lang="en">Respiratory System &amp; Gas Exchange</div>
                     </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> <strong>직접 당기는 가로막 핸들:</strong> 보일 법칙 음압/양압 샌드박스</li>
-                        <li class="card-feature-item"><span class="dot"></span> 흉강 부피 ↔ 압력 ↔ 폐 풍선 실시간 팽창·수축</li>
-                        <li class="card-feature-item"><span class="dot"></span> 폐포-모세혈관 산소·이산화탄소 분압 확산 모델</li>
-                    </ul>
                 </div>
             </a>
 
             <!-- 4. 배설계 -->
             <a href="excretion/" class="hub-card" style="--card-accent: #10b981;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">🫘</div>
-                        <div class="card-title-group">
-                            <div class="card-title">배설계와 네프론 여과</div>
-                            <div class="card-title-en" lang="en">Excretory System &amp; Nephron Filtration</div>
-                            <div class="card-sub">초등 [6과04-05] · 중등 [9과14-04] 배설과 여과</div>
-                        </div>
+                <div class="card-top">
+                    <div class="card-icon-box">🫘</div>
+                    <div class="card-title-group">
+                        <div class="card-title">배설계와 네프론 여과</div>
+                        <div class="card-title-en" lang="en">Excretory System &amp; Nephron Filtration</div>
                     </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> 사구체-보먼주머니 혈압 여과 &amp; 세뇨관 100% 포도당 재흡수</li>
-                        <li class="card-feature-item"><span class="dot"></span> <strong>항이뇨호르몬(ADH) 연동:</strong> 수분 재흡수 입자 및 오줌 농축</li>
-                        <li class="card-feature-item"><span class="dot"></span> 수뇨관 흐름 &amp; 방광 차오름 실시간 배뇨 조작</li>
-                    </ul>
                 </div>
             </a>
 
             <!-- 5. 신경계 (시냅스 통합) -->
             <a href="nervous/" class="hub-card" style="--card-accent: #a855f7;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">⚡</div>
-                        <div class="card-title-group">
-                            <div class="card-title">신경계와 자극·반응·시냅스</div>
-                            <div class="card-title-en" lang="en">Nervous System &amp; Synaptic Transmission</div>
-                            <div class="card-sub">초등 [6과04-06] · 중등 [9과20-01~03] · 고등 [12생과Ⅰ03]</div>
-                        </div>
+                <div class="card-top">
+                    <div class="card-icon-box">⚡</div>
+                    <div class="card-title-group">
+                        <div class="card-title">신경계와 자극·반응·시냅스</div>
+                        <div class="card-title-en" lang="en">Nervous System &amp; Synaptic Transmission</div>
                     </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> 의식적 반응(대뇌) vs 무조건 반사(척수) 속도 레이스</li>
-                        <li class="card-feature-item"><span class="dot"></span> <strong>뉴런 시냅스 챔버:</strong> 활동전위(+30mV) 발사 &amp; Ca2+ 유입 소포 분비</li>
-                        <li class="card-feature-item"><span class="dot"></span> 눈의 원근(수정체) 및 명암(동공) 렌즈 광학</li>
-                    </ul>
                 </div>
             </a>
 
             <!-- 6. 근골격계 (활주설 통합) -->
             <a href="skeleton/" class="hub-card" style="--card-accent: #38bdf8;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">🦴</div>
-                        <div class="card-title-group">
-                            <div class="card-title">근골격계와 운동·활주설</div>
-                            <div class="card-title-en" lang="en">Musculoskeletal &amp; Sliding Filament Theory</div>
-                            <div class="card-sub">초등 [6과04-01] · 중등 [9과14-05] · 고등 [12생과Ⅰ03]</div>
-                        </div>
+                <div class="card-top">
+                    <div class="card-icon-box">🦴</div>
+                    <div class="card-title-group">
+                        <div class="card-title">근골격계와 운동·활주설</div>
+                        <div class="card-title-en" lang="en">Musculoskeletal &amp; Sliding Filament</div>
                     </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> <strong>직접 꺾는 관절 래그돌:</strong> 회전 각도에 따른 이두근 울퉁불퉁 수축</li>
-                        <li class="card-feature-item"><span class="dot"></span> 이두근 vs 삼두근 길항 수축·이완 실시간 연동</li>
-                        <li class="card-feature-item"><span class="dot"></span> <strong>근절 활주설:</strong> A대(1.60μm 불변), I대·H대 감소 수치 계산표</li>
-                    </ul>
                 </div>
             </a>
 
             <!-- 7. 항상성 조절 -->
             <a href="homeostasis/" class="hub-card" style="--card-accent: #06b6d4;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">🌡️</div>
-                        <div class="card-title-group">
-                            <div class="card-title">통합 항상성 조절</div>
-                            <div class="card-title-en" lang="en">Homeostatic Regulation</div>
-                            <div class="card-sub">초등 [6과04-07] · 중등 [9과20-04] 체온 및 혈당 피드백</div>
-                        </div>
+                <div class="card-top">
+                    <div class="card-icon-box">🌡️</div>
+                    <div class="card-title-group">
+                        <div class="card-title">통합 항상성 조절</div>
+                        <div class="card-title-en" lang="en">Homeostatic Regulation</div>
                     </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> 기온 변화 시 피부 혈관 수축/확장 &amp; 땀/떨림 반응</li>
-                        <li class="card-feature-item"><span class="dot"></span> 식사/운동에 따른 인슐린·글루카곤 혈당 피드백</li>
-                        <li class="card-feature-item"><span class="dot"></span> 실시간 생체 변동 시계열 오실로스코프 그래프</li>
-                    </ul>
-                </div>
-            </a>
-
-            <!-- 8. 근육 수축 (활주설) -->
-            <a href="muscle/" class="hub-card" style="--card-accent: #f43f5e;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">💪</div>
-                        <div class="card-title-group">
-                            <div class="card-title">근육 수축과 활주설</div>
-                            <div class="card-title-en" lang="en">Muscle Contraction &amp; Sliding Filament</div>
-                            <div class="card-sub">중등 [9과14-05] 근육이 줄어드는 원리</div>
-                        </div>
-                    </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> Z선이 다가오고 I대·H대가 좁아지는 모습을 직접 조작</li>
-                        <li class="card-feature-item"><span class="dot"></span> A대는 길이가 변하지 않는다는 것을 눈으로 확인</li>
-                        <li class="card-feature-item"><span class="dot"></span> 칼슘 이온과 ATP가 만드는 파워 스트로크</li>
-                    </ul>
-                </div>
-            </a>
-
-            <!-- 9. 시냅스 -->
-            <a href="synapse/" class="hub-card" style="--card-accent: #22d3ee;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">🔬</div>
-                        <div class="card-title-group">
-                            <div class="card-title">시냅스와 신경전달물질</div>
-                            <div class="card-title-en" lang="en">Synapse &amp; Neurotransmitters</div>
-                            <div class="card-sub">중등 [9과16] 뉴런 사이에서 신호가 건너가는 법</div>
-                        </div>
-                    </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> 활동전위를 쏘아 칼슘 유입과 소포 방출을 관찰</li>
-                        <li class="card-feature-item"><span class="dot"></span> 도파민·아세틸콜린·세로토닌·GABA 골라 보기</li>
-                        <li class="card-feature-item"><span class="dot"></span> 보톡스·신경가스가 전달을 막는 방식 비교</li>
-                    </ul>
-                </div>
-            </a>
-
-            <!-- 10. 360도 해부학 뷰어 -->
-            <a href="3d-atlas/" class="hub-card" style="--card-accent: #94a3b8;">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box">🔍</div>
-                        <div class="card-title-group">
-                            <div class="card-title">360도 해부학 뷰어</div>
-                            <div class="card-title-en" lang="en">360&deg; Anatomy Viewer</div>
-                            <div class="card-sub">장기를 돌려 보고 잘라 보는 간단한 입체 모형</div>
-                        </div>
-                    </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> 콩팥·심장·위를 마우스로 돌리고 확대</li>
-                        <li class="card-feature-item"><span class="dot"></span> 단면 잘라 속 구조 들여다보기</li>
-                    </ul>
-                </div>
-            </a>
-
-            <!-- 11. 전 단원 실전 진단평가 -->
-            <a href="exam-challenge/" class="hub-card" style="--card-accent: #fbbf24; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(180, 83, 9, 0.25) 100%); border-color: rgba(251, 191, 36, 0.4);">
-                <div>
-                    <div class="card-top">
-                        <div class="card-icon-box" style="background:rgba(251, 191, 36, 0.15); border:1px solid #fbbf24;">🏆</div>
-                        <div class="card-title-group">
-                            <div class="card-title">전 단원 실전 진단평가 (100점 챌린지)</div>
-                            <div class="card-title-en" lang="en">Comprehensive Diagnostic Exam &amp; Report</div>
-                            <div class="card-sub" style="color:#fbbf24;">전 단원 12문항 진단평가</div>
-                        </div>
-                    </div>
-                    <ul class="card-features">
-                        <li class="card-feature-item"><span class="dot"></span> 실시간 자동 채점 및 문항별 오개념 집중 해설</li>
-                        <li class="card-feature-item"><span class="dot"></span> 취약 단원 즉시 시뮬레이션 복습 처방전 리포트</li>
-                        <li class="card-feature-item"><span class="dot"></span> 타이머 및 시험 결과 클립보드 복사 공유 기능</li>
-                    </ul>
                 </div>
             </a>
 
