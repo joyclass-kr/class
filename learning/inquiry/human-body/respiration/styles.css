@@ -66,3 +66,15 @@
     border-color: #22d3ee;
     box-shadow: 0 0 14px rgba(6, 182, 212, 0.5);
 }
+
+/* ── 호흡 운동 (breath-motion.js) ─────────────────────────── */
+.breath-layer {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, #101a2e 0%, #05070f 100%);
+    z-index: 3;
+    padding: 50px 10px 8px;
+}
+
+.breath-layer[hidden] { display: none !important; }
+.breath-layer svg { width: 100%; height: 100%; display: block; }
