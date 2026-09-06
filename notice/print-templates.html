@@ -158,6 +158,9 @@
 
         .sig-img {
             max-height: 35px;
+            /* 폭도 막아야 한다. 가로로 긴 서명이 들어오면 결재란 칸이 밀려 표가 깨진다. */
+            max-width: 100%;
+            object-fit: contain;
             vertical-align: middle;
         }
 

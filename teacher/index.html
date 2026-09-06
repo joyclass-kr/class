@@ -32,34 +32,30 @@
             margin: 0 auto;
         }
 
-        .header-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-            border-bottom: 1px solid var(--line);
-            padding-bottom: 16px;
-        }
-
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        h1 { margin: 0; font-size: 22px; color: var(--green); }
-        .role-tag { font-size: 12px; padding: 3px 10px; background: #1f4730; color: var(--green); border-radius: 99px; border: 1px solid var(--green); }
-
-        .teacher-info {
-            font-size: 14px;
-            color: var(--muted);
-        }
-
         .nav-tabs {
             display: flex;
+            align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
             margin-bottom: 20px;
         }
+
+        .back-btn {
+            width: 44px;
+            height: 44px;
+            flex: none;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            color: var(--muted);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .back-btn:hover { color: var(--green); border-color: var(--green); }
 
         .tab-btn {
             padding: 12px 20px;
@@ -159,17 +155,9 @@
 </head>
 <body>
     <main>
-        <div class="header-bar">
-            <div class="header-title">
-                <h1>👩‍🏫 선생님 전용 업무 공간</h1>
-                <span class="role-tag">교사 전용</span>
-            </div>
-            <div class="teacher-info">
-                서울계상초등학교 | 가정통신문 및 출결 결재 관리
-            </div>
-        </div>
-
+        <!-- 제목 줄을 따로 두지 않는다. 탭 이름이 곧 이 페이지가 무엇인지 말한다. -->
         <div class="nav-tabs">
+            <a class="back-btn" href="/classtools/" aria-label="교사 도구로 돌아가기">←</a>
             <button class="tab-btn active" onclick="switchSection('send', this)">📢 가정통신문 작성/발송</button>
             <button class="tab-btn" onclick="switchSection('quick', this)">🤒 실시간 출결 예고 접수함</button>
             <button class="tab-btn" onclick="switchSection('approval', this)">📝 결석계 & 체험학습 전자 결재함</button>
@@ -329,7 +317,10 @@
                     </div>
                     <p id="signatureMissing" style="margin:10px 0 0; color:#ffcf7c; font-size:13px; display:none;">아직 서명이 없습니다. 승인하려면 먼저 등록해 주세요.</p>
                     <div id="signatureEditor" style="display:none; margin-top:12px;">
-                        <canvas id="teacherSignatureCanvas" style="width:100%; height:120px; background:#fff; border-radius:8px; touch-action:none;"></canvas>
+                        <!-- 서명은 결재란 한 칸에 들어간다. 종이 결재란과 같은 가로세로
+                             비율(5:2)로 두어야 그려 본 대로 찍힌다. -->
+                        <canvas id="teacherSignatureCanvas" width="600" height="240"
+                                style="width:min(100%, 300px); height:120px; background:#fff; border-radius:8px; border:1px dashed #c9c9c9; touch-action:none; display:block;"></canvas>
                         <div style="display:flex; gap:8px; margin-top:8px;">
                             <button class="btn-action" type="button" style="padding:8px 16px; font-size:14px;" onclick="saveTeacherSignature()">이 서명으로 등록</button>
                             <button class="btn-secondary" type="button" onclick="clearTeacherSignature()">지우기</button>
@@ -963,15 +954,48 @@
             return false;
         }
 
+        // 그린 자국만 남기고 잘라낸다. 여백째로 저장하면 결재란에 넣을 때 그 여백까지
+        // 칸을 차지해 정작 이름은 개미만 해진다.
+        function trimmedSignature(cv) {
+            const c = cv.getContext('2d');
+            const d = c.getImageData(0, 0, cv.width, cv.height).data;
+            let x0 = cv.width, y0 = cv.height, x1 = -1, y1 = -1;
+            for (let y = 0; y < cv.height; y += 1) {
+                for (let x = 0; x < cv.width; x += 1) {
+                    if (d[(y * cv.width + x) * 4 + 3] === 0) continue;
+                    if (x < x0) x0 = x;
+                    if (x > x1) x1 = x;
+                    if (y < y0) y0 = y;
+                    if (y > y1) y1 = y;
+                }
+            }
+            if (x1 < 0) return null;
+            const pad = 10;
+            x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad);
+            x1 = Math.min(cv.width - 1, x1 + pad); y1 = Math.min(cv.height - 1, y1 + pad);
+            const out = document.createElement('canvas');
+            out.width = x1 - x0 + 1;
+            out.height = y1 - y0 + 1;
+            out.getContext('2d').drawImage(cv, x0, y0, out.width, out.height, 0, 0, out.width, out.height);
+            return out.toDataURL('image/png');
+        }
+
         function setupTeacherSignatureCanvas() {
             const cv = document.getElementById('teacherSignatureCanvas');
             if (!cv || teacherSigCtx) return;
-            cv.width = cv.offsetWidth || 400;
-            cv.height = cv.offsetHeight || 120;
             const c = cv.getContext('2d');
-            c.lineWidth = 3; c.lineCap = 'round'; c.strokeStyle = '#000';
+            c.lineWidth = 6; c.lineCap = 'round'; c.lineJoin = 'round'; c.strokeStyle = '#000';
             let drawing = false;
-            const pos = (e) => { const r = cv.getBoundingClientRect(); const p = e.touches ? e.touches[0] : e; return { x: p.clientX - r.left, y: p.clientY - r.top }; };
+            // 화면에 보이는 크기와 캔버스 픽셀 크기가 다르다. 좌표를 그 비율로 옮기지
+            // 않으면 그린 자리와 그려지는 자리가 어긋난다.
+            const pos = (e) => {
+                const r = cv.getBoundingClientRect();
+                const p = e.touches ? e.touches[0] : e;
+                return {
+                    x: (p.clientX - r.left) * (cv.width / (r.width || cv.width)),
+                    y: (p.clientY - r.top) * (cv.height / (r.height || cv.height))
+                };
+            };
             cv.addEventListener('mousedown', e => { drawing = true; const p = pos(e); c.beginPath(); c.moveTo(p.x, p.y); });
             cv.addEventListener('mousemove', e => { if (!drawing) return; const p = pos(e); c.lineTo(p.x, p.y); c.stroke(); });
             cv.addEventListener('mouseup', () => { drawing = false; });
@@ -1012,10 +1036,12 @@
             const cv = document.getElementById('teacherSignatureCanvas');
             const status = document.getElementById('signatureStatus');
             if (!cv || !canvasHasInk(cv)) { status.style.color = '#ff7b72'; status.textContent = '먼저 서명을 그려 주세요.'; return; }
+            const signature = trimmedSignature(cv);
+            if (!signature) { status.style.color = '#ff7b72'; status.textContent = '먼저 서명을 그려 주세요.'; return; }
             try {
                 const res = await fetch('/api/me/signature', {
                     method: 'PUT', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ signature: cv.toDataURL('image/png') })
+                    body: JSON.stringify({ signature })
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || '등록 실패');
