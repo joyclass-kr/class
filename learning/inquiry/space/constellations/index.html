@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="별과 별자리 (Stars &amp; Constellations) - 사계절 성도 시뮬레이션, 대표 별자리 지식, 별의 등급, Quiz">
     <title>별과 별자리</title>
-    <link rel="stylesheet" href="base.css?v=space-home-button-20260801">
+    <link rel="stylesheet" href="base.css?v=floating-nav-full-quiz-20260906">
     <!-- Three.js & OrbitControls for 3D Celestial Sphere -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <link rel="stylesheet" href="styles.css?v=subtle_night_sky_20260731">
+    <link rel="stylesheet" href="styles.css?v=floating-nav-full-quiz-20260906">
     <script src="navigation.js"></script>
     <script src="../../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
 </head>
@@ -39,8 +39,6 @@
                 
                 <!-- Viewport Top Floating Controls -->
                 <div class="viewport-header-bar" style="border-bottom: 1px solid rgba(56,189,248,0.2); padding-right:16px;">
-                    <h2 class="sim-title">Stars &amp; Constellations Simulation</h2>
-                    
                     <!-- 4 Modes Switcher -->
                     <div style="display:flex; gap:6px; margin-right:16px; pointer-events:auto; z-index:30;" id="simModeSwitcher">
                         <button class="sim-mode-btn active" data-sim-mode="zodiac" onclick="switchSimMode('zodiac')" style="padding:4px 10px; font-size:12px; font-weight:700; border-radius:12px; background:rgba(56,189,248,0.2); color:#38bdf8; border:1px solid #38bdf8; cursor:pointer; pointer-events:auto;">☀️ 황도 12궁</button>
@@ -738,28 +736,17 @@
 
         <!-- Sub-Tab 4: Quiz -->
         <section class="tab-pane" id="tab-quiz">
-            <div style="padding:24px; max-width:750px; margin:0 auto; background:rgba(15,23,42,0.9); border:1px solid rgba(168,85,247,0.4); border-radius:16px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:12px;">
-                    <h2 style="color:#c084fc; font-size:20px; margin:0;">⭐ 별과 별자리 단원 실전 퀴즈</h2>
-                    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
-                        <span id="stQuizProgress" style="background:rgba(168,85,247,0.2); color:#c084fc; padding:4px 12px; border-radius:12px; font-weight:700; font-size:13px;">문제 1 / 5</span>
-                        <span style="background:rgba(16,185,129,0.14); color:#6ee7b7; padding:4px 10px; border-radius:12px; font-weight:700; font-size:13px;">정답 <span id="stQuizCorrectCount">0</span></span>
-                        <span style="background:rgba(239,68,68,0.14); color:#fca5a5; padding:4px 10px; border-radius:12px; font-weight:700; font-size:13px;">오답 <span id="stQuizIncorrectCount">0</span></span>
-                    </div>
+            <div class="quiz-panel">
+                <div class="quiz-panel-heading">
+                    <h2>⭐ 별과 별자리 확인 문제</h2>
+                    <span id="stQuizTotalCount"></span>
                 </div>
-                <div id="stQuizCard">
-                    <p id="stQuestionText" style="font-size:17px; color:#fff; font-weight:700; margin-bottom:18px; line-height:1.5;"></p>
-                    <div id="stOptionsBox" style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;"></div>
-                    <div id="stExpBox" style="display:none; background:rgba(168,85,247,0.1); border-left:4px solid #c084fc; padding:12px 16px; border-radius:6px; font-size:13.5px; color:#e2e8f0; margin-bottom:16px;"></div>
-                    <div style="text-align:right;">
-                        <button id="stNextBtn" class="btn" style="background:#7c3aed; color:#fff; min-height:44px; padding:8px 20px; border-radius:8px; font-weight:700; cursor:pointer; display:none;">다음 문제 ➔</button>
-                    </div>
-                </div>
+                <div class="quiz-grid" id="stQuizGrid"></div>
             </div>
         </section>
     </main>
 
-    <script src="app.js?v=astronomy-periods-20260814"></script>
+    <script src="app.js?v=floating-nav-full-quiz-20260906"></script>
 
 </body>
 </html>

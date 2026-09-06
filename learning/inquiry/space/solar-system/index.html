@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="인터랙티브 태양계 관찰 - 3D 태양계 공전 시뮬레이션, 행성 입체 도감, 자전 &amp; 공전주기 비교">
     <title>태양계</title>
-    <link rel="stylesheet" href="styles.css?v=single-row-controls-reality-clean-20260819">
+    <link rel="stylesheet" href="styles.css?v=floating-nav-full-quiz-20260906">
     <link rel="stylesheet" href="../../../../assets/network/multiplayer-lobby.css">
     <!-- Three.js & OrbitControls for 3D Space WebGL Renderer -->
     <script src="assets/vendor/three-r128/three.min.js"></script>
@@ -42,7 +42,6 @@
                 
                 <!-- Viewport Top Floating Controls -->
                 <div class="viewport-header-bar">
-                    <h2 class="sim-title">Solar System Simulation</h2>
                     <div class="sim-top-btns">
                         <button class="btn btn-secondary" id="ufoModeBtn" style="padding: 4px 10px; font-size: 12px; font-weight: 700; background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; border-radius: 14px;">🛸 UFO Flight (방번호 입력)</button>
                         <button class="icon-btn" id="playPauseBtn" title="시뮬레이션 일시정지 / 재생">⏸</button>
@@ -204,50 +203,12 @@
 
         <!-- Tab 3: Space Quiz -->
         <section class="tab-pane" id="tab-quiz">
-            <div style="max-width: 850px; margin: 20px auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; flex-wrap: wrap; gap: 12px;">
-                    <div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <h2>🧩 핵심 출제 문제</h2>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <span class="slider-val-badge" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;" id="quizProgressText">문제 1 / 5</span>
-                        <span class="slider-val-badge" style="background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.35); color:#6ee7b7; padding:6px 12px; border-radius:20px; font-weight:800; font-size:13px;">정답 <span id="quizCorrectCount">0</span></span>
-                        <span class="slider-val-badge" style="background:rgba(239,68,68,0.14); border:1px solid rgba(239,68,68,0.35); color:#fca5a5; padding:6px 12px; border-radius:20px; font-weight:800; font-size:13px;">오답 <span id="quizIncorrectCount">0</span></span>
-                    </div>
+            <div class="quiz-panel">
+                <div class="quiz-panel-heading">
+                    <h2>🪐 태양계 확인 문제</h2>
+                    <span id="quizTotalCount"></span>
                 </div>
-
-                <div style="text-align: left;">
-                    <!-- Question Box -->
-                    <div style="background: rgba(10, 16, 28, 0.8); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px 28px; margin-bottom: 24px;">
-                        <div style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.5; margin-bottom: 8px;" id="quizQuestionText">문제를 불러오는 중입니다...</div>
-                        <div style="font-size: 14px; color: var(--text-muted);" id="quizSubText">💡 힌트: 문제를 주의 깊게 읽어보세요.</div>
-                    </div>
-
-                    <!-- Options Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;" id="quizOptionsGrid">
-                        <!-- Options dynamically inserted -->
-                    </div>
-
-                    <!-- Result Feedback Banner -->
-                    <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 17px; text-align: center;"></div>
-
-                    <!-- Detailed Explanation Box -->
-                    <div id="quizExpBox" style="display: none; margin-top: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-left: 4px solid #38bdf8; border-radius: 10px; padding: 16px 20px;">
-                        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-                            <span>💡</span> <span>핵심 개념 해설</span>
-                        </div>
-                        <div id="quizExpText" style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;"></div>
-                    </div>
-                    
-                    <!-- Next Question Action Button -->
-                    <div style="text-align: center; margin-top: 24px;">
-                        <button class="quiz-action-btn" id="nextQuizBtn" style="min-height:44px; padding: 12px 32px; font-size: 16px; font-weight: 800; border-radius: 30px; cursor: pointer;">
-                            다음 문제 풀기 ➔
-                        </button>
-                    </div>
-                </div>
+                <div class="quiz-grid" id="quizGrid"></div>
             </div>
         </section>
 
@@ -343,6 +304,6 @@
     </section>
 
     <script src="solar-data.js?v=outer-planet-textures-20260803"></script>
-    <script src="app.js?v=ufo-offline-continuity-20260826"></script>
+    <script src="app.js?v=floating-nav-full-quiz-20260906"></script>
 </body>
 </html>

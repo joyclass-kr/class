@@ -4,28 +4,9 @@
  */
 
 (function syncSpaceViewportHeight() {
-    function updateHeaderHeight() {
-        var header = document.querySelector('.top-header');
-        if (header) {
-            document.documentElement.style.setProperty('--space-header-height', header.offsetHeight + 'px');
-        }
-    }
-
-    function start() {
-        updateHeaderHeight();
-        var header = document.querySelector('.top-header');
-        if (header && typeof ResizeObserver !== 'undefined') {
-            new ResizeObserver(updateHeaderHeight).observe(header);
-        }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', start, { once: true });
-    } else {
-        start();
-    }
-    window.addEventListener('resize', updateHeaderHeight, { passive: true });
-    window.addEventListener('orientationchange', updateHeaderHeight);
+    // The nav tabs float over the viewport instead of reserving a header
+    // row, so the simulation card no longer needs to subtract its height.
+    document.documentElement.style.setProperty('--space-header-height', '0px');
 })();
 
 (function () {
@@ -52,9 +33,7 @@
                 speed: 1.0,
                 showOrbit: true,
                 angle: Math.PI / 2
-            },
-
-            quiz: { correctCount: 0, incorrectCount: 0, currentQuestion: null, answered: false, hadWrong: false, autoTimer: null }
+            }
         };
 
         var canvasContainer = document.getElementById('solarCanvasContainer');
@@ -3213,7 +3192,6 @@
                     var pane = document.getElementById('tab-' + target);
                     if (pane) pane.classList.add('active');
                     state.currentTab = target;
-                    if (target === 'quiz' && !state.quiz.currentQuestion) loadNewQuizQuestion();
                     if (target === 'sim' && renderer) onWindowResize();
                     if (target === 'moon' && moonRenderer) onMoonWindowResize();
                 });
@@ -3623,35 +3601,8 @@
             if (modalOverlay) modalOverlay.classList.remove('active');
         }
 
-        // ========== QUIZ SYSTEM (Tab 5) - Enhanced & Robust ==========
+        // ========== QUIZ SYSTEM (Tab 5) - shows every question at once ==========
         function initSpaceQuiz() {
-            var nextBtn = document.getElementById('nextQuizBtn');
-            if (nextBtn) nextBtn.addEventListener('click', loadNewQuizQuestion);
-        }
-
-        function makeSpaceQuizOrder(length, previousQuestion) {
-            var order = Array.from({ length: length }, function (_, index) { return index; });
-            for (var index = order.length - 1; index > 0; index--) {
-                var randomIndex = Math.floor(Math.random() * (index + 1));
-                var temp = order[index];
-                order[index] = order[randomIndex];
-                order[randomIndex] = temp;
-            }
-            if (order.length > 1 && order[0] === previousQuestion) {
-                var first = order[0];
-                order[0] = order[1];
-                order[1] = first;
-            }
-            return order;
-        }
-
-        var SPACE_QUIZ_ROUND_SIZE = 5;
-
-        function loadNewQuizQuestion() {
-            if (state.quiz.autoTimer) { clearTimeout(state.quiz.autoTimer); state.quiz.autoTimer = null; }
-            state.quiz.answered = false;
-            state.quiz.hadWrong = false;
-
             var quizPool = [
                 { cat: "태양계의 중심", q: "태양계 전체 질량의 대부분을 차지하며 행성의 공전을 지배하는 천체는?", ans: "태양", opts: ["태양", "목성", "지구", "토성"], exp: "태양은 태양계 전체 질량의 약 99.8%를 차지하며 강한 중력으로 행성과 작은 천체들을 붙잡고 있습니다." },
                 { cat: "행성 순서", q: "태양에서 가까운 순서대로 처음 네 행성을 바르게 나열한 것은?", ans: "수성-금성-지구-화성", opts: ["수성-금성-지구-화성", "수성-지구-금성-화성", "금성-수성-화성-지구", "지구-금성-수성-화성"], exp: "태양에서 바깥쪽으로 수성, 금성, 지구, 화성 순이며 이 네 행성은 지구형 행성입니다." },
@@ -3700,119 +3651,82 @@
                 { cat: "자연위성", q: "자연위성에 대한 설명으로 옳은 것은?", ans: "행성이나 왜소행성의 중력에 묶여 그 주위를 공전한다.", opts: ["행성이나 왜소행성의 중력에 묶여 그 주위를 공전한다.", "반드시 스스로 빛을 낸다.", "모두 지구의 달과 크기가 같다.", "태양 주위를 직접 공전하지 않는다."], exp: "자연위성은 행성 또는 왜소행성 주위를 공전하며, 그 천체와 함께 태양 주위를 이동합니다." }
             ];
 
-            var roundLength = Math.min(SPACE_QUIZ_ROUND_SIZE, quizPool.length);
-            if (!Array.isArray(state.quiz.questionOrder) || state.quiz.questionOrder.length !== roundLength) {
-                if (typeof state.quiz.previousQuestion === 'number') {
-                    state.quiz.correctCount = 0;
-                    state.quiz.incorrectCount = 0;
+            var totalCountEl = document.getElementById('quizTotalCount');
+            if (totalCountEl) totalCountEl.textContent = quizPool.length + '문제';
+
+            var grid = document.getElementById('quizGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            quizPool.forEach(function (item, qIndex) {
+                var correctIndex = typeof item.ans === 'number' ? item.ans : item.opts.indexOf(item.ans);
+                var options = item.opts.map(function (text, index) { return { text: text, correct: index === correctIndex }; });
+                for (var i = options.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var temp = options[i]; options[i] = options[j]; options[j] = temp;
                 }
-                state.quiz.questionOrder = makeSpaceQuizOrder(quizPool.length, state.quiz.previousQuestion).slice(0, roundLength);
-                state.quiz.questionPosition = 0;
-            }
 
-            var correctCountEl = document.getElementById('quizCorrectCount');
-            if (correctCountEl) correctCountEl.textContent = state.quiz.correctCount;
-            var incorrectCountEl = document.getElementById('quizIncorrectCount');
-            if (incorrectCountEl) incorrectCountEl.textContent = state.quiz.incorrectCount;
+                var card = document.createElement('article');
+                card.className = 'quiz-card';
 
-            var displayPosition = state.quiz.questionPosition;
-            var qIndexInPool = state.quiz.questionOrder[displayPosition];
-            var qObj = quizPool[qIndexInPool];
-            state.quiz.currentQuestion = qObj;
-            state.quiz.previousQuestion = qIndexInPool;
-            state.quiz.questionPosition += 1;
-            state.quiz.roundComplete = state.quiz.questionPosition >= roundLength;
-            if (state.quiz.roundComplete) {
-                state.quiz.questionOrder = null;
-                state.quiz.questionPosition = 0;
-            }
+                var h3 = document.createElement('h3');
+                h3.textContent = '[' + item.cat + '] ' + item.q;
+                card.appendChild(h3);
 
-            var catBadge = document.getElementById('quizCategoryBadge');
-            if (catBadge) catBadge.textContent = '[' + qObj.cat + ']';
-
-            var progressText = document.getElementById('quizProgressText');
-            if (progressText) progressText.textContent = '문제 ' + (displayPosition + 1) + ' / ' + roundLength;
-
-            var qTextEl = document.getElementById('quizQuestionText');
-            if (qTextEl) qTextEl.textContent = '🪐 ' + qObj.q;
-
-            var expBox = document.getElementById('quizExpBox');
-            if (expBox) expBox.style.display = 'none';
-            var nextBtn = document.getElementById('nextQuizBtn');
-            if (nextBtn) {
-                nextBtn.style.display = 'none';
-                nextBtn.textContent = '다음 문제 풀기 ➔';
-            }
-
-            var optGrid = document.getElementById('quizOptionsGrid');
-            if (optGrid) {
-                optGrid.innerHTML = '';
-                var shuffled = qObj.opts.slice();
-                for (var optionIndex = shuffled.length - 1; optionIndex > 0; optionIndex--) {
-                    var optionRandomIndex = Math.floor(Math.random() * (optionIndex + 1));
-                    var optionTemp = shuffled[optionIndex];
-                    shuffled[optionIndex] = shuffled[optionRandomIndex];
-                    shuffled[optionRandomIndex] = optionTemp;
-                }
-                shuffled.forEach(function (optText) {
-                    var btn = document.createElement('button');
-                    btn.className = 'quiz-opt-btn';
-                    btn.style.cssText = 'background:rgba(255,255,255,0.05);border:1px solid var(--border-color);min-height:44px;padding:16px;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:left;line-height:1.4;';
-                    btn.textContent = optText;
-                    btn.addEventListener('click', function () { checkQuizAnswer(optText, btn, qObj.ans, qObj.exp); });
-                    optGrid.appendChild(btn);
+                var optionsWrap = document.createElement('div');
+                optionsWrap.className = 'quiz-options';
+                options.forEach(function (opt, optIndex) {
+                    var label = document.createElement('label');
+                    if (opt.correct) label.dataset.correct = 'true';
+                    var input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'quiz-q' + qIndex;
+                    input.value = String(optIndex);
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(' ' + opt.text));
+                    optionsWrap.appendChild(label);
                 });
-            }
+                card.appendChild(optionsWrap);
 
-            var resMsg = document.getElementById('quizResultMsg');
-            if (resMsg) resMsg.textContent = '';
-        }
+                var checkBtn = document.createElement('button');
+                checkBtn.type = 'button';
+                checkBtn.className = 'answer-button';
+                checkBtn.textContent = '정답 확인';
+                card.appendChild(checkBtn);
 
-        function checkQuizAnswer(selectedOpt, btn, correctAns, expText) {
-            if (state.quiz.answered) return;
+                var resultEl = document.createElement('p');
+                resultEl.className = 'answer-result';
+                card.appendChild(resultEl);
 
-            var isCorrect = selectedOpt === correctAns;
-            var msg = document.getElementById('quizResultMsg');
-            var expBox = document.getElementById('quizExpBox');
-            var expContent = document.getElementById('quizExpText');
+                var expEl = document.createElement('p');
+                expEl.className = 'answer-explanation';
+                expEl.hidden = true;
+                expEl.textContent = item.exp;
+                card.appendChild(expEl);
 
-            if (isCorrect) {
-                state.quiz.answered = true;
-                var allBtns = document.querySelectorAll('.quiz-opt-btn');
-                allBtns.forEach(function(b) { b.disabled = true; b.style.cursor = 'default'; });
-                btn.style.background = '#10b981';
-                btn.style.color = '#000';
-                if (!state.quiz.hadWrong) state.quiz.correctCount += 1;
-                if (msg) {
-                    msg.textContent = '정답입니다.';
-                    msg.style.color = '#6ee7b7';
-                }
-            } else {
-                btn.style.background = '#ef4444';
-                if (!state.quiz.hadWrong) state.quiz.incorrectCount += 1;
-                state.quiz.hadWrong = true;
-                btn.disabled = true;
-                if (msg) {
-                    msg.textContent = '다시 생각하고 다른 답을 골라보세요.';
-                    msg.style.color = '#fca5a5';
-                }
-            }
+                checkBtn.addEventListener('click', function () {
+                    var selected = optionsWrap.querySelector('input:checked');
+                    if (!selected) {
+                        delete card.dataset.state;
+                        resultEl.textContent = '답을 먼저 선택하세요.';
+                        return;
+                    }
+                    var correct = selected.closest('label').dataset.correct === 'true';
+                    card.dataset.state = correct ? 'correct' : 'incorrect';
+                    if (correct) {
+                        resultEl.textContent = '정답입니다.';
+                        expEl.hidden = false;
+                        Array.prototype.forEach.call(optionsWrap.querySelectorAll('input'), function (input) { input.disabled = true; });
+                        checkBtn.disabled = true;
+                    } else {
+                        resultEl.textContent = '다시 생각하고 다른 답을 골라보세요.';
+                        selected.checked = false;
+                        selected.disabled = true;
+                    }
+                });
 
-            if (isCorrect && expBox && expContent) {
-                expContent.textContent = expText;
-                expBox.style.display = 'block';
-            }
-
-            var nextBtn = document.getElementById('nextQuizBtn');
-            if (nextBtn) {
-                nextBtn.style.display = isCorrect ? 'inline-block' : 'none';
-                if (isCorrect && state.quiz.roundComplete) nextBtn.textContent = '새로운 5문제';
-            }
-
-            var correctEl = document.getElementById('quizCorrectCount');
-            if (correctEl) correctEl.textContent = state.quiz.correctCount;
-            var incorrectEl = document.getElementById('quizIncorrectCount');
-            if (incorrectEl) incorrectEl.textContent = state.quiz.incorrectCount;
+                grid.appendChild(card);
+            });
         }
     }
 })();

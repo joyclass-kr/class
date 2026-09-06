@@ -1,26 +1,7 @@
 (function syncSpaceViewportHeight() {
-    function updateHeaderHeight() {
-        const header = document.querySelector('.top-header');
-        if (header) {
-            document.documentElement.style.setProperty('--space-header-height', `${header.offsetHeight}px`);
-        }
-    }
-
-    function start() {
-        updateHeaderHeight();
-        const header = document.querySelector('.top-header');
-        if (header && typeof ResizeObserver !== 'undefined') {
-            new ResizeObserver(updateHeaderHeight).observe(header);
-        }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', start, { once: true });
-    } else {
-        start();
-    }
-    window.addEventListener('resize', updateHeaderHeight, { passive: true });
-    window.addEventListener('orientationchange', updateHeaderHeight);
+    // The nav tabs float over the viewport instead of reserving a header
+    // row, so the simulation card no longer needs to subtract its height.
+    document.documentElement.style.setProperty('--space-header-height', '0px');
 })();
 
 (function initSubtleDiurnalNightSky() {
@@ -1304,98 +1285,80 @@
                 { cat: "별자리", q: "별자리에서 서로 이웃해 보이는 두 별에 대한 설명으로 옳은 것은?", ans: 3, opts: ["반드시 서로 공전한다", "실제 거리도 반드시 가깝다", "온도와 크기가 반드시 같다", "시선 방향이 비슷할 뿐 실제 거리는 크게 다를 수 있다"], exp: "해설: 별자리는 천구에 투영된 겉보기 모양이므로 이웃해 보이는 별들의 실제 거리는 서로 다를 수 있습니다." }
             ];
 
-            function makeQuestionOrder(length, previousQuestion = -1) {
-                const order = Array.from({ length }, (_, index) => index);
-                for (let index = order.length - 1; index > 0; index -= 1) {
-                    const randomIndex = Math.floor(Math.random() * (index + 1));
-                    [order[index], order[randomIndex]] = [order[randomIndex], order[index]];
-                }
-                if (order.length > 1 && order[0] === previousQuestion) {
-                    [order[0], order[1]] = [order[1], order[0]];
-                }
-                return order;
-            }
+            const totalCountEl = document.getElementById('stQuizTotalCount');
+            if (totalCountEl) totalCountEl.textContent = `${quizData.length}문제`;
 
-            const QUIZ_ROUND_SIZE = 5;
-            let questionOrder = [];
-            let curr = 0;
-            let correctCount = 0;
-            let incorrectCount = 0;
-            let questionHadWrong = false;
+            const grid = document.getElementById('stQuizGrid');
+            if (!grid) return;
 
-            function updateQuizCounts() {
-                const correctEl = document.getElementById('stQuizCorrectCount');
-                const incorrectEl = document.getElementById('stQuizIncorrectCount');
-                if (correctEl) correctEl.textContent = String(correctCount);
-                if (incorrectEl) incorrectEl.textContent = String(incorrectCount);
-            }
-            function loadQuestion() {
-                questionHadWrong = false;
-                const item = quizData[questionOrder[curr]];
-                document.getElementById('stQuizProgress').textContent = `문제 ${curr + 1} / ${questionOrder.length}`;
-                document.getElementById('stQuestionText').textContent = `[${item.cat}] ${item.q}`;
-                const optsBox = document.getElementById('stOptionsBox');
-                optsBox.innerHTML = '';
-                const expBox = document.getElementById('stExpBox');
-                expBox.style.display = 'none';
-                const nextBtn = document.getElementById('stNextBtn');
-                nextBtn.style.display = 'none';
-                nextBtn.textContent = '다음 문제 ➔';
-
-                const randomizedOptions = item.opts.map((text, index) => ({ text, correct: index === item.ans }));
-                for (let index = randomizedOptions.length - 1; index > 0; index -= 1) {
-                    const randomIndex = Math.floor(Math.random() * (index + 1));
-                    [randomizedOptions[index], randomizedOptions[randomIndex]] = [randomizedOptions[randomIndex], randomizedOptions[index]];
+            quizData.forEach((item, qIndex) => {
+                const options = item.opts.map((text, index) => ({ text, correct: index === item.ans }));
+                for (let i = options.length - 1; i > 0; i -= 1) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [options[i], options[j]] = [options[j], options[i]];
                 }
-                randomizedOptions.forEach((option, idx) => {
-                    const btn = document.createElement('button');
-                    btn.style.cssText = 'text-align:left; min-height:44px; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:8px; font-size:14px; cursor:pointer; transition:all 0.2s;';
-                    btn.textContent = `${idx + 1}. ${option.text}`;
-                    btn.dataset.correct = String(option.correct);
-                    btn.onclick = () => {
-                        if (option.correct) {
-                            Array.from(optsBox.children).forEach(b => b.disabled = true);
-                            if (!questionHadWrong) correctCount += 1;
-                            btn.style.background = 'rgba(16, 185, 129, 0.3)';
-                            btn.style.borderColor = '#10b981';
-                        } else {
-                            if (!questionHadWrong) incorrectCount += 1;
-                            questionHadWrong = true;
-                            btn.style.background = 'rgba(239, 68, 68, 0.3)';
-                            btn.style.borderColor = '#ef4444';
-                            btn.disabled = true;
-                        }
-                        updateQuizCounts();
-                        expBox.textContent = option.correct ? `정답입니다. ${item.exp}` : '다시 생각하고 다른 답을 골라보세요.';
-                        expBox.style.display = 'block';
-                        nextBtn.style.display = option.correct ? 'inline-block' : 'none';
-                        if (option.correct && curr === questionOrder.length - 1) nextBtn.textContent = '새로운 5문제';
-                    };
-                    optsBox.appendChild(btn);
+
+                const card = document.createElement('article');
+                card.className = 'quiz-card';
+
+                const h3 = document.createElement('h3');
+                h3.textContent = `[${item.cat}] ${item.q}`;
+                card.appendChild(h3);
+
+                const optionsWrap = document.createElement('div');
+                optionsWrap.className = 'quiz-options';
+                options.forEach((opt, optIndex) => {
+                    const label = document.createElement('label');
+                    if (opt.correct) label.dataset.correct = 'true';
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `st-quiz-q${qIndex}`;
+                    input.value = String(optIndex);
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(` ${opt.text}`));
+                    optionsWrap.appendChild(label);
                 });
-            }
+                card.appendChild(optionsWrap);
 
-            function startNewRound(previousQuestion = -1) {
-                questionOrder = makeQuestionOrder(quizData.length, previousQuestion)
-                    .slice(0, Math.min(QUIZ_ROUND_SIZE, quizData.length));
-                curr = 0;
-                correctCount = 0;
-                incorrectCount = 0;
-                updateQuizCounts();
-                loadQuestion();
-            }
+                const checkBtn = document.createElement('button');
+                checkBtn.type = 'button';
+                checkBtn.className = 'answer-button';
+                checkBtn.textContent = '정답 확인';
+                card.appendChild(checkBtn);
 
-            document.getElementById('stNextBtn').onclick = () => {
-                const previousQuestion = questionOrder[curr];
-                if (curr === questionOrder.length - 1) {
-                    startNewRound(previousQuestion);
-                    return;
-                }
-                curr += 1;
-                loadQuestion();
-            };
+                const resultEl = document.createElement('p');
+                resultEl.className = 'answer-result';
+                card.appendChild(resultEl);
 
-            startNewRound();
+                const expEl = document.createElement('p');
+                expEl.className = 'answer-explanation';
+                expEl.hidden = true;
+                expEl.textContent = item.exp;
+                card.appendChild(expEl);
+
+                checkBtn.addEventListener('click', () => {
+                    const selected = optionsWrap.querySelector('input:checked');
+                    if (!selected) {
+                        delete card.dataset.state;
+                        resultEl.textContent = '답을 먼저 선택하세요.';
+                        return;
+                    }
+                    const correct = selected.closest('label').dataset.correct === 'true';
+                    card.dataset.state = correct ? 'correct' : 'incorrect';
+                    if (correct) {
+                        resultEl.textContent = '정답입니다.';
+                        expEl.hidden = false;
+                        optionsWrap.querySelectorAll('input').forEach(input => { input.disabled = true; });
+                        checkBtn.disabled = true;
+                    } else {
+                        resultEl.textContent = '다시 생각하고 다른 답을 골라보세요.';
+                        selected.checked = false;
+                        selected.disabled = true;
+                    }
+                });
+
+                grid.appendChild(card);
+            });
         })();
 
 // Three.js 3D Celestial Sphere Engine (Mode 3)
