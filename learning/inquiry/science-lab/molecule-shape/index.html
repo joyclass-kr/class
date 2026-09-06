@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="물·이산화 탄소·암모니아·메테인 같은 분자의 중심 원자 전자쌍을 세어 전자쌍 반발로 모양과 결합각을 예상하고 분자를 돌려 보며, 전기 음성도 차이로 결합의 극성을 구해 모양과 합쳐 분자가 극성인지 판정하고 전기장 속에서 줄지어 서는지 보며, 극성·무극성 용매와 용질의 짝으로 녹고 섞이는지 확인하는 고등학교 화학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="shape-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>분자 구조와 극성</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 2~3학년</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>분자 모양, 극성 판정, 녹고 섞임 가운데 하나를 고릅니다.</li>
+            <li>분자를 고르거나, 용매와 용질의 짝을 정합니다.</li>
+            <li>어떤 모양일지, 극성일지, 잘 녹을지 예상합니다.</li>
+            <li>시작해서 돌아가는 분자와 결합각, 쌍극자 화살표와 전기장 속의 정렬, 비커 속 용질의 퍼짐을 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">중심 원자의 전자쌍들은 서로 밀어내며 가장 멀리 떨어진 자리를 잡습니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="shape">분자 모양<small>전자쌍 반발</small></button>
+                        <button type="button" data-mode="polar">극성 판정<small>쌍극자가 상쇄될까</small></button>
+                        <button type="button" data-mode="mix">녹고 섞임<small>비슷한 것끼리</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">분자 돌려 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">분자가 천천히 돌아갑니다. 보라색 덩어리가 비공유 전자쌍이고, 노란 호가 결합각입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>전자쌍 반발과 분자 모양</strong> 중심 원자 둘레의 전자쌍(결합 전자쌍과 비공유 전자쌍)은 모두 음전하라 서로 밀어내고, 가장 멀리 떨어지는 배치를 잡습니다. 전자쌍이 2개면 직선(180°), 3개면 평면 삼각형(120°), 4개면 정사면체(109.5°)입니다. 비공유 전자쌍은 한 원자에만 붙어 있어 더 넓게 퍼지므로 결합 전자쌍을 조금 더 밀어냅니다. 그래서 전자쌍이 4개라도 암모니아(비공유 1쌍)는 107°의 삼각뿔형, 물(비공유 2쌍)은 104.5°의 굽은형이 됩니다. 이중 결합은 전자쌍 하나로 셉니다.</p>
+                <p><strong>결합의 극성</strong> 두 원자가 전자를 끌어당기는 힘(전기 음성도)이 다르면 공유 전자쌍이 센 쪽으로 치우쳐 그쪽이 부분 음전하(δ−), 반대쪽이 부분 양전하(δ+)를 띱니다. 이것이 결합의 극성이고, 크기는 전기 음성도 차이(H 2.2, C 2.6, N 3.0, O 3.4, F 4.0, Cl 3.2)로 어림합니다. 같은 원자끼리(H₂, O₂)는 차이가 0이라 무극성 결합입니다.</p>
+                <p><strong>분자의 극성</strong> 결합의 극성을 화살표(쌍극자)로 그려 모두 더했을 때 남는 것이 있으면 극성 분자, 상쇄되어 0이면 무극성 분자입니다. CO₂와 CH₄, BF₃는 결합 하나하나는 극성이지만 대칭 모양이라 화살표가 상쇄되어 무극성이고, H₂O와 NH₃는 비공유 전자쌍 때문에 비대칭이라 극성입니다. 극성 분자는 전기장 속에서 δ+가 − 극을 향하도록 줄지어 서며, 전자레인지는 물 분자를 이렇게 흔들어 음식을 데웁니다.</p>
+                <p><strong>비슷한 것끼리 녹는다</strong> 극성 용매(물)는 이온이나 극성 분자를 둘러싸 끌어내지만, 무극성 분자는 물 분자끼리의 강한 끌림을 비집고 들어가지 못해 밀려나 층을 이룹니다. 무극성 용매(기름, 헥세인)는 반대로 무극성 물질(왁스, 아이오딘)을 잘 녹입니다. 에탄올처럼 극성 부분과 무극성 부분을 함께 가진 분자는 양쪽에 어느 정도 섞이고, 비누·세제는 이 성질로 기름때를 물에 씻어 냅니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>물 분자가 직선이 아니라 104.5°로 굽은 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 수소 원자가 서로 끌어당기기 때문에</label>
+                        <label><input type="radio" name="q1" value="b"> 산소의 비공유 전자쌍 2개가 결합 전자쌍을 밀어내기 때문에</label>
+                        <label><input type="radio" name="q1" value="c"> 산소가 수소보다 무겁기 때문에</label>
+                        <label><input type="radio" name="q1" value="d"> 물이 액체이기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>산소 둘레의 전자쌍은 결합 2쌍과 비공유 2쌍, 모두 4쌍이라 정사면체로 배치됩니다. 그중 두 자리를 비공유 전자쌍이 차지하고 더 넓게 퍼져 결합 전자쌍을 밀어내므로 109.5°보다 좁은 104.5°가 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>C=O 결합은 극성인데 CO₂ 분자가 무극성인 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 탄소와 산소의 전기 음성도가 같기 때문에</label>
+                        <label><input type="radio" name="q2" value="b"> 이중 결합이기 때문에</label>
+                        <label><input type="radio" name="q2" value="c"> 직선형이라 두 결합의 쌍극자가 반대 방향으로 상쇄되기 때문에</label>
+                        <label><input type="radio" name="q2" value="d"> 기체이기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>탄소(2.6)와 산소(3.4)의 차이로 각 C=O 결합은 극성입니다. 그러나 CO₂는 O=C=O 직선형이라 두 쌍극자 화살표가 정반대 방향으로 같은 크기이므로 더하면 0이 됩니다. 물은 굽어 있어 상쇄되지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>기름이 물에 녹지 않고 층을 이루는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 기름은 무극성이고 물은 극성이라, 물 분자끼리의 끌림이 커서 기름을 밀어내기 때문에</label>
+                        <label><input type="radio" name="q3" value="b"> 기름이 물보다 무겁기 때문에</label>
+                        <label><input type="radio" name="q3" value="c"> 기름 분자가 물 분자보다 크기 때문에</label>
+                        <label><input type="radio" name="q3" value="d"> 기름이 물을 밀어내는 전하를 띠기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>녹으려면 용매 분자 사이를 비집고 들어가 둘러싸여야 합니다. 극성인 물 분자는 서로 강하게 끌어당기고 무극성인 기름 분자와는 끌림이 약해, 기름은 물 사이로 들어가지 못하고 따로 모여 층이 됩니다. 기름이 뜨는 것은 가볍기 때문이지 안 녹는 까닭은 아닙니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>전기장 속에 물 분자를 두면 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 분자가 쪼개진다</label>
+                        <label><input type="radio" name="q4" value="b"> 아무 일도 없다</label>
+                        <label><input type="radio" name="q4" value="c"> 모두 + 극 쪽으로 끌려간다</label>
+                        <label><input type="radio" name="q4" value="d"> δ+ 쪽이 − 극을 향하도록 돌아 줄지어 선다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>극성 분자는 한쪽이 δ+, 반대쪽이 δ−라 전기장이 걸리면 돌림힘을 받아 방향을 맞춥니다. 전체 전하는 0이라 끌려가지는 않습니다. 무극성 분자는 돌아설 까닭이 없어 제멋대로 놓여 있습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
