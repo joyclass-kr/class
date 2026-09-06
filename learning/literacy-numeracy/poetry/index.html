@@ -27,11 +27,19 @@
                 <ol id="topicPoemList" class="lesson-list hidden" aria-label="소재별 시 목록"></ol>
             </section>
 
-            <section id="readScreen" class="panel start-panel study-panel hidden" aria-labelledby="readTitle">
+            <section id="lessonDetailScreen" class="panel start-panel lesson-panel hidden" aria-labelledby="lessonDetailTitle">
+                <p id="lessonDetailKicker" class="mode-kicker"></p>
+                <h2 id="lessonDetailTitle"></h2>
+                <p id="lessonDetailNote" class="lead"></p>
+                <ol id="lessonPoemList" class="lesson-list" aria-label="이 차시의 시 목록"></ol>
+                <div class="lesson-detail-actions">
+                    <button id="startQuizButton" class="primary-button" type="button">확인 문제 풀기</button>
+                </div>
+            </section>
+
+            <section id="readScreen" class="panel start-panel study-panel hidden" aria-labelledby="poemTitle">
                 <p id="readKicker" class="mode-kicker"></p>
-                <h2 id="readTitle"></h2>
                 <div class="poem-card">
-                    <p class="study-count"><span id="readIndex">1</span> / <span id="readTotal">1</span></p>
                     <h3 id="poemTitle" class="poem-title"></h3>
                     <p id="poemByline" class="poem-byline"></p>
                     <div id="poemBody" class="poem-body"></div>
@@ -39,12 +47,6 @@
                     <dl id="poemWords" class="poem-words"></dl>
                     <p id="poemPoint" class="poem-point"></p>
                 </div>
-                <div class="study-nav">
-                    <button id="readPrevButton" class="secondary-button" type="button">이전 시</button>
-                    <button id="readNextButton" class="primary-button" type="button">다음 시</button>
-                </div>
-                <button id="readSkipButton" class="text-button" type="button">바로 확인 문제 풀기</button>
-                <button id="readBackButton" class="text-button" type="button">← 차시 목록</button>
             </section>
 
             <section id="quizScreen" class="quiz-screen hidden" aria-labelledby="questionText">
@@ -63,7 +65,7 @@
                     <span id="progressFill"></span>
                 </div>
 
-                <article id="quizPoemCard" class="panel poem-card quiz-poem-card">
+                <article id="quizPoemCard" class="poem-card quiz-poem-card">
                     <h3 id="quizPoemTitle" class="poem-title"></h3>
                     <p id="quizPoemByline" class="poem-byline"></p>
                     <div id="quizPoemBody" class="poem-body"></div>
@@ -100,10 +102,10 @@
                 </div>
 
                 <div class="result-actions">
-                    <button id="restartButton" class="primary-button" type="button">이 차시 다시 풀기</button>
+                    <button id="restartButton" class="primary-button" type="button">다시 풀기</button>
                     <button id="nextLessonButton" class="primary-button hidden" type="button">다음 차시</button>
+                    <button id="lessonDetailButton" class="secondary-button" type="button">시 목차</button>
                     <button id="lessonListButton" class="secondary-button" type="button">차시 목록</button>
-                    <a class="secondary-button" href="../../../">메인으로</a>
                 </div>
             </section>
         </main>
