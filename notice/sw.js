@@ -1,4 +1,4 @@
-// PWA Service Worker for 서울계상초 가정통신문 & 출결 알림
+// PWA Service Worker for 가정통신문 & 출결 알림
 const CACHE_NAME = 'gyesang-notice-v2';
 const ASSETS_TO_CACHE = [
   '/notice/index.html',
@@ -33,7 +33,7 @@ self.addEventListener('fetch', (event) => {
 
 // Push notification event listener
 self.addEventListener('push', (event) => {
-  let data = { title: '서울계상초 알림장', body: '새로운 알림이 도착했습니다.' };
+  let data = { title: '알림장', body: '새로운 알림이 도착했습니다.' };
   if (event.data) {
     try {
       data = event.data.json();

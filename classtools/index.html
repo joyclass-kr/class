@@ -258,10 +258,9 @@
         <!-- 교사 정보 대시보드 배너 -->
         <section class="profile-card">
             <h1 class="teacher-title" id="teacher-greeting">
-                <span id="school-disp">학교명</span> <span id="class-disp">학급 정보</span> · <span id="teacher-disp">교사명</span>
+                <span id="class-disp">학급 정보</span> · <span id="teacher-disp">교사명</span>
             </h1>
             <div class="meta-chips">
-                <div class="chip chip-highlight">🏫 <span id="chip-school">학교명 불러오는 중...</span></div>
                 <div class="chip">📅 <span id="chip-year">2026학년도</span></div>
             </div>
         </section>
@@ -373,10 +372,8 @@
         (() => {
             'use strict';
 
-            const schoolDisp = document.getElementById('school-disp');
             const classDisp = document.getElementById('class-disp');
             const teacherDisp = document.getElementById('teacher-disp');
-            const chipSchool = document.getElementById('chip-school');
             const chipYear = document.getElementById('chip-year');
             const chipClass = document.getElementById('chip-class');
             const chipTeacher = document.getElementById('chip-teacher');
@@ -396,7 +393,6 @@
             }
 
             function applyProfileData(data) {
-                const school = data.schoolName || '학교 미설정';
                 const year = data.academicYear || 2026;
                 const grade = data.grade || '';
                 const classNum = data.classNumber || '';
@@ -410,11 +406,9 @@
                 // 아예 그려지지 않았다.
                 const setText = (el, value) => { if (el) el.textContent = value; };
 
-                setText(schoolDisp, school);
                 setText(classDisp, classStr);
                 setText(teacherDisp, teacher);
 
-                setText(chipSchool, school);
                 setText(chipYear, `${year}학년도`);
                 setText(chipClass, classStr);
                 setText(chipTeacher, `${teacher} 선생님`);

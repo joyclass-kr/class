@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>서울계상초등학교 알림장</title>
+    <title>알림장</title>
     <link rel="manifest" href="/notice/manifest.json">
     <meta name="theme-color" content="#101512">
     <style>
@@ -267,7 +267,7 @@
 
     <header style="flex-wrap: wrap;">
         <div class="brand-title">
-            <span>🏫</span> 서울계상초 알림장
+            <span>🏫</span> 알림장
         </div>
         <div id="studentChip" class="student-chip">보호자 계정 확인 중…</div>
         <div id="childSelectorBar" style="display:none; gap:6px; flex-wrap:wrap; margin-top:8px; width:100%;"></div>
@@ -1186,7 +1186,7 @@
             const c = activeChild;
             const chip = document.getElementById('studentChip');
             if (chip) {
-                chip.textContent = `${c.schoolName} ${c.grade}학년 ${c.classNumber}반 ${c.studentNumber}번 ${c.studentName} 학부모님`;
+                chip.textContent = `${c.grade}학년 ${c.classNumber}반 ${c.studentNumber}번 ${c.studentName} 학부모님`;
                 chip.style.background = '#1f4730';
             }
 

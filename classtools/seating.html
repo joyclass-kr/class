@@ -861,7 +861,7 @@
                     const classRes = await api(fetchUrl).catch(() => null);
                     if (classRes && classRes.classroom) {
                         const c = classRes.classroom;
-                        classHeader.textContent = `${c.schoolName} ${c.grade}학년 ${c.classNumber}반 (${c.teacherName} 선생님)`;
+                        classHeader.textContent = `${c.grade}학년 ${c.classNumber}반 (${c.teacherName} 선생님)`;
                         seatingClassKey = c.id || `${c.schoolName}-${c.grade}-${c.classNumber}`;
                         // 교사마다 자리배치를 따로 저장한다(전담교사는 특별실 배치가 교실과 다르므로).
                         // 예전 키(교사 구분 없음)에 저장된 배치는 처음 한 번 자동으로 이어받는다.

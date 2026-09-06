@@ -159,7 +159,6 @@
         <a href="/classtools/" class="back-btn" title="뒤로">←</a>
         <div>
             <div class="top-title">📌 월중 행사 등록</div>
-            <div class="top-school" id="schoolName">학교 불러오는 중…</div>
         </div>
     </div>
 </div>
@@ -356,7 +355,6 @@
                 api(`/api/teacher/public-holidays?year=${y}`).catch(() => ({ holidays: [] })),
                 api(`/api/teacher/vacation-settings?academicYear=${academicYear}`).catch(() => ({ settings: null }))
             ]);
-            if (eventsRes.schoolName) document.getElementById("schoolName").textContent = eventsRes.schoolName;
 
             const holidaysMap = {};
             (holidaysRes.holidays || []).forEach(h => { holidaysMap[h.date] = h.name; });

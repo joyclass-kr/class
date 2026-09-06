@@ -399,7 +399,6 @@
 <!-- 상단 바: 탭 이름이 곧 화면 제목이라 별도 큰 제목 없이 한 줄로 둔다 -->
 <div class="top-bar">
     <a href="/classtools/" class="back-btn" title="뒤로">←</a>
-    <span class="top-school" id="schoolName">학교 불러오는 중…</span>
     <nav class="tabs">
         <button class="tab-btn active" id="tab-roster" onclick="switchTab('roster')">📋 전교생 명단</button>
         <button class="tab-btn" id="tab-teachers" onclick="switchTab('teachers')">👩‍🏫 교사 명단</button>
@@ -1299,15 +1298,6 @@
             isSchoolAdmin = Boolean(data.isAdmin);
             schoolSettings = { columns: data.columns || [], specialRooms: data.specialRooms || [], approvalLines: data.approvalLines || {} };
             
-            if (data.schoolName) {
-                document.getElementById("schoolName").textContent = data.schoolName;
-            } else {
-                try {
-                    const classData = await api("/api/teacher/class");
-                    if (classData.schoolName) document.getElementById("schoolName").textContent = classData.schoolName;
-                } catch (_) {}
-            }
-
             // Apply admin vs staff UI controls
             document.getElementById("pasteSectionBtn").style.display = isSchoolAdmin ? "inline-flex" : "none";
             document.getElementById("addStudentBtn").style.display = isSchoolAdmin ? "inline-flex" : "none";

@@ -161,7 +161,6 @@
         <a href="/classtools/" class="back-btn" title="뒤로">←</a>
         <div>
             <div class="top-title">📋 출결 현황판</div>
-            <div class="top-school" id="schoolName">학교 불러오는 중…</div>
         </div>
     </div>
 </div>
@@ -342,7 +341,6 @@
         try {
             const dateStr = document.getElementById("dashboardDate").value;
             const res = await api(`/api/school-admin/dashboard?date=${dateStr}`);
-            document.getElementById("schoolName").textContent = res.schoolName;
             renderDashboard(res.roster, res.notices, res.formalNotes, res.experientialApps);
             setStatus("");
         } catch (error) {
