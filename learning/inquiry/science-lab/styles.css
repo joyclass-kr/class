@@ -210,9 +210,10 @@ main {
 }
 
 .subject-heading {
-    display: flex;
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    gap: 16px;
     align-items: center;
-    justify-content: space-between;
     padding: 13px 20px;
     border-bottom: 1px solid var(--subject-border);
     background: var(--subject-bg);
@@ -221,8 +222,31 @@ main {
 .subject-title {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
+
+.column-labels {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.column-labels span {
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 850;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--subject-border);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.column-labels span:nth-child(1) { color: #047857; }
+.column-labels span:nth-child(2) { color: #1d4ed8; }
+.column-labels span:nth-child(3) { color: #7e22ce; }
 
 .subject-heading h3 {
     margin: 0;
@@ -296,11 +320,38 @@ main {
     line-height: 1.35;
 }
 
-/* Card Grid */
-.level-list {
+/* Card Grid & Level Matrix */
+.level-list,
+.level-matrix {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
+    align-items: start;
+}
+
+.level-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.level-cell.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px dashed #e2e8f0;
+    border-radius: 9px;
+    background: rgba(248, 250, 252, 0.5);
+}
+
+.empty-mark {
+    color: #cbd5e1;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    user-select: none;
 }
 
 .level-entry {
@@ -417,13 +468,16 @@ main {
 
 /* Responsive */
 @media (max-width: 1040px) {
+    .subject-heading,
     .topic-row {
         grid-template-columns: 120px minmax(0, 1fr);
         gap: 12px;
         padding: 12px 16px;
     }
+    .column-labels,
+    .level-matrix,
     .level-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
     }
 }
 
@@ -446,7 +500,11 @@ main {
         justify-content: space-around;
     }
     .subject-heading {
+        grid-template-columns: 1fr;
         padding: 11px 14px;
+    }
+    .column-labels {
+        display: none;
     }
     .topic-row {
         grid-template-columns: 1fr;
@@ -457,8 +515,13 @@ main {
         padding-top: 0;
         font-size: 15px;
     }
+    .level-matrix,
     .level-list {
         grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .level-cell.empty {
+        display: none;
     }
 }
 
