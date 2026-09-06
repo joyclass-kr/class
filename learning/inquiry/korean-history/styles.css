@@ -5,6 +5,9 @@
   --line-soft: #eef1f5;
   --bg: #f5f7fa;
   --card: #ffffff;
+  /* 문항 그림 원본이 1,870px쯤이다. 2배 화면에서 900px이면 거의 원본 그대로
+     찍혀 글씨가 뭉개지지 않는다. 보기·해설도 같은 폭으로 맞춘다. */
+  --sheet: 900px;
   --accent: #2f6bd8;
   --accent-soft: #eaf1fd;
   --right: #1a7f4b;
@@ -201,9 +204,11 @@ main {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 16px;
   align-items: start;
+  max-width: calc(var(--sheet) + 32px);
+  margin: 0 auto;
 }
 
 .item {
@@ -244,13 +249,13 @@ main {
   margin: 0 auto 8px;
   text-align: center;
   width: 100%;
-  max-width: 480px;
+  max-width: var(--sheet);
 }
 .figure img {
   display: block;
   margin: 0 auto;
   width: 100%;
-  max-width: 480px;
+  max-width: var(--sheet);
   height: auto;
   border: 1px solid var(--line-soft);
   border-radius: 6px;
@@ -266,7 +271,7 @@ main {
   gap: 6px;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
-  max-width: 480px;
+  max-width: var(--sheet);
 }
 .choice {
   display: flex;
@@ -294,7 +299,7 @@ main {
 .aids {
   margin: 10px auto 0;
   width: 100%;
-  max-width: 480px;
+  max-width: var(--sheet);
   display: flex;
   flex-direction: column;
 }
@@ -362,11 +367,7 @@ main {
 
 /* ── 반응형 최적화 (태블릿 세로 / 모바일) ── */
 @media (max-width: 900px) {
-  .list {
-    grid-template-columns: 1fr;
-    max-width: 520px;
-    margin: 0 auto;
-  }
+  .list { max-width: 100%; }
 }
 
 @media (max-width: 600px) {
