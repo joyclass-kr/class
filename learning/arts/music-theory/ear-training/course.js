@@ -23,7 +23,7 @@
             {
                 id: "perfect-drill",
                 kind: "drill",
-                title: "Perfect Intervals​(완전음정) 가려듣기",
+                title: "Perfect Intervals​(완전음정) 듣고 맞히기",
                 drill: { items: ["P4", "P5", "P8"], mode: "mixed", limit: 10 }
             },
             {
@@ -39,13 +39,13 @@
             {
                 id: "thirds-drill",
                 kind: "drill",
-                title: "Thirds​(3도) 가려듣기",
+                title: "Thirds​(3도) 듣고 맞히기",
                 drill: { items: ["m3", "M3"], mode: "mixed", limit: 10 }
             },
             {
                 id: "perfect-thirds-drill",
                 kind: "drill",
-                title: "Perfect​(완전음정)과 Thirds​(3도) 섞어 듣기",
+                title: "Perfect​(완전음정)과 Thirds​(3도) 섞어서 맞히기",
                 drill: { items: ["m3", "M3", "P4", "P5", "P8"], mode: "mixed", limit: 15 }
             },
             {
@@ -61,13 +61,13 @@
             {
                 id: "seconds-drill",
                 kind: "drill",
-                title: "Seconds​(2도) 가려듣기",
+                title: "Seconds​(2도) 듣고 맞히기",
                 drill: { items: ["m2", "M2"], mode: "mixed", limit: 10 }
             },
             {
                 id: "narrow-drill",
                 kind: "drill",
-                title: "여기까지 모아 듣기",
+                title: "여기까지 모아서 맞히기",
                 drill: { items: ["m2", "M2", "m3", "M3", "P4", "P5", "P8"], mode: "mixed", limit: 15 }
             },
             {
@@ -83,7 +83,7 @@
             {
                 id: "sixths-drill",
                 kind: "drill",
-                title: "Sixths​(6도) 가려듣기",
+                title: "Sixths​(6도) 듣고 맞히기",
                 drill: { items: ["m6", "M6"], mode: "mixed", limit: 10 }
             },
             {
@@ -99,7 +99,7 @@
             {
                 id: "sevenths-drill",
                 kind: "drill",
-                title: "Sevenths​(7도) 가려듣기",
+                title: "Sevenths​(7도) 듣고 맞히기",
                 drill: { items: ["m7", "M7"], mode: "mixed", limit: 10 }
             },
             {
@@ -127,13 +127,13 @@
             {
                 id: "tritone-drill",
                 kind: "drill",
-                title: "P4·A4·P5 가려듣기",
+                title: "P4·A4·P5 듣고 맞히기",
                 drill: { items: ["P4", "A4", "P5"], mode: "mixed", limit: 10 }
             },
             {
                 id: "all-simple-drill",
                 kind: "drill",
-                title: "Simple Intervals​(한 옥타브 안 음정) 전부",
+                title: "Simple Intervals​(한 옥타브 안 음정) 전부 맞히기",
                 drill: {
                     items: ["m2", "M2", "m3", "M3", "P4", "A4", "P5", "m6", "M6", "m7", "M7", "P8"],
                     mode: "mixed",
@@ -153,7 +153,7 @@
             {
                 id: "compound-drill",
                 kind: "drill",
-                title: "Compound Intervals​(겹음정) 가려듣기",
+                title: "Compound Intervals​(겹음정) 듣고 맞히기",
                 drill: { items: ["m9", "M9", "m10", "M10", "P11", "A11", "P12"], mode: "mixed", limit: 15 }
             }
         ]
@@ -182,13 +182,13 @@
             {
                 id: "major-minor-drill",
                 kind: "drill",
-                title: "maj·min 가리기",
+                title: "maj·min 듣고 맞히기",
                 drill: { drillId: "chord", items: ["maj", "min"], mode: "harmony", limit: 10 }
             },
             {
                 id: "triads-drill",
                 kind: "drill",
-                title: "Triads​(3화음) 네 가지 가려듣기",
+                title: "Triads​(3화음) 네 가지 듣고 맞히기",
                 drill: { drillId: "chord", items: ["maj", "min", "dim", "aug"], mode: "mixed", limit: 15 }
             },
             {
@@ -198,7 +198,7 @@
                 body: [
                     "실제 음악에서는 밑음이 맨 아래 있는 Root Position​(근음 자리)만 쓰지 않습니다. 맨 아래 음을 한 옥타브 올리면 1st Inversion​(첫째 자리바꿈), 아래 두 음을 올리면 2nd Inversion​(둘째 자리바꿈)이 됩니다.",
                     "첫째 자리바꿈은 바깥 두 음이 Sixth​(6도)가 되고, 둘째 자리바꿈은 아래 두 음이 P4​(완전4도)가 됩니다.",
-                    "Augmented Triad​(증3화음)은 자리를 바꿔도 쌓인 모양이 그대로여서 귀로는 가릴 수 없습니다. 그래서 자리 문제에는 넣지 않습니다."
+                    "Augmented Triad​(증3화음)은 자리를 바꿔도 쌓인 모양이 그대로여서 귀로는 구별할 수 없습니다. 그래서 자리 문제에는 넣지 않습니다."
                 ],
                 examples: [
                     { chord: "maj", inversion: 0 },
@@ -211,13 +211,13 @@
             {
                 id: "position-drill",
                 kind: "drill",
-                title: "Chord Inversions​(화음 자리) 가려듣기",
+                title: "Chord Inversions​(화음 자리) 듣고 맞히기",
                 drill: { drillId: "position", items: ["root", "first", "second"], mode: "harmony", limit: 15 }
             },
             {
                 id: "triads-inv-drill",
                 kind: "drill",
-                title: "자리바꿈까지 섞은 Triads​(3화음)",
+                title: "자리바꿈까지 섞어서 맞히기",
                 drill: {
                     drillId: "chord",
                     items: ["maj", "min", "dim", "aug"],
@@ -242,7 +242,7 @@
             {
                 id: "dom7-maj7-drill",
                 kind: "drill",
-                title: "dom7·maj7 가리기",
+                title: "dom7·maj7 듣고 맞히기",
                 drill: { drillId: "chord", items: ["dom7", "maj7"], mode: "mixed", limit: 10 }
             },
             {
@@ -261,7 +261,7 @@
             {
                 id: "min7-mmaj7-drill",
                 kind: "drill",
-                title: "m7·mMaj7 가리기",
+                title: "m7·mMaj7 듣고 맞히기",
                 drill: { drillId: "chord", items: ["min7", "mmaj7"], mode: "mixed", limit: 10 }
             },
             {
@@ -281,13 +281,13 @@
             {
                 id: "other7-drill",
                 kind: "drill",
-                title: "Other 7th Chords​(나머지 7화음) 가려듣기",
+                title: "Other 7th Chords​(나머지 7화음) 듣고 맞히기",
                 drill: { drillId: "chord", items: ["m7b5", "dim7", "maj7s5"], mode: "mixed", limit: 12 }
             },
             {
                 id: "all7-drill",
                 kind: "drill",
-                title: "7th Chords​(7화음) 일곱 가지 전부",
+                title: "7th Chords​(7화음) 일곱 가지 전부 맞히기",
                 drill: {
                     drillId: "chord",
                     items: ["dom7", "maj7", "min7", "mmaj7", "m7b5", "dim7", "maj7s5"],

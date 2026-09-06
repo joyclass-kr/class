@@ -67,7 +67,7 @@
     ];
 
     /*
-     * 소리는 같지만 적는 법이 다른 음정. 귀로는 가릴 수 없어 문제로 내지 않고
+     * 소리는 같지만 적는 법이 다른 음정. 귀로는 구별할 수 없어 문제로 내지 않고
      * 설명 차시의 보기로만 쓴다.
      */
     const DISPLAY_INTERVALS = [
@@ -167,7 +167,7 @@
         });
     }
 
-    /* 증3화음은 자리를 바꿔도 구조가 같아 귀로 가릴 수 없으므로 뺀다. */
+    /* 증3화음은 자리를 바꿔도 구조가 같아 귀로 구별할 수 없으므로 뺀다. */
     const POSITION_QUALITIES = CHORDS.filter(item => ["maj", "min", "dim"].indexOf(item.id) >= 0);
 
     /* 화음을 자리바꿈하고, 베이스가 너무 높아지면 한 옥타브 내린다. */
@@ -235,7 +235,7 @@
     function chordQuestion(item, mode) {
         const shape = mode === "mixed" ? pick(["harmony", "arp"]) : mode;
         const root = pick(chordRoots(item));
-        /* 증3화음과 감7화음은 자리를 바꿔도 구조가 같아 귀로 가릴 수 없다. */
+        /* 증3화음과 감7화음은 자리를 바꿔도 구조가 같아 귀로 구별할 수 없다. */
         const allowed = item.id === "aug" || item.id === "dim7" ? [0] : (session.inversions || [0]);
         const inversion = pick(allowed);
         const notes = chordNotes(root, item, inversion);
