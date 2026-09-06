@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>면역계 &amp; 인체 방어 작용 시뮬레이터 | 2022 개정 교육과정</title>
+    <link rel="stylesheet" href="../styles.css?v=20260904h">
+    <link rel="stylesheet" href="styles.css?v=20260904h">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="sim-header">
+        <div class="sim-header-left">
+            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+                <span>◀</span> 목록
+            </a>
+            <div class="sim-title-group">
+                <h1 class="sim-title">면역계 &amp; 인체 방어 작용</h1>
+                <span class="sim-subtitle">Innate &amp; Adaptive Immunity &amp; Immunological Memory</span>
+                <span class="curriculum-badge">2022 개정 중등 [9과20] · 고등 [12생과Ⅰ03]</span>
+            </div>
+        </div>
+        <div class="sim-header-right">
+            <button id="triggerInvasionBtn" class="sim-btn" type="button" style="border-color:#f43f5e; color:#fda4af;">
+                <span>🦠</span> 병원체 침입 (항원 주입)
+            </button>
+            <button id="triggerDefenseBtn" class="sim-btn primary" type="button" style="background:linear-gradient(135deg, #8b5cf6, #6366f1); border-color:#a78bfa;">
+                <span>🛡️</span> 면역 방어 가동
+            </button>
+            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+                <span>⏸️</span> 일시정지
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="sim-app-container">
+        
+        <!-- Left/Center Stage Area -->
+        <main class="sim-stage-area">
+            <div class="immune-viewport">
+                <canvas id="immuneCanvas"></canvas>
+
+                <!-- Floating Top Scene Switcher -->
+                <div class="scene-switcher">
+                    <button class="scene-btn active" data-scene="barrier">🛡️ 1. 1차 물리·화학 장벽 (피부·점막)</button>
+                    <button class="scene-btn" data-scene="innate">🦠 2. 비특이적 방어 (염증·식균)</button>
+                    <button class="scene-btn" data-scene="adaptive">🧬 3. 특이적 방어 (T·B세포 &amp; 항체)</button>
+                    <button class="scene-btn" data-scene="memory">💉 4. 백신 &amp; 면역 기억 (1차·2차)</button>
+                </div>
+
+                <!-- Floating HUD Badges -->
+                <div class="sim-hud-overlay">
+                    <div class="sim-hud-badge">
+                        <span class="indicator"></span>
+                        <span id="hudInstruction">우측 상단 <strong>[🦠 병원체 침입]</strong>을 눌러 세균 침투를 유발하고 백혈구의 방어 작용을 관찰하세요.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar: Details & Exam Traps -->
+        <aside class="sim-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">🛡️ 면역 방어 살펴보기</span>
+            </div>
+
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab-btn active" data-tab="focus">실시간 방어 조작</button>
+                <button class="sidebar-tab-btn" data-tab="guide">면역 세포 도감</button>
+                <button class="sidebar-tab-btn" data-tab="traps">헷갈리기 쉬운 것</button>
+                <button class="sidebar-tab-btn" data-tab="quiz">개념 퀴즈</button>
+            </div>
+
+            <div class="sidebar-body">
+                
+                <!-- Tab 1: Live Controls & Telemetry -->
+                <div id="tabPanel_focus" class="sidebar-tab-panel">
+                    
+                    <!-- Live Telemetry Card -->
+                    <div class="immune-telemetry-card">
+                        <div style="font-size:12px; font-weight:800; color:#c084fc; margin-bottom:8px;">
+                            <span>실시간 면역 방어 현황판</span>
+                        </div>
+                        <div class="immune-telemetry-row">
+                            <span style="color:#cbd5e1;">침입 병원체(항원):</span>
+                            <strong id="pathogenCount" style="color:#f43f5e;">0 마리</strong>
+                        </div>
+                        <div class="immune-telemetry-row">
+                            <span style="color:#cbd5e1;">활성 백혈구(대식세포/T세포):</span>
+                            <strong id="wbcCount" style="color:#38bdf8;">0 개</strong>
+                        </div>
+                        <div class="immune-telemetry-row">
+                            <span style="color:#cbd5e1;">분비된 Y자 맞춤 항체:</span>
+                            <strong id="antibodyCount" style="color:#34d399;">0 개</strong>
+                        </div>
+                        <div style="margin-top:8px;">
+                            <div style="display:flex; justify-content:space-between; font-size:11px; color:#94a3b8;">
+                                <span>생체 방어율 (제거율)</span>
+                                <span id="clearanceRate">100%</span>
+                            </div>
+                            <div class="immune-meter-bar">
+                                <div id="defenseProgressFill" class="immune-meter-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Organ / Focus Card -->
+                    <div id="organDetailCard" class="meter-card" style="border-color: #8b5cf6; background: rgba(139, 92, 246, 0.08);">
+                        <div class="meter-card-title">
+                            <span id="organTitle" style="color:#c084fc; font-size:15px;">피부 &amp; 점막 (1차 방어선)</span>
+                            <span class="curriculum-badge">IMMUNE FOCUS</span>
+                        </div>
+                        <p id="organDesc" style="font-size:12.5px; color:#f1f5f9; line-height:1.5; margin-top:6px;">피부의 각질층과 땀·피지의 산성 물질, 기도의 점액과 섬모 운동이 병원체의 체내 유입을 원천 차단합니다.</p>
+                    </div>
+
+                    <!-- Interactive Control Box -->
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>실험 조작 및 병원체 선택</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+                            <div style="display:flex; gap:6px;">
+                                <button id="btnBacteria" class="sim-pill-btn active" type="button" style="flex:1;">🦠 세균 (박테리아)</button>
+                                <button id="btnVirus" class="sim-pill-btn" type="button" style="flex:1;">🧬 바이러스</button>
+                                <button id="btnVaccine" class="sim-pill-btn" type="button" style="flex:1;">💉 백신 항원</button>
+                            </div>
+                            <div style="display:flex; gap:8px;">
+                                <button id="secondaryInfectBtn" class="sim-btn" type="button" style="width:100%; font-size:12px; background:rgba(236, 72, 153, 0.15); border:1px solid #ec4899; color:#f472b6;">
+                                    <span>⚡ 2차 감염 유발 (면역 기억 발동)</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2022 Curriculum Checklist -->
+                    <div class="meter-card">
+                        <div class="meter-card-title">
+                            <span>2022 개정 핵심 체크리스트</span>
+                        </div>
+                        <ul id="conceptList" class="concept-list"></ul>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Immune Cell Guide -->
+                <div id="tabPanel_guide" class="sidebar-tab-panel" style="display:none;">
+                    <div class="cell-guide-item" style="border-left: 3px solid #f59e0b;">
+                        <div class="cell-guide-header">
+                            <span>🧫 대식세포 (Macrophage)</span>
+                            <span class="curriculum-badge">비특이적</span>
+                        </div>
+                        <div class="cell-guide-desc">
+                            조직을 돌아다니며 세균과 이물질을 위족으로 둘러싸 삼키는 <strong>식균 작용</strong>을 수행하고, 항원 조각을 세포막에 띄워 T림프구에 알립니다(항원 제시).
+                        </div>
+                    </div>
+
+                    <div class="cell-guide-item" style="border-left: 3px solid #38bdf8;">
+                        <div class="cell-guide-header">
+                            <span>🛡️ 보조 T림프구 (Helper T cell)</span>
+                            <span class="curriculum-badge">특이적 지휘</span>
+                        </div>
+                        <div class="cell-guide-desc">
+                            가슴샘(흉선)에서 성숙하며, 제시된 항원을 인식하면 사이토카인 신호를 보내 B림프구와 세포독성 T림프구를 증식·활성화시키는 <strong>면역의 총사령관</strong>입니다.
+                        </div>
+                    </div>
+
+                    <div class="cell-guide-item" style="border-left: 3px solid #34d399;">
+                        <div class="cell-guide-header">
+                            <span>🏹 B림프구 &amp; 형질세포 (Plasma cell)</span>
+                            <span class="curriculum-badge">체액성 면역</span>
+                        </div>
+                        <div class="cell-guide-desc">
+                            골수에서 성숙합니다. 보조 T림프구의 신호를 받으면 <strong>형질세포</strong>로 분화하여 특정 항원에만 결합하는 <strong>Y자형 항체</strong>를 초당 2,000개씩 대량 분비합니다.
+                        </div>
+                    </div>
+
+                    <div class="cell-guide-item" style="border-left: 3px solid #f43f5e;">
+                        <div class="cell-guide-header">
+                            <span>⚔️ 세포독성 T림프구 (Cytotoxic T cell)</span>
+                            <span class="curriculum-badge">세포성 면역</span>
+                        </div>
+                        <div class="cell-guide-desc">
+                            바이러스에 감염된 체세포나 암세포를 직접 찾아가 세포막에 구멍을 뚫고 독성 효소(퍼포린, 그랜자임)를 주입해 <strong>세포 자살(사멸)</strong>을 유도합니다.
+                        </div>
+                    </div>
+
+                    <div class="cell-guide-item" style="border-left: 3px solid #ec4899;">
+                        <div class="cell-guide-header">
+                            <span>🧠 기억 세포 (Memory cell)</span>
+                            <span class="curriculum-badge">면역 기억</span>
+                        </div>
+                        <div class="cell-guide-desc">
+                            1차 면역 반응 중 일부 T·B림프구가 변하여 수년간 생존합니다. 동일 항원이 2차 침입하면 즉시 형질세포로 폭발 분화하여 <strong>초고속·고농도 항체</strong>를 쏟아냅니다(백신의 원리).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Exam Traps -->
+                <div id="tabPanel_traps" class="sidebar-tab-panel" style="display:none;">
+                    <div id="examTrapList"></div>
+                </div>
+
+                <!-- Tab 4: Quick Quiz -->
+                <div id="tabPanel_quiz" class="sidebar-tab-panel" style="display:none;">
+                    <div id="quizContainer"></div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/engine-core.js?v=20260904h"></script>
+    <script src="../shared/exam-data.js?v=20260904h"></script>
+    <script src="app.js?v=20260904h"></script>
+</body>
+</html>

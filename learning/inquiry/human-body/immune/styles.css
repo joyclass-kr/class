@@ -1,0 +1,137 @@
+/* ==========================================================================
+   면역계 & 인체 방어 작용 시뮬레이터 스타일시트
+   2022 개정 교육과정: 비특이적(식균·염증) + 특이적(T·B세포 항체) + 백신 면역기억
+   ========================================================================== */
+
+.immune-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #050814;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#immuneCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Scene Switcher */
+.scene-switcher {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(10, 15, 30, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    z-index: 40;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    max-width: 95%;
+    overflow-x: auto;
+}
+
+.scene-btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.scene-btn.active, .scene-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    color: #ffffff;
+    border-color: #a78bfa;
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.55);
+}
+
+/* Immune Telemetry Status Card */
+.immune-telemetry-card {
+    padding: 12px 14px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.immune-telemetry-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 12px;
+}
+
+.immune-telemetry-row:last-child {
+    border-bottom: none;
+}
+
+/* Kinetic Gauge Fill */
+.immune-meter-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.immune-meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #8b5cf6, #ec4899);
+    transition: width 0.2s ease;
+    border-radius: 999px;
+}
+
+/* Cell Guide Cards */
+.cell-guide-item {
+    padding: 10px 12px;
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cell-guide-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 750;
+    color: #f8fafc;
+}
+
+.cell-guide-desc {
+    font-size: 11.5px;
+    color: #cbd5e1;
+    line-height: 1.45;
+}

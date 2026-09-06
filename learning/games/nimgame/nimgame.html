@@ -1035,7 +1035,7 @@ body{align-items:center;padding:18px}
                            placeholder="ROOM CODE · 4 DIGITS">
                     <button class="primary-btn" id="join-room-btn" type="button" aria-label="입력한 방 번호로 참가">JOIN</button>
                 </div>
-                <div class="room-help">방장이 알려준 4자리 방 번호를 입력하세요.</div>
+                <div class="room-help"></div>
             </div>
         </div>
 
@@ -1310,7 +1310,7 @@ body{align-items:center;padding:18px}
 
         if (connected) setLobbyStatus("connected", myRole === "host" ? "상대방이 접속했습니다." : "방장과 연결되었습니다.");
         else if (myRole === "host") setLobbyStatus("connecting", currentRoomCode ? `방 ${currentRoomCode} — 상대방 접속 대기 중...` : "새 방 번호를 만드는 중...");
-        else setLobbyStatus("connecting", "방장이 알려준 4자리 방 번호를 입력하세요.");
+        else setLobbyStatus("connecting", "");
     }
 
     function nimLobbyPresentation({ count, role, canStart }) {

@@ -1,6 +1,6 @@
 /* ==========================================================================
    신경계 & 자극-반사 실시간 시뮬레이터 스타일시트
-   초고화질 3D 비주얼 + 60fps 대뇌 vs 척수반사 레이스 타이머 & 눈 광학
+   2022 개정: 뇌 5대 중추, 4대 반사 레이스, 자율신경 길항, 뉴런 3종류, 눈/귀
    ========================================================================== */
 
 .nervous-viewport {
@@ -33,14 +33,16 @@
     transform: translateX(-50%);
     display: flex;
     gap: 8px;
-    background: rgba(10, 15, 30, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 15, 30, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     padding: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 999px;
     z-index: 40;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    max-width: 95%;
+    overflow-x: auto;
 }
 
 .scene-btn {
@@ -83,4 +85,136 @@
     padding: 6px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     font-size: 12px;
+}
+
+.race-timer-row:last-child {
+    border-bottom: none;
+}
+
+/* Brain Parts Quick Selector */
+.brain-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.brain-pill-btn {
+    padding: 6px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    color: #cbd5e1;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+}
+
+.brain-pill-btn:hover, .brain-pill-btn.active {
+    background: rgba(168, 85, 247, 0.25);
+    border-color: #c084fc;
+    color: #ffffff;
+}
+
+/* Reflex Mode Selector */
+.reflex-mode-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.reflex-mode-btn {
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    color: #cbd5e1;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reflex-mode-btn:hover, .reflex-mode-btn.active {
+    background: rgba(168, 85, 247, 0.25);
+    border-color: #c084fc;
+    color: #ffffff;
+}
+
+/* Autonomic Toggle Box */
+.autonomic-toggle-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.autonomic-tab-btn {
+    flex: 1;
+    padding: 10px 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.autonomic-tab-btn.sympathetic.active {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(220, 38, 38, 0.4));
+    border-color: #ef4444;
+    color: #fca5a5;
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.35);
+}
+
+.autonomic-tab-btn.parasympathetic.active {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.4));
+    border-color: #10b981;
+    color: #6ee7b7;
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
+}
+
+/* Autonomic Antagonism Table */
+.autonomic-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    margin-top: 6px;
+}
+
+.autonomic-table th {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.autonomic-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+}
+
+.autonomic-table tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Sensory Info Cards */
+.sensory-card {
+    padding: 10px 12px;
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-bottom: 8px;
 }

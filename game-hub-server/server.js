@@ -365,8 +365,8 @@ const MULTIPLAYER_CONTENT_PATHS = Object.freeze({
   digestion: "/learning/inquiry/human-body/digestion",
   respiration: "/learning/inquiry/human-body/respiration",
   nervous: "/learning/inquiry/human-body/nervous",
-  immune: "/learning/inquiry/human-body",
-  movement: "/learning/inquiry/human-body/muscle",
+  immune: "/learning/inquiry/human-body/immune",
+  movement: "/learning/inquiry/human-body/skeleton",
   excretion: "/learning/inquiry/human-body/excretion",
   temperature: "/learning/inquiry/human-body/homeostasis"
 });

@@ -172,27 +172,19 @@
         }
 
         /* Responsive Layout Optimization */
-        /* PC & Chromebook: 3 Columns, 7th Card Centered */
+        /* PC & Chromebook: 4 Columns (4x2 Perfect Grid) */
         @media (min-width: 861px) {
             .hub-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-            .hub-card:nth-child(7) {
-                grid-column: 2;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                max-width: 1000px;
             }
         }
 
-        /* iPad / Tablet: 2 Columns, 7th Card Centered */
+        /* iPad / Tablet: 2 Columns (2x4 Even Grid) */
         @media (min-width: 581px) and (max-width: 860px) {
             .hub-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 max-width: 600px;
-            }
-            .hub-card:nth-child(7) {
-                grid-column: 1 / -1;
-                max-width: 290px;
-                margin: 0 auto;
-                width: 100%;
             }
         }
 
@@ -292,6 +284,17 @@
                     <div class="card-title-group">
                         <div class="card-title">통합 항상성 조절</div>
                         <div class="card-title-en" lang="en">Homeostatic Regulation</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 8. 면역계 (방어 작용) -->
+            <a href="immune/" class="hub-card" style="--card-accent: #8b5cf6;">
+                <div class="card-top">
+                    <div class="card-icon-box">🛡️</div>
+                    <div class="card-title-group">
+                        <div class="card-title">면역계와 방어 작용</div>
+                        <div class="card-title-en" lang="en">Immune System &amp; Host Defense</div>
                     </div>
                 </div>
             </a>
