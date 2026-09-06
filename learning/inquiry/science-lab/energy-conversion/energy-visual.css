@@ -18,7 +18,7 @@
 .pick-buttons button.selected small { color: var(--mint); }
 
 .prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
-.prediction-buttons.three button { font-size: 12px; padding: 9px 4px; }
+.prediction-buttons.three button { font-size: 13px; padding: 9px 4px; }
 .reset-button {
     width: 100%;
     margin-top: 8px;
@@ -57,25 +57,25 @@
 .stage-views { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 6px 0 2px; }
 .main-svg, .graph-svg { width: 100%; max-width: 560px; margin: 0 auto; height: auto; display: block; }
 
-.small-label { fill: #8fa8b0; font-size: 9.5px; font-weight: 800; }
-.note-text { fill: #8fa8b0; font-size: 12.5px; font-weight: 800; }
+.small-label { fill: #475569; font-size: 12px; font-weight: 800; }
+.note-text { fill: #475569; font-size: 12.5px; font-weight: 800; }
 .verdict-text { font-size: 12.5px; font-weight: 900; }
-.gen-text { fill: #cfe6ee; font-size: 12px; font-weight: 900; }
-.trait-text { fill: #b6d3d9; font-size: 12.5px; font-weight: 800; }
+.gen-text { fill: #0f172a; font-size: 13px; font-weight: 900; }
+.trait-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
 
-.axis { stroke: rgba(214, 245, 250, .6); stroke-width: 1.6; }
-.grid-line { stroke: rgba(151, 218, 211, .13); stroke-width: 1; }
-.axis-text { fill: #9cb6b4; font-size: 12.5px; font-weight: 800; }
-.axis-title { fill: #cfe6ee; font-size: 10.5px; font-weight: 900; }
+.axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
+.grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
+.axis-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
 .trace { fill: none; stroke-width: 2.6; }
 .trace-faint { fill: none; stroke-width: 1.8; stroke: rgba(214, 245, 250, .35); stroke-dasharray: 4 3; }
 .trace-dot { stroke: #fff; stroke-width: 1.3; }
 .now-line { stroke: rgba(255, 209, 102, .7); stroke-width: 1.2; stroke-dasharray: 4 3; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
-.data-row { display: grid; grid-template-columns: 122px 1fr; gap: 10px; font-size: 11.5px; font-weight: 850; align-items: baseline; }
-.data-name { color: #b6d3d9; }
-.data-val { color: #cfe6ee; }
+.data-row { display: grid; grid-template-columns: 122px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
+.data-name { color: #475569; font-weight: 750; }
+.data-val { color: #0f172a; font-weight: 850; }
 .data-row.match .data-val { color: var(--mint); }
 
 /* the sky and the ground */
@@ -84,7 +84,7 @@
 .ground { fill: #3a4a3a; stroke: rgba(214, 245, 250, .3); stroke-width: 1; }
 .sun-arc { fill: none; stroke-width: 1.4; stroke: rgba(255, 209, 102, .28); }
 .sun-arc.now { stroke: rgba(255, 209, 102, .85); stroke-width: 1.8; }
-.sun { fill: #ffd166; stroke: #fff3c4; stroke-width: 1.2; }
+.sun { fill: #c2410c; stroke: #fff3c4; stroke-width: 1.2; }
 .cloud { fill: #9fb0bd; opacity: .9; }
 .ray { stroke: #ffd166; stroke-width: 1.3; fill: none; }
 .ray.diffuse { stroke: #cfd8de; stroke-width: 1; }
@@ -101,14 +101,14 @@
 /* the energy road */
 .box { fill: #10222c; stroke: rgba(214, 245, 250, .45); stroke-width: 1.2; }
 .box.lit { stroke: var(--mint); }
-.box-text { fill: #cfe6ee; font-size: 10.5px; font-weight: 900; }
-.box-sub { fill: #9cb6b4; font-size: 9.5px; font-weight: 800; }
+.box-text { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.box-sub { fill: #334155; font-size: 12px; font-weight: 800; }
 .band { fill: #ffb347; opacity: .85; }
 .band.elec { fill: #52c7ff; }
-.band.light { fill: #ffd166; }
+.band.light { fill: #c2410c; }
 .heat { stroke: #ff7a59; stroke-width: 1.8; fill: none; }
 .heat-text { fill: #ff9a7a; font-size: 12.5px; font-weight: 900; }
-.glow { fill: #ffd166; }
+.glow { fill: #c2410c; }
 .stack-seg { stroke: rgba(255, 255, 255, .3); stroke-width: .8; }
-.seg-text { font-size: 9.5px; font-weight: 900; }
+.seg-text { font-size: 12px; font-weight: 900; }
 .lamp-bar { stroke: rgba(255, 255, 255, .25); stroke-width: .8; }

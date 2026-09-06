@@ -61,7 +61,7 @@
 .view-title { margin-bottom: 7px; color: #0f172a; font-size: 13px; font-weight: 900; text-align: center; }
 .side-svg { width: 100%; height: auto; display: block; }
 .front-svg { width: 100%; height: auto; display: block; }
-.front-note { margin: 7px 0 0; color: #475569; font-size: 11.5px; font-weight: 700; line-height: 1.45; text-align: center; }
+.front-note { margin: 7px 0 0; color: #475569; font-size: 13px; font-weight: 700; line-height: 1.45; text-align: center; }
 
 .lamp-bulb { fill: #fef08a; stroke: #d97706; stroke-width: 2.5; }
 @keyframes lampPulse {
@@ -98,7 +98,7 @@
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
-.stage-label { fill: #0f172a; font-size: 12px; font-weight: 900; }
+.stage-label { fill: #0f172a; font-size: 13px; font-weight: 900; }
 .label-chip { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.2; opacity: .96; transition: x .18s linear; }
 .dim-line, .dim-tick { stroke: #0284c7; stroke-width: 2; }
 .dim-line { stroke-dasharray: 5 4; }
@@ -133,7 +133,7 @@
 }
 .axis { stroke: #334155; stroke-width: 2; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; }
-.axis-text { fill: #475569; font-size: 11px; font-weight: 800; font-family: Pretendard, monospace; }
+.axis-text { fill: #475569; font-size: 12.5px; font-weight: 800; font-family: Pretendard, monospace; }
 .axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
 .curve { fill: none; stroke: #ea580c; stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; filter: drop-shadow(0 2px 4px rgba(234, 88, 12, 0.25)); }
 .op-guide { stroke: #ea580c; stroke-width: 1.5; stroke-dasharray: 4 3; opacity: .65; }

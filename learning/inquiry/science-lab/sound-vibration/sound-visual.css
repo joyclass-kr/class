@@ -21,7 +21,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.bar-buttons button small { color: var(--muted-light); font-size: 11px; font-weight: 800; transition: color 0.15s ease; }
+.bar-buttons button small { color: var(--muted-light); font-size: 12.5px; font-weight: 800; transition: color 0.15s ease; }
 .bar-buttons button:hover {
     border-color: var(--line-bright);
     color: var(--ink);
@@ -54,9 +54,9 @@
 .stage-views { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 12px 0 4px; }
 .bars-view, .scope-view { width: 100%; max-width: 560px; }
 .view-title { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; color: var(--muted); font-size: 13px; font-weight: 850; letter-spacing: -0.01em; }
-.slow-badge { padding: 3px 9px; border-radius: 999px; background: rgba(192, 132, 252, 0.16); border: 1px solid rgba(192, 132, 252, 0.3); color: #d8b4fe; font-size: 10.5px; font-weight: 900; }
+.slow-badge { padding: 3px 9px; border-radius: 999px; background: rgba(192, 132, 252, 0.16); border: 1px solid rgba(192, 132, 252, 0.3); color: #d8b4fe; font-size: 12.5px; font-weight: 900; }
 .bars-svg, .scope-svg { width: 100%; height: auto; display: block; border-radius: 12px; }
-.scope-note { margin: 8px 0 0; color: #84a4a1; font-size: 11.5px; line-height: 1.45; text-align: center; }
+.scope-note { margin: 8px 0 0; color: #475569; font-size: 13px; line-height: 1.45; text-align: center; }
 
 /* Metallic chime bars */
 .bar-shadow { fill: rgba(0, 0, 0, 0.45); filter: blur(2px); pointer-events: none; }
@@ -69,7 +69,7 @@
 }
 .bar-shine { fill: rgba(255, 255, 255, 0.45); pointer-events: none; }
 .bar-pin { fill: #132731; stroke: rgba(141, 228, 245, 0.5); stroke-width: 0.9; pointer-events: none; }
-.bar-pin-center { fill: #ffd166; pointer-events: none; }
+.bar-pin-center { fill: #c2410c; pointer-events: none; }
 
 .bar-row:hover .bar {
     filter: brightness(1.22) drop-shadow(0 0 8px rgba(82, 199, 255, 0.45));
@@ -88,7 +88,7 @@
 .bar-row.vibrating .bar {
     animation: barVibrateGlow 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.bar-label { fill: var(--muted); font-size: 12px; font-weight: 850; pointer-events: none; }
+.bar-label { fill: var(--muted); font-size: 13px; font-weight: 850; pointer-events: none; }
 
 /* 3D Mallet */
 .mallet-stick { stroke: url(#stickGrad); stroke-width: 3.2; stroke-linecap: round; }
@@ -109,7 +109,7 @@
 .scope-axis-v { stroke: rgba(56, 189, 248, 0.2); stroke-width: 1; stroke-dasharray: 2 4; }
 .scope-wave { fill: none; stroke: #34d399; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .scope-envelope { fill: none; stroke: rgba(251, 191, 36, 0.75); stroke-width: 1.4; stroke-dasharray: 4 3; }
-.scope-caption { fill: #7e9fa0; font-size: 11px; font-weight: 800; }
+.scope-caption { fill: #7e9fa0; font-size: 12.5px; font-weight: 800; }
 
 @media (max-width: 600px) {
     .bar-buttons { grid-template-columns: 1fr; }
