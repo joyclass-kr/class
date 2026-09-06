@@ -66,7 +66,7 @@
         bodyCapillaries: ['온몸 모세혈관', '동맥혈이 여기서 산소와 영양소를 조직에 주고 이산화 탄소를 받아 <strong>정맥혈로 바뀝니다</strong>.']
     };
 
-    var DOT_COUNT = 14;
+    var DOT_COUNT = 8;
 
     var layer, svg, wrap, labelBox;
     var pathPul, pathSys, lenPul, lenSys;
@@ -77,10 +77,55 @@
     var loaded = false;
     var lastTs = 0;
 
+    var currentArterial = ARTERIAL;
+
     function bpm() {
         var el = document.getElementById('bpmSlider') || document.getElementById('heartRateSlider');
-        var v = el ? parseInt(el.value, 10) : 75;
-        return isNaN(v) ? 75 : v;
+        var v = el ? parseInt(el.value, 10) : 72;
+        return isNaN(v) ? 72 : v;
+    }
+
+    function getSpO2() {
+        var el = document.getElementById('o2Slider');
+        var v = el ? parseInt(el.value, 10) : 98;
+        return isNaN(v) ? 98 : v;
+    }
+
+    function getArterialColor(o2) {
+        var ratio = Math.max(0, Math.min(1, (o2 - 70) / 30));
+        var r = Math.round(75 + ratio * 160);
+        var g = Math.round(35 - ratio * 5);
+        var b = Math.round(80 - ratio * 10);
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+
+    function updateArterialVisuals() {
+        var o2 = getSpO2();
+        var color = getArterialColor(o2);
+        currentArterial = color;
+
+        if (svg) {
+            ['leftAtrium', 'leftVentricle', 'vesselPulmonaryVein', 'vesselAorta'].forEach(function (id) {
+                var el = svg.querySelector('#' + id);
+                if (el) el.setAttribute('fill', color);
+            });
+            var wall = svg.querySelector('#leftVentricleWall');
+            if (wall) {
+                wall.setAttribute('stroke', color);
+                wall.setAttribute('opacity', (0.4 + 0.35 * Math.max(0, (o2 - 70) / 30)).toFixed(2));
+            }
+        }
+
+        if (layer) {
+            var legendDot = layer.querySelector('.heart-flow-legend-arterial');
+            var legendText = layer.querySelector('.heart-flow-legend-arterial-text');
+            if (legendDot) legendDot.style.background = color;
+            if (legendText) {
+                if (o2 >= 95) legendText.textContent = '동맥혈 (산소 풍부 ➔ 선홍색)';
+                else if (o2 >= 90) legendText.textContent = '동맥혈 (산소 부족 ➔ 암적색)';
+                else legendText.textContent = '동맥혈 (저산소증 ➔ 암자색·청색증)';
+            }
+        }
     }
 
     function init() {
@@ -165,7 +210,7 @@
     function legendMarkup() {
         return '<div class="heart-flow-legend">' +
             '<span><i style="background:' + VENOUS + '"></i>정맥혈 (산소 적음)</span>' +
-            '<span><i style="background:' + ARTERIAL + '"></i>동맥혈 (산소 많음)</span>' +
+            '<span><i class="heart-flow-legend-arterial" style="background:' + ARTERIAL + '"></i><span class="heart-flow-legend-arterial-text">동맥혈 (산소 풍부)</span></span>' +
             '</div>';
     }
 
@@ -209,7 +254,9 @@
 
     function makeDot(parent, circuit, offset) {
         var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        c.setAttribute('r', 7);
+        c.setAttribute('r', 7.5);
+        c.setAttribute('stroke', '#ffffff');
+        c.setAttribute('stroke-width', '1.6');
         parent.appendChild(c);
         return { el: c, circuit: circuit, t: offset };
     }
@@ -280,13 +327,14 @@
         var beat = bpm() / 60;
         phase += dt * beat * Math.PI * 2;
 
+        updateArterialVisuals();
         moveDots(dt, beat);
         pumpChambers();
         flapValves();
     }
 
     function moveDots(dt, beat) {
-        var speed = dt * beat * 0.28;
+        var speed = dt * beat * 0.07;
         dots.forEach(function (d) {
             var show = (mode === 'all') || (mode === d.circuit);
             if (!show) { d.el.setAttribute('opacity', 0); return; }
@@ -302,8 +350,8 @@
             // 폐를 지나면 정맥혈 ➔ 동맥혈, 온몸을 지나면 동맥혈 ➔ 정맥혈
             var afterOrgan = d.t > 0.5;
             var color = (d.circuit === 'pulmonary')
-                ? (afterOrgan ? ARTERIAL : VENOUS)
-                : (afterOrgan ? VENOUS : ARTERIAL);
+                ? (afterOrgan ? currentArterial : VENOUS)
+                : (afterOrgan ? VENOUS : currentArterial);
             d.el.setAttribute('fill', color);
         });
     }

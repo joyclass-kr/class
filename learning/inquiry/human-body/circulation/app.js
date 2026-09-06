@@ -33,7 +33,7 @@
     var currentSceneKey = 'immune';
 
     // Real-Time Physiological Simulation Variables
-    var bpm = 75;            // 40 ~ 180 BPM
+    var bpm = 72;            // 50 ~ 130 BPM (표준 72)
     var oxygenSaturation = 98;// 70 ~ 100%
     var immuneActive = true;
 
@@ -556,18 +556,59 @@
             });
         }
 
+        function updateBpmUI(v) {
+            if (bpmValEl) bpmValEl.textContent = v + ' BPM';
+            var sliderVal = document.getElementById('bpmSliderVal');
+            if (sliderVal) sliderVal.textContent = v + ' BPM';
+            var desc = document.getElementById('bpmStateDesc');
+            if (desc) {
+                if (v < 60) {
+                    desc.textContent = '수면 / 깊은 휴식 (서맥 경향)';
+                    desc.style.color = '#38bdf8';
+                } else if (v <= 85) {
+                    desc.textContent = '안정 시 정상 (표준 60~80)';
+                    desc.style.color = '#22c55e';
+                } else if (v <= 105) {
+                    desc.textContent = '가벼운 활동 / 계단 오르기';
+                    desc.style.color = '#eab308';
+                } else {
+                    desc.textContent = '격렬한 운동 (달리기, 줄넘기)';
+                    desc.style.color = '#ef4444';
+                }
+            }
+        }
+
+        function updateO2UI(v) {
+            if (o2ValEl) o2ValEl.textContent = v + ' %';
+            var desc = document.getElementById('o2StateDesc');
+            if (desc) {
+                if (v >= 95) {
+                    desc.textContent = '🟢 정상 산소 (선홍색 동맥혈)';
+                    desc.style.color = '#22c55e';
+                } else if (v >= 90) {
+                    desc.textContent = '🟡 경미한 저산소증 (동맥혈 탁해짐)';
+                    desc.style.color = '#eab308';
+                } else {
+                    desc.textContent = '🔴 저산소증·청색증 주의 (암자색 변색)';
+                    desc.style.color = '#ef4444';
+                }
+            }
+        }
+
         if (bpmSlider) {
             bpmSlider.addEventListener('input', function () {
                 bpm = parseInt(bpmSlider.value, 10);
-                if (bpmValEl) bpmValEl.textContent = bpm + ' BPM';
+                updateBpmUI(bpm);
             });
+            updateBpmUI(bpm);
         }
 
         if (o2Slider) {
             o2Slider.addEventListener('input', function () {
                 oxygenSaturation = parseInt(o2Slider.value, 10);
-                if (o2ValEl) o2ValEl.textContent = oxygenSaturation + ' %';
+                updateO2UI(oxygenSaturation);
             });
+            updateO2UI(oxygenSaturation);
         }
 
         if (canvas) {
