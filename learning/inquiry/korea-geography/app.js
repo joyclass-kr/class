@@ -497,7 +497,7 @@
     if (opts.admin) {
       provinceLabels.forEach(([name, lat, lng]) => {
         if (hide.has(name)) return;
-        entries.push({ marker: L.marker([lat, lng], { icon: textIcon("admin-label", name), pane: "adminLabels", interactive: false }), minZoom: 6 });
+        entries.push({ marker: L.marker([lat, lng], { icon: textIcon("admin-label", name), pane: "adminLabels", interactive: false }), minZoom: opts.adminMinZoom || 6 });
       });
     }
     if (opts.city) {
@@ -654,7 +654,7 @@
         .forEach((name) => { if (name.length >= 2 && correctText.includes(name)) hide.add(name); });
     }
     const adminOnly = question.labels === "admin" && !revealed;
-    drawLabels(questionMap, questionLabelLayer, { admin: true, city: true, annotations: adminOnly ? [] : (theme.annotations || []), hide });
+    drawLabels(questionMap, questionLabelLayer, { admin: true, city: true, annotations: adminOnly ? [] : (theme.annotations || []), hide, adminMinZoom: adminOnly ? 5 : 6 });
   }
 
   function drawMarks(question, correctIndex) {

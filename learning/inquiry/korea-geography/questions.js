@@ -220,12 +220,20 @@
     },
     {
       id: "terrain-08", topic: "terrain", difficulty: "advanced",
-      prompt: "한반도 북부의 하천을 위치와 함께 바르게 연결한 것은?",
-      options: ["압록강－중국과의 서북쪽 국경을 이루며 황해로 흐른다.", "두만강－황해도를 지나 서해로 흐른다.", "대동강－함경산맥을 넘어 동해로 흐른다.", "청천강－개마고원에서 동해로 흐른다.", "임진강－중국과의 국경을 이룬다."],
-      answer: 0,
-      hint: "국경을 이루는 두 강 가운데 서쪽 강입니다.",
-      explanation: "압록강은 한반도 서북쪽에서 중국과의 국경을 이루며 황해로 흐릅니다. 두만강은 북동쪽 국경을 이루며 동해로 흐르고, 대동강과 청천강은 서쪽으로 흘러 황해로 들어갑니다.",
-      focus: { lat: 40.65, lng: 125.55, zoom: 7, label: "압록강과 두만강이 이루는 북쪽 국경" }
+      prompt: "지도의 A~E 중 중국과 국경을 이루며 황해로 흘러드는 하천은?",
+      marks: [
+        { label: "A", lat: 42.3, lng: 130.1 },
+        { label: "B", lat: 40.15, lng: 124.6 },
+        { label: "C", lat: 38.95, lng: 125.45 },
+        { label: "D", lat: 37.6, lng: 126.6 },
+        { label: "E", lat: 35.3, lng: 128.95 }
+      ],
+      labels: "admin",
+      options: ["A", "B", "C", "D", "E"],
+      answer: 1,
+      hint: "우리나라에서 가장 긴 하천으로, 물길 건너편이 중국입니다.",
+      explanation: "B가 압록강입니다. 백두산에서 시작해 서북쪽으로 중국과 국경을 이루며 황해로 흘러드는 우리나라에서 가장 긴 하천입니다. A 두만강도 국경 하천이지만 북동쪽으로 흘러 동해로 들어갑니다. C 대동강은 평양을 지나 황해로 흐르고, D 한강과 E 낙동강은 국경과 관계없이 각각 황해와 남해로 흘러듭니다.",
+      focus: { lat: 40.15, lng: 124.6, zoom: 7, label: "압록강 하구" }
     },
     {
       id: "terrain-09", topic: "terrain", difficulty: "advanced",
@@ -915,12 +923,21 @@
     },
     {
       id: "industry-05", topic: "industry", difficulty: "basic",
-      prompt: "대덕 연구개발특구가 위치한 도시는?",
-      options: ["대전", "구미", "포항", "창원", "천안"],
-      answer: 0,
-      hint: "국토 중앙의 광역시입니다.",
-      explanation: "대덕 연구개발특구는 대전에 있으며 정부 출연 연구 기관, 카이스트 같은 대학, 첨단 기업이 모여 연구 개발 기능을 수행합니다.",
-      focus: { lat: 36.39, lng: 127.36, zoom: 11, label: "대전 북서부의 대덕 연구개발특구" }
+      prompt: "지도의 A~E 중 대덕 연구개발특구가 있는 도시는?",
+      marks: [
+        { label: "A", lat: 36.81, lng: 127.15 },
+        { label: "B", lat: 36.35, lng: 127.38 },
+        { label: "C", lat: 36.12, lng: 128.34 },
+        { label: "D", lat: 36.02, lng: 129.34 },
+        { label: "E", lat: 35.23, lng: 128.62 }
+      ],
+      labels: "admin",
+      hide: ["대전", "천안", "구미", "포항", "창원"],
+      options: ["A", "B", "C", "D", "E"],
+      answer: 1,
+      hint: "국토의 한가운데에 있는 광역시로, 세종시 바로 남쪽에 붙어 있습니다.",
+      explanation: "B가 대전입니다. 대덕 연구개발특구에는 정부출연 연구 기관과 대학, 기업 연구소가 모여 있어 우리나라 과학 기술 연구의 중심을 이룹니다. A 천안은 수도권과 이어지는 교통 요지, C 구미는 전자, D 포항은 제철, E 창원은 기계 공업이 발달한 도시입니다.",
+      focus: { lat: 36.35, lng: 127.38, zoom: 9, label: "대덕 연구개발특구" }
     },
     {
       id: "industry-08", topic: "industry", difficulty: "advanced",
@@ -1136,13 +1153,22 @@
       focus: { lat: 36.42, lng: 127.25, zoom: 8, label: "수도권·영남·호남으로 갈라지는 중앙 위치" }
     },
     {
-      id: "region-06", topic: "region", difficulty: "advanced",
-      prompt: "다음 단서에 해당하는 도시는?<br><br><b>국제 무역항, 우리나라 제2의 도시, 동남권의 중심, 국제 영화제</b>",
-      options: ["부산", "인천", "울산", "포항", "창원"],
-      answer: 0,
-      hint: "컨테이너 부두와 해운대가 있는 도시입니다.",
-      explanation: "부산은 우리나라 최대 규모의 국제 무역항을 갖춘 제2의 도시이며 동남권의 중심입니다. 부산 국제 영화제와 해운대 관광으로도 유명합니다.",
-      focus: { lat: 35.18, lng: 129.08, zoom: 10, label: "한반도 남동단의 부산" }
+      id: "region-06", topic: "region", difficulty: "basic",
+      prompt: "지도의 A~E 중 다음 단서에 모두 해당하는 도시는?<br><br><b>국제 무역항, 우리나라 제2의 도시, 동남권의 중심, 국제 영화제</b>",
+      marks: [
+        { label: "A", lat: 37.46, lng: 126.7 },
+        { label: "B", lat: 36.02, lng: 129.34 },
+        { label: "C", lat: 35.55, lng: 129.32 },
+        { label: "D", lat: 35.16, lng: 129.06 },
+        { label: "E", lat: 35.23, lng: 128.58 }
+      ],
+      labels: "admin",
+      hide: ["부산", "인천", "울산", "포항", "창원"],
+      options: ["A", "B", "C", "D", "E"],
+      answer: 3,
+      hint: "낙동강이 바다와 만나는 자리에 있고, 동남권에서 가장 큰 도시입니다.",
+      explanation: "D가 부산입니다. 우리나라에서 컨테이너를 가장 많이 실어 나르는 항만이 있고 인구가 서울 다음으로 많으며 해마다 국제 영화제가 열립니다. A 인천도 국제 무역항이지만 수도권에 속하고, B 포항은 제철, C 울산은 자동차·조선·석유 화학, E 창원은 기계 공업이 발달한 도시입니다.",
+      focus: { lat: 35.16, lng: 129.06, zoom: 9, label: "동남권의 중심 부산" }
     },
     {
       id: "region-07", topic: "region", difficulty: "basic",
@@ -1311,6 +1337,57 @@
       hint: "제천 의림지라는 호수의 서쪽입니다.",
       explanation: "호서는 충청도를 가리키는 전통 지역명으로 제천 의림지의 서쪽이라는 뜻입니다. 호남은 전라도(김제 벽골제 남쪽), 영남은 경상도(조령 남쪽), 관동은 강원도, 해서는 황해도입니다.",
       focus: { lat: 36.55, lng: 127.1, zoom: 8, label: "호서 지방 충청도" }
+    },
+    {
+      id: "terrain-26", topic: "terrain", difficulty: "basic",
+      prompt: "지도의 A~E 중 동해안 가까이 남북으로 뻗어 큰 하천의 분수계를 이루는 산맥은?",
+      marks: [
+        { label: "A", lat: 41.2, lng: 128.6 },
+        { label: "B", lat: 40.1, lng: 126.6 },
+        { label: "C", lat: 37.6, lng: 128.72 },
+        { label: "D", lat: 36.4, lng: 128.05 },
+        { label: "E", lat: 35.6, lng: 127.1 }
+      ],
+      labels: "admin",
+      options: ["A", "B", "C", "D", "E"],
+      answer: 2,
+      hint: "동쪽 비탈은 짧고 가파르며, 서쪽 비탈은 길고 완만합니다.",
+      explanation: "C가 태백산맥입니다. 동해안 가까이 남북으로 뻗어 있어 동쪽 사면은 짧고 가파르고 서쪽 사면은 길고 완만합니다. 그래서 한강과 낙동강 같은 큰 하천이 이 산맥에서 시작해 서쪽과 남쪽으로 흘러갑니다. A 함경산맥과 B 낭림산맥은 북부의 산맥이고, D 소백산맥은 태백산맥에서 남서쪽으로 갈라져 나가며, E 노령산맥은 호남 지방을 지납니다.",
+      focus: { lat: 37.6, lng: 128.72, zoom: 7, label: "태백산맥" }
+    },
+    {
+      id: "terrain-27", topic: "terrain", difficulty: "advanced",
+      prompt: "지도의 A~E 중 하천이 실어 온 흙이 넓게 쌓여 우리나라에서 가장 넓은 평야를 이룬 곳은?",
+      marks: [
+        { label: "A", lat: 35.83, lng: 126.9 },
+        { label: "B", lat: 35.03, lng: 126.72 },
+        { label: "C", lat: 37.62, lng: 126.65 },
+        { label: "D", lat: 35.87, lng: 128.6 },
+        { label: "E", lat: 38.2, lng: 127.22 }
+      ],
+      labels: "admin",
+      options: ["A", "B", "C", "D", "E"],
+      answer: 0,
+      hint: "만경강과 동진강이 흐르는 김제·만경 일대로, 예부터 나라의 곡창으로 불렸습니다.",
+      explanation: "A는 만경강과 동진강이 흐르는 김제·만경 일대의 호남평야로 우리나라에서 가장 넓은 평야입니다. B 나주평야도 영산강이 만든 넓은 평야지만 호남평야보다 좁고, C 김포평야는 한강 하류에 있습니다. D 대구는 산으로 둘러싸인 분지이고, E 철원은 용암이 굳어 만들어진 평평한 땅이어서 하천이 흙을 쌓아 만든 평야와는 생긴 과정이 다릅니다.",
+      focus: { lat: 35.83, lng: 126.9, zoom: 9, label: "호남평야" }
+    },
+    {
+      id: "climate-26", topic: "climate", difficulty: "basic",
+      prompt: "지도의 A~E 중 겨울에 눈이 가장 많이 내리는 곳은?",
+      marks: [
+        { label: "A", lat: 37.5, lng: 130.87 },
+        { label: "B", lat: 40.5, lng: 127.5 },
+        { label: "C", lat: 37.46, lng: 126.7 },
+        { label: "D", lat: 35.87, lng: 128.6 },
+        { label: "E", lat: 35.16, lng: 129.06 }
+      ],
+      labels: "admin",
+      options: ["A", "B", "C", "D", "E"],
+      answer: 0,
+      hint: "동해 한가운데 있는 섬이라, 찬 바람이 바다를 건너오며 수증기를 잔뜩 머금고 부딪힙니다.",
+      explanation: "A 울릉도가 우리나라에서 눈이 가장 많이 내리는 곳입니다. 겨울 북서 계절풍이 동해를 건너오며 수증기를 얻어 섬에 부딪히면서 많은 눈을 뿌립니다. 눈에 갇힐 때를 대비해 집 둘레에 우데기라는 벽을 둘렀습니다. B 개마고원은 몹시 춥지만 바다에서 멀어 눈이 적고, C 인천과 D 대구, E 부산은 눈이 내리는 날이 훨씬 적습니다.",
+      focus: { lat: 37.5, lng: 130.87, zoom: 9, label: "다설지 울릉도" }
     },
   ];
 
