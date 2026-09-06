@@ -99,28 +99,7 @@
                 limit: "컴퓨터 데이터는 실제 방송 장비 사이를 한 번만 이동하는 물건이 아닙니다. 같은 데이터를 복사해 화면에 보여 주면서 파일로도 기록할 수 있습니다.",
                 teachback: "사진이 화면에는 보이지만 파일로 저장되지 않은 상황을 입력·처리·출력·저장 중 어떤 역할이 끝나지 않은 것인지 설명해 보세요."
             },
-            activity: {
-                type: "sort",
-                title: "네 기기의 동작을 역할별로 연결하기",
-                instruction: "기기 이름에 기대지 말고, 각 동작이 데이터를 받는지·계산하는지·나타내는지·남기는지를 근거로 끌어다 놓으세요.",
-                categories: [
-                    { id: "input", label: "입력", english: "Input" },
-                    { id: "processing", label: "처리", english: "Processing" },
-                    { id: "output", label: "출력", english: "Output" },
-                    { id: "storage", label: "저장", english: "Storage" }
-                ],
-                items: [
-                    { id: "camera-light", label: "스마트폰 카메라 센서가 빛을 측정한다", english: "Camera Sensor Measures Light", category: "input" },
-                    { id: "keyboard-key", label: "Chromebook 키보드가 눌린 키 신호를 보낸다", english: "Keyboard Sends a Key Signal", category: "input" },
-                    { id: "image-calc", label: "SoC가 사진의 밝기와 색을 계산한다", english: "SoC Calculates Image Data", category: "processing" },
-                    { id: "page-layout", label: "브라우저가 글과 그림의 위치를 계산한다", english: "Browser Calculates Page Layout", category: "processing" },
-                    { id: "screen-pixels", label: "디스플레이 픽셀이 사진을 보여 준다", english: "Display Shows Pixels", category: "output" },
-                    { id: "speaker-sound", label: "스피커가 음악을 소리로 낸다", english: "Speaker Produces Sound", category: "output" },
-                    { id: "photo-file", label: "사진 파일을 모바일 저장 장치에 기록한다", english: "Write Photo to Mobile Storage", category: "storage" },
-                    { id: "document-file", label: "문서 파일을 SSD에 기록한다", english: "Write Document to SSD", category: "storage" }
-                ],
-                success: "기기의 모양이 달라도 입력–처리–출력–저장이라는 같은 관계로 설명할 수 있음을 확인했습니다."
-            },
+            activity: { type: "none" },
             questions: [
                 { text: "태블릿 카메라 화면에는 장면이 계속 보이지만 촬영 버튼을 누르지 않았습니다. 현재 일어난 역할의 조합으로 가장 알맞은 것은 무엇입니까?", options: ["센서 입력–영상 처리–화면 출력", "센서 입력–영상 처리–파일 저장", "화면 입력–센서 처리–영상 출력", "센서 입력–파일 저장–화면 출력"], answer: 0, concept: "입력·처리·출력 · Input, Processing, and Output", explanation: "미리보기는 센서가 빛을 입력하고 앱과 처리 장치가 계산한 결과를 화면에 출력한 상태입니다. 촬영 파일 저장은 아직 일어나지 않을 수 있습니다." },
                 { text: "사진을 찍은 뒤 기기를 완전히 종료했다가 다시 켰는데도 사진 앱에서 열 수 있었습니다. 이 사실을 가장 직접적으로 뒷받침하는 것은 무엇입니까?", options: ["사진 데이터가 저장 장치에 파일로 기록되었다", "사진 앱이 카메라 센서에서 이전 장면을 다시 측정했다", "디스플레이 회로가 꺼지기 전 픽셀 빛을 보존했다", "프로세서가 원본 데이터 없이 같은 사진을 다시 계산했다"], answer: 0, concept: "저장 · Storage", explanation: "전원을 끈 뒤에도 다시 열 수 있으려면 사진 데이터가 비휘발성 저장 장치에 파일로 기록되어 있어야 합니다." },
@@ -209,27 +188,7 @@
                 limit: "하지만 컴퓨터는 맛을 판단하거나 조리법의 뜻을 이해하지 않습니다. CPU는 주어진 기계 명령을 매우 빠르고 정확하게 실행할 뿐입니다.",
                 teachback: "‘프린터 본체·프린터 드라이버·인쇄할 사진’이 각각 무엇인지 자신의 말로 설명해 보세요."
             },
-            activity: {
-                type: "sort",
-                title: "장치·프로그램·자료 구분하기",
-                instruction: "각 카드가 만질 수 있는 장치인지, 실행되는 명령인지, 프로그램이 다루는 자료인지 근거를 생각한 뒤 끌어다 놓으세요.",
-                categories: [
-                    { id: "hardware", label: "하드웨어", english: "Hardware" },
-                    { id: "software", label: "소프트웨어", english: "Software" },
-                    { id: "data", label: "데이터", english: "Data" }
-                ],
-                items: [
-                    { id: "keyboard", label: "키보드", english: "Keyboard", category: "hardware" },
-                    { id: "cpu", label: "CPU", english: "Central Processing Unit", category: "hardware" },
-                    { id: "monitor", label: "모니터", english: "Monitor", category: "hardware" },
-                    { id: "windows", label: "Windows 11", english: "Operating System", category: "software" },
-                    { id: "chromeos", label: "ChromeOS", english: "Operating System", category: "software" },
-                    { id: "paint", label: "그림 앱", english: "Drawing App", category: "software" },
-                    { id: "document", label: "내가 쓴 문서 파일", english: "Document File", category: "data" },
-                    { id: "photo", label: "카메라로 찍은 사진", english: "Photo Data", category: "data" }
-                ],
-                success: "물리 장치, 실행 명령, 프로그램이 다루는 자료를 구별했습니다. 세 범주는 함께 작동하지만 같은 종류는 아닙니다."
-            },
+            activity: { type: "none" },
             questions: [
                 {
                     text: "학교 PC의 모니터만 새것으로 바꾸었습니다. 저장되어 있던 문서와 그림 앱은 그대로입니다. 바뀐 대상을 가장 정확하게 설명한 것은 무엇입니까?",
@@ -347,27 +306,7 @@
                 limit: "운영체제는 교장 선생님처럼 생각하는 사람이 아닙니다. 미리 작성된 규칙과 프로그램으로 메모리·파일·장치 사용을 배분합니다.",
                 teachback: "‘Chromebook에서 Chrome으로 웹사이트를 연다’는 문장에서 기기·운영체제·앱·웹사이트를 나누어 말해 보세요."
             },
-            activity: {
-                type: "sort",
-                title: "세 층에 알맞게 놓기",
-                instruction: "이름이 가리키는 대상이 물리적인 제품인지, 기본 소프트웨어인지, 특정 작업용 앱인지 구별해 끌어다 놓으세요.",
-                categories: [
-                    { id: "device", label: "기기", english: "Device" },
-                    { id: "os", label: "운영체제", english: "Operating System" },
-                    { id: "app", label: "앱", english: "Application" }
-                ],
-                items: [
-                    { id: "ipad", label: "iPad", english: "Tablet Device", category: "device" },
-                    { id: "chromebook", label: "Chromebook", english: "Laptop Device", category: "device" },
-                    { id: "android", label: "Android", english: "Operating System", category: "os" },
-                    { id: "ios", label: "iOS", english: "Operating System", category: "os" },
-                    { id: "chromeos", label: "ChromeOS", english: "Operating System", category: "os" },
-                    { id: "safari", label: "Safari", english: "Web Browser App", category: "app" },
-                    { id: "youtube", label: "YouTube 앱", english: "Video App", category: "app" },
-                    { id: "camera", label: "카메라 앱", english: "Camera App", category: "app" }
-                ],
-                success: "기기·운영체제·앱의 세 층을 구별했습니다. 제품 이름과 운영체제 이름이 함께 불리더라도 역할은 다릅니다."
-            },
+            activity: { type: "none" },
             questions: [
                 {
                     text: "Chromebook에서 Chrome을 열어 학교 사이트를 보았습니다. 기기–운영체제–앱 순서로 올바르게 배열한 것은 무엇입니까?",
@@ -795,28 +734,7 @@
                 limit: "CPU가 항상 혼자 지휘하고 GPU가 그림만 처리하는 것은 아닙니다. 실제 프로그램은 작업의 종류에 따라 CPU와 GPU에 일을 나누며, 두 부품 모두 전자 회로로 명령과 데이터를 처리합니다.",
                 teachback: "저장 공간이 256GB로 같아도 RAM 4GB와 16GB의 사용감이 달라질 수 있는 이유를 ‘창고’와 ‘책상’ 비유로 설명해 보세요."
             },
-            activity: {
-                type: "sort",
-                title: "부품의 실제 역할로 분류하기",
-                instruction: "부품 이름보다 실제로 맡은 일을 근거로 카드를 끌어다 놓으세요. 하나의 컴퓨터 안에서도 처리·작업 공간·보관·연결 기능이 나뉩니다.",
-                categories: [
-                    { id: "processing", label: "계산·처리", english: "Processing" },
-                    { id: "working", label: "실행 중 작업 공간", english: "Working Memory" },
-                    { id: "storage", label: "장기 보관", english: "Storage" },
-                    { id: "support", label: "연결·전력·냉각", english: "System Support" }
-                ],
-                items: [
-                    { id: "cpu", label: "CPU", english: "General Processing", category: "processing" },
-                    { id: "gpu", label: "GPU", english: "Parallel Processing", category: "processing" },
-                    { id: "ram", label: "RAM", english: "Working Memory", category: "working" },
-                    { id: "ssd", label: "SSD", english: "Solid-State Drive", category: "storage" },
-                    { id: "hdd", label: "HDD", english: "Hard Disk Drive", category: "storage" },
-                    { id: "motherboard", label: "메인보드", english: "Motherboard", category: "support" },
-                    { id: "psu", label: "전원 공급 장치", english: "Power Supply Unit", category: "support" },
-                    { id: "fan", label: "냉각 팬", english: "Cooling Fan", category: "support" }
-                ],
-                success: "부품을 모양이 아니라 실제 역할로 분류했습니다. 컴퓨터는 역할이 다른 여러 부품이 연결되어 함께 작동하는 시스템입니다."
-            },
+            activity: { type: "none" },
             questions: [
                 {
                     text: "저장 공간은 둘 다 256GB인데 A는 RAM 4GB, B는 RAM 16GB입니다. 같은 앱 여러 개를 동시에 열 때 B가 더 넉넉한 까닭은?",
@@ -882,6 +800,8 @@
     const requestedIndex = lessons.findIndex((item) => item.id === requestedId);
     const lessonIndex = requestedIndex >= 0 ? requestedIndex : 0;
     const lesson = lessons[lessonIndex];
+    // 조작 단계를 가진 차시는 개념·조작·문제 세 걸음, 없는 차시는 개념·문제 두 걸음이다.
+    const hasActivityStage = lesson.activity.type !== "none";
     const stages = {
         concept: document.getElementById("stageConcept"),
         activity: document.getElementById("stageActivity"),
@@ -2412,13 +2332,14 @@
                 <div class="teachback"><strong>설명 문제 <small>Explanation Question</small></strong><p>${analogy.teachback}</p></div>
             </section>
         `;
-        document.getElementById("activityTitle").textContent = lesson.activity.title;
-        document.getElementById("activityInstruction").textContent = lesson.activity.instruction;
-        const hasStandaloneActivity = lesson.activity.type !== "sort";
-        document.getElementById("startActivity").innerHTML = hasStandaloneActivity
-            ? "실험 시작 <small>Start Experiment</small>"
-            : "문제 풀기 <small>Start Questions</small>";
-        stepStatus.textContent = hasStandaloneActivity ? "장면·원리 1 / 3" : "장면·원리 1 / 2";
+        document.getElementById("activityTitle").textContent = lesson.activity.title || "";
+        document.getElementById("activityInstruction").textContent = lesson.activity.instruction || "";
+        document.getElementById("startActivity").innerHTML = !hasActivityStage
+            ? "문제 풀기 <small>Start Questions</small>"
+            : lesson.activity.type === "sort"
+                ? "나누어 보기 <small>Start Sorting</small>"
+                : "실험 시작 <small>Start Experiment</small>";
+        stepStatus.textContent = hasActivityStage ? "장면·원리 1 / 3" : "장면·원리 1 / 2";
         renderStaticCanvases();
         renderLessonList();
         const back = document.querySelector(".back-button");
@@ -2686,7 +2607,7 @@
     }
 
     const beginActivity = () => {
-        if (lesson.activity.type === "sort") {
+        if (!hasActivityStage) {
             resetQuiz();
             showStage("quiz", "문제 풀이 2 / 2");
             focusFirstQuizOption();
@@ -2838,7 +2759,7 @@
 
     document.getElementById("retryQuiz").addEventListener("click", () => {
         resetQuiz();
-        showStage("quiz", lesson.activity.type === "sort" ? "문제 풀이 2 / 2" : "문제 풀이 3 / 3");
+        showStage("quiz", hasActivityStage ? "문제 풀이 3 / 3" : "문제 풀이 2 / 2");
         focusFirstQuizOption();
     });
 

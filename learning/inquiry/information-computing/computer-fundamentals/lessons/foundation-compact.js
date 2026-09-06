@@ -27,7 +27,7 @@
             comparisons,
             analogy: spec.analogy,
             deviceComparison: spec.deviceComparison,
-            activity: [spec.activity[0], spec.activity[1], categories, items, spec.activity[2]],
+            activity: spec.activity ? [spec.activity[0], spec.activity[1], categories, items, spec.activity[2]] : null,
             questions: spec.questions
         });
     };

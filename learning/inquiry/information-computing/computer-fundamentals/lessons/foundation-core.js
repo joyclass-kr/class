@@ -78,6 +78,15 @@
         return [`${index + 1}단계`, `Step ${index + 1}`, String(step)];
     };
 
+    // 분류 활동은 개념을 실제로 갈라 보아야만 풀리는 차시에만 둔다.
+    // 나머지 차시는 개념 화면의 실험 장치가 같은 일을 이미 한다.
+    const sortActivityLessons = new Set([
+        "c01", // 하드웨어·운영체제·앱: 층을 가르지 못하면 뒤 차시가 모두 막힌다
+        "c03", // 프로그램·프로세스·창: 창을 닫는 것과 앱을 끝내는 것을 섞어 쓴다
+        "e02", // 이름·확장자·형식·연결 앱: 파일 공부에서 가장 자주 섞인다
+        "g01"  // 아날로그·디지털·이진·변환: 이 차시에만 실험 장치가 없다
+    ]);
+
     const makeLesson = (spec) => ({
         id: spec.id,
         code: spec.id.toUpperCase(),
@@ -107,14 +116,16 @@
             limit: spec.analogy[3],
             teachback: spec.analogy[4]
         },
-        activity: {
-            type: "sort",
-            title: spec.activity[0],
-            instruction: spec.activity[1],
-            categories: spec.activity[2].map((entry) => ({ id: entry[0], label: entry[1], english: entry[2] })),
-            items: spec.activity[3].map((entry) => ({ id: entry[0], label: entry[1], english: entry[2], category: entry[3] })),
-            success: spec.activity[4]
-        },
+        activity: sortActivityLessons.has(spec.id) && spec.activity
+            ? {
+                type: "sort",
+                title: spec.activity[0],
+                instruction: spec.activity[1],
+                categories: spec.activity[2].map((entry) => ({ id: entry[0], label: entry[1], english: entry[2] })),
+                items: spec.activity[3].map((entry) => ({ id: entry[0], label: entry[1], english: entry[2], category: entry[3] })),
+                success: spec.activity[4]
+            }
+            : { type: "none" },
         questions: spec.questions.map((entry) => ({
             text: entry[0],
             options: entry[1],
