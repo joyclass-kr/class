@@ -47,7 +47,7 @@
         </div>
 
         <div class="filter-group">
-            <span class="filter-label">상태:</span>
+            <span class="filter-label">상온 상태:</span>
             <button class="btn-filter active" data-state="all">전체</button>
             <button class="btn-filter" data-state="solid">🧱 고체</button>
             <button class="btn-filter" data-state="liquid">💧 액체</button>
@@ -73,11 +73,6 @@
 
         <!-- Tab 1: Interactive Periodic Table -->
         <section class="tab-pane active" id="tab-explore">
-            <div class="table-guide">
-                <span id="guidePeriod"><b>가로</b>는 주기</span>
-                <span id="guideGroup"><b>세로</b>는 족</span>
-                <span id="guideDetail"><b>전자 배치</b>는 아래 숫자로 확인</span>
-            </div>
             <div class="periodic-table-wrapper">
                 <div class="periodic-table-grid" id="elementsGrid">
                     <!-- JS Rendered Elements 1~20 -->
@@ -89,14 +84,8 @@
         <section class="tab-pane" id="tab-quiz">
             <div class="quiz-container">
                 <div class="quiz-header">
-                    <div>
-                        <h2>🧩 단주기표 퀴즈</h2>
-                        <p class="quiz-scope">기호 · 이름 · 원자번호 · 전자 배치 · 족/주기</p>
-                    </div>
-                    <div style="display: flex; gap: 12px; align-items: center;">
-                        <span class="quiz-score-badge">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
-                        <span class="quiz-score-badge">총 점수: <span id="quizScore">0</span>점</span>
-                    </div>
+                    <span class="quiz-score-badge">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
+                    <span class="quiz-score-badge">총 점수: <span id="quizScore">0</span>점</span>
                 </div>
 
                 <div class="quiz-card">

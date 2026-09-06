@@ -312,15 +312,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (titleBadge) titleBadge.textContent = isExam ? '1~20번 원소' : '1~118번 원소';
         const exploreLabel = document.getElementById('tabExploreLabel');
         if (exploreLabel) exploreLabel.textContent = isExam ? '단주기표' : '실제 주기율표';
-        const guidePeriod = document.getElementById('guidePeriod');
-        if (guidePeriod) guidePeriod.innerHTML = isExam ? '<b>가로</b>는 주기' : '<b>7개</b> 주기';
-        const guideGroup = document.getElementById('guideGroup');
-        if (guideGroup) guideGroup.innerHTML = isExam ? '<b>세로</b>는 족' : '<b>18개</b> 족';
-        const guideDetail = document.getElementById('guideDetail');
-        if (guideDetail) guideDetail.innerHTML = isExam
-            ? '<b>전자 배치</b>는 아래 숫자로 확인'
-            : '<b>아래 두 줄</b>은 란타넘족·악티늄족';
-
         if (searchInput) {
             searchInput.placeholder = isExam
                 ? '이름, 기호(H, Na), 원자번호(1~20) 검색'
