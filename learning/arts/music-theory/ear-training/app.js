@@ -66,6 +66,14 @@
         { id: "P12", en: "P12", ko: "완전12도", degree: 11, semis: 19, roots: [28, 29] }
     ];
 
+    /*
+     * 소리는 같지만 적는 법이 다른 음정. 귀로는 가릴 수 없어 문제로 내지 않고
+     * 설명 차시의 보기로만 쓴다.
+     */
+    const DISPLAY_INTERVALS = [
+        { id: "d5", en: "d5", ko: "감5도", degree: 4, semis: 6 }
+    ];
+
     const SIMPLE_INTERVAL_IDS = ["m2", "M2", "m3", "M3", "P4", "A4", "P5", "m6", "M6", "m7", "M7", "P8"];
     const COMPOUND_INTERVAL_IDS = ["m9", "M9", "m10", "M10", "P11", "A11", "P12"];
 
@@ -129,7 +137,7 @@
         ["ii", "V", "I", "vi"]
     ].map(chords => ({ id: chords.join("-"), label: chords.join("–"), chords: chords }));
 
-    [INTERVALS, CHORDS, SCALES, POSITIONS].forEach(list => {
+    [INTERVALS, DISPLAY_INTERVALS, CHORDS, SCALES, POSITIONS].forEach(list => {
         list.forEach(item => { item.label = label(item.en, item.ko); });
     });
 
@@ -837,7 +845,7 @@
     ];
 
     function intervalExample(intervalId) {
-        const item = INTERVALS.find(entry => entry.id === intervalId);
+        const item = INTERVALS.concat(DISPLAY_INTERVALS).find(entry => entry.id === intervalId);
         const root = N.natural(28);
         const top = N.step(root, item.degree, item.semis);
         const block = document.createElement("div");
