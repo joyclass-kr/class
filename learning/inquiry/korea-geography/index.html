@@ -4,20 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#123c46">
-  <title>지리</title>
+  <title>한국지리</title>
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260903-1">
+  <link rel="stylesheet" href="styles.css?v=20260906-1">
 </head>
 <body>
   <div class="app-shell">
-    <nav class="topbar" aria-label="페이지 기능">
-      <a class="back-link" href="../../../" aria-label="학습 메뉴로 돌아가기">←</a>
-      <button class="progress-button" id="progressButton" type="button" aria-label="학습 기록 보기">
-        <span>누적 정답</span><strong id="progressScore">0 / 0</strong>
-      </button>
-    </nav>
-
-    <nav class="theme-tabs" aria-label="지도 학습 주제">
+    <nav class="theme-tabs" aria-label="한국지리 학습 주제">
+      <button class="theme-tab" type="button" data-theme="territory" aria-pressed="false"><span>🗺️</span> 국토</button>
       <button class="theme-tab is-active" type="button" data-theme="terrain" aria-pressed="true"><span>⛰️</span> 지형</button>
       <button class="theme-tab" type="button" data-theme="climate" aria-pressed="false"><span>🌦️</span> 기후</button>
       <button class="theme-tab" type="button" data-theme="population" aria-pressed="false"><span>🏙️</span> 인구·도시</button>
@@ -27,15 +21,24 @@
 
     <main class="study-layout">
       <section class="map-stage" aria-label="한국지리 주제 지도">
-        <div id="map" role="application" aria-label="대한민국 한국지리 학습 지도"></div>
+        <div id="map" role="application" aria-label="한국지리 학습 지도"></div>
+        <a class="map-back" href="../../../" aria-label="학습 메뉴로 돌아가기">←</a>
+        <button class="map-progress" id="progressButton" type="button" aria-label="학습 기록 보기"><span>누적</span><strong id="progressScore">0 / 0</strong></button>
+        <button class="map-toggle" id="labelToggle" type="button" aria-pressed="false">이름 가리기</button>
         <div class="map-key" id="mapKey" aria-live="polite"></div>
       </section>
 
       <aside class="study-panel">
         <section class="concept-card" aria-labelledby="conceptTitle">
-          <div class="section-kicker" id="conceptKicker">지형 환경</div>
-          <h1 id="conceptTitle">동고서저와 산맥의 방향</h1>
+          <div class="section-kicker" id="conceptKicker"></div>
+          <h1 id="conceptTitle"></h1>
           <p id="conceptSummary"></p>
+          <aside class="feature-focus" id="featureFocus" aria-live="polite" hidden>
+            <button class="focus-close" id="focusClose" type="button" aria-label="닫고 전국 보기">×</button>
+            <span id="focusKicker"></span>
+            <strong id="focusTitle"></strong>
+            <div id="focusBody"></div>
+          </aside>
           <div class="concept-points" id="conceptPoints"></div>
           <div class="feature-list" id="featureList" aria-label="지도 핵심 지점"></div>
           <details class="principle-guide" id="principleGuide">
@@ -44,21 +47,22 @@
           </details>
         </section>
 
-        <section class="practice-launch" aria-label="현재 주제 문제 풀기">
-          <button class="primary-button" id="startPractice" type="button">지형 문제 10개 풀기</button>
+        <section class="practice-launch" aria-label="문제 풀기">
+          <button class="primary-button" id="startPractice" type="button">지형 문제 풀기</button>
+          <button class="secondary-button" id="startMixed" type="button">전 주제 섞어 풀기</button>
         </section>
       </aside>
     </main>
   </div>
 
   <dialog class="practice-dialog" id="practiceDialog" aria-labelledby="questionTitle">
-    <form method="dialog" class="dialog-topbar">
+    <div class="dialog-topbar">
       <div>
         <strong id="questionProgress">1 / 1</strong>
         <span id="questionTopic">지형</span>
       </div>
-      <button type="submit" aria-label="문제 풀이 닫기">×</button>
-    </form>
+      <button type="button" id="closePractice" aria-label="문제 풀이 닫기">×</button>
+    </div>
     <div class="progress-track" aria-hidden="true"><span id="questionProgressBar"></span></div>
     <section class="question-body">
       <div class="question-copy">
@@ -69,7 +73,8 @@
       </div>
       <div class="question-map-wrap">
         <div id="questionMap" aria-label="문제 관련 위치 지도"></div>
-        <div class="question-map-caption" id="questionMapCaption">문제의 단서를 지도에서 확인하세요.</div>
+        <div id="questionGraph" class="question-graph" hidden></div>
+        <div class="question-map-caption" id="questionMapCaption">단서 보기를 누르면 글 단서가 나옵니다.</div>
       </div>
     </section>
     <section class="answer-feedback" id="answerFeedback" aria-live="polite" hidden>
@@ -77,7 +82,7 @@
       <p id="feedbackExplanation"></p>
     </section>
     <div class="dialog-actions">
-      <button class="secondary-button" id="showHint" type="button">지도 단서</button>
+      <button class="secondary-button" id="showHint" type="button">단서 보기</button>
       <button class="primary-button" id="nextQuestion" type="button" disabled>다음 문제</button>
     </div>
   </dialog>
@@ -93,9 +98,29 @@
     </div>
   </dialog>
 
+  <dialog class="record-dialog" id="recordDialog" aria-labelledby="recordTitle">
+    <div class="dialog-topbar">
+      <div><strong id="recordTitle">나의 학습 기록</strong></div>
+      <button type="button" id="closeRecord" aria-label="기록 닫기">×</button>
+    </div>
+    <div class="record-body">
+      <p class="record-summary" id="recordSummary"></p>
+      <table class="record-table" id="recordTable">
+        <thead><tr><th scope="col">주제</th><th scope="col">푼 문제</th><th scope="col">맞힌 문제</th><th scope="col">정답률</th></tr></thead>
+        <tbody id="recordRows"></tbody>
+      </table>
+    </div>
+    <div class="dialog-actions">
+      <button class="secondary-button" id="resetRecord" type="button">기록 지우기</button>
+      <button class="primary-button" id="retryWrong" type="button">틀렸던 문제 다시 풀기</button>
+    </div>
+  </dialog>
+
   <script src="../korean-museum/vendor/leaflet/leaflet.js"></script>
-  <script src="data.js?v=20260903-1"></script>
-  <script src="principles.js?v=20260901-7"></script>
-  <script src="app.js?v=20260903-1"></script>
+  <script src="data.js?v=20260906-1"></script>
+  <script src="questions.js?v=20260906-1"></script>
+  <script src="principles.js?v=20260906-1"></script>
+  <script src="climate-graph.js?v=20260906-1"></script>
+  <script src="app.js?v=20260906-1"></script>
 </body>
 </html>
