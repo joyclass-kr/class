@@ -117,9 +117,9 @@ function drawSea(g) {
     }
 
     g.appendChild(el('text', { x: 14, y: 16, class: 'small-label' }, `${a.belt.wind} · ${a.belt.from}에서 붑니다`));
-    g.appendChild(el('text', { x: 14, y: 202, class: 'tiny-label', style: 'fill:#ffd166' }, '바람'));
-    g.appendChild(el('text', { x: 62, y: 202, class: 'tiny-label', style: 'fill:#7fd4f0' }, '표층 45°'));
-    g.appendChild(el('text', { x: 130, y: 202, class: 'tiny-label', style: 'fill:#54e6c1' }, '전체 수송 90°'));
+    g.appendChild(el('text', { x: 14, y: 202, class: 'tiny-label', style: 'fill:#d97706' }, '바람'));
+    g.appendChild(el('text', { x: 62, y: 202, class: 'tiny-label', style: 'fill:#0284c7' }, '표층 45°'));
+    g.appendChild(el('text', { x: 130, y: 202, class: 'tiny-label', style: 'fill:#059669' }, '전체 수송 90°'));
 
     // The spiral, seen from above: each arrow is the current at one depth.
     g.appendChild(el('circle', { cx: HODO.cx, cy: HODO.cy, r: HODO.r, class: 'sea-disc' }));
@@ -182,12 +182,12 @@ function drawGraph(g) {
         g.appendChild(el('line', { x1: X(L), y1: yTop, x2: X(L), y2: yBot, class: 'mark-line' }));
         g.appendChild(el('text', { x: X(L), y: yTop - 4, 'text-anchor': 'middle', class: 'axis-text' }, `${L}° ${label}`));
     });
-    g.appendChild(el('circle', { cx: X(a.lat), cy: Y(a.poleward), r: 5, class: 'trace-dot', style: 'fill:#54e6c1' }));
+    g.appendChild(el('circle', { cx: X(a.lat), cy: Y(a.poleward), r: 5, class: 'trace-dot', style: 'fill:#059669' }));
 
-    g.appendChild(el('text', { x: x0 + 4, y: 175.5, class: 'legend-text', style: 'fill:#ffd166' }, '무역풍대'));
-    g.appendChild(el('text', { x: x0 + 66, y: 175.5, class: 'legend-text', style: 'fill:#7fd4f0' }, '편서풍대'));
+    g.appendChild(el('text', { x: x0 + 4, y: 175.5, class: 'legend-text', style: 'fill:#d97706' }, '무역풍대'));
+    g.appendChild(el('text', { x: x0 + 66, y: 175.5, class: 'legend-text', style: 'fill:#0284c7' }, '편서풍대'));
     g.appendChild(el('text', { x: x0 + 128, y: 175.5, class: 'legend-text', style: 'fill:#beaaeb' }, '극동풍대'));
-    g.appendChild(el('text', { x: x1 - 2, y: 175.5, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#9cb6b4' }, `풍속 ${state.wind} m/s일 때`));
+    g.appendChild(el('text', { x: x1 - 2, y: 175.5, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#475569' }, `풍속 ${state.wind} m/s일 때`));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '위도 — 세로는 에크만 수송의 남북 성분 (m²/s)'));
 }
 

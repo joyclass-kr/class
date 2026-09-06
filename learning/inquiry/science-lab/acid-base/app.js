@@ -126,9 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
        일입니다. 그래서 눈금이 아니라 세 칸에 용액을 늘어놓고, 지금 고른 것을
        도드라지게 합니다. */
     const ZONES = [
-        { type: 'acid',    name: '산성',   hint: '푸른 리트머스 → 붉게', fill: 'rgba(235,120,110,.22)', text: '#ff9d8a' },
-        { type: 'neutral', name: '중성',   hint: '두 종이 모두 그대로',   fill: 'rgba(200,190,175,.18)', text: '#cfe6ee' },
-        { type: 'base',    name: '염기성', hint: '붉은 리트머스 → 푸르게', fill: 'rgba(110,150,230,.22)', text: '#8fb8f5' },
+        { type: 'acid',    name: '산성',   hint: '푸른 리트머스 → 붉게', fill: '#fee2e2', text: '#b91c1c' },
+        { type: 'neutral', name: '중성',   hint: '두 종이 모두 그대로',   fill: '#f1f5f9', text: '#334155' },
+        { type: 'base',    name: '염기성', hint: '붉은 리트머스 → 푸르게', fill: '#dbeafe', text: '#1d4ed8' },
     ];
 
     function renderBand() {

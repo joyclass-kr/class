@@ -233,13 +233,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // readouts
         const c = COLOURS[a.colour];
         out += `<text class="part-label" x="330" y="82">불꽃 색</text>`;
-        out += `<text class="read-text" fill="${k > 0 ? a.metal.hex : '#9cb6b4'}" x="330" y="102">${k > 0 ? c.label : '파란 불꽃'}</text>`;
+        out += `<text class="read-text" fill="${k > 0 ? a.metal.hex : '#475569'}" x="330" y="102">${k > 0 ? c.label : '파란 불꽃'}</text>`;
         out += `<text class="part-label" x="330" y="128">색을 내는 원소</text>`;
         out += `<text class="read-text" x="330" y="148">${k > 0 ? `${a.metal.name} ${a.metal.symbol}` : '-'}</text>`;
         out += `<text class="note-text" x="330" y="170">${p < 0.18 ? '시료를 묻히는 중' : k > 0 ? '시료가 불꽃에서 빛을 냅니다' : p >= 0.85 ? '시료가 다 날아갔습니다' : '불꽃으로 옮기는 중'}</text>`;
 
         const text = k > 0 || p >= 0.85 ? `${a.compound.name} → ${c.label} 불꽃` : `${a.compound.name} — 불꽃에 넣기 전`;
-        out += `<text class="verdict-text" fill="${k > 0 || p >= 0.85 ? a.metal.hex : '#9cb6b4'}" x="20" y="28">${text}</text>`;
+        out += `<text class="verdict-text" fill="${k > 0 || p >= 0.85 ? a.metal.hex : '#475569'}" x="20" y="28">${text}</text>`;
         return out;
     }
 

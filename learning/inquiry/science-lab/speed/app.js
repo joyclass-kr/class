@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<path class="finish" d="M${px(COURSE_M)},${LANES[0] - 34} l16,6 l-16,6 z"/>`;
         }
         const VERD = { a: `1번 ${iga(a.A.name)} 빠르다`, b: `2번 ${iga(a.B.name)} 빠르다`, same: '똑같이 빠르다' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${a.kind === 'distance' ? '같은 거리 100 m' : '같은 시간 10초'} → ${VERD[a.verdict]}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${a.kind === 'distance' ? '같은 거리 100 m' : '같은 시간 10초'} → ${VERD[a.verdict]}</text>`;
         out += `<text class="note-text" x="20" y="206">${a.kind === 'distance' ? '결승선에 닿으면 그 길의 초시계만 멈춥니다' : '10초가 되면 둘 다 멈추고 간 거리를 잽니다'} · 지난 시간 ${fmtTime(t)}</text>`;
         return out;
     }
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = graphFrame(ticks, a.kind === 'distance' ? '100 m를 가는 데 걸린 시간 — 짧을수록 빠름' : '10초 동안 간 거리 — 길수록 빠름');
         rows.forEach(r => {
             const y = GRAPH.y1 + 30 + r.i * 48;
-            const colour = r.i === 0 ? '#52c7ff' : '#ff9d6b';
+            const colour = r.i === 0 ? '#0284c7' : '#ea580c';
             out += `<text class="bar-text" fill="${colour}" x="${GRAPH.x0}" y="${y - 10}">${r.i + 1}번 ${r.M.name} — ${a.kind === 'distance' ? fmtTime(r.full) : `${r.full.toFixed(0)} m`} · 속력 ${r.M.speed} m/s (${kmh(r.M.speed)} km/h)</text>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(0, gx(r.full) - GRAPH.x0).toFixed(1)}" height="12" rx="3" fill="${colour}" opacity=".25"/>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(0, gx(r.measured) - GRAPH.x0).toFixed(1)}" height="12" rx="3" fill="${colour}" opacity=".9"/>`;

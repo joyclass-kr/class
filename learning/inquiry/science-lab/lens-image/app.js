@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (a.f > 0) { out += branch(0.25, a.f - 0.25); out += branch(a.f + 0.25, GRAPH.aMax); }
         else out += branch(0.25, GRAPH.aMax);
         if (isFinite(a.b) && Math.abs(a.b) <= GRAPH.bMax) {
-            out += `<circle class="trace-dot" cx="${gx(a.a).toFixed(1)}" cy="${gy(a.b).toFixed(1)}" r="5" fill="#ffd166"/>`;
+            out += `<circle class="trace-dot" cx="${gx(a.a).toFixed(1)}" cy="${gy(a.b).toFixed(1)}" r="5" fill="#d97706"/>`;
         }
         out += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${(gy(0) - 6).toFixed(1)}" text-anchor="end">b &gt; 0 실상 · b &lt; 0 허상</text>`;
         graphGroup.innerHTML = out;

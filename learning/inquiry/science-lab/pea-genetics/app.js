@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const head = a.kind === 'one'
             ? `${alleles(state.parentA, a.gene).join('')} × ${alleles(state.parentB, a.gene).join('')}`
             : a.cross.label;
-        out += `<text class="verdict-text" fill="#cfe6ee" x="26" y="210">${head} · 기대 ${expectedText(a)}</text>`;
+        out += `<text class="verdict-text" fill="#0f172a" x="26" y="210">${head} · 기대 ${expectedText(a)}</text>`;
         mainGroup.innerHTML = out;
     }
 
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<path class="band" d="M${upper.join('L')}L${lower.join('L')}Z"/>`;
         }
         out += `<line class="expect-line" x1="${GRAPH.x0}" y1="${gy(p).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(p).toFixed(1)}"/>`;
-        out += `<text class="axis-text" style="fill:#54e6c1" x="${GRAPH.x1 - 4}" y="${(gy(p) - 5).toFixed(1)}" text-anchor="end">기대 ${Math.round(p * 100)} %</text>`;
+        out += `<text class="axis-text" style="fill:#059669" x="${GRAPH.x1 - 4}" y="${(gy(p) - 5).toFixed(1)}" text-anchor="end">기대 ${Math.round(p * 100)} %</text>`;
         if (k > 0) {
             const pts = [];
             let dom = 0;
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i % Math.max(1, Math.floor(k / 120)) === 0 || i === k) pts.push(`${gx(i).toFixed(1)},${gy(dom / i).toFixed(1)}`);
             }
             out += `<path class="trace" d="M${pts.join('L')}"/>`;
-            out += `<circle class="trace-dot" cx="${gx(k).toFixed(1)}" cy="${gy(dom / k).toFixed(1)}" r="5" fill="#52c7ff"/>`;
+            out += `<circle class="trace-dot" cx="${gx(k).toFixed(1)}" cy="${gy(dom / k).toFixed(1)}" r="5" fill="#0284c7"/>`;
         }
         if (p > 0 && p < 1) out += `<text class="note-text" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 14}">옅은 띠: 우연만으로 보통 벗어나는 범위 — 많이 뿌릴수록 좁아집니다</text>`;
         return out;

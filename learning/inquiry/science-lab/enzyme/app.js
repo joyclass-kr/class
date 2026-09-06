@@ -224,12 +224,12 @@ function drawGraph(g) {
         g.appendChild(el('line', { x1: X(km), y1: Y(vm / 2), x2: X(km), y2: yBot, class: 'mark-line' }));
         g.appendChild(el('text', { x: X(km) + 4, y: yBot - 6, class: 'axis-text' }, `Km ${fmt(km, 1)}`));
     }
-    g.appendChild(el('circle', { cx: X(state.sub), cy: Y(rateAt(state.sub)), r: 5, class: 'trace-dot', style: 'fill:#54e6c1' }));
+    g.appendChild(el('circle', { cx: X(state.sub), cy: Y(rateAt(state.sub)), r: 5, class: 'trace-dot', style: 'fill:#059669' }));
 
-    g.appendChild(el('line', { x1: x0, y1: 172, x2: x0 + 15, y2: 172, style: 'stroke:rgba(255,209,102,.7);stroke-width:3' }));
-    g.appendChild(el('text', { x: x0 + 20, y: 175.5, class: 'legend-text', style: 'fill:#ffd166' }, `표준 (37 ℃ · pH ${e.phOpt} · 억제제 없음)`));
-    g.appendChild(el('line', { x1: x0 + 246, y1: 172, x2: x0 + 261, y2: 172, style: 'stroke:#54e6c1;stroke-width:3' }));
-    g.appendChild(el('text', { x: x0 + 266, y: 175.5, class: 'legend-text', style: 'fill:#54e6c1' }, '지금 조건'));
+    g.appendChild(el('line', { x1: x0, y1: 172, x2: x0 + 15, y2: 172, style: 'stroke:rgba(217, 119, 6, .7);stroke-width:3' }));
+    g.appendChild(el('text', { x: x0 + 20, y: 175.5, class: 'legend-text', style: 'fill:#d97706' }, `표준 (37 ℃ · pH ${e.phOpt} · 억제제 없음)`));
+    g.appendChild(el('line', { x1: x0 + 246, y1: 172, x2: x0 + 261, y2: 172, style: 'stroke:#059669;stroke-width:3' }));
+    g.appendChild(el('text', { x: x0 + 266, y: 175.5, class: 'legend-text', style: 'fill:#059669' }, '지금 조건'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '기질 농도 (mmol/L) — 세로는 반응 속도 (μmol/min·mg)'));
 }
 

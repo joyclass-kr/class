@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="note-text" x="240" y="100">[N₂O₄] = ${a.n2o4.toFixed(4)} M (무색)</text>`;
         out += `<text class="note-text" x="240" y="118">질소의 ${(a.fracN2O4 * 100).toFixed(1)}%가 N₂O₄ 로</text>`;
         out += `<text class="note-text" x="240" y="136">기준 [NO₂] = ${a.ref.no2.toFixed(4)} M</text>`;
-        const tone = a.verdict === 'darker' ? '#c8703c' : a.verdict === 'lighter' ? '#7fd4f0' : '#54e6c1';
+        const tone = a.verdict === 'darker' ? '#c8703c' : a.verdict === 'lighter' ? '#0284c7' : '#059669';
         out += `<text class="verdict-text" fill="${tone}" x="240" y="162">기준의 ${a.ratio.toFixed(2)}배 — ${EQ_WORD[a.verdict]}</text>`;
         out += `<text class="note-text" x="20" y="206">K는 온도만이 바꿉니다. 부피를 바꾸면 K는 그대로이고 농도만 달라집니다.</text>`;
         mainGroup.innerHTML = out;
@@ -230,11 +230,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const on = c === a.cat;
             out += `<path class="${cls}" opacity="${on ? 1 : 0.32}" d="M${pts.join('L')}"/>`;
             const endL = Math.min(HI, Math.log10(analyseRate(100, c, a.heat).rel));
-            out += `<text class="curve-tag" fill="${c === 'on' ? '#54e6c1' : '#ffd166'}" opacity="${on ? 1 : 0.5}" ` +
+            out += `<text class="curve-tag" fill="${c === 'on' ? '#059669' : '#d97706'}" opacity="${on ? 1 : 0.5}" ` +
                    `x="${GRAPH.x1 - 4}" y="${(gy(endL) + 12).toFixed(1)}" text-anchor="end">${tag}</text>`;
         });
         const l = Math.max(LO, Math.min(HI, Math.log10(a.rel)));
-        out += `<circle class="trace-dot" cx="${gx(a.T).toFixed(1)}" cy="${gy(l).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.T).toFixed(1)}" cy="${gy(l).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = frame([0, 25, 50, 75, 100].map(T => [T, gx(T)]),
                         [0, 0.25, 0.5, 0.75, 1].map(f => [`${(f * 100).toFixed(0)}%`, gy(f)]),
                         '온도 (℃)', 'N₂O₄로 있는 질소의 비율');
-        [[0.5, 'rgba(255,209,102,.3)'], [1.0, '#ffd166'], [2.0, 'rgba(255,209,102,.3)']].forEach(([V, col]) => {
+        [[0.5, 'rgba(217, 119, 6, .3)'], [1.0, '#d97706'], [2.0, 'rgba(217, 119, 6, .3)']].forEach(([V, col]) => {
             const pts = [];
             for (let T = 0; T <= 100; T += 1) pts.push(`${gx(T).toFixed(1)},${gy(analyseEq(T, V).fracN2O4).toFixed(1)}`);
             out += `<path class="trace" style="stroke:${col}" d="M${pts.join('L')}"/>`;
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let T = 0; T <= 100; T += 1) pts.push(`${gx(T).toFixed(1)},${gy(analyseEq(T, a.V).fracN2O4).toFixed(1)}`);
             out += `<path class="trace cat" d="M${pts.join('L')}"/>`;
         }
-        out += `<circle class="trace-dot" cx="${gx(a.T).toFixed(1)}" cy="${gy(a.fracN2O4).toFixed(1)}" r="5" fill="#54e6c1"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.T).toFixed(1)}" cy="${gy(a.fracN2O4).toFixed(1)}" r="5" fill="#059669"/>`;
         graphGroup.innerHTML = out;
     }
 

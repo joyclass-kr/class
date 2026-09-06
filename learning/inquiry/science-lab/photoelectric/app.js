@@ -168,10 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // readouts
         out += `<text class="trait-text" style="fill:${light.color}" x="120" y="40">광자 한 개의 에너지 hf = 1240 ÷ ${light.nm} = ${fmtN(a.hf, 2)} eV</text>`;
         out += `<text class="trait-text" x="120" y="72">일함수 ${fmtN(metal.W, 2)} eV</text>`;
-        out += `<text class="trait-text" style="fill:${a.emit ? '#54e6c1' : '#ff7a59'}" x="120" y="88">${a.emit ? `남는 에너지 ${fmtN(a.KE, 2)} eV → 전자 나옴` : `${fmtN(-a.KE, 2)} eV 모자람 → 전자 못 나옴`}</text>`;
+        out += `<text class="trait-text" style="fill:${a.emit ? '#059669' : '#ff7a59'}" x="120" y="88">${a.emit ? `남는 에너지 ${fmtN(a.KE, 2)} eV → 전자 나옴` : `${fmtN(-a.KE, 2)} eV 모자람 → 전자 못 나옴`}</text>`;
         if (a.emit) out += `<text class="small-label" x="120" y="102">전자 속력 ${fmtSpeed(a.v)} · 정지 전압 ${fmtN(a.KE, 2)} V</text>`;
         const VERD = { none: '전자가 안 나옴', slow: `전자 나옴 — 최대 ${fmtN(a.KE, 2)} eV`, fast: `전자 나옴 — 최대 ${fmtN(a.KE, 2)} eV` };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${metal.label} · ${light.label} ${light.nm} nm · ${br.label}: ${VERD[a.verdict]}${a.emit ? `, 전류 ${a.current}` : ''}` : `${metal.label} · ${light.label} ${light.nm} nm · ${br.label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${metal.label} · ${light.label} ${light.nm} nm · ${br.label}: ${VERD[a.verdict]}${a.emit ? `, 전류 ${a.current}` : ''}` : `${metal.label} · ${light.label} ${light.nm} nm · ${br.label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">밝기는 광자 수(전류)만 바꾸고, 전자 한 개의 에너지 hf − W는 빛의 색(진동수)이 정합니다</text>`;
         return out;
     }
@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         Object.entries(METALS).forEach(([k, m], i) => {
             const f0 = m.W / H_EVS, fEnd = Math.min(FMAX, (KMAX + m.W) / H_EVS);
-            if (f0 < FMAX) out += `<line class="trace${k === state.metal ? '' : ' faint'}" style="stroke:${k === state.metal ? '#ffd166' : '#9cb6b4'}" x1="${xOf(f0).toFixed(1)}" y1="${Y0}" x2="${xOf(fEnd).toFixed(1)}" y2="${yOf(fEnd * H_EVS - m.W).toFixed(1)}"/>`;
-            out += `<text class="small-label" style="fill:${k === state.metal ? '#ffd166' : '#9cb6b4'}" x="${(xOf(Math.min(f0, FMAX * 0.93)) + (i % 2 ? 3 : -3)).toFixed(1)}" y="${Y0 + 25}" text-anchor="${i % 2 ? 'start' : 'end'}">${m.label}${f0 > FMAX ? ' (눈금 밖)' : ''}</text>`;
+            if (f0 < FMAX) out += `<line class="trace${k === state.metal ? '' : ' faint'}" style="stroke:${k === state.metal ? '#d97706' : '#475569'}" x1="${xOf(f0).toFixed(1)}" y1="${Y0}" x2="${xOf(fEnd).toFixed(1)}" y2="${yOf(fEnd * H_EVS - m.W).toFixed(1)}"/>`;
+            out += `<text class="small-label" style="fill:${k === state.metal ? '#d97706' : '#475569'}" x="${(xOf(Math.min(f0, FMAX * 0.93)) + (i % 2 ? 3 : -3)).toFixed(1)}" y="${Y0 + 25}" text-anchor="${i % 2 ? 'start' : 'end'}">${m.label}${f0 > FMAX ? ' (눈금 밖)' : ''}</text>`;
         });
         Object.values(LIGHTS).forEach(l => { const f = C_LIGHT / (l.nm * 1e-9); out += `<line class="ref-line" style="stroke:${l.color}" x1="${xOf(f).toFixed(1)}" y1="${Y1}" x2="${xOf(f).toFixed(1)}" y2="${Y0}"/>`; });
         const xf = xOf(a.f);
@@ -222,15 +222,15 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${RX}" y="128">처음 준위 E${sub(ni)} = ${fmtN(a.Ei, 2)} eV</text>`;
         out += `<text class="trait-text" x="${RX}" y="144">나중 준위 E${sub(nf)} = ${fmtN(a.Ef, 2)} eV</text>`;
         if (a.verdict === 'none') {
-            out += `<text class="trait-text" style="fill:#ff9f8a" x="${RX}" y="160">${ni === nf ? '같은 준위 — 아무 일도 없음' : `올라가려면 ${fmtN(a.dE, 2)} eV를 흡수해야 함`}</text>`;
+            out += `<text class="trait-text" style="fill:#dc2626" x="${RX}" y="160">${ni === nf ? '같은 준위 — 아무 일도 없음' : `올라가려면 ${fmtN(a.dE, 2)} eV를 흡수해야 함`}</text>`;
             out += `<text class="small-label" x="${RX}" y="176">빛을 내는 것은 내려올 때뿐입니다</text>`;
         } else {
-            out += `<text class="trait-text" style="fill:#ffd166" x="${RX}" y="160">차이 ΔE = ${fmtN(a.dE, 2)} eV</text>`;
+            out += `<text class="trait-text" style="fill:#d97706" x="${RX}" y="160">차이 ΔE = ${fmtN(a.dE, 2)} eV</text>`;
             out += `<text class="trait-text" style="fill:${a.color}" x="${RX}" y="176">파장 λ = 1240 ÷ ${fmtN(a.dE, 2)} = ${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm</text>`;
             out += `<text class="trait-text" x="${RX}" y="192">${a.series} 계열 · ${a.region === 'visible' ? '눈에 보이는 빛' : a.region === 'uv' ? '자외선 (안 보임)' : '적외선 (안 보임)'}</text>`;
         }
         const VERD = { visible: '눈에 보이는 빛', uv: '자외선', ir: '적외선', none: '빛이 안 나옴' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `n = ${ni} → n = ${nf}: ${a.verdict === 'none' ? VERD.none : `${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm, ${VERD[a.verdict]} (${a.series} 계열)`}` : `n = ${ni} → n = ${nf}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `n = ${ni} → n = ${nf}: ${a.verdict === 'none' ? VERD.none : `${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm, ${VERD[a.verdict]} (${a.series} 계열)`}` : `n = ${ni} → n = ${nf}`}</text>`;
         out += `<text class="note-text" x="20" y="208">Eₙ = −13.6/n² eV. 준위 간격은 읽기 쉽게 벌렸고 값은 옆에 적었습니다. 내려올 때 그 차이가 광자 하나</text>`;
         return out;
     }
@@ -247,9 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/>`;
         const lines = [];
         for (let nf = 1; nf <= 3; nf += 1) for (let ni = nf + 1; ni <= 7; ni += 1) { const dE = 13.6 * (1 / (nf * nf) - 1 / (ni * ni)), lam = HC / dE; if (lam >= 90 && lam <= 2000) lines.push({ nf, ni, lam }); }
-        lines.forEach(l => { const now = l.nf === a.nf && l.ni === a.ni; out += `<line class="line-mark" style="stroke:${now ? '#ffd166' : 'rgba(214,245,250,.7)'};stroke-width:${now ? 3 : 1.2}" x1="${xOf(l.lam).toFixed(1)}" y1="${Y1 + (now ? -4 : 2)}" x2="${xOf(l.lam).toFixed(1)}" y2="${Y0 + (now ? 4 : -2)}"/>`; });
-        [[1, '라이먼 (n=1로)', 121.6], [2, '발머 (n=2로)', 656], [3, '파셴 (n=3으로)', 1875]].forEach(([nf, lab, nm]) => { out += `<text class="small-label" style="fill:${a.nf === nf ? '#ffd166' : '#8fa8b0'}" x="${xOf(nm).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">${lab}</text>`; });
-        if (a.lam) out += `<text class="trait-text" style="fill:#ffd166" x="${clamp(xOf(a.lam), 70, 400).toFixed(1)}" y="${Y1 - 20}" text-anchor="middle">지금 ${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm</text>`;
+        lines.forEach(l => { const now = l.nf === a.nf && l.ni === a.ni; out += `<line class="line-mark" style="stroke:${now ? '#d97706' : '#64748b'};stroke-width:${now ? 3 : 1.2}" x1="${xOf(l.lam).toFixed(1)}" y1="${Y1 + (now ? -4 : 2)}" x2="${xOf(l.lam).toFixed(1)}" y2="${Y0 + (now ? 4 : -2)}"/>`; });
+        [[1, '라이먼 (n=1로)', 121.6], [2, '발머 (n=2로)', 656], [3, '파셴 (n=3으로)', 1875]].forEach(([nf, lab, nm]) => { out += `<text class="small-label" style="fill:${a.nf === nf ? '#d97706' : '#8fa8b0'}" x="${xOf(nm).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">${lab}</text>`; });
+        if (a.lam) out += `<text class="trait-text" style="fill:#d97706" x="${clamp(xOf(a.lam), 70, 400).toFixed(1)}" y="${Y1 - 20}" text-anchor="middle">지금 ${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm</text>`;
         out += `<text class="small-label" x="${X0}" y="${Y0 + 48}">발머 계열 656·486·434·410 nm가 수소 방전관의 붉은빛과 푸른 선입니다. 흰 선은 n = 7까지의 모든 전이.</text>`;
         return out;
     }
@@ -263,18 +263,18 @@ document.addEventListener('DOMContentLoaded', () => {
             let d = '';
             for (let x = 160; x <= 440; x += 1) { const y = 118 + 22 * Math.sin(2 * Math.PI * ((x - 160) / wlPx) - p * 6.28 * 2); d += `${d ? 'L' : 'M'}${x},${y.toFixed(1)} `; }
             out += `<path class="wave" d="${d}"/>`;
-            if (wlPx <= 280) { out += `<line class="ref-line" style="stroke:#ffd166" x1="160" y1="156" x2="${(160 + wlPx).toFixed(1)}" y2="156"/><text class="small-label" style="fill:#ffd166" x="${Math.max(200, 160 + wlPx / 2).toFixed(1)}" y="168" text-anchor="middle">한 파장 ${fmtLam(a.lam)}</text>`; }
-            else out += `<text class="small-label" style="fill:#ffd166" x="300" y="168" text-anchor="middle">한 파장 ${fmtLam(a.lam)} — 화면보다 김 (원자 ${fmtN(a.ratio)}개 너비)</text>`;
+            if (wlPx <= 280) { out += `<line class="ref-line" style="stroke:#d97706" x1="160" y1="156" x2="${(160 + wlPx).toFixed(1)}" y2="156"/><text class="small-label" style="fill:#d97706" x="${Math.max(200, 160 + wlPx / 2).toFixed(1)}" y="168" text-anchor="middle">한 파장 ${fmtLam(a.lam)}</text>`; }
+            else out += `<text class="small-label" style="fill:#d97706" x="300" y="168" text-anchor="middle">한 파장 ${fmtLam(a.lam)} — 화면보다 김 (원자 ${fmtN(a.ratio)}개 너비)</text>`;
         } else {
             out += `<line class="wave" x1="160" y1="118" x2="440" y2="118"/>`;
-            out += `<text class="small-label" style="fill:#ffd166" x="300" y="168" text-anchor="middle">파장 ${fmtSci(a.lam)} m — 어떤 눈금으로도 물결이 보이지 않음</text>`;
+            out += `<text class="small-label" style="fill:#d97706" x="300" y="168" text-anchor="middle">파장 ${fmtSci(a.lam)} m — 어떤 눈금으로도 물결이 보이지 않음</text>`;
         }
         out += `<text class="trait-text" x="160" y="44">${o.name}</text>`;
         out += `<text class="trait-text" x="160" y="60">속력 ${fmtSpeed(a.v)} · 운동량 p = mv = ${fmtSci(a.p)} kg·m/s</text>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="160" y="76">파장 λ = h/p = ${fmtLam(a.lam)}</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="160" y="76">파장 λ = h/p = ${fmtLam(a.lam)}</text>`;
         out += `<text class="small-label" x="160" y="90">원자 지름(0.1 nm)의 ${a.ratio >= 0.01 ? `${fmtN(a.ratio, a.ratio < 1 ? 2 : 1)}배` : `${fmtSci(a.ratio, 0)}배`}</text>`;
         const VERD = { big: '원자보다 큼', atom: '원자만 함', tiny: '잴 수 없이 작음' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${o.name}: 파장 ${fmtLam(a.lam)} — ${VERD[a.verdict]}` : o.name}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${o.name}: 파장 ${fmtLam(a.lam)} — ${VERD[a.verdict]}` : o.name}</text>`;
         out += `<text class="note-text" x="20" y="208">드브로이 파장 λ = h/p, h = 6.63×10⁻³⁴ J·s. 파장보다 작은 것은 파동으로 구별할 수 없습니다</text>`;
         return out;
     }
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const xOf = lam => X0 + clamp((Math.log10(lam) + 36) / 31, 0, 1) * (X1 - X0);
         let out = `<text class="axis-title" x="20" y="18">파장 (로그 눈금, m) — 원자·원자핵·빛의 파장과 견주기</text>`;
         [-35, -30, -25, -20, -15, -10, -5].forEach(e => { const x = xOf(10 ** e); out += `<line class="grid-line" x1="${x.toFixed(1)}" y1="${Y - 8}" x2="${x.toFixed(1)}" y2="${Y + 4 * (BH + 6)}"/><text class="axis-text" x="${x.toFixed(1)}" y="${Y + 4 * (BH + 6) + 14}" text-anchor="middle">10${sup(e)}</text>`; });
-        [[1e-15, '원자핵', '#ff9f8a'], [1e-10, '원자', '#ffd166'], [5e-7, '가시광선', '#54e6c1']].forEach(([lam, lab, col]) => { const x = xOf(lam); out += `<line class="ref-line" style="stroke:${col}" x1="${x.toFixed(1)}" y1="${Y - 8}" x2="${x.toFixed(1)}" y2="${Y + 4 * (BH + 6)}"/><text class="small-label" style="fill:${col}" x="${x.toFixed(1)}" y="${Y - 12}" text-anchor="middle">${lab}</text>`; });
+        [[1e-15, '원자핵', '#dc2626'], [1e-10, '원자', '#d97706'], [5e-7, '가시광선', '#059669']].forEach(([lam, lab, col]) => { const x = xOf(lam); out += `<line class="ref-line" style="stroke:${col}" x1="${x.toFixed(1)}" y1="${Y - 8}" x2="${x.toFixed(1)}" y2="${Y + 4 * (BH + 6)}"/><text class="small-label" style="fill:${col}" x="${x.toFixed(1)}" y="${Y - 12}" text-anchor="middle">${lab}</text>`; });
         Object.entries(OBJS).forEach(([k, o], i) => {
             let pp; if (o.v) pp = o.m * o.v; else { const KEj = o.KE * QE, mc2 = o.m * C_LIGHT * C_LIGHT; pp = Math.sqrt(KEj * KEj + 2 * KEj * mc2) / C_LIGHT; }
             const lam = H / pp, y = Y + i * (BH + 6), w = xOf(lam) - X0;

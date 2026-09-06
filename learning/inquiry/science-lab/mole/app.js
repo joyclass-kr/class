@@ -150,11 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         out += `<text class="small-label" x="${BX}" y="${BY - 8}">1몰 묶음으로 세면${n > 12 ? ` (${fmtMol(n)}묶음 중 12개만 그림)` : ''}</text>`;
         out += `<text class="trait-text" x="236" y="40">몰 질량 ${fmtN(sub.M, 2)} g/mol (1몰의 질량)</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="236" y="58">몰수 = ${fmtG(g)} ÷ ${fmtN(sub.M, 2)} = ${fmtMol(n)} mol</text>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="236" y="76">${sub.short} 수 = ${fmtMol(n)} × 6.02×10²³ = ${fmtSci(a.N)}개</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="236" y="58">몰수 = ${fmtG(g)} ÷ ${fmtN(sub.M, 2)} = ${fmtMol(n)} mol</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="236" y="76">${sub.short} 수 = ${fmtMol(n)} × 6.02×10²³ = ${fmtSci(a.N)}개</text>`;
         if (a.V !== null) out += `<text class="trait-text" style="fill:#97dad3" x="236" y="94">0 ℃ 1기압 부피 = ${fmtMol(n)} × 22.4 L = ${a.V >= 1000 ? `${fmtN(a.V / 1000, 2)} m³` : `${fmtN(a.V, a.V < 10 ? 2 : 1)} L`}</text>`;
         const VERD = { less: '1몰보다 적음', one: '거의 1몰', more: '1몰보다 많음' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${sub.label} ${MASSES[state.mass].label}: ${fmtMol(n)} mol = ${fmtSci(a.N)}개 — ${VERD[a.verdict]}` : `${sub.label} ${sub.formula} · ${MASSES[state.mass].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${sub.label} ${MASSES[state.mass].label}: ${fmtMol(n)} mol = ${fmtSci(a.N)}개 — ${VERD[a.verdict]}` : `${sub.label} ${sub.formula} · ${MASSES[state.mass].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">몰수 = 질량 ÷ 몰 질량. 저울로 무게를 재는 것이 곧 개수를 세는 것입니다</text>`;
         return out;
     }
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = `<text class="axis-title" x="20" y="18">${sub.label} ${sub.formula}의 양에 따른 몰수 (로그 눈금) — 초록 띠가 '거의 1몰'</text>`;
         out += `<rect class="band-good" x="${xOf(0.8).toFixed(1)}" y="${Y - 8}" width="${(xOf(1.25) - xOf(0.8)).toFixed(1)}" height="${4 * (BH + 6) + 8}"/>`;
         [0.01, 0.1, 1, 10, 100].forEach(n => { const x = xOf(n); out += `<line class="grid-line" x1="${x.toFixed(1)}" y1="${Y - 8}" x2="${x.toFixed(1)}" y2="${Y + 4 * (BH + 6)}"/><text class="axis-text" x="${x.toFixed(1)}" y="${Y + 4 * (BH + 6) + 14}" text-anchor="middle">${n} mol</text>`; });
-        out += `<line class="ref-line" style="stroke:#ffd166" x1="${xOf(1).toFixed(1)}" y1="${Y - 8}" x2="${xOf(1).toFixed(1)}" y2="${Y + 4 * (BH + 6)}"/>`;
+        out += `<line class="ref-line" style="stroke:#d97706" x1="${xOf(1).toFixed(1)}" y1="${Y - 8}" x2="${xOf(1).toFixed(1)}" y2="${Y + 4 * (BH + 6)}"/>`;
         Object.entries(MASSES).forEach(([k, m], i) => {
             const n = m.g / sub.M, y = Y + i * (BH + 6), w = Math.max(2, xOf(n) - X0);
             out += `<rect class="bar-a" style="opacity:${k === state.mass ? 1 : 0.45}" x="${X0}" y="${y}" width="${w.toFixed(1)}" height="${BH}" rx="3"/>`;
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="365" y="178" text-anchor="middle">${a.prods.map(pr => `${fmtMol(pr.n * react)} mol`).join(' · ')}</text>`;
         out += `<text class="small-label" x="30" y="50">넣은 양 (점 하나 = 0.25 mol)</text>`;
         const VERD = { aLeft: `${r.B.name}${iga(r.B.name)} 먼저 바닥나고 ${r.A.name} ${fmtMol(a.leftA)} mol 남음`, bLeft: `${r.A.name}${iga(r.A.name)} 먼저 바닥나고 ${r.B.name} ${fmtMol(a.leftB)} mol 남음`, exact: '계수 비대로 둘 다 딱 맞게 쓰임' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${r.label}: ${VERD[a.verdict]}` : `${r.label} — ${r.A.name} ${AMT_A[state.na].label}, ${r.B.name} ${AMT_B[state.nb].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${r.label}: ${VERD[a.verdict]}` : `${r.label} — ${r.A.name} ${AMT_A[state.na].label}, ${r.B.name} ${AMT_B[state.nb].label}`}</text>`;
         out += `<text class="note-text" x="20" y="196">질량은 반응 전 ${fmtG(a.before)} = 반응 후 (생성물 + 남은 것) ${fmtG(a.before)}. 원자는 없어지지 않습니다</text>`;
         out += `<text class="note-text" x="20" y="208">계수 비 ${r.A.f} : ${r.B.f} = ${r.A.coef} : ${r.B.coef} — 이 비율보다 많이 넣은 쪽이 남습니다</text>`;
         return out;
@@ -238,20 +238,20 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="solution" fill="rgba(82,199,255,${alpha.toFixed(2)})" x="${BX + 1}" y="${(BB - h).toFixed(1)}" width="${BW - 2}" height="${h.toFixed(1)}"/>`;
         const cnt = Math.max(3, Math.round(n * 24));
         for (let i = 0; i < cnt; i += 1) { const px = BX + 8 + ((i * 53) % (BW - 16)), py = BB - 6 - ((i * 37) % Math.max(8, h - 12)); out += `<circle class="particle p-d" cx="${px}" cy="${py.toFixed(1)}" r="3"/>`; }
-        if (k > 1 && dil > 0 && dil < 1) out += `<rect class="water-in" x="${BX + BW / 2 - 4}" y="${BT - 14}" width="8" height="${(BB - h - BT + 10).toFixed(1)}" rx="3"/><text class="small-label" style="fill:#52c7ff" x="${BX + BW / 2 + 10}" y="${BT - 4}">물 붓는 중</text>`;
+        if (k > 1 && dil > 0 && dil < 1) out += `<rect class="water-in" x="${BX + BW / 2 - 4}" y="${BT - 14}" width="8" height="${(BB - h - BT + 10).toFixed(1)}" rx="3"/><text class="small-label" style="fill:#0284c7" x="${BX + BW / 2 + 10}" y="${BT - 4}">물 붓는 중</text>`;
                 // readouts
         const RX = 238;
         out += `<text class="trait-text" x="${RX}" y="48">용질 ${so.label} ${fmtMol(n)} mol = ${fmtG(a.g)}</text>`;
         out += `<text class="trait-text" x="${RX}" y="66">용액 ${fmtVolL(V1)} → 몰 농도 = ${fmtMol(n)} ÷ ${fmtN(V1, 2)} = ${fmtN(M1, 2)} M</text>`;
         if (k > 1) {
-            out += `<text class="trait-text" style="fill:#52c7ff" x="${RX}" y="90">물을 더해 ${fmtVolL(V2)} (${k}배)로 묽힘</text>`;
-            out += `<text class="trait-text" style="fill:#ffd166" x="${RX}" y="108">용질은 그대로 ${fmtMol(n)} mol → ${fmtN(M2, 2)} M</text>`;
+            out += `<text class="trait-text" style="fill:#0284c7" x="${RX}" y="90">물을 더해 ${fmtVolL(V2)} (${k}배)로 묽힘</text>`;
+            out += `<text class="trait-text" style="fill:#d97706" x="${RX}" y="108">용질은 그대로 ${fmtMol(n)} mol → ${fmtN(M2, 2)} M</text>`;
             out += `<text class="small-label" x="${RX}" y="124">M₁V₁ = M₂V₂: ${fmtN(M1, 2)} × ${fmtN(V1, 2)} = ${fmtN(M2, 2)} × ${fmtN(V2, 2)}</text>`;
-        } else out += `<text class="trait-text" style="fill:#ffd166" x="${RX}" y="90">묽히지 않음 → ${fmtN(M2, 2)} M</text>`;
+        } else out += `<text class="trait-text" style="fill:#d97706" x="${RX}" y="90">묽히지 않음 → ${fmtN(M2, 2)} M</text>`;
         out += `<text class="trait-text" x="${RX}" y="148">지금 부피 ${fmtVolL(V)} · 농도 ${fmtN(M, 2)} M</text>`;
         out += `<text class="small-label" x="${RX}" y="162">노란 점(용질) 수는 그대로, 부피만 늘어 옅어집니다</text>`;
         const VERD = { low: '0.5 M 아래', mid: '0.5~1.5 M', high: '1.5 M 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${so.short} ${fmtMol(n)} mol · ${fmtVolL(V1)}${k > 1 ? ` → ${fmtVolL(V2)}` : ''}: ${fmtN(M2, 2)} M — ${VERD[a.verdict]}` : `${so.short} ${fmtMol(n)} mol · ${fmtVolL(V1)} · ${DILS[state.dil].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${so.short} ${fmtMol(n)} mol · ${fmtVolL(V1)}${k > 1 ? ` → ${fmtVolL(V2)}` : ''}: ${fmtN(M2, 2)} M — ${VERD[a.verdict]}` : `${so.short} ${fmtMol(n)} mol · ${fmtVolL(V1)} · ${DILS[state.dil].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">몰 농도(M) = 용질 몰수 ÷ 용액 부피(L). 묽혀도 용질의 몰수는 변하지 않습니다</text>`;
         return out;
     }
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const X0 = 120, X1 = 420, Y = 44, BH = 22, SC = (X1 - X0) / 6.4;
         let out = `<text class="axis-title" x="20" y="18">몰 농도 — 붉은 점선이 예상 보기의 경계(0.5 M, 1.5 M)</text>`;
         [0, 1, 2, 3, 4].forEach(m => { out += `<line class="grid-line" x1="${(X0 + m * SC).toFixed(1)}" y1="${Y - 8}" x2="${(X0 + m * SC).toFixed(1)}" y2="${Y + 2 * (BH + 10)}"/><text class="axis-text" x="${(X0 + m * SC).toFixed(1)}" y="${Y + 2 * (BH + 10) + 14}" text-anchor="middle">${m} M</text>`; });
-        [0.5, 1.5].forEach(m => { out += `<line class="ref-line" style="stroke:#ff9f8a" x1="${(X0 + m * SC).toFixed(1)}" y1="${Y - 8}" x2="${(X0 + m * SC).toFixed(1)}" y2="${Y + 2 * (BH + 10)}"/>`; });
+        [0.5, 1.5].forEach(m => { out += `<line class="ref-line" style="stroke:#dc2626" x1="${(X0 + m * SC).toFixed(1)}" y1="${Y - 8}" x2="${(X0 + m * SC).toFixed(1)}" y2="${Y + 2 * (BH + 10)}"/>`; });
         [['처음 농도', a.M1, 'bar-a'], ['묽힌 뒤 농도', a.M2, 'bar-c']].forEach(([lab, m, cls], i) => {
             const y = Y + i * (BH + 10), w = m * SC;
             out += `<rect class="${cls}" x="${X0}" y="${y}" width="${w.toFixed(1)}" height="${BH}" rx="3"/>`;

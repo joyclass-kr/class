@@ -98,21 +98,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // Breathing and pumping on the left, feeding and filtering on the right.
         // The columns stop short of the body so the organ labels have room.
         out += `<text class="group-title" style="fill:#8fd0ef" x="14" y="40">호흡</text>`;
-        out += statRow(14, 56, '호흡수', `${a.d.rr} 회/분`, '#cfe6ee', 144);
-        out += statRow(14, 70, '1회 호흡량', `${a.d.tv} mL`, '#cfe6ee', 144);
+        out += statRow(14, 56, '호흡수', `${a.d.rr} 회/분`, '#0f172a', 144);
+        out += statRow(14, 70, '1회 호흡량', `${a.d.tv} mL`, '#0f172a', 144);
         out += statRow(14, 84, '분당 환기량', `${fmt(a.ve)} L/분`, '#8fd0ef', 144);
         out += `<text class="group-title" style="fill:#ff8a8a" x="14" y="106">순환</text>`;
-        out += statRow(14, 122, '심장 박동수', `${a.d.hr} 회/분`, '#cfe6ee', 144);
-        out += statRow(14, 136, '1회 박출량', `${a.d.sv} mL`, '#cfe6ee', 144);
+        out += statRow(14, 122, '심장 박동수', `${a.d.hr} 회/분`, '#0f172a', 144);
+        out += statRow(14, 136, '1회 박출량', `${a.d.sv} mL`, '#0f172a', 144);
         out += statRow(14, 150, '심박출량', `${fmt(a.co)} L/분`, '#ff8a8a', 144);
 
         out += `<text class="group-title" style="fill:#d9b070" x="300" y="40">소화·흡수</text>`;
         out += statRow(300, 56, '쓰는 포도당', `${fmt(a.glucose, 2)} g/분`, '#d9b070', 452);
-        out += statRow(300, 70, '내는 열량', `${fmt(a.kcal, 1)} kcal/분`, '#cfe6ee', 452);
+        out += statRow(300, 70, '내는 열량', `${fmt(a.kcal, 1)} kcal/분`, '#0f172a', 452);
         out += `<text class="group-title" style="fill:#c9a6f0" x="300" y="106">배설</text>`;
-        out += statRow(300, 122, '사구체 여과량', `${a.d.gfr} mL/분`, '#cfe6ee', 452);
+        out += statRow(300, 122, '사구체 여과량', `${a.d.gfr} mL/분`, '#0f172a', 452);
         out += statRow(300, 136, '오줌 양', `${fmt(a.d.urine, 1)} mL/분`, '#c9a6f0', 452);
-        out += statRow(300, 150, '오줌 속 포도당', `0 mg`, '#cfe6ee', 452);
+        out += statRow(300, 150, '오줌 속 포도당', `0 mg`, '#0f172a', 452);
 
         out += `<text class="note-text" x="14" y="188">산소 소비량 ${a.d.vo2} mL/분 = 심박출량 ${fmt(a.co)} L × 1 L에서 뽑아 쓴 ${fmt(a.avDiff, 0)} mL</text>`;
         out += `<text class="note-text" x="14" y="204">피가 온몸을 한 바퀴 도는 데 ${fmt(a.circTime, 0)} 초 · 내쉰 숨의 산소 ${fmt(a.feO2 * 100, 1)} % — 심장과 폐는 실제 빠르기입니다</text>`;
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const ROWS = [
         { name: '산소 소비량', pick: a => a.d.vo2, unit: 'mL/분', colour: '#8fd0ef' },
-        { name: '분당 환기량', pick: a => a.ve, unit: 'L/분', colour: '#52c7ff', digits: 1 },
+        { name: '분당 환기량', pick: a => a.ve, unit: 'L/분', colour: '#0284c7', digits: 1 },
         { name: '심박출량', pick: a => a.co, unit: 'L/분', colour: '#ff8a8a', digits: 1 },
         { name: '사구체 여과량', pick: a => a.d.gfr, unit: 'mL/분', colour: '#c9a6f0' },
         { name: '오줌 양', pick: a => a.d.urine, unit: 'mL/분', colour: '#b8a6f0', digits: 1 },
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ROWS.forEach((row, i) => {
             const y = GRAPH.y1 + 22 + i * 26;
             const value = row.pick(a), ratio = ratios[i];
-            const colour = ratio > 1.02 ? row.colour : ratio < 0.98 ? '#ff9d6b' : '#9cb6b4';
+            const colour = ratio > 1.02 ? row.colour : ratio < 0.98 ? '#ea580c' : '#475569';
             out += `<text class="axis-text" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${row.name}</text>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 5}" width="${Math.max(2, gx(ratio) - GRAPH.x0).toFixed(1)}" height="13" rx="3" fill="${colour}" opacity=".82"/>`;
             const label = `${ratio.toFixed(2)}배 · ${value.toFixed(row.digits ?? 0)} ${row.unit}`;

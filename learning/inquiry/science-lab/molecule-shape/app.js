@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const x2 = fromC ? CX + (ap.x - CX) * (0.15 + L) : ap.x - (ap.x - CX) * (0.15 + L), y2 = fromC ? CY + (ap.y - CY) * (0.15 + L) : ap.y - (ap.y - CY) * (0.15 + L);
                 out += arrow(x1, y1, x2, y2, 'dipole', 'dipole-head', 3);
                 const bl = Math.hypot(ap.x - CX, ap.y - CY), ux = (ap.x - CX) / (bl || 1), uy = (ap.y - CY) / (bl || 1), lx = ap.x + ux * (ATOM[ap.a].r + 10), ly = ap.y + uy * (ATOM[ap.a].r + 10);
-                if (bl > 14 && ly < 168 && !atomPos.some((o, j) => j !== i && Math.hypot(o.x - lx, o.y - ly) < 13)) out += `<text class="small-label" style="fill:#ffd166" x="${lx.toFixed(1)}" y="${(ly + 3).toFixed(1)}" text-anchor="middle">${fromC ? 'δ−' : 'δ+'}</text>`;
+                if (bl > 14 && ly < 168 && !atomPos.some((o, j) => j !== i && Math.hypot(o.x - lx, o.y - ly) < 13)) out += `<text class="small-label" style="fill:#d97706" x="${lx.toFixed(1)}" y="${(ly + 3).toFixed(1)}" text-anchor="middle">${fromC ? 'δ−' : 'δ+'}</text>`;
             });
             if (dip.mag > 0.05) { const n = proj(dip.net, th); const L = dip.mag * 34; out += arrow(CX, CY, CX + n[0] / dip.mag * L, CY - n[1] / dip.mag * L, 'net-dipole', 'net-head', 5); }
         }
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const r = 24, big = Math.abs(d) > Math.PI ? 1 : 0, sweep = d > 0 ? 1 : 0;
             out += `<path class="angle-arc" d="M${(CX + r * Math.cos(a1)).toFixed(1)},${(CY + r * Math.sin(a1)).toFixed(1)} A${r},${r} 0 ${big} ${sweep} ${(CX + r * Math.cos(a2)).toFixed(1)},${(CY + r * Math.sin(a2)).toFixed(1)}"/>`;
             const am = a1 + d / 2, lx = CX + 44 * Math.cos(am), ly = CY + 44 * Math.sin(am);
-            if (!atomPos.some(ap => Math.hypot(ap.x - lx, ap.y - ly) < 16)) out += `<text class="small-label" style="fill:#ffd166" x="${lx.toFixed(1)}" y="${(ly + 3).toFixed(1)}" text-anchor="middle">${m.angle}°</text>`;
+            if (!atomPos.some(ap => Math.hypot(ap.x - lx, ap.y - ly) < 16)) out += `<text class="small-label" style="fill:#d97706" x="${lx.toFixed(1)}" y="${(ly + 3).toFixed(1)}" text-anchor="middle">${m.angle}°</text>`;
         }
         const RX = 250;
         out += `<text class="gen-text" x="${RX}" y="44">${m.name} ${m.formula}</text>`;
@@ -201,13 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="trait-text" style="fill:#d6f5fa" x="${RX}" y="82">결합 전자쌍 ${m.bondPairs}${m.order === 2 ? ' (이중 결합도 하나로 셈)' : ''}</text>`;
             out += `<text class="trait-text" style="fill:#a78bfa" x="${RX}" y="98">비공유 전자쌍 ${m.lonePairs}</text>`;
             const total = m.bondPairs + m.lonePairs;
-            out += `<text class="trait-text" style="fill:#ffd166" x="${RX}" y="118">모두 ${total}쌍 → ${total === 2 ? '직선 배치 180°' : total === 3 ? '평면 삼각 배치 120°' : '정사면체 배치 109.5°'}</text>`;
+            out += `<text class="trait-text" style="fill:#d97706" x="${RX}" y="118">모두 ${total}쌍 → ${total === 2 ? '직선 배치 180°' : total === 3 ? '평면 삼각 배치 120°' : '정사면체 배치 109.5°'}</text>`;
             out += `<text class="trait-text" x="${RX}" y="136">${m.lonePairs ? `비공유 ${m.lonePairs}쌍이 더 밀어` : '모두 결합이라'} → ${m.shape} ${m.angle}°</text>`;
         }
         out += `<text class="small-label" x="${RX}" y="158">회색 C · 붉은 O · 파란 N · 흰 H · 초록 F/Cl · 분홍 B</text>`;
         out += `<text class="small-label" x="${RX}" y="172">보라 덩어리 = 비공유 전자쌍 (원자에는 안 보임)</text>`;
         const VERD = { linear: '직선형', trigonal: '평면 삼각형', tetra: '정사면체형', lone: `${m.shape} — 비공유 전자쌍이 밀어냄` };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${m.formula}: ${VERD[a.verdict]}${m.angle !== null ? `, 결합각 ${m.angle}°` : ''}` : `${m.name} ${m.formula}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${m.formula}: ${VERD[a.verdict]}${m.angle !== null ? `, 결합각 ${m.angle}°` : ''}` : `${m.name} ${m.formula}`}</text>`;
         out += `<text class="note-text" x="20" y="208">전자쌍은 서로 밀어 가장 멀리 떨어진 자리를 잡습니다. 비공유 전자쌍은 더 넓게 퍼져 결합각을 조금 좁힙니다</text>`;
         return out;
     }
@@ -237,17 +237,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const FX = 236, FY = 40, FW = 204, FH = 138, on = p > 0.5, align = ease(clamp((p - 0.5) / 0.4, 0, 1));
         out += `<rect class="field-box" x="${FX}" y="${FY}" width="${FW}" height="${FH}" rx="8"/>`;
         out += `<rect fill="rgba(255,122,89,.5)" x="${FX + 6}" y="${FY + 8}" width="6" height="${FH - 16}"/><rect fill="rgba(82,199,255,.5)" x="${FX + FW - 12}" y="${FY + 8}" width="6" height="${FH - 16}"/>`;
-        out += `<text class="charge-text" style="fill:#ff9f8a;font-size:12px;font-weight:900" x="${FX + 9}" y="${FY - 4}" text-anchor="middle">+</text><text style="fill:#52c7ff;font-size:12px;font-weight:900" x="${FX + FW - 9}" y="${FY - 4}" text-anchor="middle">−</text>`;
+        out += `<text class="charge-text" style="fill:#dc2626;font-size:13.5px;font-weight:900" x="${FX + 9}" y="${FY - 4}" text-anchor="middle">+</text><text style="fill:#0284c7;font-size:13.5px;font-weight:900" x="${FX + FW - 9}" y="${FY - 4}" text-anchor="middle">−</text>`;
         if (on) for (let k = 0; k < 4; k += 1) { const y = FY + 26 + k * 34; out += arrow(FX + 16, y, FX + FW - 18, y, 'field-line', 'field-arrow', 2.5); }
         const polar = a.verdict === 'polar';
         for (let k = 0; k < 8; k += 1) {
             const gx = FX + 36 + (k % 4) * 44, gy = FY + 38 + Math.floor(k / 4) * 62, seed = ((k * 137) % 360) - 180;
             const ang = polar ? seed * (1 - align) : seed;
-            out += `<g transform="rotate(${ang.toFixed(1)} ${gx} ${gy})"><ellipse class="mol-glyph${polar ? '' : ' nonpolar'}" cx="${gx}" cy="${gy}" rx="15" ry="8"/>${polar ? `<text class="glyph-text" style="fill:#ff9f8a" x="${gx - 10}" y="${gy + 3}" text-anchor="middle">δ−</text><text class="glyph-text" style="fill:#52c7ff" x="${gx + 10}" y="${gy + 3}" text-anchor="middle">δ+</text>` : ''}</g>`;
+            out += `<g transform="rotate(${ang.toFixed(1)} ${gx} ${gy})"><ellipse class="mol-glyph${polar ? '' : ' nonpolar'}" cx="${gx}" cy="${gy}" rx="15" ry="8"/>${polar ? `<text class="glyph-text" style="fill:#dc2626" x="${gx - 10}" y="${gy + 3}" text-anchor="middle">δ−</text><text class="glyph-text" style="fill:#0284c7" x="${gx + 10}" y="${gy + 3}" text-anchor="middle">δ+</text>` : ''}</g>`;
         }
         out += `<text class="small-label" x="${FX + FW / 2}" y="${FY + FH + 14}" text-anchor="middle">${on ? (polar ? '전기장 켬 — 극성 분자가 줄지어 섬' : '전기장 켬 — 무극성이라 제멋대로 놓임') : '전기장 끔 — 제멋대로 놓인 분자들'}</text>`;
         const VERD = { polar: '극성 분자 — 쌍극자가 남음', cancel: '무극성 분자 — 결합은 극성이지만 상쇄됨', nonbond: '무극성 분자 — 결합부터 무극성' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${m.formula}: ${VERD[a.verdict]}` : `${m.name} ${m.formula}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${m.formula}: ${VERD[a.verdict]}` : `${m.name} ${m.formula}`}</text>`;
         out += `<text class="note-text" x="20" y="208">전기 음성도: H 2.2 · B 2.0 · C 2.6 · N 3.0 · O 3.4 · F 4.0 · Cl 3.2 — 차이가 클수록 결합이 극성</text>`;
         return out;
     }
@@ -292,14 +292,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const RX = 236;
         out += `<text class="trait-text" x="${RX}" y="48">용매 ${sv.label} — ${sv.polar ? '극성 분자 (δ+/δ− 있음)' : '무극성 분자'}</text>`;
         const G1 = RX + 8;
-        out += sv.polar ? `<ellipse class="mol-glyph" cx="${G1 + 16}" cy="68" rx="15" ry="8"/><text class="glyph-text" style="fill:#ff9f8a" x="${G1 + 6}" y="71" text-anchor="middle">δ−</text><text class="glyph-text" style="fill:#52c7ff" x="${G1 + 26}" y="71" text-anchor="middle">δ+</text>` : `<rect class="mol-glyph nonpolar" x="${G1}" y="62" width="44" height="12" rx="6"/>`;
+        out += sv.polar ? `<ellipse class="mol-glyph" cx="${G1 + 16}" cy="68" rx="15" ry="8"/><text class="glyph-text" style="fill:#dc2626" x="${G1 + 6}" y="71" text-anchor="middle">δ−</text><text class="glyph-text" style="fill:#0284c7" x="${G1 + 26}" y="71" text-anchor="middle">δ+</text>` : `<rect class="mol-glyph nonpolar" x="${G1}" y="62" width="44" height="12" rx="6"/>`;
         out += `<text class="trait-text" x="${RX}" y="96">넣는 것 ${su.label} — ${su.hint}</text>`;
-        out += state.solute === 'salt' ? `<circle class="solute s-salt" cx="${G1 + 8}" cy="112" r="7"/><text class="glyph-text" x="${G1 + 8}" y="115" text-anchor="middle">+</text><circle class="solute" fill="#4ade80" stroke="#166534" cx="${G1 + 26}" cy="112" r="8"/><text class="glyph-text" x="${G1 + 26}" y="115" text-anchor="middle">−</text>` : state.solute === 'sugar' || state.solute === 'ethanol' ? `<ellipse class="mol-glyph" cx="${G1 + 16}" cy="112" rx="15" ry="8"/><text class="glyph-text" style="fill:#ff9f8a" x="${G1 + 6}" y="115" text-anchor="middle">δ−</text><text class="glyph-text" style="fill:#52c7ff" x="${G1 + 26}" y="115" text-anchor="middle">δ+</text>${state.solute === 'ethanol' ? `<rect class="mol-glyph nonpolar" x="${G1 + 32}" y="106" width="30" height="12" rx="6"/>` : ''}` : `<rect class="mol-glyph nonpolar" x="${G1}" y="106" width="44" height="12" rx="6"/>`;
+        out += state.solute === 'salt' ? `<circle class="solute s-salt" cx="${G1 + 8}" cy="112" r="7"/><text class="glyph-text" x="${G1 + 8}" y="115" text-anchor="middle">+</text><circle class="solute" fill="#4ade80" stroke="#166534" cx="${G1 + 26}" cy="112" r="8"/><text class="glyph-text" x="${G1 + 26}" y="115" text-anchor="middle">−</text>` : state.solute === 'sugar' || state.solute === 'ethanol' ? `<ellipse class="mol-glyph" cx="${G1 + 16}" cy="112" rx="15" ry="8"/><text class="glyph-text" style="fill:#dc2626" x="${G1 + 6}" y="115" text-anchor="middle">δ−</text><text class="glyph-text" style="fill:#0284c7" x="${G1 + 26}" y="115" text-anchor="middle">δ+</text>${state.solute === 'ethanol' ? `<rect class="mol-glyph nonpolar" x="${G1 + 32}" y="106" width="30" height="12" rx="6"/>` : ''}` : `<rect class="mol-glyph nonpolar" x="${G1}" y="106" width="44" height="12" rx="6"/>`;
         const words = a.reason.split(' '); const lines = []; let cur = '';
         words.forEach(w => { if ((cur + ' ' + w).length > 26) { lines.push(cur); cur = w; } else cur = cur ? `${cur} ${w}` : w; }); lines.push(cur);
         lines.slice(0, 4).forEach((ln, i) => { out += `<text class="small-label" style="fill:#d6f5fa" x="${RX}" y="${138 + i * 13}">${ln}</text>`; });
         const VERD = { mix: '잘 녹아 섞임', partly: '조금만 녹음', no: '녹지 않고 따로 놂' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${sv.label} + ${su.label}: ${VERD[a.verdict]}` : `${sv.label}에 ${su.label} 넣기`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${sv.label} + ${su.label}: ${VERD[a.verdict]}` : `${sv.label}에 ${su.label} 넣기`}</text>`;
         out += `<text class="note-text" x="20" y="208">비슷한 것끼리 녹습니다 — 극성은 극성끼리, 무극성은 무극성끼리. 이온은 극성 용매에</text>`;
         return out;
     }
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Object.entries(SOLUTES).forEach(([k, su], i) => {
                 const v = su[sk];
                 out += `<rect class="chart-cell ${v === 'mix' ? 'chart-ok' : v === 'partly' ? 'chart-part' : 'chart-bad'}" x="${X + i * W}" y="${Y + j * H}" width="${W}" height="${H}"/>`;
-                out += `<text class="chart-text" style="fill:${v === 'mix' ? '#54e6c1' : v === 'partly' ? '#ffd166' : '#ff9f8a'}" x="${X + i * W + W / 2}" y="${Y + j * H + H / 2 + 4}" text-anchor="middle">${v === 'mix' ? '○' : v === 'partly' ? '△' : '✕'}</text>`;
+                out += `<text class="chart-text" style="fill:${v === 'mix' ? '#059669' : v === 'partly' ? '#d97706' : '#dc2626'}" x="${X + i * W + W / 2}" y="${Y + j * H + H / 2 + 4}" text-anchor="middle">${v === 'mix' ? '○' : v === 'partly' ? '△' : '✕'}</text>`;
             });
         });
         const i = Object.keys(SOLUTES).indexOf(state.solute), j = Object.keys(SOLVENTS).indexOf(state.solvent);

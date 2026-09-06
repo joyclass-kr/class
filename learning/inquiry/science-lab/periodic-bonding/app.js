@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const valence = e => e.shells[e.shells.length - 1];
     const GROUPS = ['1', '2', '13', '14', '15', '16', '17', '18'];
     const PERIODS = ['1', '2', '3', '4'];
-    const GROUP_COLOR = { 1: '#ffb347', 2: '#f4a261', 13: '#e9a3c9', 14: '#9fb6d9', 15: '#b29bff', 16: '#ff7a59', 17: '#7fd48a', 18: '#52c7ff' };
+    const GROUP_COLOR = { 1: '#ffb347', 2: '#f4a261', 13: '#e9a3c9', 14: '#9fb6d9', 15: '#7c3aed', 16: '#ff7a59', 17: '#7fd48a', 18: '#0284c7' };
     const elementAt = (period, group) => ELEMENTS.find(e => e.period === Number(period) && e.group === Number(group)) || null;
 
     // Pairs that meet. Ionic: electrons cross over; covalent: pairs are shared.
@@ -210,8 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${IX}" y="66">바깥 전자 ${v}개</text>`;
         out += `<text class="trait-text" x="${IX}" y="82">${el.kind}</text>`;
         out += `<text class="trait-text" x="${IX}" y="98">상온에서 ${el.state}</text>`;
-        if (t > 0 && (lost || gained)) out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="160">전자 ${Math.abs(a.change)}개 ${lost ? '잃음' : '얻음'}</text>`;
-        else if (p >= 0.5) out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="160">${el.why === 'noble' ? '이미 가득 참' : '전자를 함께 씀'}</text>`;
+        if (t > 0 && (lost || gained)) out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="160">전자 ${Math.abs(a.change)}개 ${lost ? '잃음' : '얻음'}</text>`;
+        else if (p >= 0.5) out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="160">${el.why === 'noble' ? '이미 가득 참' : '전자를 함께 씀'}</text>`;
         // the table
         const TX = 296, TY = 40, CW = 19, CH = 17;
         GROUPS.forEach((g, c) => { out += `<text class="cell-head" x="${TX + c * CW + CW / 2}" y="${TY - 4}" text-anchor="middle">${g}</text>`; });
@@ -220,22 +220,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = TX + c * CW, y = TY + r * CH;
             const mine = e.z === el.z, same = e.group === el.group;
             out += `<rect class="cell" x="${x}" y="${y}" width="${CW}" height="${CH}" fill="${mine ? GROUP_COLOR[e.group] : same ? GROUP_COLOR[e.group] + '55' : 'rgba(16,34,44,.9)'}"/>`;
-            out += `<text class="cell-text" style="fill:${mine ? '#0a1c24' : '#dce9e8'}" x="${x + CW / 2}" y="${y + CH / 2 + 3}" text-anchor="middle">${e.sym}</text>`;
+            out += `<text class="cell-text" style="fill:${mine ? '#0a1c24' : '#0f172a'}" x="${x + CW / 2}" y="${y + CH / 2 + 3}" text-anchor="middle">${e.sym}</text>`;
         });
         out += `<text class="small-label" x="${TX}" y="${TY + 4 * CH + 14}">같은 세로줄(족) = 같은 바깥 전자 수</text>`;
         // verdict
         if (p >= 0.9) {
             const IONX = 372;
             if (el.ion) {
-                out += `<text class="big-text" fill="#ffd166" x="${IONX}" y="166" text-anchor="middle">${el.ion.sym}</text>`;
+                out += `<text class="big-text" fill="#d97706" x="${IONX}" y="166" text-anchor="middle">${el.ion.sym}</text>`;
                 out += `<text class="small-label" x="${IONX}" y="182" text-anchor="middle">${el.ion.noble}과 같은 전자 배치</text>`;
             } else {
-                out += `<text class="big-text" fill="#ffd166" x="${IONX}" y="166" text-anchor="middle">${el.sym}</text>`;
+                out += `<text class="big-text" fill="#d97706" x="${IONX}" y="166" text-anchor="middle">${el.sym}</text>`;
                 out += `<text class="small-label" x="${IONX}" y="182" text-anchor="middle">${el.why === 'noble' ? '그대로 안정' : '공유 결합으로 감'}</text>`;
             }
-            out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${el.name} → ${el.ion ? `${el.ion.sym} (전자 ${Math.abs(a.change)}개 ${lost ? '잃음' : '얻음'})` : el.why === 'noble' ? '이온이 되지 않음 (이미 가득 참)' : '이온이 되지 않음 (전자를 함께 씀)'}</text>`;
+            out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${el.name} → ${el.ion ? `${el.ion.sym} (전자 ${Math.abs(a.change)}개 ${lost ? '잃음' : '얻음'})` : el.why === 'noble' ? '이온이 되지 않음 (이미 가득 참)' : '이온이 되지 않음 (전자를 함께 씀)'}</text>`;
         } else {
-            out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${el.name} (${el.sym}) · 원자 번호 ${el.z} · ${el.period}주기 ${el.group}족</text>`;
+            out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${el.name} (${el.sym}) · 원자 번호 ${el.z} · ${el.period}주기 ${el.group}족</text>`;
         }
         out += `<text class="note-text" x="20" y="208">${lost || gained ? '가장 바깥 껍질이 비활성 기체처럼 가득 차는 쪽으로 전자를 잃거나 얻습니다' : el.why === 'noble' ? '바깥 껍질이 가득 차 있어 전자를 잃거나 얻을 까닭이 없습니다' : '4개를 잃기도 얻기도 힘들어 다른 원자와 전자를 함께 씁니다'}</text>`;
         return out;
@@ -254,8 +254,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="trace" d="${ELEMENTS.map((e, n) => `${n ? 'L' : 'M'}${xOf(e.z).toFixed(1)},${yOf(valence(e)).toFixed(1)}`).join(' ')}"/>`;
         ELEMENTS.forEach(e => {
             const mine = e.z === a.el.z, same = e.group === a.el.group;
-            out += `<circle class="trace-dot ${mine ? 'chosen' : ''}" fill="${same ? GROUP_COLOR[e.group] : 'rgba(214,245,250,.55)'}" cx="${xOf(e.z).toFixed(1)}" cy="${yOf(valence(e)).toFixed(1)}" r="${mine ? 5 : 3.2}"/>`;
-            out += `<text class="axis-text" style="fill:${same ? GROUP_COLOR[e.group] : '#9cb6b4'};font-size:${e.sym.length > 1 ? 8.5 : 9.5}px" x="${xOf(e.z).toFixed(1)}" y="${Y0 + 13}" text-anchor="middle">${e.sym}</text>`;
+            out += `<circle class="trace-dot ${mine ? 'chosen' : ''}" fill="${same ? GROUP_COLOR[e.group] : '#64748b'}" cx="${xOf(e.z).toFixed(1)}" cy="${yOf(valence(e)).toFixed(1)}" r="${mine ? 5 : 3.2}"/>`;
+            out += `<text class="axis-text" style="fill:${same ? GROUP_COLOR[e.group] : '#475569'};font-size:${e.sym.length > 1 ? 8.5 : 9.5}px" x="${xOf(e.z).toFixed(1)}" y="${Y0 + 13}" text-anchor="middle">${e.sym}</text>`;
         });
         [[1, 2], [3, 10], [11, 18], [19, 20]].forEach(([z0, z1], n) => {
             out += `<text class="small-label" x="${((xOf(z0) + xOf(z1)) / 2).toFixed(1)}" y="${Y0 + 28}" text-anchor="middle">${n + 1}주기</text>`;
@@ -333,10 +333,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             if (t2 > 0.5) {
-                out += `<text class="trait-text" style="fill:#ffd166" x="180" y="174" text-anchor="middle">반대 전하의 이온이 서로 끌어당김</text>`;
+                out += `<text class="trait-text" style="fill:#d97706" x="180" y="174" text-anchor="middle">반대 전하의 이온이 서로 끌어당김</text>`;
                 out += `<text class="gen-text" x="180" y="190" text-anchor="middle">${p.formulaHtml} · 이온 결합</text>`;
             } else if (t1 > 0) {
-                out += `<text class="trait-text" style="fill:#ffd166" x="180" y="174" text-anchor="middle">${a.A.name}의 바깥 전자가 ${a.B.name}${pRo(a.B.name)} 옮겨 감</text>`;
+                out += `<text class="trait-text" style="fill:#d97706" x="180" y="174" text-anchor="middle">${a.A.name}의 바깥 전자가 ${a.B.name}${pRo(a.B.name)} 옮겨 감</text>`;
             } else {
                 out += `<text class="trait-text" x="180" y="174" text-anchor="middle">${a.A.name} 바깥 전자 ${valence(a.A)}개 · ${a.B.name} 바깥 전자 ${valence(a.B)}개</text>`;
             }
@@ -383,10 +383,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const pairsTotal = p.bonds.reduce((s, b) => s + b.pairs, 0);
             if (t2 >= 1) {
-                out += `<text class="trait-text" style="fill:#54e6c1" x="180" y="174" text-anchor="middle">초록 전자 ${pairsTotal}쌍을 함께 씀 — 모두 바깥 껍질이 채워짐</text>`;
+                out += `<text class="trait-text" style="fill:#059669" x="180" y="174" text-anchor="middle">초록 전자 ${pairsTotal}쌍을 함께 씀 — 모두 바깥 껍질이 채워짐</text>`;
                 out += `<text class="gen-text" x="180" y="190" text-anchor="middle">${p.formulaHtml} · 공유 결합 (분자)</text>`;
             } else if (t1 > 0) {
-                out += `<text class="trait-text" style="fill:#ffd166" x="180" y="174" text-anchor="middle">둘 다 비금속 — 어느 쪽도 전자를 내주지 않음</text>`;
+                out += `<text class="trait-text" style="fill:#d97706" x="180" y="174" text-anchor="middle">둘 다 비금속 — 어느 쪽도 전자를 내주지 않음</text>`;
             } else {
                 out += `<text class="trait-text" x="180" y="174" text-anchor="middle">${a.A.name} 바깥 전자 ${valence(a.A)}개${p.a === p.b ? '' : ` · ${a.B.name} 바깥 전자 ${valence(a.B)}개`}</text>`;
             }
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${PX}" y="118">녹는점: ${shown ? meltText(p) : '?'}</text>`;
         out += `<text class="trait-text" x="${PX}" y="134">전기: ${shown ? (ionic ? '고체 ✗ · 녹인 액체 ✓' : '흐르지 않음') : '?'}</text>`;
         if (shown && ionic) out += `<text class="trait-text" x="${PX}" y="150">${p.aq === 'yes' ? '물에 풀면 ✓' : p.aq === 'insoluble' ? '물에 거의 안 녹음' : '물과 만나면 반응'}</text>`;
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${shown ? (a.same ? `${a.A.name} 원자 2개 → ${p.formulaHtml} (공유 결합, 전자 ${a.pairs}쌍 함께 씀)` : `${a.A.name} ${a.na}개 : ${a.B.name} ${a.nb}개 → ${p.formulaHtml} (${ionic ? '이온 결합' : '공유 결합'})`) : `${a.A.name}(${a.A.sym})${a.same ? ' 원자 둘이' : `${pWa(a.A.name)} ${a.B.name}(${a.B.sym})${pIga(a.B.name)}`} 만난다`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${shown ? (a.same ? `${a.A.name} 원자 2개 → ${p.formulaHtml} (공유 결합, 전자 ${a.pairs}쌍 함께 씀)` : `${a.A.name} ${a.na}개 : ${a.B.name} ${a.nb}개 → ${p.formulaHtml} (${ionic ? '이온 결합' : '공유 결합'})`) : `${a.A.name}(${a.A.sym})${a.same ? ' 원자 둘이' : `${pWa(a.A.name)} ${a.B.name}(${a.B.sym})${pIga(a.B.name)}`} 만난다`}</text>`;
         out += `<text class="note-text" x="20" y="208">안쪽 껍질의 전자는 그리지 않았습니다 · ${ionic ? '금속은 전자를 내주고 비금속은 받습니다' : '비금속끼리는 전자쌍을 함께 씁니다'}</text>`;
         return out;
     }
@@ -424,10 +424,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const p = PAIRS[k], x = X0 + 8 + n * step;
             const y = yOf(p.melt), top = Math.min(y, YZ), h = Math.max(1.5, Math.abs(YZ - y));
             const mine = k === state.pair;
-            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${p.bond === 'ionic' ? '#ffb347' : '#52c7ff'}" opacity="${mine ? 1 : 0.6}" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${W}" height="${h.toFixed(1)}" rx="2"/>`;
+            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${p.bond === 'ionic' ? '#ffb347' : '#0284c7'}" opacity="${mine ? 1 : 0.6}" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${W}" height="${h.toFixed(1)}" rx="2"/>`;
             const ly = p.melt >= 0 ? top - 4 : YZ + h + 11;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle">${fmtNum(p.melt)}</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${YBOT + 26}" text-anchor="middle">${p.formulaHtml}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle">${fmtNum(p.melt)}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${YBOT + 26}" text-anchor="middle">${p.formulaHtml}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${YBOT + 46}" text-anchor="middle">이온끼리의 끌림은 세고, 분자끼리의 끌림은 약하다${a.p.sublimes ? ' (CO₂는 −78.5 ℃에서 곧바로 기체가 됨)' : ''}</text>`;
         return out;

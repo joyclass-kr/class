@@ -142,7 +142,7 @@ function drawStages(g) {
         const r = here ? 25 * (state.running ? beat : 1) : 21;
         g.appendChild(el('circle', { cx, cy, r, class: `stage-disc${here ? ' now' : ''}`, style: `fill:${s.tint}` }));
         g.appendChild(el('text', { x: cx, y: cy + 4, 'text-anchor': 'middle', class: 'stage-name', style: 'fill:#14242c' }, String(i + 1)));
-        g.appendChild(el('text', { x: cx, y: 132, 'text-anchor': 'middle', class: 'stage-name', style: `fill:${here ? '#ffd166' : '#cfe6ee'}` }, s.n));
+        g.appendChild(el('text', { x: cx, y: 132, 'text-anchor': 'middle', class: 'stage-name', style: `fill:${here ? '#d97706' : '#0f172a'}` }, s.n));
         g.appendChild(el('text', { x: cx, y: 146, 'text-anchor': 'middle', class: 'stage-days' }, s.days ? `${s.days}일` : '어른'));
         if (i < n - 1) {
             const x1 = cx + 27, x2 = 10 + slot * (i + 1.5) - 27;
@@ -160,7 +160,7 @@ function drawStages(g) {
     // What it is eating right now, given its own line so the row stays clean.
     g.appendChild(el('rect', { x: 22, y: 168, width: 416, height: 34, rx: 9, class: 'eat-box' }));
     g.appendChild(el('text', { x: 36, y: 182, class: 'tiny-label' }, `${a.stage.n}일 때 먹는 것`));
-    g.appendChild(el('text', { x: 36, y: 196, class: 'part-label', style: 'fill:#dce9e8' }, a.stage.eat));
+    g.appendChild(el('text', { x: 36, y: 196, class: 'part-label', style: 'fill:#0f172a' }, a.stage.eat));
 }
 
 function drawPyramid(g) {
@@ -182,10 +182,10 @@ function drawPyramid(g) {
             class: `tier${here ? ' here' : ''}`,
             style: `fill:${here ? a.animal.colour : 'rgba(150,190,175,.28)'}`,
         }));
-        g.appendChild(el('text', { x: cx, y: y + rowH / 2, 'text-anchor': 'middle', class: 'tier-name', style: `fill:${here ? '#14242c' : '#cfe6ee'}` }, t.name));
+        g.appendChild(el('text', { x: cx, y: y + rowH / 2, 'text-anchor': 'middle', class: 'tier-name', style: `fill:${here ? '#14242c' : '#0f172a'}` }, t.name));
         g.appendChild(el('text', {
             x: cx + wBot / 2 + 8, y: y + rowH / 2 + 1, class: 'tier-count',
-            style: `fill:${here ? '#ffd166' : '#9cb6b4'}`,
+            style: `fill:${here ? '#d97706' : '#475569'}`,
         }, t.count === 1 ? `1${t.unit}` : `${t.count.toLocaleString('ko-KR')}${t.unit}쯤`));
         /* An arrow up the left edge for "this level feeds the one above". It
            needs a head — a bare curve just read as a stray bracket. */
@@ -200,7 +200,7 @@ function drawPyramid(g) {
     g.appendChild(el('text', { x: 16, y: 22, class: 'small-label' }, `${iga(a.animal.name)} 든 먹이 사슬`));
     g.appendChild(el('text', { x: 444, y: 22, 'text-anchor': 'end', class: 'legend-text', style: `fill:${a.animal.colour}` },
         `${eun(a.animal.chain[a.animal.at])} 여기`));
-    g.appendChild(el('text', { x: 230, y: 172, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#9cb6b4' },
+    g.appendChild(el('text', { x: 230, y: 172, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#475569' },
         '한 단계 올라갈 때마다 열 배쯤 적어집니다'));
     g.appendChild(el('text', { x: 230, y: 190, 'text-anchor': 'middle', class: 'axis-title' },
         '맨 위 하나를 먹여 살리는 데 필요한 수'));

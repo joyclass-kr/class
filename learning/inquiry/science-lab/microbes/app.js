@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="count-text" x="270" y="172">${fmtCount(n)}마리</text>`;
         out += `<text class="note-text" x="270" y="190">${Math.floor(h * 60 / a.t.minutes)}번 나뉨 · 1마리에서 시작</text>`;
         const VERD = { double: '2배 안팎', tens: '몇 배에서 수십 배', huge: '수천 배 넘게' };
-        out += `<text class="verdict-text" fill="#ff9d6b" x="20" y="16">${a.t.label} · ${a.hours}시간 → ${VERD[a.verdict]} 늘어난다</text>`;
+        out += `<text class="verdict-text" fill="#ea580c" x="20" y="16">${a.t.label} · ${a.hours}시간 → ${VERD[a.verdict]} 늘어난다</text>`;
         return out;
     }
 
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             [0, 1, 2, 3, 4, 5, 6, 7].map(d => [d, gx(d)]),
             [[0, gy(0)], ['25 %', gy(0.25)], ['50 %', gy(0.5)], ['75 %', gy(0.75)], ['100 %', gy(1)]],
             '빵을 놓은 뒤 지난 날', '곰팡이가 덮은 넓이');
-        const colours = { cold: '#52c7ff', room: '#ffd166', warm: '#ff9d6b' };
+        const colours = { cold: '#0284c7', room: '#d97706', warm: '#ea580c' };
         const line = (halfDays, upTo, cls, colour) => {
             const pts = [];
             for (let d = 0; d <= upTo + 1e-9; d += 0.1) pts.push(`${gx(d).toFixed(1)},${gy(coverage(d, halfDays)).toFixed(1)}`);
@@ -252,8 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const done = [];
         for (let t = 0; t <= a.hours + 1e-9; t += a.hours / 200) done.push(`${gx(t).toFixed(1)},${gy(a.countAt(t)).toFixed(1)}`);
         out += `<path class="trace-done" d="M${done.join('L')}"/>`;
-        if (pts.length > 1) out += `<path class="trace" style="stroke:#ff9d6b" d="M${pts.join('L')}"/>`;
-        out += `<circle class="trace-dot" cx="${gx(h).toFixed(1)}" cy="${gy(a.countAt(h)).toFixed(1)}" r="5" fill="#ff9d6b"/>`;
+        if (pts.length > 1) out += `<path class="trace" style="stroke:#ea580c" d="M${pts.join('L')}"/>`;
+        out += `<circle class="trace-dot" cx="${gx(h).toFixed(1)}" cy="${gy(a.countAt(h)).toFixed(1)}" r="5" fill="#ea580c"/>`;
         // the halfway mark shows how little has happened by then
         const half = a.countAt(a.hours / 2);
         out += `<text class="note-text" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 14}">절반인 ${a.hours / 2}시간 때는 ${fmtCount(half)}마리 — 늘어난 것이 거의 끝에 몰립니다</text>`;

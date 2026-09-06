@@ -129,24 +129,24 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="gas${st.T < (a.Th + a.Tc) / 2 ? ' cold' : ''}" x="${CX0 + 1}" y="${gasTop.toFixed(1)}" width="${CW - 2}" height="${(CB - gasTop - 1).toFixed(1)}"/>`;
         out += `<rect class="piston" x="${CX0 + 2}" y="${(gasTop - 7).toFixed(1)}" width="${CW - 4}" height="7"/><line class="rod" x1="${CX0 + CW / 2}" y1="${(gasTop - 7).toFixed(1)}" x2="${CX0 + CW / 2}" y2="${Math.max(18, gasTop - 30).toFixed(1)}"/>`;
         // gas particles, faster when hot
-        for (let i = 0; i < 18; i += 1) { const gx = CX0 + 6 + ((i * 37 + Math.floor(p * 300 * (st.T / a.Tc))) % (CW - 12)), gy = gasTop + 6 + ((i * 53 + Math.floor(p * 200 * (st.T / a.Tc))) % Math.max(4, CB - gasTop - 12)); out += `<circle fill="#ffd166" opacity=".8" cx="${gx.toFixed(1)}" cy="${gy.toFixed(1)}" r="1.6"/>`; }
+        for (let i = 0; i < 18; i += 1) { const gx = CX0 + 6 + ((i * 37 + Math.floor(p * 300 * (st.T / a.Tc))) % (CW - 12)), gy = gasTop + 6 + ((i * 53 + Math.floor(p * 200 * (st.T / a.Tc))) % Math.max(4, CB - gasTop - 12)); out += `<circle fill="#d97706" opacity=".8" cx="${gx.toFixed(1)}" cy="${gy.toFixed(1)}" r="1.6"/>`; }
         // reservoir in contact below the cylinder
         const leg = on ? st.leg : -1;
         if (leg === 0) out += `<rect class="hot-block" x="${CX0 - 8}" y="${CB + 4}" width="${CW + 16}" height="16" rx="3"/><text class="small-label" x="${CX0 + CW / 2}" y="${CB + 33}" text-anchor="middle">뜨거운 곳 ${fmtN(a.Th - 273.15)} ℃</text>` + arrow(CX0 + CW / 2, CB + 2, CX0 + CW / 2, CB - 16, 'heat-in', 'heat-in-head', 4);
         else if (leg === 2) out += `<rect class="cold-block" x="${CX0 - 8}" y="${CB + 4}" width="${CW + 16}" height="16" rx="3"/><text class="small-label" x="${CX0 + CW / 2}" y="${CB + 33}" text-anchor="middle">차가운 곳 ${fmtN(a.Tc - 273.15)} ℃</text>` + arrow(CX0 + CW / 2, CB - 16, CX0 + CW / 2, CB + 2, 'heat-out', 'heat-out-head', 4);
         else out += `<rect class="insul" x="${CX0 - 8}" y="${CB + 4}" width="${CW + 16}" height="16" rx="3"/><text class="small-label" x="${CX0 + CW / 2}" y="${CB + 33}" text-anchor="middle">${on ? '단열 (열 드나듦 없음)' : '아직 정지'}</text>`;
-        if (on && (leg === 0 || leg === 1)) out += arrow(CX0 + CW + 12, gasTop + 10, CX0 + CW + 12, gasTop - 14, 'work', 'work-head', 3.5) + `<text class="small-label" style="fill:#54e6c1" x="${CX0 + CW + 18}" y="${(gasTop - 2).toFixed(1)}">일 함</text>`;
-        else if (on) out += arrow(CX0 + CW + 12, gasTop - 24, CX0 + CW + 12, gasTop, 'work', 'work-head', 3.5) + `<text class="small-label" style="fill:#54e6c1" x="${CX0ᅟ = 0 || CX0 + CW + 18}" y="${(gasTop - 2).toFixed(1)}">일 받음</text>`;
+        if (on && (leg === 0 || leg === 1)) out += arrow(CX0 + CW + 12, gasTop + 10, CX0 + CW + 12, gasTop - 14, 'work', 'work-head', 3.5) + `<text class="small-label" style="fill:#059669" x="${CX0 + CW + 18}" y="${(gasTop - 2).toFixed(1)}">일 함</text>`;
+        else if (on) out += arrow(CX0 + CW + 12, gasTop - 24, CX0 + CW + 12, gasTop, 'work', 'work-head', 3.5) + `<text class="small-label" style="fill:#059669" x="${CX0ᅟ = 0 || CX0 + CW + 18}" y="${(gasTop - 2).toFixed(1)}">일 받음</text>`;
         out += `<text class="small-label" x="${CX0 + CW / 2}" y="${CT - 8}" text-anchor="middle">${on ? `${LEGS[leg]}` : '기체 1 mol'}</text>`;
         const TX = 230;
         out += `<text class="trait-text" x="${TX}" y="50">T_h = ${fmtN(a.Th - 273.15)} ℃ = ${fmtN(a.Th)} K · T_c = ${fmtN(a.Tc - 273.15)} ℃ = ${fmtN(a.Tc)} K</text>`;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${TX}" y="72">η = 1 − ${fmtN(a.Tc)}/${fmtN(a.Th)} = ${fmtN(a.eta * 100, 1)} %</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${TX}" y="72">η = 1 − ${fmtN(a.Tc)}/${fmtN(a.Th)} = ${fmtN(a.eta * 100, 1)} %</text>`;
         out += `<text class="trait-text" x="${TX}" y="94">${on ? `지금 기체 ${fmtN(st.T - 273.15)} ℃ · ${fmtN(st.V, 2)} L · ${fmtN(st.p)} kPa` : '한 바퀴 돌려 보세요'}</text>`;
-        out += `<text class="trait-text" style="fill:#ff9f8a" x="${TX}" y="116">받는 열 Q_h = ${fmtN(a.Qh)} J</text><text class="trait-text" style="fill:#54e6c1" x="${TX}" y="134">한 일 W = ${fmtN(a.W)} J</text><text class="trait-text" style="fill:#52c7ff" x="${TX}" y="152">버리는 열 Q_c = ${fmtN(a.Qc)} J</text>`;
+        out += `<text class="trait-text" style="fill:#dc2626" x="${TX}" y="116">받는 열 Q_h = ${fmtN(a.Qh)} J</text><text class="trait-text" style="fill:#059669" x="${TX}" y="134">한 일 W = ${fmtN(a.W)} J</text><text class="trait-text" style="fill:#0284c7" x="${TX}" y="152">버리는 열 Q_c = ${fmtN(a.Qc)} J</text>`;
         out += `<text class="small-label" x="${TX}" y="174">견주기: 화력 발전소 40 % · 자동차 엔진 30 % 안팎</text>`;
         out += `<text class="small-label" x="${TX}" y="188">(실제 기관은 마찰과 새는 열로 한계보다 낮음)</text>`;
         const VERD = { low: '30 % 안', mid: '30~60 %', high: '60 % 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${HOTS[state.hot].label} / ${COLDS[state.cold].label}: 효율 ${fmtN(a.eta * 100, 1)} % — ${VERD[a.verdict]}` : `${HOTS[state.hot].label} / ${COLDS[state.cold].label} 카르노 기관`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${HOTS[state.hot].label} / ${COLDS[state.cold].label}: 효율 ${fmtN(a.eta * 100, 1)} % — ${VERD[a.verdict]}` : `${HOTS[state.hot].label} / ${COLDS[state.cold].label} 카르노 기관`}</text>`;
         out += `<text class="note-text" x="20" y="208">기체 1 mol, 등온 팽창으로 부피 2배. 피스톤 높이는 부피의 로그 눈금(대략). 효율은 절대 온도로 계산</text>`;
         return out;
     }
@@ -163,9 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="loop-fill" d="${legPath(0)} ${legPath(1).replace('M', 'L')} ${legPath(2).replace('M', 'L')} ${legPath(3).replace('M', 'L')} Z"/>`;
         out += `<path class="leg-iso-h" d="${legPath(0)}"/><path class="leg-adi" d="${legPath(1)}"/><path class="leg-iso-c" d="${legPath(2)}"/><path class="leg-adi" d="${legPath(3)}"/>`;
         const s1 = carnotState(a, 0.125), s3 = carnotState(a, 0.625);
-        out += `<text class="small-label" style="fill:#ff9f8a" x="${(xOf(s1.V) + 8).toFixed(1)}" y="${(yOf(s1.p) - 6).toFixed(1)}">등온 ${fmtN(a.Th - 273.15)} ℃</text>`;
-        out += `<text class="small-label" style="fill:#52c7ff" x="${xOf(s3.V).toFixed(1)}" y="${(yOf(s3.p) - 8).toFixed(1)}" text-anchor="middle">등온 ${fmtN(a.Tc - 273.15)} ℃</text>`;
-        if (state.progress > 0) { const st = carnotState(a, state.progress); out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(st.V).toFixed(1)}" cy="${yOf(st.p).toFixed(1)}" r="4.5"/>`; }
+        out += `<text class="small-label" style="fill:#dc2626" x="${(xOf(s1.V) + 8).toFixed(1)}" y="${(yOf(s1.p) - 6).toFixed(1)}">등온 ${fmtN(a.Th - 273.15)} ℃</text>`;
+        out += `<text class="small-label" style="fill:#0284c7" x="${xOf(s3.V).toFixed(1)}" y="${(yOf(s3.p) - 8).toFixed(1)}" text-anchor="middle">등온 ${fmtN(a.Tc - 273.15)} ℃</text>`;
+        if (state.progress > 0) { const st = carnotState(a, state.progress); out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(st.V).toFixed(1)}" cy="${yOf(st.p).toFixed(1)}" r="4.5"/>`; }
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">부피 — 점선은 단열 과정. 위 등온선 아래 넓이가 Q_h, 아래 등온선 아래 넓이가 Q_c</text>`;
         return out;
     }
@@ -184,20 +184,20 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<circle class="engine" cx="${EX}" cy="${EY}" r="${ER}"/><text class="gen-text" x="${EX}" y="${EY + 4}" text-anchor="middle">기관</text>`;
         // energy packets flowing in
         for (let k = 0; k < 4; k += 1) { const t = (p * 1.5 + k / 4) % 1; out += `<circle class="packet" cx="${EX}" cy="${(52 + 30 * t).toFixed(1)}" r="2.2"/>`; }
-        out += `<text class="small-label" style="fill:#ff9f8a" x="${EX + wH / 2 + 8}" y="63">Q_h = ${fmtN(Q_IN)} J</text>`;
-        out += `<text class="small-label" style="fill:#54e6c1" x="${EX + ER + 8}" y="${(EY - wW / 2 - 6).toFixed(1)}">W = ${fmtN(a.W)} J</text>`;
-        out += `<text class="small-label" style="fill:#52c7ff" x="${EX + wC / 2 + 8}" y="${EY + ER + 16}">Q_c = ${fmtN(a.Qc)} J${a.Qc === 0 ? ' (없음)' : ''}</text>`;
+        out += `<text class="small-label" style="fill:#dc2626" x="${EX + wH / 2 + 8}" y="63">Q_h = ${fmtN(Q_IN)} J</text>`;
+        out += `<text class="small-label" style="fill:#059669" x="${EX + ER + 8}" y="${(EY - wW / 2 - 6).toFixed(1)}">W = ${fmtN(a.W)} J</text>`;
+        out += `<text class="small-label" style="fill:#0284c7" x="${EX + wC / 2 + 8}" y="${EY + ER + 16}">Q_c = ${fmtN(a.Qc)} J${a.Qc === 0 ? ' (없음)' : ''}</text>`;
         if (p >= 1 && a.verdict !== 'ok') out += `<line class="forbid" x1="${EX - 22}" y1="${EY - 22}" x2="${EX + 22}" y2="${EY + 22}"/><line class="forbid" x1="${EX + 22}" y1="${EY - 22}" x2="${EX - 22}" y2="${EY + 22}"/>`;
         const TX = 306;
         out += `<text class="trait-text" x="${TX}" y="50">효율 η = W/Q_h = ${fmtN(a.eta * 100)} %</text>`;
         out += `<text class="trait-text" x="${TX}" y="68">카르노 한계 1 − T_c/T_h = ${fmtN(a.etaC * 100, 1)} %</text>`;
         out += `<text class="trait-text" x="${TX}" y="92">엔트로피 변화 (한 바퀴)</text>`;
         out += `<text class="trait-text" x="${TX}" y="108">Q_c/T_c − Q_h/T_h</text>`;
-        out += `<text class="gen-text" style="fill:${a.dS >= -1e-9 ? '#54e6c1' : '#ff9f8a'}" x="${TX}" y="128">= ${fmtN(a.dS, 2)} J/K</text>`;
+        out += `<text class="gen-text" style="fill:${a.dS >= -1e-9 ? '#059669' : '#dc2626'}" x="${TX}" y="128">= ${fmtN(a.dS, 2)} J/K</text>`;
         out += `<text class="small-label" x="${TX}" y="148">${a.dS >= -1e-9 ? '0 이상 → 제2법칙에 맞음' : '0보다 작음 → 제2법칙 위반'}</text>`;
         out += `<text class="small-label" x="${TX}" y="162">${a.verdict === 'perpetual' ? '열을 몽땅 일로 — 2종 영구 기관' : a.verdict === 'over' ? '카르노 기관보다 좋을 수 없음' : '실제 기관도 이 안에서 돔'}</text>`;
         const VERD = { ok: '가능한 기관', over: '불가능 — 카르노 한계 넘음', perpetual: '불가능 — 2종 영구 기관' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `효율 ${fmtN(a.eta * 100)} % (${PAIRS[state.pair].label}): ${VERD[a.verdict]}` : `효율 ${fmtN(a.eta * 100)} %를 내세우는 기관 · ${PAIRS[state.pair].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `효율 ${fmtN(a.eta * 100)} % (${PAIRS[state.pair].label}): ${VERD[a.verdict]}` : `효율 ${fmtN(a.eta * 100)} %를 내세우는 기관 · ${PAIRS[state.pair].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">띠의 폭이 에너지의 크기. Q_h = W + Q_c는 늘 성립(제1법칙)하고, 엔트로피 변화가 0 이상이어야 함(제2법칙)</text>`;
         return out;
     }
@@ -209,11 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         keys.forEach((k, i) => {
             const eta = EFFS[k].eta, x = X0 + bw * i + bw * 0.22, w = bw * 0.56, over = eta > a.etaC + 1e-9;
-            out += `<rect class="bar-eff${over ? ' over' : ''}" style="${k === state.eff ? 'stroke:#ffd166;stroke-width:2' : ''}" x="${x.toFixed(1)}" y="${yOf(eta).toFixed(1)}" width="${w.toFixed(1)}" height="${(Y0 - yOf(eta)).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="${k === state.eff ? 'fill:#ffd166' : ''}" x="${(x + w / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${EFFS[k].label}</text>`;
+            out += `<rect class="bar-eff${over ? ' over' : ''}" style="${k === state.eff ? 'stroke:#d97706;stroke-width:2' : ''}" x="${x.toFixed(1)}" y="${yOf(eta).toFixed(1)}" width="${w.toFixed(1)}" height="${(Y0 - yOf(eta)).toFixed(1)}" rx="2"/>`;
+            out += `<text class="axis-text" style="${k === state.eff ? 'fill:#d97706' : ''}" x="${(x + w / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${EFFS[k].label}</text>`;
             out += `<text class="small-label" x="${(x + w / 2).toFixed(1)}" y="${(yOf(eta) - 5).toFixed(1)}" text-anchor="middle">${over ? '✕' : 'W ' + fmtN(Q_IN * eta) + ' J'}</text>`;
         });
-        out += `<line class="limit-line" x1="${X0}" y1="${yOf(a.etaC).toFixed(1)}" x2="${X1}" y2="${yOf(a.etaC).toFixed(1)}"/><text class="small-label" style="fill:#ffd166" x="${X1}" y="${(yOf(a.etaC) - 5).toFixed(1)}" text-anchor="end">카르노 한계 ${fmtN(a.etaC * 100, 1)} %</text>`;
+        out += `<line class="limit-line" x1="${X0}" y1="${yOf(a.etaC).toFixed(1)}" x2="${X1}" y2="${yOf(a.etaC).toFixed(1)}"/><text class="small-label" style="fill:#d97706" x="${X1}" y="${(yOf(a.etaC) - 5).toFixed(1)}" text-anchor="end">카르노 한계 ${fmtN(a.etaC * 100, 1)} %</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">받은 열 1,000 J 가운데 일로 바꾸는 몫 — 한계는 온도로만 정해집니다</text>`;
         return out;
     }
@@ -229,13 +229,13 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="flow-c" x="150" y="${(PY - wQc / 2).toFixed(1)}" width="${(32 * e).toFixed(1)}" height="${wQc.toFixed(1)}"/>`;
         out += `<rect class="flow-h" x="${PX + PW / 2}" y="${(PY - wQh / 2).toFixed(1)}" width="${(54 * e).toFixed(1)}" height="${wQh.toFixed(1)}"/>`;
         out += `<rect class="flow-w" x="${(PX - wW / 2).toFixed(1)}" y="${(PY + PH / 2 + 30 - 30 * e).toFixed(1)}" width="${wW.toFixed(1)}" height="${(30 * e).toFixed(1)}"/>`;
-        out += `<line class="plug" x1="${PX - 8}" y1="${PY + PH / 2 + 32}" x2="${PX + 8}" y2="${PY + PH / 2 + 32}"/><text class="small-label" style="fill:#ffd166" x="${PX}" y="${PY + PH / 2 + 46}" text-anchor="middle">전기 W = 1 J</text>`;
-        out += `<text class="small-label" style="fill:#52c7ff" x="166" y="${(PY - wQc / 2 - 6).toFixed(1)}" text-anchor="middle">Q_c = ${fmtN(a.Qc, 1)} J</text>`;
-        out += `<text class="small-label" style="fill:#ff9f8a" x="${PX + PW / 2 + 27}" y="${(PY - wQh / 2 - 6).toFixed(1)}" text-anchor="middle">Q_h = ${fmtN(a.cop, 1)} J</text>`;
+        out += `<line class="plug" x1="${PX - 8}" y1="${PY + PH / 2 + 32}" x2="${PX + 8}" y2="${PY + PH / 2 + 32}"/><text class="small-label" style="fill:#d97706" x="${PX}" y="${PY + PH / 2 + 46}" text-anchor="middle">전기 W = 1 J</text>`;
+        out += `<text class="small-label" style="fill:#0284c7" x="166" y="${(PY - wQc / 2 - 6).toFixed(1)}" text-anchor="middle">Q_c = ${fmtN(a.Qc, 1)} J</text>`;
+        out += `<text class="small-label" style="fill:#dc2626" x="${PX + PW / 2 + 27}" y="${(PY - wQh / 2 - 6).toFixed(1)}" text-anchor="middle">Q_h = ${fmtN(a.cop, 1)} J</text>`;
         for (let k = 0; k < 3; k += 1) { const t = (p * 1.5 + k / 3) % 1; out += `<circle class="packet" cx="${(150 + 32 * t).toFixed(1)}" cy="${PY}" r="2"/><circle class="packet" cx="${(PX + PW / 2 + 54 * t).toFixed(1)}" cy="${PY}" r="2"/>`; }
         out += `<text class="trait-text" x="20" y="190">이상적 성적 계수 = T_h/(T_h − T_c) = ${fmtN(a.Th, 1)}/(${fmtN(a.Th, 1)} − ${fmtN(a.Tc, 1)}) = ${fmtN(a.cop, 1)} · 실제 기기는 그 3분의 1쯤 ≈ ${fmtN(a.copReal, 1)}</text>`;
         const VERD = { low: '10배 안', mid: '10~20배', high: '20배 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `바깥 ${OUTS[state.out].label} · 실내 ${INS[state.inn].label}: 전기 1 J로 열 ${fmtN(a.cop, 1)} J — ${VERD[a.verdict]}` : `바깥 ${OUTS[state.out].label} · 실내 ${INS[state.inn].label} 열펌프`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `바깥 ${OUTS[state.out].label} · 실내 ${INS[state.inn].label}: 전기 1 J로 열 ${fmtN(a.cop, 1)} J — ${VERD[a.verdict]}` : `바깥 ${OUTS[state.out].label} · 실내 ${INS[state.inn].label} 열펌프`}</text>`;
         out += `<text class="note-text" x="20" y="208">Q_h = Q_c + W · 이상값은 카르노 기관을 거꾸로 돌린 값, 실제 기기는 온도 차와 마찰로 그보다 낮음(대략)</text>`;
         return out;
     }
@@ -248,10 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         let dI = '', dR = '';
         for (let T = TA; T <= TB + 1e-9; T += 0.5) { const c = a.Th / (a.Th - K(T)); if (c <= CM * 1.02) dI += `${dI ? 'L' : 'M'}${xOf(T).toFixed(1)},${yOf(c).toFixed(1)} `; dR += `${dR ? 'L' : 'M'}${xOf(T).toFixed(1)},${yOf(c * REAL_FACTOR).toFixed(1)} `; }
-        out += `<path class="trace" style="stroke:#ffd166" d="${dI}"/><path class="trace faint" style="stroke:#97dad3" d="${dR}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${dI}"/><path class="trace faint" style="stroke:#97dad3" d="${dR}"/>`;
         out += `<line class="marker" x1="${xOf(OUTS[state.out].T).toFixed(1)}" y1="${Y1}" x2="${xOf(OUTS[state.out].T).toFixed(1)}" y2="${Y0}"/>`;
-        out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(OUTS[state.out].T).toFixed(1)}" cy="${yOf(a.cop).toFixed(1)}" r="4.5"/><circle fill="#97dad3" stroke="#fff" cx="${xOf(OUTS[state.out].T).toFixed(1)}" cy="${yOf(a.copReal).toFixed(1)}" r="3.5"/>`;
-        out += `<text class="small-label" style="fill:#ffd166" x="${(xOf(OUTS[state.out].T) + (OUTS[state.out].T >= 5 ? -8 : 8)).toFixed(1)}" y="${(clamp(yOf(a.cop), Y1 + 14, Y0) - 8).toFixed(1)}" text-anchor="${OUTS[state.out].T >= 5 ? 'end' : 'start'}">${OUTS[state.out].label}: ${fmtN(a.cop, 1)}배 (실제 ≈ ${fmtN(a.copReal, 1)}배)</text>`;
+        out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(OUTS[state.out].T).toFixed(1)}" cy="${yOf(a.cop).toFixed(1)}" r="4.5"/><circle fill="#97dad3" stroke="#fff" cx="${xOf(OUTS[state.out].T).toFixed(1)}" cy="${yOf(a.copReal).toFixed(1)}" r="3.5"/>`;
+        out += `<text class="small-label" style="fill:#d97706" x="${(xOf(OUTS[state.out].T) + (OUTS[state.out].T >= 5 ? -8 : 8)).toFixed(1)}" y="${(clamp(yOf(a.cop), Y1 + 14, Y0) - 8).toFixed(1)}" text-anchor="${OUTS[state.out].T >= 5 ? 'end' : 'start'}">${OUTS[state.out].label}: ${fmtN(a.cop, 1)}배 (실제 ≈ ${fmtN(a.copReal, 1)}배)</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">바깥 온도 — 추울수록 온도 차가 커져 전기 1 J로 나르는 열이 줄어듭니다</text>`;
         return out;
     }

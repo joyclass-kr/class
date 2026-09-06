@@ -118,9 +118,9 @@ function drawStage(g) {
 
     // Gel with its two lanes.
     g.appendChild(el('rect', { x: 96, y: 30, width: 242, height: 5, rx: 2, class: 'electrode-minus' }));
-    g.appendChild(el('text', { x: 92, y: 36, 'text-anchor': 'end', class: 'small-label', style: 'fill:#7fd4f0' }, '(−)'));
+    g.appendChild(el('text', { x: 92, y: 36, 'text-anchor': 'end', class: 'small-label', style: 'fill:#0284c7' }, '(−)'));
     g.appendChild(el('rect', { x: 96, y: 205, width: 242, height: 5, rx: 2, class: 'electrode-plus' }));
-    g.appendChild(el('text', { x: 92, y: 211, 'text-anchor': 'end', class: 'small-label', style: 'fill:#ff9d6b' }, '(+)'));
+    g.appendChild(el('text', { x: 92, y: 211, 'text-anchor': 'end', class: 'small-label', style: 'fill:#ea580c' }, '(+)'));
     g.appendChild(el('rect', { x: 96, y: 40, width: 242, height: 160, rx: 6, class: 'gel-body' }));
     g.appendChild(el('text', { x: LANE_X.ladder, y: 22, 'text-anchor': 'middle', class: 'part-label' }, '표준자'));
     g.appendChild(el('text', { x: LANE_X.sample, y: 22, 'text-anchor': 'middle', class: 'part-label' }, '시료'));
@@ -212,7 +212,7 @@ function drawGraph(g) {
     g.appendChild(el('text', { x: x0 + 12, y: 175.5, class: 'legend-text', style: 'fill:#bed2e1' }, '표준자'));
     g.appendChild(el('circle', { cx: x0 + 66, cy: 172, r: 4, class: 'sample-dot' }));
     g.appendChild(el('text', { x: x0 + 74, y: 175.5, class: 'legend-text', style: 'fill:#7ff0d6' }, '시료 조각'));
-    g.appendChild(el('text', { x: x0 + 148, y: 175.5, class: 'legend-text', style: 'fill:#9cb6b4' },
+    g.appendChild(el('text', { x: x0 + 148, y: 175.5, class: 'legend-text', style: 'fill:#475569' },
         a.minutes > 0 ? `10배마다 ${fmt(a.mmPerDecade, 1)} mm씩` : '전압을 걸지 않았습니다'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '이동 거리 (mm) — 세로는 조각 크기 (bp, 로그 눈금)'));
 }

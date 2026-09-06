@@ -71,15 +71,15 @@
 
 /* 여섯 용액이 산성·중성·염기성 가운데 어디에 놓이는지 보여 주는 띠와 표 */
 .graph-svg { width: 100%; max-width: 560px; margin: 8px auto 0; height: auto; display: block; }
-.zone-band { stroke: rgba(14, 24, 30, .4); stroke-width: 1; }
-.zone-name { font-size: 12.5px; font-weight: 900; }
-.zone-hint { fill: #475569; font-size: 12px; font-weight: 800; }
-.sol-chip { fill: rgba(10, 28, 36, .78); stroke: rgba(151, 218, 211, .3); stroke-width: 1.1; }
-.sol-chip.now { fill: rgba(255, 209, 102, .18); stroke: #ffd166; stroke-width: 2; }
-.sol-name { fill: #0f172a; font-size: 12px; font-weight: 850; }
-.sol-name.now { fill: #c2410c; font-weight: 900; }
-.band-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.band-note { fill: #475569; font-size: 12px; font-weight: 800; }
+.zone-band { stroke: #cbd5e1; stroke-width: 1.2; }
+.zone-name { font-size: 13.5px; font-weight: 900; }
+.zone-hint { fill: #334155; font-size: 13.5px; font-weight: 750; }
+.sol-chip { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.2; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05)); }
+.sol-chip.now { fill: #eff6ff; stroke: #0284c7; stroke-width: 2; }
+.sol-name { fill: #0f172a; font-size: 14px; font-weight: 850; }
+.sol-name.now { fill: #0369a1; font-weight: 900; }
+.band-title { fill: #0f172a; font-size: 13.5px; font-weight: 900; }
+.band-note { fill: #475569; font-size: 14px; font-weight: 750; }
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 160px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
 .data-name { color: #475569; font-weight: 750; }

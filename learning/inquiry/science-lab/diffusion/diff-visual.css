@@ -7,7 +7,7 @@
 .grain-field { margin: 16px 0 4px; padding: 0; border: 0; }
 .grain-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .grain-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 9px; }
-.grain-buttons button { padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
+.grain-buttons button { padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
 .grain-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
 
 .prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
@@ -57,26 +57,26 @@
 .ring-glow { fill: rgba(255, 255, 255, .3); }
 .cotton { fill: #e8e2d0; stroke: rgba(160, 150, 130, .7); stroke-width: 1; }
 .end-label { font-size: 13px; font-weight: 900; }
-.tick { stroke: rgba(151, 218, 211, .45); stroke-width: 1.1; }
-.tick-text { fill: #7c9b98; font-size: 12px; font-weight: 800; }
-.ring-text { fill: #ffffff; font-size: 12.5px; font-weight: 900; }
+.tick { stroke: #64748b; stroke-width: 1.1; }
+.tick-text { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.ring-text { fill: #ffffff; font-size: 14px; font-weight: 900; }
 
 .flask { fill: rgba(255, 255, 255, .05); stroke: rgba(177, 226, 230, .8); stroke-width: 2.6; }
 .acid { fill: rgba(110, 200, 235, .3); }
 .chip { fill: #d8d2c0; stroke: rgba(120, 115, 100, .8); stroke-width: .8; }
 .bubble { fill: rgba(255, 255, 255, .6); }
 .syringe { fill: rgba(255, 255, 255, .05); stroke: rgba(177, 226, 230, .8); stroke-width: 2.2; }
-.syringe-gas { fill: rgba(255, 209, 102, .22); }
+.syringe-gas { fill: rgba(217, 119, 6, .22); }
 .syringe-plunger { fill: #8d9aa0; stroke: rgba(220, 235, 240, .6); stroke-width: 1.2; }
 .vol-text { fill: var(--amber); font-size: 13px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .trace { fill: none; stroke-width: 2.3; }
 .trace-dot { stroke: #fff; stroke-width: 1.2; }
-.limit-line { stroke: rgba(255, 204, 102, .5); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.limit-line { stroke: rgba(217, 119, 6, .5); stroke-width: 1.2; stroke-dasharray: 4 4; }
 .meet-marker { stroke: rgba(255, 255, 255, .6); stroke-width: 1.2; stroke-dasharray: 4 3; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }

@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="${X0}" y="32">파동 1</text>`;
         out += `<text class="small-label" x="${X0}" y="84">파동 2 — ${a.ratio}λ 만큼 늦게 도착</text>`;
         out += `<text class="small-label" x="${X0}" y="136">두 파동을 더한 것</text>`;
-        const tone = a.verdict === 'constructive' ? '#54e6c1' : a.verdict === 'destructive' ? '#ff9d6b' : '#ffd166';
+        const tone = a.verdict === 'constructive' ? '#059669' : a.verdict === 'destructive' ? '#ea580c' : '#d97706';
         out += `<text class="verdict-text" fill="${tone}" x="20" y="20">경로차 ${a.ratio}λ · 합성 진폭 ${a.amp.toFixed(2)}A · ${VERDICT[a.verdict]}</text>`;
         mainGroup.innerHTML = out;
     }
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="peg" x="${X0 - 10}" y="${STRING_Y - 18}" width="10" height="36" rx="3"/>`;
         out += `<rect class="peg" x="${X1}" y="${STRING_Y - 18}" width="10" height="36" rx="3"/>`;
         out += `<text class="small-label" fill="#ff7d6b" x="${X0}" y="${STRING_Y + STRING_A + 26}">● 마디 ${a.nodes}개 — 움직이지 않습니다</text>`;
-        out += `<text class="small-label" fill="#54e6c1" x="${X1}" y="${STRING_Y + STRING_A + 26}" text-anchor="end">┆ 배 ${a.antinodes}개 — 가장 크게 흔들립니다</text>`;
+        out += `<text class="small-label" fill="#059669" x="${X1}" y="${STRING_Y + STRING_A + 26}" text-anchor="end">┆ 배 ${a.antinodes}개 — 가장 크게 흔들립니다</text>`;
         out += `<text class="part-label" x="20" y="20">${a.n}배 진동 · 줄 ${a.L.toFixed(1)} m · v ${a.v} m/s</text>`;
         out += `<text class="read-text" x="20" y="190">λ = 2×${a.L.toFixed(1)}÷${a.n} = ${a.lambda.toFixed(2)} m · f = ${a.n}×${a.v}÷(2×${a.L.toFixed(1)}) = ${a.freq.toFixed(0)} Hz</text>`;
         out += `<text class="note-text" x="20" y="206">화면의 진동은 실제보다 ${SLOW}배 느리게 보여 줍니다 — 모드끼리의 빠르기 비는 그대로입니다</text>`;
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pts = [];
         for (let r = 0; r <= 2.0001; r += 0.01) pts.push(`${gx(r).toFixed(1)},${gy(analyseSuper(r).amp).toFixed(1)}`);
         out += `<path class="trace" d="M${pts.join('L')}"/>`;
-        out += `<circle class="trace-dot" cx="${gx(a.ratio).toFixed(1)}" cy="${gy(a.amp).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.ratio).toFixed(1)}" cy="${gy(a.amp).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 
@@ -249,11 +249,11 @@ document.addEventListener('DOMContentLoaded', () => {
         all.forEach((row, i) => {
             const y = GRAPH.y1 + 18 + i * 22;
             const on = row.n === a.n;
-            out += `<text class="axis-text" style="fill:${on ? '#cfe6ee' : '#7f9298'}" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${row.n}배</text>`;
+            out += `<text class="axis-text" style="fill:${on ? '#0f172a' : '#7f9298'}" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${row.n}배</text>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 5}" width="${Math.max(2, gx(row.freq) - GRAPH.x0).toFixed(1)}" height="12" rx="3" ` +
-                   `fill="#ffd166" opacity="${on ? 0.9 : 0.35}"/>`;
+                   `fill="#d97706" opacity="${on ? 0.9 : 0.35}"/>`;
             const flip = gx(row.freq) > GRAPH.x1 - 80;
-            out += `<text class="bar-text" fill="${on ? '#ffd166' : '#7f9298'}" x="${(gx(row.freq) + (flip ? -6 : 6)).toFixed(1)}" ` +
+            out += `<text class="bar-text" fill="${on ? '#d97706' : '#7f9298'}" x="${(gx(row.freq) + (flip ? -6 : 6)).toFixed(1)}" ` +
                    `y="${(y + 4).toFixed(1)}"${flip ? ' text-anchor="end"' : ''}>${row.freq.toFixed(0)} Hz</text>`;
         });
         graphGroup.innerHTML = out;

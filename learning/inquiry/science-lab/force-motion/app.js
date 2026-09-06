@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // The arrows carry no text of their own. The crate roams the whole
         // track, so any label pinned to it collides with something sooner or
         // later; this table sits where the crate can never reach.
-        [['미는 힘', a.F, '#52c7ff'], ['마찰력', a.friction, '#ff9d6b'],
+        [['미는 힘', a.F, '#0284c7'], ['마찰력', a.friction, '#ea580c'],
          ['수직항력', a.weight, '#b4d2dc'], ['무게', a.weight, '#b4d2dc']]
             .forEach(([name, value, colour], i) => {
                 const y = 38 + i * 12;
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="part-label" x="${TRACK_X1 + 8}" y="162">m</text>`;
 
         const balanced = Math.abs(a.net) < 1e-9;
-        const tone = balanced ? '#54e6c1' : a.net > 0 ? '#52c7ff' : '#ff9d6b';
+        const tone = balanced ? '#059669' : a.net > 0 ? '#0284c7' : '#ea580c';
         out += `<text class="balance-text" fill="${tone}" x="20" y="190">` +
                `미는 힘 ${a.F} N ${balanced ? '=' : a.net > 0 ? '>' : '<'} 마찰력 ${fmt(a.friction)} N → 알짜힘 ${fmt(Math.abs(a.net))} N${balanced ? ' (평형)' : ''}</text>`;
         out += `<text class="note-text" x="20" y="206">${MOTION_NOTE[a.motion]}</text>`;
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         out += line(0, endT, 'trace-done');
         if (simTime > 0) out += line(0, Math.min(simTime, endT), 'trace');
-        out += `<circle class="trace-dot" cx="${gx(Math.min(simTime, endT)).toFixed(1)}" cy="${gy(st.v).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(Math.min(simTime, endT)).toFixed(1)}" cy="${gy(st.v).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

@@ -116,11 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // angle arcs, measured from the normal
         let arcs = '';
         arcs += `<path class="angle-arc incident" d="${arcPath(0, s.theta1, inSgn, -1)}"/>`;
-        arcs += `<text class="angle-text" fill="#ffd166" x="${(P.x - ARC_R * Math.sin(rad(s.theta1 / 2)) - 30).toFixed(1)}" y="${(P.y + inSgn * (ARC_R + 8) * Math.cos(rad(s.theta1 / 2))).toFixed(1)}">${s.theta1}°</text>`;
+        arcs += `<text class="angle-text" fill="#b45309" x="${(P.x - ARC_R * Math.sin(rad(s.theta1 / 2)) - 30).toFixed(1)}" y="${(P.y + inSgn * (ARC_R + 8) * Math.cos(rad(s.theta1 / 2))).toFixed(1)}">${s.theta1}°</text>`;
         arcs += `<path class="angle-arc reflected" d="${arcPath(0, s.theta1, inSgn, 1)}"/>`;
         if (!s.total) {
             arcs += `<path class="angle-arc refracted" d="${arcPath(0, s.theta2, outSgn, 1)}"/>`;
-            arcs += `<text class="angle-text" fill="#a4f0a4" x="${(P.x + ARC_R * Math.sin(rad(s.theta2 / 2)) + 8).toFixed(1)}" y="${(P.y + outSgn * (ARC_R + 10) * Math.cos(rad(s.theta2 / 2))).toFixed(1)}">${s.theta2.toFixed(1)}°</text>`;
+            arcs += `<text class="angle-text" fill="#15803d" x="${(P.x + ARC_R * Math.sin(rad(s.theta2 / 2)) + 8).toFixed(1)}" y="${(P.y + outSgn * (ARC_R + 10) * Math.cos(rad(s.theta2 / 2))).toFixed(1)}">${s.theta2.toFixed(1)}°</text>`;
         }
         arcGroup.innerHTML = arcs;
 

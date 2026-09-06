@@ -55,30 +55,30 @@
 .pan { fill: rgba(255, 255, 255, .05); stroke: rgba(177, 226, 230, .75); stroke-width: 2; }
 .hanger { stroke: #334155; stroke-width: 1.8; stroke-width: 1.4; }
 .chip-mg { fill: #cfd8dd; stroke: rgba(255, 255, 255, .6); stroke-width: .8; }
-.chip-ox { fill: #7fd4f0; opacity: .75; }
+.chip-ox { fill: #0284c7; opacity: .75; }
 .chip-mgo { fill: #f0e6c8; stroke: rgba(160, 145, 110, .7); stroke-width: .8; }
 .pan-title { fill: #0f172a; font-size: 13px; font-weight: 900; }
 .pan-mass { fill: var(--mint); font-size: 13px; font-weight: 900; }
-.level-note { fill: var(--mint); font-size: 12.5px; font-weight: 900; }
-.left-note { fill: #ffcc66; font-size: 12.5px; font-weight: 850; }
+.level-note { fill: var(--mint); font-size: 14px; font-weight: 900; }
+.left-note { fill: #d97706; font-size: 14px; font-weight: 850; }
 
 .vessel { fill: rgba(255, 255, 255, .04); stroke: rgba(177, 226, 230, .75); stroke-width: 2.6; }
 .vessel-fill { transition: fill .3s ease; }
 .therm-tube { fill: rgba(255, 255, 255, .1); stroke: #334155; stroke-width: 1.8; stroke-width: 1.2; }
 .therm-fill { fill: #ff7d6b; }
-.therm-fill.cold { fill: #7fd4f0; }
+.therm-fill.cold { fill: #0284c7; }
 .rxn-label { fill: #0f172a; font-size: 13px; font-weight: 900; }
 .rxn-kind { font-size: 13px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .trace { fill: none; stroke-width: 2.4; }
 .trace-dot { stroke: #fff; stroke-width: 1.3; }
-.knee-line { stroke: rgba(255, 204, 102, .55); stroke-width: 1.3; stroke-dasharray: 5 4; }
-.knee-text { fill: var(--amber); font-size: 12.5px; font-weight: 900; }
-.base-line { stroke: rgba(151, 218, 211, .4); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.knee-line { stroke: rgba(217, 119, 6, .55); stroke-width: 1.3; stroke-dasharray: 5 4; }
+.knee-text { fill: var(--amber); font-size: 14px; font-weight: 900; }
+.base-line { stroke: rgba(148, 163, 184, 0.35); stroke-width: 1.2; stroke-dasharray: 4 4; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 126px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }

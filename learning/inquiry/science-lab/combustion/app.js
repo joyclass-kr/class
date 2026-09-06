@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const VERDICT = { up: '질량이 늘어난다', same: '질량이 그대로다', down: '질량이 줄어든다' };
-    const TONE = { up: '#52c7ff', same: '#54e6c1', down: '#ff9d6b' };
+    const TONE = { up: '#0284c7', same: '#059669', down: '#ea580c' };
 
     function renderMain(a) {
         const p = state.progress;
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (p > 0.05) {
                 for (let i = 0; i < 4; i += 1) {
                     const x = CX - 40 + i * 26;
-                    out += `<circle fill="${state.material === 'steel' ? '#52c7ff' : '#ff9d6b'}" opacity=".5" cx="${x}" cy="${(104 + (i % 2) * 14).toFixed(1)}" r="3.4"/>`;
+                    out += `<circle fill="${state.material === 'steel' ? '#0284c7' : '#ea580c'}" opacity=".5" cx="${x}" cy="${(104 + (i % 2) * 14).toFixed(1)}" r="3.4"/>`;
                 }
             }
         } else if (p > 0.05) {
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dir = inward ? 1 : -1;
                 out += `<path class="gas-arrow ${inward ? 'gas-in' : 'gas-out'}" d="M${x - 5},${y1 - dir * 6} L${x},${y1} L${x + 5},${y1 - dir * 6}"/>`;
             }
-            out += `<text class="small-label" fill="${inward ? '#52c7ff' : '#ff9d6b'}" x="${CX}" y="88" text-anchor="middle">` +
+            out += `<text class="small-label" fill="${inward ? '#0284c7' : '#ea580c'}" x="${CX}" y="88" text-anchor="middle">` +
                    `${inward ? '산소가 들어와 결합합니다' : '기체가 되어 날아갑니다'}</text>`;
         }
 
@@ -203,9 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const st = step(state.progress, a);
         const rows = [
             ['반응 전 고체', a.m, '#b4d2dc'],
-            ['반응 후 고체', a.solidEnd, a.mat.burnsAway ? '#ff9d6b' : '#52c7ff'],
-            ['반응 전 전체 (고체 + 산소)', a.totalBefore, '#54e6c1'],
-            ['반응 후 전체 (고체 + 기체)', a.totalAfter, '#54e6c1'],
+            ['반응 후 고체', a.solidEnd, a.mat.burnsAway ? '#ea580c' : '#0284c7'],
+            ['반응 전 전체 (고체 + 산소)', a.totalBefore, '#059669'],
+            ['반응 후 전체 (고체 + 기체)', a.totalAfter, '#059669'],
         ];
         const max = Math.max(...rows.map(r => r[1])) * 1.1;
         const gx = v => GRAPH.x0 + (v / max) * (GRAPH.x1 - GRAPH.x0);

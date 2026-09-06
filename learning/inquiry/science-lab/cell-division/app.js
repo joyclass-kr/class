@@ -220,9 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="chrom-line" d="${path(s => s.chrom)}"/>`;
         out += `<path class="dna-line" d="${path(s => s.dna)}"/>`;
         out += `<line class="now-line" x1="${gx(a.i).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(a.i).toFixed(1)}" y2="${GRAPH.y0}"/>`;
-        out += `<circle class="trace-dot" cx="${gx(a.i).toFixed(1)}" cy="${gy(a.s.dna).toFixed(1)}" r="5" fill="#ffd166"/>`;
-        out += `<circle class="trace-dot" cx="${gx(a.i).toFixed(1)}" cy="${gy(a.s.chrom).toFixed(1)}" r="4.5" fill="#7fd4f0"/>`;
-        [['DNA 양', '#ffd166', 0], ['염색체 수 (2n = 1)', '#7fd4f0', 1]].forEach(([t, c, k]) => {
+        out += `<circle class="trace-dot" cx="${gx(a.i).toFixed(1)}" cy="${gy(a.s.dna).toFixed(1)}" r="5" fill="#d97706"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.i).toFixed(1)}" cy="${gy(a.s.chrom).toFixed(1)}" r="4.5" fill="#0284c7"/>`;
+        [['DNA 양', '#d97706', 0], ['염색체 수 (2n = 1)', '#0284c7', 1]].forEach(([t, c, k]) => {
             out += `<rect x="${GRAPH.x0 + 150 + k * 96}" y="14" width="9" height="9" rx="2" fill="${c}"/>`;
             out += `<text class="legend-text" fill="${c}" x="${GRAPH.x0 + 163 + k * 96}" y="22">${t}</text>`;
         });

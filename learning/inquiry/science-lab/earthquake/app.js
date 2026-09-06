@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const map = { width: 400, height: 320 };
     const predictionTolerance = 50;
     const stations = [
-        { id: 'A', x: 70, y: 70, color: '#52c7ff' },
-        { id: 'B', x: 330, y: 80, color: '#ffcc66' },
-        { id: 'C', x: 100, y: 260, color: '#b69cff' }
+        { id: 'A', x: 70, y: 70, color: '#0284c7' },
+        { id: 'B', x: 330, y: 80, color: '#d97706' },
+        { id: 'C', x: 100, y: 260, color: '#7c3aed' }
     ];
     const scenarios = [
         { epicenter: { x: 210, y: 165 }, origin: 34200 },
@@ -125,36 +125,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const xFor = distance => plot.left + ((distance / 240) * (plot.right - plot.left));
         const yFor = seconds => plot.bottom - ((seconds / 80) * (plot.bottom - plot.top));
 
-        travelTimeContext.font = '10px system-ui';
+        travelTimeContext.font = '700 12.5px system-ui';
         travelTimeContext.lineWidth = 1;
         for (let distance = 0; distance <= 240; distance += 40) {
             const x = xFor(distance);
-            travelTimeContext.strokeStyle = 'rgba(151, 218, 211, .1)';
+            travelTimeContext.strokeStyle = 'rgba(148, 163, 184, 0.20)';
             travelTimeContext.beginPath();
             travelTimeContext.moveTo(x, plot.top);
             travelTimeContext.lineTo(x, plot.bottom);
             travelTimeContext.stroke();
-            travelTimeContext.fillStyle = '#789492';
+            travelTimeContext.fillStyle = '#475569';
             travelTimeContext.textAlign = 'center';
             travelTimeContext.fillText(String(distance), x, height - 9);
         }
         for (let seconds = 0; seconds <= 80; seconds += 10) {
             const y = yFor(seconds);
-            travelTimeContext.strokeStyle = 'rgba(151, 218, 211, .1)';
+            travelTimeContext.strokeStyle = 'rgba(148, 163, 184, .25)';
             travelTimeContext.beginPath();
             travelTimeContext.moveTo(plot.left, y);
             travelTimeContext.lineTo(plot.right, y);
             travelTimeContext.stroke();
             if (seconds % 20 === 0) {
-                travelTimeContext.fillStyle = '#789492';
+                travelTimeContext.fillStyle = '#475569';
                 travelTimeContext.textAlign = 'right';
                 travelTimeContext.fillText(String(seconds), plot.left - 6, y + 3);
             }
         }
 
         [
-            { key: 'pTime', color: '#52c7ff', label: 'P파' },
-            { key: 'sTime', color: '#ffcc66', label: 'S파' }
+            { key: 'pTime', color: '#0284c7', label: 'P파' },
+            { key: 'sTime', color: '#d97706', label: 'S파' }
         ].forEach(wave => {
             travelTimeContext.strokeStyle = wave.color;
             travelTimeContext.lineWidth = 2.5;
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             travelTimeContext.stroke();
             const lastPoint = travelTimeCurve.at(-1);
             travelTimeContext.fillStyle = wave.color;
-            travelTimeContext.font = '800 10px system-ui';
+            travelTimeContext.font = '800 12.5px system-ui';
             travelTimeContext.textAlign = 'right';
             travelTimeContext.fillText(wave.label, plot.right - 4, yFor(lastPoint[wave.key]) + (wave.key === 'pTime' ? -5 : 11));
         });
@@ -192,13 +192,13 @@ document.addEventListener('DOMContentLoaded', () => {
             travelTimeContext.arc(x, sY, 3, 0, Math.PI * 2);
             travelTimeContext.fillStyle = item.color;
             travelTimeContext.fill();
-            travelTimeContext.font = '800 10px system-ui';
+            travelTimeContext.font = '800 12.5px system-ui';
             travelTimeContext.textAlign = 'left';
             travelTimeContext.fillText(`${item.id} ${item.difference}초`, x + 5, ((pY + sY) / 2) - (index * 8));
         });
 
-        travelTimeContext.fillStyle = '#9ab4b2';
-        travelTimeContext.font = '10px system-ui';
+        travelTimeContext.fillStyle = '#334155';
+        travelTimeContext.font = '700 12.5px system-ui';
         travelTimeContext.textAlign = 'right';
         travelTimeContext.fillText('진앙 거리(km)', plot.right, height - 9);
         travelTimeContext.save();
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { width, height, scale, offsetX, offsetY } = mapGeometry();
         context.clearRect(0, 0, width, height);
 
-        context.strokeStyle = 'rgba(151, 218, 211, .10)';
+        context.strokeStyle = 'rgba(148, 163, 184, .25)';
         context.lineWidth = 1;
         for (let x = 0; x <= map.width; x += 50) {
             context.beginPath();
@@ -335,15 +335,15 @@ document.addEventListener('DOMContentLoaded', () => {
             context.arc(stationX, stationY, 7, 0, Math.PI * 2);
             context.fillStyle = item.color;
             context.fill();
-            context.fillStyle = '#e9f6f5';
-            context.font = '800 12px system-ui';
+            context.fillStyle = '#0f172a';
+            context.font = '800 13px system-ui';
             context.fillText(`${item.id} 관측소`, stationX + 11, stationY - 10);
         });
 
         if (predictedPoint) {
             const x = offsetX + (predictedPoint.x * scale);
             const y = offsetY + (predictedPoint.y * scale);
-            context.strokeStyle = '#e9f6f5';
+            context.strokeStyle = '#0f172a';
             context.lineWidth = 2;
             context.beginPath();
             context.arc(x, y, 10, 0, Math.PI * 2);
@@ -352,8 +352,8 @@ document.addEventListener('DOMContentLoaded', () => {
             context.moveTo(x, y - 14);
             context.lineTo(x, y + 14);
             context.stroke();
-            context.fillStyle = '#e9f6f5';
-            context.font = '900 12px system-ui';
+            context.fillStyle = '#0f172a';
+            context.font = '900 13px system-ui';
             context.fillText('내 예측', x + 15, y - 10);
         }
 
@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
             context.strokeStyle = 'rgba(255, 120, 111, .5)';
             context.lineWidth = 2;
             context.stroke();
-            context.strokeStyle = '#ff786f';
+            context.strokeStyle = '#dc2626';
             context.lineWidth = 3;
             context.beginPath();
             context.moveTo(x - 9, y - 9);
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
             context.lineTo(x - 9, y + 9);
             context.stroke();
             context.fillStyle = '#ffaaa4';
-            context.font = '900 12px system-ui';
+            context.font = '900 13px system-ui';
             context.fillText('진앙', x + 13, y + 4);
         }
     }

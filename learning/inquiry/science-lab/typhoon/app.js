@@ -140,28 +140,28 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderGenesis(a) {
         const p = state.progress, { sst, lat } = a;
         let out = `<rect class="sea" fill="${seaColor(sst)}" x="20" y="140" width="260" height="60" rx="6"/>`;
-        for (let x = 30; x < 280; x += 24) out += `<path fill="none" stroke="rgba(214,245,250,.35)" stroke-width="1" d="M${x},${150 + (x % 48 ? 0 : 5)} q6,-4 12,0 q6,4 12,0"/>`;
+        for (let x = 30; x < 280; x += 24) out += `<path fill="none" stroke="rgba(148, 163, 184, 0.40)" stroke-width="1" d="M${x},${150 + (x % 48 ? 0 : 5)} q6,-4 12,0 q6,4 12,0"/>`;
         out += `<text class="small-label" x="26" y="196">바다 ${sst} ℃ · ${LATS[state.lat].label}</text>`;
         // vapour rising, more from a warmer sea
         const nV = Math.round(a.es / 6), rise = clamp(p / 0.35, 0, 1);
         for (let i = 0; i < nV; i += 1) { const x = 50 + i * (200 / Math.max(1, nV - 1)), y0 = 138, y1 = 138 - 26 * rise - ((i * 7) % 12); out += arrow(x, y0, x, y1, 'vapor', 'vapor-head', 2.5); }
         out += `<text class="small-label" style="fill:#97dad3" x="160" y="134" text-anchor="middle">수증기 ${a.es.toFixed(0)} hPa (${a.heat ? '넉넉함' : '모자람'})</text>`;
         const cx = 150, cy = 82;
-        if (!a.heat) { for (let i = 0; i < 3; i += 1) out += cloud(90 + i * 70, 96 - (i % 2) * 8, 9, 'cloud-weak'); out += `<text class="trait-text" style="fill:#ff9f8a" x="${cx}" y="46" text-anchor="middle">수증기가 모자라 구름이 자라지 못함</text>`; }
-        else if (!a.cor) { const g = clamp((p - 0.3) / 0.5, 0, 1); for (let i = 0; i < 5; i += 1) out += cloud(cx - 60 + i * 30, cy + 8 - (i % 2) * 12, 8 + 6 * g); out += `<text class="trait-text" style="fill:#ff9f8a" x="${cx}" y="42" text-anchor="middle">구름은 크게 자라지만 전향력이 0 — 소용돌이로 감기지 않음</text>`; }
-        else { const g = clamp((p - 0.3) / 0.6, 0, 1), R = 14 + (a.vmax / 62) * 46 * g; if (g < 0.25) for (let i = 0; i < 4; i += 1) out += cloud(cx - 45 + i * 30, cy + 6, 8); out += spiral(cx, cy, R, p * 9, 'spiral', (2 + 3 * g).toFixed(1)); out += `<text class="trait-text" style="fill:#54e6c1" x="${cx}" y="34" text-anchor="middle">전향력이 공기를 꺾어 반시계 방향으로 감김</text>`; }
+        if (!a.heat) { for (let i = 0; i < 3; i += 1) out += cloud(90 + i * 70, 96 - (i % 2) * 8, 9, 'cloud-weak'); out += `<text class="trait-text" style="fill:#dc2626" x="${cx}" y="46" text-anchor="middle">수증기가 모자라 구름이 자라지 못함</text>`; }
+        else if (!a.cor) { const g = clamp((p - 0.3) / 0.5, 0, 1); for (let i = 0; i < 5; i += 1) out += cloud(cx - 60 + i * 30, cy + 8 - (i % 2) * 12, 8 + 6 * g); out += `<text class="trait-text" style="fill:#dc2626" x="${cx}" y="42" text-anchor="middle">구름은 크게 자라지만 전향력이 0 — 소용돌이로 감기지 않음</text>`; }
+        else { const g = clamp((p - 0.3) / 0.6, 0, 1), R = 14 + (a.vmax / 62) * 46 * g; if (g < 0.25) for (let i = 0; i < 4; i += 1) out += cloud(cx - 45 + i * 30, cy + 6, 8); out += spiral(cx, cy, R, p * 9, 'spiral', (2 + 3 * g).toFixed(1)); out += `<text class="trait-text" style="fill:#059669" x="${cx}" y="34" text-anchor="middle">전향력이 공기를 꺾어 반시계 방향으로 감김</text>`; }
         // readouts
         const RX = 292;
         out += `<text class="trait-text" x="${RX}" y="44">전향력 f = ${fmtExp(a.f)} /s</text>`;
         out += `<text class="trait-text" x="${RX}" y="60">${a.cor ? '회전 가능 (위도 5° 밖)' : '0 — 회전 불가'}</text>`;
         out += `<text class="trait-text" x="${RX}" y="84">잠재 최대 풍속(이론) ${a.heat ? `${fmtN(a.PI)} m/s` : '—'}</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${RX}" y="100">실제 최대 풍속(대략) ${a.vmax ? `${fmtN(a.vmax)} m/s` : '—'}</text>`;
-        out += `<text class="trait-text" style="fill:#ff9f8a" x="${RX}" y="116">중심 기압 ${a.vmax ? `${fmtN(a.p)} hPa` : '—'}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${RX}" y="100">실제 최대 풍속(대략) ${a.vmax ? `${fmtN(a.vmax)} m/s` : '—'}</text>`;
+        out += `<text class="trait-text" style="fill:#dc2626" x="${RX}" y="116">중심 기압 ${a.vmax ? `${fmtN(a.p)} hPa` : '—'}</text>`;
         out += `<text class="gen-text" x="${RX}" y="140">${a.vmax ? `등급: ${a.grade}` : '태풍 없음'}</text>`;
         out += `<text class="small-label" x="${RX}" y="158">등급 문턱 25 · 33 · 44 · 54 m/s</text>`;
         out += `<text class="small-label" x="${RX}" y="172">(중 · 강 · 매우강 · 초강력)</text>`;
         const VERD = { none: '태풍이 생기지 않음', mid: `${a.grade} 태풍 (최대 ${fmtN(a.vmax)} m/s)`, high: `${a.grade} 태풍 (최대 ${fmtN(a.vmax)} m/s)` };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${SSTS[state.sst].label} · ${LATS[state.lat].label}: ${VERD[a.verdict]}` : `${SSTS[state.sst].label} · ${LATS[state.lat].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${SSTS[state.sst].label} · ${LATS[state.lat].label}: ${VERD[a.verdict]}` : `${SSTS[state.sst].label} · ${LATS[state.lat].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">조건: 해수면 26.5 ℃ 이상(잠열) + 위도 5° 밖(전향력). 육지에 오르면 연료가 끊겨 약해집니다</text>`;
         return out;
     }
@@ -174,11 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let t = 24; t <= 32; t += 2) out += `<text class="axis-text" x="${xOf(t).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${t} ℃</text>`;
         [20, 40, 60, 80].forEach(v => { out += `<text class="axis-text" x="${X0 - 5}" y="${(yOf(v) + 3.5).toFixed(1)}" text-anchor="end">${v}</text>`; });
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
-        out += `<rect class="band-bad" x="${X0}" y="${Y1}" width="${(xOf(SST_MIN) - X0).toFixed(1)}" height="${Y0 - Y1}"/><text class="small-label" style="fill:#ff9f8a" x="${((X0 + xOf(SST_MIN)) / 2).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">안 생김</text>`;
+        out += `<rect class="band-bad" x="${X0}" y="${Y1}" width="${(xOf(SST_MIN) - X0).toFixed(1)}" height="${Y0 - Y1}"/><text class="small-label" style="fill:#dc2626" x="${((X0 + xOf(SST_MIN)) / 2).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">안 생김</text>`;
         let d = '', d2 = '';
         for (let t = SST_MIN; t <= 32; t += 0.1) { const PI = 35 + 12 * (t - SST_MIN); d += `${d ? 'L' : 'M'}${xOf(t).toFixed(1)},${yOf(PI).toFixed(1)} `; d2 += `${d2 ? 'L' : 'M'}${xOf(t).toFixed(1)},${yOf(PI * 0.8).toFixed(1)} `; }
-        out += `<path class="trace faint" style="stroke:#9cb6b4" d="${d}"/><path class="trace" style="stroke:#ffd166" d="${d2}"/>`;
-        out += `<text class="small-label" x="${xOf(31.2).toFixed(1)}" y="${(yOf(35 + 12 * 4.7) - 6).toFixed(1)}" text-anchor="end">이론값</text><text class="small-label" style="fill:#ffd166" x="${xOf(31.2).toFixed(1)}" y="${(yOf((35 + 12 * 4.7) * 0.8) + 12).toFixed(1)}" text-anchor="end">실제(대략, 위도 15°)</text>`;
+        out += `<path class="trace faint" style="stroke:#475569" d="${d}"/><path class="trace" style="stroke:#d97706" d="${d2}"/>`;
+        out += `<text class="small-label" x="${xOf(31.2).toFixed(1)}" y="${(yOf(35 + 12 * 4.7) - 6).toFixed(1)}" text-anchor="end">이론값</text><text class="small-label" style="fill:#d97706" x="${xOf(31.2).toFixed(1)}" y="${(yOf((35 + 12 * 4.7) * 0.8) + 12).toFixed(1)}" text-anchor="end">실제(대략, 위도 15°)</text>`;
         if (a.vmax) out += `<circle fill="#ff7a59" stroke="#fff" cx="${xOf(a.sst).toFixed(1)}" cy="${yOf(a.vmax).toFixed(1)}" r="4.5"/>`;
         else out += `<circle fill="#ff7a59" stroke="#fff" cx="${xOf(a.sst).toFixed(1)}" cy="${Y0}" r="4.5"/>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">해수면 온도 — 세로축은 최대 풍속 (m/s)</text>`;
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<ellipse class="high" cx="${h.cx + MX}" cy="${h.cy + MY}" rx="${h.rx}" ry="${h.ry}"/>`;
         out += `</g>`;
         out += `<text class="map-text" x="${MX + 40}" y="${MY + 70}">중국</text><text class="map-text" x="${MX + 158}" y="${MY + 84}" text-anchor="middle">한반도</text><text class="map-text" x="${MX + 250}" y="${MY + 104}">일본</text>`;
-        out += `<text class="map-text" style="fill:#ff9f8a" x="${clamp(h.cx + MX, MX + 30, MX + 250)}" y="${h.cy + MY - h.ry + 14}" text-anchor="middle">북태평양 고기압</text>`;
+        out += `<text class="map-text" style="fill:#dc2626" x="${clamp(h.cx + MX, MX + 30, MX + 250)}" y="${h.cy + MY - h.ry + 14}" text-anchor="middle">북태평양 고기압</text>`;
         const full = h.track.map(([x, y]) => `${x + MX},${y + MY}`).join(' ');
         out += `<polyline class="track" points="${full}"/>`;
         const pos = alongTrack(h.track, ease(p));
@@ -213,17 +213,17 @@ document.addEventListener('DOMContentLoaded', () => {
         out += spiral(pos.x, pos.y, 12, p * 14, 'spiral', 2);
         // the right-hand column: danger semicircle
         const RX = 380, RY = 96;
-        out += `<circle fill="rgba(240,248,250,.08)" stroke="rgba(214,245,250,.35)" cx="${RX}" cy="${RY}" r="40"/>`;
+        out += `<circle fill="rgba(240,248,250,.08)" stroke="rgba(148, 163, 184, 0.40)" cx="${RX}" cy="${RY}" r="40"/>`;
         out += `<line class="ref-line" x1="${RX}" y1="${RY - 44}" x2="${RX}" y2="${RY + 44}"/>`;
         [[RX + 30, RY, RX + 30, RY - 16], [RX - 30, RY, RX - 30, RY + 16]].forEach(([x1, y1, x2, y2]) => { out += arrow(x1, y1, x2, y2, 'wind-arrow', 'wind-head', 3); });
         out += arrow(RX, RY + 8, RX, RY - 26, 'move-arrow', 'move-head', 3.5);
-        out += `<text class="small-label" style="fill:#ffd166" x="${RX}" y="${RY - 30}" text-anchor="middle">이동 ${fmtN(a.vm)} m/s</text>`;
-        out += `<text class="small-label" style="fill:#52c7ff" x="${RX + 36}" y="${RY + 32}" text-anchor="middle">회전 ${V_ROT}</text><text class="small-label" style="fill:#52c7ff" x="${RX - 36}" y="${RY + 32}" text-anchor="middle">회전 ${V_ROT}</text>`;
-        out += `<text class="trait-text" style="fill:#ff9f8a" x="${RX}" y="${RY + 58}" text-anchor="middle">오른쪽(위험 반원) ${fmtN(a.right)} m/s</text>`;
-        out += `<text class="trait-text" style="fill:#54e6c1" x="${RX}" y="${RY + 74}" text-anchor="middle">왼쪽(가항 반원) ${fmtN(a.left)} m/s</text>`;
+        out += `<text class="small-label" style="fill:#d97706" x="${RX}" y="${RY - 30}" text-anchor="middle">이동 ${fmtN(a.vm)} m/s</text>`;
+        out += `<text class="small-label" style="fill:#0284c7" x="${RX + 36}" y="${RY + 32}" text-anchor="middle">회전 ${V_ROT}</text><text class="small-label" style="fill:#0284c7" x="${RX - 36}" y="${RY + 32}" text-anchor="middle">회전 ${V_ROT}</text>`;
+        out += `<text class="trait-text" style="fill:#dc2626" x="${RX}" y="${RY + 58}" text-anchor="middle">오른쪽(위험 반원) ${fmtN(a.right)} m/s</text>`;
+        out += `<text class="trait-text" style="fill:#059669" x="${RX}" y="${RY + 74}" text-anchor="middle">왼쪽(가항 반원) ${fmtN(a.left)} m/s</text>`;
         out += `<text class="small-label" x="${RX}" y="${RY + 90}" text-anchor="middle">회전 ${V_ROT} ± 이동 ${fmtN(a.vm)}</text>`;
         const VERD = { china: '고기압 서쪽 가장자리를 따라 중국으로', korea: '고기압 서쪽 끝을 돌아 한반도 관통', japan: '일찍 휘어 일본 쪽으로' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `고기압 ${h.label} · ${SPEEDS[state.speed].label}: ${VERD[a.verdict]}` : `고기압 ${h.label} · ${SPEEDS[state.speed].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `고기압 ${h.label} · ${SPEEDS[state.speed].label}: ${VERD[a.verdict]}` : `고기압 ${h.label} · ${SPEEDS[state.speed].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">태풍은 고기압 가장자리의 바람을 타고 갑니다. 진행 방향 오른쪽은 회전 바람에 이동 속력이 더해져 위험 반원</text>`;
         return out;
     }
@@ -236,13 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
         [0, 20, 40, 60].forEach(v => { out += `<line class="grid-line" x1="${X0}" y1="${yOf(v).toFixed(1)}" x2="${X1}" y2="${yOf(v).toFixed(1)}"/><text class="axis-text" x="${X0 - 5}" y="${(yOf(v) + 3.5).toFixed(1)}" text-anchor="end">${v}</text>`; });
         [-200, -100, 0, 100, 200, 300].forEach(r => { out += `<text class="axis-text" x="${xOf(r).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${r === 0 ? '중심' : `${Math.abs(r)}`}</text>`; });
         out += `<rect class="band-bad" x="${xOf(0).toFixed(1)}" y="${Y1}" width="${(X1 - xOf(0)).toFixed(1)}" height="${Y0 - Y1}"/>`;
-        out += `<text class="small-label" style="fill:#ff9f8a" x="${xOf(180).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">오른쪽 — 위험 반원</text><text class="small-label" style="fill:#54e6c1" x="${xOf(-180).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">왼쪽 — 가항 반원</text>`;
+        out += `<text class="small-label" style="fill:#dc2626" x="${xOf(180).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">오른쪽 — 위험 반원</text><text class="small-label" style="fill:#059669" x="${xOf(-180).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">왼쪽 — 가항 반원</text>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         let d = '';
         for (let r = -RMAX; r <= RMAX; r += 5) { if (Math.abs(r) < 3) continue; d += `${d ? 'L' : 'M'}${xOf(r).toFixed(1)},${yOf(Math.max(0, prof(r))).toFixed(1)} `; }
-        out += `<path class="trace" style="stroke:#ffd166" d="${d}"/>`;
-        out += `<circle fill="#ff7a59" cx="${xOf(R_MAX).toFixed(1)}" cy="${yOf(a.right).toFixed(1)}" r="3.5"/><text class="small-label" style="fill:#ff9f8a" x="${(xOf(R_MAX) + 6).toFixed(1)}" y="${(yOf(a.right) - 4).toFixed(1)}">${fmtN(a.right)} m/s</text>`;
-        out += `<circle fill="#54e6c1" cx="${xOf(-R_MAX).toFixed(1)}" cy="${yOf(a.left).toFixed(1)}" r="3.5"/><text class="small-label" style="fill:#54e6c1" x="${(xOf(-R_MAX) - 6).toFixed(1)}" y="${(yOf(a.left) - 4).toFixed(1)}" text-anchor="end">${fmtN(a.left)} m/s</text>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
+        out += `<circle fill="#ff7a59" cx="${xOf(R_MAX).toFixed(1)}" cy="${yOf(a.right).toFixed(1)}" r="3.5"/><text class="small-label" style="fill:#dc2626" x="${(xOf(R_MAX) + 6).toFixed(1)}" y="${(yOf(a.right) - 4).toFixed(1)}">${fmtN(a.right)} m/s</text>`;
+        out += `<circle fill="#059669" cx="${xOf(-R_MAX).toFixed(1)}" cy="${yOf(a.left).toFixed(1)}" r="3.5"/><text class="small-label" style="fill:#059669" x="${(xOf(-R_MAX) - 6).toFixed(1)}" y="${(yOf(a.left) - 4).toFixed(1)}" text-anchor="end">${fmtN(a.left)} m/s</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">중심에서의 거리 (km) — 세로축은 풍속 (m/s), 회전 바람은 최대 풍속 반지름 50 km에서 ${V_ROT} m/s</text>`;
         return out;
     }
@@ -270,11 +270,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += cloud(390, 32, 7 * Math.min(1.6, 0.5 + rainE * 0.5)) + rainAt(390, rainE);
         // upwelling arrows near Peru
         for (let i = 0; i < Math.round(up * 2); i += 1) out += arrow(X1 - 14 - i * 12, BY - 10, X1 - 14 - i * 12, yTh(thE) + 4, 'up-arrow', 'up-head', 3);
-        out += `<text class="small-label" style="fill:#54e6c1" x="${X1 - 8}" y="${BY - 14}" text-anchor="end">용승 ${up < 0.5 ? '멎음' : up > 1.2 ? '강함' : '보통'}</text>`;
+        out += `<text class="small-label" style="fill:#059669" x="${X1 - 8}" y="${BY - 14}" text-anchor="end">용승 ${up < 0.5 ? '멎음' : up > 1.2 ? '강함' : '보통'}</text>`;
         out += `<text class="trait-text" x="${X0 + 6}" y="${SY + 16}">인도네시아 쪽 ${sgn(west)} ℃</text><text class="trait-text" x="${X1 - 6}" y="${SY + 18}" text-anchor="end">페루 쪽 ${sgn(east)} ℃</text>`;
         out += `<text class="small-label" x="${X0 + 6}" y="${BY - 6}">서태평양</text><text class="small-label" x="230" y="${BY - 6}" text-anchor="middle">붉은 층이 따뜻한 물, 파란 층이 찬물, 흰 점선이 그 경계</text>`;
         const VERD = { elnino: '엘니뇨 — 동태평양 따뜻, 페루 큰비·인도네시아 가뭄', normal: '평소 — 서쪽에 따뜻한 물, 동쪽에서 용승', lanina: '라니냐 — 동태평양 더 차가움, 인도네시아 홍수·페루 가뭄' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? VERD[a.verdict] : `무역풍 ${TRADES[state.trade].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? VERD[a.verdict] : `무역풍 ${TRADES[state.trade].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">무역풍이 따뜻한 물을 서쪽에 쌓고, 동쪽에서는 찬물이 올라옵니다(용승). 바람이 바뀌면 다 뒤집힙니다</text>`;
         return out;
     }

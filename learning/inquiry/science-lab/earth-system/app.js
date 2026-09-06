@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* -------------------------------------------------------------- data */
     const SPHERES = {
-        space: { label: '외권', pos: [60, 40], color: '#b29bff' },
+        space: { label: '외권', pos: [60, 40], color: '#7c3aed' },
         atmo: { label: '기권', pos: [190, 40], color: '#9fd8ff' },
-        hydro: { label: '수권', pos: [80, 116], color: '#52c7ff' },
+        hydro: { label: '수권', pos: [80, 116], color: '#0284c7' },
         geo: { label: '지권', pos: [290, 116], color: '#c9a35f' },
         bio: { label: '생물권', pos: [185, 170], color: '#7fd48a' },
     };
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const ang = Math.atan2(T[1] - F[1], T[0] - F[0]);
             const ex = T[0] - 24 * Math.cos(ang), ey = T[1] - 24 * Math.sin(ang);
             out += `<line class="link active" x1="${F[0]}" y1="${F[1]}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}"/>`;
-            out += `<polygon fill="#ffd166" points="${ex.toFixed(1)},${ey.toFixed(1)} ${(ex - 8 * Math.cos(ang - 0.4)).toFixed(1)},${(ey - 8 * Math.sin(ang - 0.4)).toFixed(1)} ${(ex - 8 * Math.cos(ang + 0.4)).toFixed(1)},${(ey - 8 * Math.sin(ang + 0.4)).toFixed(1)}"/>`;
+            out += `<polygon fill="#d97706" points="${ex.toFixed(1)},${ey.toFixed(1)} ${(ex - 8 * Math.cos(ang - 0.4)).toFixed(1)},${(ey - 8 * Math.sin(ang - 0.4)).toFixed(1)} ${(ex - 8 * Math.cos(ang + 0.4)).toFixed(1)},${(ey - 8 * Math.sin(ang + 0.4)).toFixed(1)}"/>`;
         }
         SPHERE_KEYS.forEach(k => {
             const s = SPHERES[k], on = started && (k === ph.from || k === ph.to);
@@ -193,13 +193,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // description on the right
         const IX = 316;
-        ph.lines.forEach((ln, i) => { out += `<text class="trait-text" style="fill:#cfe6ee" x="${IX}" y="${46 + i * 14}">${ln}</text>`; });
+        ph.lines.forEach((ln, i) => { out += `<text class="trait-text" style="fill:#0f172a" x="${IX}" y="${46 + i * 14}">${ln}</text>`; });
         const y0 = 46 + ph.lines.length * 14 + 6;
         out += `<text class="small-label" x="${IX}" y="${y0}">옮겨 가는 것</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="${y0 + 13}">${started ? ph.carry : '?'}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="${y0 + 13}">${started ? ph.carry : '?'}</text>`;
         out += `<text class="small-label" x="${IX}" y="${y0 + 29}">실제 예</text>`;
         ph.example.forEach((ln, i) => { out += `<text class="trait-text" x="${IX}" y="${y0 + 42 + i * 13}">${ln}</text>`; });
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${ph.label}: ${SPHERES[ph.from].label} → ${SPHERES[ph.to].label} (${CAT_LABEL[ph.cat]})` : `${ph.label} — 어느 권에서 어느 권으로?`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${ph.label}: ${SPHERES[ph.from].label} → ${SPHERES[ph.to].label} (${CAT_LABEL[ph.cat]})` : `${ph.label} — 어느 권에서 어느 권으로?`}</text>`;
         out += `<text class="note-text" x="20" y="208">한 권의 변화가 다른 권을 바꿉니다 · 화살표 방향은 물질이나 에너지가 옮겨 가는 쪽</text>`;
         return out;
     }
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const items = Object.entries(PHENOMENA).filter(([k, v]) => v.from === rk && v.to === ck && (state.seen.has(k) || (state.progress >= 1 && k === state.phenomenon)));
                 const mine = state.progress >= 1 && a.ph.from === rk && a.ph.to === ck;
                 if (rk === ck) { out += `<rect class="cell" x="${x}" y="${y}" width="${CW}" height="${CH}" opacity=".35"/>`; return; }
-                out += `<rect class="cell ${items.length ? 'filled' : ''}" x="${x}" y="${y}" width="${CW}" height="${CH}" ${mine ? 'stroke="#ffd166" stroke-width="2"' : ''}/>`;
+                out += `<rect class="cell ${items.length ? 'filled' : ''}" x="${x}" y="${y}" width="${CW}" height="${CH}" ${mine ? 'stroke="#d97706" stroke-width="2"' : ''}/>`;
                 items.slice(0, 2).forEach(([k, v], i) => { out += `<text class="cell-text" x="${x + CW / 2}" y="${y + (items.length > 1 ? 10 + i * 10 : 15.5)}" text-anchor="middle">${v.short}</text>`; });
             });
         });
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<polygon class="land" points="166,190 166,150 200,118 260,112 300,126 300,190"/>`;
         out += `<text class="trait-text" x="92" y="180" text-anchor="middle">바다 ${fmtVol(RESERVOIRS.ocean.volume)}</text>`;
         out += `<text class="trait-text" x="236" y="180" text-anchor="middle">육지</text>`;
-        const arrow = (x, y1, y2, cls) => { const up = y2 < y1; return `<line class="flow ${cls}" x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"/><polygon fill="${cls === 'rain' ? '#9fd8ff' : '#52c7ff'}" points="${x},${y2} ${x - 4},${up ? y2 + 7 : y2 - 7} ${x + 4},${up ? y2 + 7 : y2 - 7}"/>`; };
+        const arrow = (x, y1, y2, cls) => { const up = y2 < y1; return `<line class="flow ${cls}" x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"/><polygon fill="${cls === 'rain' ? '#9fd8ff' : '#0284c7'}" points="${x},${y2} ${x - 4},${up ? y2 + 7 : y2 - 7} ${x + 4},${up ? y2 + 7 : y2 - 7}"/>`; };
         out += arrow(56, 128, 64, '') + `<text class="flow-text" x="60" y="98">증발 ${FLUX.evapSea}</text>`;
         out += arrow(130, 64, 128, 'rain') + `<text class="flow-text" x="134" y="98">강수 ${FLUX.rainSea}</text>`;
         out += arrow(206, 114, 64, '') + `<text class="flow-text" x="210" y="92">증발 ${FLUX.evapLand}</text>`;
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="flow river" x1="214" y1="160" x2="172" y2="160"/><polygon fill="#7fc8ff" points="170,160 177,156 177,164"/><text class="flow-text" x="194" y="173" text-anchor="middle">강물 ${FLUX.runoff}</text>`;
         // where the chosen store sits
         const spot = { atmo: [20, 28, 280, 34], ocean: [20, 130, 146, 60], river: [166, 150, 50, 40], soil: [216, 118, 60, 30], lake: [230, 128, 40, 22], ground: [180, 166, 110, 22], ice: [196, 112, 30, 12] }[state.reservoir];
-        out += `<rect fill="none" stroke="#ffd166" stroke-width="2" stroke-dasharray="4 3" x="${spot[0]}" y="${spot[1]}" width="${spot[2]}" height="${spot[3]}" rx="3"/>`;
+        out += `<rect fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="4 3" x="${spot[0]}" y="${spot[1]}" width="${spot[2]}" height="${spot[3]}" rx="3"/>`;
         // the tank on the right: the dyed water that was there at the start drains away
         const TX = 336, TY = 44, TW = 100, TH = 126;
         out += `<text class="gen-text" x="${TX + TW / 2}" y="34" text-anchor="middle">${r.label} ${fmtVol(r.volume)}</text>`;
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="old-water" x="${TX + 2}" y="${(TY + 2 + (TH - 4) * (1 - dyed)).toFixed(1)}" width="${TW - 4}" height="${((TH - 4) * dyed).toFixed(1)}"/>`;
         out += `<text class="trait-text" x="${TX + TW / 2}" y="${TY + TH / 2 + 3}" text-anchor="middle">${p === 0 ? '처음 물 100 %' : dyed > 0 ? `처음 물 ${Math.round(dyed * 100)} %` : '모두 새 물'}</text>`;
         out += `<text class="trait-text" x="${TX + TW / 2}" y="${TY + TH + 14}" text-anchor="middle">지난 시간 ${fmtTime(Math.min(t, tau))}${t >= tau ? ' — 다 바뀜' : ''}</text>`;
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${r.label}의 물은 ${fmtTime(tau)} 만에 모두 바뀜` : `${r.label} — ${r.out ? `한 해 ${r.out}천 km³가 드나듦` : '대표값으로 재 봅니다'}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${r.label}의 물은 ${fmtTime(tau)} 만에 모두 바뀜` : `${r.label} — ${r.out ? `한 해 ${r.out}천 km³가 드나듦` : '대표값으로 재 봅니다'}`}</text>`;
         out += `<text class="note-text" x="20" y="208">화살표 숫자는 한 해에 옮겨 가는 물 (천 km³) · 나가는 양 = 들어오는 양이어서 각 곳의 물은 거의 일정</text>`;
         return out;
     }
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const X0 = 60, X1 = 430, Y0 = 150, Y1 = 40;
         const keys = Object.keys(RESERVOIRS);
         const yOf = years => Y0 - Math.log10(Math.max(1, years * 365)) / 7 * (Y0 - Y1);
-        const CAT_COLOR = { days: '#52c7ff', years: '#54e6c1', ages: '#ffb347' };
+        const CAT_COLOR = { days: '#0284c7', years: '#059669', ages: '#ffb347' };
         let out = `<text class="axis-title" x="${X0}" y="18">물이 머무는 시간 — 든 양 ÷ 한 해 드나드는 양 (한 칸 = 10배)</text>`;
         [[1, '1일'], [30, '1개월'], [365, '1년'], [3650, '10년'], [36500, '100년'], [365000, '1,000년'], [3650000, '1만 년']].forEach(([d, lab]) => {
             const y = Y0 - Math.log10(d) / 7 * (Y0 - Y1);
@@ -277,8 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const r = RESERVOIRS[k], tau = tauOf(r), x = X0 + n * step + (step - W) / 2, mine = k === state.reservoir;
             const top = yOf(tau);
             out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${CAT_COLOR[r.cat]}" opacity="${mine ? 1 : 0.5}" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${W}" height="${(Y0 - top).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${(top - 4).toFixed(1)}" text-anchor="middle">${fmtTime(tau).replace('약 ', '')}</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${r.label}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${(top - 4).toFixed(1)}" text-anchor="middle">${fmtTime(tau).replace('약 ', '')}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${r.label}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 34}" text-anchor="middle">양이 적고 드나듦이 많으면 금방, 양이 많고 드나듦이 적으면 아주 오래</text>`;
         return out;
@@ -297,14 +297,14 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="box-sub" x="230" y="59" text-anchor="middle">산업화 전 ${gt(C_PRE)} (${ppm(C_PRE)} ppm) · 지금 ${gt(C_NOW)} (${ppm(C_NOW)} ppm)</text>`;
         out += `<rect class="box landbox" x="20" y="118" width="170" height="72" rx="5"/>`;
         out += `<text class="box-text" x="105" y="136" text-anchor="middle">숲과 흙 ${gt(LAND_C)}</text>`;
-        out += `<text class="box-sub" style="fill:#54e6c1" x="105" y="152" text-anchor="middle">더 거두는 양 한 해 ${gt(sinkLand)}</text>`;
+        out += `<text class="box-sub" style="fill:#059669" x="105" y="152" text-anchor="middle">더 거두는 양 한 해 ${gt(sinkLand)}</text>`;
         out += `<text class="box-sub" x="105" y="168" text-anchor="middle">광합성 ${gt(NAT_LAND)} = 호흡·분해 ${gt(NAT_LAND)}</text>`;
         out += `<rect class="box seabox" x="270" y="118" width="170" height="72" rx="5"/>`;
         out += `<text class="box-text" x="355" y="136" text-anchor="middle">바다 ${gt(SEA_C)}</text>`;
-        out += `<text class="box-sub" style="fill:#54e6c1" x="355" y="152" text-anchor="middle">더 거두는 양 한 해 ${gt(sinkSea)}</text>`;
+        out += `<text class="box-sub" style="fill:#059669" x="355" y="152" text-anchor="middle">더 거두는 양 한 해 ${gt(sinkSea)}</text>`;
         out += `<text class="box-sub" x="355" y="168" text-anchor="middle">녹아듦 ${gt(NAT_SEA)} = 내놓음 ${gt(NAT_SEA)}</text>`;
         out += `<rect class="box fossil" x="200" y="150" width="60" height="40" rx="4"/>`;
-        out += `<text class="box-sub" style="fill:#cfe6ee" x="230" y="167" text-anchor="middle">화석 연료</text><text class="box-sub" x="230" y="181" text-anchor="middle">땅속</text>`;
+        out += `<text class="box-sub" style="fill:#0f172a" x="230" y="167" text-anchor="middle">화석 연료</text><text class="box-sub" x="230" y="181" text-anchor="middle">땅속</text>`;
         const vArrow = (x, y1, y2, cls, w) => { const up = y2 < y1; return `<line class="carbon-flow ${cls}" style="stroke-width:${w}" stroke-dashoffset="${up ? dash : -dash}" x1="${x}" y1="${y1}" x2="${x}" y2="${up ? y2 + 6 : y2 - 6}"/><polygon class="arrow-head ${cls}" points="${x},${y2} ${x - 4},${up ? y2 + 7 : y2 - 7} ${x + 4},${up ? y2 + 7 : y2 - 7}"/>`; };
         out += vArrow(60, 68, 116, '', 2.2) + `<text class="trait-text" x="54" y="90" text-anchor="end">광합성</text>`;
         out += vArrow(100, 116, 68, '', 2.2) + `<text class="trait-text" x="106" y="90">호흡·분해</text>`;
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else out += `<text class="trait-text" style="fill:#ff7a59" x="236" y="112">사람이 더함 0</text>`;
         out += `<text class="gen-text" x="440" y="16" text-anchor="end">${2020 + Math.round(t)}년</text>`;
         const VERD = { down: '줄어듦', same: '거의 그대로', up: '늘어남' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${em.label} → 50년 뒤 ${gt(a.end)} (${ppm(a.end)} ppm), ${VERD[a.verdict]} (${a.change >= 0 ? '+' : '−'}${Math.round(Math.abs(a.change) * 100)} %)` : `화석 연료 ${em.label}: 한 해 ${gt(em.E)}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${em.label} → 50년 뒤 ${gt(a.end)} (${ppm(a.end)} ppm), ${VERD[a.verdict]} (${a.change >= 0 ? '+' : '−'}${Math.round(Math.abs(a.change) * 100)} %)` : `화석 연료 ${em.label}: 한 해 ${gt(em.E)}`}</text>`;
         out += `<text class="note-text" x="20" y="208">자연의 큰 순환은 서로 같아 균형 · 초록 화살표는 대기에 쌓인 여분에 비례해 바다와 숲이 더 거두는 양</text>`;
         return out;
     }
@@ -334,16 +334,16 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let yr = 0; yr <= YEARS; yr += 10) out += `<text class="axis-text" x="${xOf(yr).toFixed(1)}" y="${Y0 + 17}" text-anchor="middle">${2020 + yr}</text>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         out += `<text class="axis-text" x="${X0 + 4}" y="${Y1 - 6}">억 t</text>`;
-        out += `<line class="grid-line" style="stroke:rgba(255,209,102,.5)" x1="${X0}" y1="${yOf(C_PRE).toFixed(1)}" x2="${X1}" y2="${yOf(C_PRE).toFixed(1)}"/><text class="small-label" x="${X1 - 4}" y="${(yOf(C_PRE) - 3).toFixed(1)}" text-anchor="end">산업화 전 ${gt(C_PRE)}</text>`;
+        out += `<line class="grid-line" style="stroke:rgba(217, 119, 6, .5)" x1="${X0}" y1="${yOf(C_PRE).toFixed(1)}" x2="${X1}" y2="${yOf(C_PRE).toFixed(1)}"/><text class="small-label" x="${X1 - 4}" y="${(yOf(C_PRE) - 3).toFixed(1)}" text-anchor="end">산업화 전 ${gt(C_PRE)}</text>`;
         Object.entries(EMITS).forEach(([k, em]) => {
             const mine = k === state.emit;
             const tEnd = mine ? t : YEARS;
             let d = '';
             for (let yr = 0; yr <= tEnd + 1e-9; yr += 0.5) d += `${d ? 'L' : 'M'}${xOf(yr).toFixed(1)},${yOf(carbonAt(em.E, yr)).toFixed(1)} `;
-            out += `<path class="trace ${mine ? '' : 'faint'}" style="stroke:${mine ? '#ffd166' : '#9cb6b4'}" d="${d}"/>`;
+            out += `<path class="trace ${mine ? '' : 'faint'}" style="stroke:${mine ? '#d97706' : '#475569'}" d="${d}"/>`;
         });
         const now = carbonAt(a.em.E, t);
-        out += `<circle class="trace-dot" fill="#ffd166" cx="${xOf(t).toFixed(1)}" cy="${yOf(now).toFixed(1)}" r="4"/>`;
+        out += `<circle class="trace-dot" fill="#d97706" cx="${xOf(t).toFixed(1)}" cy="${yOf(now).toFixed(1)}" r="4"/>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 33}" text-anchor="middle">연도 — 지금 고른 경우: ${a.em.label}</text>`;
         return out;
     }

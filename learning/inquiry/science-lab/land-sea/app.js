@@ -154,10 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // two bars to compare
         const BW = 200;
         out += `<rect class="bar" x="${TX}" y="132" width="${BW}" height="12" rx="3" fill="rgba(255,255,255,.08)"/>`;
-        if (k) out += `<rect class="bar" x="${TX}" y="132" width="${(BW * t.sea / k).toFixed(1)}" height="12" rx="3" fill="#ffd166" opacity=".9"/>`;
+        if (k) out += `<rect class="bar" x="${TX}" y="132" width="${(BW * t.sea / k).toFixed(1)}" height="12" rx="3" fill="#d97706" opacity=".9"/>`;
         out += `<text class="legend-text" x="${TX}" y="158">노란 막대 = 바다 비율 · 점선 = 실제 71 %</text>`;
         out += `<line class="expect-line" x1="${(TX + BW * (1 - LAND_SHARE)).toFixed(1)}" y1="128" x2="${(TX + BW * (1 - LAND_SHARE)).toFixed(1)}" y2="148"/>`;
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">붙임딱지 ${state.dots}장 → 바다에 훨씬 많이 떨어진다</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">붙임딱지 ${state.dots}장 → 바다에 훨씬 많이 떨어진다</text>`;
         out += `<text class="note-text" x="${TX}" y="196">${k < state.dots ? '떨어뜨리는 중' : `다 떨어졌습니다 · 바다 ${a.seaAll}장 : 육지 ${a.landAll}장`}</text>`;
         return out;
     }
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="legend-text" x="${cx}" y="${base + 20}" text-anchor="middle">${e >= 1 ? (salt >= 0.1 ? `소금 ${salt.toFixed(1)} g 남음` : '거의 남지 않음') : `물 ${Math.round((1 - e) * state.grams)} g 남음`}</text>`;
         });
         const VERD = { none: '거의 남지 않는다', some: `소금 ${a.salt.toFixed(1)} g이 남는다`, lots: '소금이 아주 많이 남는다' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${a.water.name} ${state.grams} g → ${VERD[a.verdict]}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${a.water.name} ${state.grams} g → ${VERD[a.verdict]}</text>`;
         out += `<text class="note-text" x="20" y="34">${e < 1 ? `햇볕에 말리는 중 · ${Math.round(e * 100)} % 증발` : '물이 다 날아갔습니다'}</text>`;
         out += `<text class="note-text" x="20" y="206">물은 수증기가 되어 날아가고 녹아 있던 것만 남습니다 · 맛: ${a.water.taste}</text>`;
         return out;
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         out += `<path class="band" d="M${upper.join('L')}L${lower.join('L')}Z"/>`;
         out += `<line class="expect-line" x1="${GRAPH.x0}" y1="${gy(pSea).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(pSea).toFixed(1)}"/>`;
-        out += `<text class="axis-text" style="fill:#54e6c1" x="${GRAPH.x1 - 4}" y="${(gy(pSea) - 5).toFixed(1)}" text-anchor="end">실제 바다 ${Math.round(pSea * 100)} %</text>`;
+        out += `<text class="axis-text" style="fill:#059669" x="${GRAPH.x1 - 4}" y="${(gy(pSea) - 5).toFixed(1)}" text-anchor="end">실제 바다 ${Math.round(pSea * 100)} %</text>`;
         if (k > 0) {
             const pts = [];
             let sea = 0;
@@ -243,8 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!state.drops[i - 1].land) sea += 1;
                 if (i % Math.max(1, Math.floor(k / 120)) === 0 || i === k) pts.push(`${gx(i).toFixed(1)},${gy(sea / i).toFixed(1)}`);
             }
-            out += `<path class="trace" style="stroke:#ffd166" d="M${pts.join('L')}"/>`;
-            out += `<circle class="trace-dot" cx="${gx(k).toFixed(1)}" cy="${gy(sea / k).toFixed(1)}" r="5" fill="#ffd166"/>`;
+            out += `<path class="trace" style="stroke:#d97706" d="M${pts.join('L')}"/>`;
+            out += `<circle class="trace-dot" cx="${gx(k).toFixed(1)}" cy="${gy(sea / k).toFixed(1)}" r="5" fill="#d97706"/>`;
         }
         out += `<text class="note-text" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 14}">옅은 띠: 우연만으로 보통 벗어나는 범위 — 많이 떨어뜨릴수록 좁아집니다</text>`;
         return out;
@@ -259,8 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
         rows.forEach((r, i) => {
             const y = GRAPH.y1 + 30 + i * 36;
             const mine = r.k === state.water;
-            out += `<text class="bar-text" fill="${mine ? '#ffd166' : '#b6d3d9'}" x="${GRAPH.x0}" y="${y - 9}">${r.w.name} — ${r.salt >= 0.1 ? `${r.salt.toFixed(1)} g` : `${r.salt.toFixed(2)} g (거의 없음)`}</text>`;
-            out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(2, gx(r.salt) - GRAPH.x0).toFixed(1)}" height="12" rx="3" fill="${mine ? '#ffd166' : '#6f8f8d'}" opacity=".9"/>`;
+            out += `<text class="bar-text" fill="${mine ? '#d97706' : '#334155'}" x="${GRAPH.x0}" y="${y - 9}">${r.w.name} — ${r.salt >= 0.1 ? `${r.salt.toFixed(1)} g` : `${r.salt.toFixed(2)} g (거의 없음)`}</text>`;
+            out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(2, gx(r.salt) - GRAPH.x0).toFixed(1)}" height="12" rx="3" fill="${mine ? '#d97706' : '#6f8f8d'}" opacity=".9"/>`;
         });
         return out;
     }

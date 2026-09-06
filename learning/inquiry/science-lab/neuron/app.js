@@ -179,14 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="meter-fill" x="${MX + 3}" y="${Math.min(yOf(s.V), yOf(REST)).toFixed(1)}" width="16" height="${Math.abs(yOf(s.V) - yOf(REST)).toFixed(1)}"/>`;
         [[50, '+50', 3], [0, '0', 3], [-55, '문턱', 3], [-65, '휴지', 11], [-90, '−90', 3]].forEach(([v, lab, dy]) => { out += `<line class="ref-line ${v === -55 ? 'threshold' : ''}" x1="${MX - 4}" y1="${yOf(v).toFixed(1)}" x2="${MX + 26}" y2="${yOf(v).toFixed(1)}"/><text class="small-label" x="${MX - 6}" y="${(yOf(v) + dy).toFixed(1)}" text-anchor="end">${lab}</text>`; });
         out += `<text class="gen-text" x="${MX + 34}" y="60">${s.V >= 0 ? '+' : ''}${s.V.toFixed(0)} mV</text>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="${MX + 34}" y="80">Na⁺ 통로 ${Math.round(s.na / 0.35 * 100)} %</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="${MX + 34}" y="80">Na⁺ 통로 ${Math.round(s.na / 0.35 * 100)} %</text>`;
         out += `<text class="trait-text" style="fill:#ffb347" x="${MX + 34}" y="96">K⁺ 통로 ${Math.round(s.k / 0.6 * 100)} %</text>`;
         out += `<text class="trait-text" x="${MX + 34}" y="120">${t.toFixed(1)} ms</text>`;
         const seen = a.run.spikes.filter(sp => sp.t <= t).length;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${MX + 34}" y="140">활동 전위 ${seen}번</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${MX + 34}" y="140">활동 전위 ${seen}번</text>`;
         out += `<text class="small-label" x="${MX + 34}" y="160">${stimOn ? '자극 중' : t < T_ON ? '자극 전' : '자극 뒤'}</text>`;
         const VERD = { none: '생기지 않음', one: '한 번, 정해진 크기', many: '되풀이해 생김' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${a.st.hint} · ${a.du.label}: 활동 전위 ${a.n}번 → ${VERD[a.verdict]}${a.n ? ` (꼭대기 +${Math.round(a.run.spikes[0].peak)} mV)` : ''}` : `${a.st.label} (${a.st.hint}) · ${a.du.label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${a.st.hint} · ${a.du.label}: 활동 전위 ${a.n}번 → ${VERD[a.verdict]}${a.n ? ` (꼭대기 +${Math.round(a.run.spikes[0].peak)} mV)` : ''}` : `${a.st.label} (${a.st.hint}) · ${a.du.label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">통로 그림은 열린 비율(최대 열림 = 100 %) · 이온 알갱이는 전류가 흐를 때만 · 호지킨–헉슬리 방정식으로 계산</text>`;
         return out;
     }
@@ -205,8 +205,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let d = '';
         const iMax = clamp(Math.round(t / SAMPLE), 0, a.run.t.length - 1);
         for (let i = 0; i <= iMax; i += 1) d += `${i ? 'L' : 'M'}${xOf(a.run.t[i]).toFixed(1)},${yOf(a.run.V[i]).toFixed(1)} `;
-        out += `<path class="trace" style="stroke:#54e6c1" d="${d}"/>`;
-        a.run.spikes.filter(sp => sp.t <= t).forEach((sp, i) => { out += `<text class="small-label" style="fill:#ffd166" x="${clamp(xOf(sp.t), X0 + 14, X1 - 14).toFixed(1)}" y="${(yOf(sp.peak) - 5).toFixed(1)}" text-anchor="middle">+${Math.round(sp.peak)}</text>`; void i; });
+        out += `<path class="trace" style="stroke:#059669" d="${d}"/>`;
+        a.run.spikes.filter(sp => sp.t <= t).forEach((sp, i) => { out += `<text class="small-label" style="fill:#d97706" x="${clamp(xOf(sp.t), X0 + 14, X1 - 14).toFixed(1)}" y="${(yOf(sp.peak) - 5).toFixed(1)}" text-anchor="middle">+${Math.round(sp.peak)}</text>`; void i; });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">시간 (ms) — 막전위 (mV, 세포 안이 밖보다 얼마나 높은가)</text>`;
         return out;
     }
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="20" y="174">${ax.label} — ${ax.hint} · 초속 ${ax.v} m</text>`;
         out += `<text class="trait-text" x="20" y="189">${ax.myelin ? '말이집(회색)이 감긴 곳은 건너뛰고 마디에서만 활동 전위가 생김 (실제로는 1 mm마다 마디)' : ax.v > 5 ? '굵은 축삭은 안쪽으로 전류가 잘 흘러 이웃 막을 빨리 문턱까지 밀어 올림' : '얇은 축삭은 전류가 조금씩만 흘러 한 칸 한 칸 느리게 옮겨 감'}</text>`;
         const VERD = { fast: '10 ms 안', mid: '수십 ms', slow: '1초 가까이' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${ax.label}: 1 m에 ${a.ms < 100 ? a.ms.toFixed(0) : fmtN(a.ms)} ms → ${VERD[a.verdict]}` : `${ax.label} 축삭 — 발끝에서 척수까지 1 m`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${ax.label}: 1 m에 ${a.ms < 100 ? a.ms.toFixed(0) : fmtN(a.ms)} ms → ${VERD[a.verdict]}` : `${ax.label} 축삭 — 발끝에서 척수까지 1 m`}</text>`;
         out += `<text class="note-text" x="20" y="208">화면은 실제보다 느리게 재생 · 초속 1·25·100 m는 실제 측정값</text>`;
         return out;
     }
@@ -243,9 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const step = (X1 - X0) / 3, W = 70;
         Object.entries(AXONS).forEach(([k, ax], i) => {
             const ms = DIST_M / ax.v * 1000, x = X0 + i * step + (step - W) / 2, mine = k === state.axon;
-            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${ax.myelin ? '#54e6c1' : '#ffb347'}" opacity="${mine ? 1 : 0.5}" x="${x.toFixed(1)}" y="${yOf(ms).toFixed(1)}" width="${W}" height="${(Y0 - yOf(ms)).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${(yOf(ms) - 4).toFixed(1)}" text-anchor="middle">${fmtN(ms)} ms</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${ax.label}</text>`;
+            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${ax.myelin ? '#059669' : '#ffb347'}" opacity="${mine ? 1 : 0.5}" x="${x.toFixed(1)}" y="${yOf(ms).toFixed(1)}" width="${W}" height="${(Y0 - yOf(ms)).toFixed(1)}" rx="2"/>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${(yOf(ms) - 4).toFixed(1)}" text-anchor="middle">${fmtN(ms)} ms</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${ax.label}</text>`;
             out += `<text class="small-label" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 26}" text-anchor="middle">초속 ${ax.v} m</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 42}" text-anchor="middle">다친 순간 날카로운 통증(빠른 신경) 뒤에 둔한 통증(느린 신경)이 오는 까닭</text>`;
@@ -280,12 +280,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // readouts
         const IX = 236;
         out += `<text class="trait-text" x="${IX}" y="70">틈의 전달 물질 ${Math.round(T * 100)} %</text>`;
-        out += `<text class="trait-text" style="fill:#54e6c1" x="${IX}" y="88">막전위 변화 +${P.toFixed(1)} mV</text>`;
+        out += `<text class="trait-text" style="fill:#059669" x="${IX}" y="88">막전위 변화 +${P.toFixed(1)} mV</text>`;
         out += `<text class="trait-text" x="${IX}" y="106">${t.toFixed(1)} ms</text>`;
         out += `<text class="trait-text" x="${IX}" y="130">수용체 ${d.receptor ? '열림 가능' : '막힘 — 전달 물질이 붙지 못함'}</text>`;
         out += `<text class="trait-text" x="${IX}" y="146">치우는 속도 ${d.kRe + d.kEnz ? `평소의 ${Math.round((d.kRe + d.kEnz) / 1.0 * 100)} %` : '0'}</text>`;
         const VERD = { normal: '평소처럼 짧게', none: '반응 없음', long: '오래 이어짐' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${d.label}: 최고 +${run.peak.toFixed(1)} mV, ${run.duration.toFixed(1)} ms 동안 → ${VERD[a.verdict]}` : `${d.label} (${d.hint})`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${d.label}: 최고 +${run.peak.toFixed(1)} mV, ${run.duration.toFixed(1)} ms 동안 → ${VERD[a.verdict]}` : `${d.label} (${d.hint})`}</text>`;
         out += `<text class="note-text" x="20" y="208">전달 물질은 앞 세포에서만 나오고 수용체는 뒤 세포에만 있어 신호는 한쪽으로만 갑니다</text>`;
         return out;
     }
@@ -300,11 +300,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let tt = 0; tt <= SYN_END; tt += 2) out += `<text class="axis-text" x="${xOf(tt).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${tt}</text>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         let dN = ''; normal.t.forEach((tt, i) => { dN += `${i ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yP(normal.P[i]).toFixed(1)} `; });
-        out += `<path class="trace faint" style="stroke:#54e6c1" d="${dN}"/>`;
+        out += `<path class="trace faint" style="stroke:#059669" d="${dN}"/>`;
         const iMax = clamp(Math.round(t / 0.05), 0, run.t.length - 1);
         let dT = '', dP = '';
         for (let i = 0; i <= iMax; i += 1) { dT += `${i ? 'L' : 'M'}${xOf(run.t[i]).toFixed(1)},${yT(run.T[i]).toFixed(1)} `; dP += `${i ? 'L' : 'M'}${xOf(run.t[i]).toFixed(1)},${yP(run.P[i]).toFixed(1)} `; }
-        out += `<path class="trace" style="stroke:#ffd166" d="${dT}"/><path class="trace" style="stroke:#54e6c1" d="${dP}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${dT}"/><path class="trace" style="stroke:#059669" d="${dP}"/>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">시간 (ms) — 전달 물질은 1 ms에 나와 치워지는 만큼 줄어듦</text>`;
         return out;
     }

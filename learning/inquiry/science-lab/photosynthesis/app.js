@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gx = v => GRAPH.x0 + (v / 100) * (GRAPH.x1 - GRAPH.x0);
     const gy = v => GRAPH.y0 - (v / V_MAX) * (GRAPH.y0 - GRAPH.y1);
     const LIMIT_NAME = { light: '빛의 세기', co2: '이산화탄소', temp: '온도', none: '없음 (최대)' };
-    const LIMIT_TONE = { light: '#ffd166', co2: '#7fd4f0', temp: '#ff9d6b', none: '#54e6c1' };
+    const LIMIT_TONE = { light: '#d97706', co2: '#0284c7', temp: '#ea580c', none: '#059669' };
 
     function renderMain() {
         const a = analyse();
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = '';
         // lamp on the left, its brightness tracking the light setting
         const lit = light() / 100;
-        out += `<circle class="lamp-glow" cx="72" cy="96" r="30" fill="#ffd166" opacity="${(0.06 + 0.34 * lit).toFixed(2)}"/>`;
+        out += `<circle class="lamp-glow" cx="72" cy="96" r="30" fill="#d97706" opacity="${(0.06 + 0.34 * lit).toFixed(2)}"/>`;
         out += `<circle class="lamp-glow" cx="72" cy="96" r="17" fill="#fff3c4" opacity="${(0.15 + 0.75 * lit).toFixed(2)}"/>`;
         out += `<rect class="lamp-body" x="58" y="118" width="28" height="34" rx="4"/>`;
         for (let i = 0; i < 5; i += 1) {
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Three CO₂ levels at the current temperature: they lie on top of one
         // another while light is scarce, then split where CO₂ takes over.
-        const tags = [[25, '#4a7fd6'], [50, '#7fd4f0'], [100, '#a8ecff']].map(([c, col]) => {
+        const tags = [[25, '#4a7fd6'], [50, '#0284c7'], [100, '#a8ecff']].map(([c, col]) => {
             const pts = [];
             for (let L = 0; L <= 100; L += 1) pts.push(`${gx(L).toFixed(1)},${gy(analyse(L, c, temp()).rate).toFixed(1)}`);
             const isCurrent = Math.abs(c - co2()) < 3;
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const flip = gx(knee) > (GRAPH.x0 + GRAPH.x1) / 2;
             out += `<text class="knee-text" x="${(gx(knee) + (flip ? -5 : 5)).toFixed(1)}" y="${GRAPH.y1 + 10}"${flip ? ' text-anchor="end"' : ''}>여기부터 빛이 남습니다</text>`;
         }
-        out += `<circle class="trace-dot" cx="${gx(light()).toFixed(1)}" cy="${gy(a.rate).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(light()).toFixed(1)}" cy="${gy(a.rate).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="ray" stroke="${a.star.hex}" d="M${SX + 11},${SY + 3} L${xNow.toFixed(1)},${(SY + halfNow).toFixed(1)}"/>`;
         // the reference cell at 10 pc
         out += `<rect class="screen-ref" x="${(xRef - half0).toFixed(1)}" y="${(SY - half0).toFixed(1)}" width="${CELL}" height="${CELL}"/>`;
-        out += `<text class="small-label" fill="#54e6c1" x="${xRef.toFixed(1)}" y="${SY - 12}" text-anchor="middle">10 pc</text>`;
+        out += `<text class="small-label" fill="#059669" x="${xRef.toFixed(1)}" y="${SY - 12}" text-anchor="middle">10 pc</text>`;
         out += `<text class="note-text" x="${xRef.toFixed(1)}" y="${SY + 26}" text-anchor="middle">한 칸에 빛 전부</text>`;
         // the screen now: the same light over n × n cells
         if (p > 0.001) {
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 out += `<line class="screen-grid" x1="${(xNow + off).toFixed(1)}" y1="${(SY - halfNow).toFixed(1)}" x2="${(xNow + off).toFixed(1)}" y2="${(SY + halfNow).toFixed(1)}"/>`;
                 out += `<line class="screen-grid" x1="${(xNow - halfNow).toFixed(1)}" y1="${(SY + off).toFixed(1)}" x2="${(xNow + halfNow).toFixed(1)}" y2="${(SY + off).toFixed(1)}"/>`;
             }
-            out += `<rect class="screen-grid" style="stroke:#cfe6ee" x="${(xNow - halfNow).toFixed(1)}" y="${(SY - halfNow).toFixed(1)}" width="${side.toFixed(1)}" height="${side.toFixed(1)}"/>`;
+            out += `<rect class="screen-grid" style="stroke:#0f172a" x="${(xNow - halfNow).toFixed(1)}" y="${(SY - halfNow).toFixed(1)}" width="${side.toFixed(1)}" height="${side.toFixed(1)}"/>`;
             if (xNow - xRef >= 40) out += `<text class="small-label" x="${xNow.toFixed(1)}" y="${(SY - halfNow - 6).toFixed(1)}" text-anchor="middle">${at.d.toFixed(0)} pc</text>`;
             // the caption waits until the screen has cleared the reference cell's caption
             if (xNow - xRef >= 64) out += `<text class="note-text" x="${xNow.toFixed(1)}" y="${(SY + halfNow + 14).toFixed(1)}" text-anchor="middle">${(at.n * at.n).toFixed(1)}칸에 나뉨</text>`;
@@ -172,8 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // readouts along the top of the frame
         out += `<text class="verdict-text" fill="${a.star.hex}" x="20" y="28">${a.star.name} · ${BASE_PC} pc → ${a.d} pc</text>`;
-        out += `<text class="mag-text" fill="#cfe6ee" x="20" y="204">밝기 ${at.n > 1.001 ? `${BASE_PC} pc일 때의 ${fmtFrac(1 / at.ratio)}` : '처음 그대로'}</text>`;
-        out += `<text class="mag-text" fill="#cfe6ee" x="250" y="204">겉보기 ${fmtMag(at.m)} · 절대 ${fmtMag(a.star.abs)}</text>`;
+        out += `<text class="mag-text" fill="#0f172a" x="20" y="204">밝기 ${at.n > 1.001 ? `${BASE_PC} pc일 때의 ${fmtFrac(1 / at.ratio)}` : '처음 그대로'}</text>`;
+        out += `<text class="mag-text" fill="#0f172a" x="250" y="204">겉보기 ${fmtMag(at.m)} · 절대 ${fmtMag(a.star.abs)}</text>`;
         return out;
     }
 
@@ -197,15 +197,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const from = homeX + dir * (r.d0 * UNIT0), to = x;
                 const ay = Y + 22 + (r.d0 % 2) * 12;
                 out += `<line class="recede" x1="${from.toFixed(1)}" y1="${ay}" x2="${to.toFixed(1)}" y2="${ay}"/>`;
-                out += `<path fill="#ff9d6b" d="M${to.toFixed(1)},${ay} l${-dir * 6},-3.5 l0,7 z"/>`;
+                out += `<path fill="#ea580c" d="M${to.toFixed(1)},${ay} l${-dir * 6},-3.5 l0,7 z"/>`;
                 out += `<text class="recede-text" x="${((from + to) / 2).toFixed(1)}" y="${ay - 4}" text-anchor="middle">${(r.d0 * (S - 1)).toFixed(1)}칸</text>`;
                             }
             out += `<circle class="galaxy${r.i === a.home ? ' home' : ''}" cx="${x.toFixed(1)}" cy="${Y}" r="${r.i === a.home ? 7 : 5.5}"/>`;
             out += `<text class="galaxy-text" x="${x.toFixed(1)}" y="${Y - 14}" text-anchor="middle">${r.name}${r.i === a.home ? ' (여기)' : ''}</text>`;
         });
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="28">고무줄 ${S.toFixed(2)}배 · ${GALAXIES[a.home]} 은하에서 본 모습</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="28">고무줄 ${S.toFixed(2)}배 · ${GALAXIES[a.home]} 은하에서 본 모습</text>`;
         out += `<text class="small-label" x="20" y="164">눈금 한 칸 = 처음 은하 사이 거리 · 화살표 = 나에게서 멀어진 거리</text>`;
-        out += `<text class="mag-text" fill="#cfe6ee" x="20" y="204">가장 먼 은하 ${Math.max(...a.rows.map(r => r.d0))}칸 → ${(Math.max(...a.rows.map(r => r.d0)) * S).toFixed(1)}칸 · 가장 가까운 은하 1칸 → ${S.toFixed(1)}칸</text>`;
+        out += `<text class="mag-text" fill="#0f172a" x="20" y="204">가장 먼 은하 ${Math.max(...a.rows.map(r => r.d0))}칸 → ${(Math.max(...a.rows.map(r => r.d0)) * S).toFixed(1)}칸 · 가장 가까운 은하 1칸 → ${S.toFixed(1)}칸</text>`;
         return out;
     }
 
@@ -244,8 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let d = BASE_PC; d <= dMax + 1e-9; d += 0.5) pts.push(`${gx(d).toFixed(1)},${gy(Math.min(1, (BASE_PC / d) ** 2)).toFixed(1)}`);
         out += `<path class="trace-done" d="M${pts.join('L')}"/>`;
         MULTIPLES.forEach(n => {
-            out += `<circle class="flash-dot" style="fill:#54e6c1" cx="${gx(n * BASE_PC).toFixed(1)}" cy="${gy(1 / (n * n)).toFixed(1)}" r="2.6"/>`;
-            out += `<text class="axis-text" style="fill:#54e6c1" x="${(gx(n * BASE_PC) + 4).toFixed(1)}" y="${(gy(1 / (n * n)) - 6).toFixed(1)}">1/${n * n}</text>`;
+            out += `<circle class="flash-dot" style="fill:#059669" cx="${gx(n * BASE_PC).toFixed(1)}" cy="${gy(1 / (n * n)).toFixed(1)}" r="2.6"/>`;
+            out += `<text class="axis-text" style="fill:#059669" x="${(gx(n * BASE_PC) + 4).toFixed(1)}" y="${(gy(1 / (n * n)) - 6).toFixed(1)}">1/${n * n}</text>`;
         });
         const live = [];
         for (let d = BASE_PC; d <= at.d + 1e-9; d += 0.5) live.push(`${gx(d).toFixed(1)},${gy((BASE_PC / d) ** 2).toFixed(1)}`);
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rows.forEach(r => { const g = byDist.get(r.d0) || []; g.push(r); byDist.set(r.d0, g); });
         [...byDist.values()].forEach(group => {
             const r = group[0], moved = r.d0 * (S - 1);
-            out += `<circle class="trace-dot" cx="${gx(r.d0).toFixed(1)}" cy="${gy(r.speed).toFixed(1)}" r="5" fill="#ff9d6b"/>`;
+            out += `<circle class="trace-dot" cx="${gx(r.d0).toFixed(1)}" cy="${gy(r.speed).toFixed(1)}" r="5" fill="#ea580c"/>`;
             // labels hang below their point; far points sit near the right edge, so theirs go on the left
             const left = r.d0 >= 3;
             // odd distances label above, even below, so neighbours never share a row

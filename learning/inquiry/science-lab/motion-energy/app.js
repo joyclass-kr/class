@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="part-label" x="300" y="84">속력</text><text class="read-text" x="300" y="102">${now.v.toFixed(2)} m/s</text>`;
         out += `<text class="part-label" x="380" y="40">가속도</text><text class="read-text" x="380" y="58">${(now.onRamp ? a.a : 0).toFixed(2)} m/s²</text>`;
         out += `<text class="note-text" x="380" y="102">${now.onRamp ? '속력 늘어남' : '속력 그대로'}</text>`;
-        out += `<text class="verdict-text" fill="#52c7ff" x="20" y="28">${state.angle}° 빗면 · ${state.flash}초마다 찍음 → ${now.onRamp ? '등가속도 운동' : '등속 운동'}</text>`;
+        out += `<text class="verdict-text" fill="#0284c7" x="20" y="28">${state.angle}° 빗면 · ${state.flash}초마다 찍음 → ${now.onRamp ? '등가속도 운동' : '등속 운동'}</text>`;
         return out;
     }
 
@@ -241,8 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const h = val * scale;
             return `<rect class="ebar-frame" x="${x}" y="${BY}" width="${BW}" height="${BH}" rx="3"/>` +
                 `<rect class="${cls}" x="${x + 2}" y="${(BY + BH - h).toFixed(1)}" width="${BW - 4}" height="${h.toFixed(1)}" rx="2"/>` +
-                `<text class="ebar-text" fill="#cfe6ee" x="${x + BW / 2}" y="${BY + BH + 14}" text-anchor="middle">${name}</text>` +
-                `<text class="ebar-text" fill="#cfe6ee" x="${x + BW / 2}" y="${BY - 6}" text-anchor="middle">${val.toFixed(1)}</text>`;
+                `<text class="ebar-text" fill="#0f172a" x="${x + BW / 2}" y="${BY + BH + 14}" text-anchor="middle">${name}</text>` +
+                `<text class="ebar-text" fill="#0f172a" x="${x + BW / 2}" y="${BY - 6}" text-anchor="middle">${val.toFixed(1)}</text>`;
         };
         out += bar(BX, q.pe, 'ebar-pe', '위치');
         out += bar(BX + 40, q.ke, 'ebar-ke', '운동');
@@ -250,12 +250,12 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="ebar-frame" x="${BX + 80}" y="${BY}" width="${BW}" height="${BH}" rx="3"/>`;
         out += `<rect class="ebar-pe" x="${BX + 82}" y="${(BY + BH - q.pe * scale).toFixed(1)}" width="${BW - 4}" height="${(q.pe * scale).toFixed(1)}"/>`;
         out += `<rect class="ebar-ke" x="${BX + 82}" y="${BY}" width="${BW - 4}" height="${(q.ke * scale).toFixed(1)}"/>`;
-        out += `<text class="ebar-text" fill="#54e6c1" x="${BX + 80 + BW / 2}" y="${BY + BH + 14}" text-anchor="middle">합</text>`;
-        out += `<text class="ebar-text" fill="#54e6c1" x="${BX + 80 + BW / 2}" y="${BY - 6}" text-anchor="middle">${a.eTotal.toFixed(1)}</text>`;
+        out += `<text class="ebar-text" fill="#059669" x="${BX + 80 + BW / 2}" y="${BY + BH + 14}" text-anchor="middle">합</text>`;
+        out += `<text class="ebar-text" fill="#059669" x="${BX + 80 + BW / 2}" y="${BY - 6}" text-anchor="middle">${a.eTotal.toFixed(1)}</text>`;
         out += `<text class="small-label" x="${BX + 52}" y="${BY + BH + 28}" text-anchor="middle">에너지 (J)</text>`;
 
         const VERD = { pass: '언덕을 넘어간다', stop: '꼭대기에서 멈춘다', back: '되돌아온다' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="28">${a.h0.toFixed(1)} m에서 놓은 ${a.m} kg 공 → ${VERD[a.verdict]}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="28">${a.h0.toFixed(1)} m에서 놓은 ${a.m} kg 공 → ${VERD[a.verdict]}</text>`;
         out += `<text class="part-label" x="20" y="208">시간 ${q.t.toFixed(2)} 초 · 높이 ${q.y.toFixed(2)} m · 속력 ${q.v.toFixed(2)} m/s</text>`;
         return out;
     }
@@ -327,13 +327,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ke.push(`${gx(pt.t).toFixed(1)},${gy(a.eTotal - e).toFixed(1)}`);
         });
         out += `<line class="expect-line" x1="${GRAPH.x0}" y1="${gy(a.eTotal).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(a.eTotal).toFixed(1)}"/>`;
-        out += `<text class="axis-text" style="fill:#54e6c1" x="${GRAPH.x1 - 4}" y="${(gy(a.eTotal) - 5).toFixed(1)}" text-anchor="end">합 ${a.eTotal.toFixed(1)} J — 언제나 같음</text>`;
+        out += `<text class="axis-text" style="fill:#059669" x="${GRAPH.x1 - 4}" y="${(gy(a.eTotal) - 5).toFixed(1)}" text-anchor="end">합 ${a.eTotal.toFixed(1)} J — 언제나 같음</text>`;
         if (pe.length > 1) {
-            out += `<path class="trace" style="stroke:#52c7ff" d="M${pe.join('L')}"/>`;
-            out += `<path class="trace" style="stroke:#ff9d6b" d="M${ke.join('L')}"/>`;
+            out += `<path class="trace" style="stroke:#0284c7" d="M${pe.join('L')}"/>`;
+            out += `<path class="trace" style="stroke:#ea580c" d="M${ke.join('L')}"/>`;
         }
-        out += `<text class="bar-text" fill="#52c7ff" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 12}">위치 에너지</text>`;
-        out += `<text class="bar-text" fill="#ff9d6b" x="${GRAPH.x0 + 78}" y="${GRAPH.y1 + 12}">운동 에너지</text>`;
+        out += `<text class="bar-text" fill="#0284c7" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 12}">위치 에너지</text>`;
+        out += `<text class="bar-text" fill="#ea580c" x="${GRAPH.x0 + 78}" y="${GRAPH.y1 + 12}">운동 에너지</text>`;
         return out;
     }
 

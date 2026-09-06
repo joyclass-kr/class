@@ -27,7 +27,7 @@ const SYSTEMS = {
         ],
     },
     resp: {
-        name: '호흡 기관', mover: '공기', colour: '#7fd4f0', unit: 'L/분',
+        name: '호흡 기관', mover: '공기', colour: '#0284c7', unit: 'L/분',
         label: '1분에 들이마시는 공기',
         organs: [
             { n: '코', x: 150, y: 32, w: 20, h: 14, note: '먼지를 거르고 공기를 데웁니다', stay: '한순간' },
@@ -196,9 +196,9 @@ function drawGraph(g) {
             x: cx - bw / 2, y: Y(v), width: bw, height: yBot - Y(v), rx: 3, class: 'bar',
             style: `fill:${a.sys.colour}${on ? '' : '66'}`,
         }));
-        g.appendChild(el('text', { x: cx, y: Y(v) - 6, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${on ? '#54e6c1' : '#9cb6b4'}` },
+        g.appendChild(el('text', { x: cx, y: Y(v) - 6, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${on ? '#059669' : '#475569'}` },
             `${fmt(v, v < 10 ? 1 : 0)} ${a.sys.unit}`));
-        g.appendChild(el('text', { x: cx, y: yBot + 15, 'text-anchor': 'middle', class: 'axis-text', style: on ? 'fill:#54e6c1' : '' }, ACTS[k].name));
+        g.appendChild(el('text', { x: cx, y: yBot + 15, 'text-anchor': 'middle', class: 'axis-text', style: on ? 'fill:#059669' : '' }, ACTS[k].name));
         g.appendChild(el('text', { x: cx, y: yBot + 28, 'text-anchor': 'middle', class: 'tiny-label' }, `쉴 때의 ${fmt(ratio(state.sys, k), 1)}배`));
     });
 

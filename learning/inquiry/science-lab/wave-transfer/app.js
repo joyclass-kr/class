@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="ref-text" x="${GRAPH.x1 - 4}" y="${(gy(REF_LAMBDA) - 5).toFixed(1)}" text-anchor="end">기준 ${REF_LAMBDA} cm</text>`;
 
         // λ = v / f for three different media: faster medium, longer wave
-        [[10, '#4a7fd6'], [20, '#7fd4f0'], [30, '#a8ecff']].forEach(([v, col]) => {
+        [[10, '#4a7fd6'], [20, '#0284c7'], [30, '#a8ecff']].forEach(([v, col]) => {
             const pts = [];
             for (let f = 0.5; f <= 2.501; f += 0.02) pts.push(`${gx(f).toFixed(1)},${gy(v / f).toFixed(1)}`);
             const isCurrent = v === speed();
@@ -191,9 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (![10, 20, 30].includes(speed())) {
             const pts = [];
             for (let f = 0.5; f <= 2.501; f += 0.02) pts.push(`${gx(f).toFixed(1)},${gy(speed() / f).toFixed(1)}`);
-            out += `<path class="trace" style="stroke:#ffd166" d="M${pts.join('L')}"/>`;
+            out += `<path class="trace" style="stroke:#d97706" d="M${pts.join('L')}"/>`;
         }
-        out += `<circle class="trace-dot" cx="${gx(a.f).toFixed(1)}" cy="${gy(a.lambda).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.f).toFixed(1)}" cy="${gy(a.lambda).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalPts = history.map(h => `${tx(h.d, span).toFixed(1)},${tyTop(h.sea + h.vapor + h.cloud + h.land).toFixed(1)}`);
         out.push(`<path class="trend-total" d="M${totalPts.join('L')}"/>`);
         endTags(out, [
-            { name: '전체', color: '#54e6c1', y: tyTop(total()) },
+            { name: '전체', color: '#059669', y: tyTop(total()) },
             { name: byKey.sea.name, color: byKey.sea.color, y: tyTop(R.sea) },
         ], TOP);
 

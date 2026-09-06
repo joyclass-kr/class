@@ -174,11 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="${RX}" y="190">노랑 늙은 별 · 파랑 젊은 별 · 분홍 별 탄생 구름</text>`;
         out += `<text class="trait-text" x="${RX}" y="52">나선팔: ${ARMS[a.arms].label}</text><text class="trait-text" x="${RX}" y="70">팽대부: ${BULGES[a.bulge].label}</text><text class="trait-text" x="${RX}" y="88">막대: ${a.arms === 'none' ? '(팔이 없으면 따지지 않음)' : BARS[a.bar].label}</text>`;
         const NAMES = { e: '타원 은하', s: '정상 나선 은하', sb: '막대 나선 은하', irr: '불규칙 은하' };
-        out += `<text class="gen-text" style="fill:#ffd166" x="${RX}" y="114">${p >= 1 ? `${a.code} — ${NAMES[a.cls]}` : '분류 기호: ?'}</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${RX}" y="114">${p >= 1 ? `${a.code} — ${NAMES[a.cls]}` : '분류 기호: ?'}</text>`;
         out += `<text class="small-label" x="${RX}" y="132">${p >= 1 ? a.sub : '만들어 보면 소리굽쇠의 자리가 나옵니다'}</text>`;
         out += `<text class="small-label" x="${RX}" y="156">${a.cls === 'e' ? '붉고 늙은 별 위주 · 가스 거의 없음' : a.cls === 'irr' ? '가스 많음 · 젊은 별이 여기저기 태어남' : '팽대부는 늙은 별 · 팔에서 젊은 별 탄생'}</text>`;
         out += `<text class="small-label" x="${RX}" y="172">${a.cls === 'e' ? '새 별이 거의 안 태어남' : a.cls === 'irr' ? '작은 은하가 많고 모양이 흐트러짐' : '원반이 돌며 팔이 감김'}</text>`;
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${NAMES[a.cls]} (${a.code})` : '고른 특징으로 은하를 그리는 중'}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${NAMES[a.cls]} (${a.code})` : '고른 특징으로 은하를 그리는 중'}</text>`;
         out += `<text class="note-text" x="20" y="208">소리굽쇠 표는 생김새의 정리이지 진화 순서가 아닙니다. 팔 사이 각(피치각)은 실제 은하의 값 범위</text>`;
         return out;
     }
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<rect class="strip-frame" x="${SX0}" y="${y - 12}" width="${SX1 - SX0}" height="24"/>`;
         });
         out += `<text class="small-label" x="${SX0}" y="${YL - 17}">위: 실험실에서 잰 파장 (${o.kind === 'quasar' ? '방출선' : '흡수선'}) · 아래: ${o.name}에서 온 빛</text>`;
-        out += `<text class="small-label" x="${xOf(340).toFixed(1)}" y="${YL + 4}" text-anchor="middle" style="fill:#9cb6b4">자외선</text><text class="small-label" x="${xOf(880).toFixed(1)}" y="${YL + 4}" text-anchor="middle" style="fill:#9cb6b4">적외선</text>`;
+        out += `<text class="small-label" x="${xOf(340).toFixed(1)}" y="${YL + 4}" text-anchor="middle" style="fill:#475569">자외선</text><text class="small-label" x="${xOf(880).toFixed(1)}" y="${YL + 4}" text-anchor="middle" style="fill:#475569">적외선</text>`;
         [400, 500, 600, 700, 800, 900].forEach(nm => { out += `<text class="axis-text" x="${xOf(nm).toFixed(1)}" y="${(YL + YO) / 2 + 3.5}" text-anchor="middle">${nm}</text>`; });
         out += `<text class="axis-text" x="${SX1}" y="${(YL + YO) / 2 + 3.5}" text-anchor="end">nm</text>`;
         a.lines.forEach(([name, lam, tracked]) => {
@@ -222,14 +222,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (lamObs <= L1) out += `<line class="${tracked ? 'line-track' : 'line-obs'}" x1="${x1.toFixed(1)}" y1="${YO - 12}" x2="${x1.toFixed(1)}" y2="${YO + 12}"/>`;
             if (tracked) {
                 if (x1 - x0 > 14) out += arrow(x0, (YL + YO) / 2 + 14, x1, (YL + YO) / 2 + 14, 'shift-arrow', 'shift-head', 3);
-                out += `<text class="small-label" style="fill:#ffd166" x="${Math.min(x1, SX1 - 4).toFixed(1)}" y="${YO + 25}" text-anchor="end">${name} ${fmtN(lamObs, 1)}</text>`;
+                out += `<text class="small-label" style="fill:#d97706" x="${Math.min(x1, SX1 - 4).toFixed(1)}" y="${YO + 25}" text-anchor="end">${name} ${fmtN(lamObs, 1)}</text>`;
             }
         });
         const [tn, tl] = a.track, lamObs = tl * (1 + zNow), dl = lamObs - tl, zN = dl / tl, qq = (1 + zN) ** 2, vR = C * (qq - 1) / (qq + 1);
         out += `<text class="trait-text" x="${SX0}" y="176">${tn} ${tl} nm → ${fmtN(lamObs, 1)} nm, Δλ = ${fmtN(dl, 1)} nm → z = ${fmtN(dl, 1)} ÷ ${tl} = ${fmtN(zN, zN < 0.01 ? 4 : 3)}</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${SX0}" y="192">v = cz ≈ ${fmtN(C * zN)} km/s${zN > 0.05 ? ` → 상대론 식으로 ${fmtN(vR)} km/s` : ''} (광속의 ${fmtN(vR / C * 100, vR / C < 0.01 ? 2 : 1)} %)</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${SX0}" y="192">v = cz ≈ ${fmtN(C * zN)} km/s${zN > 0.05 ? ` → 상대론 식으로 ${fmtN(vR)} km/s` : ''} (광속의 ${fmtN(vR / C * 100, vR / C < 0.01 ? 2 : 1)} %)</text>`;
         const VERD = { slow: '수천 km/s', mid: '수만 km/s', fast: '광속의 30 % 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${o.name}: z = ${z}, ${fmtN(a.vRel)} km/s — ${VERD[a.verdict]}` : `${o.name} · 스펙트럼 선이 밀리는 중`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${o.name}: z = ${z}, ${fmtN(a.vRel)} km/s — ${VERD[a.verdict]}` : `${o.name} · 스펙트럼 선이 밀리는 중`}</text>`;
         out += `<text class="note-text" x="20" y="208">z = Δλ ÷ λ₀ · z가 작으면 v ≈ cz, 크면 v/c = [(1+z)²−1] ÷ [(1+z)²+1] · 가시광선 380~750 nm</text>`;
         return out;
     }
@@ -242,11 +242,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         let dN = '', dR = '';
         for (let z = 0; z <= ZM + 1e-9; z += 0.02) { const q = (1 + z) ** 2; if (z <= 1.05) dN += `${dN ? 'L' : 'M'}${xOf(z).toFixed(1)},${yOf(z).toFixed(1)} `; dR += `${dR ? 'L' : 'M'}${xOf(z).toFixed(1)},${yOf((q - 1) / (q + 1)).toFixed(1)} `; }
-        out += `<path class="trace faint" style="stroke:#97dad3" d="${dN}"/><path class="trace" style="stroke:#ffd166" d="${dR}"/>`;
-        Object.values(OBJECTS).forEach(o => { const q = (1 + o.z) ** 2, f = (q - 1) / (q + 1); out += `<circle fill="${o === a.o ? '#ffd166' : 'rgba(214,245,250,.5)'}" stroke="${o === a.o ? '#fff' : 'none'}" cx="${xOf(o.z).toFixed(1)}" cy="${yOf(f).toFixed(1)}" r="${o === a.o ? 4.5 : 3}"/>`; });
+        out += `<path class="trace faint" style="stroke:#97dad3" d="${dN}"/><path class="trace" style="stroke:#d97706" d="${dR}"/>`;
+        Object.values(OBJECTS).forEach(o => { const q = (1 + o.z) ** 2, f = (q - 1) / (q + 1); out += `<circle fill="${o === a.o ? '#d97706' : 'rgba(148, 163, 184, 0.40)'}" stroke="${o === a.o ? '#fff' : 'none'}" cx="${xOf(o.z).toFixed(1)}" cy="${yOf(f).toFixed(1)}" r="${o === a.o ? 4.5 : 3}"/>`; });
         const zNow = a.z * ease(state.progress), q = (1 + zNow) ** 2, fNow = (q - 1) / (q + 1);
         out += `<line class="marker" x1="${xOf(zNow).toFixed(1)}" y1="${Y1}" x2="${xOf(zNow).toFixed(1)}" y2="${Y0}"/>`;
-        out += `<text class="small-label" style="fill:#ffd166" x="${(xOf(zNow) + (zNow > 0.9 ? -6 : 6)).toFixed(1)}" y="${(yOf(fNow) - 8).toFixed(1)}" text-anchor="${zNow > 0.9 ? 'end' : 'start'}">${a.o.label} z = ${fmtN(zNow, zNow < 0.01 ? 4 : 3)}</text>`;
+        out += `<text class="small-label" style="fill:#d97706" x="${(xOf(zNow) + (zNow > 0.9 ? -6 : 6)).toFixed(1)}" y="${(yOf(fNow) - 8).toFixed(1)}" text-anchor="${zNow > 0.9 ? 'end' : 'start'}">${a.o.label} z = ${fmtN(zNow, zNow < 0.01 ? 4 : 3)}</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">적색 이동 z — z가 0.1을 넘으면 두 식이 갈라지고, 상대론 식은 광속을 넘지 않습니다</text>`;
         return out;
     }
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cur = a.fit(a.pts.slice(0, shown));
         out += `<text class="trait-text" x="20" y="186">${shown >= 2 ? `지금까지 ${shown}개로 맞춘 기울기 H₀ = ${fmtN(cur)} km/s/Mpc → 1/H₀ = ${fmtN(AGE_K / cur * 10, 0)}억 년` : '은하를 하나씩 재는 중…'}</text>`;
         const VERD = { ok: '오늘날 값 근처', low: '60보다 작음', high: '80보다 큼' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `H₀ = ${fmtN(a.H)} km/s/Mpc (${VERD[a.verdict]}) → 우주 나이 어림 ${fmtN(a.age * 10, 0)}억 년` : `${a.sm.label} · ${SCALES[state.scale].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `H₀ = ${fmtN(a.H)} km/s/Mpc (${VERD[a.verdict]}) → 우주 나이 어림 ${fmtN(a.age * 10, 0)}억 년` : `${a.sm.label} · ${SCALES[state.scale].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">1 Mpc = 326만 광년 · 속도는 실제 관측값 · 나이 어림 1/H₀ = 9,778억 년 ÷ H₀ (팽창 빠르기가 늘 같았다면)</text>`;
         return out;
     }

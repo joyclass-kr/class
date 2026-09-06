@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Real solubility, grams per 100 g of water.
     const SALTS = {
-        kno3: { name: '질산 칼륨', formula: 'KNO₃', colour: '#7fd4f0',
+        kno3: { name: '질산 칼륨', formula: 'KNO₃', colour: '#0284c7',
                 table: [[0, 13.3], [10, 20.9], [20, 31.6], [30, 45.8], [40, 63.9], [50, 85.5],
                         [60, 110], [70, 138], [80, 169], [90, 202], [100, 246]] },
-        nacl: { name: '염화 나트륨', formula: 'NaCl', colour: '#ffd166',
+        nacl: { name: '염화 나트륨', formula: 'NaCl', colour: '#d97706',
                 table: [[0, 35.7], [10, 35.8], [20, 36.0], [30, 36.3], [40, 36.6], [50, 37.0],
                         [60, 37.3], [70, 37.8], [80, 38.4], [90, 39.0], [100, 39.8]] },
     };
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="note-text" x="248" y="98">${a.T2} ℃ 에서는 ${a.canHold.toFixed(1)} g 만 녹을 수 있음</text>`;
         out += `<text class="note-text" x="248" y="116">지금까지 나온 결정 ${st.crystals.toFixed(1)} g</text>`;
         out += `<text class="note-text" x="248" y="134">불순물 ${a.imp} g 중 녹아 남는 양 ${Math.min(a.imp, a.impCanHold).toFixed(1)} g</text>`;
-        const tone = a.verdict === 'pure' ? '#54e6c1' : a.verdict === 'slight' ? '#ffd166' : '#ff9d6b';
+        const tone = a.verdict === 'pure' ? '#059669' : a.verdict === 'slight' ? '#d97706' : '#ea580c';
         out += `<text class="purity-text" fill="${tone}" x="248" y="160">${VERDICT[a.verdict]}</text>`;
         out += `<text class="note-text" x="20" y="206">석출량 = (${a.s1.toFixed(1)} − ${a.s2.toFixed(1)}) × ${a.w} ÷ 100 = ${a.crystals.toFixed(1)} g</text>`;
         mainGroup.innerHTML = out;
@@ -192,8 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="drop-line" x1="${gx(a.T2).toFixed(1)}" y1="${gy(a.s2).toFixed(1)}" x2="${gx(a.T1).toFixed(1)}" y2="${gy(a.s1).toFixed(1)}"/>`;
         out += `<line class="drop-line" x1="${gx(a.T2).toFixed(1)}" y1="${gy(a.s1).toFixed(1)}" x2="${gx(a.T1).toFixed(1)}" y2="${gy(a.s1).toFixed(1)}"/>`;
         out += `<line class="drop-line" x1="${gx(a.T2).toFixed(1)}" y1="${gy(a.s1).toFixed(1)}" x2="${gx(a.T2).toFixed(1)}" y2="${gy(a.s2).toFixed(1)}"/>`;
-        out += `<circle class="mark-dot" cx="${gx(a.T1).toFixed(1)}" cy="${gy(a.s1).toFixed(1)}" r="4.5" fill="#54e6c1"/>`;
-        out += `<circle class="mark-dot" cx="${gx(a.T2).toFixed(1)}" cy="${gy(a.s2).toFixed(1)}" r="4.5" fill="#54e6c1"/>`;
+        out += `<circle class="mark-dot" cx="${gx(a.T1).toFixed(1)}" cy="${gy(a.s1).toFixed(1)}" r="4.5" fill="#059669"/>`;
+        out += `<circle class="mark-dot" cx="${gx(a.T2).toFixed(1)}" cy="${gy(a.s2).toFixed(1)}" r="4.5" fill="#059669"/>`;
         const midY = (gy(a.s1) + gy(a.s2)) / 2;
         const flip = gx(a.T2) < 130;
         out += `<text class="drop-text" x="${(gx(a.T2) + (flip ? 8 : -8)).toFixed(1)}" y="${midY.toFixed(1)}"${flip ? '' : ' text-anchor="end"'}>` +

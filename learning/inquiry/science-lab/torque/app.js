@@ -174,11 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const arms = run.parts.filter(o => Math.abs(o.arm) > 0.01);
         arms.forEach((o, i) => { const x = clamp(px + o.arm * S, 40, 420); out += `<line class="ref-line" x1="${px}" y1="${groundY + 14 + i * 12}" x2="${x.toFixed(1)}" y2="${groundY + 14 + i * 12}"/><text class="small-label" x="${((px + x) / 2).toFixed(1)}" y="${groundY + 11 + i * 12}" text-anchor="middle">${o.name} ${Math.abs(o.arm).toFixed(1)} m</text>`; });
         const left = run.parts.filter(o => o.tau < -1e-6).reduce((s, o) => s - o.tau, 0), right = run.parts.filter(o => o.tau > 1e-6).reduce((s, o) => s + o.tau, 0);
-        out += `<text class="trait-text" style="fill:#52c7ff" x="20" y="30">왼쪽으로 돌리는 돌림힘 ${fmt(left)} N·m</text>`;
-        out += `<text class="trait-text" style="fill:#ff9f8a" x="440" y="30" text-anchor="end">오른쪽으로 돌리는 돌림힘 ${fmt(right)} N·m</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="20" y="30">왼쪽으로 돌리는 돌림힘 ${fmt(left)} N·m</text>`;
+        out += `<text class="trait-text" style="fill:#dc2626" x="440" y="30" text-anchor="end">오른쪽으로 돌리는 돌림힘 ${fmt(right)} N·m</text>`;
         out += `<text class="small-label" x="440" y="${groundY + 11}" text-anchor="end">기울기 ${Math.abs(deg).toFixed(1)}°${Math.abs(phi) >= Math.min(run.maxLeft, run.maxRight) - 1e-6 ? ' — 끝이 땅에 닿음' : ''}</text>`;
         const VERD = { left: '왼쪽이 내려감', balance: '평형 — 수평 유지', right: '오른쪽이 내려감' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${MASSES[state.mass].label} · 왼쪽 ${DISTS[state.dist].label} · 받침점 ${PIVOTS[state.pivot].label}: ${VERD[run.verdict]} (${fmt(left)} 대 ${fmt(right)} N·m)` : `${MASSES[state.mass].label} · 왼쪽 ${DISTS[state.dist].label} · 받침점 ${PIVOTS[state.pivot].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${MASSES[state.mass].label} · 왼쪽 ${DISTS[state.dist].label} · 받침점 ${PIVOTS[state.pivot].label}: ${VERD[run.verdict]} (${fmt(left)} 대 ${fmt(right)} N·m)` : `${MASSES[state.mass].label} · 왼쪽 ${DISTS[state.dist].label} · 받침점 ${PIVOTS[state.pivot].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">돌림힘 = 무게 × 받침점까지의 거리. 붉은 상자 20 kg은 오른쪽 1 m 고정, 노란 점은 판(8 kg)의 무게중심</text>`;
         return out;
     }
@@ -218,10 +218,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const inside = footLocal <= cornerX + 0.01;
         const [fx, fy] = rot(footLocal, HY, HX, HY, theta);
         if (psi < 1) {
-            out += `<line class="cm-line" style="stroke:${inside ? '#54e6c1' : '#ff7a59'}" x1="${cmx.toFixed(1)}" y1="${cmy.toFixed(1)}" x2="${cmx.toFixed(1)}" y2="${(cmy + Math.max(0, fy - cmy)).toFixed(1)}"/>`;
+            out += `<line class="cm-line" style="stroke:${inside ? '#059669' : '#ff7a59'}" x1="${cmx.toFixed(1)}" y1="${cmy.toFixed(1)}" x2="${cmx.toFixed(1)}" y2="${(cmy + Math.max(0, fy - cmy)).toFixed(1)}"/>`;
             out += `<circle class="cm-dot" cx="${cmx.toFixed(1)}" cy="${cmy.toFixed(1)}" r="3.2"/>`;
             const [c1x, c1y] = rot(cornerX, HY, HX, HY, theta);
-            out += `<circle fill="${inside ? '#54e6c1' : '#ff7a59'}" cx="${c1x.toFixed(1)}" cy="${c1y.toFixed(1)}" r="2.6"/>`;
+            out += `<circle fill="${inside ? '#059669' : '#ff7a59'}" cx="${c1x.toFixed(1)}" cy="${c1y.toFixed(1)}" r="2.6"/>`;
         }
         // forces: weight down from the CM, normal and friction at the foot
         out += arrow(cmx, cmy, cmx, cmy + 36, 'force-w', 'arrow-w');
@@ -233,15 +233,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fLen > 2) { const [gx, gy] = rot(fx - fLen, fy, fx, fy, theta); out += arrow(fx, fy, gx, gy, 'force-f', 'arrow-f'); }
         }
         // angle arc at the hinge
-        if (theta > 1) out += `<path class="angle-arc" d="M${HX - 44},${HY} A44,44 0 0 0 ${(HX - 44 * Math.cos(theta * RAD)).toFixed(1)},${(HY - 44 * Math.sin(theta * RAD)).toFixed(1)}"/><text class="small-label" style="fill:#ffd166" x="${HX - 62}" y="${HY - 8}" text-anchor="end">${theta.toFixed(0)}°</text>`;
+        if (theta > 1) out += `<path class="angle-arc" d="M${HX - 44},${HY} A44,44 0 0 0 ${(HX - 44 * Math.cos(theta * RAD)).toFixed(1)},${(HY - 44 * Math.sin(theta * RAD)).toFixed(1)}"/><text class="small-label" style="fill:#d97706" x="${HX - 62}" y="${HY - 8}" text-anchor="end">${theta.toFixed(0)}°</text>`;
         // readouts
         out += `<text class="trait-text" x="20" y="40">기울기 ${theta.toFixed(0)}° · tan = ${Math.tan(theta * RAD).toFixed(2)}</text>`;
-        out += `<text class="trait-text" style="fill:#b29bff" x="20" y="56">미끄러지는 문턱 tan = 마찰 계수 ${mu} → ${a.slideAt.toFixed(0)}°</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="20" y="72">넘어지는 문턱 tan = 폭÷높이 ${a.ratio.toFixed(2)} → ${a.tipAt.toFixed(0)}°</text>`;
+        out += `<text class="trait-text" style="fill:#7c3aed" x="20" y="56">미끄러지는 문턱 tan = 마찰 계수 ${mu} → ${a.slideAt.toFixed(0)}°</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="20" y="72">넘어지는 문턱 tan = 폭÷높이 ${a.ratio.toFixed(2)} → ${a.tipAt.toFixed(0)}°</text>`;
         out += `<text class="small-label" x="20" y="88">먼저 오는 문턱: ${a.slideAt < a.tipAt ? `미끄러짐 (${a.slideAt.toFixed(0)}°)` : `넘어짐 (${a.tipAt.toFixed(0)}°)`}</text>`;
         out += `<text class="small-label" x="20" y="104">${inside ? '무게중심 수직선이 바닥면 안 — 되돌리는 쪽' : '무게중심 수직선이 모서리 밖 — 넘기는 쪽'}</text>`;
         const VERD = { stay: '그대로 버팀', slide: '미끄러져 내려감', tip: '넘어짐' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${SHAPES[state.shape].label} · ${FLOORS[state.floor].label} · ${deg}°: ${VERD[verdict]}` : `${SHAPES[state.shape].label} · ${FLOORS[state.floor].label} · ${deg}°`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${SHAPES[state.shape].label} · ${FLOORS[state.floor].label} · ${deg}°: ${VERD[verdict]}` : `${SHAPES[state.shape].label} · ${FLOORS[state.floor].label} · ${deg}°`}</text>`;
         out += `<text class="note-text" x="20" y="208">초록 화살표 수직 항력, 보라 마찰력, 붉은 무게. 노란 점이 무게중심, 점선이 그 수직선입니다</text>`;
         return out;
     }
@@ -256,10 +256,10 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="${((X0 + xOf(first)) / 2).toFixed(1)}" y="${Y1 + 14}" text-anchor="middle">버팀</text><text class="small-label" x="${((xOf(first) + X1) / 2).toFixed(1)}" y="${Y1 + 14}" text-anchor="middle">${which}</text>`;
         for (let d = 0; d <= 70; d += 10) out += `<line class="grid-line" x1="${xOf(d).toFixed(1)}" y1="${Y1}" x2="${xOf(d).toFixed(1)}" y2="${Y0}"/><text class="axis-text" x="${xOf(d).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${d}°</text>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/>`;
-        const marks = [[a.slideAt, `미끄러짐 문턱 ${a.slideAt.toFixed(0)}°`, '#b29bff', 78], [a.tipAt, `넘어짐 문턱 ${a.tipAt.toFixed(0)}°`, '#ffd166', 96]];
+        const marks = [[a.slideAt, `미끄러짐 문턱 ${a.slideAt.toFixed(0)}°`, '#7c3aed', 78], [a.tipAt, `넘어짐 문턱 ${a.tipAt.toFixed(0)}°`, '#d97706', 96]];
         marks.forEach(([d, lab, col, y]) => { const x = xOf(Math.min(d, 70)); out += `<line class="ref-line" style="stroke:${col}" x1="${x.toFixed(1)}" y1="${Y1}" x2="${x.toFixed(1)}" y2="${Y0}"/><text class="trait-text" style="fill:${col}" x="${(x + (x > 300 ? -5 : 5)).toFixed(1)}" y="${y}" text-anchor="${x > 300 ? 'end' : 'start'}">${lab}</text>`; });
         const xc = xOf(a.deg);
-        out += `<polygon fill="#cfe6ee" points="${xc.toFixed(1)},${Y0 - 1} ${(xc - 5).toFixed(1)},${Y0 + 9} ${(xc + 5).toFixed(1)},${Y0 + 9}"/>`;
+        out += `<polygon fill="#0f172a" points="${xc.toFixed(1)},${Y0 - 1} ${(xc - 5).toFixed(1)},${Y0 + 9} ${(xc + 5).toFixed(1)},${Y0 + 9}"/>`;
         out += `<text class="trait-text" x="${xc.toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">지금 기울기 ${a.deg}°</text>`;
         out += `<text class="small-label" x="20" y="${Y0 + 52}">마찰 계수가 폭÷높이보다 작으면 미끄러짐이 먼저, 크면 넘어짐이 먼저 옵니다.</text>`;
         return out;
@@ -288,14 +288,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const n1 = Math.max(0, N1) * 0.25 * grow, n2 = N2 * 0.25 * grow;
             if (n1 > 1) out += arrow(x1, Y + 4, x1, Y + 4 - n1 - 4, 'force-n', 'arrow-n');
             out += arrow(x2, Y + 4, x2, Y + 4 - n2 - 4, 'force-n', 'arrow-n');
-            out += `<text class="trait-text" style="fill:${N1 <= 0 ? '#ff7a59' : '#54e6c1'}" x="${x1}" y="${GY + 16}" text-anchor="middle">왼쪽 받침 ${N1 <= 0 ? `${fmt(N1)} N → 0 아래, 뜸` : `${fmt(N1 * grow)} N`}</text>`;
-            out += `<text class="trait-text" style="fill:#54e6c1" x="${x2}" y="${GY + 16}" text-anchor="middle">오른쪽 받침 ${fmt(N2 * grow)} N</text>`;
+            out += `<text class="trait-text" style="fill:${N1 <= 0 ? '#ff7a59' : '#059669'}" x="${x1}" y="${GY + 16}" text-anchor="middle">왼쪽 받침 ${N1 <= 0 ? `${fmt(N1)} N → 0 아래, 뜸` : `${fmt(N1 * grow)} N`}</text>`;
+            out += `<text class="trait-text" style="fill:#059669" x="${x2}" y="${GY + 16}" text-anchor="middle">오른쪽 받침 ${fmt(N2 * grow)} N</text>`;
         } else {
-            out += `<text class="trait-text" style="fill:#54e6c1" x="${x1}" y="${GY + 16}" text-anchor="middle">왼쪽 받침 (0.3 m)</text><text class="trait-text" style="fill:#54e6c1" x="${x2}" y="${GY + 16}" text-anchor="middle">오른쪽 받침 (1.3 m)</text>`;
+            out += `<text class="trait-text" style="fill:#059669" x="${x1}" y="${GY + 16}" text-anchor="middle">왼쪽 받침 (0.3 m)</text><text class="trait-text" style="fill:#059669" x="${x2}" y="${GY + 16}" text-anchor="middle">오른쪽 받침 (1.3 m)</text>`;
         }
         out += `<text class="small-label" x="${X0}" y="${GY + 30}">0 m</text>${x < 1.7 ? `<text class="small-label" x="${X0 + PL_L * S}" y="${GY + 30}" text-anchor="end">2 m</text>` : ''}<text class="small-label" x="${bx.toFixed(1)}" y="${GY + 30}" text-anchor="middle">물건 ${x} m</text>`;
         const VERD = { left: '왼쪽 받침이 더 받음', right: '오른쪽 받침이 더 받음', tip: '왼쪽이 뜨며 판이 뒤집힘' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${m} kg을 ${x} m에: ${VERD[verdict]} (왼쪽 ${fmt(N1)} N · 오른쪽 ${fmt(N2)} N)` : `${m} kg 물건을 ${x} m 자리에 (판 2 m · 4 kg, 받침 0.3 m와 1.3 m)`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${m} kg을 ${x} m에: ${VERD[verdict]} (왼쪽 ${fmt(N1)} N · 오른쪽 ${fmt(N2)} N)` : `${m} kg 물건을 ${x} m 자리에 (판 2 m · 4 kg, 받침 0.3 m와 1.3 m)`}</text>`;
         out += `<text class="trait-text" x="20" y="40">누르는 힘 모두 ${fmt(a.W)} N = 판 ${fmt(PL_M * G)} N + 물건 ${fmt(m * G)} N</text>`;
         out += `<text class="small-label" x="20" y="54">받침대는 위로 밀 수만 있고 아래로 붙잡지는 못합니다</text>`;
         return out;
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const net = parts[0].tau + parts[1].tau;
         out += `<text class="trait-text" x="20" y="${Y0 - 14}">합 ${fmt(net)} N·m을 왼쪽 받침(축에서 ${(S2 - S1).toFixed(1)} m)이 받쳐야 하므로 왼쪽 받침 힘 = ${fmt(net)} ÷ ${(S2 - S1).toFixed(1)} = ${fmt(N1)} N</text>`;
         out += `<text class="trait-text" x="20" y="${Y0 + 4}">오른쪽 받침 힘 = 전체 ${fmt(a.W)} − ${fmt(N1)} = ${fmt(N2)} N</text>`;
-        out += `<text class="small-label" style="fill:${N1 <= 0 ? '#ff7a59' : '#54e6c1'}" x="20" y="${Y0 + 24}">${N1 <= 0 ? '왼쪽 받침 힘이 0 아래 — 받침대는 아래로 붙잡지 못하므로 왼쪽 끝이 들리며 판이 뒤집힙니다' : N1 > N2 ? '물건이 왼쪽 받침에 더 가까워 왼쪽이 더 받습니다' : '물건이 오른쪽 받침에 더 가까워 오른쪽이 더 받습니다'}</text>`;
+        out += `<text class="small-label" style="fill:${N1 <= 0 ? '#ff7a59' : '#059669'}" x="20" y="${Y0 + 24}">${N1 <= 0 ? '왼쪽 받침 힘이 0 아래 — 받침대는 아래로 붙잡지 못하므로 왼쪽 끝이 들리며 판이 뒤집힙니다' : N1 > N2 ? '물건이 왼쪽 받침에 더 가까워 왼쪽이 더 받습니다' : '물건이 오른쪽 받침에 더 가까워 오른쪽이 더 받습니다'}</text>`;
         out += `<text class="small-label" x="20" y="${Y0 + 42}">힘의 합 0 · 돌림힘의 합 0 — 이 두 식이 평형 조건입니다</text>`;
         return out;
     }

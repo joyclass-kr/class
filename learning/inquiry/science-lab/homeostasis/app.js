@@ -196,27 +196,27 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="26" y="86">혈관 — 포도당 ${Math.round(G)} mg/dL</text>`;
         // organs: gut above, pancreas/liver/muscle below
         out += `<rect class="organ" x="30" y="30" width="90" height="34" rx="6"/><text class="organ-text" x="75" y="44" text-anchor="middle">소장</text><text class="small-label" x="75" y="58" text-anchor="middle">${Ra > 0.2 ? `흡수 중 ${Ra.toFixed(1)}/분` : '흡수 끝'}</text>`;
-        if (Ra > 0.2) out += `<line class="flow-arrow" style="stroke:#ffd166" x1="75" y1="66" x2="75" y2="88"/><polygon fill="#ffd166" points="75,92 71,85 79,85"/>`;
+        if (Ra > 0.2) out += `<line class="flow-arrow" style="stroke:#d97706" x1="75" y1="66" x2="75" y2="88"/><polygon fill="#d97706" points="75,92 71,85 79,85"/>`;
         out += `<rect class="organ" x="130" y="30" width="110" height="34" rx="6"/><text class="organ-text" x="185" y="44" text-anchor="middle">이자</text>`;
-        out += `<text class="small-label" style="fill:#54e6c1" x="140" y="58">인슐린 ${b.beta === 0 ? '없음' : I < 1 ? '조금' : I < 50 ? '나옴' : '많이'}</text><text class="small-label" style="fill:#ff9f8a" x="200" y="58">글루카곤 ${G < 88 ? '나옴' : '조금'}</text>`;
+        out += `<text class="small-label" style="fill:#059669" x="140" y="58">인슐린 ${b.beta === 0 ? '없음' : I < 1 ? '조금' : I < 50 ? '나옴' : '많이'}</text><text class="small-label" style="fill:#dc2626" x="200" y="58">글루카곤 ${G < 88 ? '나옴' : '조금'}</text>`;
         out += `<rect class="organ" x="30" y="150" width="120" height="36" rx="6"/><text class="organ-text" x="90" y="165" text-anchor="middle">간</text><text class="small-label" x="90" y="179" text-anchor="middle">${G > 95 && I > 1 ? '포도당 → 글리코젠 저장' : G < 88 ? '글리코젠 → 포도당 꺼냄' : '들고 내기 균형'}</text>`;
         out += `<rect class="organ" x="170" y="150" width="130" height="36" rx="6"/><text class="organ-text" x="235" y="165" text-anchor="middle">근육·지방 세포</text><text class="small-label" x="235" y="179" text-anchor="middle">${b.ex ? '운동으로 포도당 씀' : b.SI * I > 0.3 ? '인슐린 신호로 포도당 들임' : b.beta === 0 ? '인슐린 없어 못 들임' : b.SI < 0.01 && I > 1 ? '인슐린이 잘 안 들림' : '평소대로'}</text>`;
         const upt = b.SI * I * G / 100 + b.ex * G / 100;
-        if (upt > 0.3) out += `<line class="flow-arrow" style="stroke:#54e6c1" x1="235" y1="128" x2="235" y2="146"/><polygon fill="#54e6c1" points="235,150 231,143 239,143"/>`;
-        if (G < 88) out += `<line class="flow-arrow" style="stroke:#ff9f8a" x1="90" y1="148" x2="90" y2="130"/><polygon fill="#ff9f8a" points="90,126 86,133 94,133"/>`;
+        if (upt > 0.3) out += `<line class="flow-arrow" style="stroke:#059669" x1="235" y1="128" x2="235" y2="146"/><polygon fill="#059669" points="235,150 231,143 239,143"/>`;
+        if (G < 88) out += `<line class="flow-arrow" style="stroke:#dc2626" x1="90" y1="148" x2="90" y2="130"/><polygon fill="#dc2626" points="90,126 86,133 94,133"/>`;
         // the meter
         const MX = 340, MT = 40, MB = 180;
         const yOf = g => MB - clamp(g, 0, 350) / 350 * (MB - MT);
         out += `<rect class="organ" x="${MX}" y="${MT}" width="20" height="${MB - MT}" rx="3"/>`;
         out += `<rect class="band" x="${MX + 1}" y="${yOf(140).toFixed(1)}" width="18" height="${(yOf(70) - yOf(140)).toFixed(1)}"/>`;
-        out += `<rect fill="#ffd166" x="${MX + 4}" y="${yOf(G).toFixed(1)}" width="12" height="${(MB - yOf(G)).toFixed(1)}"/>`;
+        out += `<rect fill="#d97706" x="${MX + 4}" y="${yOf(G).toFixed(1)}" width="12" height="${(MB - yOf(G)).toFixed(1)}"/>`;
         [[70, '70'], [140, '140'], [200, '200'], [300, '300']].forEach(([g, lab]) => { out += `<line class="ref-line" x1="${MX - 3}" y1="${yOf(g).toFixed(1)}" x2="${MX + 23}" y2="${yOf(g).toFixed(1)}"/><text class="small-label" x="${MX + 27}" y="${(yOf(g) + 3).toFixed(1)}">${lab}</text>`; });
         out += `<text class="gen-text" x="${MX + 60}" y="60">${Math.round(G)}</text><text class="small-label" x="${MX + 60}" y="74">mg/dL</text>`;
         out += `<text class="trait-text" x="${MX + 60}" y="100">${Math.round(t)}분</text>`;
-        out += `<text class="trait-text" style="fill:#54e6c1" x="${MX + 60}" y="120">인슐린 ${Math.round(I)}</text>`;
+        out += `<text class="trait-text" style="fill:#059669" x="${MX + 60}" y="120">인슐린 ${Math.round(I)}</text>`;
         out += `<text class="small-label" x="${MX + 60}" y="134">(평소 = 0)</text>`;
         const VERD = { normal: '정상', elevated: '당뇨 전 단계 범위', high: '당뇨 범위' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${MEALS[state.meal].label} · ${b.label}: 최고 ${Math.round(run.peak)} → 2시간 뒤 ${a.g120} — ${VERD[a.verdict]}` : `${MEALS[state.meal].label} · ${b.label} (${b.hint})`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${MEALS[state.meal].label} · ${b.label}: 최고 ${Math.round(run.peak)} → 2시간 뒤 ${a.g120} — ${VERD[a.verdict]}` : `${MEALS[state.meal].label} · ${b.label} (${b.hint})`}</text>`;
         out += `<text class="note-text" x="20" y="208">포도당 75 g 부하 검사 기준: 2시간 뒤 140 미만 정상 · 140~199 당뇨 전 단계 · 200 이상 당뇨</text>`;
         return out;
     }
@@ -234,12 +234,12 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="ref-line" x1="${xOf(120).toFixed(1)}" y1="${Y1}" x2="${xOf(120).toFixed(1)}" y2="${Y0}"/><text class="small-label" x="${(xOf(120) + 3).toFixed(1)}" y="${Y1 + 10}">2시간</text>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         const ref = glucoseRun('meal', 'normal');
-        out += `<path class="trace faint" style="stroke:#9cb6b4" d="${ref.t.map((tt, i) => `${i ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(ref.G[i]).toFixed(1)}`).join(' ')}"/>`;
+        out += `<path class="trace faint" style="stroke:#475569" d="${ref.t.map((tt, i) => `${i ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(ref.G[i]).toFixed(1)}`).join(' ')}"/>`;
         let d = ''; run.t.forEach((tt, i) => { if (tt <= t) d += `${d ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(run.G[i]).toFixed(1)} `; });
-        out += `<path class="trace" style="stroke:#ffd166" d="${d}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
         let dI = ''; run.t.forEach((tt, i) => { if (tt <= t) dI += `${dI ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(run.I[i] * 0.5).toFixed(1)} `; });
-        out += `<path class="trace" style="stroke:#54e6c1;stroke-width:1.4" d="${dI}"/>`;
-        out += `<text class="small-label" style="fill:#54e6c1" x="${X1}" y="${Y1 - 4}" text-anchor="end">초록 선: 인슐린 (상대값)</text>`;
+        out += `<path class="trace" style="stroke:#059669;stroke-width:1.4" d="${dI}"/>`;
+        out += `<text class="small-label" style="fill:#059669" x="${X1}" y="${Y1 - 4}" text-anchor="end">초록 선: 인슐린 (상대값)</text>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">먹은 뒤 시간 (분) — 혈당 (mg/dL)</text>`;
         return out;
     }
@@ -269,12 +269,12 @@ document.addEventListener('DOMContentLoaded', () => {
         [[42, '42'], [38, '38'], [37, '37'], [35.5, '35.5'], [32, '32']].forEach(([tc, lab]) => { out += `<line class="ref-line" x1="${MX - 3}" y1="${yOf(tc).toFixed(1)}" x2="${MX + 23}" y2="${yOf(tc).toFixed(1)}"/><text class="small-label" x="${MX + 27}" y="${(yOf(tc) + 3).toFixed(1)}">${lab}</text>`; });
         out += `<text class="gen-text" x="${MX + 60}" y="56">${T.toFixed(1)} ℃</text>`;
         out += `<text class="trait-text" x="${MX + 60}" y="76">${Math.round(t)}분</text>`;
-        out += `<text class="trait-text" style="fill:#ff9f8a" x="${MX + 60}" y="100">만드는 열 ${Math.round(make)} W</text>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="${MX + 60}" y="116">내보내는 열 ${Math.round(loss)} W</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${MX + 60}" y="136">${make - loss > 20 ? `+${Math.round(make - loss)} W → 오름` : loss - make > 20 ? `−${Math.round(loss - make)} W → 내림` : '거의 균형'}</text>`;
+        out += `<text class="trait-text" style="fill:#dc2626" x="${MX + 60}" y="100">만드는 열 ${Math.round(make)} W</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="${MX + 60}" y="116">내보내는 열 ${Math.round(loss)} W</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${MX + 60}" y="136">${make - loss > 20 ? `+${Math.round(make - loss)} W → 오름` : loss - make > 20 ? `−${Math.round(loss - make)} W → 내림` : '거의 균형'}</text>`;
         out += `<text class="small-label" x="${MX + 60}" y="156">200 W가 어긋나면</text><text class="small-label" x="${MX + 60}" y="168">1시간에 3 ℃쯤</text>`;
         const VERD = { hold: '유지', rise: '오름 — 열사병 위험', drop: '내림 — 저체온증' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${w.label} · ${s.label}: 1시간 뒤 ${run.end.toFixed(1)} ℃ → ${VERD[a.verdict]}` : `${w.label} · ${s.label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${w.label} · ${s.label}: 1시간 뒤 ${run.end.toFixed(1)} ℃ → ${VERD[a.verdict]}` : `${w.label} · ${s.label}`}</text>`;
         return out;
     }
 
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let m = 0; m <= 60; m += 10) out += `<text class="axis-text" x="${xOf(m).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${m}</text>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         const ref = heatRun(state.weather, 'normal');
-        out += `<path class="trace faint" style="stroke:#9cb6b4" d="${ref.t.map((m, i) => `${i ? 'L' : 'M'}${xOf(m).toFixed(1)},${yOf(ref.T[i]).toFixed(1)}`).join(' ')}"/>`;
+        out += `<path class="trace faint" style="stroke:#475569" d="${ref.t.map((m, i) => `${i ? 'L' : 'M'}${xOf(m).toFixed(1)},${yOf(ref.T[i]).toFixed(1)}`).join(' ')}"/>`;
         let d = ''; run.t.forEach((m, i) => { if (m <= t) d += `${d ? 'L' : 'M'}${xOf(m).toFixed(1)},${yOf(run.T[i]).toFixed(1)} `; });
         out += `<path class="trace" style="stroke:#ff7a59" d="${d}"/>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">시간 (분) — 몸속 온도 (℃)</text>`;
@@ -304,8 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="blood-box" x="20" y="36" width="150" height="60" rx="8"/><text class="organ-text" x="95" y="54" text-anchor="middle">몸속 물 (혈액)</text>`;
         out += `<text class="trait-text" x="95" y="72" text-anchor="middle">진하기 ${osm.toFixed(1)} mOsm/kg</text><text class="small-label" x="95" y="88" text-anchor="middle">${osm > 288 ? '너무 진함 → 목마름' : osm < 282 ? '너무 옅음' : '알맞음 (285)'}</text>`;
         out += `<rect class="organ" x="20" y="110" width="150" height="40" rx="6"/><text class="organ-text" x="95" y="126" text-anchor="middle">뇌하수체 — 항이뇨 호르몬</text>`;
-        out += `<rect class="hormone-bar" fill="rgba(178,155,255,.3)" x="40" y="134" width="110" height="8" rx="4"/><rect fill="#b29bff" x="40" y="134" width="${(110 * adh).toFixed(1)}" height="8" rx="4"/>`;
-        out += `<line class="flow-arrow" style="stroke:#b29bff" x1="170" y1="130" x2="200" y2="130"/><polygon fill="#b29bff" points="204,130 197,126 197,134"/>`;
+        out += `<rect class="hormone-bar" fill="rgba(178,155,255,.3)" x="40" y="134" width="110" height="8" rx="4"/><rect fill="#7c3aed" x="40" y="134" width="${(110 * adh).toFixed(1)}" height="8" rx="4"/>`;
+        out += `<line class="flow-arrow" style="stroke:#7c3aed" x1="170" y1="130" x2="200" y2="130"/><polygon fill="#7c3aed" points="204,130 197,126 197,134"/>`;
         // kidney and bladder
         out += `<path class="kidney" d="M230,96 C205,100 205,150 230,156 C250,160 262,140 258,126 C255,110 250,92 230,96 Z"/><text class="organ-text" x="232" y="130" text-anchor="middle">콩팥</text>`;
         out += `<text class="small-label" x="232" y="172" text-anchor="middle">물 다시 빨아들임 ${Math.round(adh * 100)} %</text>`;
@@ -316,10 +316,10 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${BX + BW + 12}" y="104">1분에 ${flow.toFixed(1)} mL</text>`;
         out += `<text class="trait-text" x="${BX + BW + 12}" y="120">진하기 ${fmtN(uosm)}</text><text class="small-label" x="${BX + BW + 12}" y="132">mOsm/kg</text>`;
         out += `<text class="trait-text" x="${BX + BW + 12}" y="156">${Math.round(t)}분</text>`;
-        if (drank > 0) out += `<text class="trait-text" style="fill:#52c7ff" x="${BX + BW + 12}" y="172">목말라 ${fmtN(drank * 1000)} mL 마심</text>`;
+        if (drank > 0) out += `<text class="trait-text" style="fill:#0284c7" x="${BX + BW + 12}" y="172">목말라 ${fmtN(drank * 1000)} mL 마심</text>`;
         out += `<text class="small-label" x="230" y="60" text-anchor="middle">${it.label} ${state.intake === 'salt' ? '먹음' : state.intake === 'water' ? '마심' : ''}</text>`;
         const VERD = { much: '많고 옅음', little: '적고 진함', usual: '평소와 비슷' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${it.label}: 1시간 뒤 오줌 1분에 ${a.flow60.toFixed(1)} mL, ${fmtN(a.uosm60)} mOsm/kg → ${VERD[a.verdict]}` : `${it.label} (${it.hint})`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${it.label}: 1시간 뒤 오줌 1분에 ${a.flow60.toFixed(1)} mL, ${fmtN(a.uosm60)} mOsm/kg → ${VERD[a.verdict]}` : `${it.label} (${it.hint})`}</text>`;
         out += `<text class="note-text" x="20" y="208">오줌은 1분에 0.5~10 mL, 진하기는 60~1,200 mOsm/kg 사이에서 바뀌어 몸속 물의 진하기를 지킵니다</text>`;
         return out;
     }
@@ -331,13 +331,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const xOf = tt => X0 + tt / W_END * (X1 - X0), yO = o => Y0 - (clamp(o, 276, 292) - 276) / 16 * (Y0 - Y1), yF = f => Y0 - clamp(f, 0, 12) / 12 * (Y0 - Y1);
         let out = `<text class="axis-title" x="${X0}" y="18">붉은 선: 몸속 물의 진하기 (왼쪽 눈금) · 노란 선: 오줌 양 (오른쪽 눈금)</text>`;
         [276, 280, 284, 288, 292].forEach(o => { out += `<line class="grid-line" x1="${X0}" y1="${yO(o).toFixed(1)}" x2="${X1}" y2="${yO(o).toFixed(1)}"/><text class="axis-text" x="${X0 - 6}" y="${(yO(o) + 3.5).toFixed(1)}" text-anchor="end">${o}</text>`; });
-        [0, 4, 8, 12].forEach(f => { out += `<text class="axis-text" style="fill:#ffd166" x="${X1 + 6}" y="${(yF(f) + (f ? 3.5 : -1)).toFixed(1)}">${f} mL</text>`; });
+        [0, 4, 8, 12].forEach(f => { out += `<text class="axis-text" style="fill:#d97706" x="${X1 + 6}" y="${(yF(f) + (f ? 3.5 : -1)).toFixed(1)}">${f} mL</text>`; });
         for (let tt = 0; tt <= W_END; tt += 30) out += `<text class="axis-text" x="${xOf(tt).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${tt}</text>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         out += `<line class="ref-line" x1="${X0}" y1="${yO(285).toFixed(1)}" x2="${X1}" y2="${yO(285).toFixed(1)}"/>`;
         let dO = '', dF = '';
         run.t.forEach((tt, i) => { if (tt <= t) { dO += `${dO ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yO(run.osm[i]).toFixed(1)} `; dF += `${dF ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yF(run.flow[i]).toFixed(1)} `; } });
-        out += `<path class="trace" style="stroke:#ff7a59" d="${dO}"/><path class="trace" style="stroke:#ffd166" d="${dF}"/>`;
+        out += `<path class="trace" style="stroke:#ff7a59" d="${dO}"/><path class="trace" style="stroke:#d97706" d="${dF}"/>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">시간 (분) — 진하기 mOsm/kg · 오줌 mL/분</text>`;
         return out;
     }

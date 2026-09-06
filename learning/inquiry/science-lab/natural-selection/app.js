@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${RX}" y="134">흐려진 개체는</text><text class="trait-text" x="${RX}" y="148">자손을 남기지 못함</text>`;
         const VERD_B = { small: '작은 쪽으로 몰림', large: '큰 쪽으로 몰림', split: '양쪽으로 갈림', same: '거의 그대로' };
         const VERD_C = { light: '밝은 쪽으로', dark: '어두운 쪽으로', mixed: '거의 그대로' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${a.kind === 'beak' ? `${SEEDS[state.seeds].label} → 10세대 뒤 ${VERD_B[a.verdict]}` : `${GROUNDS[state.ground].label}${state.flip === 'flip' ? ` → ${FLIP_GEN}세대 뒤 바뀜` : ''} → 10세대 뒤 ${VERD_C[a.verdict]}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${a.kind === 'beak' ? `${SEEDS[state.seeds].label} → 10세대 뒤 ${VERD_B[a.verdict]}` : `${GROUNDS[state.ground].label}${state.flip === 'flip' ? ` → ${FLIP_GEN}세대 뒤 바뀜` : ''} → 10세대 뒤 ${VERD_C[a.verdict]}`}</text>`;
         out += `<text class="note-text" x="20" y="208">${a.kind === 'beak' ? '부리가 클수록 뾰족한 부분이 큽니다 · 씨앗에 맞는 부리가 잘 먹습니다' : '천적은 배경과 다른 색의 쥐를 먼저 잡습니다'}</text>`;
         return out;
     }
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const c0 = count(first.traits), c1 = count(gen.traits);
         const X0 = 50, X1 = 424, Y0 = 144, Y1 = 30, W = (X1 - X0) / bins, max = Math.max(8, ...c0, ...c1);
         let out = `<text class="axis-title" x="${X0}" y="18">옅은 막대: 처음 · 진한 막대: ${g === 0 ? '처음' : `${g}세대`}</text>`;
-        out += `<text class="axis-text" style="fill:#54e6c1" x="${X1}" y="18" text-anchor="end">초록 점선: 환경이 유리하게 하는 값</text>`;
+        out += `<text class="axis-text" style="fill:#059669" x="${X1}" y="18" text-anchor="end">초록 점선: 환경이 유리하게 하는 값</text>`;
         for (let b = 0; b < bins; b += 1) {
             const x = X0 + b * W;
             out += `<rect class="hist-bar hist-first" x="${(x + 2).toFixed(1)}" y="${(Y0 - (Y0 - Y1) * c0[b] / max).toFixed(1)}" width="${(W - 4).toFixed(1)}" height="${((Y0 - Y1) * c0[b] / max).toFixed(1)}" rx="2"/>`;
@@ -243,8 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/>`;
         // the environment's favoured value, and the mean now
-        if (beak) SEEDS[state.seeds].targets.forEach(t => { const x = X0 + (t - lo) / (hi - lo) * (X1 - X0); out += `<line class="expect-line" style="stroke:#54e6c1" x1="${x.toFixed(1)}" y1="${Y1}" x2="${x.toFixed(1)}" y2="${Y0}"/>`; });
-        else { const sh = groundAt(g).shade; const x = X0 + sh * (X1 - X0); out += `<line class="expect-line" style="stroke:#54e6c1" x1="${x.toFixed(1)}" y1="${Y1}" x2="${x.toFixed(1)}" y2="${Y0}"/>`; }
+        if (beak) SEEDS[state.seeds].targets.forEach(t => { const x = X0 + (t - lo) / (hi - lo) * (X1 - X0); out += `<line class="expect-line" style="stroke:#059669" x1="${x.toFixed(1)}" y1="${Y1}" x2="${x.toFixed(1)}" y2="${Y0}"/>`; });
+        else { const sh = groundAt(g).shade; const x = X0 + sh * (X1 - X0); out += `<line class="expect-line" style="stroke:#059669" x1="${x.toFixed(1)}" y1="${Y1}" x2="${x.toFixed(1)}" y2="${Y0}"/>`; }
         const mx = X0 + (gen.mean - lo) / (hi - lo) * (X1 - X0);
         out += `<line class="mean-line" x1="${mx.toFixed(1)}" y1="${Y1 - 4}" x2="${mx.toFixed(1)}" y2="${Y0}"/>`;
         out += `<text class="mean-text" x="${Math.min(X1 - 40, Math.max(X0 + 40, mx)).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">평균 ${beak ? gen.mean.toFixed(1) : (gen.mean).toFixed(2)}</text>`;

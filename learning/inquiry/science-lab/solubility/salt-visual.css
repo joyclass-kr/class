@@ -28,7 +28,7 @@
 
 .scale-body { fill: #26383d; stroke: rgba(255, 255, 255, .16); stroke-width: 1.5; }
 .scale-screen { fill: #061512; stroke: rgba(84, 230, 193, .3); stroke-width: 1; }
-.scale-readout { fill: var(--mint); font-size: 12.5px; font-weight: 950; font-family: 'Courier New', monospace; }
+.scale-readout { fill: var(--mint); font-size: 14px; font-weight: 950; font-family: 'Courier New', monospace; }
 
 .salt-dose.poured .salt-cup-svg { opacity: 0; transform: translateY(20px); }
 .salt-dose.poured strong { color: var(--mint); }
@@ -45,7 +45,7 @@
 .beaker-shine { pointer-events: none; }
 .water-surface { fill: rgba(190, 238, 250, .4); }
 .tick { stroke: rgba(220, 246, 247, .5); stroke-width: 1.5; }
-.tick-label { fill: rgba(220, 246, 247, .72); font-size: 12.5px; font-weight: 700; text-anchor: end; }
+.tick-label { fill: rgba(220, 246, 247, .72); font-size: 14px; font-weight: 700; text-anchor: end; }
 #sedimentGroup rect { transition: opacity .2s ease; }
 
 @keyframes waterBob {
@@ -62,7 +62,7 @@
 .beaker.stirring .water-surface { animation: stirWobble .6s ease-in-out infinite; transform-origin: center; }
 
 .particle { transition: opacity .4s ease, transform .4s ease, left 3.2s ease-out, top 3.2s ease-out; }
-.ion { font-size: 12px; letter-spacing: -.3px; }
+.ion { font-size: 13.5px; letter-spacing: -.3px; }
 
 .thermometer-wrap {
     position: absolute;
@@ -95,15 +95,15 @@
 .graph-svg { width: 100%; max-width: 560px; margin: 8px auto 0; height: auto; display: block; }
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.sol-curve { fill: none; stroke: #7fd4f0; stroke-width: 2.4; stroke-linejoin: round; }
-.sol-dot { fill: #7fd4f0; stroke: #0d1f27; stroke-width: 1.2; }
-.put-line { stroke: #ffd166; stroke-width: 1.6; stroke-dasharray: 5 4; }
-.put-text { fill: #c2410c; font-size: 12px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 13.5px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.sol-curve { fill: none; stroke: #0284c7; stroke-width: 2.4; stroke-linejoin: round; }
+.sol-dot { fill: #0284c7; stroke: #0d1f27; stroke-width: 1.2; }
+.put-line { stroke: #d97706; stroke-width: 1.6; stroke-dasharray: 5 4; }
+.put-text { fill: #c2410c; font-size: 13.5px; font-weight: 900; }
 .op-guide { stroke: rgba(127, 212, 240, .45); stroke-width: 1.2; stroke-dasharray: 4 4; }
 .op-point { fill: #c2410c; stroke: #0d1f27; stroke-width: 1.6; }
-.op-text { fill: #7fd4f0; font-size: 12.5px; font-weight: 900; }
+.op-text { fill: #0284c7; font-size: 14px; font-weight: 900; }
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 176px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
 .data-name { color: #475569; font-weight: 750; }

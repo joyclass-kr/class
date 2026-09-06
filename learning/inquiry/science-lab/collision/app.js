@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         let out = `<g clip-path="url(#trackClip)">${body}</g>`;
         out += `<text class="part-label" x="20" y="20">${KIND_NAME[a.kind]} (e = ${a.e}) · ${a.m1} kg이 ${a.v1} m/s로 ${a.m2} kg을 칩니다</text>`;
-        const tone = s.hit ? '#54e6c1' : '#ffd166';
+        const tone = s.hit ? '#059669' : '#d97706';
         out += `<text class="phase-text" fill="${tone}" x="20" y="176">${s.hit ? '충돌 뒤' : '충돌 전'} · ${s.t.toFixed(2)} 초</text>`;
         out += `<text class="read-text" x="20" y="196">수레 1 ${s.v1.toFixed(2)} m/s · 수레 2 ${s.v2.toFixed(2)} m/s</text>`;
         mainGroup.innerHTML = out;
@@ -137,14 +137,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const kMax = Math.max(a.kBefore, a.kAfter) * 1.18 || 1;
         let out = '';
         out += `<text class="axis-title" x="20" y="26">운동량 (kg·m/s) — 언제나 보존</text>`;
-        out += bar(50, '충돌 전', a.pBefore, pMax, '#54e6c1', '');
-        out += bar(76, '충돌 후', a.pAfter, pMax, '#54e6c1', '');
+        out += bar(50, '충돌 전', a.pBefore, pMax, '#059669', '');
+        out += bar(76, '충돌 후', a.pAfter, pMax, '#059669', '');
         const pLine = GRAPH.x0 + (a.pBefore / pMax) * (GRAPH.x1 - GRAPH.x0);
         out += `<line class="keep-line" x1="${pLine.toFixed(1)}" y1="36" x2="${pLine.toFixed(1)}" y2="90"/>`;
 
         out += `<text class="axis-title" x="20" y="118">운동 에너지 (J) — 탄성 충돌에서만 보존</text>`;
-        out += bar(142, '충돌 전', a.kBefore, kMax, '#ffd166', 'J');
-        out += bar(168, '충돌 후', a.kAfter, kMax, a.lost > 1e-9 ? '#ff9d6b' : '#ffd166', 'J');
+        out += bar(142, '충돌 전', a.kBefore, kMax, '#d97706', 'J');
+        out += bar(168, '충돌 후', a.kAfter, kMax, a.lost > 1e-9 ? '#ea580c' : '#d97706', 'J');
         const kLine = GRAPH.x0 + (a.kBefore / kMax) * (GRAPH.x1 - GRAPH.x0);
         out += `<line class="keep-line" x1="${kLine.toFixed(1)}" y1="128" x2="${kLine.toFixed(1)}" y2="182"/>`;
         if (a.lost > 1e-9) {

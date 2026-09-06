@@ -198,10 +198,10 @@ function drawGraph(g) {
     });
     g.appendChild(el('circle', { cx: X(a.temp), cy: Y(a.lum), r: 6, class: 'star-dot', style: `fill:${a.colour}` }));
 
-    g.appendChild(el('text', { x: X(20000), y: yTop - 4, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#7fd4f0' }, '주계열'));
+    g.appendChild(el('text', { x: X(20000), y: yTop - 4, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#0284c7' }, '주계열'));
     g.appendChild(el('text', { x: X(4100), y: Y(3000) - 4, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#ff9d9d' }, '거성'));
     g.appendChild(el('text', { x: X(14000), y: Y(0.0005) + 10, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#bed2e1' }, '백색왜성'));
-    g.appendChild(el('text', { x: (x0 + x1) / 2, y: 175, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#9cb6b4' },
+    g.appendChild(el('text', { x: (x0 + x1) / 2, y: 175, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#475569' },
         '점선은 반지름이 같은 별들이 놓이는 자리입니다'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '표면 온도 (K, 왼쪽이 뜨거움) — 세로는 광도 (태양 = 1)'));
 }

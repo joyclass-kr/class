@@ -7,7 +7,7 @@
 .pick-buttons.cols3 { grid-template-columns: repeat(3, 1fr); }
 .pick-buttons.cols4 { grid-template-columns: repeat(4, 1fr); }
 .pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 9px 2px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 13px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 12px; font-weight: 800; line-height: 1.25; }
+.pick-buttons button small { color: var(--muted-light); font-size: 13.5px; font-weight: 800; line-height: 1.25; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -58,7 +58,7 @@
 .slide-glass { fill: rgba(210, 235, 245, .35); stroke: #334155; stroke-width: 1.8; stroke-width: 1; }
 .knob { fill: rgba(170, 185, 195, .8); stroke: rgba(214, 235, 245, .5); stroke-width: 1; }
 .knob-mark { stroke: #10202a; stroke-width: 2; stroke-linecap: round; }
-.mirror { fill: rgba(214, 245, 250, .35); stroke: #334155; stroke-width: 1.8; stroke-width: 1; }
+.mirror { fill: rgba(148, 163, 184, 0.40); stroke: #334155; stroke-width: 1.8; stroke-width: 1; }
 .light-ray { stroke: rgba(255, 224, 130, .35); stroke-width: 1.4; stroke-dasharray: 4 3; }
 
 .field-rim { fill: none; stroke: rgba(214, 235, 245, .55); stroke-width: 3; }
@@ -68,23 +68,23 @@
 .guard-cell { stroke: rgba(30, 70, 45, .85); stroke-width: 1.2; }
 .pore { fill: rgba(10, 28, 22, .85); }
 .para-body { stroke: rgba(50, 70, 60, .7); stroke-width: 1; }
-.scale-bar { stroke: #ffd166; stroke-width: 2.6; stroke-linecap: round; }
+.scale-bar { stroke: #d97706; stroke-width: 2.6; stroke-linecap: round; }
 
-.part-label { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.small-label { fill: #475569; font-size: 12px; font-weight: 800; }
-.tiny-label { fill: #475569; font-size: 12px; font-weight: 800; }
-.read-text { fill: var(--mint); font-size: 12.5px; font-weight: 900; }
+.part-label { fill: #334155; font-size: 14px; font-weight: 800; }
+.small-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.tiny-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.read-text { fill: var(--mint); font-size: 14px; font-weight: 900; }
 .big-read { fill: var(--mint); font-size: 18px; font-weight: 900; }
-.note-text { fill: #475569; font-size: 12.5px; font-weight: 800; }
-.warn-text { fill: #ff9d6b; font-size: 12.5px; font-weight: 900; }
+.note-text { fill: #475569; font-size: 14px; font-weight: 800; }
+.warn-text { fill: #ea580c; font-size: 14px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 13.5px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .bar { stroke: rgba(255, 255, 255, .22); stroke-width: .8; }
-.bar-text { font-size: 12px; font-weight: 900; }
-.legend-text { font-size: 12px; font-weight: 900; }
+.bar-text { font-size: 13.5px; font-weight: 900; }
+.legend-text { font-size: 13.5px; font-weight: 900; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 158px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }

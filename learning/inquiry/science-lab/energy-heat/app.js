@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="total-line" x1="${GRAPH.x0}" y1="${gy(a.total).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(a.total).toFixed(1)}"/>`;
         out += `<text class="total-text" x="${GRAPH.x0 + 6}" y="${(gy(a.total) - 5).toFixed(1)}">전체 ${a.total.toFixed(1)} J — 어디에서나 같습니다</text>`;
         if (s && s.d > 0.001) out += `<line class="now-line" x1="${gx(s.d).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(s.d).toFixed(1)}" y2="${GRAPH.y0}"/>`;
-        [['위치', '#52c7ff'], ['운동', '#54e6c1'], ['열', '#ff7d6b']].forEach(([n, c], i) => {
+        [['위치', '#0284c7'], ['운동', '#059669'], ['열', '#ff7d6b']].forEach(([n, c], i) => {
             out += `<rect x="${GRAPH.x0 + 150 + i * 74}" y="14" width="9" height="9" rx="2" fill="${c}"/>`;
             out += `<text class="legend-text" fill="${c}" x="${GRAPH.x0 + 163 + i * 74}" y="22">${n} 에너지</text>`;
         });

@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = '';
         for (const y of [66, 108, 150, 192, 234]) {
             out += `<line class="sun-ray" x1="70" y1="${y}" x2="168" y2="${y}"/>`;
-            out += `<polygon class="sun-ray-head" points="168,${y - 4} 176,${y} 168,${y + 4}" fill="rgba(255,209,102,.55)"/>`;
+            out += `<polygon class="sun-ray-head" points="168,${y - 4} 176,${y} 168,${y + 4}" fill="rgba(217, 119, 6, .55)"/>`;
         }
         sunRays.innerHTML = out;
     }

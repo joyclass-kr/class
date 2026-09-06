@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const TILTS = {
         '0': { label: '눕혀 놓기', deg: 0, color: '#ffb347' },
-        '35': { label: '비스듬히', deg: 35, color: '#52c7ff' },
-        '70': { label: '많이 세우기', deg: 70, color: '#54e6c1' },
+        '35': { label: '비스듬히', deg: 35, color: '#0284c7' },
+        '70': { label: '많이 세우기', deg: 70, color: '#059669' },
     };
     const LAT = 37.5, PANEL_AREA = 1.6, PANEL_EFF = 0.20;   // one household panel, 320 W at 1000 W/m²
     const DIFFUSE_SHARE = 0.12;      // clear-sky diffuse light, as a share of the direct beam on the ground
@@ -268,9 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="440" y="44" text-anchor="end">나머지 ${Math.round((1 - PANEL_EFF) * 100)} %는 열로 판을 데움</text>`;
         if (state.progress >= 1) {
             const w = TILTS[a.winner];
-            out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${SEASONS[state.season].label} ${WEATHERS[state.weather].label} → ${w.label} ${w.deg}° 판이 하루 ${(day.tilts[a.winner].total / 1000).toFixed(2)} kWh로 가장 많이</text>`;
+            out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${SEASONS[state.season].label} ${WEATHERS[state.weather].label} → ${w.label} ${w.deg}° 판이 하루 ${(day.tilts[a.winner].total / 1000).toFixed(2)} kWh로 가장 많이</text>`;
         } else {
-            out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${SEASONS[state.season].label} · ${WEATHERS[state.weather].label} — 남쪽을 보는 판 세 장</text>`;
+            out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${SEASONS[state.season].label} · ${WEATHERS[state.weather].label} — 남쪽을 보는 판 세 장</text>`;
         }
         out += `<text class="note-text" x="20" y="208">${cloudy ? '구름 낀 날은 곧게 오는 빛이 없고 하늘 전체에서 흩어진 빛만 옵니다' : '햇살은 태양 높이만큼 기울어 들고, 판에 수직으로 들수록 같은 넓이에 더 많이 닿습니다'}</text>`;
         return out;
@@ -335,12 +335,12 @@ document.addEventListener('DOMContentLoaded', () => {
         out += turbine(330, a.r, a.v, '내 발전기', a.P * ease);
         // two bars, taller one 120 px
         const top = Math.max(a.P, a.Pref);
-        [[418, a.Pref, 'rgba(214,245,250,.55)'], [440, a.P, '#52c7ff']].forEach(([x, P, fill]) => {
+        [[418, a.Pref, '#64748b'], [440, a.P, '#0284c7']].forEach(([x, P, fill]) => {
             const hgt = Math.max(1.5, 120 * P / top * ease);
             out += `<rect class="power-bar" fill="${fill}" x="${x}" y="${(186 - hgt).toFixed(1)}" width="12" height="${hgt.toFixed(1)}" rx="1.5"/>`;
         });
         out += `<text class="small-label" x="424" y="208" text-anchor="middle">기준</text><text class="small-label" x="446" y="208" text-anchor="middle">내 것</text>`;
-        if (state.progress >= 1) out += `<text class="verdict-text" fill="#ffd166" x="234" y="60" text-anchor="middle">${a.verdict === 'same' ? '같다' : `${ratioText(a.ratio)}`}</text>`;
+        if (state.progress >= 1) out += `<text class="verdict-text" fill="#d97706" x="234" y="60" text-anchor="middle">${a.verdict === 'same' ? '같다' : `${ratioText(a.ratio)}`}</text>`;
         return out;
     }
     const ratioText = ratio => ratio >= 1 ? `${Math.round(ratio * 10) / 10}배` : `${Math.round(10 / ratio) / 10}분의 1`;
@@ -367,14 +367,14 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         const curve = r => { let d = ''; for (let v = 0; v <= V1 + 1e-9; v += 0.25) { const P = windPower(v, r); if (P > yMax) break; d += `${d ? 'L' : 'M'}${xOf(v).toFixed(1)},${yOf(P).toFixed(1)} `; } return d; };
         if (a.r !== REF.blade) out += `<path class="trace-faint" d="${curve(REF.blade)}"/>`;
-        out += `<path class="trace" style="stroke:#52c7ff" d="${curve(a.r)}"/>`;
+        out += `<path class="trace" style="stroke:#0284c7" d="${curve(a.r)}"/>`;
         if (a.r !== REF.blade) out += `<text class="axis-text" x="${X0 + 4}" y="18">흰 점선: 날개 ${REF.blade} m · 파란 선: 날개 ${a.r} m</text>`;
         else out += `<text class="axis-text" x="${X0 + 4}" y="18">파란 선: 날개 ${a.r} m</text>`;
         const px = xOf(a.v), py = yOf(a.P), rx = xOf(REF.wind), ry = yOf(a.Pref);
         out += `<circle class="trace-dot" fill="#ffb347" cx="${rx.toFixed(1)}" cy="${ry.toFixed(1)}" r="4"/>`;
-        out += `<circle class="trace-dot" fill="#52c7ff" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="4"/>`;
+        out += `<circle class="trace-dot" fill="#0284c7" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="4"/>`;
         if (a.verdict === 'same' && a.v === REF.wind && a.r === REF.blade) {
-            out += `<text class="axis-text" style="fill:#ffd166" x="${(px + 8).toFixed(1)}" y="${(py - 6).toFixed(1)}">기준 = 내 발전기 ${fmtP(a.P)}</text>`;
+            out += `<text class="axis-text" style="fill:#d97706" x="${(px + 8).toFixed(1)}" y="${(py - 6).toFixed(1)}">기준 = 내 발전기 ${fmtP(a.P)}</text>`;
         } else {
             // labels sit beside their dots, flipped to the left near the right edge
             const mineStart = px <= X1 - 93, refStart = mineStart ? px < rx : true;
@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let mineY = Math.max(Y1 + 12, py - 8);
             if (Math.abs(mineY - refY) < 12 && Math.abs(px - rx) < 100) mineY += 14;
             out += `<text class="axis-text" style="fill:#ffb347" x="${(rx + (refStart ? 8 : -8)).toFixed(1)}" y="${refY.toFixed(1)}" text-anchor="${refStart ? 'start' : 'end'}">기준 ${fmtP(a.Pref)}</text>`;
-            out += `<text class="axis-text" style="fill:#52c7ff" x="${(px + (mineStart ? 8 : -8)).toFixed(1)}" y="${mineY.toFixed(1)}" text-anchor="${mineStart ? 'start' : 'end'}">내 발전기 ${fmtP(a.P)}</text>`;
+            out += `<text class="axis-text" style="fill:#0284c7" x="${(px + (mineStart ? 8 : -8)).toFixed(1)}" y="${mineY.toFixed(1)}" text-anchor="${mineStart ? 'start' : 'end'}">내 발전기 ${fmtP(a.P)}</text>`;
         }
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">풍속 (m/s)</text>`;
         return out;
@@ -434,9 +434,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (front >= 452) {
             const glow = clamp(a.light / 35, 0.08, 1);
             out += `<circle class="glow" cx="452" cy="${MID}" r="${(4 + 8 * glow).toFixed(1)}" opacity="${(0.35 + 0.65 * glow).toFixed(2)}"/>`;
-            out += `<text class="trait-text" style="fill:#ffd166" x="452" y="${BY + BH + 30}" text-anchor="middle">빛</text>`;
+            out += `<text class="trait-text" style="fill:#d97706" x="452" y="${BY + BH + 30}" text-anchor="middle">빛</text>`;
         }
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${PLANTS[state.plant].label} → ${LAMPS[state.lamp].label}: 빛이 된 에너지 ${fmtJ(a.lightR)} J (효율 ${fmtJ(a.lightR)} %)` : `${PLANTS[state.plant].label} → 송전선 → ${LAMPS[state.lamp].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${PLANTS[state.plant].label} → ${LAMPS[state.lamp].label}: 빛이 된 에너지 ${fmtJ(a.lightR)} J (효율 ${fmtJ(a.lightR)} %)` : `${PLANTS[state.plant].label} → 송전선 → ${LAMPS[state.lamp].label}`}</text>`;
         out += `<text class="trait-text" x="20" y="166">${state.progress >= 1 ? `열로 흩어진 것 ${fmtJ(a.plantHeat)} + ${fmtJ(a.gridHeat)} + ${fmtJ(a.lampHeat)} = ${fmtJ(a.plantHeat + a.gridHeat + a.lampHeat)} J, 빛 ${fmtJ(a.lightR)} J, 합 ${SUPPLY_J} J` : '띠의 두께가 남은 에너지의 양입니다'}</text>`;
         out += `<text class="trait-text" x="20" y="182">${state.progress >= 1 ? '에너지는 사라지지 않았지만 열로 흩어진 몫은 다시 쓰기 어렵습니다' : '단계마다 일부가 열로 빠져나갑니다'}</text>`;
         out += `<text class="note-text" x="20" y="208">${state.plant === 'hydro' ? '수력은 물의 위치 에너지가 곧바로 터빈을 돌려 열로 잃는 몫이 작습니다' : '화력은 연료의 열로 증기를 만들어 터빈을 돌리므로 열의 절반 넘게를 내보내야 합니다'}</text>`;
@@ -446,13 +446,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function graphChain(a) {
         const X0 = 30, X1 = 430, BY = 44, BH = 26, scale = (X1 - X0) / SUPPLY_J;
         const segs = [
-            { name: '빛', J: a.lightR, fill: '#ffd166', text: '#0a1c24', narrowY: BY + BH + 14 },
+            { name: '빛', J: a.lightR, fill: '#d97706', text: '#0a1c24', narrowY: BY + BH + 14 },
             { name: '전등에서 열', J: a.lampHeat, fill: '#c9756b', text: '#fff', narrowY: BY - 8 },
             { name: '송전선에서 열', J: a.gridHeat, fill: '#e08a5c', text: '#0a1c24', narrowY: BY - 8 },
             { name: '발전소에서 열', J: a.plantHeat, fill: '#8a4b3f', text: '#fff', narrowY: BY + BH + 14 },
         ];
         let out = `<text class="axis-title" x="${X0}" y="18">공급한 ${SUPPLY_J} J은 어디로 갔나</text>`;
-        out += `<text class="axis-text" style="fill:#54e6c1" x="${X1}" y="18" text-anchor="end">합 ${SUPPLY_J} J — 사라진 에너지는 없음</text>`;
+        out += `<text class="axis-text" style="fill:#059669" x="${X1}" y="18" text-anchor="end">합 ${SUPPLY_J} J — 사라진 에너지는 없음</text>`;
         let x = X0;
         const shown = Math.min(1, state.progress * 1.05);
         segs.forEach(s => {
@@ -470,9 +470,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const c = chainOf(state.plant, k), y = LY + n * 24;
             const w = c.lightR * 8 * shown;
             const mine = k === state.lamp;
-            out += `<text class="axis-text" style="fill:${mine ? '#ffd166' : '#9cb6b4'}" x="${X0 + 50}" y="${y + 11}" text-anchor="end">${l.label}</text>`;
-            out += `<rect class="lamp-bar" fill="${mine ? '#ffd166' : 'rgba(255,209,102,.35)'}" x="${X0 + 58}" y="${y}" width="${Math.max(1, w).toFixed(1)}" height="15" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#ffd166' : '#9cb6b4'}" x="${(X0 + 64 + w).toFixed(1)}" y="${y + 11}">${fmtJ(c.lightR)} J (${fmtJ(c.lightR)} %)</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#d97706' : '#475569'}" x="${X0 + 50}" y="${y + 11}" text-anchor="end">${l.label}</text>`;
+            out += `<rect class="lamp-bar" fill="${mine ? '#d97706' : 'rgba(217, 119, 6, .35)'}" x="${X0 + 58}" y="${y}" width="${Math.max(1, w).toFixed(1)}" height="15" rx="2"/>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#d97706' : '#475569'}" x="${(X0 + 64 + w).toFixed(1)}" y="${y + 11}">${fmtJ(c.lightR)} J (${fmtJ(c.lightR)} %)</text>`;
         });
         out += `<text class="axis-title" x="${X0}" y="${LY + 82}">효율은 곱해집니다: ${Math.round(PLANTS[state.plant].eff * 100)} % × ${Math.round(GRID_EFF * 100)} % × ${Math.round(LAMPS[state.lamp].eff * 100)} % = ${fmtJ(a.lightR)} %</text>`;
         return out;

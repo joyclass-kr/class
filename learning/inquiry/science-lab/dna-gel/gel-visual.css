@@ -5,8 +5,8 @@
 .pick-buttons { display: grid; gap: 6px; margin-top: 8px; }
 .pick-buttons.cols2 { grid-template-columns: 1fr 1fr; }
 .pick-buttons.cols4 { grid-template-columns: repeat(4, 1fr); }
-.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 8px 2px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 12px; font-weight: 800; line-height: 1.25; }
+.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 8px 2px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
+.pick-buttons button small { color: var(--muted-light); font-size: 13.5px; font-weight: 800; line-height: 1.25; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -60,27 +60,27 @@
 .band { stroke: none; }
 .band.ladder { fill: rgba(190, 210, 225, .85); }
 .band.sample { fill: #7ff0d6; }
-.band.piled { fill: #ff9d6b; }
-.electrode-minus { fill: #7fd4f0; }
-.electrode-plus { fill: #ff9d6b; }
-.field-arrow { stroke: rgba(255, 209, 102, .5); stroke-width: 1.4; }
+.band.piled { fill: #ea580c; }
+.electrode-minus { fill: #0284c7; }
+.electrode-plus { fill: #ea580c; }
+.field-arrow { stroke: rgba(217, 119, 6, .5); stroke-width: 1.4; }
 
-.part-label { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.small-label { fill: #475569; font-size: 12px; font-weight: 800; }
-.tiny-label { fill: #475569; font-size: 12px; font-weight: 800; }
-.read-text { fill: var(--mint); font-size: 12.5px; font-weight: 900; }
-.note-text { fill: #475569; font-size: 12.5px; font-weight: 800; }
-.warn-text { fill: #ff9d6b; font-size: 12.5px; font-weight: 900; }
+.part-label { fill: #334155; font-size: 14px; font-weight: 800; }
+.small-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.tiny-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.read-text { fill: var(--mint); font-size: 14px; font-weight: 900; }
+.note-text { fill: #475569; font-size: 14px; font-weight: 800; }
+.warn-text { fill: #ea580c; font-size: 14px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 13.5px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .fit-line { fill: none; stroke: rgba(190, 210, 225, .6); stroke-width: 1.8; stroke-dasharray: 6 4; }
 .ladder-dot { fill: rgba(190, 210, 225, .9); }
 .sample-mark { stroke: #7ff0d6; stroke-width: 1.4; stroke-dasharray: 3 3; }
 .sample-dot { fill: #7ff0d6; stroke: #fff; stroke-width: 1.2; }
-.legend-text { font-size: 12px; font-weight: 900; }
+.legend-text { font-size: 13.5px; font-weight: 900; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 150px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }

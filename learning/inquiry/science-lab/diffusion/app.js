@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">시간 (초)</text>`;
         g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 4}">기체 부피 (mL)</text>`;
         g += `<line class="limit-line" x1="${GRAPH.x0}" y1="${gy(g0.vMax, vScale).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(g0.vMax, vScale).toFixed(1)}"/>`;
-        g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${(gy(g0.vMax, vScale) - 5).toFixed(1)}" text-anchor="end" fill="#ffcc66">최대 ${g0.vMax.toFixed(0)} mL</text>`;
+        g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${(gy(g0.vMax, vScale) - 5).toFixed(1)}" text-anchor="end" fill="#d97706">최대 ${g0.vMax.toFixed(0)} mL</text>`;
         // all three surface areas share the same ceiling and differ only in rate
         Object.entries(SURFACE).forEach(([key, factor]) => {
             const kk = RATE_K * conc() * factor;
@@ -235,10 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tt = (tMax * i) / 90;
                 pts.push(`${gx(tt, 0, tMax).toFixed(1)},${gy(g0.vMax * (1 - Math.exp(-kk * tt)), vScale).toFixed(1)}`);
             }
-            const col = key === 'powder' ? '#54e6c1' : key === 'chip' ? '#7fd4f0' : '#9aa4ab';
+            const col = key === 'powder' ? '#059669' : key === 'chip' ? '#0284c7' : '#9aa4ab';
             g += `<path class="trace" style="stroke:${col};opacity:${key === grain ? 1 : 0.42}" d="M${pts.join('L')}"/>`;
         });
-        g += `<circle class="trace-dot" cx="${gx(t, 0, tMax).toFixed(1)}" cy="${gy(v, vScale).toFixed(1)}" r="4.5" fill="#ffd166"/>`;
+        g += `<circle class="trace-dot" cx="${gx(t, 0, tMax).toFixed(1)}" cy="${gy(v, vScale).toFixed(1)}" r="4.5" fill="#d97706"/>`;
         graphGroup.innerHTML = g;
 
         dataNote.innerHTML =

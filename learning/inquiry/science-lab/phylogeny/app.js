@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         const VERD = { close: '목 이상까지 같음', mid: '문·강까지 같음', far: '계부터 다름' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${o.label}: ${shared === 0 ? '역부터 다름' : `${LEVELS[shared - 1]}까지 같음`} — ${VERD[a.verdict]}` : `사람과 ${o.label} · ${LEVELS[Math.max(0, Math.min(7, shown - 1))]}까지 내려옴`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${o.label}: ${shared === 0 ? '역부터 다름' : `${LEVELS[shared - 1]}까지 같음`} — ${VERD[a.verdict]}` : `사람과 ${o.label} · ${LEVELS[Math.max(0, Math.min(7, shown - 1))]}까지 내려옴`}</text>`;
         out += `<text class="note-text" x="20" y="208">초록 = 같은 무리, 노랑 = 사람 쪽, 주황 = ${o.label} 쪽. 학명은 속명 + 종소명 (사람 Homo sapiens)</text>`;
         return out;
     }
@@ -160,8 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/>`;
         keys.forEach((k, i) => {
             const o = ORGS[k], x = X0 + bw * i + bw * 0.2, w = bw * 0.6, on = k === state.org;
-            out += `<rect fill="${on ? 'rgba(255,209,102,.6)' : 'rgba(84,230,193,.4)'}" x="${x.toFixed(1)}" y="${yOf(o.split).toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(1, Y0 - yOf(o.split)).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="${on ? 'fill:#ffd166' : ''}" x="${(x + w / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${o.label}</text>`;
+            out += `<rect fill="${on ? 'rgba(217, 119, 6, .6)' : 'rgba(84,230,193,.4)'}" x="${x.toFixed(1)}" y="${yOf(o.split).toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(1, Y0 - yOf(o.split)).toFixed(1)}" rx="2"/>`;
+            out += `<text class="axis-text" style="${on ? 'fill:#d97706' : ''}" x="${(x + w / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${o.label}</text>`;
             out += `<text class="small-label" x="${(x + w / 2).toFixed(1)}" y="${(yOf(o.split) - 5).toFixed(1)}" text-anchor="middle">${o.split}</text>`;
         });
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">침팬지는 과까지 같고, 소나무·버섯은 역만 같으며, 대장균은 역부터 다릅니다</text>`;
@@ -196,11 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         L.nodes.filter(n => n.tip).forEach(n => {
             const role = n.tip === st.ref ? 'ref-tip' : n.tip === A ? 'a-tip' : n.tip === B ? 'b-tip' : '';
-            out += `<circle class="${role || 'node-dot'}" cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${role ? 5 : 3}"/><text class="tip-text" style="${role === 'ref-tip' ? 'fill:#ffd166' : role === 'a-tip' ? 'fill:#54e6c1' : role === 'b-tip' ? 'fill:#ff9f8a' : ''}" x="${n.x.toFixed(1)}" y="${(n.y - 10).toFixed(1)}" text-anchor="middle">${n.tip}${n.tip === st.ref ? ' (기준)' : ''}</text>`;
+            out += `<circle class="${role || 'node-dot'}" cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${role ? 5 : 3}"/><text class="tip-text" style="${role === 'ref-tip' ? 'fill:#d97706' : role === 'a-tip' ? 'fill:#059669' : role === 'b-tip' ? 'fill:#dc2626' : ''}" x="${n.x.toFixed(1)}" y="${(n.y - 10).toFixed(1)}" text-anchor="middle">${n.tip}${n.tip === st.ref ? ' (기준)' : ''}</text>`;
         });
         const cnt = { first: A, second: B, equal: '똑같이 가까움' };
         out += `<text class="small-label" x="20" y="192">묶는 차례: ${inner.map(n => st.nodeNames[n.tips.join('|')] || n.tips.join('·')).slice(0, shown).join(' → ') || '아직 시작 전'}</text>`;
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${st.ref}에 더 가까운 것: ${cnt[a.verdict]} (공통 조상 마디 깊이 ${A} ${a.dA} · ${B} ${a.dB})` : `${st.label} 계통수 · 공유 형질이 많은 것부터 묶는 중`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${st.ref}에 더 가까운 것: ${cnt[a.verdict]} (공통 조상 마디 깊이 ${A} ${a.dA} · ${B} ${a.dB})` : `${st.label} 계통수 · 공유 형질이 많은 것부터 묶는 중`}</text>`;
         out += `<text class="note-text" x="20" y="208">가지는 마디를 축으로 돌려도 같은 나무. 가까움은 그림의 거리가 아니라 공통 조상 마디의 깊이로 읽습니다</text>`;
         return out;
     }
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function graphTree(a) {
         const { st } = a, X0 = 150, cw = (430 - X0) / st.taxa.length, rh = 22, Y0 = 44;
         let out = `<text class="axis-title" x="20" y="18">형질표 — ✓ 있음 · 새 형질을 함께 가진 무리끼리 묶습니다 (${st.label})</text>`;
-        st.taxa.forEach((t, j) => { out += `<text class="grid-text" style="${t === st.ref ? 'fill:#ffd166' : t === a.A ? 'fill:#54e6c1' : t === a.B ? 'fill:#ff9f8a' : ''}" x="${(X0 + cw * j + cw / 2).toFixed(1)}" y="${Y0 - 8}" text-anchor="middle">${t}</text>`; });
+        st.taxa.forEach((t, j) => { out += `<text class="grid-text" style="${t === st.ref ? 'fill:#d97706' : t === a.A ? 'fill:#059669' : t === a.B ? 'fill:#dc2626' : ''}" x="${(X0 + cw * j + cw / 2).toFixed(1)}" y="${Y0 - 8}" text-anchor="middle">${t}</text>`; });
         st.traits.forEach(([name, row], i) => {
             const y = Y0 + i * rh;
             out += `<text class="grid-text" x="${X0 - 8}" y="${y + 15}" text-anchor="end">${name}</text>`;
@@ -237,10 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const TX = 130;
         out += `<text class="trait-text" x="${TX}" y="132">다른 자리 ${shownDiff}개 / ${AA_TOTAL}개 (모두 ${o.diff}개)</text>`;
         out += `<text class="trait-text" x="${TX}" y="150">눈금: ${cal.label} → 한 차이당 ${fmtN(cal.k * 100)}만 년</text>`;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${TX}" y="172">어림 ${o.diff} × ${fmtN(cal.k * 100)}만 년 = ${est > 0 ? myr(est) : '0'}</text>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="${TX}" y="192">화석 기록: 약 ${myr(o.fossil)} (파란 바늘)</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${TX}" y="172">어림 ${o.diff} × ${fmtN(cal.k * 100)}만 년 = ${est > 0 ? myr(est) : '0'}</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="${TX}" y="192">화석 기록: 약 ${myr(o.fossil)} (파란 바늘)</text>`;
         const VERD = { recent: '1천만 년 안', mid: '1천만~1억 년', old: '1억 년 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `사람–${o.label}: 차이 ${o.diff}개 → 어림 ${est > 0 ? myr(est) : '0'} — ${VERD[a.verdict]}` : `사람–${o.label} 사이토크롬 c 견주는 중`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `사람–${o.label}: 차이 ${o.diff}개 → 어림 ${est > 0 ? myr(est) : '0'} — ${VERD[a.verdict]}` : `사람–${o.label} 사이토크롬 c 견주는 중`}</text>`;
         out += `<text class="note-text" x="20" y="208">다른 자리는 보기 위해 임의 배치 · 차이 수와 화석 연대는 교과서 값(대략) · 눈금은 화석으로 아는 갈래로 맞춤</text>`;
         return out;
     }
@@ -255,8 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="clock-line" x1="${X0}" y1="${Y0}" x2="${xOf(tEnd).toFixed(1)}" y2="${yOf(tEnd / a.cal.k).toFixed(1)}"/>`;
         Object.entries(ORGS3).forEach(([k, o], i) => {
             const on = k === state.org3;
-            out += `<circle fill="${on ? '#ffd166' : '#52c7ff'}" stroke="${on ? '#fff' : 'none'}" cx="${xOf(o.fossil).toFixed(1)}" cy="${yOf(o.diff).toFixed(1)}" r="${on ? 5 : 3.5}"/>`;
-            out += `<text class="small-label" style="${on ? 'fill:#ffd166' : ''}" x="${(xOf(o.fossil) + (o.fossil > 900 ? -7 : 7)).toFixed(1)}" y="${(yOf(o.diff) - (i % 2 === 0 ? 6 : 17)).toFixed(1)}" text-anchor="${o.fossil > 900 ? 'end' : 'start'}">${o.label}</text>`;
+            out += `<circle fill="${on ? '#d97706' : '#0284c7'}" stroke="${on ? '#fff' : 'none'}" cx="${xOf(o.fossil).toFixed(1)}" cy="${yOf(o.diff).toFixed(1)}" r="${on ? 5 : 3.5}"/>`;
+            out += `<text class="small-label" style="${on ? 'fill:#d97706' : ''}" x="${(xOf(o.fossil) + (o.fossil > 900 ? -7 : 7)).toFixed(1)}" y="${(yOf(o.diff) - (i % 2 === 0 ? 6 : 17)).toFixed(1)}" text-anchor="${o.fossil > 900 ? 'end' : 'start'}">${o.label}</text>`;
         });
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">갈라진 때(화석) — 오래된 갈래일수록 점이 선 아래로 처집니다 (같은 자리가 되풀이 바뀜)</text>`;
         return out;

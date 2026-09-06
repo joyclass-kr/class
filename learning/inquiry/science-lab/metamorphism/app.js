@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* -------------------------------------------------------------- data */
     const P_PER_KM = 0.02744; // GPa per km for rock of 2,800 kg/m³
     const DEPTHS = { d5: { label: '5 km', hint: '얕게 묻힘', z: 5 }, d15: { label: '15 km', hint: '중간', z: 15 }, d30: { label: '30 km', hint: '깊이 묻힘', z: 30 } };
-    const GRADS = { g10: { label: '낮음 10 ℃/km', hint: '섭입대', g: 10, col: '#52c7ff' }, g25: { label: '보통 25 ℃/km', hint: '안정한 대륙', g: 25, col: '#ffd166' }, g40: { label: '높음 40 ℃/km', hint: '화산호·열곡', g: 40, col: '#ff7a59' } };
+    const GRADS = { g10: { label: '낮음 10 ℃/km', hint: '섭입대', g: 10, col: '#0284c7' }, g25: { label: '보통 25 ℃/km', hint: '안정한 대륙', g: 25, col: '#d97706' }, g40: { label: '높음 40 ℃/km', hint: '화산호·열곡', g: 40, col: '#ff7a59' } };
     const TEMPS = { t200: { label: '200 ℃', hint: '낮은 변성', T: 200 }, t350: { label: '350 ℃', hint: '', T: 350 }, t550: { label: '550 ℃', hint: '', T: 550 }, t750: { label: '750 ℃', hint: '높은 변성', T: 750 } };
     const PARENTS = { shale: { label: '셰일', hint: '진흙이 굳은 암석' }, sandstone: { label: '사암', hint: '석영 모래' }, limestone: { label: '석회암', hint: '방해석' } };
     const BODIES = { dike: { label: '얇은 암맥', hint: '두께 10 m', L: 5 }, pluton: { label: '큰 저반', hint: '지름 5 km', L: 2500 } };
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let y = Y0; y < Y1; y += 3) out += `<rect fill="${tColor(20 + a.g * (y - Y0) / (Y1 - Y0) * ZM)}" opacity=".55" x="${CX0}" y="${y}" width="${CW}" height="3.5"/>`;
         out += `<rect class="crust-frame" x="${CX0}" y="${Y0}" width="${CW}" height="${Y1 - Y0}"/>`;
         [0, 10, 20, 30].forEach(z => { out += `<text class="axis-text" x="${CX0 - 4}" y="${(yOf(z) + 3.5).toFixed(1)}" text-anchor="end">${z} km</text>`; });
-        [200, 400, 600, 800].forEach(T => { const z = (T - 20) / a.g; if (z < ZM) out += `<line class="isotherm" x1="${CX0}" y1="${yOf(z).toFixed(1)}" x2="${CX0 + CW}" y2="${yOf(z).toFixed(1)}"/><text class="small-label" style="fill:#ff9f8a" x="${CX0 + CW + 4}" y="${(yOf(z) + 3.5).toFixed(1)}">${T} ℃</text>`; });
+        [200, 400, 600, 800].forEach(T => { const z = (T - 20) / a.g; if (z < ZM) out += `<line class="isotherm" x1="${CX0}" y1="${yOf(z).toFixed(1)}" x2="${CX0 + CW}" y2="${yOf(z).toFixed(1)}"/><text class="small-label" style="fill:#dc2626" x="${CX0 + CW + 4}" y="${(yOf(z) + 3.5).toFixed(1)}">${T} ℃</text>`; });
         out += `<circle class="sample" cx="${CX0 + CW / 2}" cy="${yOf(zNow).toFixed(1)}" r="6"/>`;
         out += `<text class="small-label" x="${CX0 + CW / 2}" y="${Y0 - 8}" text-anchor="middle">지각 · ${GRADS[state.grad].hint}</text>`;
         // rock panel on the right
@@ -163,11 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="${RX + RW / 2}" y="${RY - 8}" text-anchor="middle">지금의 시료 (셰일이 변한 것)</text>`;
         const TX = 336;
         out += `<text class="trait-text" x="${TX}" y="56">깊이 ${fmtN(zNow, 1)} km</text><text class="trait-text" x="${TX}" y="74">온도 ${fmtN(Tnow)} ℃</text><text class="trait-text" x="${TX}" y="92">압력 ${fmtN(Pnow, 2)} GPa</text>`;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${RX}" y="136">${fNow.name}</text><text class="trait-text" x="${RX}" y="154">→ ${fNow.rock}</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${RX}" y="136">${fNow.name}</text><text class="trait-text" x="${RX}" y="154">→ ${fNow.rock}</text>`;
         out += `<text class="small-label" x="${RX}" y="174">${fNow.key === 'blueschist' ? '온도는 낮고 압력만 높음 — 섭입대의 특징' : fNow.key === 'melt' ? '녹기 시작 — 변성암과 마그마가 섞임' : fNow.key === 'none' ? '아직 굳어 가는 중 (속성 작용)' : fNow.key === 'granulite' ? '물이 빠져나가고 무수 광물이 자람' : '온도가 오를수록 결정이 굵어지고 엽리가 뚜렷'}</text>`;
         out += `<text class="small-label" x="${RX}" y="188">지온 기울기 ${a.g} ℃/km · 1 km마다 ${fmtN(P_PER_KM * 1000)} MPa</text>`;
         const VERD = { low: '낮은 변성', mid: '중간 변성', high: '높은 변성' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${a.z} km · ${a.g} ℃/km: ${fmtN(a.T)} ℃, ${fmtN(a.P, 2)} GPa → ${a.f.name} — ${VERD[a.verdict]}` : `셰일이 ${DEPTHS[state.depth].label}까지 묻히는 중 (${GRADS[state.grad].label})`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${a.z} km · ${a.g} ℃/km: ${fmtN(a.T)} ℃, ${fmtN(a.P, 2)} GPa → ${a.f.name} — ${VERD[a.verdict]}` : `셰일이 ${DEPTHS[state.depth].label}까지 묻히는 중 (${GRADS[state.grad].label})`}</text>`;
         out += `<text class="note-text" x="20" y="208">온도 = 20 ℃ + 지온 기울기 × 깊이 · 압력 = 2,800 kg/m³ × g × 깊이 · 변성상 경계는 어림값</text>`;
         return out;
     }
@@ -176,9 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const X0 = 60, X1 = 420, Y0 = 150, Y1 = 36, TM = 1000, PM = 1.4, xOf = T => X0 + T / TM * (X1 - X0), yOf = P => Y0 - P / PM * (Y0 - Y1);
         let out = `<text class="axis-title" x="20" y="18">온도–압력 그림과 변성상 — 점선 셋이 지온 기울기, 노란 점이 지금의 시료</text>`;
         const fields = [
-            ['zeolite', '제올라이트', [[120, 0], [300, 0], [300, 0.45], [120, 0.45]], 'rgba(151,218,211,.18)'],
+            ['zeolite', '제올라이트', [[120, 0], [300, 0], [300, 0.45], [120, 0.45]], 'rgba(148, 163, 184, 0.28)'],
             ['greenschist', '녹색편암', [[300, 0.2], [450, 0.2], [450, 0.45], [300, 0.45]], 'rgba(84,230,193,.22)'],
-            ['hornfels', '혼펠스', [[300, 0], [700, 0], [700, 0.2], [300, 0.2]], 'rgba(255,209,102,.22)'],
+            ['hornfels', '혼펠스', [[300, 0], [700, 0], [700, 0.2], [300, 0.2]], 'rgba(217, 119, 6, .22)'],
             ['amphibolite', '각섬암', [[450, 0.2], [700, 0.2], [700, 1.2], [500, 1.2], [500, 0.45], [450, 0.45]], 'rgba(255,159,138,.22)'],
             ['blueschist', '청색편암', [[120, 0.45], [500, 0.45], [500, 1.2], [450, 1.2], [450, PM], [120, PM]], 'rgba(82,199,255,.25)'],
             ['eclogite', '에클로자이트', [[450, 1.2], [900, 1.2], [900, PM], [450, PM]], 'rgba(167,139,250,.25)'],
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fields.forEach(([key, name, poly, col]) => {
             out += `<polygon class="facies-field" fill="${col}" points="${poly.map(([T, P]) => `${xOf(T).toFixed(1)},${yOf(P).toFixed(1)}`).join(' ')}"/>`;
             const cx = poly.reduce((s, q) => s + q[0], 0) / poly.length, cy = poly.reduce((s, q) => s + q[1], 0) / poly.length;
-            out += `<text class="facies-text" style="${state.progress >= 1 && a.f.key === key ? 'fill:#ffd166' : ''}" x="${xOf(cx).toFixed(1)}" y="${(yOf(cy) + 3).toFixed(1)}" text-anchor="middle">${name}</text>`;
+            out += `<text class="facies-text" style="${state.progress >= 1 && a.f.key === key ? 'fill:#d97706' : ''}" x="${xOf(cx).toFixed(1)}" y="${(yOf(cy) + 3).toFixed(1)}" text-anchor="middle">${name}</text>`;
         });
         [0, 200, 400, 600, 800, 1000].forEach(T => { out += `<text class="axis-text" x="${xOf(T).toFixed(1)}" y="${Y0 + 14}" text-anchor="${T === 0 ? 'start' : 'middle'}">${T} ℃</text>`; });
         [0, 0.5, 1].forEach(P => { out += `<text class="axis-text" x="${X0 - 5}" y="${(yOf(P) + 3.5).toFixed(1)}" text-anchor="end">${P} GPa</text>`; });
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         Object.entries(GRADS).forEach(([k, gr]) => { const zEnd = Math.min(50, (TM - 20) / gr.g), Pend = Math.min(PM, P_PER_KM * zEnd), zP = Pend / P_PER_KM; out += `<line class="geotherm${k === state.grad ? ' on' : ''}" style="stroke:${gr.col}" x1="${xOf(20).toFixed(1)}" y1="${yOf(0).toFixed(1)}" x2="${xOf(20 + gr.g * zP).toFixed(1)}" y2="${yOf(Pend).toFixed(1)}"/>`; });
         const zNow = a.z * ease(state.progress), Tn = 20 + a.g * zNow, Pn = P_PER_KM * zNow;
-        out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(Math.min(Tn, TM - 8)).toFixed(1)}" cy="${yOf(Pn).toFixed(1)}" r="4.5"/>`;
+        out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(Math.min(Tn, TM - 8)).toFixed(1)}" cy="${yOf(Pn).toFixed(1)}" r="4.5"/>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">온도 — 오른쪽 눈금은 깊이. 섭입대(파랑)는 압력만, 열곡(주황)은 온도가 먼저 오릅니다</text>`;
         return out;
     }
@@ -208,13 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (a.parent === 'shale') out += `<text class="small-label" x="${RX + RW / 2}" y="${RY + RH + 16}" text-anchor="middle">${Tnow >= 650 ? '밝고 어두운 띠 = 편마 구조' : Tnow >= 150 ? '판 모양 광물이 압력에 수직으로 늘어섬 = 엽리' : '진흙 알갱이가 층을 이룸'}</text>`;
         else out += `<text class="small-label" x="${RX + RW / 2}" y="${RY + RH + 16}" text-anchor="middle">${Tnow >= 250 ? '알갱이가 녹지 않고 다시 자라 맞물림 = 재결정' : '알갱이가 따로따로'}</text>`;
         const TX = 246;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${TX}" y="58">${rNow.name}</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${TX}" y="58">${rNow.name}</text>`;
         out += `<text class="trait-text" x="${TX}" y="80">광물: ${rNow.minerals}</text><text class="trait-text" x="${TX}" y="98">조직: ${rNow.texture}</text>`;
         out += `<text class="small-label" x="${TX}" y="122">${a.parent === 'shale' ? '셰일 → 점판암 → 천매암 → 편암 → 편마암' : a.parent === 'sandstone' ? '사암 → 규암 (석영 하나라 엽리 없음)' : '석회암 → 대리암 (방해석 하나라 엽리 없음)'}</text>`;
         out += `<text class="small-label" x="${TX}" y="138">${a.parent === 'shale' ? '지시 광물: 녹니석 → 흑운모 → 석류석 → 규선석' : '온도가 오를수록 결정이 굵어짐'}</text>`;
         out += `<text class="small-label" x="${TX}" y="162">단계 ${rNow.stage + 1} / ${rNow.stages} · 압력은 중간 (광역 변성)</text>`;
         const VERD = { weak: '약한 변성', strong: '뚜렷한 변성암', high: '높은 변성' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${PARENTS[a.parent].label} ${a.T} ℃: ${a.r.name} — ${VERD[a.verdict]}` : `${PARENTS[a.parent].label}${eul(PARENTS[a.parent].label)} ${a.T} ℃까지 데우는 중`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${PARENTS[a.parent].label} ${a.T} ℃: ${a.r.name} — ${VERD[a.verdict]}` : `${PARENTS[a.parent].label}${eul(PARENTS[a.parent].label)} ${a.T} ℃까지 데우는 중`}</text>`;
         out += `<text class="note-text" x="20" y="208">암석 이름이 바뀌는 온도는 어림값. 실제로는 압력과 물의 양에 따라 조금씩 달라집니다</text>`;
         return out;
     }
@@ -223,9 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const X0 = 66, X1 = 420, TM = 900, xOf = T => X0 + T / TM * (X1 - X0);
         let out = `<text class="axis-title" x="20" y="18">온도(℃)에 따른 암석 이름과 지시 광물 (${PARENTS[a.parent].label}) — 노란 선이 지금 온도</text>`;
         const zones = ROCKS[a.parent], ZY = 40;
-        zones.forEach((row, i) => { const t0 = row[0], t1 = i + 1 < zones.length ? zones[i + 1][0] : TM, x = xOf(t0), w = xOf(t1) - x; out += `<rect class="zone-bar" fill="${['rgba(151,218,211,.2)', 'rgba(84,230,193,.25)', 'rgba(255,209,102,.25)', 'rgba(255,159,138,.28)', 'rgba(255,122,89,.32)'][i]}" x="${x.toFixed(1)}" y="${ZY}" width="${w.toFixed(1)}" height="22"/>`; if (w > 24) out += `<text class="small-label" style="fill:#08131a" x="${(x + w / 2).toFixed(1)}" y="${ZY + 15}" text-anchor="middle">${row[1]}</text>`; });
+        zones.forEach((row, i) => { const t0 = row[0], t1 = i + 1 < zones.length ? zones[i + 1][0] : TM, x = xOf(t0), w = xOf(t1) - x; out += `<rect class="zone-bar" fill="${['rgba(148, 163, 184, 0.30)', 'rgba(84,230,193,.25)', 'rgba(217, 119, 6, .25)', 'rgba(255,159,138,.28)', 'rgba(255,122,89,.32)'][i]}" x="${x.toFixed(1)}" y="${ZY}" width="${w.toFixed(1)}" height="22"/>`; if (w > 24) out += `<text class="small-label" style="fill:#08131a" x="${(x + w / 2).toFixed(1)}" y="${ZY + 15}" text-anchor="middle">${row[1]}</text>`; });
         out += `<text class="axis-text" x="${X0 - 5}" y="${ZY + 15}" text-anchor="end">암석</text>`;
-        const minerals = a.parent === 'shale' ? [['녹니석', 150, 400, '#54e6c1'], ['흑운모', 350, 650, '#ffd166'], ['석류석', 450, 750, '#ff7a59'], ['십자석', 500, 650, '#ff9f8a'], ['규선석', 600, 850, '#a78bfa']] : a.parent === 'sandstone' ? [['석영', 250, 900, '#dce9e8']] : [['방해석', 250, 900, '#dce9e8']];
+        const minerals = a.parent === 'shale' ? [['녹니석', 150, 400, '#059669'], ['흑운모', 350, 650, '#d97706'], ['석류석', 450, 750, '#ff7a59'], ['십자석', 500, 650, '#dc2626'], ['규선석', 600, 850, '#a78bfa']] : a.parent === 'sandstone' ? [['석영', 250, 900, '#0f172a']] : [['방해석', 250, 900, '#0f172a']];
         minerals.forEach(([name, t0, t1, col], i) => { const y = ZY + 34 + i * 16; out += `<rect class="mineral-bar" fill="${col}" opacity=".6" x="${xOf(t0).toFixed(1)}" y="${y}" width="${(xOf(t1) - xOf(t0)).toFixed(1)}" height="10" rx="2"/><text class="axis-text" x="${X0 - 5}" y="${y + 9}" text-anchor="end">${name}</text>`; });
         const AY = ZY + 34 + minerals.length * 16 + 8;
         [0, 150, 300, 450, 600, 750, 900].forEach(T => { out += `<line class="grid-line" x1="${xOf(T).toFixed(1)}" y1="${ZY}" x2="${xOf(T).toFixed(1)}" y2="${AY}"/><text class="axis-text" x="${xOf(T).toFixed(1)}" y="${AY + 12}" text-anchor="${T === 0 ? 'start' : 'middle'}">${T}</text>`; });
@@ -245,16 +245,16 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="halo2" x="${MX + MW}" y="${Y0}" width="${((xOf(dOf(200)) - MX - MW) * spread).toFixed(1)}" height="${Y1 - Y0}"/>`;
         out += `<rect class="halo" x="${MX + MW}" y="${Y0}" width="${((xOf(dOf(400)) - MX - MW) * spread).toFixed(1)}" height="${Y1 - Y0}"/>`;
         out += `<rect class="magma" x="${MX}" y="${Y0}" width="${MW}" height="${Y1 - Y0}"/>`;
-        out += `<text class="small-label" style="fill:#ffd166" x="${MX + MW / 2}" y="${Y0 - 8}" text-anchor="middle">${b.label} 900 ℃</text>`;
+        out += `<text class="small-label" style="fill:#d97706" x="${MX + MW / 2}" y="${Y0 - 8}" text-anchor="middle">${b.label} 900 ℃</text>`;
         [1, 10, 100, 1000, 5000].forEach(d => { out += `<line class="thresh" x1="${xOf(d).toFixed(1)}" y1="${Y1}" x2="${xOf(d).toFixed(1)}" y2="${Y1 + 5}"/><text class="axis-text" x="${xOf(d).toFixed(1)}" y="${Y1 + 17}" text-anchor="middle">${d >= 1000 ? `${d / 1000} km` : `${d} m`}</text>`; });
         const Tn = T_HOST + (a.T - T_HOST) * spread, sx = xOf(x);
         out += `<circle class="sample" cx="${sx.toFixed(1)}" cy="${(Y0 + Y1) / 2}" r="6"/>`;
         out += `<text class="small-label" x="${sx.toFixed(1)}" y="${(Y0 + Y1) / 2 - 12}" text-anchor="middle">셰일 시료 ${DISTS[state.dist].label}</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${sx.toFixed(1)}" y="${(Y0 + Y1) / 2 + 22}" text-anchor="middle">${fmtN(Tn)} ℃</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${sx.toFixed(1)}" y="${(Y0 + Y1) / 2 + 22}" text-anchor="middle">${fmtN(Tn)} ℃</text>`;
         out += `<text class="small-label" x="${MX + MW + 6}" y="${Y0 + 12}">붉은 띠: 400 ℃ 넘게 (혼펠스) · 노란 띠: 200~400 ℃ (약간 구워짐)</text>`;
         out += `<text class="small-label" x="${MX + MW + 6}" y="${Y1 - 8}">구워지는 범위 ≈ 관입체 크기: 암맥은 몇 m, 저반은 수백 m~수 km</text>`;
         const VERD = { hornfels: '혼펠스로 구워짐', baked: '약간 구워짐', none: '변화 없음' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${b.label}에서 ${DISTS[state.dist].label}: 최고 ${fmtN(a.T)} ℃ — ${VERD[a.verdict]}` : `${b.label}의 열이 퍼지는 중 · 시료는 ${DISTS[state.dist].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${b.label}에서 ${DISTS[state.dist].label}: 최고 ${fmtN(a.T)} ℃ — ${VERD[a.verdict]}` : `${b.label}의 열이 퍼지는 중 · 시료는 ${DISTS[state.dist].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">거리 눈금은 로그 · 최고 온도 = 100 + 400 × e^(−거리/관입체 반지름) ℃ (대략) · 압력은 그대로라 엽리 없음</text>`;
         return out;
     }
@@ -265,10 +265,10 @@ document.addEventListener('DOMContentLoaded', () => {
         [1, 10, 100, 1000, 10000].forEach(d => { out += `<line class="grid-line" x1="${xOf(d).toFixed(1)}" y1="${Y1}" x2="${xOf(d).toFixed(1)}" y2="${Y0}"/><text class="axis-text" x="${xOf(d).toFixed(1)}" y="${Y0 + 14}" text-anchor="${d === 1 ? 'start' : 'middle'}">${d >= 1000 ? `${d / 1000} km` : `${d} m`}</text>`; });
         [0, 200, 400, 600].forEach(T => { out += `<line class="grid-line" x1="${X0}" y1="${yOf(T).toFixed(1)}" x2="${X1}" y2="${yOf(T).toFixed(1)}"/><text class="axis-text" x="${X0 - 5}" y="${(yOf(T) + 3.5).toFixed(1)}" text-anchor="end">${T} ℃</text>`; });
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
-        out += `<line class="thresh" x1="${X0}" y1="${yOf(400).toFixed(1)}" x2="${X1}" y2="${yOf(400).toFixed(1)}"/><text class="small-label" style="fill:#ff9f8a" x="${X1}" y="${(yOf(400) - 4).toFixed(1)}" text-anchor="end">혼펠스 400 ℃</text>`;
-        out += `<line class="thresh" x1="${X0}" y1="${yOf(200).toFixed(1)}" x2="${X1}" y2="${yOf(200).toFixed(1)}"/><text class="small-label" style="fill:#ffd166" x="${X1}" y="${(yOf(200) - 4).toFixed(1)}" text-anchor="end">약간 구워짐 200 ℃</text>`;
-        Object.entries(BODIES).forEach(([k, bd]) => { let d = ''; for (let e = 0; e <= 4 + 1e-9; e += 0.05) { const dist = 10 ** e; d += `${d ? 'L' : 'M'}${xOf(dist).toFixed(1)},${yOf(contactT(dist, bd.L)).toFixed(1)} `; } out += `<path class="trace${k === state.body ? '' : ' faint'}" style="stroke:${k === 'pluton' ? '#ff7a59' : '#52c7ff'}" d="${d}"/>`; });
-        out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(a.x).toFixed(1)}" cy="${yOf(a.T).toFixed(1)}" r="4.5"/>`;
+        out += `<line class="thresh" x1="${X0}" y1="${yOf(400).toFixed(1)}" x2="${X1}" y2="${yOf(400).toFixed(1)}"/><text class="small-label" style="fill:#dc2626" x="${X1}" y="${(yOf(400) - 4).toFixed(1)}" text-anchor="end">혼펠스 400 ℃</text>`;
+        out += `<line class="thresh" x1="${X0}" y1="${yOf(200).toFixed(1)}" x2="${X1}" y2="${yOf(200).toFixed(1)}"/><text class="small-label" style="fill:#d97706" x="${X1}" y="${(yOf(200) - 4).toFixed(1)}" text-anchor="end">약간 구워짐 200 ℃</text>`;
+        Object.entries(BODIES).forEach(([k, bd]) => { let d = ''; for (let e = 0; e <= 4 + 1e-9; e += 0.05) { const dist = 10 ** e; d += `${d ? 'L' : 'M'}${xOf(dist).toFixed(1)},${yOf(contactT(dist, bd.L)).toFixed(1)} `; } out += `<path class="trace${k === state.body ? '' : ' faint'}" style="stroke:${k === 'pluton' ? '#ff7a59' : '#0284c7'}" d="${d}"/>`; });
+        out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(a.x).toFixed(1)}" cy="${yOf(a.T).toFixed(1)}" r="4.5"/>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">거리 (로그 눈금) — 관입체가 클수록 열이 멀리까지 미칩니다</text>`;
         return out;
     }

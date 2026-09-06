@@ -206,13 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // readouts
         out += `<text class="gen-text" x="450" y="44" text-anchor="end">t = ${Math.min(t, dur).toFixed(2)} s</text>`;
         out += `<text class="trait-text" x="450" y="60" text-anchor="end">놓은 공 높이 ${pa.y.toFixed(1)} m${t >= a.tA ? ` · ${a.tA.toFixed(2)} s에 닿음` : ''}</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="450" y="76" text-anchor="end">던진 공 높이 ${pb.y.toFixed(1)} m${t >= a.tB ? ` · ${a.tB.toFixed(2)} s에 닿음` : ''}</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="450" y="92" text-anchor="end">던진 공 옆으로 ${pb.x.toFixed(1)} m</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="450" y="76" text-anchor="end">던진 공 높이 ${pb.y.toFixed(1)} m${t >= a.tB ? ` · ${a.tB.toFixed(2)} s에 닿음` : ''}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="450" y="92" text-anchor="end">던진 공 옆으로 ${pb.x.toFixed(1)} m</text>`;
         // scale bar
         const bar = 10 * s;
         out += `<line class="scale-bar" x1="${(440 - bar).toFixed(1)}" y1="166" x2="440" y2="166"/><text class="small-label" x="${(440 - bar / 2).toFixed(1)}" y="160" text-anchor="middle">10 m</text>`;
         const VERD = { same: '동시에 닿음', 'drop-first': '놓은 공이 먼저', 'throw-first': '던진 공이 먼저' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `놓은 공 ${a.tA.toFixed(2)} s · 던진 공 ${a.tB.toFixed(2)} s → ${VERD[a.verdict]}` : `높이 ${a.h} m · ${AIMS[state.aim].phrase} ${a.v} m/s로 던짐`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `놓은 공 ${a.tA.toFixed(2)} s · 던진 공 ${a.tB.toFixed(2)} s → ${VERD[a.verdict]}` : `높이 ${a.h} m · ${AIMS[state.aim].phrase} ${a.v} m/s로 던짐`}</text>`;
         out += `<text class="note-text" x="20" y="208">공기 저항 없음 · 두 공 모두 아래 방향 속력이 1초마다 9.8 m/s씩 늘어남 · 옆 방향 속력은 그대로</text>`;
         return out;
     }
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="axis-text" x="${X0 + 4}" y="${Y1 - 6}">높이 (m)</text>`;
         const curve = (fn, tEnd) => { let d = ''; for (let tt = 0; tt <= Math.min(t, tEnd) + 1e-9; tt += 0.02) d += `${d ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(fn(tt)).toFixed(1)} `; if (t >= tEnd) d += `L${xOf(tEnd).toFixed(1)},${yOf(0).toFixed(1)}`; return d; };
         out += `<path class="trace" style="stroke:#eef5f8" d="${curve(tt => posA(a, tt).y, a.tA)}"/>`;
-        out += `<path class="trace dashed" style="stroke:#ffd166" d="${curve(tt => posB(a, tt).y, a.tB)}"/>`;
+        out += `<path class="trace dashed" style="stroke:#d97706" d="${curve(tt => posB(a, tt).y, a.tB)}"/>`;
         const landing = (tt, txt, color, first) => {
             const x = xOf(tt);
             if (first) return `<text class="axis-text" style="fill:${color}" x="${(x - 4).toFixed(1)}" y="${Y0 - 6}" text-anchor="end">${txt}</text>`;
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return `<text class="axis-text" style="fill:${color}" x="${(room ? x + 4 : x - 4).toFixed(1)}" y="${room ? Y0 - 6 : Y0 - 18}" text-anchor="${room ? 'start' : 'end'}">${txt}</text>`;
         };
         if (t >= a.tA) out += landing(a.tA, `${a.verdict === 'same' ? '둘 다 ' : '놓은 공 '}${a.tA.toFixed(2)} s`, '#eef5f8', a.tA <= a.tB);
-        if (t >= a.tB && a.verdict !== 'same') out += landing(a.tB, `던진 공 ${a.tB.toFixed(2)} s`, '#ffd166', a.tB < a.tA);
+        if (t >= a.tB && a.verdict !== 'same') out += landing(a.tB, `던진 공 ${a.tB.toFixed(2)} s`, '#d97706', a.tB < a.tA);
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">시간 (s) — 세로 운동만 견줍니다</text>`;
         return out;
     }
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const travelled = (() => { let s = 0, prev = o.samples[0]; for (const p of o.samples) { if (p.t > t) break; s += Math.hypot(p.x - prev.x, p.y - prev.y); prev = p; } return s + Math.hypot(now.x - prev.x, now.y - prev.y); })();
         out += `<text class="trait-text" x="${IX}" y="148">날아간 거리 ${fmtN(travelled / 1000)} km</text>`;
         const VERD = { short: `${fmtN(o.rangeKm)} km 가서 떨어짐`, far: `${fmtN(o.rangeKm)} km(둘레의 ${Math.round(o.deg / 360 * 100)} %) 가서 떨어짐`, orbit: `지구를 돎 · 한 바퀴 ${(o.T / 60).toFixed(0)}분`, escape: '지구를 떠남' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${LAUNCH[state.launch].label} → ${VERD[o.verdict]}` : `400 km 산꼭대기에서 ${LAUNCH[state.launch].label}로 옆으로 던짐`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${LAUNCH[state.launch].label} → ${VERD[o.verdict]}` : `400 km 산꼭대기에서 ${LAUNCH[state.launch].label}로 옆으로 던짐`}</text>`;
         out += `<text class="note-text" x="20" y="208">${o.outcome === 'orbit' ? '떨어지는 만큼 지면이 둥글게 멀어져 영원히 땅에 닿지 않습니다' : o.outcome === 'escape' ? '멀어질수록 중력이 약해져 속력은 줄지만 붙잡히지 않습니다' : '중력이 대포알을 아래로 당겨 길이 굽고, 땅이 둥글어 더 멀리 갑니다'}</text>`;
         return out;
     }
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const p of o.samples) { if (p.t > t) break; d += `${d ? 'L' : 'M'}${xOf(p.t / 60).toFixed(1)},${yOf(Math.max(0, (p.r - R_E) / 1000)).toFixed(1)} `; }
         const now = orbitAt(o, t);
         d += `L${xOf(t / 60).toFixed(1)},${yOf(Math.max(0, (now.r - R_E) / 1000)).toFixed(1)}`;
-        out += `<path class="trace" style="stroke:#ffd166" d="${d}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">시간 (분)${o.outcome === 'orbit' ? ` — 한 바퀴 ${(o.T / 60).toFixed(0)}분, 국제 우주 정거장은 92분` : ''}</text>`;
         return out;
     }
@@ -332,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${MX + 32}" y="64">${done ? `무게의 ${a.ratio < 100 ? fmt1(a.ratio) : fmtN(a.ratio)}배 · ${a.broken ? '깨짐' : '멀쩡함'}` : ''}</text>`;
         out += `<text class="trait-text" x="${MX + 32}" y="112">${p >= 0.6 ? `닿는 속력 ${fmt1(a.v)} m/s` : `떨어지는 중 ${fallT.toFixed(2)} s`}</text>`;
         out += `<text class="trait-text" x="${MX + 32}" y="126">${done ? `멈추는 데 ${a.dt * 1000 < 10 ? (a.dt * 1000).toFixed(1) : fmtN(a.dt * 1000)} ms` : ''}</text>`;
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${done ? `${a.h} m → ${fl.label}: 평균 힘 ${a.F < 10 ? fmt1(a.F) : fmtN(a.F)} N, 무게의 ${a.ratio < 100 ? fmt1(a.ratio) : fmtN(a.ratio)}배 → ${a.broken ? '깨짐' : '안 깨짐'}` : `달걀 ${EGG_M * 1000} g을 ${a.h} m에서 ${fl.label}에 떨어뜨림`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${done ? `${a.h} m → ${fl.label}: 평균 힘 ${a.F < 10 ? fmt1(a.F) : fmtN(a.F)} N, 무게의 ${a.ratio < 100 ? fmt1(a.ratio) : fmtN(a.ratio)}배 → ${a.broken ? '깨짐' : '안 깨짐'}` : `달걀 ${EGG_M * 1000} g을 ${a.h} m에서 ${fl.label}에 떨어뜨림`}</text>`;
         out += `<text class="note-text" x="20" y="208">멈출 때 힘 × 시간(충격량)은 어느 바닥이든 같음 · 힘 눈금은 한 칸에 10배</text>`;
         return out;
     }
@@ -350,9 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
         a.all.forEach((f, n) => {
             const x = X0 + 20 + n * 92, w = 50, mine = f.key === state.floor;
             const top = yOf(f.ratio), h = (Y0 - top) * shown;
-            out += `<rect class="bar" fill="${f.broken ? '#ff7a59' : '#52c7ff'}" opacity="${mine ? 1 : 0.45}" stroke="${mine ? '#fff' : 'rgba(255,255,255,.2)'}" stroke-width="${mine ? 2 : .8}" x="${x}" y="${(Y0 - h).toFixed(1)}" width="${w}" height="${h.toFixed(1)}" rx="2"/>`;
-            if (shown) out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${x + w / 2}" y="${(top - 4).toFixed(1)}" text-anchor="middle">${f.ratio < 100 ? fmt1(f.ratio) : fmtN(f.ratio)}배</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${x + w / 2}" y="${Y0 + 14}" text-anchor="middle">${FLOORS[f.key].label}</text>`;
+            out += `<rect class="bar" fill="${f.broken ? '#ff7a59' : '#0284c7'}" opacity="${mine ? 1 : 0.45}" stroke="${mine ? '#fff' : 'rgba(255,255,255,.2)'}" stroke-width="${mine ? 2 : .8}" x="${x}" y="${(Y0 - h).toFixed(1)}" width="${w}" height="${h.toFixed(1)}" rx="2"/>`;
+            if (shown) out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${x + w / 2}" y="${(top - 4).toFixed(1)}" text-anchor="middle">${f.ratio < 100 ? fmt1(f.ratio) : fmtN(f.ratio)}배</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${x + w / 2}" y="${Y0 + 14}" text-anchor="middle">${FLOORS[f.key].label}</text>`;
             out += `<text class="small-label" x="${x + w / 2}" y="${Y0 + 26}" text-anchor="middle">${shown ? `${f.dt * 1000 < 10 ? (f.dt * 1000).toFixed(1) : fmtN(f.dt * 1000)} ms 만에 멈춤` : ''}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 40}" text-anchor="middle">${shown ? `네 바닥 모두 충격량(힘 × 시간)은 ${fmt2(a.p)} N·s로 같고, 멈추는 시간이 길수록 힘이 작다` : '같은 높이에서 떨어진 달걀을 네 바닥이 멈출 때'}</text>`;

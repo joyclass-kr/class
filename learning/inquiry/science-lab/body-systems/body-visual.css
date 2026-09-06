@@ -3,8 +3,8 @@
 .act-field { margin: 4px 0 14px; padding: 0; border: 0; }
 .act-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .act-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
-.act-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
-.act-buttons button small { color: var(--muted-light); font-size: 12.5px; font-weight: 800; }
+.act-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
+.act-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
 .act-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
 .act-buttons button.selected small { color: #0369a1; }
 
@@ -57,23 +57,23 @@
 .heart { fill: rgba(235, 90, 110, .55); stroke: #ff8a8a; stroke-width: 2; }
 .gut { fill: rgba(220, 175, 110, .35); stroke: #d9b070; stroke-width: 1.8; }
 .kidney { fill: rgba(170, 120, 200, .35); stroke: #c9a6f0; stroke-width: 1.8; }
-.organ-label { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.organ-label { fill: #0f172a; font-size: 14px; font-weight: 900; }
 
-.stat-name { fill: #475569; font-size: 12px; font-weight: 800; }
-.stat-value { font-size: 12.5px; font-weight: 900; }
-.group-title { font-size: 12.5px; font-weight: 900; }
+.stat-name { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.stat-value { font-size: 14px; font-weight: 900; }
+.group-title { font-size: 14px; font-weight: 900; }
 .read-text { fill: var(--mint); font-size: 13px; font-weight: 900; }
-.note-text { fill: #475569; font-size: 12.5px; font-weight: 800; }
+.note-text { fill: #475569; font-size: 14px; font-weight: 800; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .base-line { stroke: rgba(84, 230, 193, .55); stroke-width: 1.3; stroke-dasharray: 5 4; }
-.base-text { fill: var(--mint); font-size: 12.5px; font-weight: 900; }
+.base-text { fill: var(--mint); font-size: 14px; font-weight: 900; }
 .bar { stroke: rgba(255, 255, 255, .25); stroke-width: .8; }
 .bar-rest { fill: rgba(180, 210, 220, .3); stroke: rgba(180, 210, 220, .5); stroke-width: .8; }
-.bar-text { font-size: 12.5px; font-weight: 900; }
+.bar-text { font-size: 14px; font-weight: 900; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 120px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }

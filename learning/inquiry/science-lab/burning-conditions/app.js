@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const VERDICT = { burn: '계속 탄다', out: '타다가 꺼진다', none: '불이 붙지 않는다' };
-    const TONE = { burn: '#ffd166', out: '#ff9d6b', none: '#8fa8b0' };
+    const TONE = { burn: '#d97706', out: '#ea580c', none: '#8fa8b0' };
 
     function renderMain(a) {
         const p = state.progress;
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         out += line(total, 'trace-done');
         if (t > 0) out += line(t, 'trace');
-        out += `<circle class="trace-dot" cx="${gx(t).toFixed(1)}" cy="${gy(o2At(t, a)).toFixed(1)}" r="5" fill="#52c7ff"/>`;
+        out += `<circle class="trace-dot" cx="${gx(t).toFixed(1)}" cy="${gy(o2At(t, a)).toFixed(1)}" r="5" fill="#0284c7"/>`;
         if (state.oxygen === 'open') {
             out += `<text class="note-text" x="${GRAPH.x0 + 8}" y="${(gy(O2_START) + 16).toFixed(1)}">공기가 계속 들어와 산소가 줄지 않습니다</text>`;
         } else if (a.outcome === 'none') {

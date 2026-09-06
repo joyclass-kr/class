@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return pts.length > 1 ? `<path class="${cls}" style="stroke:${colour}" d="M${pts.join('L')}"/>` : '';
         };
         if (!a.same) out += line(a.base.maxCm, BEAN_DAYS, 'trace other', '#6cc25a');
-        const mineColour = a.mine.hue === 'yellow' ? '#e6de7a' : a.mine.hue === 'green' ? '#52c7ff' : '#8fa8b0';
+        const mineColour = a.mine.hue === 'yellow' ? '#e6de7a' : a.mine.hue === 'green' ? '#0284c7' : '#8fa8b0';
         out += line(a.mine.maxCm, day, 'trace', mineColour);
         out += `<circle class="trace-dot" cx="${gx(day).toFixed(1)}" cy="${gy(heightAt(day, a.mine.maxCm)).toFixed(1)}" r="5" fill="${mineColour}"/>`;
         out += `<text class="axis-text" style="fill:${mineColour}" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 14}">— 내 화분</text>`;

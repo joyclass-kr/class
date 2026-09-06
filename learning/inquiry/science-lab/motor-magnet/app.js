@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cur1 = on && a.moves ? flip : on ? 1 : 0; // +1 = out of the screen at wire 1
         [[w1, cur1], [w2, -cur1]].forEach(([wp, c]) => {
             out += `<circle class="wire-end" cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="6"/>`;
-            if (c > 0) out += `<circle fill="#ffd166" cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="2"/>`;
+            if (c > 0) out += `<circle fill="#d97706" cx="${wp[0].toFixed(1)}" cy="${wp[1].toFixed(1)}" r="2"/>`;
             else if (c < 0) out += `<line class="wire-mark" x1="${(wp[0] - 3.5).toFixed(1)}" y1="${(wp[1] - 3.5).toFixed(1)}" x2="${(wp[0] + 3.5).toFixed(1)}" y2="${(wp[1] + 3.5).toFixed(1)}"/><line class="wire-mark" x1="${(wp[0] - 3.5).toFixed(1)}" y1="${(wp[1] + 3.5).toFixed(1)}" x2="${(wp[0] + 3.5).toFixed(1)}" y2="${(wp[1] - 3.5).toFixed(1)}"/>`;
             // force F = I L × B: current out of the screen in B along +x gives a force along screen-up (−y)
             if (on && c !== 0) { const fl = 12 + 16 * Math.min(1, a.tauMax / 0.02); out += arrow(wp[0], wp[1], wp[0], wp[1] - c * fl, 'force', 'force-head', 3); }
@@ -164,14 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const TX = 262;
         out += `<text class="trait-text" x="${TX}" y="52">코일 ${a.N}번 × ${a.I} A × 12 cm² × 0.5 T</text>`;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${TX}" y="72">τ 최대 = ${fmtTau(a.tauMax)}</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${TX}" y="72">τ 최대 = ${fmtTau(a.tauMax)}</text>`;
         out += `<text class="trait-text" x="${TX}" y="94">${on ? `지금 각 θ = ${fmtN(((phi * 180 / Math.PI) % 360 + 360) % 360)}° → τ = ${fmtTau(tau)}` : '아직 전류 없음'}</text>`;
         out += `<text class="trait-text" x="${TX}" y="112">${on ? `각속도 ${fmtN(Math.abs(w), 1)} rad/s (${fmtN(Math.abs(w) / (2 * Math.PI) * 60)} rpm)` : `정지 마찰 ${fmtTau(TAU_STATIC)}을 넘어야 움직임`}</text>`;
         out += `<text class="trait-text" x="${TX}" y="130">${on ? `돈 바퀴 수 ${fmtN(Math.abs(phi - Math.PI / 2) / (2 * Math.PI), 2)} · ${fmtN(t, 1)} s` : `정류자 ${COMMS[state.comm].label}`}</text>`;
         out += `<text class="small-label" x="${TX}" y="154">${a.comm ? '수직을 지날 때마다 전류가 뒤집혀' : '수직을 지나면 돌림힘이 거꾸로 되어'}</text><text class="small-label" x="${TX}" y="168">${a.comm ? '돌림힘이 늘 같은 방향' : '되돌아오며 흔들리다 멈춤'}</text>`;
         out += `<text class="small-label" x="${TX}" y="190">초록 화살 = 도선이 받는 힘 F = BIL</text>`;
         const VERD = { spin: '계속 돎', wobble: '흔들리다 멈춤', still: '거의 안 움직임' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${a.N}번 · ${a.I} A · 정류자 ${COMMS[state.comm].label}: ${VERD[a.verdict]} (6 s 동안 ${fmtN(a.turns, 1)}바퀴)` : `${a.N}번 감은 코일 · ${a.I} A · 정류자 ${COMMS[state.comm].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${a.N}번 · ${a.I} A · 정류자 ${COMMS[state.comm].label}: ${VERD[a.verdict]} (6 s 동안 ${fmtN(a.turns, 1)}바퀴)` : `${a.N}번 감은 코일 · ${a.I} A · 정류자 ${COMMS[state.comm].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">돌림힘 τ = NIAB sinθ (θ는 코일 법선과 B의 각). 관성과 마찰은 작은 모형 전동기 값(대략)</text>`;
         return out;
     }
@@ -184,8 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${yOf(0).toFixed(1)}" x2="${X1}" y2="${yOf(0).toFixed(1)}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         const idx = Math.min(a.samples.length - 1, Math.round(state.progress * (a.samples.length - 1)));
         let d = ''; a.samples.forEach(([t, phi, w, tau], i) => { if (i <= idx && i % 2 === 0) d += `${d ? 'L' : 'M'}${xOf(t).toFixed(1)},${yOf(-tau).toFixed(1)} `; });
-        out += `<path class="trace" style="stroke:#ffd166" d="${d}"/>`;
-        if (state.progress > 0) { const [t, , , tau] = a.samples[idx]; out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(t).toFixed(1)}" cy="${yOf(-tau).toFixed(1)}" r="4"/>`; }
+        out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
+        if (state.progress > 0) { const [t, , , tau] = a.samples[idx]; out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(t).toFixed(1)}" cy="${yOf(-tau).toFixed(1)}" r="4"/>`; }
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">${a.moves ? (a.comm ? '돌림힘이 0이 되는 죽은점은 관성으로 넘고, 마찰과 균형을 이루면 속도가 일정해집니다' : '되돌리는 돌림힘이 번갈아 나타나 흔들림이 점점 줄어듭니다') : '돌림힘이 정지 마찰보다 작아 코일이 꼼짝하지 않습니다'}</text>`;
         return out;
     }
@@ -212,11 +212,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${TX}" y="48">χ = ${m.kind === 'ferro' ? '수천 (강자성)' : `${fmtN(m.chi * 1e6, m.kind === 'dia' && Math.abs(m.chi) < 1e-5 ? 1 : 0)} × 10⁻⁶`}</text>`;
         out += `<text class="trait-text" x="${TX}" y="64">${m.kind === 'ferro' ? '포화 M = 1.7 × 10⁶ A/m' : 'B = 0.5 T · dB/dx = 50 T/m'}</text>`;
         out += `<text class="trait-text" x="${TX}" y="80">${m.kind === 'ferro' ? 'F = M V (dB/dx), dB/dx = 50 T/m' : 'F = χ V B (dB/dx) / μ₀'}</text>`;
-        out += `<text class="gen-text" style="fill:${F > 0 ? '#54e6c1' : '#ff9f8a'}" x="${TX}" y="104">F = ${fmtF(F)} (${F > 0 ? '끌림' : '밀림'})</text>`;
+        out += `<text class="gen-text" style="fill:${F > 0 ? '#059669' : '#dc2626'}" x="${TX}" y="104">F = ${fmtF(F)} (${F > 0 ? '끌림' : '밀림'})</text>`;
         out += `<text class="small-label" x="${TX}" y="126">${m.kind === 'ferro' ? '자기 구역이 통째로 정렬' : m.kind === 'para' ? '원자 자석이 조금 정렬' : '자기장과 반대로 자기화'}</text>`;
         out += `<text class="small-label" x="${TX}" y="140">${m.kind === 'ferro' ? '→ 시료 무게(7.9 g)의 천 배 넘는 힘' : `→ 시료 무게(≈ ${fmtN([7.9, 21.5, 2.7, 9.0, 9.8][Object.keys(MATERIALS).indexOf(state.material)], 1)} g)의 ${fmtN(Math.abs(F) / 9.8 * 1000 / [7.9, 21.5, 2.7, 9.0, 9.8][Object.keys(MATERIALS).indexOf(state.material)] * 100, 1)} %`}</text>`;
         const VERD = { strong: '세게 끌림', weak: '아주 약하게 끌림', repel: '아주 약하게 밀림' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${m.label}: ${fmtF(F)} — ${VERD[a.verdict]}` : `${m.label} 1 cm³에 자석을 가까이 대는 중`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${m.label}: ${fmtF(F)} — ${VERD[a.verdict]}` : `${m.label} 1 cm³에 자석을 가까이 대는 중`}</text>`;
         out += `<text class="note-text" x="20" y="208">노란 화살은 원자 자석의 방향(자기 구역). 힘의 크기는 실제 자화율과 센 네오디뮴 자석 값으로 계산(대략)</text>`;
         return out;
     }
@@ -230,8 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${YM}" x2="${X1}" y2="${YM}"/>`;
         keys.forEach((k, i) => {
             const m = MATERIALS[k], F = m.kind === 'ferro' ? m.Ms * VOL * GRAD_B : m.chi * VOL / MU0 * B_MAG * GRAD_B, x = X0 + bw * i + bw * 0.2, w = bw * 0.6, y = yOf(F), top = Math.min(y, YM), h = Math.abs(y - YM);
-            out += `<rect class="${F > 0 ? 'bar-pos' : 'bar-neg'}" style="${k === state.material ? 'stroke:#ffd166;stroke-width:2' : ''}" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(1, h).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="${k === state.material ? 'fill:#ffd166' : ''}" x="${(x + w / 2).toFixed(1)}" y="${YM + H + 20}" text-anchor="middle">${m.label}</text>`;
+            out += `<rect class="${F > 0 ? 'bar-pos' : 'bar-neg'}" style="${k === state.material ? 'stroke:#d97706;stroke-width:2' : ''}" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(1, h).toFixed(1)}" rx="2"/>`;
+            out += `<text class="axis-text" style="${k === state.material ? 'fill:#d97706' : ''}" x="${(x + w / 2).toFixed(1)}" y="${YM + H + 20}" text-anchor="middle">${m.label}</text>`;
             out += `<text class="small-label" x="${(x + w / 2).toFixed(1)}" y="${(F > 0 ? top - 5 : top + h + 11).toFixed(1)}" text-anchor="middle">${fmtF(F)}</text>`;
         });
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${YM + H + 34}" text-anchor="middle">강자성체는 상자성체의 만 배 넘게 끌리고, 반자성체는 반대로 밀립니다</text>`;
@@ -264,11 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${TX}" y="52">퀴리 온도 ${fmtN(f.Tc)} ℃ (${fmtN(f.Tc + 273)} K)</text>`;
         out += `<text class="trait-text" x="${TX}" y="70">가열 온도 ${T} ℃ (${T + 273} K)</text>`;
         out += `<text class="trait-text" x="${TX}" y="88">T/Tc = ${fmtN((T + 273) / (f.Tc + 273), 2)}</text>`;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${TX}" y="110">자기화 M/M₀ = ${fmtN(ratio, 2)}</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${TX}" y="110">자기화 M/M₀ = ${fmtN(ratio, 2)}</text>`;
         out += `<text class="small-label" x="${TX}" y="130">${T >= f.Tc ? '퀴리 온도 위 — 자기 구역 사라짐' : 'M/M₀ ≈ (1 − T/Tc)^⅓ (대략)'}</text>`;
         out += `<text class="small-label" x="${TX}" y="144">${T >= f.Tc ? '상자성체처럼 아주 약하게만 끌림' : `끌리는 힘은 실온의 ${fmtN(ratio / Math.pow(1 - 293 / (f.Tc + 273), 1 / 3) * 100)} %`}</text>`;
         const VERD = { strong: '세게 붙음', weak: '약하게 붙음', none: '안 붙음' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${T} ℃의 ${f.label}: M/M₀ = ${fmtN(ratio, 2)} — ${VERD[a.verdict]}` : `${f.label} · ${T} ℃로 달구고 자석 대기`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${T} ℃의 ${f.label}: M/M₀ = ${fmtN(ratio, 2)} — ${VERD[a.verdict]}` : `${f.label} · ${T} ℃로 달구고 자석 대기`}</text>`;
         out += `<text class="note-text" x="20" y="208">노란 화살은 자기 구역의 방향. 자기화 곡선은 퀴리 온도 근처의 어림식이고, 식으면 다시 강자성체가 됩니다</text>`;
         return out;
     }
@@ -279,13 +279,13 @@ document.addEventListener('DOMContentLoaded', () => {
         [0, 200, 400, 600, 800, 1000, 1200].forEach(T => { out += `<line class="grid-line" x1="${xOf(T).toFixed(1)}" y1="${Y1}" x2="${xOf(T).toFixed(1)}" y2="${Y0}"/><text class="axis-text" x="${xOf(T).toFixed(1)}" y="${Y0 + 14}" text-anchor="${T === 0 ? 'start' : 'middle'}">${T} ℃</text>`; });
         [0, 0.5, 1].forEach(r => { out += `<line class="grid-line" x1="${X0}" y1="${yOf(r).toFixed(1)}" x2="${X1}" y2="${yOf(r).toFixed(1)}"/><text class="axis-text" x="${X0 - 5}" y="${(yOf(r) + 3.5).toFixed(1)}" text-anchor="end">${r}</text>`; });
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
-        const cols = { fe: '#ff9f8a', ni: '#97dad3', co: '#52c7ff' };
+        const cols = { fe: '#dc2626', ni: '#97dad3', co: '#0284c7' };
         Object.entries(FERROS).forEach(([k, f]) => {
             let d = ''; for (let T = 0; T <= TM; T += 5) { const r = T >= f.Tc ? 0 : Math.pow(1 - (T + 273) / (f.Tc + 273), 1 / 3); d += `${d ? 'L' : 'M'}${xOf(T).toFixed(1)},${yOf(r).toFixed(1)} `; }
             out += `<path class="trace${k === state.ferro ? '' : ' faint'}" style="stroke:${cols[k]}" d="${d}"/>`;
             out += `<text class="small-label" style="fill:${cols[k]}" x="${(xOf(f.Tc) + (k === 'co' ? -6 : 6)).toFixed(1)}" y="${Y1 + 12 + { fe: 0, ni: 14, co: 28 }[k]}" text-anchor="${k === 'co' ? 'end' : 'start'}">${f.label} ${f.Tc} ℃</text>`;
         });
-        out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(a.T).toFixed(1)}" cy="${yOf(a.ratio).toFixed(1)}" r="4.5"/>`;
+        out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(a.T).toFixed(1)}" cy="${yOf(a.ratio).toFixed(1)}" r="4.5"/>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">온도 — 뜨거워질수록 열운동이 정렬을 흐트러뜨려 자기화가 줄어듭니다</text>`;
         return out;
     }

@@ -126,9 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const SEGMENTS = [
-        ['신경 전도', a => a.conduction, '#52c7ff'],
+        ['신경 전도', a => a.conduction, '#0284c7'],
         ['시냅스', a => a.synapse, '#c9a6f0'],
-        ['중추 처리', a => a.brain, '#ffd166'],
+        ['중추 처리', a => a.brain, '#d97706'],
         ['근육 수축', a => a.muscle, '#ff8a8a'],
     ];
 
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         all.forEach((row, i) => {
             const y = GRAPH.y1 + 30 + i * 38;
             const current = row.p === a.p;
-            out += `<text class="axis-text" style="fill:${current ? '#cfe6ee' : '#7f9298'}" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${row.p.label}</text>`;
+            out += `<text class="axis-text" style="fill:${current ? '#0f172a' : '#7f9298'}" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${row.p.label}</text>`;
             let cursor = 0;
             SEGMENTS.forEach(([, pick, colour]) => {
                 const v = pick(row);
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const label = `${(row.total * 1000).toFixed(0)} ms`;
             const flip = gx(row.total) > GRAPH.x1 - 56;
-            out += `<text class="bar-text" fill="${current ? '#cfe6ee' : '#7f9298'}" x="${(gx(row.total) + (flip ? -6 : 6)).toFixed(1)}" ` +
+            out += `<text class="bar-text" fill="${current ? '#0f172a' : '#7f9298'}" x="${(gx(row.total) + (flip ? -6 : 6)).toFixed(1)}" ` +
                    `y="${(y + 4).toFixed(1)}"${flip ? ' text-anchor="end"' : ''}>${label}</text>`;
         });
         graphGroup.innerHTML = out;

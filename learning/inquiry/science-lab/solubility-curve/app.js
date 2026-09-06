@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Potassium nitrate climbs steeply while table salt barely moves, which is
     // the contrast the whole experiment turns on.
     const SOLUTES = {
-        kno3: { name: '질산칼륨', formula: 'KNO₃', color: '#54e6c1', data: [13.3, 31.6, 63.9, 110.0, 169.0, 246.0] },
-        kcl:  { name: '염화칼륨', formula: 'KCl',  color: '#ffd166', data: [28.1, 34.2, 40.1, 45.8, 51.3, 56.3] },
-        nacl: { name: '염화나트륨', formula: 'NaCl', color: '#7fd4f0', data: [35.7, 36.0, 36.6, 37.3, 38.4, 39.8] },
+        kno3: { name: '질산칼륨', formula: 'KNO₃', color: '#059669', data: [13.3, 31.6, 63.9, 110.0, 169.0, 246.0] },
+        kcl:  { name: '염화칼륨', formula: 'KCl',  color: '#d97706', data: [28.1, 34.2, 40.1, 45.8, 51.3, 56.3] },
+        nacl: { name: '염화나트륨', formula: 'NaCl', color: '#0284c7', data: [35.7, 36.0, 36.6, 37.3, 38.4, 39.8] },
     };
     const TEMPS = [0, 20, 40, 60, 80, 100];
     const WATER_G = 100;
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="beaker-note" x="${BX.x1 + 10}" y="60">녹은 양 ${a.dissolved.toFixed(1)} g</text>`;
         out += `<text class="beaker-note" x="${BX.x1 + 10}" y="78">남은 양 ${a.undissolved.toFixed(1)} g</text>`;
         const label = a.undissolved > 0.01 ? '포화 (남음)' : a.saturated ? '꼭 포화' : '불포화';
-        const col = a.undissolved > 0.01 ? '#ff9d8a' : a.saturated ? '#ffd166' : '#54e6c1';
+        const col = a.undissolved > 0.01 ? '#dc2626' : a.saturated ? '#d97706' : '#059669';
         out += `<text class="sat-badge" fill="${col}" x="${BX.x1 + 10}" y="98">${label}</text>`;
         out += `<text class="beaker-note" x="${(BX.x0 + BX.x1) / 2}" y="${BX.bottom + 20}" text-anchor="middle">${S.name} ${added()} g · ${temp()} ℃</text>`;
         beakerGroup.innerHTML = out;
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="added-line" x1="${GRAPH.x0}" y1="${gy(added()).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(added()).toFixed(1)}"/>`;
         // held below the axis title, which sits just above the plot's top edge
         const addedY = Math.max(GRAPH.y1 + 12, gy(added()) - 5);
-        out += `<text class="axis-text" x="${GRAPH.x0 + 4}" y="${addedY.toFixed(1)}" fill="#ffd166">넣은 양 ${added()} g</text>`;
+        out += `<text class="axis-text" x="${GRAPH.x0 + 4}" y="${addedY.toFixed(1)}" fill="#d97706">넣은 양 ${added()} g</text>`;
 
         const px = gx(temp()), py = gy(a.s1);
         out += `<line class="op-guide" x1="${px.toFixed(1)}" y1="${GRAPH.y0}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (flipA && names.some(n => Math.abs(n.y - opY) < 13)) {
             opY = Math.min(GRAPH.y0 - 2, py + 18);
         }
-        out += `<text class="op-text" fill="#ffd166" x="${(px + (flipA ? -9 : 9)).toFixed(1)}" y="${opY.toFixed(1)}"${flipA ? ' text-anchor="end"' : ''}>${temp()} ℃ → ${a.s1.toFixed(1)} g</text>`;
+        out += `<text class="op-text" fill="#d97706" x="${(px + (flipA ? -9 : 9)).toFixed(1)}" y="${opY.toFixed(1)}"${flipA ? ' text-anchor="end"' : ''}>${temp()} ℃ → ${a.s1.toFixed(1)} g</text>`;
 
         const cx2 = gx(coolTemp()), cy2 = gy(a.s2);
         out += `<line class="cool-guide" x1="${cx2.toFixed(1)}" y1="${GRAPH.y0}" x2="${cx2.toFixed(1)}" y2="${cy2.toFixed(1)}"/>`;
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // y1 + 28 keeps it under the axis title and the "넣은 양" marker,
             // both of which live in the band along the top-left of the plot.
             coolY = Math.max(GRAPH.y1 + 28, Math.min(GRAPH.y0 - 6, coolY));
-            out += `<text class="op-text" fill="#7fd4f0" x="${(cx2 + (flipB ? -9 : 9)).toFixed(1)}" y="${coolY.toFixed(1)}"${flipB ? ' text-anchor="end"' : ''}>${coolTemp()} ℃ → ${a.s2.toFixed(1)} g</text>`;
+            out += `<text class="op-text" fill="#0284c7" x="${(cx2 + (flipB ? -9 : 9)).toFixed(1)}" y="${coolY.toFixed(1)}"${flipB ? ' text-anchor="end"' : ''}>${coolTemp()} ℃ → ${a.s2.toFixed(1)} g</text>`;
         }
 
         if (a.precipitated > 0.01) {

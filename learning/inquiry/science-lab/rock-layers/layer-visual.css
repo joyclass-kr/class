@@ -50,11 +50,11 @@
 .tank-water { fill: rgba(110, 200, 235, .13); }
 .sub-layer { stroke: rgba(0, 0, 0, .22); stroke-width: .6; }
 .layer-divider { stroke: rgba(255, 255, 255, .38); stroke-width: 1.2; stroke-dasharray: 5 4; }
-.layer-tag { fill: #e8f3f6; font-size: 12.5px; font-weight: 900; }
-.layer-age { fill: #334155; font-size: 12.5px; font-weight: 800; }
+.layer-tag { fill: #e8f3f6; font-size: 14px; font-weight: 900; }
+.layer-age { fill: #334155; font-size: 14px; font-weight: 800; }
 .fossil { fill: #f0e2b8; stroke: #7a6236; stroke-width: 1; }
 .falling { opacity: .95; }
-.ruler-line { stroke: rgba(151, 218, 211, .3); stroke-width: 1; stroke-dasharray: 3 3; }
+.ruler-line { stroke: rgba(148, 163, 184, 0.35); stroke-width: 1; stroke-dasharray: 3 3; }
 
 .speed-note { display: grid; gap: 4px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
 .speed-row { display: grid; grid-template-columns: 62px 1fr 96px; gap: 8px; align-items: center; font-size: 13px; font-weight: 850; }
@@ -64,19 +64,19 @@
    블록으로 바뀌지도 않습니다. display를 주지 않으면 width가 안 먹습니다. */
 .speed-fill { display: block; height: 100%; border-radius: 999px; }
 .speed-value { color: #0f172a; font-weight: 850; text-align: right; font-variant-numeric: tabular-nums; }
-.speed-caption { margin: 6px 0 0; color: #7c9b98; font-size: 12.5px; line-height: 1.45; }
+.speed-caption { margin: 6px 0 0; color: #475569; font-size: 14px; line-height: 1.45; }
 
 /* 쌓인 순서를 시간 순서로 읽는 표와 측정값 */
 .graph-svg { width: 100%; max-width: 560px; margin: 8px auto 0; height: auto; display: block; }
-.ord-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.ord-row { fill: rgba(151, 218, 211, .07); }
-.ord-row.newest { fill: rgba(255, 209, 102, .14); stroke: #ffd166; stroke-width: 1.4; }
-.ord-num { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.ord-name { fill: #0f172a; font-size: 12px; font-weight: 850; }
-.ord-when { fill: #475569; font-size: 12px; font-weight: 800; }
+.ord-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.ord-row { fill: rgba(148, 163, 184, 0.17); }
+.ord-row.newest { fill: rgba(217, 119, 6, .14); stroke: #d97706; stroke-width: 1.4; }
+.ord-num { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.ord-name { fill: #0f172a; font-size: 13.5px; font-weight: 850; }
+.ord-when { fill: #475569; font-size: 13.5px; font-weight: 800; }
 .ord-swatch { stroke: rgba(14, 24, 30, .45); stroke-width: 1; }
-.ord-empty { fill: #475569; font-size: 12.5px; font-weight: 800; }
-.ord-note { fill: #475569; font-size: 12px; font-weight: 800; }
+.ord-empty { fill: #475569; font-size: 14px; font-weight: 800; }
+.ord-note { fill: #475569; font-size: 13.5px; font-weight: 800; }
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 164px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
 .data-name { color: #475569; font-weight: 750; }

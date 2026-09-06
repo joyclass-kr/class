@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // the sun's declination on the days the seasons are shown for
     const SEASONS = {
         spring: { label: '봄·가을', hint: '3월 21일 · 9월 23일', dec: 0, colour: '#6cc25a' },
-        summer: { label: '여름', hint: '6월 21일', dec: TILT_REAL, colour: '#ff9d6b' },
-        winter: { label: '겨울', hint: '12월 21일', dec: -TILT_REAL, colour: '#52c7ff' },
+        summer: { label: '여름', hint: '6월 21일', dec: TILT_REAL, colour: '#ea580c' },
+        winter: { label: '겨울', hint: '12월 21일', dec: -TILT_REAL, colour: '#0284c7' },
     };
     const TILTS = [0, 23.44, 45];
     const SPOTS = {
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="alt-text" x="${Math.min(cx + patch / 2 + 26, 436).toFixed(1)}" y="${GY - 8}">${Math.round(a.noon)}°</text>`;
         out += `<text class="axis-text" x="${cx}" y="${GY + 14}" text-anchor="middle">빛이 닿는 땅 ${a.spread.toFixed(1)}배 넓이</text>`;
         const VERD = { summer: '여름', winter: '겨울', none: '계절 차이 없음' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">자전축 ${state.tilt === TILT_REAL ? '23.5' : state.tilt}° · ${a.spot.label} → 서울은 ${VERD[a.verdict]} (남중 고도 ${Math.round(a.noon)}°, 낮 ${a.len.toFixed(1)}시간)</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">자전축 ${state.tilt === TILT_REAL ? '23.5' : state.tilt}° · ${a.spot.label} → 서울은 ${VERD[a.verdict]} (남중 고도 ${Math.round(a.noon)}°, 낮 ${a.len.toFixed(1)}시간)</text>`;
         out += `<text class="note-text" x="20" y="208">반대쪽 자리에서는 남중 고도 ${Math.round(a.other)}°, 낮 ${a.otherLen.toFixed(1)}시간 · 노란 선은 자전축, 빨간 점은 서울</text>`;
         return out;
     }
@@ -280,11 +280,11 @@ document.addEventListener('DOMContentLoaded', () => {
         rows.forEach((r, i) => {
             const y = 40 + i * 48;
             const w = v => (v / r.max) * 300;
-            out += `<text class="bar-text" fill="#cfe6ee" x="${GRAPH.x0}" y="${y}">${r.name}</text>`;
-            out += `<rect class="bar" x="${GRAPH.x0}" y="${y + 6}" width="${w(r.mine).toFixed(1)}" height="11" rx="3" fill="#ffd166" opacity=".9"/>`;
-            out += `<text class="bar-text" fill="#ffd166" x="${(GRAPH.x0 + w(r.mine) + 6).toFixed(1)}" y="${y + 15}">${r.mine.toFixed(r.unit === '시간' ? 1 : 0)}${r.unit}</text>`;
-            out += `<rect class="bar" x="${GRAPH.x0}" y="${y + 20}" width="${w(r.other).toFixed(1)}" height="11" rx="3" fill="#52c7ff" opacity=".45"/>`;
-            out += `<text class="bar-text" fill="#9cb6b4" x="${(GRAPH.x0 + w(r.other) + 6).toFixed(1)}" y="${y + 29}">${r.other.toFixed(r.unit === '시간' ? 1 : 0)}${r.unit}</text>`;
+            out += `<text class="bar-text" fill="#0f172a" x="${GRAPH.x0}" y="${y}">${r.name}</text>`;
+            out += `<rect class="bar" x="${GRAPH.x0}" y="${y + 6}" width="${w(r.mine).toFixed(1)}" height="11" rx="3" fill="#d97706" opacity=".9"/>`;
+            out += `<text class="bar-text" fill="#d97706" x="${(GRAPH.x0 + w(r.mine) + 6).toFixed(1)}" y="${y + 15}">${r.mine.toFixed(r.unit === '시간' ? 1 : 0)}${r.unit}</text>`;
+            out += `<rect class="bar" x="${GRAPH.x0}" y="${y + 20}" width="${w(r.other).toFixed(1)}" height="11" rx="3" fill="#0284c7" opacity=".45"/>`;
+            out += `<text class="bar-text" fill="#475569" x="${(GRAPH.x0 + w(r.other) + 6).toFixed(1)}" y="${y + 29}">${r.other.toFixed(r.unit === '시간' ? 1 : 0)}${r.unit}</text>`;
         });
         out += `<text class="note-text" x="${GRAPH.x0}" y="190">${state.tilt === 0 ? '기울기가 없으면 두 자리가 똑같아 계절이 생기지 않습니다' : '기울기가 클수록 두 자리의 차이가 커집니다'}</text>`;
         return out;

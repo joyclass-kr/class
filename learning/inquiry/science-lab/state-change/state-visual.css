@@ -1,12 +1,12 @@
 .prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
 
 .particle-model { display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(180px, 34vw); }
-.particle-model-title { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12.5px; font-weight: 850; }
-.zoom-badge { padding: 2px 7px; border-radius: 999px; background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.06) 100%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--cyan); font-size: 12.5px; font-weight: 900; }
+.particle-model-title { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; font-weight: 850; }
+.zoom-badge { padding: 2px 7px; border-radius: 999px; background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.06) 100%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--cyan); font-size: 14px; font-weight: 900; }
 .particle-svg { width: 100%; aspect-ratio: 1 / 1; display: block; }
-.particle-frame { fill: rgba(255, 255, 255, .03); stroke: rgba(151, 218, 211, .3); stroke-width: 2; stroke-dasharray: 5 4; }
+.particle-frame { fill: rgba(255, 255, 255, .03); stroke: rgba(148, 163, 184, 0.35); stroke-width: 2; stroke-dasharray: 5 4; }
 #particleGroup circle { fill: #8fd8ff; stroke: rgba(255, 255, 255, .55); stroke-width: 1; transform-box: fill-box; transform-origin: center; }
-.particle-note { margin: 0; color: #7c9b98; font-size: 12.5px; line-height: 1.45; text-align: center; }
+.particle-note { margin: 0; color: #475569; font-size: 14px; line-height: 1.45; text-align: center; }
 
 .beaker {
     position: relative;
@@ -21,7 +21,7 @@
 .water-surface { fill: rgba(190, 238, 250, .4); transition: cy .9s ease; }
 #waterRect { transition: y .9s ease, height .9s ease; }
 .tick { stroke: rgba(220, 246, 247, .5); stroke-width: 1.5; }
-.tick-label { fill: rgba(220, 246, 247, .72); font-size: 12.5px; font-weight: 700; text-anchor: end; }
+.tick-label { fill: rgba(220, 246, 247, .72); font-size: 14px; font-weight: 700; text-anchor: end; }
 
 .ice-facet { stroke: rgba(255, 255, 255, .55); stroke-width: 1.2; }
 /* Ice doesn't swap in/out — it's always drawn full-size underneath, and
@@ -117,14 +117,14 @@
 .graph-svg { width: 100%; max-width: 560px; margin: 8px auto 0; height: auto; display: block; }
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.heat-curve { fill: none; stroke: #7fd4f0; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
-.flat-mark { stroke: #ffd166; stroke-width: 3.4; stroke-linecap: round; }
-.flat-text { fill: #c2410c; font-size: 12px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 13.5px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.heat-curve { fill: none; stroke: #0284c7; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.flat-mark { stroke: #d97706; stroke-width: 3.4; stroke-linecap: round; }
+.flat-text { fill: #c2410c; font-size: 13.5px; font-weight: 900; }
 .op-guide { stroke: #ea580c; stroke-width: 1.5; stroke-dasharray: 4 3; opacity: 0.7; stroke-width: 1.2; stroke-dasharray: 4 4; }
 .op-point { fill: #c2410c; stroke: #0d1f27; stroke-width: 1.6; }
-.op-text { fill: #c2410c; font-size: 12.5px; font-weight: 900; }
+.op-text { fill: #c2410c; font-size: 14px; font-weight: 900; }
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 172px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
 .data-name { color: #475569; font-weight: 750; }

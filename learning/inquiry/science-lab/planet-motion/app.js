@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // real orbital radii (AU), periods (days), diameters (km), inclinations (°); circular orbits are an approximation
     const PLANETS = {
         mercury: { label: '수성', hint: '88일', a: 0.387, P: 87.97, D: 4879, i: 7.0, inner: true, col: '#c8c8c8', win: 35 },
-        venus: { label: '금성', hint: '225일', a: 0.723, P: 224.7, D: 12104, i: 3.39, inner: true, col: '#ffd166', win: 60 },
+        venus: { label: '금성', hint: '225일', a: 0.723, P: 224.7, D: 12104, i: 3.39, inner: true, col: '#d97706', win: 60 },
         mars: { label: '화성', hint: '687일', a: 1.524, P: 687.0, D: 6779, i: 1.85, inner: false, col: '#ff7a59', win: 100 },
         jupiter: { label: '목성', hint: '11.9년', a: 5.203, P: 4333, D: 139820, i: 1.30, inner: false, col: '#f5c58a', win: 140 },
         saturn: { label: '토성', hint: '29.5년', a: 9.537, P: 10759, D: 116460, i: 2.49, inner: false, col: '#e8d9a8', win: 160 },
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${SX0}" y="170">${t === 0 ? ref : t < 0 ? `${ref} ${-t}일 전` : `${ref} ${t}일 후`} · 지구에서 ${fmtN(row.delta, 2)} AU · 황경 ${row.lon >= 0 ? '+' : ''}${fmtN(row.lon, 1)}°</text>`;
         out += `<text class="trait-text" style="fill:${inRet ? '#ff7a59' : '#97dad3'}" x="${SX0}" y="186">${inRet ? '지금 서쪽으로 되돌아가는 중 (역행)' : '지금 동쪽으로 가는 중 (순행)'}</text>`;
         const VERD = { short: '한 달 남짓', mid: '두 달 반쯤', long: '넉 달 안팎' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${pl.label}: ${ref} ${-a.t1}일 전부터 ${a.t2}일 후까지 ${a.dur}일 동안 역행 — ${VERD[a.verdict]}` : `${pl.label} · ${ref} 앞뒤 ${W}일씩`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${pl.label}: ${ref} ${-a.t1}일 전부터 ${a.t2}일 후까지 ${a.dur}일 동안 역행 — ${VERD[a.verdict]}` : `${pl.label} · ${ref} 앞뒤 ${W}일씩`}</text>`;
         out += `<text class="note-text" x="20" y="208">궤도는 원, 공전 주기와 반지름은 실제 값. 남북 움직임은 궤도 기울기 ${pl.i}°에서 나온 것(대략)</text>`;
         return out;
     }
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         const tNow = Math.round(-W + 2 * W * state.progress);
         let d = ''; rows.forEach(r => { if (r.t <= tNow) d += `${d ? 'L' : 'M'}${xOf(r.t).toFixed(1)},${yOf(r.lon).toFixed(1)} `; });
-        out += `<path class="trace" style="stroke:#ffd166" d="${d}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
         if (a.t1 !== null) { const r1 = rows[a.t1 + W], r2 = rows[a.t2 + W]; out += `<text class="small-label" style="fill:#ff7a59" x="${((xOf(a.t1) + xOf(a.t2)) / 2).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">역행 ${a.dur}일 · ${fmtN(a.arc, 1)}° 되돌아감</text>`; if (tNow >= a.t1) out += `<circle class="stop-dot" cx="${xOf(a.t1).toFixed(1)}" cy="${yOf(r1.lon).toFixed(1)}" r="3.5"/>`; if (tNow >= a.t2) out += `<circle class="stop-dot" cx="${xOf(a.t2).toFixed(1)}" cy="${yOf(r2.lon).toFixed(1)}" r="3.5"/>`; }
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">황경은 동쪽으로 갈수록 커집니다. 동그라미가 멈추는 순간 유(留)</text>`;
         return out;
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="sight" x1="${ex.toFixed(1)}" y1="${ey}" x2="${CX}" y2="${CY}"/><line class="sight now" x1="${ex.toFixed(1)}" y1="${ey}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;
         // the planet's sunlit half, seen from above
         const ang = Math.atan2(-(g.py), g.px), r0 = 5;
-        out += `<circle fill="#1b2733" stroke="rgba(214,245,250,.4)" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${r0}"/>`;
+        out += `<circle fill="#1b2733" stroke="rgba(148, 163, 184, 0.40)" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${r0}"/>`;
         out += `<path fill="${pl.col}" d="M${(px + r0 * Math.cos(ang + Math.PI / 2)).toFixed(1)},${(py + r0 * Math.sin(ang + Math.PI / 2)).toFixed(1)} A${r0},${r0} 0 0 1 ${(px + r0 * Math.cos(ang - Math.PI / 2)).toFixed(1)},${(py + r0 * Math.sin(ang - Math.PI / 2)).toFixed(1)} Z"/>`;
         out += `<circle class="earth-dot" cx="${ex.toFixed(1)}" cy="${ey}" r="3.5"/>`;
         out += `<text class="small-label" x="${CX}" y="196" text-anchor="middle">위에서 본 궤도 (축척대로) · 밝은 쪽이 태양 쪽</text>`;
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="212" y="170">지구에서 ${fmtN(g.delta, 2)} AU · 겉보기 지름 ${fmtN(g.size, 1)}″ · 태양과 ${fmtN(g.e * R2D)}° 벌어짐</text>`;
         out += `<text class="trait-text" x="212" y="186">밝은 부분 ${fmtN(g.k * 100)} % — ${g.k < 0.25 ? '가는 초승달' : g.k < 0.7 ? '반달쯤' : g.k < 0.97 ? '조금 이지러진 둥근 모양' : '둥근 모양'}</text>`;
         const VERD = { crescent: '가는 초승달, 가장 크게', half: '반달쯤', fullFar: '둥글고 가장 작게', fullNear: '둥글고 가장 크게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${pl.label} ${posTable()[a.posKey].label}: ${VERD[a.verdict]} (${fmtN(a.g.size, 1)}″, ${fmtN(a.g.k * 100)} %)` : `${pl.label} · ${posTable()[a.posKey].label}까지 한 바퀴`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${pl.label} ${posTable()[a.posKey].label}: ${VERD[a.verdict]} (${fmtN(a.g.size, 1)}″, ${fmtN(a.g.k * 100)} %)` : `${pl.label} · ${posTable()[a.posKey].label}까지 한 바퀴`}</text>`;
         out += `<text class="note-text" x="20" y="208">겉보기 지름 = 실제 지름 ÷ 거리, 밝은 부분 = (1 + cos 위상각) ÷ 2. 1″은 1°의 3,600분의 1</text>`;
         return out;
     }
@@ -260,9 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         let dS = '', dK = '';
         for (let deg = 0; deg <= 360; deg += 2) { const g = geom(pl, deg * D2R); dS += `${dS ? 'L' : 'M'}${xOf(deg).toFixed(1)},${ySize(g.size).toFixed(1)} `; dK += `${dK ? 'L' : 'M'}${xOf(deg).toFixed(1)},${yPct(g.k * 100).toFixed(1)} `; }
-        out += `<path class="trace" style="stroke:#ffd166" d="${dS}"/><path class="trace" style="stroke:#52c7ff" d="${dK}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${dS}"/><path class="trace" style="stroke:#0284c7" d="${dK}"/>`;
         const psi = a.psi - 2 * Math.PI * (1 - ease(state.progress)), deg = ((psi * R2D) % 360 + 360) % 360, g = geom(pl, psi);
-        out += `<line class="marker" x1="${xOf(deg).toFixed(1)}" y1="${Y1}" x2="${xOf(deg).toFixed(1)}" y2="${Y0}"/><circle fill="#ffd166" stroke="#fff" cx="${xOf(deg).toFixed(1)}" cy="${ySize(g.size).toFixed(1)}" r="4"/><circle fill="#52c7ff" stroke="#fff" cx="${xOf(deg).toFixed(1)}" cy="${yPct(g.k * 100).toFixed(1)}" r="4"/>`;
+        out += `<line class="marker" x1="${xOf(deg).toFixed(1)}" y1="${Y1}" x2="${xOf(deg).toFixed(1)}" y2="${Y0}"/><circle fill="#d97706" stroke="#fff" cx="${xOf(deg).toFixed(1)}" cy="${ySize(g.size).toFixed(1)}" r="4"/><circle fill="#0284c7" stroke="#fff" cx="${xOf(deg).toFixed(1)}" cy="${yPct(g.k * 100).toFixed(1)}" r="4"/>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">${pl.inner ? '가까울수록 크지만 초승달, 멀수록 둥글지만 작음 — 크기와 모양이 엇갈립니다' : '충에서 둥글고 가장 크고, 합에서 둥글고 가장 작음 — 늘 거의 둥긂'}</text>`;
         return out;
     }
@@ -282,9 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="trait-text" x="${RX}" y="52">달까지 ${fmtN(a.d)} km (${DISTS[state.dist].label})</text>`;
             out += `<text class="trait-text" x="${RX}" y="70">본그림자 길이 ${fmtN(a.Lu)} km</text>`;
             out += `<text class="trait-text" x="${RX}" y="88">달에서 지표까지 ${fmtN(a.x)} km</text>`;
-            out += `<text class="trait-text" style="fill:${a.x < a.Lu ? '#ff9f8a' : '#ffd166'}" x="${RX}" y="106">→ 본그림자가 지표에 ${a.x < a.Lu ? '닿음' : '안 닿음'}</text>`;
+            out += `<text class="trait-text" style="fill:${a.x < a.Lu ? '#dc2626' : '#d97706'}" x="${RX}" y="106">→ 본그림자가 지표에 ${a.x < a.Lu ? '닿음' : '안 닿음'}</text>`;
             out += `<text class="trait-text" x="${RX}" y="130">그림자 축이 지구 중심에서</text><text class="trait-text" x="${RX}" y="146">${fmtN(a.offset)} km 빗나감 (황위 ${fmtN(a.beta, 2)}°)</text>`;
-            out += `<text class="trait-text" style="fill:#52c7ff" x="${RX}" y="164">${a.offset < RE ? '축이 지구를 지남 → 중심식' : a.type === 'partial' ? '축은 비껴가고 반그림자만 스침' : '반그림자도 지구를 비껴감'}</text>`;
+            out += `<text class="trait-text" style="fill:#0284c7" x="${RX}" y="164">${a.offset < RE ? '축이 지구를 지남 → 중심식' : a.type === 'partial' ? '축은 비껴가고 반그림자만 스침' : '반그림자도 지구를 비껴감'}</text>`;
             if (a.type === 'total' || a.type === 'annular') out += `<text class="small-label" x="${RX}" y="184">지표의 ${a.type === 'annular' ? '고리 그림자' : '본그림자'} 반지름 ${fmtN(Math.abs(a.Ru))} km</text>`;
         } else {
             const SC = 0.9, toArc = km => km / a.d * R2D * 60, rp = toArc(a.Rp) * SC, ru = toArc(a.Ru) * SC, rm = toArc(RM) * SC;
@@ -301,17 +301,17 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="trait-text" x="${RX}" y="88">반그림자 반지름 ${fmtN(a.Rp)} km (${fmtN(toArc(a.Rp))}′)</text>`;
             out += `<text class="trait-text" x="${RX}" y="106">달 반지름 ${fmtN(RM)} km (${fmtN(toArc(RM), 1)}′)</text>`;
             out += `<text class="trait-text" x="${RX}" y="130">달 중심이 그림자 축에서</text><text class="trait-text" x="${RX}" y="146">${fmtN(a.offset)} km 빗나감 (황위 ${fmtN(a.beta, 2)}°)</text>`;
-            out += `<text class="trait-text" style="fill:#52c7ff" x="${RX}" y="164">${a.type === 'total' ? '달 전체가 본그림자 안' : a.type === 'partial' ? '달 일부만 본그림자 안' : a.type === 'penumbral' ? '반그림자만 지남 — 조금 어두워짐' : '그림자를 비껴감'}</text>`;
+            out += `<text class="trait-text" style="fill:#0284c7" x="${RX}" y="164">${a.type === 'total' ? '달 전체가 본그림자 안' : a.type === 'partial' ? '달 일부만 본그림자 안' : a.type === 'penumbral' ? '반그림자만 지남 — 조금 어두워짐' : '그림자를 비껴감'}</text>`;
         }
         const NAMES = { solar: { total: '개기일식', annular: '금환일식', partial: '부분일식', none: '일식 없음' }, lunar: { total: '개기월식', partial: '부분월식', penumbral: '반영월식', none: '월식 없음' } };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${state.node === 'n0' ? '교점 바로' : `교점에서 ${a.dl}°`} · ${DISTS[state.dist].label}: ${NAMES[a.kindKey][a.type]}` : `${KINDS[a.kindKey].label} · ${state.node === 'n0' ? '교점 바로' : `교점에서 ${a.dl}°`} · ${DISTS[state.dist].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${state.node === 'n0' ? '교점 바로' : `교점에서 ${a.dl}°`} · ${DISTS[state.dist].label}: ${NAMES[a.kindKey][a.type]}` : `${KINDS[a.kindKey].label} · ${state.node === 'n0' ? '교점 바로' : `교점에서 ${a.dl}°`} · ${DISTS[state.dist].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">해 반지름 696,000 km · 지구 6,371 km · 달 1,737 km · 해까지 1억 4,960만 km로 계산. 궤도 기울기 5.1°</text>`;
         return out;
     }
 
     function graphEclipse(a) {
         const X0 = 70, X1 = 430, xOf = dl => X0 + dl / 25 * (X1 - X0);
-        const COL = { total: '#ff7a59', annular: '#ffd166', partial: '#52c7ff', penumbral: '#a78bfa', none: '#24343f' };
+        const COL = { total: '#ff7a59', annular: '#d97706', partial: '#0284c7', penumbral: '#a78bfa', none: '#24343f' };
         const NAMES = { solar: { total: '개기', annular: '금환', partial: '부분', none: '없음' }, lunar: { total: '개기', partial: '부분', penumbral: '반영', none: '없음' } };
         let out = `<text class="axis-title" x="20" y="18">교점에서 떨어진 각에 따른 식의 종류 — 달까지 ${fmtN(a.d)} km일 때</text>`;
         [['solar', 46], ['lunar', 100]].forEach(([kk, y]) => {
@@ -320,8 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const beta = Math.asin(Math.sin(INCL * D2R) * Math.sin(dl * D2R)) * R2D, type = eclipseType(kk, a.d, beta).type;
                 if (!cur || cur.type !== type) { cur = { type, from: dl, to: dl }; segs.push(cur); } else cur.to = dl;
             }
-            out += `<text class="trait-text" style="fill:${kk === a.kindKey ? '#ffd166' : '#b6d3d9'}" x="${X0 - 5}" y="${y + 15}" text-anchor="end">${KINDS[kk].label}</text>`;
-            segs.forEach(sg => { const x = xOf(sg.from), w = Math.max(0.5, xOf(sg.to) - x); out += `<rect class="band" fill="${COL[sg.type]}" x="${x.toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="22"/>`; if (w > 30) out += `<text class="band-text" style="fill:${sg.type === 'none' ? '#9cb6b4' : '#08131a'}" x="${(x + w / 2).toFixed(1)}" y="${y + 15}" text-anchor="middle">${NAMES[kk][sg.type]}</text>`; });
+            out += `<text class="trait-text" style="fill:${kk === a.kindKey ? '#d97706' : '#334155'}" x="${X0 - 5}" y="${y + 15}" text-anchor="end">${KINDS[kk].label}</text>`;
+            segs.forEach(sg => { const x = xOf(sg.from), w = Math.max(0.5, xOf(sg.to) - x); out += `<rect class="band" fill="${COL[sg.type]}" x="${x.toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="22"/>`; if (w > 30) out += `<text class="band-text" style="fill:${sg.type === 'none' ? '#475569' : '#08131a'}" x="${(x + w / 2).toFixed(1)}" y="${y + 15}" text-anchor="middle">${NAMES[kk][sg.type]}</text>`; });
             segs.forEach((sg, i) => { if (i > 0) out += `<text class="small-label" x="${xOf(sg.from).toFixed(1)}" y="${y + 33}" text-anchor="middle">${fmtN(sg.from, 1)}°</text>`; });
         });
         [0, 5, 10, 15, 20, 25].forEach(dl => { out += `<text class="axis-text" x="${xOf(dl).toFixed(1)}" y="158" text-anchor="middle">${dl}°</text>`; });

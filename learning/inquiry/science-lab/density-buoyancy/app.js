@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="liquid" x="${TANK.x0 + 2}" y="${TANK.surface}" width="${TANK.x1 - TANK.x0 - 4}" height="${TANK.bottom - TANK.surface}" fill="${f.fill}"/>`;
         out += `<ellipse class="liquid-surface" cx="${cx}" cy="${TANK.surface}" rx="${(TANK.x1 - TANK.x0 - 4) / 2}" ry="4"/>`;
         out += `<path class="tank" fill="none" d="M${TANK.x0},52 L${TANK.x0},${TANK.bottom} L${TANK.x1},${TANK.bottom} L${TANK.x1},52"/>`;
-        out += `<rect class="block" x="${(cx - side / 2).toFixed(1)}" y="${topY.toFixed(1)}" width="${side.toFixed(1)}" height="${side.toFixed(1)}" rx="3" fill="#ffd166"/>`;
+        out += `<rect class="block" x="${(cx - side / 2).toFixed(1)}" y="${topY.toFixed(1)}" width="${side.toFixed(1)}" height="${side.toFixed(1)}" rx="3" fill="#d97706"/>`;
         out += `<text class="block-label" x="${cx}" y="${(topY + side / 2 + 4).toFixed(1)}" text-anchor="middle">${b.rhoObj.toFixed(2)}</text>`;
         out += `<text class="zone-label" x="${TANK.x0}" y="44">${f.name} (밀도 ${f.rho.toFixed(2)})</text>`;
         out += `<text class="zone-label" x="${TANK.x1 + 6}" y="${TANK.surface + 4}">수면</text>`;
@@ -117,14 +117,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // of each other, so each is held clear of the mid-line.
         const upTextY = Math.min(base - upLen + 4, base - 6);
         const dnTextY = Math.max(base + dnLen + 4, base + 18);
-        out += `<text class="force-text" fill="#54e6c1" x="${ax + 9}" y="${upTextY.toFixed(1)}">부력 ${b.buoyN.toFixed(2)} N</text>`;
+        out += `<text class="force-text" fill="#059669" x="${ax + 9}" y="${upTextY.toFixed(1)}">부력 ${b.buoyN.toFixed(2)} N</text>`;
         out += `<line class="force-arrow force-down" x1="${ax}" y1="${base}" x2="${ax}" y2="${(base + dnLen).toFixed(1)}"/>`;
         out += `<path class="force-arrow force-down" d="M${ax - 5},${(base + dnLen - 7).toFixed(1)} L${ax},${(base + dnLen).toFixed(1)} L${ax + 5},${(base + dnLen - 7).toFixed(1)}" fill="none"/>`;
         out += `<text class="force-text" fill="#ff8a8a" x="${ax + 9}" y="${dnTextY.toFixed(1)}">무게 ${b.weightN.toFixed(2)} N</text>`;
         if (b.state === 'sink' && b.normalN > 0) {
             out += `<text class="force-text" fill="#c79bff" x="${ax - 84}" y="${base + 34}">바닥이 ${b.normalN.toFixed(2)} N 받침</text>`;
         } else if (b.state === 'neutral') {
-            out += `<text class="force-text" fill="#54e6c1" x="${ax - 84}" y="${base + 34}">부력 = 무게 (중성 부력)</text>`;
+            out += `<text class="force-text" fill="#059669" x="${ax - 84}" y="${base + 34}">부력 = 무게 (중성 부력)</text>`;
         }
         mainGroup.innerHTML = out;
 
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         g += `<path class="curve" d="M${pts.join('L')}"/>`;
         g += `<line class="float-line" x1="${gx(b.rhoFl, 0, rhoMax)}" y1="${GRAPH.y0}" x2="${gx(b.rhoFl, 0, rhoMax)}" y2="${GRAPH.y1}"/>`;
-        g += `<text class="axis-text" x="${gx(b.rhoFl, 0, rhoMax) + 4}" y="${GRAPH.y0 - 6}" fill="#54e6c1">${f.name} ${b.rhoFl.toFixed(2)}</text>`;
+        g += `<text class="axis-text" x="${gx(b.rhoFl, 0, rhoMax) + 4}" y="${GRAPH.y0 - 6}" fill="#059669">${f.name} ${b.rhoFl.toFixed(2)}</text>`;
         const px = gx(Math.min(rhoMax, b.rhoObj), 0, rhoMax), py = gy(b.frac * 100, 100);
         g += `<line class="op-guide" x1="${px}" y1="${GRAPH.y0}" x2="${px}" y2="${py.toFixed(1)}"/>`;
         g += `<circle class="op-point" cx="${px}" cy="${py.toFixed(1)}" r="5"/>`;

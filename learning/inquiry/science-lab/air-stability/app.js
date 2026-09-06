@@ -111,7 +111,7 @@ function drawRidge(g) {
         // the top left, so it is only written on the canvas when the line sits
         // clear of it. The height is in the result box and the table regardless.
         if (yLcl > 108) {
-            g.appendChild(el('text', { x: 34, y: yLcl - 5, class: 'tiny-label', style: 'fill:#7fd4f0' },
+            g.appendChild(el('text', { x: 34, y: yLcl - 5, class: 'tiny-label', style: 'fill:#0284c7' },
                 `상승 응결 고도 ${Math.round(a.lcl * 1000)} m`));
         }
         // Cloud hugs the windward slope from the condensation level to the top.
@@ -242,10 +242,10 @@ function drawGraph(g) {
     const merged = a.lfc !== null && state.lapse < GD && Math.abs(a.lfc - a.lcl) < 0.06;
     const placed = [];
     if (a.lcl < Z_TOP) {
-        g.appendChild(el('circle', { cx: X(a.tLcl), cy: Y(a.lcl), r: 4.2, class: 'trace-dot', style: 'fill:#7fd4f0' }));
+        g.appendChild(el('circle', { cx: X(a.tLcl), cy: Y(a.lcl), r: 4.2, class: 'trace-dot', style: 'fill:#0284c7' }));
         const t = el('text', {
             x: X(a.tLcl) - 6, y: Y(a.lcl) - 6, 'text-anchor': 'end', class: 'axis-text',
-            style: `fill:${merged ? '#ff8a8a' : '#7fd4f0'}`,
+            style: `fill:${merged ? '#ff8a8a' : '#0284c7'}`,
         }, merged ? '응결 = 자유 대류' : '응결');
         g.appendChild(t); placed.push(t);
     }
@@ -276,7 +276,7 @@ function drawGraph(g) {
         if (placed.some(p => hits(t, p))) t.remove();
     }
 
-    const keys = [['#cfe6ee', '주위 공기'], ['#ffd166', '건조 단열'], ['#54e6c1', '습윤 단열'], ['#7fd4f0', '이슬점']];
+    const keys = [['#0f172a', '주위 공기'], ['#d97706', '건조 단열'], ['#059669', '습윤 단열'], ['#0284c7', '이슬점']];
     let lx = x0;
     keys.forEach(([col, label]) => {
         g.appendChild(el('line', { x1: lx, y1: 172, x2: lx + 14, y2: 172, style: `stroke:${col};stroke-width:3` }));

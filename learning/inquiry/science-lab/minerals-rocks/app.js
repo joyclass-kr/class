@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<path class="scratch" d="M${vx - 22},${CY + 6} L${vx + 22},${CY - 6}" stroke-dasharray="52" stroke-dashoffset="52">` +
                    `<animate attributeName="stroke-dashoffset" values="52;0;0;52" dur="2.6s" repeatCount="indefinite"/></path>`;
             const hx = a.verdict === 'a' ? AX : BX;
-            out += `<text class="small-label" x="${vx}" y="${CY + 28}" text-anchor="middle" fill="#ffd166">흠집</text>`;
+            out += `<text class="small-label" x="${vx}" y="${CY + 28}" text-anchor="middle" fill="#d97706">흠집</text>`;
             out += `<text class="small-label" x="${hx}" y="${CY + 28}" text-anchor="middle">더 단단함</text>`;
         } else {
             out += `<text class="small-label" x="${(AX + BX) / 2}" y="${CY + 30}" text-anchor="middle">굳기가 같아 서로 긁지 못합니다</text>`;
@@ -273,10 +273,10 @@ document.addEventListener('DOMContentLoaded', () => {
         list.forEach(([k, m], i) => {
             const y = GRAPH.y1 + 10 + i * 17;
             const on = k === a.ak || k === a.bk;
-            out += `<text class="axis-text" style="fill:${on ? '#cfe6ee' : '#7f9298'}" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${m.name}</text>`;
+            out += `<text class="axis-text" style="fill:${on ? '#0f172a' : '#7f9298'}" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${m.name}</text>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 5}" width="${(gx(m.h) - GRAPH.x0).toFixed(1)}" height="11" rx="3" ` +
                    `fill="${m.colour}" opacity="${on ? 0.95 : 0.32}"/>`;
-            out += `<text class="bar-text" style="fill:${on ? '#ffd166' : '#7f9298'}" x="${(gx(m.h) + 6).toFixed(1)}" y="${(y + 4).toFixed(1)}">${m.h}` +
+            out += `<text class="bar-text" style="fill:${on ? '#d97706' : '#7f9298'}" x="${(gx(m.h) + 6).toFixed(1)}" y="${(y + 4).toFixed(1)}">${m.h}` +
                    `${k === a.ak ? ' ← A' : ''}${k === a.bk ? ' ← B' : ''}</text>`;
         });
         graphGroup.innerHTML = out;
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let lg = LOG_MIN; lg <= LOG_MAX + 1e-9; lg += 0.1) pts.push(`${gx(lg).toFixed(1)},${gy(crystalFor(10 ** lg)).toFixed(1)}`);
         out += `<path class="trace" d="M${pts.join('L')}"/>`;
         const lgNow = LOG_MIN + (state.logT / 100) * (LOG_MAX - LOG_MIN);
-        out += `<circle class="trace-dot" cx="${gx(lgNow).toFixed(1)}" cy="${gy(a.mm).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(lgNow).toFixed(1)}" cy="${gy(a.mm).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

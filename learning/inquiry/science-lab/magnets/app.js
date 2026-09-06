@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const ax1 = ax0 + dir * mag;
             out += `<line class="force-arrow" x1="${ax0.toFixed(1)}" y1="${ay}" x2="${ax1.toFixed(1)}" y2="${ay}"/>`;
             out += `<path class="force-head" d="M${ax1.toFixed(1)},${ay} l${(-dir * 9).toFixed(1)},-5 l0,10 z"/>`;
-            out += `<text class="small-label" fill="#ffd166" x="${((ax0 + ax1) / 2).toFixed(1)}" y="${ay - 8}" text-anchor="middle">${F > 0 ? '끌어당김' : '밀어냄'} ${Math.abs(F).toFixed(2)} N</text>`;
+            out += `<text class="small-label" fill="#d97706" x="${((ax0 + ax1) / 2).toFixed(1)}" y="${ay - 8}" text-anchor="middle">${F > 0 ? '끌어당김' : '밀어냄'} ${Math.abs(F).toFixed(2)} N</text>`;
         }
         // gap marker
         if (q.gap > 0.002) {
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="axis-text" x="${(LX + MW).toFixed(1)}" y="${TY + MH + 31}" text-anchor="middle">붙었습니다</text>`;
         }
         const VERD = { stick: '끌려가 붙는다', push: '밀려난다', still: '움직이지 않는다' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${f.label} · ${state.gap} cm → ${VERD[a.verdict]}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${f.label} · ${state.gap} cm → ${VERD[a.verdict]}</text>`;
         out += `<text class="note-text" x="20" y="34">바닥 마찰: ${FRICTION.toFixed(2)} N보다 센 힘이어야 움직입니다 · 지난 시간 ${q.t.toFixed(1)}초</text>`;
         return out;
     }
@@ -359,10 +359,10 @@ document.addEventListener('DOMContentLoaded', () => {
             '떨어진 거리', '힘의 세기');
         const pts = [];
         for (let cm = 0.6; cm <= gMax + 1e-9; cm += 0.1) pts.push(`${gx(cm).toFixed(1)},${gy(Math.abs(forceAt(cm / 100, state.facing))).toFixed(1)}`);
-        out += `<path class="trace" style="stroke:#ffd166" d="M${pts.join('L')}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="M${pts.join('L')}"/>`;
         out += `<line class="friction-line" x1="${GRAPH.x0}" y1="${gy(FRICTION).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(FRICTION).toFixed(1)}"/>`;
         out += `<text class="friction-text" x="${GRAPH.x1 - 4}" y="${(gy(FRICTION) - 5).toFixed(1)}" text-anchor="end">마찰 ${FRICTION.toFixed(2)} N — 이보다 세야 움직임</text>`;
-        out += `<circle class="trace-dot" cx="${gx(Math.max(0.6, q.gap * 100)).toFixed(1)}" cy="${gy(Math.abs(q.F)).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(Math.max(0.6, q.gap * 100)).toFixed(1)}" cy="${gy(Math.abs(q.F)).toFixed(1)}" r="5" fill="#d97706"/>`;
         out += `<text class="note-text" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 14}">${a.f.right === null ? '쇠못을 끄는 힘' : a.f0 > 0 ? '끌어당기는 힘' : '밀어내는 힘'} — 가까울수록 세고 멀어지면 빠르게 약해집니다</text>`;
         return out;
     }
@@ -380,8 +380,8 @@ document.addEventListener('DOMContentLoaded', () => {
         rows.forEach((r, i) => {
             const y = GRAPH.y1 + 24 + i * 32;
             const chosen = r.d === state.dist;
-            out += `<text class="bar-text" fill="${chosen ? '#ffd166' : '#b6d3d9'}" x="${GRAPH.x0}" y="${y - 9}">${a.place.label} ${r.d} cm — 지구의 ${r.ratio >= 10 ? Math.round(r.ratio) : r.ratio.toFixed(1)}배${r.ratio < 0.5 ? ' → 북쪽을 가리킴' : ' → 자석 쪽으로 돌아감'}</text>`;
-            out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(2, gx(r.ratio) - GRAPH.x0).toFixed(1)}" height="11" rx="3" fill="${chosen ? '#ffd166' : '#6f8f8d'}" opacity=".85"/>`;
+            out += `<text class="bar-text" fill="${chosen ? '#d97706' : '#334155'}" x="${GRAPH.x0}" y="${y - 9}">${a.place.label} ${r.d} cm — 지구의 ${r.ratio >= 10 ? Math.round(r.ratio) : r.ratio.toFixed(1)}배${r.ratio < 0.5 ? ' → 북쪽을 가리킴' : ' → 자석 쪽으로 돌아감'}</text>`;
+            out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(2, gx(r.ratio) - GRAPH.x0).toFixed(1)}" height="11" rx="3" fill="${chosen ? '#d97706' : '#6f8f8d'}" opacity=".85"/>`;
         });
         out += `<line class="friction-line" x1="${gx(1).toFixed(1)}" y1="${GRAPH.y1 + 8}" x2="${gx(1).toFixed(1)}" y2="${GRAPH.y0}"/>`;
         out += `<text class="friction-text" x="${(gx(1) + 4).toFixed(1)}" y="${GRAPH.y0 - 6}">지구의 힘과 같음</text>`;

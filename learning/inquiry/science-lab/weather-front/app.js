@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<circle class="sun" cx="368" cy="52" r="13"/>`;
             for (let i = 0; i < 8; i += 1) {
                 const th = (i / 8) * Math.PI * 2;
-                out += `<line class="rain" style="stroke:#ffd166" x1="${(368 + 17 * Math.cos(th)).toFixed(1)}" y1="${(52 + 17 * Math.sin(th)).toFixed(1)}" ` +
+                out += `<line class="rain" style="stroke:#d97706" x1="${(368 + 17 * Math.cos(th)).toFixed(1)}" y1="${(52 + 17 * Math.sin(th)).toFixed(1)}" ` +
                        `x2="${(368 + 22 * Math.cos(th)).toFixed(1)}" y2="${(52 + 22 * Math.sin(th)).toFixed(1)}"/>`;
             }
             out += `<text class="small-label" x="368" y="88" text-anchor="middle">하강 기류 → 맑음</text>`;
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pts = [];
         for (let s = 100; s <= 500; s += 4) pts.push(`${gx(s).toFixed(1)},${gy(analyseWind(s).v).toFixed(1)}`);
         out += `<path class="trace" d="M${pts.join('L')}"/>`;
-        out += `<circle class="trace-dot" cx="${gx(a.spacing).toFixed(1)}" cy="${gy(a.v).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.spacing).toFixed(1)}" cy="${gy(a.v).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

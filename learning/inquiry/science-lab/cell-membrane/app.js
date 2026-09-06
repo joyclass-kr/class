@@ -132,11 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${IX}" y="66">1초에 차이의 ${Math.round(a.tmp.k * 100)} %가 건너감</text>`;
         out += `<text class="trait-text" x="${IX}" y="90">지난 시간 ${t.toFixed(1)}초</text>`;
         out += `<text class="trait-text" x="${IX}" y="106">차이 ${Math.max(0, nL - nR)}개</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="130">${nR > 0 ? `왼쪽 : 오른쪽 = ${(nL / nR).toFixed(2)} : 1` : '오른쪽은 아직 0개'}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="130">${nR > 0 ? `왼쪽 : 오른쪽 = ${(nL / nR).toFixed(2)} : 1` : '오른쪽은 아직 0개'}</text>`;
         out += `<text class="trait-text" x="${IX}" y="154">${nL > nR ? '진한 쪽 → 옅은 쪽으로' : '양쪽에서 건너는 수가 같음'}</text>`;
         out += `<text class="trait-text" x="${IX}" y="168">${nL > nR ? '더 많이 건너감' : '— 수는 변하지 않음'}</text>`;
         const VERD = { far: '아직 왼쪽에 훨씬 많음', mid: '왼쪽이 조금 더 많음', same: '거의 같아짐' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `20초 뒤 왼쪽 ${Math.round(a.end.L)}개 · 오른쪽 ${Math.round(a.end.R)}개 → ${VERD[a.verdict]}` : `${a.c.label} · ${a.tmp.label} 물`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `20초 뒤 왼쪽 ${Math.round(a.end.L)}개 · 오른쪽 ${Math.round(a.end.R)}개 → ${VERD[a.verdict]}` : `${a.c.label} · ${a.tmp.label} 물`}</text>`;
         out += `<text class="note-text" x="20" y="208">알갱이는 제멋대로 움직여 어느 쪽으로든 건너지만, 많은 쪽에서 건너오는 수가 더 많습니다</text>`;
         return out;
     }
@@ -150,14 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let tt = 0; tt <= SIM_T; tt += 5) out += `<text class="axis-text" x="${xOf(tt).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${tt}</text>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         const mean = (a.c.L + a.c.R) / 2;
-        out += `<line class="trace dashed" style="stroke:#9cb6b4" x1="${X0}" y1="${yOf(mean).toFixed(1)}" x2="${X1}" y2="${yOf(mean).toFixed(1)}"/><text class="small-label" x="${X1}" y="${(yOf(mean) - 4).toFixed(1)}" text-anchor="end">같아지는 값 ${mean}개</text>`;
+        out += `<line class="trace dashed" style="stroke:#475569" x1="${X0}" y1="${yOf(mean).toFixed(1)}" x2="${X1}" y2="${yOf(mean).toFixed(1)}"/><text class="small-label" x="${X1}" y="${(yOf(mean) - 4).toFixed(1)}" text-anchor="end">같아지는 값 ${mean}개</text>`;
         let dL = '', dR = '';
         for (let tt = 0; tt <= t + 1e-9; tt += 0.2) { const c = countsAt(a.c, a.tmp.k, tt); dL += `${dL ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(c.L).toFixed(1)} `; dR += `${dR ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(c.R).toFixed(1)} `; }
-        out += `<path class="trace" style="stroke:#ffd166" d="${dL}"/><path class="trace" style="stroke:#52c7ff" d="${dR}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${dL}"/><path class="trace" style="stroke:#0284c7" d="${dR}"/>`;
         // the other temperature, faintly, for comparison
         const other = TEMPS[state.temp === 'cold' ? 'warm' : 'cold'];
         let dO = ''; for (let tt = 0; tt <= SIM_T; tt += 0.5) dO += `${dO ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(countsAt(a.c, other.k, tt).L).toFixed(1)} `;
-        out += `<path class="trace dashed" style="stroke:rgba(255,209,102,.45)" d="${dO}"/>`;
+        out += `<path class="trace dashed" style="stroke:rgba(217, 119, 6, .45)" d="${dO}"/>`;
         out += `<text class="small-label" x="${X0 + 4}" y="${Y1 - 6}">점선: ${other.label}일 때의 왼쪽</text>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">시간 (초) — 차이가 줄수록 건너가는 속도도 줄어듭니다</text>`;
         return out;
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (burst) {
             for (let k = 0; k < 8; k += 1) { const ang = k * Math.PI / 4; out += `<line class="burst" x1="${(CX + (r - 6) * Math.cos(ang)).toFixed(1)}" y1="${(CY + (r - 6) * Math.sin(ang) * 0.8).toFixed(1)}" x2="${(CX + (r + 16) * Math.cos(ang)).toFixed(1)}" y2="${(CY + (r + 16) * Math.sin(ang) * 0.8).toFixed(1)}"/>`; }
             out += `<ellipse class="cell-body" cx="${CX}" cy="${CY}" rx="${r.toFixed(1)}" ry="${(r * 0.85).toFixed(1)}" stroke-dasharray="6 5" opacity=".5"/>`;
-            out += `<text class="trait-text" style="fill:#ff9f8a" x="${CX}" y="${CY + 4}" text-anchor="middle">터짐 (용혈)</text>`;
+            out += `<text class="trait-text" style="fill:#dc2626" x="${CX}" y="${CY + 4}" text-anchor="middle">터짐 (용혈)</text>`;
         } else if (V < 0.9) {
             const pts = []; for (let k = 0; k < 24; k += 1) { const ang = k * Math.PI / 12, rr = r * (1 + (k % 2 ? -0.12 : 0.04) * (1 - V) / 0.5); pts.push(`${(CX + rr * Math.cos(ang)).toFixed(1)},${(CY + rr * 0.8 * Math.sin(ang)).toFixed(1)}`); }
             out += `<polygon class="cell-body" points="${pts.join(' ')}"/>`;
@@ -204,12 +204,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const IX = 300;
         out += `<text class="trait-text" x="${IX}" y="50">세포 안: 1 L에 알갱이 ${C_IN} mol</text>`;
         out += `<text class="trait-text" x="${IX}" y="66">${sol.label}: ${sol.osm} mol</text>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="${IX}" y="90">${Math.abs(diff) <= 0.03 ? '물이 드나드는 양이 같음' : diff > 0 ? '물이 세포 안으로 들어옴' : '물이 세포 밖으로 빠져나감'}</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="${IX}" y="90">${Math.abs(diff) <= 0.03 ? '물이 드나드는 양이 같음' : diff > 0 ? '물이 세포 안으로 들어옴' : '물이 세포 밖으로 빠져나감'}</text>`;
         out += `<text class="trait-text" x="${IX}" y="114">지난 시간 ${t.toFixed(1)}초</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="130">부피 ${V.toFixed(2)}배${burst ? ' — 터짐' : ''}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="130">부피 ${V.toFixed(2)}배${burst ? ' — 터짐' : ''}</text>`;
         out += `<text class="trait-text" x="${IX}" y="154">${sol.osm < 0.26 ? '밖이 옅음 (저장액)' : sol.osm > 0.32 ? '밖이 진함 (고장액)' : '안팎이 같음 (등장액)'}</text>`;
         const VERD = { swell: '부풀어 오름', same: '거의 그대로', shrink: '쪼그라듦' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${sol.label}: 적혈구 부피 ${a.bt !== null ? `${BURST}배에서 터짐` : `${a.vEnd.toFixed(2)}배`} → ${VERD[a.verdict]}` : `적혈구를 ${sol.label}에 넣음`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${sol.label}: 적혈구 부피 ${a.bt !== null ? `${BURST}배에서 터짐` : `${a.vEnd.toFixed(2)}배`} → ${VERD[a.verdict]}` : `적혈구를 ${sol.label}에 넣음`}</text>`;
         out += `<text class="note-text" x="20" y="208">물은 막을 지나지만 녹은 알갱이는 지나지 못해, 물이 알갱이가 진한 쪽으로 옮겨 갑니다</text>`;
         return out;
     }
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const mine = k === state.solution, bt = burstTime(sol.osm), tEnd = mine ? t : OSM_T;
             let d = '';
             for (let tt = 0; tt <= tEnd + 1e-9; tt += 0.25) { if (bt !== null && tt > bt) break; d += `${d ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(clamp(volumeAt(sol.osm, tt), VMIN, VMAX)).toFixed(1)} `; }
-            out += `<path class="trace ${mine ? '' : 'dashed'}" style="stroke:${mine ? '#ffd166' : 'rgba(156,182,180,.6)'}" d="${d}"/>`;
+            out += `<path class="trace ${mine ? '' : 'dashed'}" style="stroke:${mine ? '#d97706' : 'rgba(156,182,180,.6)'}" d="${d}"/>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">시간 (초) — 점선은 다른 용액들</text>`;
         return out;

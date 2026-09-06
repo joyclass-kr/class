@@ -111,7 +111,7 @@ function drawRuler(g) {
         const y = 26 + i * 30;
         const on = i === lit;
         g.appendChild(el('rect', { x: 232, y: y - 12, width: 76, height: 22, rx: 6, class: `step-box${on ? ' lit' : ''}` }));
-        g.appendChild(el('text', { x: 270, y: y + 3, 'text-anchor': 'middle', class: 'step-name', style: `fill:${on ? '#ffd166' : '#cfe6ee'}` }, n));
+        g.appendChild(el('text', { x: 270, y: y + 3, 'text-anchor': 'middle', class: 'step-name', style: `fill:${on ? '#d97706' : '#0f172a'}` }, n));
         if (i < steps.length - 1) {
             g.appendChild(el('line', { x1: 270, y1: y + 10, x2: 270, y2: y + 18, class: 'arrow-line' }));
             g.appendChild(el('path', { d: `M 270 ${y + 19} l -4 -6 l 8 0 z`, class: 'arrow-head' }));
@@ -148,9 +148,9 @@ function drawGraph(g) {
             x: cx - bw / 2, y: Y(t), width: bw, height: yBot - Y(t), rx: 3, class: 'bar',
             style: `fill:${fits ? 'rgba(84,230,193,' : 'rgba(255,138,138,'}${on ? '.75)' : '.35)'}`,
         }));
-        g.appendChild(el('text', { x: cx, y: Y(t) - 16, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${on ? '#54e6c1' : '#9cb6b4'}` }, `${fmt(t, 2)}초`));
-        g.appendChild(el('text', { x: cx, y: Y(t) - 5, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${fits ? '#9cb6b4' : '#ff9d9d'}` }, `${fmt(d, 0)} cm`));
-        g.appendChild(el('text', { x: cx, y: yBot + 15, 'text-anchor': 'middle', class: 'axis-text', style: on ? 'fill:#54e6c1' : '' }, SENSES[k].name));
+        g.appendChild(el('text', { x: cx, y: Y(t) - 16, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${on ? '#059669' : '#475569'}` }, `${fmt(t, 2)}초`));
+        g.appendChild(el('text', { x: cx, y: Y(t) - 5, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${fits ? '#475569' : '#ff9d9d'}` }, `${fmt(d, 0)} cm`));
+        g.appendChild(el('text', { x: cx, y: yBot + 15, 'text-anchor': 'middle', class: 'axis-text', style: on ? 'fill:#059669' : '' }, SENSES[k].name));
     });
 
     g.appendChild(el('line', { x1: x0, y1: Y(RULER_T), x2: x1, y2: Y(RULER_T), class: 'limit-line' }));

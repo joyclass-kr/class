@@ -172,12 +172,12 @@ function drawDecayGraph(g) {
 
     // The two curves meet at one half-life, where parent and daughter are equal.
     g.appendChild(el('line', { x1: X(1), y1: Y(0.5), x2: X(1), y2: yBot, class: 'mark-line' }));
-    g.appendChild(el('circle', { cx: X(1), cy: Y(0.5), r: 3.6, style: 'fill:#ffd166' }));
+    g.appendChild(el('circle', { cx: X(1), cy: Y(0.5), r: 3.6, style: 'fill:#d97706' }));
     g.appendChild(el('text', { x: X(1) + 5, y: Y(0.5) - 7, class: 'axis-text' }, '1번 지나면 반반'));
-    g.appendChild(el('circle', { cx: X(state.hl), cy: Y(a.frac), r: 5, class: 'trace-dot', style: 'fill:#7fd4f0' }));
+    g.appendChild(el('circle', { cx: X(state.hl), cy: Y(a.frac), r: 5, class: 'trace-dot', style: 'fill:#0284c7' }));
 
-    g.appendChild(el('line', { x1: x0, y1: 172, x2: x0 + 15, y2: 172, style: 'stroke:#7fd4f0;stroke-width:3' }));
-    g.appendChild(el('text', { x: x0 + 20, y: 175.5, class: 'legend-text', style: 'fill:#7fd4f0' }, `남은 모원소 ${iso().name}`));
+    g.appendChild(el('line', { x1: x0, y1: 172, x2: x0 + 15, y2: 172, style: 'stroke:#0284c7;stroke-width:3' }));
+    g.appendChild(el('text', { x: x0 + 20, y: 175.5, class: 'legend-text', style: 'fill:#0284c7' }, `남은 모원소 ${iso().name}`));
     g.appendChild(el('line', { x1: x0 + 130, y1: 172, x2: x0 + 145, y2: 172, style: 'stroke:#ffab6b;stroke-width:3;stroke-dasharray:5 3' }));
     g.appendChild(el('text', { x: x0 + 150, y: 175.5, class: 'legend-text', style: 'fill:#ffab6b' }, `생긴 딸원소 ${iso().daughter}`));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, `지난 반감기 횟수 — 반감기 한 번은 ${koYears(iso().half)}`));
@@ -270,21 +270,21 @@ function drawStrataGraph(g) {
     const [lo, hi] = a.window;
     const bx0 = Math.max(x0, X(lo)), bx1 = Math.min(x1, X(hi));
     g.appendChild(el('rect', { x: bx0, y: bandTop, width: Math.max(2, bx1 - bx0), height: bandBot - bandTop, rx: 4, class: 'window-band' }));
-    g.appendChild(el('text', { x: (bx0 + bx1) / 2, y: bandTop - 7, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#54e6c1' },
+    g.appendChild(el('text', { x: (bx0 + bx1) / 2, y: bandTop - 7, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#059669' },
         `${iso().name}로 잴 수 있는 범위`));
 
     Object.entries(TARGETS).forEach(([k, t]) => {
         const x = X(t.age), on = k === state.target;
         g.appendChild(el('line', { x1: x, y1: axisY - 20, x2: x, y2: axisY, class: `age-tick${on ? ' picked' : ''}` }));
         if (on) {
-            g.appendChild(el('circle', { cx: x, cy: axisY - 24, r: 4.5, class: 'trace-dot', style: 'fill:#ffd166' }));
+            g.appendChild(el('circle', { cx: x, cy: axisY - 24, r: 4.5, class: 'trace-dot', style: 'fill:#d97706' }));
             const anchor = x > x1 - 70 ? 'end' : (x < x0 + 70 ? 'start' : 'middle');
-            g.appendChild(el('text', { x: clamp(x, x0, x1), y: axisY - 32, 'text-anchor': anchor, class: 'axis-text', style: 'fill:#ffd166' },
+            g.appendChild(el('text', { x: clamp(x, x0, x1), y: axisY - 32, 'text-anchor': anchor, class: 'axis-text', style: 'fill:#d97706' },
                 `${t.name} ${koYears(t.age)}`));
         }
     });
 
-    g.appendChild(el('text', { x: (x0 + x1) / 2, y: 168, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#9cb6b4' },
+    g.appendChild(el('text', { x: (x0 + x1) / 2, y: 168, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#475569' },
         '눈금 하나가 10배입니다 · 세로 막대는 이 단면에 있는 여섯 곳의 나이'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 189, 'text-anchor': 'middle', class: 'axis-title' }, '몇 년 전인가 (로그 눈금)'));
 }

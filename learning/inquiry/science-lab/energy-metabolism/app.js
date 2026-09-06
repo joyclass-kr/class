@@ -254,9 +254,9 @@ function drawLeafGraph(g) {
         g.appendChild(el('line', { x1: X(sat), y1: yBot, x2: X(sat), y2: yBot - 12, class: 'mark-line' }));
         g.appendChild(el('text', { x: X(sat) - 4, y: yBot - 4, 'text-anchor': 'end', class: 'axis-text' }, `광포화점 ${Math.round(sat)}`));
     }
-    g.appendChild(el('circle', { cx: X(state.light), cy: Y(netAt(state.light, c, t)), r: 5, class: 'trace-dot', style: 'fill:#54e6c1' }));
+    g.appendChild(el('circle', { cx: X(state.light), cy: Y(netAt(state.light, c, t)), r: 5, class: 'trace-dot', style: 'fill:#059669' }));
 
-    const keys = [['#ffd166', '총광합성'], ['#54e6c1', '순광합성 = 총광합성 − 호흡'], ['#ff9d6b', '호흡']];
+    const keys = [['#d97706', '총광합성'], ['#059669', '순광합성 = 총광합성 − 호흡'], ['#ea580c', '호흡']];
     let lx = x0;
     keys.forEach(([col, label]) => {
         g.appendChild(el('line', { x1: lx, y1: 172, x2: lx + 15, y2: 172, style: `stroke:${col};stroke-width:3` }));
@@ -301,7 +301,7 @@ function drawCell(g) {
         const [bx, by, bw, bh] = boxes[i];
         const on = i === idx;
         g.appendChild(el('rect', { x: bx, y: by, width: bw, height: bh, rx: 10, class: `step-box${on ? ' on' : ''}` }));
-        g.appendChild(el('text', { x: bx + bw / 2, y: by + (bh > 40 ? 20 : 16), 'text-anchor': 'middle', class: 'step-text', style: `fill:${on ? '#ffd166' : '#cfe6ee'}` }, s.name));
+        g.appendChild(el('text', { x: bx + bw / 2, y: by + (bh > 40 ? 20 : 16), 'text-anchor': 'middle', class: 'step-text', style: `fill:${on ? '#d97706' : '#0f172a'}` }, s.name));
         g.appendChild(el('text', { x: bx + bw / 2, y: by + (bh > 40 ? 34 : 28), 'text-anchor': 'middle', class: 'step-sub', style: `fill:${on ? '#e6d9a0' : '#8fa8b0'}` }, `ATP ${s.atp} · ${s.made}`));
     });
 
@@ -362,21 +362,21 @@ function drawCellGraph(g) {
         cum += h;
         pts.push([cx, Y(cum)]);
         const bw = Math.min(58, slot * 0.6);
-        if (h > 0.02) g.appendChild(el('rect', { x: cx - bw / 2, y: Y(h), width: bw, height: yBot - Y(h), rx: 3, class: 'bar-body', style: 'fill:rgba(255,209,102,.5)' }));
-        else g.appendChild(el('line', { x1: cx - bw / 2, y1: yBot - 1, x2: cx + bw / 2, y2: yBot - 1, style: 'stroke:rgba(255,209,102,.5);stroke-width:2' }));
-        g.appendChild(el('text', { x: cx, y: Y(h) - 6, 'text-anchor': 'middle', class: 'bar-text', style: 'fill:#ffd166' }, fmt(h, h % 1 ? 1 : 0)));
+        if (h > 0.02) g.appendChild(el('rect', { x: cx - bw / 2, y: Y(h), width: bw, height: yBot - Y(h), rx: 3, class: 'bar-body', style: 'fill:rgba(217, 119, 6, .5)' }));
+        else g.appendChild(el('line', { x1: cx - bw / 2, y1: yBot - 1, x2: cx + bw / 2, y2: yBot - 1, style: 'stroke:rgba(217, 119, 6, .5);stroke-width:2' }));
+        g.appendChild(el('text', { x: cx, y: Y(h) - 6, 'text-anchor': 'middle', class: 'bar-text', style: 'fill:#d97706' }, fmt(h, h % 1 ? 1 : 0)));
         g.appendChild(el('text', { x: cx, y: yBot + 15, 'text-anchor': 'middle', class: 'axis-text' }, s.short));
     });
 
     let d = '';
     pts.forEach(([px, py], i) => { d += `${i ? 'L' : 'M'} ${fmt(px, 2)} ${fmt(py, 2)} `; });
-    g.appendChild(el('path', { d, style: 'fill:none;stroke:#54e6c1;stroke-width:2.4' }));
-    pts.forEach(([px, py]) => g.appendChild(el('circle', { cx: px, cy: py, r: 3.6, style: 'fill:#54e6c1' })));
+    g.appendChild(el('path', { d, style: 'fill:none;stroke:#059669;stroke-width:2.4' }));
+    pts.forEach(([px, py]) => g.appendChild(el('circle', { cx: px, cy: py, r: 3.6, style: 'fill:#059669' })));
 
-    g.appendChild(el('line', { x1: x0, y1: 172, x2: x0 + 15, y2: 172, style: 'stroke:#ffd166;stroke-width:3' }));
-    g.appendChild(el('text', { x: x0 + 20, y: 175.5, class: 'legend-text', style: 'fill:#ffd166' }, '단계별 ATP'));
-    g.appendChild(el('line', { x1: x0 + 132, y1: 172, x2: x0 + 147, y2: 172, style: 'stroke:#54e6c1;stroke-width:3' }));
-    g.appendChild(el('text', { x: x0 + 152, y: 175.5, class: 'legend-text', style: 'fill:#54e6c1' }, '누적 ATP'));
+    g.appendChild(el('line', { x1: x0, y1: 172, x2: x0 + 15, y2: 172, style: 'stroke:#d97706;stroke-width:3' }));
+    g.appendChild(el('text', { x: x0 + 20, y: 175.5, class: 'legend-text', style: 'fill:#d97706' }, '단계별 ATP'));
+    g.appendChild(el('line', { x1: x0 + 132, y1: 172, x2: x0 + 147, y2: 172, style: 'stroke:#059669;stroke-width:3' }));
+    g.appendChild(el('text', { x: x0 + 152, y: 175.5, class: 'legend-text', style: 'fill:#059669' }, '누적 ATP'));
     const eff = plan.total * ATP_KJ / GLUCOSE_KJ;
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, `포도당 2870 kJ · ATP 1개 30.5 kJ → 에너지의 ${fmt(eff * 100, 1)}%가 ATP로`));
 }

@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="dir-text" x="${CX}" y="${(HORIZON + 14).toFixed(1)}" text-anchor="middle">북</text>`;
         out += `<text class="dir-text" x="436" y="${(HORIZON + 14).toFixed(1)}" text-anchor="end">동</text>`;
         // faint circles: the paths the stars follow round the pole
-        [20, 30, 40].forEach(deg => { out += `<circle class="constellation" style="stroke:rgba(214,245,250,.12)" cx="${CX}" cy="${CY}" r="${(deg * SCALE).toFixed(1)}"/>`; });
+        [20, 30, 40].forEach(deg => { out += `<circle class="constellation" style="stroke:rgba(148, 163, 184, 0.22)" cx="${CX}" cy="${CY}" r="${(deg * SCALE).toFixed(1)}"/>`; });
         const draw = (list, close) => {
             const pts = list.map(toXY);
             const path = pts.map((q, i) => `${i ? 'L' : 'M'}${q.x.toFixed(1)},${q.y.toFixed(1)}`).join('') + (close ? 'Z' : '');
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="sky-text" x="24" y="36">${hourText(hour)}</text>`;
         out += `<text class="sky-text" x="24" y="50">저녁 9시부터 ${Math.round(15 * (hour - STAR_START))}° 돌았음</text>`;
         const phiNow = polar({ ra: 12.5, dec: 56 }, state.season, hour).phi;
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${a.season.label} 저녁 9시 → 북두칠성은 북극성 ${SIDE[a.verdict]} · 지금은 ${SIDE[side(phiNow)]}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${a.season.label} 저녁 9시 → 북두칠성은 북극성 ${SIDE[a.verdict]} · 지금은 ${SIDE[side(phiNow)]}</text>`;
         return out;
     }
 
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cx = 40 + col * 42, cy = 50 + row * 48;
             const e = elongation(d);
             const chosen = Math.abs(d - state.day) < 0.6 || (state.day === 7.5 && (d === 7 || d === 8)) || (state.day === 22.5 && (d === 22 || d === 23));
-            if (chosen) out += `<circle fill="none" stroke="#ffd166" stroke-width="1.6" cx="${cx}" cy="${cy}" r="17"/>`;
+            if (chosen) out += `<circle fill="none" stroke="#d97706" stroke-width="1.6" cx="${cx}" cy="${cy}" r="17"/>`;
             out += moonShape(cx, cy, 12, e);
             out += `<text class="axis-text" x="${cx}" y="${cy + 26}" text-anchor="middle">${d}</text>`;
         }
@@ -281,8 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="axis-title" x="${G.x0 + 4}" y="${G.y1 - 8}">북극성을 중심으로 돈 각도</text>`;
         const hour = starHour(state.progress);
         out += `<path class="trace-done" d="M${gx(STAR_START)},${gy(0)} L${gx(STAR_END)},${gy(90)}"/>`;
-        out += `<path class="trace" style="stroke:#ffd166" d="M${gx(STAR_START)},${gy(0)} L${gx(hour).toFixed(1)},${gy(15 * (hour - STAR_START)).toFixed(1)}"/>`;
-        out += `<circle class="trace-dot" cx="${gx(hour).toFixed(1)}" cy="${gy(15 * (hour - STAR_START)).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="M${gx(STAR_START)},${gy(0)} L${gx(hour).toFixed(1)},${gy(15 * (hour - STAR_START)).toFixed(1)}"/>`;
+        out += `<circle class="trace-dot" cx="${gx(hour).toFixed(1)}" cy="${gy(15 * (hour - STAR_START)).toFixed(1)}" r="5" fill="#d97706"/>`;
         out += `<text class="note-text" x="${G.x0 + 8}" y="${G.y1 + 14}">한 시간에 15° — 하루 24시간이면 360°, 한 바퀴</text>`;
         return out;
     }

@@ -158,7 +158,7 @@ function drawGraph(g) {
     g.appendChild(el('circle', { cx: X(a.soda), cy: Y(a.gas), r: 6, class: 'trace-dot', style: 'fill:#ffb26b' }));
 
     g.appendChild(el('text', { x: x0 + 4, y: 172, class: 'legend-text', style: 'fill:#ffb26b' }, '올라가는 동안은 소다가 모자랍니다'));
-    g.appendChild(el('text', { x: x1 - 2, y: 172, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#9cb6b4' }, '평평해지면 식초가 다 떨어진 것입니다'));
+    g.appendChild(el('text', { x: x1 - 2, y: 172, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#475569' }, '평평해지면 식초가 다 떨어진 것입니다'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, `식초 ${state.vin} mL에 소다를 넣을 때 생기는 거품`));
 }
 

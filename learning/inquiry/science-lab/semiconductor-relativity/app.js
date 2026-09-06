@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="${Rr + 13}" y="${Tt + 47}">p</text><text class="small-label" x="${Rr + 13}" y="${Tt + 70}">n</text>`;
         // ammeter
         out += `<circle class="meter" cx="${(L + Rr) / 2}" cy="${Bb}" r="14"/><text class="gen-text" x="${(L + Rr) / 2}" y="${Bb + 4}" text-anchor="middle">A</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${(L + Rr) / 2}" y="${Bb + 26}" text-anchor="middle">${on ? fmtI(a.I) : '—'}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${(L + Rr) / 2}" y="${Bb + 26}" text-anchor="middle">${on ? fmtI(a.I) : '—'}</text>`;
         // moving charges along the loop when current flows (conventional current, p→n through the diode)
         if (on && flow > 0.02) {
             const path = [[L, Tt + 42], [L, Tt], [Rr, Tt], [Rr, Bb], [L, Bb], [L, Tt + 78]];
@@ -169,9 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
         else out += `<text class="small-label" x="${mid}" y="${JY + JH + 24}" text-anchor="middle">${on ? '공핍층이 두꺼워져 운반자가 못 건넘' : '공핍층: 운반자가 없는 띠'}</text>`;
         out += `<text class="trait-text" x="${JX}" y="158">양단 ${on ? `${fmtN(a.Vd, 2)} V` : '—'} · 공핍층 ${on ? `${fmtN(wDraw / 14 * 100)} %` : '100 %'} (0 V일 때 기준)</text>`;
         out += `<text class="trait-text" x="${JX}" y="174">I₀ = ${fmtI(a.I0)} · V_T = kT/q = ${fmtN(a.VT * 1000, 1)} mV (${a.T} K)</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${JX}" y="190">${on ? `I = I₀(e^(${fmtN(a.Vd, 2)}/${fmtN(a.VT, 4)}) − 1) = ${fmtI(a.I)}` : '전압을 걸면 쇼클리 식으로 전류가 나옵니다'}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${JX}" y="190">${on ? `I = I₀(e^(${fmtN(a.Vd, 2)}/${fmtN(a.VT, 4)}) − 1) = ${fmtI(a.I)}` : '전압을 걸면 쇼클리 식으로 전류가 나옵니다'}</text>`;
         const VERD = { well: '잘 흐름', some: '조금 흐름', none: '거의 안 흐름' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${VOLTS[state.volt].label} ${VOLTS[state.volt].hint} · ${a.T} K: ${fmtI(a.I)} — ${VERD[a.verdict]}` : `${VOLTS[state.volt].label} ${VOLTS[state.volt].hint} · ${TEMPS[state.temp].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${VOLTS[state.volt].label} ${VOLTS[state.volt].hint} · ${a.T} K: ${fmtI(a.I)} — ${VERD[a.verdict]}` : `${VOLTS[state.volt].label} ${VOLTS[state.volt].hint} · ${TEMPS[state.temp].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">규소 다이오드, 실온 I₀ = 1 pA (대략) · 뜨거워지면 I₀ ∝ T³e^(−Eg/kT), Eg = 1.12 eV · 노란 점은 전류의 방향</text>`;
         return out;
     }
@@ -185,10 +185,10 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.values(TEMPS).forEach(t => {
             const VT = KB * t.T, I0 = I0_300 * (t.T / 300) ** 3 * Math.exp(-EG / KB * (1 / t.T - 1 / 300));
             let d = ''; for (let v = VA; v <= VB + 1e-9; v += 0.01) { const i = I0 * (Math.exp(v / VT) - 1); if (i > IM * 1.05) break; d += `${d ? 'L' : 'M'}${xOf(v).toFixed(1)},${yOf(i).toFixed(1)} `; }
-            out += `<path class="trace${t.T === a.T ? '' : ' faint'}" style="stroke:${t.T === 300 ? '#52c7ff' : '#ff9f8a'}" d="${d}"/>`;
+            out += `<path class="trace${t.T === a.T ? '' : ' faint'}" style="stroke:${t.T === 300 ? '#0284c7' : '#dc2626'}" d="${d}"/>`;
         });
-        out += `<text class="small-label" style="fill:#52c7ff" x="${X0 + 8}" y="${Y1 + 12}">파랑 300 K · 주황 400 K</text>`;
-        if (state.progress > 0) out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(clamp(a.Vd, VA, VB)).toFixed(1)}" cy="${yOf(a.I).toFixed(1)}" r="4.5"/><text class="small-label" style="fill:#ffd166" x="${(xOf(clamp(a.Vd, VA, VB)) + (a.Vd > 0.4 ? -8 : 8)).toFixed(1)}" y="${(yOf(a.I) - 8).toFixed(1)}" text-anchor="${a.Vd > 0.4 ? 'end' : 'start'}">${fmtN(a.Vd, 2)} V · ${fmtI(a.I)}</text>`;
+        out += `<text class="small-label" style="fill:#0284c7" x="${X0 + 8}" y="${Y1 + 12}">파랑 300 K · 주황 400 K</text>`;
+        if (state.progress > 0) out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(clamp(a.Vd, VA, VB)).toFixed(1)}" cy="${yOf(a.I).toFixed(1)}" r="4.5"/><text class="small-label" style="fill:#d97706" x="${(xOf(clamp(a.Vd, VA, VB)) + (a.Vd > 0.4 ? -8 : 8)).toFixed(1)}" y="${(yOf(a.I) - 8).toFixed(1)}" text-anchor="${a.Vd > 0.4 ? 'end' : 'start'}">${fmtN(a.Vd, 2)} V · ${fmtI(a.I)}</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">다이오드 양단 전압 — 0.6 V 근처부터 급히 켜지고, 역방향은 pA 수준. 뜨거우면 곡선이 왼쪽으로</text>`;
         return out;
     }
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 out += `<circle class="muon${dead ? ' dead' : ''}" cx="${xx.toFixed(1)}" cy="${y.toFixed(1)}" r="${dead ? 2 : 2.6}"/>`;
             }
             const fNow = Math.exp(-(a.tGround * p) / (TAU * g));
-            out += `<text class="trait-text" style="fill:${kind === 'with' ? '#ffd166' : '#b6d3d9'}" x="${x + 6}" y="${GND - 12}">${cnt(fNow)}개 남음 / 1,000개</text>`;
+            out += `<text class="trait-text" style="fill:${kind === 'with' ? '#d97706' : '#334155'}" x="${x + 6}" y="${GND - 12}">${cnt(fNow)}개 남음 / 1,000개</text>`;
         });
         // clocks in the middle
         const CX = 215, hand = (cy, frac) => `<line class="clock-hand" x1="${CX}" y1="${cy}" x2="${(CX + 10 * Math.sin(frac * 2 * Math.PI)).toFixed(1)}" y2="${(cy - 10 * Math.cos(frac * 2 * Math.PI)).toFixed(1)}"/>`;
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<circle class="clock" cx="${CX}" cy="136" r="13"/>${hand(136, p * a.tMuon / 10e-6)}<text class="small-label" x="${CX}" y="158" text-anchor="middle">뮤온 시계</text><text class="small-label" x="${CX}" y="170" text-anchor="middle">${fmtN(a.tMuon * 1e6 * p, 2)} μs</text>`;
         out += `<text class="small-label" x="${CX}" y="${TOP - 6}" text-anchor="middle">높이 ${HEIGHTS[state.height].label}</text>`;
         const VERD = { few: '거의 다 붕괴', some: '일부 닿음', many: '많이 닿음' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${SPEEDS_M[state.mspeed].label} 뮤온, ${HEIGHTS[state.height].label}: 1,000개 중 ${cnt(a.fRel)}개 도착 — ${VERD[a.verdict]}` : `${SPEEDS_M[state.mspeed].label} 뮤온이 ${HEIGHTS[state.height].label}에서 떨어지는 중`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${SPEEDS_M[state.mspeed].label} 뮤온, ${HEIGHTS[state.height].label}: 1,000개 중 ${cnt(a.fRel)}개 도착 — ${VERD[a.verdict]}` : `${SPEEDS_M[state.mspeed].label} 뮤온이 ${HEIGHTS[state.height].label}에서 떨어지는 중`}</text>`;
         out += `<text class="note-text" x="20" y="208">정지 수명 2.2 μs · 남는 비율 e^(−t/2.2 μs), 뮤온 시계 t = 지상 시계 ÷ γ · 1963년 실험과 같은 셈</text>`;
         return out;
     }
@@ -229,11 +229,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         let dR = '', dN = '';
         for (let d = 0; d <= DM + 1e-9; d += 250) { const t = d / a.v; dR += `${dR ? 'L' : 'M'}${xOf(d).toFixed(1)},${yOf(Math.exp(-t / a.g / TAU)).toFixed(1)} `; dN += `${dN ? 'L' : 'M'}${xOf(d).toFixed(1)},${yOf(Math.exp(-t / TAU)).toFixed(1)} `; }
-        out += `<path class="trace faint" style="stroke:#97dad3" d="${dN}"/><path class="trace" style="stroke:#ffd166" d="${dR}"/>`;
+        out += `<path class="trace faint" style="stroke:#97dad3" d="${dN}"/><path class="trace" style="stroke:#d97706" d="${dR}"/>`;
         const dNow = a.d * state.progress;
         out += `<line class="marker" x1="${xOf(a.d).toFixed(1)}" y1="${Y1}" x2="${xOf(a.d).toFixed(1)}" y2="${Y0}"/>`;
-        out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(dNow).toFixed(1)}" cy="${yOf(Math.exp(-dNow / a.v / a.g / TAU)).toFixed(1)}" r="4.5"/>`;
-        out += `<text class="small-label" style="fill:#ffd166" x="${(xOf(a.d) + (a.d > 15000 ? -6 : 6)).toFixed(1)}" y="${Y1 + 12}" text-anchor="${a.d > 15000 ? 'end' : 'start'}">${HEIGHTS[state.height].label}: ${fmtN(a.fRel * 100, a.fRel < 0.01 ? 2 : 1)} % (없다면 ${a.fNewton < 1e-4 ? '0.00' : fmtN(a.fNewton * 100, 2)} %)</text>`;
+        out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(dNow).toFixed(1)}" cy="${yOf(Math.exp(-dNow / a.v / a.g / TAU)).toFixed(1)}" r="4.5"/>`;
+        out += `<text class="small-label" style="fill:#d97706" x="${(xOf(a.d) + (a.d > 15000 ? -6 : 6)).toFixed(1)}" y="${Y1 + 12}" text-anchor="${a.d > 15000 ? 'end' : 'start'}">${HEIGHTS[state.height].label}: ${fmtN(a.fRel * 100, a.fRel < 0.01 ? 2 : 1)} % (없다면 ${a.fNewton < 1e-4 ? '0.00' : fmtN(a.fNewton * 100, 2)} %)</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">뮤온이 생긴 높이 — 한 수명 동안 가는 거리 v·γ·2.2 μs = ${fmtN(a.reach / 1000, 2)} km</text>`;
         return out;
     }
@@ -242,16 +242,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const p = state.progress, { g, b, body } = a, L0 = 150, L = L0 / g, Y = 62;
         let out = `<text class="small-label" x="20" y="36">정지한 우주선 100 m (점선) · 같은 우주선이 ${SPEEDS_E[state.espeed].label}로 지나갈 때 (파랑)</text>`;
         out += `<rect class="ship-rest" x="20" y="${Y - 14}" width="${L0}" height="28" rx="8"/><text class="small-label" x="${20 + L0 / 2}" y="${Y + 3.5}" text-anchor="middle">100 m</text>`;
-        out += `<text class="small-label" style="fill:#52c7ff" x="${20 + L0 + 12}" y="${Y + 3.5}">지나갈 때 ${fmtN(100 / g, 1)} m = 100 ÷ ${fmtN(g, 2)} · 높이는 그대로</text>`;
+        out += `<text class="small-label" style="fill:#0284c7" x="${20 + L0 + 12}" y="${Y + 3.5}">지나갈 때 ${fmtN(100 / g, 1)} m = 100 ÷ ${fmtN(g, 2)} · 높이는 그대로</text>`;
         const sx = 20 + (440 - 20 - L) * ease(p);
         out += `<rect class="ship" x="${sx.toFixed(1)}" y="${Y + 26}" width="${L.toFixed(1)}" height="28" rx="${Math.min(8, L / 2).toFixed(1)}"/>`;
         // energy bars
         const BY = 152, BX = 150, SC = 60, wN = SC, wR = Math.min(270, SC * a.ratio), grow = ease(p);
         out += `<text class="trait-text" x="20" y="${BY - 12}">½mv² (뉴턴)</text><rect class="bar-newton" x="${BX}" y="${BY - 20}" width="${(wN * grow).toFixed(1)}" height="12" rx="2"/><text class="small-label" x="${BX + wN * grow + 6}" y="${BY - 10}">${fmtE(a.kNewton * grow, body.unit)}</text>`;
-        out += `<text class="trait-text" x="20" y="${BY + 10}">(γ − 1)mc² (상대론)</text><rect class="bar-rel" x="${BX}" y="${BY + 2}" width="${(wR * grow).toFixed(1)}" height="12" rx="2"/><text class="small-label" style="fill:#ff9f8a" x="${Math.min(BX + wR * grow + 6, 366).toFixed(1)}" y="${BY + 12}">${fmtE(a.kRel * grow, body.unit)}${wR >= 270 ? ' …' : ''}</text>`;
+        out += `<text class="trait-text" x="20" y="${BY + 10}">(γ − 1)mc² (상대론)</text><rect class="bar-rel" x="${BX}" y="${BY + 2}" width="${(wR * grow).toFixed(1)}" height="12" rx="2"/><text class="small-label" style="fill:#dc2626" x="${Math.min(BX + wR * grow + 6, 366).toFixed(1)}" y="${BY + 12}">${fmtE(a.kRel * grow, body.unit)}${wR >= 270 ? ' …' : ''}</text>`;
         out += `<text class="trait-text" x="20" y="${BY + 34}">γ = 1/√(1 − ${b}²) = ${fmtN(g, 3)} · 상대론 ÷ 뉴턴 = ${fmtN(a.ratio, 2)}배 · 정지 에너지 mc² = ${fmtE(body.mc2, body.unit)}</text>`;
         const VERD = { same: '거의 같음', bit: '조금 큼', much: '두 배 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${SPEEDS_E[state.espeed].label} ${body.label}: ${fmtN(100 / g, 1)} m · ${fmtE(a.kRel, body.unit)} · 뉴턴 식의 ${fmtN(a.ratio, 1)}배 — ${VERD[a.verdict]}` : `${SPEEDS_E[state.espeed].label} · ${body.label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${SPEEDS_E[state.espeed].label} ${body.label}: ${fmtN(100 / g, 1)} m · ${fmtE(a.kRel, body.unit)} · 뉴턴 식의 ${fmtN(a.ratio, 1)}배 — ${VERD[a.verdict]}` : `${SPEEDS_E[state.espeed].label} · ${body.label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">길이는 운동 방향만 L = L₀/γ로 줄고 폭은 그대로. 운동 에너지 = (γ − 1)mc², 느릴 때 ½mv²과 같아짐</text>`;
         return out;
     }
@@ -266,8 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let bb = 0; bb <= 0.9995; bb += 0.005) { dN += `${dN ? 'L' : 'M'}${xOf(bb).toFixed(1)},${yOf(0.5 * bb * bb).toFixed(1)} `; const k = gamma(bb) - 1; if (k <= KM * 1.02) dR += `${dR ? 'L' : 'M'}${xOf(bb).toFixed(1)},${yOf(k).toFixed(1)} `; }
         out += `<path class="trace faint" style="stroke:#97dad3" d="${dN}"/><path class="trace" style="stroke:#ff7a59" d="${dR}"/>`;
         const kk = a.g - 1;
-        out += `<line class="marker" x1="${xOf(a.b).toFixed(1)}" y1="${Y1}" x2="${xOf(a.b).toFixed(1)}" y2="${Y0}"/><circle fill="#ffd166" stroke="#fff" cx="${xOf(a.b).toFixed(1)}" cy="${yOf(kk).toFixed(1)}" r="4.5"/><circle fill="#97dad3" stroke="#fff" cx="${xOf(a.b).toFixed(1)}" cy="${yOf(0.5 * a.b * a.b).toFixed(1)}" r="3.5"/>`;
-        out += `<text class="small-label" style="fill:#ffd166" x="${(xOf(a.b) + (a.b > 0.7 ? -8 : 8)).toFixed(1)}" y="${(clamp(yOf(kk), Y1 + 12, Y0) - 6).toFixed(1)}" text-anchor="${a.b > 0.7 ? 'end' : 'start'}">${SPEEDS_E[state.espeed].label}: ${fmtN(kk, kk < 0.1 ? 3 : 2)} mc² (뉴턴 ${fmtN(0.5 * a.b * a.b, 3)} mc²)</text>`;
+        out += `<line class="marker" x1="${xOf(a.b).toFixed(1)}" y1="${Y1}" x2="${xOf(a.b).toFixed(1)}" y2="${Y0}"/><circle fill="#d97706" stroke="#fff" cx="${xOf(a.b).toFixed(1)}" cy="${yOf(kk).toFixed(1)}" r="4.5"/><circle fill="#97dad3" stroke="#fff" cx="${xOf(a.b).toFixed(1)}" cy="${yOf(0.5 * a.b * a.b).toFixed(1)}" r="3.5"/>`;
+        out += `<text class="small-label" style="fill:#d97706" x="${(xOf(a.b) + (a.b > 0.7 ? -8 : 8)).toFixed(1)}" y="${(clamp(yOf(kk), Y1 + 12, Y0) - 6).toFixed(1)}" text-anchor="${a.b > 0.7 ? 'end' : 'start'}">${SPEEDS_E[state.espeed].label}: ${fmtN(kk, kk < 0.1 ? 3 : 2)} mc² (뉴턴 ${fmtN(0.5 * a.b * a.b, 3)} mc²)</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">속력 — 광속에 다가갈수록 에너지가 한없이 치솟아 광속을 넘지 못합니다</text>`;
         return out;
     }

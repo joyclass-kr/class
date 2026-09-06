@@ -127,7 +127,7 @@ function drawScene(g) {
     g.appendChild(el('text', { x: TANK.x + TANK.w / 2, y: 208, 'text-anchor': 'middle', class: 'small-label' },
         a.floats ? `물 위에 뜹니다 · ${Math.round(a.sunk * 100)}%만 잠김` : '바닥까지 가라앉습니다'));
     g.appendChild(el('text', { x: 444, y: 22, 'text-anchor': 'end', class: 'small-label' }, '물에 넣어 보면'));
-    g.appendChild(el('text', { x: 444, y: 40, 'text-anchor': 'end', class: 'read-text', style: a.floats ? '' : 'fill:#ff9d6b' },
+    g.appendChild(el('text', { x: 444, y: 40, 'text-anchor': 'end', class: 'read-text', style: a.floats ? '' : 'fill:#ea580c' },
         a.floats ? '뜬다' : '가라앉는다'));
 }
 
@@ -161,7 +161,7 @@ function drawGraph(g) {
         }
         g.appendChild(el('text', {
             x: cx - gap, y: Y(w) - 5, 'text-anchor': 'middle', class: 'bar-text',
-            style: `fill:${sz === state.size ? '#54e6c1' : '#9cb6b4'}`,
+            style: `fill:${sz === state.size ? '#059669' : '#475569'}`,
         }, grams(w)));
         g.appendChild(el('text', { x: cx, y: yBot + 15, 'text-anchor': 'middle', class: 'axis-text' }, `${sz} cm`));
     });
@@ -172,7 +172,7 @@ function drawGraph(g) {
         g.appendChild(el('rect', { x: x0 + 92, y: 168, width: 12, height: 8, rx: 2, class: 'bar-ghost' }));
         g.appendChild(el('text', { x: x0 + 110, y: 175.5, class: 'legend-text', style: 'fill:#bed2e1' }, '같은 크기의 나무'));
     }
-    g.appendChild(el('text', { x: x1 - 2, y: 175.5, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#9cb6b4' },
+    g.appendChild(el('text', { x: x1 - 2, y: 175.5, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#475569' },
         '한 변이 2배면 무게는 8배'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '덩어리 한 변의 길이 — 세로는 무게 (g)'));
 }

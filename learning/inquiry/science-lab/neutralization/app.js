@@ -148,9 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
-        out += `<text class="axis-title" fill="#cfe6ee" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">넣은 수산화나트륨 (mL)</text>`;
+        out += `<text class="axis-title" fill="#0f172a" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">넣은 수산화나트륨 (mL)</text>`;
         out += `<text class="axis-title" fill="#c79bff" x="${GRAPH.x0}" y="${GRAPH.y1 - 8}">pH</text>`;
-        out += `<text class="axis-title" fill="#ff9d6b" x="${GRAPH.x1 + 4}" y="${GRAPH.y1 - 8}" text-anchor="end">온도 (점선)</text>`;
+        out += `<text class="axis-title" fill="#ea580c" x="${GRAPH.x1 + 4}" y="${GRAPH.y1 - 8}" text-anchor="end">온도 (점선)</text>`;
 
         // temperature is drawn on its own scale so both fit the same panel
         const tempAt = v => analyse(v).temp;

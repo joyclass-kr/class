@@ -77,7 +77,7 @@ function drawScope(g) {
         const on = o === state.obj;
         const bx = 74 + i * 20, len = 12 + i * 7;
         g.appendChild(el('rect', { x: bx, y: 96, width: 15, height: len, rx: 3, class: `lens-barrel${on ? ' on' : ''}` }));
-        g.appendChild(el('text', { x: bx + 7.5, y: 131, 'text-anchor': 'middle', class: 'tiny-label', style: on ? 'fill:#54e6c1' : '' }, String(o)));
+        g.appendChild(el('text', { x: bx + 7.5, y: 131, 'text-anchor': 'middle', class: 'tiny-label', style: on ? 'fill:#059669' : '' }, String(o)));
     });
     g.appendChild(el('text', { x: 66, y: 131, 'text-anchor': 'end', class: 'tiny-label' }, '대물'));
 
@@ -179,7 +179,7 @@ function drawScaleAndLabels(g, a, pxPerMm) {
     const barMm = a.field / 4;
     const barPx = barMm * pxPerMm;
     g.appendChild(el('line', { x1: FIELD.cx - barPx / 2, y1: FIELD.cy + FIELD.r - 12, x2: FIELD.cx + barPx / 2, y2: FIELD.cy + FIELD.r - 12, class: 'scale-bar' }));
-    g.appendChild(el('text', { x: FIELD.cx, y: FIELD.cy + FIELD.r - 17, 'text-anchor': 'middle', class: 'tiny-label', style: 'fill:#ffd166' },
+    g.appendChild(el('text', { x: FIELD.cx, y: FIELD.cy + FIELD.r - 17, 'text-anchor': 'middle', class: 'tiny-label', style: 'fill:#d97706' },
         barMm >= 1 ? `${fmt(barMm, 2)} mm` : `${Math.round(barMm * 1000)} μm`));
 
     g.appendChild(el('text', { x: 444, y: 22, 'text-anchor': 'end', class: 'small-label' }, a.spec.name));
@@ -216,12 +216,12 @@ function drawGraph(g) {
             x: cx - bw / 2, y: Y(f), width: bw, height: yBot - Y(f), rx: 3, class: 'bar',
             style: `fill:${on ? 'rgba(84,230,193,.65)' : 'rgba(127,212,240,.32)'}`,
         }));
-        g.appendChild(el('text', { x: cx, y: Y(f) - 5, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${on ? '#54e6c1' : '#9cb6b4'}` },
+        g.appendChild(el('text', { x: cx, y: Y(f) - 5, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${on ? '#059669' : '#475569'}` },
             `${Math.round(f / SPECIMENS[state.spec].mm)}개`));
-        g.appendChild(el('text', { x: cx, y: yBot + 14, 'text-anchor': 'middle', class: 'axis-text', style: on ? 'fill:#54e6c1' : '' }, `${mag}배`));
+        g.appendChild(el('text', { x: cx, y: yBot + 14, 'text-anchor': 'middle', class: 'axis-text', style: on ? 'fill:#059669' : '' }, `${mag}배`));
     });
 
-    g.appendChild(el('text', { x: (x0 + x1) / 2, y: 172, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#9cb6b4' },
+    g.appendChild(el('text', { x: (x0 + x1) / 2, y: 172, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#475569' },
         `막대 위의 숫자는 ${a.spec.name}가 가로로 몇 개 들어가는지입니다`));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '배율 — 세로는 한눈에 보이는 너비 (mm)'));
 }

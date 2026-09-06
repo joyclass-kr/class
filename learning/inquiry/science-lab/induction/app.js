@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = `<g clip-path="url(#railClip)">${body}</g>`;
         out += `<text class="part-label" x="20" y="20">B = ${a.B} T (지면으로 들어감) · L = ${a.L} m · v = ${a.v} m/s</text>`;
         // one legend row, then the readings, each on its own line
-        out += `<text class="small-label" x="20" y="180"><tspan fill="#54e6c1">초록 = 미는 방향</tspan>` +
+        out += `<text class="small-label" x="20" y="180"><tspan fill="#059669">초록 = 미는 방향</tspan>` +
                `<tspan fill="#8fa8b0">  ·  </tspan><tspan fill="#ff7d6b">빨강 = 유도 전류가 만드는 방해하는 힘</tspan></text>`;
         out += `<text class="read-text" x="20" y="196">ε = ${a.B}×${a.L}×${a.v} = ${a.emf.toFixed(2)} V · I = ${a.current.toFixed(3)} A · F = ${a.force.toFixed(3)} N</text>`;
         out += `<text class="note-text" x="20" y="209">${moving ? `도선이 실제 속력으로 움직입니다 (${RAIL_M} m 구간)` : '도선이 멈춰 있어 자기장 변화가 없고 전류도 흐르지 않습니다'}</text>`;
@@ -205,14 +205,14 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="bench-text" x="${GRAPH.x0 + 4}" y="${(gy(EMF_BENCH) - 5).toFixed(1)}">${EMF_BENCH} V</text>`;
         [0.2, 0.5, 1].forEach(b => {
             const on = Math.abs(b - a.B) < 1e-9;
-            out += `<path class="trace" style="stroke:${on ? '#ffd166' : 'rgba(255,209,102,.28)'}" ` +
+            out += `<path class="trace" style="stroke:${on ? '#d97706' : 'rgba(217, 119, 6, .28)'}" ` +
                    `d="M${gx(0).toFixed(1)},${gy(0).toFixed(1)}L${gx(10).toFixed(1)},${gy(b * ROD_L * 10).toFixed(1)}"/>`;
-            out += `<text class="axis-text" style="fill:${on ? '#ffd166' : '#7f9298'}" x="${GRAPH.x1 - 4}" y="${(gy(b * ROD_L * 10) + 12).toFixed(1)}" text-anchor="end">B ${b} T</text>`;
+            out += `<text class="axis-text" style="fill:${on ? '#d97706' : '#7f9298'}" x="${GRAPH.x1 - 4}" y="${(gy(b * ROD_L * 10) + 12).toFixed(1)}" text-anchor="end">B ${b} T</text>`;
         });
         if (!([0.2, 0.5, 1].some(b => Math.abs(b - a.B) < 1e-9))) {
             out += `<path class="trace" d="M${gx(0).toFixed(1)},${gy(0).toFixed(1)}L${gx(10).toFixed(1)},${gy(a.B * ROD_L * 10).toFixed(1)}"/>`;
         }
-        out += `<circle class="trace-dot" cx="${gx(a.v).toFixed(1)}" cy="${gy(a.emf).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.v).toFixed(1)}" cy="${gy(a.emf).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="trace" d="M${pts.join('L')}"/>`;
         out += `<line class="peak-line" x1="${gx(a.r).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(a.r).toFixed(1)}" y2="${GRAPH.y0}"/>`;
         out += `<text class="peak-text" x="${(gx(a.r) + 5).toFixed(1)}" y="${GRAPH.y1 + 10}">R = r 에서 최대</text>`;
-        out += `<circle class="trace-dot" cx="${gx(a.R).toFixed(1)}" cy="${gy(a.pExt).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.R).toFixed(1)}" cy="${gy(a.pExt).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

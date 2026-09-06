@@ -139,8 +139,8 @@ function drawShore(g) {
     [[96, a.sea, '바다'], [340, a.land, '육지']].forEach(([x, t, label]) => {
         const h = clamp((t - 12) / 18, 0, 1);
         g.appendChild(el('rect', { x: x - 7, y: GROUND_Y + 8, width: 14, height: 44, rx: 7, class: 'thermo' }));
-        g.appendChild(el('rect', { x: x - 4, y: GROUND_Y + 48 - h * 36, width: 8, height: h * 36 + 2, rx: 4, class: 'thermo-fill', style: `fill:${label === '육지' ? '#ffb26b' : '#7fd4f0'}` }));
-        g.appendChild(el('text', { x, y: GROUND_Y + 4, 'text-anchor': 'middle', class: 'read-text', style: `fill:${label === '육지' ? '#ffb26b' : '#7fd4f0'}` }, `${fmt(t, 1)}℃`));
+        g.appendChild(el('rect', { x: x - 4, y: GROUND_Y + 48 - h * 36, width: 8, height: h * 36 + 2, rx: 4, class: 'thermo-fill', style: `fill:${label === '육지' ? '#ffb26b' : '#0284c7'}` }));
+        g.appendChild(el('text', { x, y: GROUND_Y + 4, 'text-anchor': 'middle', class: 'read-text', style: `fill:${label === '육지' ? '#ffb26b' : '#0284c7'}` }, `${fmt(t, 1)}℃`));
     });
 
     g.appendChild(el('text', { x: 16, y: 22, class: 'big-read' }, koHour(a.hour)));
@@ -200,13 +200,13 @@ function drawGraph(g) {
 
     g.appendChild(el('line', { x1: x0 + 4, y1: 172, x2: x0 + 19, y2: 172, style: 'stroke:#ffb26b;stroke-width:3' }));
     g.appendChild(el('text', { x: x0 + 24, y: 175.5, class: 'legend-text', style: 'fill:#ffb26b' }, '육지'));
-    g.appendChild(el('line', { x1: x0 + 62, y1: 172, x2: x0 + 77, y2: 172, style: 'stroke:#7fd4f0;stroke-width:3;stroke-dasharray:5 3' }));
-    g.appendChild(el('text', { x: x0 + 82, y: 175.5, class: 'legend-text', style: 'fill:#7fd4f0' }, '바다'));
+    g.appendChild(el('line', { x1: x0 + 62, y1: 172, x2: x0 + 77, y2: 172, style: 'stroke:#0284c7;stroke-width:3;stroke-dasharray:5 3' }));
+    g.appendChild(el('text', { x: x0 + 82, y: 175.5, class: 'legend-text', style: 'fill:#0284c7' }, '바다'));
     g.appendChild(el('rect', { x: x0 + 124, y: 168, width: 13, height: 8, class: 'breeze-band breeze-sea' }));
     g.appendChild(el('text', { x: x0 + 142, y: 175.5, class: 'legend-text', style: 'fill:#7ff0d6' }, '바닷바람'));
     g.appendChild(el('rect', { x: x0 + 200, y: 168, width: 13, height: 8, class: 'breeze-band breeze-land' }));
     g.appendChild(el('text', { x: x0 + 218, y: 175.5, class: 'legend-text', style: 'fill:#beaaeb' }, '뭍바람'));
-    g.appendChild(el('text', { x: x1 - 2, y: 175.5, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#9cb6b4' }, `일교차 ${fmt(a.range, 1)}℃`));
+    g.appendChild(el('text', { x: x1 - 2, y: 175.5, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#475569' }, `일교차 ${fmt(a.range, 1)}℃`));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '하루 동안의 기온 변화'));
 }
 

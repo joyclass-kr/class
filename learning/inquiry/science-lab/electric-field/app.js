@@ -189,15 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const tx0 = CX + x * S_F, room = dir > 0 ? CX + X_CH * S_F - 18 - tx0 : dir < 0 ? tx0 - (CX - X_CH * S_F + 18) : 0;
         const tx = tx0 + dir * Math.min(46, room) * ease(p), ty = CY;
         if (p > 0 && dir) out += `<line class="trail" x1="${tx0.toFixed(1)}" y1="${ty}" x2="${tx.toFixed(1)}" y2="${ty}"/>`;
-        out += `<circle class="test-charge" cx="${tx.toFixed(1)}" cy="${ty}" r="5"/><text class="charge-text" style="font-size:9px;fill:#3a2a00" x="${tx.toFixed(1)}" y="${ty + 3}" text-anchor="middle">+</text>`;
+        out += `<circle class="test-charge" cx="${tx.toFixed(1)}" cy="${ty}" r="5"/><text class="charge-text" style="font-size:12px;font-weight:900;fill:#3a2a00" x="${tx.toFixed(1)}" y="${ty + 3}" text-anchor="middle">+</text>`;
         if (dir) { const L = clamp((Math.abs(a.E) / 2e5) * 40, 10, 60); out += arrow(tx, ty - 14, tx + dir * L, ty - 14, 'force force-e', 'arrow-e'); }
         out += `<text class="small-label" x="${tx0.toFixed(1)}" y="${CY - 22}" text-anchor="middle">시험 전하 ${SPOTS[state.spot].label}</text>`;
         // readouts
-        out += `<text class="trait-text" style="fill:#ff9f8a" x="20" y="40">왼쪽 전하가 만드는 전기장 ${fmtE(a.eL)} ${a.eL > 0 ? '→' : '←'}</text>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="20" y="56">오른쪽 전하가 만드는 전기장 ${fmtE(a.eR)} ${a.eR > 0 ? '→' : '←'}</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="20" y="72">합친 전기장 ${a.verdict === 'zero' ? '0' : `${fmtE(a.E)} ${a.E > 0 ? '→' : '←'}`} · +1 nC이 받는 힘 ${a.verdict === 'zero' ? '0' : fmtF(a.F)}</text>`;
+        out += `<text class="trait-text" style="fill:#dc2626" x="20" y="40">왼쪽 전하가 만드는 전기장 ${fmtE(a.eL)} ${a.eL > 0 ? '→' : '←'}</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="20" y="56">오른쪽 전하가 만드는 전기장 ${fmtE(a.eR)} ${a.eR > 0 ? '→' : '←'}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="20" y="72">합친 전기장 ${a.verdict === 'zero' ? '0' : `${fmtE(a.E)} ${a.E > 0 ? '→' : '←'}`} · +1 nC이 받는 힘 ${a.verdict === 'zero' ? '0' : fmtF(a.F)}</text>`;
         const VERD = { left: '왼쪽으로 밀림', zero: '두 전기장이 상쇄되어 힘 0', right: '오른쪽으로 밀림' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${LEFTS[state.left].label} · ${RIGHTS[state.right].label} · ${SPOTS[state.spot].label}: ${VERD[a.verdict]}` : `${LEFTS[state.left].label} · ${RIGHTS[state.right].label} · 시험 전하 ${SPOTS[state.spot].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${LEFTS[state.left].label} · ${RIGHTS[state.right].label} · ${SPOTS[state.spot].label}: ${VERD[a.verdict]}` : `${LEFTS[state.left].label} · ${RIGHTS[state.right].label} · 시험 전하 ${SPOTS[state.spot].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">전기장 E = kQ/r² (k = 9.0×10⁹). 선이 빽빽한 곳이 센 곳, + 시험 전하는 화살표 방향으로 힘을 받습니다</text>`;
         return out;
     }
@@ -210,14 +210,14 @@ document.addEventListener('DOMContentLoaded', () => {
         [[1e6, '100만'], [1e5, '10만'], [1e4, '1만'], [0, '0'], [-1e4, '−1만'], [-1e5, '−10만'], [-1e6, '−100만']].forEach(([E, lab]) => { const y = yOf(E); out += `<line class="grid-line" x1="${X0}" y1="${y.toFixed(1)}" x2="${X1}" y2="${y.toFixed(1)}"/><text class="axis-text" x="${X0 - 5}" y="${(y + 3.5).toFixed(1)}" text-anchor="end">${lab}</text>`; });
         [-0.6, -0.3, 0, 0.3, 0.6].forEach(xm => { out += `<text class="axis-text" x="${xOf(xm).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${xm} m</text>`; });
         out += `<line class="axis" x1="${X0}" y1="${YM}" x2="${X1}" y2="${YM}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
-        [[-X_CH, a.qL], [X_CH, a.qR]].forEach(([xm, q]) => { out += `<line class="ref-line" style="stroke:${q > 0 ? '#ff9f8a' : '#52c7ff'}" x1="${xOf(xm).toFixed(1)}" y1="${Y1}" x2="${xOf(xm).toFixed(1)}" y2="${Y0}"/>`; });
+        [[-X_CH, a.qL], [X_CH, a.qR]].forEach(([xm, q]) => { out += `<line class="ref-line" style="stroke:${q > 0 ? '#dc2626' : '#0284c7'}" x1="${xOf(xm).toFixed(1)}" y1="${Y1}" x2="${xOf(xm).toFixed(1)}" y2="${Y0}"/>`; });
         let d = '', pen = false;
         for (let xm = -0.6; xm <= 0.6 + 1e-9; xm += 0.005) {
             if (Math.abs(xm + X_CH) < 0.02 || Math.abs(xm - X_CH) < 0.02) { pen = false; continue; }
             const E = fieldOnAxis(xm, a.qL, a.qR).E;
             d += `${pen ? 'L' : 'M'}${xOf(xm).toFixed(1)},${yOf(E).toFixed(1)} `; pen = true;
         }
-        out += `<path class="trace" style="stroke:#ffd166" d="${d}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
         // zero crossings away from the charges
         const zeros = [];
         for (let xm = -0.6; xm < 0.6; xm += 0.005) {
@@ -225,8 +225,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const e1 = fieldOnAxis(xm, a.qL, a.qR).E, e2 = fieldOnAxis(xm + 0.005, a.qL, a.qR).E;
             if (e1 === 0 || (e1 < 0) !== (e2 < 0)) zeros.push(+(xm + (e1 === 0 ? 0 : 0.0025)).toFixed(3));
         }
-        zeros.forEach(z => { out += `<circle fill="#54e6c1" cx="${xOf(z).toFixed(1)}" cy="${YM}" r="3.5"/>`; });
-        out += `<line class="ref-line" style="stroke:#ffd166" x1="${xOf(a.x).toFixed(1)}" y1="${Y1}" x2="${xOf(a.x).toFixed(1)}" y2="${Y0}"/><text class="small-label" style="fill:#ffd166" x="${xOf(a.x).toFixed(1)}" y="${Y1 - 4}" text-anchor="middle">시험 전하</text>`;
+        zeros.forEach(z => { out += `<circle fill="#059669" cx="${xOf(z).toFixed(1)}" cy="${YM}" r="3.5"/>`; });
+        out += `<line class="ref-line" style="stroke:#d97706" x1="${xOf(a.x).toFixed(1)}" y1="${Y1}" x2="${xOf(a.x).toFixed(1)}" y2="${Y0}"/><text class="small-label" style="fill:#d97706" x="${xOf(a.x).toFixed(1)}" y="${Y1 - 4}" text-anchor="middle">시험 전하</text>`;
         out += `<text class="small-label" x="${X1}" y="${Y0 + 30}" text-anchor="end">${zeros.length ? `초록 점: 전기장이 0인 곳 (${zeros.map(z => `${z} m`).join(', ')})` : '이 축 위에는 전기장이 0인 곳이 없습니다 (전하 바로 위 제외)'}</text>`;
         return out;
     }
@@ -239,19 +239,19 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let y = YT + 16; y < YB; y += 26) { out += leftPos ? arrow(XL + 4, y, XR - 4, y, 'uniform-line', 'field-arrow', 3) : arrow(XR - 4, y, XL + 4, y, 'uniform-line', 'field-arrow', 3); }
         const x = XL + 14 + (XR - XL - 28) * p * p;
         out += `<line class="trail" x1="${XL + 14}" y1="${CY}" x2="${x.toFixed(1)}" y2="${CY}"/>`;
-        out += `<circle class="${pt.cls}" cx="${x.toFixed(1)}" cy="${CY}" r="${state.part === 'a' ? 8 : state.part === 'p' ? 6 : 4.5}"/><text class="charge-text" style="font-size:9px" x="${x.toFixed(1)}" y="${CY + 3}" text-anchor="middle">${pt.sym}</text>`;
+        out += `<circle class="${pt.cls}" cx="${x.toFixed(1)}" cy="${CY}" r="${state.part === 'a' ? 8 : state.part === 'p' ? 6 : 4.5}"/><text class="charge-text" style="font-size:12px;font-weight:900" x="${x.toFixed(1)}" y="${CY + 3}" text-anchor="middle">${pt.sym}</text>`;
         const fl = 14 + 30 * p;
         out += arrow(x + 8, CY - 16, x + 8 + fl, CY - 16, 'force force-e', 'arrow-e');
-        out += `<text class="small-label" style="fill:#ffd166" x="${(x + 8).toFixed(1)}" y="${CY - 22}">힘 →</text>`;
+        out += `<text class="small-label" style="fill:#d97706" x="${(x + 8).toFixed(1)}" y="${CY - 22}">힘 →</text>`;
         out += `<text class="small-label" x="${(XL + XR) / 2}" y="${YB + 13}" text-anchor="middle">간격 2 cm · 전압 ${VOLTS[state.volt].label} · 전기장 ${leftPos ? '→' : '←'} ${fmtN(a.E)} V/m</text>`;
         out += `<text class="trait-text" x="${XR + 22}" y="60">${pt.label} ${pt.sym}</text>`;
         out += `<text class="trait-text" x="${XR + 22}" y="78">힘 ${fmtSci(a.F)} N</text>`;
         out += `<text class="trait-text" x="${XR + 22}" y="94">가속도 ${fmtSci(a.a)} m/s²</text>`;
-        out += `<text class="trait-text" style="fill:#54e6c1" x="${XR + 22}" y="118">지금 속력</text><text class="gen-text" style="fill:#54e6c1" x="${XR + 22}" y="134">${fmtN(a.v * p / 1000)} km/s</text>`;
+        out += `<text class="trait-text" style="fill:#059669" x="${XR + 22}" y="118">지금 속력</text><text class="gen-text" style="fill:#059669" x="${XR + 22}" y="134">${fmtN(a.v * p / 1000)} km/s</text>`;
         out += `<text class="trait-text" x="${XR + 22}" y="156">걸린 시간 ${fmtN(a.t * 1e9 * p, 2)} ns</text>`;
         out += `<text class="trait-text" x="${XR + 22}" y="172">에너지 ${fmtN(a.eV * p * p)} eV</text>`;
         const VERD = { slow: '초속 1,000 km 아래', mid: '초속 1,000~10,000 km', fast: '초속 10,000 km 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${pt.label} · ${VOLTS[state.volt].label}: ${fmtV(a.v)}${a.v / C_LIGHT >= 0.01 ? ` (빛의 ${fmtN(a.v / C_LIGHT * 100, 1)} %)` : ''} — ${VERD[a.verdict]}` : `${pt.label} · ${VOLTS[state.volt].label} · 2 cm`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${pt.label} · ${VOLTS[state.volt].label}: ${fmtV(a.v)}${a.v / C_LIGHT >= 0.01 ? ` (빛의 ${fmtN(a.v / C_LIGHT * 100, 1)} %)` : ''} — ${VERD[a.verdict]}` : `${pt.label} · ${VOLTS[state.volt].label} · 2 cm`}</text>`;
         out += `<text class="note-text" x="20" y="208">전기장 E = V/d, 힘 F = qE, 얻는 운동 에너지 = qV. 음전하는 전기장과 반대쪽으로 힘을 받습니다</text>`;
         return out;
     }
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="wire" d="M60,${CY - 14} L60,${YT - 18} L${XL + 2},${YT - 18} L${XL + 2},${YT - 10}"/>`;
         out += `<path class="wire" d="M60,${CY + 14} L60,${YB + 30} L${XR + 2},${YB + 30} L${XR + 2},${YB + 10}"/>`;
         out += `<line class="battery-long" x1="46" y1="${CY - 14}" x2="74" y2="${CY - 14}"/><line class="battery-short" x1="52" y1="${CY - 6}" x2="68" y2="${CY - 6}"/><line class="battery-long" x1="46" y1="${CY + 6}" x2="74" y2="${CY + 6}"/><line class="battery-short" x1="52" y1="${CY + 14}" x2="68" y2="${CY + 14}"/>`;
-        out += `<text class="small-label" x="88" y="${CY + 4}">전지 9 V</text><text class="charge-text" style="font-size:10px" x="80" y="${CY - 10}">+</text><text class="charge-text" style="font-size:10px" x="80" y="${CY + 18}">−</text>`;
+        out += `<text class="small-label" x="88" y="${CY + 4}">전지 9 V</text><text class="charge-text" style="font-size:12.5px;font-weight:900" x="80" y="${CY - 10}">+</text><text class="charge-text" style="font-size:12.5px;font-weight:900" x="80" y="${CY + 18}">−</text>`;
         // the capacitor
         out += `<rect class="dielectric ${di.cls}" x="${XL + 4}" y="${YT}" width="${gap.px - 4}" height="${h}"/>`;
         out += `<rect class="cap-plate" x="${XL}" y="${YT - 10}" width="4" height="${h + 20}"/><rect class="cap-plate" x="${XR}" y="${YT - 10}" width="4" height="${h + 20}"/>`;
@@ -296,12 +296,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // readouts
         const RX = 316;
         out += `<text class="trait-text" x="${RX}" y="52">전기 용량 C = ε₀·εr·A/d</text>`;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${RX}" y="70">${fmtC(a.C)}</text>`;
-        out += `<text class="trait-text" x="${RX}" y="92">쌓인 전하 Q = CV</text><text class="gen-text" style="fill:#ff9f8a" x="${RX}" y="108">${fmtQ(a.Q * ease(p))}</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${RX}" y="70">${fmtC(a.C)}</text>`;
+        out += `<text class="trait-text" x="${RX}" y="92">쌓인 전하 Q = CV</text><text class="gen-text" style="fill:#dc2626" x="${RX}" y="108">${fmtQ(a.Q * ease(p))}</text>`;
         out += `<text class="trait-text" x="${RX}" y="130">판 사이 전기장 V/d</text><text class="trait-text" style="fill:#97dad3" x="${RX}" y="144">${fmtN(a.E)} V/m</text>`;
-        out += `<text class="trait-text" x="${RX}" y="166">저장 에너지 ½CV²</text><text class="trait-text" style="fill:#54e6c1" x="${RX}" y="180">${fmtU(a.U * ease(p) * ease(p))}</text>`;
+        out += `<text class="trait-text" x="${RX}" y="166">저장 에너지 ½CV²</text><text class="trait-text" style="fill:#059669" x="${RX}" y="180">${fmtU(a.U * ease(p) * ease(p))}</text>`;
         const VERD = { small: '100 pF 아래', mid: '100~1,000 pF', big: '1 nF 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${area.label} · ${gap.label} · ${di.label}: ${fmtC(a.C)} — ${VERD[a.verdict]}, 전하 ${fmtQ(a.Q)}` : `${area.label} · ${gap.label} · ${di.label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${area.label} · ${gap.label} · ${di.label}: ${fmtC(a.C)} — ${VERD[a.verdict]}, 전하 ${fmtQ(a.Q)}` : `${area.label} · ${gap.label} · ${di.label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">ε₀ = 8.85×10⁻¹² F/m. 판이 넓을수록·간격이 좁을수록·유전율이 클수록 같은 전압에서 전하가 더 쌓입니다</text>`;
         return out;
     }
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const xOf = C => X0 + clamp((Math.log10(C) + 11) / 4, 0, 1) * (X1 - X0);   // 10 pF … 100 nF
         let out = `<text class="axis-title" x="20" y="18">같은 판·간격에서 사이 물질만 바꾸면 — 전기 용량은 유전율에 비례 (로그 눈금)</text>`;
         [[1e-11, '10 pF'], [1e-10, '100 pF'], [1e-9, '1 nF'], [1e-8, '10 nF'], [1e-7, '100 nF']].forEach(([C, lab]) => { const x = xOf(C); out += `<line class="grid-line" x1="${x.toFixed(1)}" y1="${Y - 8}" x2="${x.toFixed(1)}" y2="${Y + 4 * (H + 6)}"/><text class="axis-text" x="${x.toFixed(1)}" y="${Y + 4 * (H + 6) + 14}" text-anchor="middle">${lab}</text>`; });
-        [[1e-10, '#ff9f8a'], [1e-9, '#ff9f8a']].forEach(([C, col]) => { out += `<line class="ref-line" style="stroke:${col}" x1="${xOf(C).toFixed(1)}" y1="${Y - 8}" x2="${xOf(C).toFixed(1)}" y2="${Y + 4 * (H + 6)}"/>`; });
+        [[1e-10, '#dc2626'], [1e-9, '#dc2626']].forEach(([C, col]) => { out += `<line class="ref-line" style="stroke:${col}" x1="${xOf(C).toFixed(1)}" y1="${Y - 8}" x2="${xOf(C).toFixed(1)}" y2="${Y + 4 * (H + 6)}"/>`; });
         Object.entries(DIELS).forEach(([k, di], i) => {
             const C = E0 * di.er * a.A / a.d, y = Y + i * (H + 6), w = xOf(C) - X0;
             out += `<rect class="dielectric ${di.cls}" style="opacity:${k === state.diel ? 1 : 0.55}" x="${X0}" y="${y}" width="${w.toFixed(1)}" height="${H}" rx="3"/>`;

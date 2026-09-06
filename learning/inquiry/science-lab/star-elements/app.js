@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const MEV_PER_NUCLEON_MASS = 931.5;
     const J_PER_KG_PER_MEV = 9.65e13;            // 1 MeV per nucleon, in joules per kilogram of fuel
     const COAL_J_PER_KG = 3.0e7;
-    const COLOR = { H: '#ff9f8a', He: '#ffd166', C: '#9fb6d9', O: '#52c7ff', Mg: '#b29bff', Si: '#c9a35f', Fe: '#e08a5c', Pb: '#9cb6b4' };
+    const COLOR = { H: '#dc2626', He: '#d97706', C: '#9fb6d9', O: '#0284c7', Mg: '#7c3aed', Si: '#c9a35f', Fe: '#e08a5c', Pb: '#475569' };
     // One burning stage each: fuel, ash, and where and how long it happens.
     const STEPS = {
         h: { label: '수소 → 헬륨', fuel: { sym: 'H', A: 1, n: 4, name: '수소' }, ash: { sym: 'He', A: 4, name: '헬륨' }, gain: H_GAIN, temp: '1,500만 K', where: '태양 같은 별의 중심', time25: '700만 년', timeSun: '100억 년' },
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '25': { label: '태양의 25배', hint: '푸른 큰 별', stages: ['h', 'he', 'c', 'o', 'si'], end: 'sn', lifeText: '약 700만 년', endText: '철 중심이 무너져 초신성으로 터지고 중성자별(더 무거우면 블랙홀)이 남음' },
     };
     const lifeYears = m => 1e10 * Math.pow(m, -2.5);
-    const LAYER_COLOR = { H: '#ff9f8a', He: '#ffd166', C: '#9fb6d9', O: '#52c7ff', Si: '#c9a35f', Fe: '#e08a5c' };
+    const LAYER_COLOR = { H: '#dc2626', He: '#d97706', C: '#9fb6d9', O: '#0284c7', Si: '#c9a35f', Fe: '#e08a5c' };
 
     // Where each element is found (mass %) and where it came from.
     const ORIGINS = {
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nucR = A => 5 + 2.3 * Math.cbrt(A);
     function nucleus(cx, cy, sym, A, opacity = 1, labelOpacity = opacity) {
         const r = nucR(A);
-        let out = `<circle class="nucleus" fill="${COLOR[sym] || '#9cb6b4'}" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}" opacity="${opacity}"/>`;
+        let out = `<circle class="nucleus" fill="${COLOR[sym] || '#475569'}" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}" opacity="${opacity}"/>`;
         // a few of the protons and neutrons, drawn inside
         const dots = Math.min(7, A);
         for (let k = 0; k < dots; k += 1) {
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (st.gain > 0) {
                 for (let k = 0; k < 6; k += 1) {
                     const ang = k * Math.PI / 3 + 0.3, d = 22 + 40 * t3;
-                    out += `<line class="ray" style="stroke:#ffd166;stroke-width:1.4" x1="${(CX + 22 * Math.cos(ang)).toFixed(1)}" y1="${(CY + 22 * Math.sin(ang)).toFixed(1)}" x2="${(CX + d * Math.cos(ang)).toFixed(1)}" y2="${(CY + d * Math.sin(ang)).toFixed(1)}" opacity="${(1 - t3 * 0.6).toFixed(2)}"/>`;
+                    out += `<line class="ray" style="stroke:#d97706;stroke-width:1.4" x1="${(CX + 22 * Math.cos(ang)).toFixed(1)}" y1="${(CY + 22 * Math.sin(ang)).toFixed(1)}" x2="${(CX + d * Math.cos(ang)).toFixed(1)}" y2="${(CY + d * Math.sin(ang)).toFixed(1)}" opacity="${(1 - t3 * 0.6).toFixed(2)}"/>`;
                 }
                 out += `<text class="energy-text" x="${CX}" y="196" text-anchor="middle">빛과 열이 나옴 — 질량 ${a.massPct.toFixed(a.massPct < 0.1 ? 3 : 2)} % 줄어듦</text>`;
             } else {
@@ -200,13 +200,13 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="${IX}" y="62">어디서: ${st.where}</text>`;
         out += `<text class="trait-text" x="${IX}" y="78">${st.time25 === '—' ? '별 속에서는 이어지지 않음' : `25배 무거운 별에서 이 단계: ${st.time25}`}</text>`;
         if (t3 > 0.3) {
-            out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="104">연료 1 kg에서 ${st.gain > 0 ? `${(a.jPerKg / 1e12).toFixed(a.jPerKg < 1e14 ? 0 : 0)}조 J` : '에너지가 나오지 않음'}</text>`;
-            if (st.gain > 0) out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="120">= 석탄 ${fmtTons(a.coalKg)} 태우는 것</text>`;
-            out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="140">수소 → 헬륨 때의 ${st.gain > 0 ? `${a.ratio >= 50 ? Math.round(a.ratio) : a.ratio.toFixed(1)} %` : '반대 방향'}</text>`;
+            out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="104">연료 1 kg에서 ${st.gain > 0 ? `${(a.jPerKg / 1e12).toFixed(a.jPerKg < 1e14 ? 0 : 0)}조 J` : '에너지가 나오지 않음'}</text>`;
+            if (st.gain > 0) out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="120">= 석탄 ${fmtTons(a.coalKg)} 태우는 것</text>`;
+            out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="140">수소 → 헬륨 때의 ${st.gain > 0 ? `${a.ratio >= 50 ? Math.round(a.ratio) : a.ratio.toFixed(1)} %` : '반대 방향'}</text>`;
             out += `<text class="trait-text" x="${IX}" y="156">핵자 하나에 ${st.gain > 0 ? '+' : ''}${st.gain.toFixed(2)} MeV</text>`;
         }
         const VERD = { lots: '수소 때와 비슷하게 많이', tenth: '수소 때의 10분의 1쯤', little: '수소 때의 20분의 1쯤 이하', costs: '오히려 에너지가 들어감' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${st.label}: ${VERD[a.verdict]}` : `${st.label} — ${st.fuel.name} ${n}개가 ${st.ash.name} ${st.ash.extra || ''}1개로`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${st.label}: ${VERD[a.verdict]}` : `${st.label} — ${st.fuel.name} ${n}개가 ${st.ash.name} ${st.ash.extra || ''}1개로`}</text>`;
         out += `<text class="note-text" x="20" y="208">${st.gain > 0 ? '원자핵이 더 단단히 묶이면 그만큼 질량이 줄고, 줄어든 질량이 에너지가 됩니다' : '철은 원자핵이 가장 단단히 묶여 있어 더 합치면 오히려 에너지가 듭니다'}</text>`;
         return out;
     }
@@ -221,15 +221,15 @@ document.addEventListener('DOMContentLoaded', () => {
         [1, 4, 12, 28, 56, 120, 238].forEach(A => { out += `<text class="axis-text" x="${xOf(A).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${A}</text>`; });
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         out += `<path class="trace" d="${BINDING.filter(b => b.A !== 3 && b.A !== 7 && b.A !== 14).map((b, i) => `${i ? 'L' : 'M'}${xOf(b.A).toFixed(1)},${yOf(b.be).toFixed(1)}`).join(' ')}"/>`;
-        BINDING.forEach(b => { out += `<circle class="trace-dot" fill="${COLOR[b.sym] || '#9cb6b4'}" cx="${xOf(b.A).toFixed(1)}" cy="${yOf(b.be).toFixed(1)}" r="2.6"/>`; });
+        BINDING.forEach(b => { out += `<circle class="trace-dot" fill="${COLOR[b.sym] || '#475569'}" cx="${xOf(b.A).toFixed(1)}" cy="${yOf(b.be).toFixed(1)}" r="2.6"/>`; });
         const LABELS = [['H', 1, 8, 4, 'start'], ['He', 4, 0, -8, 'middle'], ['C', 12, -4, 12, 'end'], ['O', 16, 4, -8, 'start'], ['Si', 28, 0, -9, 'middle'], ['Fe', 56, 0, -9, 'middle'], ['Pb', 208, 0, 14, 'middle'], ['U', 238, 4, 14, 'start']];
-        LABELS.forEach(([sym, A, dx, dy, anchor]) => { const b = BINDING.find(x => x.sym === sym && x.A === A); out += `<text class="axis-text" style="fill:#dce9e8" x="${(xOf(A) + dx).toFixed(1)}" y="${(yOf(b.be) + dy).toFixed(1)}" text-anchor="${anchor}">${b.name}${sym === 'Fe' ? ' — 가장 단단함' : ''}</text>`; });
+        LABELS.forEach(([sym, A, dx, dy, anchor]) => { const b = BINDING.find(x => x.sym === sym && x.A === A); out += `<text class="axis-text" style="fill:#0f172a" x="${(xOf(A) + dx).toFixed(1)}" y="${(yOf(b.be) + dy).toFixed(1)}" text-anchor="${anchor}">${b.name}${sym === 'Fe' ? ' — 가장 단단함' : ''}</text>`; });
         // the step: from fuel to ash
         const fx = xOf(st.fuel.A), fy = yOf(beOf(st.fuel.sym, st.fuel.A)), ax = xOf(st.ash.A), ay = yOf(beOf(st.ash.sym, st.ash.A));
         const f = clamp(state.progress / 0.6, 0, 1);
         const mx = lerp(fx, ax, f), my = lerp(fy, ay, f);
         out += `<line class="step-arrow" x1="${fx.toFixed(1)}" y1="${fy.toFixed(1)}" x2="${mx.toFixed(1)}" y2="${my.toFixed(1)}"/>`;
-        out += `<circle class="trace-dot chosen" fill="#ffd166" cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="4.5"/>`;
+        out += `<circle class="trace-dot chosen" fill="#d97706" cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="4.5"/>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">원자핵 알갱이 수 — 노란 화살표가 ${st.label}${st.gain > 0 ? ' (위로 = 에너지 나옴)' : ' (아래로 = 에너지 들어감)'}</text>`;
         return out;
     }
@@ -258,15 +258,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const burst = (endT - 0.5) * 2;
                 for (let k = 0; k < 12; k += 1) { const ang = k * Math.PI / 6; out += `<line class="ray" x1="${(CX + 14 * Math.cos(ang)).toFixed(1)}" y1="${(CY + 14 * Math.sin(ang)).toFixed(1)}" x2="${(CX + (14 + 90 * burst) * Math.cos(ang)).toFixed(1)}" y2="${(CY + (14 + 90 * burst) * Math.sin(ang)).toFixed(1)}" opacity="${(1 - burst * 0.7).toFixed(2)}"/>`; }
                 out += `<circle class="remnant" cx="${CX}" cy="${CY}" r="6"/>`;
-                out += `<text class="trait-text" style="fill:#ffd166" x="${CX}" y="${CY + 22}" text-anchor="middle">중성자별</text>`;
-                ['금', '은', '우라늄', '납'].forEach((nm, k) => { const ang = k * Math.PI / 2 + 0.6, d = 30 + 70 * burst; out += `<text class="trait-text" style="fill:#ffd166" x="${(CX + d * Math.cos(ang)).toFixed(1)}" y="${(CY + d * Math.sin(ang) + 3).toFixed(1)}" text-anchor="middle" opacity="${burst.toFixed(2)}">${nm}</text>`; });
+                out += `<text class="trait-text" style="fill:#d97706" x="${CX}" y="${CY + 22}" text-anchor="middle">중성자별</text>`;
+                ['금', '은', '우라늄', '납'].forEach((nm, k) => { const ang = k * Math.PI / 2 + 0.6, d = 30 + 70 * burst; out += `<text class="trait-text" style="fill:#d97706" x="${(CX + d * Math.cos(ang)).toFixed(1)}" y="${(CY + d * Math.sin(ang) + 3).toFixed(1)}" text-anchor="middle" opacity="${burst.toFixed(2)}">${nm}</text>`; });
             }
         } else if (ending) {
             // the outer layers drift off; a small white dwarf stays
             const rr = R * (1 - 0.8 * endT);
             out += `<circle class="star-glow" cx="${CX}" cy="${CY}" r="${(R + 30 * endT).toFixed(1)}" opacity="${(0.6 - 0.5 * endT).toFixed(2)}"/>`;
             cores.forEach((sym, i) => { const r = Math.max(6, rr * (1 - i / cores.length)); out += `<circle class="layer" fill="${LAYER_COLOR[sym]}" cx="${CX}" cy="${CY}" r="${r.toFixed(1)}"/>`; });
-            if (endT > 0.6) out += `<text class="trait-text" style="fill:#ffd166" x="${CX}" y="${CY + 24}" text-anchor="middle">백색 왜성 (${star.end === 'he' ? '헬륨' : '탄소·산소'})</text>`;
+            if (endT > 0.6) out += `<text class="trait-text" style="fill:#d97706" x="${CX}" y="${CY + 24}" text-anchor="middle">백색 왜성 (${star.end === 'he' ? '헬륨' : '탄소·산소'})</text>`;
         } else {
             out += `<circle class="star-glow" cx="${CX}" cy="${CY}" r="${R + 10}"/>`;
             cores.forEach((sym, i) => { const r = R * (1 - i / (cores.length + 0.4)); out += `<circle class="layer" fill="${LAYER_COLOR[sym]}" cx="${CX}" cy="${CY}" r="${r.toFixed(1)}"/>`; });
@@ -282,11 +282,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stageNow) out += `<text class="trait-text" x="${IX}" y="90">중심 온도 ${stageNow.temp}</text>`;
         out += `<text class="trait-text" x="${IX}" y="110">만든 원소:</text>`;
         const made = p === 0 ? '—' : cores.slice(1).map(s => ({ He: '헬륨', C: '탄소', O: '산소', Si: '규소', Fe: '철' }[s])).join('·') || '—';
-        out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="124">${made}</text>`;
-        if (ending && star.end === 'sn' && endT > 0.5) out += `<text class="trait-text" style="fill:#ffd166" x="${IX}" y="138">+ 철보다 무거운 원소</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="124">${made}</text>`;
+        if (ending && star.end === 'sn' && endT > 0.5) out += `<text class="trait-text" style="fill:#d97706" x="${IX}" y="138">+ 철보다 무거운 원소</text>`;
         if (ending && endT > 0.6) { const words = star.endText.match(/.{1,15}/g); words.forEach((w, i) => { out += `<text class="trait-text" x="${IX}" y="${156 + i * 13}">${w}</text>`; }); }
         const VERD = { he: '헬륨까지', co: '탄소·산소까지', sn: '철까지, 초신성으로 더 무거운 원소' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${star.label}: ${VERD[star.end]} · 수명 ${star.lifeText}` : `${star.label}의 일생 (${star.hint})`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${star.label}: ${VERD[star.end]} · 수명 ${star.lifeText}` : `${star.label}의 일생 (${star.hint})`}</text>`;
         out += `<text class="note-text" x="20" y="208">단계마다 같은 시간을 준 그림 — 실제로는 수소 단계가 수명의 90 %, 마지막 단계들은 며칠에서 몇 해</text>`;
         return out;
     }
@@ -304,8 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="life-line" d="${d}"/>`;
         Object.entries(STARS).forEach(([k, s]) => {
             const m = Number(k), mine = k === state.star;
-            out += `<circle class="trace-dot ${mine ? 'chosen' : ''}" fill="${mine ? '#ffd166' : '#9cb6b4'}" cx="${xOf(m).toFixed(1)}" cy="${yOf(lifeYears(m)).toFixed(1)}" r="${mine ? 5 : 3.5}"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#ffd166' : '#9cb6b4'}" x="${(xOf(m) + 8).toFixed(1)}" y="${(yOf(lifeYears(m)) - 6).toFixed(1)}">${s.label} ${s.lifeText.replace('약 ', '')}</text>`;
+            out += `<circle class="trace-dot ${mine ? 'chosen' : ''}" fill="${mine ? '#d97706' : '#475569'}" cx="${xOf(m).toFixed(1)}" cy="${yOf(lifeYears(m)).toFixed(1)}" r="${mine ? 5 : 3.5}"/>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#d97706' : '#475569'}" x="${(xOf(m) + 8).toFixed(1)}" y="${(yOf(lifeYears(m)) - 6).toFixed(1)}">${s.label} ${s.lifeText.replace('약 ', '')}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 33}" text-anchor="middle">질량 (태양의 몇 배) — 질량이 10배면 수명은 약 300분의 1</text>`;
         return out;
@@ -320,14 +320,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (el.origin === 'bigbang') {
                 for (let k = 0; k < 4; k += 1) { const r = ((p * 1.2 + k * 0.25) % 1) * 80; out += `<circle class="scene-ring" cx="${CX}" cy="${CY}" r="${r.toFixed(1)}" opacity="${(1 - r / 80).toFixed(2)}"/>`; }
                 out += `<circle class="glow" cx="${CX}" cy="${CY}" r="${(6 + 6 * Math.sin(p * 6)).toFixed(1)}"/>`;
-                for (let k = 0; k < 8; k += 1) { const ang = k * Math.PI / 4 + 0.4, d = 24 + 56 * ((p + k * 0.125) % 1); out += `<text class="trait-text" style="fill:#ffd166" x="${(CX + d * Math.cos(ang)).toFixed(1)}" y="${(CY + d * Math.sin(ang) * 0.7 + 3).toFixed(1)}" text-anchor="middle">${k % 4 === 0 ? 'He' : 'H'}</text>`; }
+                for (let k = 0; k < 8; k += 1) { const ang = k * Math.PI / 4 + 0.4, d = 24 + 56 * ((p + k * 0.125) % 1); out += `<text class="trait-text" style="fill:#d97706" x="${(CX + d * Math.cos(ang)).toFixed(1)}" y="${(CY + d * Math.sin(ang) * 0.7 + 3).toFixed(1)}" text-anchor="middle">${k % 4 === 0 ? 'He' : 'H'}</text>`; }
                 out += `<text class="trait-text" x="${CX}" y="188" text-anchor="middle">우주가 태어난 뒤 3분 — 수소 원자핵 12개마다 헬륨 1개</text>`;
             } else if (el.origin === 'star') {
                 const R = 44;
                 out += `<circle class="star-glow" cx="${CX}" cy="${CY}" r="${R + 14}"/>`;
                 out += `<circle class="layer" fill="${LAYER_COLOR.H}" cx="${CX}" cy="${CY}" r="${R}"/><circle class="layer" fill="${LAYER_COLOR.He}" cx="${CX}" cy="${CY}" r="${R * 0.66}"/>`;
-                out += `<circle class="layer" fill="${COLOR[el.sym] || '#9cb6b4'}" cx="${CX}" cy="${CY}" r="${R * 0.34}"/><text class="nucleus-label" x="${CX}" y="${CY + 3.5}" text-anchor="middle">${el.sym}</text>`;
-                if (p > 0.5) { const f = (p - 0.5) * 2; for (let k = 0; k < 8; k += 1) { const ang = k * Math.PI / 4 + 0.2, d = R + 14 + 32 * f; out += `<text class="trait-text" style="fill:#ffd166" x="${(CX + d * Math.cos(ang)).toFixed(1)}" y="${(CY + d * Math.sin(ang) * 0.7 + 3).toFixed(1)}" text-anchor="middle" opacity="${(1 - f * 0.5).toFixed(2)}">${el.sym}</text>`; } }
+                out += `<circle class="layer" fill="${COLOR[el.sym] || '#475569'}" cx="${CX}" cy="${CY}" r="${R * 0.34}"/><text class="nucleus-label" x="${CX}" y="${CY + 3.5}" text-anchor="middle">${el.sym}</text>`;
+                if (p > 0.5) { const f = (p - 0.5) * 2; for (let k = 0; k < 8; k += 1) { const ang = k * Math.PI / 4 + 0.2, d = R + 14 + 32 * f; out += `<text class="trait-text" style="fill:#d97706" x="${(CX + d * Math.cos(ang)).toFixed(1)}" y="${(CY + d * Math.sin(ang) * 0.7 + 3).toFixed(1)}" text-anchor="middle" opacity="${(1 - f * 0.5).toFixed(2)}">${el.sym}</text>`; } }
                 out += `<text class="trait-text" x="${CX}" y="188" text-anchor="middle">${p > 0.5 ? '별이 죽으며 만든 원소를 우주에 뿌림' : '별 속에서 핵융합으로 만들어짐'}</text>`;
             } else {
                 if (p < 0.55) {
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     const f = (p - 0.55) / 0.45;
                     out += `<circle class="glow" cx="${CX}" cy="${CY}" r="${(8 + 30 * Math.sin(Math.min(1, f * 1.5) * Math.PI)).toFixed(1)}" opacity="${(0.8 - 0.5 * f).toFixed(2)}"/>`;
-                    ['Au', 'Ag', 'Pt', 'U', 'Au', 'Ag'].forEach((sym, k) => { const ang = k * Math.PI / 3 + 0.5, d = 30 + 56 * f; out += `<text class="trait-text" style="fill:#ffd166" x="${(CX + d * Math.cos(ang)).toFixed(1)}" y="${(CY + d * Math.sin(ang) * 0.7 + 3).toFixed(1)}" text-anchor="middle">${sym}</text>`; });
+                    ['Au', 'Ag', 'Pt', 'U', 'Au', 'Ag'].forEach((sym, k) => { const ang = k * Math.PI / 3 + 0.5, d = 30 + 56 * f; out += `<text class="trait-text" style="fill:#d97706" x="${(CX + d * Math.cos(ang)).toFixed(1)}" y="${(CY + d * Math.sin(ang) * 0.7 + 3).toFixed(1)}" text-anchor="middle">${sym}</text>`; });
                     out += `<text class="trait-text" x="${CX}" y="188" text-anchor="middle">충돌 순간 중성자가 쏟아져 철보다 무거운 원소가 됨</text>`;
                 }
             }
@@ -350,14 +350,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const yOf = pct => pct <= 0 ? BY0 : BY0 - (Math.log10(pct) + 8) / 10 * (BY0 - BY1);
         [['우주', el.universe], ['지각', el.crust], ['사람 몸', el.body]].forEach(([nm, v], i) => {
             const x = BX + i * 46;
-            out += `<rect class="share-bar" fill="${i === 0 ? '#9cb6b4' : i === 1 ? '#c9a35f' : '#ff9f8a'}" x="${x}" y="${yOf(v).toFixed(1)}" width="${BW}" height="${(BY0 - yOf(v)).toFixed(1)}" rx="2"/>`;
+            out += `<rect class="share-bar" fill="${i === 0 ? '#475569' : i === 1 ? '#c9a35f' : '#dc2626'}" x="${x}" y="${yOf(v).toFixed(1)}" width="${BW}" height="${(BY0 - yOf(v)).toFixed(1)}" rx="2"/>`;
             out += `<text class="small-label" x="${x + BW / 2}" y="${(yOf(v) - 4).toFixed(1)}" text-anchor="middle">${shortShare(v)}</text>`;
             out += `<text class="trait-text" x="${x + BW / 2}" y="${BY0 + 13}" text-anchor="middle">${nm}</text>`;
         });
         out += `<text class="small-label" x="${BX + 69}" y="${BY0 + 26}" text-anchor="middle">질량 비율 (한 칸 = 10배)</text>`;
         out += `<text class="small-label" x="${BX + 69}" y="34" text-anchor="middle">${el.name}${pIga(el.name)} 있는 곳</text>`;
         const VERD = { bigbang: '빅뱅 직후에', star: '별 속 핵융합에서', merger: '초신성·중성자별 충돌에서' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${el.name}(${el.sym})의 고향: ${VERD[el.origin]}` : `${el.name}(${el.sym})은 어디에서 왔나`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${el.name}(${el.sym})의 고향: ${VERD[el.origin]}` : `${el.name}(${el.sym})은 어디에서 왔나`}</text>`;
         out += `<text class="note-text" x="20" y="208">${el.how}</text>`;
         return out;
     }
@@ -371,8 +371,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const step = (X1 - X0) / UNIVERSE.length, W = 22;
         UNIVERSE.forEach(([sym, v], n) => {
             const x = X0 + n * step + (step - W) / 2, mine = sym === a.el.sym;
-            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${COLOR[sym] || '#9cb6b4'}" opacity="${mine ? 1 : 0.55}" x="${x.toFixed(1)}" y="${yOf(v).toFixed(1)}" width="${W}" height="${(Y0 - yOf(v)).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${sym}</text>`;
+            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${COLOR[sym] || '#475569'}" opacity="${mine ? 1 : 0.55}" x="${x.toFixed(1)}" y="${yOf(v).toFixed(1)}" width="${W}" height="${(Y0 - yOf(v)).toFixed(1)}" rx="2"/>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${sym}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 32}" text-anchor="middle">수소와 헬륨이 98 % — 나머지 모든 원소는 별이 만든 2 %</text>`;
         return out;

@@ -193,16 +193,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // the reference and the target
         const rx = xOf(kind.ref), tx = xOf(t.value);
         out += `<line class="ref-mark" x1="${rx.toFixed(1)}" y1="${RY - 30}" x2="${rx.toFixed(1)}" y2="${RY + 10}"/>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="${rx.toFixed(1)}" y="${RY - 34}" text-anchor="middle">${kind.refLabel}</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="${rx.toFixed(1)}" y="${RY - 34}" text-anchor="middle">${kind.refLabel}</text>`;
         const curLg = Math.log10(kind.ref) + lg * p, cx = xOf(10 ** curLg);
         out += `<line class="marker" x1="${cx.toFixed(1)}" y1="${RY - 14}" x2="${cx.toFixed(1)}" y2="${RY + 14}"/>`;
         out += `<polygon class="marker-head" points="${cx.toFixed(1)},${RY - 14} ${(cx - 5).toFixed(1)},${RY - 22} ${(cx + 5).toFixed(1)},${RY - 22}"/>`;
         const steps = Math.floor(Math.abs(lg) * p + 1e-9);
-        out += `<text class="big-text" fill="#ffd166" x="230" y="40" text-anchor="middle">${steps === 0 && p === 0 ? '×1' : `${lg > 0 ? '×' : '÷'} ${powWords(steps)}`}</text>`;
+        out += `<text class="big-text" fill="#d97706" x="230" y="40" text-anchor="middle">${steps === 0 && p === 0 ? '×1' : `${lg > 0 ? '×' : '÷'} ${powWords(steps)}`}</text>`;
         out += `<text class="trait-text" x="230" y="58" text-anchor="middle">${p >= 1 ? `${t.label}: ${fmtSci(t.value)} ${kind.unit} = ${t.words}` : `10배 눈금 ${steps}칸 ${lg > 0 ? '크게' : '작게'} · 지금 ${fmtSci(10 ** curLg)} ${kind.unit}`}</text>`;
-        out += `<text class="trait-text" style="fill:#ffd166" x="${clamp(tx, X0 + 40, X1 - 40).toFixed(1)}" y="${RY + 40}" text-anchor="middle">${t.label}</text>`;
+        out += `<text class="trait-text" style="fill:#d97706" x="${clamp(tx, X0 + 40, X1 - 40).toFixed(1)}" y="${RY + 40}" text-anchor="middle">${t.label}</text>`;
         const VERD = { near: '1만 배 안', mid: '1만~1억 배', far: '1억 배 넘게' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${t.label}${pEun(t.label)} ${kind.refLabel.split(' ')[0]}의 ${powWords(a.steps)} 배 ${lg > 0 ? '크다' : '작다'} (${a.steps}자리) → ${VERD[a.verdict]}` : `${kind.refLabel}에서 ${t.label}까지`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${t.label}${pEun(t.label)} ${kind.refLabel.split(' ')[0]}의 ${powWords(a.steps)} 배 ${lg > 0 ? '크다' : '작다'} (${a.steps}자리) → ${VERD[a.verdict]}` : `${kind.refLabel}에서 ${t.label}까지`}</text>`;
         out += `<text class="trait-text" x="20" y="176">10배 눈금으로 재면 ${kind.label}의 세계는 ${kind.eMax - kind.eMin}칸 — 우리가 맨눈으로 보는 것은 그 가운데 두세 칸</text>`;
         out += `<text class="note-text" x="20" y="208">눈금 한 칸 = 10배 · 10${sup(kind.eMin)}부터 10${sup(kind.eMax)} ${kind.unit}까지</text>`;
         return out;
@@ -219,12 +219,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const ROWS = [[-30, -34], [16, 28], [-46, -50]];     // tick end, label baseline: three rows so names do not collide
         items.forEach(([k, t], i) => {
             const x = xOf(t.value), row = ROWS[i % 3], mine = k === state.target;
-            out += `<circle class="trace-dot ${mine ? 'chosen' : ''}" fill="${mine ? '#ffd166' : '#9cb6b4'}" cx="${x.toFixed(1)}" cy="${RY}" r="${mine ? 5 : 3.5}"/>`;
+            out += `<circle class="trace-dot ${mine ? 'chosen' : ''}" fill="${mine ? '#d97706' : '#475569'}" cx="${x.toFixed(1)}" cy="${RY}" r="${mine ? 5 : 3.5}"/>`;
             out += `<line class="tick" x1="${x.toFixed(1)}" y1="${RY}" x2="${x.toFixed(1)}" y2="${RY + row[0]}"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#ffd166' : '#9cb6b4'};font-size:9px" x="${clamp(x, X0 + 24, X1 - 24).toFixed(1)}" y="${RY + row[1]}" text-anchor="middle">${t.short}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#d97706' : '#475569'};font-size:12px;font-weight:800" x="${clamp(x, X0 + 24, X1 - 24).toFixed(1)}" y="${RY + row[1]}" text-anchor="middle">${t.short}</text>`;
         });
         const rx = xOf(kind.ref);
-        out += `<line class="ref-mark" x1="${rx.toFixed(1)}" y1="${RY - 62}" x2="${rx.toFixed(1)}" y2="${RY}"/><text class="axis-text" style="fill:#52c7ff" x="${rx.toFixed(1)}" y="${RY - 66}" text-anchor="middle">기준</text>`;
+        out += `<line class="ref-mark" x1="${rx.toFixed(1)}" y1="${RY - 62}" x2="${rx.toFixed(1)}" y2="${RY}"/><text class="axis-text" style="fill:#0284c7" x="${rx.toFixed(1)}" y="${RY - 66}" text-anchor="middle">기준</text>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${RY + 70}" text-anchor="middle">${kind.unit === 'm' ? '원자에서 우주까지 38칸 — 사람은 한가운데쯤' : '원자의 진동에서 우주의 나이까지 29칸 — 1초는 아래쪽 3분의 1 자리'}</text>`;
         return out;
     }
@@ -246,15 +246,15 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="card-title" x="${x + 8}" y="46">${ERAS[k].label} · ${d.year}년</text>`;
             if (shown) {
                 wrap(d.text, 13).slice(0, 3).forEach((ln, j) => { out += `<text class="card-text" x="${x + 8}" y="${62 + j * 13}">${ln}</text>`; });
-                if (p >= 1 || !active) out += `<text class="card-text" style="fill:${d.cat === 'constant' ? '#54e6c1' : d.cat === 'artifact' ? '#ffb347' : '#9fd8ff'}" x="${x + 8}" y="108">${CAT_LABEL[d.cat]}</text>`;
+                if (p >= 1 || !active) out += `<text class="card-text" style="fill:${d.cat === 'constant' ? '#059669' : d.cat === 'artifact' ? '#ffb347' : '#9fd8ff'}" x="${x + 8}" y="108">${CAT_LABEL[d.cat]}</text>`;
             } else out += `<text class="card-text" x="${x + 8}" y="62">?</text>`;
             out += `<line class="tick major" x1="${xOf(d.year).toFixed(1)}" y1="${TY - 10}" x2="${xOf(d.year).toFixed(1)}" y2="${TY}"/>`;
-            out += `<line class="tick" style="stroke:rgba(214,245,250,.25)" x1="${x + 65}" y1="116" x2="${xOf(d.year).toFixed(1)}" y2="${TY - 10}"/>`;
+            out += `<line class="tick" style="stroke:rgba(148, 163, 184, 0.35)" x1="${x + 65}" y1="116" x2="${xOf(d.year).toFixed(1)}" y2="${TY - 10}"/>`;
         });
         const mx = xOf(year);
         out += `<line class="marker" x1="${mx.toFixed(1)}" y1="${TY - 12}" x2="${mx.toFixed(1)}" y2="${TY + 12}"/><polygon class="marker-head" points="${mx.toFixed(1)},${TY + 12} ${(mx - 5).toFixed(1)},${TY + 20} ${(mx + 5).toFixed(1)},${TY + 20}"/>`;
         out += `<text class="trait-text" x="230" y="188" text-anchor="middle">${Math.round(year)}년${p >= 1 ? ` — ${UNITS[state.unit].label}: ${target.text}` : ''}</text>`;
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${ERAS[state.era].label} ${UNITS[state.unit].label.split(' ')[0]}의 기준: ${CAT_LABEL[target.cat]}` : `${UNITS[state.unit].label}의 기준은 어떻게 바뀌어 왔나`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${ERAS[state.era].label} ${UNITS[state.unit].label.split(' ')[0]}의 기준: ${CAT_LABEL[target.cat]}` : `${UNITS[state.unit].label}의 기준은 어떻게 바뀌어 왔나`}</text>`;
         out += `<text class="note-text" x="20" y="208">기준은 재기 쉽고 변하지 않는 것을 찾아 자연물 → 원기 → 자연 상수로 옮겨 왔습니다 (2019년 완성)</text>`;
         return out;
     }
@@ -269,10 +269,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const step = (X1 - X0) / 3, W = 70;
         ['old', 'mid', 'now'].forEach((k, i) => {
             const d = defs[k], x = X0 + i * step + (step - W) / 2, mine = k === state.era;
-            const color = d.cat === 'constant' ? '#54e6c1' : d.cat === 'artifact' ? '#ffb347' : '#9fd8ff';
+            const color = d.cat === 'constant' ? '#059669' : d.cat === 'artifact' ? '#ffb347' : '#9fd8ff';
             out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${color}" opacity="${mine ? 1 : 0.5}" x="${x.toFixed(1)}" y="${yOf(d.digits).toFixed(1)}" width="${W}" height="${(Y0 - yOf(d.digits)).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${(yOf(d.digits) - 4).toFixed(1)}" text-anchor="middle">10${sup(-d.digits)}</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#9cb6b4'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${ERAS[k].label} (${d.year})</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${(yOf(d.digits) - 4).toFixed(1)}" text-anchor="middle">10${sup(-d.digits)}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${ERAS[k].label} (${d.year})</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 32}" text-anchor="middle">${state.unit === 's' ? '초는 자연 상수에 묶인 뒤 가장 정확한 단위가 되어 다른 단위의 바탕이 됨' : state.unit === 'kg' ? '원기는 100년 동안 복제품과 50 μg 어긋나 2019년 상수로 바꿈' : '색: 파랑 자연물 · 노랑 원기 · 초록 자연 상수'}</text>`;
         return out;
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="zoom-box" x="${ZX}" y="${ZY}" width="${ZW}" height="${ZH}" rx="4"/>`;
         const lo = Math.floor(TRUE_MM / r.div) * r.div - r.div, hi = lo + 3 * r.div;
         const zx = mm => ZX + (mm - lo) / (hi - lo) * ZW;
-        for (let k = 0; k <= 3; k += 1) { const mm = lo + k * r.div, x = zx(mm); out += `<line class="ruler-tick" style="stroke:#dce9e8" x1="${x.toFixed(1)}" y1="${ZY + ZH - 14}" x2="${x.toFixed(1)}" y2="${ZY + ZH}"/><text class="small-label" x="${x.toFixed(1)}" y="${ZY + ZH - 17}" text-anchor="middle">${Number(mm.toFixed(2))}</text>`; }
+        for (let k = 0; k <= 3; k += 1) { const mm = lo + k * r.div, x = zx(mm); out += `<line class="ruler-tick" style="stroke:#0f172a" x1="${x.toFixed(1)}" y1="${ZY + ZH - 14}" x2="${x.toFixed(1)}" y2="${ZY + ZH}"/><text class="small-label" x="${x.toFixed(1)}" y="${ZY + ZH - 17}" text-anchor="middle">${Number(mm.toFixed(2))}</text>`; }
         for (let k = 1; k < 30; k += 1) { const x = zx(lo + k * r.div / 10); if (k % 10) out += `<line class="ruler-tick" style="stroke:rgba(220,233,232,.35)" x1="${x.toFixed(1)}" y1="${ZY + ZH - 6}" x2="${x.toFixed(1)}" y2="${ZY + ZH}"/>`; }
         out += `<rect class="stick" x="${ZX + 1}" y="${ZY + 6}" width="${(zx(TRUE_MM) - ZX - 1).toFixed(1)}" height="10"/>`;
         out += `<line class="marker" x1="${zx(TRUE_MM).toFixed(1)}" y1="${ZY + 2}" x2="${zx(TRUE_MM).toFixed(1)}" y2="${ZY + ZH}"/>`;
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="gen-text" x="${SX}" y="160">${shown === 0 ? '아직 재지 않음' : `${shown}번째 읽음: ${reads[shown - 1].toFixed(decimals(r.est))} mm`}</text>`;
         out += `<text class="trait-text" x="${SX}" y="178">${shown ? reads.slice(0, shown).map(v => v.toFixed(decimals(r.est))).join(' · ') : `${r.label} — 눈금 ${r.div} mm, 마지막 자리는 ${r.est} mm 자리를 어림`}</text>`;
         const VERD = { cm: '1 mm 자리', mm: '0.1 mm 자리', vernier: '0.01 mm 자리' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${p >= 1 ? `${r.label}: 평균 ${a.mean.toFixed(decimals(r.est) + 1)} ± ${a.spread.toFixed(decimals(r.est) + 1)} mm → ${VERD[state.ruler]}까지` : `${r.label}로 같은 막대를 열 번 잽니다`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${r.label}: 평균 ${a.mean.toFixed(decimals(r.est) + 1)} ± ${a.spread.toFixed(decimals(r.est) + 1)} mm → ${VERD[state.ruler]}까지` : `${r.label}로 같은 막대를 열 번 잽니다`}</text>`;
         out += `<text class="note-text" x="20" y="208">눈금 사이를 열 등분해 한 자리를 어림해 적습니다 — 그 마지막 자리는 재는 사람마다 조금씩 다릅니다</text>`;
         return out;
     }
@@ -323,8 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let k = 0; k <= nTicks; k += 1) { const mm = lo + (hi - lo) * k / nTicks; out += `<line class="tick" x1="${xOf(mm).toFixed(1)}" y1="${Y0}" x2="${xOf(mm).toFixed(1)}" y2="${Y0 + 5}"/><text class="axis-text" x="${xOf(mm).toFixed(1)}" y="${Y0 + 17}" text-anchor="middle">${mm.toFixed(decimals(r.est) + 1)}</text>`; }
         const stacks = {};
         reads.slice(0, shown).forEach(v => { const key = v.toFixed(decimals(r.est)); stacks[key] = (stacks[key] || 0) + 1; out += `<circle class="reading-dot" cx="${xOf(v).toFixed(1)}" cy="${(Y0 - 8 - (stacks[key] - 1) * 12).toFixed(1)}" r="5"/>`; });
-        if (shown) { const mean = reads.slice(0, shown).reduce((s, v) => s + v, 0) / shown; out += `<line class="mean-line" x1="${xOf(mean).toFixed(1)}" y1="40" x2="${xOf(mean).toFixed(1)}" y2="${Y0}"/><text class="axis-text" style="fill:#ffd166" x="${xOf(mean).toFixed(1)}" y="36" text-anchor="middle">평균 ${mean.toFixed(decimals(r.est) + 1)}</text>`; }
-        if (p >= 1) out += `<line class="true-line" x1="${xOf(TRUE_MM).toFixed(1)}" y1="48" x2="${xOf(TRUE_MM).toFixed(1)}" y2="${Y0}"/><text class="axis-text" style="fill:#54e6c1" x="${xOf(TRUE_MM).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">실제 ${TRUE_MM} mm</text>`;
+        if (shown) { const mean = reads.slice(0, shown).reduce((s, v) => s + v, 0) / shown; out += `<line class="mean-line" x1="${xOf(mean).toFixed(1)}" y1="40" x2="${xOf(mean).toFixed(1)}" y2="${Y0}"/><text class="axis-text" style="fill:#d97706" x="${xOf(mean).toFixed(1)}" y="36" text-anchor="middle">평균 ${mean.toFixed(decimals(r.est) + 1)}</text>`; }
+        if (p >= 1) out += `<line class="true-line" x1="${xOf(TRUE_MM).toFixed(1)}" y1="48" x2="${xOf(TRUE_MM).toFixed(1)}" y2="${Y0}"/><text class="axis-text" style="fill:#059669" x="${xOf(TRUE_MM).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">실제 ${TRUE_MM} mm</text>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 50}" text-anchor="middle">읽은 값 (mm) — 눈금이 ${r.div} mm인 자는 ±${(r.div / 5).toFixed(decimals(r.est) + 1)} mm쯤 흔들림</text>`;
         return out;
     }

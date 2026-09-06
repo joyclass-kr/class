@@ -248,15 +248,15 @@ function drawGrowthGraph(g) {
     const a = analyse();
     if (a.peakDay !== null && a.peakDay <= DAYS) {
         g.appendChild(el('line', { x1: X(a.peakDay), y1: Y(state.K / 2), x2: X(a.peakDay), y2: yBot, class: 'mark-line' }));
-        g.appendChild(el('circle', { cx: X(a.peakDay), cy: Y(state.K / 2), r: 3.6, style: 'fill:#ffd166' }));
+        g.appendChild(el('circle', { cx: X(a.peakDay), cy: Y(state.K / 2), r: 3.6, style: 'fill:#d97706' }));
         g.appendChild(el('text', { x: X(a.peakDay) + 5, y: yBot - 6, class: 'axis-text' }, `가장 빠른 때 ${fmt(a.peakDay, 1)}일`));
     }
-    g.appendChild(el('circle', { cx: X(state.day), cy: Y(a.N), r: 5, class: 'trace-dot', style: 'fill:#54e6c1' }));
+    g.appendChild(el('circle', { cx: X(state.day), cy: Y(a.N), r: 5, class: 'trace-dot', style: 'fill:#059669' }));
 
-    g.appendChild(el('line', { x1: x0, y1: 172, x2: x0 + 15, y2: 172, style: 'stroke:#ffd166;stroke-width:3;stroke-dasharray:5 3' }));
-    g.appendChild(el('text', { x: x0 + 20, y: 175.5, class: 'legend-text', style: 'fill:#ffd166' }, '지수 성장 (J자)'));
-    g.appendChild(el('line', { x1: x0 + 122, y1: 172, x2: x0 + 137, y2: 172, style: 'stroke:#54e6c1;stroke-width:3' }));
-    g.appendChild(el('text', { x: x0 + 142, y: 175.5, class: 'legend-text', style: 'fill:#54e6c1' }, '로지스틱 성장 (S자)'));
+    g.appendChild(el('line', { x1: x0, y1: 172, x2: x0 + 15, y2: 172, style: 'stroke:#d97706;stroke-width:3;stroke-dasharray:5 3' }));
+    g.appendChild(el('text', { x: x0 + 20, y: 175.5, class: 'legend-text', style: 'fill:#d97706' }, '지수 성장 (J자)'));
+    g.appendChild(el('line', { x1: x0 + 122, y1: 172, x2: x0 + 137, y2: 172, style: 'stroke:#059669;stroke-width:3' }));
+    g.appendChild(el('text', { x: x0 + 142, y: 175.5, class: 'legend-text', style: 'fill:#059669' }, '로지스틱 성장 (S자)'));
     g.appendChild(el('rect', { x: x0 + 266, y: 168, width: 14, height: 7, class: 'resist-band' }));
     g.appendChild(el('text', { x: x0 + 286, y: 175.5, class: 'legend-text', style: 'fill:#d8a98d' }, '환경 저항'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '지난 날수 (일) — 세로는 개체 수'));
@@ -334,7 +334,7 @@ function drawSurveyGraph(g) {
     if (!state.trials.length) {
         g.appendChild(el('text', { x: (x0 + x1) / 2, y: 92, 'text-anchor': 'middle', class: 'note-text' }, '되풀이 조사를 돌리면 어림값이 얼마나 흩어지는지 쌓입니다'));
     }
-    g.appendChild(el('text', { x: x0 + 4, y: 175.5, class: 'legend-text', style: 'fill:#9cb6b4' },
+    g.appendChild(el('text', { x: x0 + 4, y: 175.5, class: 'legend-text', style: 'fill:#475569' },
         `이론상 흩어짐 ± ${fmt(a.sd, 0)}마리 · 칸마다 수의 고른 정도 ${fmt(a.dispersion, 2)}`));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '어림한 개체 수 — 세로는 그 값이 나온 횟수'));
 }

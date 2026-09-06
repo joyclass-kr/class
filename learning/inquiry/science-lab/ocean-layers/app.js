@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         melt: { label: '해빙', hint: '빙하 200 g 녹아 들어옴', water: 200, ice: 'melt', when: '해빙이 일어나면', how: '해빙으로 빙하 녹은 민물 200 g이 들어오면' },
         stir: { label: '바람이 섞음', hint: '물만 오르내림', water: 0, when: '바람이 섞기만 하면', how: '바람이 물을 위아래로 섞기만 하면' },
     };
-    const IONS = [['염화 이온 Cl⁻', 55.0, '#4ade80'], ['나트륨 이온 Na⁺', 30.6, '#e5e7eb'], ['황산 이온 SO₄²⁻', 7.7, '#ffd166'], ['마그네슘 이온 Mg²⁺', 3.7, '#a78bfa'], ['칼슘·칼륨 등', 3.0, '#ff9f8a']];
+    const IONS = [['염화 이온 Cl⁻', 55.0, '#4ade80'], ['나트륨 이온 Na⁺', 30.6, '#e5e7eb'], ['황산 이온 SO₄²⁻', 7.7, '#d97706'], ['마그네슘 이온 Mg²⁺', 3.7, '#a78bfa'], ['칼슘·칼륨 등', 3.0, '#dc2626']];
     const TEMPS = { t0: { label: '0 ℃', hint: '극지방 겨울', T: 0 }, t15: { label: '15 ℃', hint: '중위도', T: 15 }, t25: { label: '25 ℃', hint: '열대', T: 25 } };
     const SALTS = { s33: { label: '33 ‰', hint: '강물 많은 곳', S: 33 }, s35: { label: '35 ‰', hint: '평균', S: 35 }, s37: { label: '37 ‰', hint: '증발 많은 곳', S: 37 } };
     const REF = { T: 15, S: 35 };
@@ -142,13 +142,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const zNow = 1000 * ease(p);
         let d = '';
         a.pts.forEach(([z, T]) => { if (z <= zNow) d += `${d ? 'L' : 'M'}${xOf(T).toFixed(1)},${yOf(z).toFixed(1)} `; });
-        out += `<path class="trace" style="stroke:#ffd166" d="${d}"/>`;
+        out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
         const Tn = a.T(zNow), px = xOf(Tn), py = yOf(zNow), flip = px > 196;
         out += `<circle class="probe" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="4"/><circle class="probe" cx="${CX0 + CW / 2}" cy="${py.toFixed(1)}" r="3"/>`;
-        out += `<text class="small-label" style="fill:#ffd166" x="${(px + (flip ? -8 : 8)).toFixed(1)}" y="${(py + 3.5).toFixed(1)}" text-anchor="${flip ? 'end' : 'start'}">${fmtN(zNow)} m · ${fmtN(Tn, 1)} ℃</text>`;
+        out += `<text class="small-label" style="fill:#d97706" x="${(px + (flip ? -8 : 8)).toFixed(1)}" y="${(py + 3.5).toFixed(1)}" text-anchor="${flip ? 'end' : 'start'}">${fmtN(zNow)} m · ${fmtN(Tn, 1)} ℃</text>`;
         // layer brackets on the right
         const BX = 292;
-        const layers = a.verdict === 'none' ? [[0, 1000, '위아래 다 차가움 · 층 없음', '#9cb6b4']] : [[0, a.mld, `혼합층 0~${a.mld} m`, '#54e6c1'], [a.mld, a.thermoEnd, `수온약층 ${a.mld}~${a.thermoEnd} m`, '#ffd166'], [a.thermoEnd, 1000, `심해층 ${a.deep} ℃쯤`, '#52c7ff']];
+        const layers = a.verdict === 'none' ? [[0, 1000, '위아래 다 차가움 · 층 없음', '#475569']] : [[0, a.mld, `혼합층 0~${a.mld} m`, '#059669'], [a.mld, a.thermoEnd, `수온약층 ${a.mld}~${a.thermoEnd} m`, '#d97706'], [a.thermoEnd, 1000, `심해층 ${a.deep} ℃쯤`, '#0284c7']];
         let lastY = Y0 - 4;
         layers.forEach(([z0, z1, lab, col]) => {
             const y0 = yOf(z0), y1 = yOf(z1);
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="20" y="172">${summer ? '햇볕 셈 · 바람 약함' : '햇볕 약함 · 바람 셈'} → 혼합층 ${a.mld} m까지 섞임 · 표층 ${fmtN(a.sst, 1)} ℃ · 심해 ${a.deep} ℃</text>`;
         out += `<text class="small-label" x="20" y="186">${a.verdict === 'none' ? `위아래 차이 ${fmtN(Math.abs(a.dT), 1)} ℃뿐 — 급히 식는 층이 없음` : `수온약층 ${a.mld}~${a.thermoEnd} m에서 ${fmtN(a.dT, 1)} ℃ 떨어짐 (가장 급한 곳 ${fmtN(a.dT / a.L * 100, 1)} ℃/100 m)`}</text>`;
         const VERD = { shallow: `얕고 뚜렷한 수온약층 (${a.mld} m 아래)`, deep: `깊고 완만한 수온약층 (${a.mld} m 아래)`, none: '수온약층이 거의 없음' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${REGIONS[state.region].label} ${SEASONS[state.season].label}: ${VERD[a.verdict]}` : `${REGIONS[state.region].label} · ${SEASONS[state.season].label}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${REGIONS[state.region].label} ${SEASONS[state.season].label}: ${VERD[a.verdict]}` : `${REGIONS[state.region].label} · ${SEASONS[state.season].label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">햇볕은 겉 몇십 m만 데우고 바람이 그 열을 섞어 혼합층을 만듭니다. 그 아래 수온이 급히 내려가는 곳이 수온약층</text>`;
         return out;
     }
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [0, 10, 20, 30].forEach(T => { out += `<line class="grid-line" x1="${xOf(T).toFixed(1)}" y1="${Y0}" x2="${xOf(T).toFixed(1)}" y2="${Y1}"/><text class="axis-text" x="${xOf(T).toFixed(1)}" y="${Y1 + 14}" text-anchor="middle">${T} ℃</text>`; });
         [0, 500, 1000].forEach(z => { out += `<text class="axis-text" x="${X0 - 5}" y="${(yOf(z) + 3.5).toFixed(1)}" text-anchor="end">${z} m</text>`; });
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y0}" x2="${X0}" y2="${Y1}"/>`;
-        const cols = { low: '#ff9f8a', mid: '#ffd166', high: '#52c7ff' };
+        const cols = { low: '#dc2626', mid: '#d97706', high: '#0284c7' };
         Object.keys(REGIONS).forEach(k => {
             const pr = profile(k, state.season);
             let d = ''; pr.pts.forEach(([z, T]) => { d += `${d ? 'L' : 'M'}${xOf(T).toFixed(1)},${yOf(z).toFixed(1)} `; });
@@ -203,14 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const Snow = 35 / (965 + ev.water * t + 35) * 1000;
         const RX = 238;
         out += `<text class="trait-text" x="${RX}" y="48">처음: 물 965 g + 염류 35 g → 35.0 ‰</text>`;
-        out += `<text class="trait-text" style="fill:#52c7ff" x="${RX}" y="70">${ev.label}: ${ev.water === 0 ? '물의 양 그대로' : ev.water > 0 ? `민물 ${ev.water} g 들어옴` : `물 ${-ev.water} g 빠져나감`}</text>`;
+        out += `<text class="trait-text" style="fill:#0284c7" x="${RX}" y="70">${ev.label}: ${ev.water === 0 ? '물의 양 그대로' : ev.water > 0 ? `민물 ${ev.water} g 들어옴` : `물 ${-ev.water} g 빠져나감`}</text>`;
         out += `<text class="trait-text" x="${RX}" y="88">지금: 물 ${fmtN(965 + ev.water * t)} g + 염류 35 g</text>`;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${RX}" y="110">염분 = 35 ÷ ${fmtN(1000 + ev.water * t)} × 1000 = ${fmtN(Snow, 1)} ‰</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${RX}" y="110">염분 = 35 ÷ ${fmtN(1000 + ev.water * t)} × 1000 = ${fmtN(Snow, 1)} ‰</text>`;
         out += `<text class="small-label" x="${RX}" y="134">염류의 양(알갱이 35개)은 그대로 — 물만 늘거나 줄어</text>`;
         out += `<text class="small-label" x="${RX}" y="148">알갱이 사이가 좁아지면 짠 것, 넓어지면 싱거운 것</text>`;
         out += `<text class="small-label" x="${RX}" y="170">이온 비율은 늘 같음: 염화 55 % · 나트륨 31 %</text><text class="small-label" x="${RX}" y="184">황산 8 % · 마그네슘 4 % · 나머지 3 %</text>`;
         const VERD = { up: `염분 ${fmtN(a.S2, 1)} ‰로 오름`, down: `염분 ${fmtN(a.S2, 1)} ‰로 내림`, same: '염분 35.0 ‰ 그대로' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${ev.label}: ${VERD[a.verdict]}` : `${ev.label} — ${ev.hint}`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${ev.label}: ${VERD[a.verdict]}` : `${ev.label} — ${ev.hint}`}</text>`;
         out += `<text class="note-text" x="20" y="208">염분(‰) = 바닷물 1 kg 속 염류의 g. 물이 드나들어도 염류의 양과 이온 비율은 변하지 않습니다</text>`;
         return out;
     }
@@ -246,13 +246,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (a.verdict !== 'same' && p > 0.05) out += arrow(TX + TW / 2 + 34, yMid, TX + TW / 2 + 34, a.verdict === 'sink' ? yMid + 40 : yMid - 40, 'wind', 'wind-head', 3);
         const RX = 302;
         out += `<text class="trait-text" x="${RX}" y="52">물덩이 ${T} ℃ · ${S} ‰</text>`;
-        out += `<text class="gen-text" style="fill:#ffd166" x="${RX}" y="72">${fmtN(rA, 1)} kg/m³</text>`;
-        out += `<text class="trait-text" x="${RX}" y="96">둘레 바닷물</text><text class="gen-text" style="fill:#52c7ff" x="${RX}" y="114">${fmtN(rB, 1)} kg/m³</text>`;
-        out += `<text class="trait-text" style="fill:${d > 0.05 ? '#ff9f8a' : d < -0.05 ? '#54e6c1' : '#b6d3d9'}" x="${RX}" y="140">차이 ${d >= 0 ? '+' : ''}${fmtN(d, 1)} kg/m³</text>`;
+        out += `<text class="gen-text" style="fill:#d97706" x="${RX}" y="72">${fmtN(rA, 1)} kg/m³</text>`;
+        out += `<text class="trait-text" x="${RX}" y="96">둘레 바닷물</text><text class="gen-text" style="fill:#0284c7" x="${RX}" y="114">${fmtN(rB, 1)} kg/m³</text>`;
+        out += `<text class="trait-text" style="fill:${d > 0.05 ? '#dc2626' : d < -0.05 ? '#059669' : '#334155'}" x="${RX}" y="140">차이 ${d >= 0 ? '+' : ''}${fmtN(d, 1)} kg/m³</text>`;
         out += `<text class="small-label" x="${RX}" y="158">${d > 0.05 ? '더 무거워 가라앉음' : d < -0.05 ? '더 가벼워 떠오름' : '같아서 그 자리'}</text>`;
         out += `<text class="small-label" x="${RX}" y="178">차가울수록·짤수록 무겁습니다</text>`;
         const VERD = { sink: '가라앉음', float: '떠오름', same: '그 자리에 머묾' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `물덩이 ${fmtN(rA, 1)} · 둘레 ${fmtN(rB, 1)} kg/m³ → ${VERD[a.verdict]}` : `${T} ℃ · ${S} ‰ 물덩이를 15 ℃ · 35 ‰ 속에`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `물덩이 ${fmtN(rA, 1)} · 둘레 ${fmtN(rB, 1)} kg/m³ → ${VERD[a.verdict]}` : `${T} ℃ · ${S} ‰ 물덩이를 15 ℃ · 35 ‰ 속에`}</text>`;
         out += `<text class="note-text" x="20" y="208">밀도는 국제 해수 상태 방정식(EOS-80)으로 계산. 1 ‰ 차이 ≈ 0.8 kg/m³, 10 ℃ 차이 ≈ 2 kg/m³</text>`;
         return out;
     }
@@ -273,8 +273,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (d) { out += `<path class="iso" d="${d.replace(/ M/g, ' M')}"/>`; if (lab) out += `<text class="iso-text" x="${(lab[0] + 3).toFixed(1)}" y="${(lab[1] - 3).toFixed(1)}">${r0}</text>`; }
         });
-        out += `<circle fill="#52c7ff" stroke="#fff" cx="${xOf(REF.S).toFixed(1)}" cy="${yOf(REF.T).toFixed(1)}" r="4.5"/><text class="small-label" style="fill:#52c7ff" x="${(xOf(REF.S) + 7).toFixed(1)}" y="${(yOf(REF.T) + 3.5).toFixed(1)}">둘레 ${fmtN(a.rB, 1)}</text>`;
-        out += `<circle fill="#ffd166" stroke="#fff" cx="${xOf(a.S).toFixed(1)}" cy="${yOf(a.T).toFixed(1)}" r="4.5"/><text class="small-label" style="fill:#ffd166" x="${(xOf(a.S) + (a.S >= 37 ? -7 : 7)).toFixed(1)}" y="${(yOf(a.T) + (Math.abs(a.T - REF.T) < 6 ? 15 : -6)).toFixed(1)}" text-anchor="${a.S >= 37 ? 'end' : 'start'}">물덩이 ${fmtN(a.rA, 1)}</text>`;
+        out += `<circle fill="#0284c7" stroke="#fff" cx="${xOf(REF.S).toFixed(1)}" cy="${yOf(REF.T).toFixed(1)}" r="4.5"/><text class="small-label" style="fill:#0284c7" x="${(xOf(REF.S) + 7).toFixed(1)}" y="${(yOf(REF.T) + 3.5).toFixed(1)}">둘레 ${fmtN(a.rB, 1)}</text>`;
+        out += `<circle fill="#d97706" stroke="#fff" cx="${xOf(a.S).toFixed(1)}" cy="${yOf(a.T).toFixed(1)}" r="4.5"/><text class="small-label" style="fill:#d97706" x="${(xOf(a.S) + (a.S >= 37 ? -7 : 7)).toFixed(1)}" y="${(yOf(a.T) + (Math.abs(a.T - REF.T) < 6 ? 15 : -6)).toFixed(1)}" text-anchor="${a.S >= 37 ? 'end' : 'start'}">물덩이 ${fmtN(a.rA, 1)}</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">염분 — 같은 선 위의 물은 밀도가 같아 섞여도 층이 안 생깁니다</text>`;
         return out;
     }

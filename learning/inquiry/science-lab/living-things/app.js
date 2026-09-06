@@ -221,9 +221,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const yes = CARDS.filter(c => c[r.key]).length;
             const y = 44 + i * 30;
             const mine = k === state.rule;
-            out += `<text class="bar-text" fill="${mine ? '#ffd166' : '#b6d3d9'}" x="20" y="${y + 4}">${r.label}</text>`;
+            out += `<text class="bar-text" fill="${mine ? '#d97706' : '#334155'}" x="20" y="${y + 4}">${r.label}</text>`;
             const x0 = 150, w = 280;
-            out += `<rect class="bar" x="${x0}" y="${y - 6}" width="${(w * yes / 12).toFixed(1)}" height="14" rx="3" fill="#54e6c1" opacity="${mine ? '.95' : '.45'}"/>`;
+            out += `<rect class="bar" x="${x0}" y="${y - 6}" width="${(w * yes / 12).toFixed(1)}" height="14" rx="3" fill="#059669" opacity="${mine ? '.95' : '.45'}"/>`;
             out += `<rect class="bar" x="${(x0 + w * yes / 12).toFixed(1)}" y="${y - 6}" width="${(w * (12 - yes) / 12).toFixed(1)}" height="14" rx="3" fill="#6f8f8d" opacity="${mine ? '.9' : '.4'}"/>`;
             out += `<text class="bar-text" fill="#10202a" x="${x0 + 6}" y="${y + 4}">${r.yes} ${yes}</text>`;
             out += `<text class="bar-text" fill="#e8f2f5" x="${x0 + w - 6}" y="${y + 4}" text-anchor="end">${r.no} ${12 - yes}</text>`;
@@ -241,8 +241,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const ok = b.home === state.habitat, mine = k === state.being;
             out += `<rect class="card${mine ? ' hit' : ''}" x="${x}" y="${y}" width="134" height="56" rx="6"/>`;
             out += `<text style="font-size:22px" x="${x + 22}" y="${y + 36}" text-anchor="middle">${b.icon}</text>`;
-            out += `<text class="bar-text" fill="#cfe6ee" x="${x + 44}" y="${y + 22}">${b.name}</text>`;
-            out += `<text class="bar-text" fill="${ok ? '#54e6c1' : '#ff7d6b'}" x="${x + 44}" y="${y + 42}">${ok ? '✓ 잘 산다' : `✗ ${HABITATS[b.home].label}이 집`}</text>`;
+            out += `<text class="bar-text" fill="#0f172a" x="${x + 44}" y="${y + 22}">${b.name}</text>`;
+            out += `<text class="bar-text" fill="${ok ? '#059669' : '#ff7d6b'}" x="${x + 44}" y="${y + 42}">${ok ? '✓ 잘 산다' : `✗ ${HABITATS[b.home].label}이 집`}</text>`;
         });
         out += `<text class="note-text" x="20" y="188">몸의 특징이 그곳에 맞는 생물만 잘 살 수 있습니다</text>`;
         return out;

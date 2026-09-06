@@ -15,8 +15,8 @@ const R_BUBBLE = 0.01; // m, a coalesced bubble
 // Each magma only exists as a liquid over its own range; below tMin it has
 // frozen solid, so the dial is limited to temperatures that are really magma.
 const KINDS = {
-    basalt: { name: '현무암질', si: 50, colour: '#7fd4f0', rock: '현무암', where: '하와이·아이슬란드', tMin: 1000, tMax: 1250 },
-    andesite: { name: '안산암질', si: 60, colour: '#ffd166', rock: '안산암', where: '일본·안데스', tMin: 900, tMax: 1150 },
+    basalt: { name: '현무암질', si: 50, colour: '#0284c7', rock: '현무암', where: '하와이·아이슬란드', tMin: 1000, tMax: 1250 },
+    andesite: { name: '안산암질', si: 60, colour: '#d97706', rock: '안산암', where: '일본·안데스', tMin: 900, tMax: 1150 },
     rhyolite: { name: '유문암질', si: 70, colour: '#ff8a8a', rock: '유문암', where: '옐로스톤·백두산', tMin: 700, tMax: 950 },
 };
 
@@ -229,7 +229,7 @@ function drawGraph(g) {
         g.appendChild(el('text', { x: lx + 20, y: 175.5, class: 'legend-text', style: `fill:${K.colour}` }, K.name));
         lx += 26 + K.name.length * 10.5;
     });
-    g.appendChild(el('text', { x: x1 - 2, y: 175.5, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#9cb6b4' }, `물 ${state.water}%일 때`));
+    g.appendChild(el('text', { x: x1 - 2, y: 175.5, 'text-anchor': 'end', class: 'legend-text', style: 'fill:#475569' }, `물 ${state.water}%일 때`));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '마그마의 온도 (℃) — 세로는 점성 (Pa·s, 로그 눈금)'));
 }
 

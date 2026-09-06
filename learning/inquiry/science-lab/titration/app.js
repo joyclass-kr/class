@@ -154,13 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="${CX + 42}" y="186">${a.c.acid} ${VA.toFixed(1)} mL</text>`;
 
         out += `<text class="part-label" x="248" y="42">${a.c.label}</text>`;
-        out += `<text class="ph-big" fill="${pH > 7 ? '#7fd4f0' : pH < 7 ? '#ff9d6b' : '#54e6c1'}" x="248" y="72">pH ${pH.toFixed(2)}</text>`;
+        out += `<text class="ph-big" fill="${pH > 7 ? '#0284c7' : pH < 7 ? '#ea580c' : '#059669'}" x="248" y="72">pH ${pH.toFixed(2)}</text>`;
         out += `<text class="note-text" x="248" y="92">떨어뜨린 염기 ${s.V.toFixed(2)} mL</text>`;
         out += `<text class="note-text" x="248" y="110">당량점 ${a.veq.toFixed(2)} mL</text>`;
         out += `<text class="note-text" x="248" y="128">지시약 ${INDS[a.ind].name} (${INDS[a.ind].lo}~${INDS[a.ind].hi})</text>`;
         const shown = pH >= INDS[a.ind].hi ? '변색됨' : pH <= INDS[a.ind].lo ? '아직 그대로' : '변색 중';
         out += `<text class="note-text" x="248" y="146">지금 상태 ${shown}</text>`;
-        out += `<text class="verdict-text" fill="${a.indOk ? '#54e6c1' : '#ff9d6b'}" x="248" y="170">` +
+        out += `<text class="verdict-text" fill="${a.indOk ? '#059669' : '#ea580c'}" x="248" y="170">` +
                `${a.indOk ? '이 적정에 알맞은 지시약입니다' : '이 적정에는 알맞지 않습니다'}</text>`;
         out += `<text class="note-text" x="20" y="206">한두 방울(${DROP} mL) 사이에 pH가 ${a.jumpLo.toFixed(1)} → ${ro(a.jumpHi.toFixed(1))} 뜁니다</text>`;
         mainGroup.innerHTML = out;
@@ -198,11 +198,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += line(vMax, 'curve-done');
         if (s && s.V > 0) out += line(s.V, 'curve');
         out += `<line class="eq-line" x1="${gx(a.veq).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(a.veq).toFixed(1)}" y2="${GRAPH.y0}"/>`;
-        out += `<circle class="mark-dot" cx="${gx(a.veq).toFixed(1)}" cy="${gy(a.eqPH).toFixed(1)}" r="5" fill="#54e6c1"/>`;
+        out += `<circle class="mark-dot" cx="${gx(a.veq).toFixed(1)}" cy="${gy(a.eqPH).toFixed(1)}" r="5" fill="#059669"/>`;
         const flip = gx(a.veq) > (GRAPH.x0 + GRAPH.x1) / 2;
         out += `<text class="eq-text" x="${(gx(a.veq) + (flip ? -6 : 6)).toFixed(1)}" y="${(gy(a.eqPH) - 8).toFixed(1)}"${flip ? ' text-anchor="end"' : ''}>` +
                `당량점 ${a.veq.toFixed(1)} mL · pH ${a.eqPH.toFixed(2)}</text>`;
-        if (s && s.V > 0) out += `<circle class="mark-dot" cx="${gx(s.V).toFixed(1)}" cy="${gy(pHAt(s.V, a.k, a.Ca, a.Cb)).toFixed(1)}" r="4" fill="#ffd166"/>`;
+        if (s && s.V > 0) out += `<circle class="mark-dot" cx="${gx(s.V).toFixed(1)}" cy="${gy(pHAt(s.V, a.k, a.Ca, a.Cb)).toFixed(1)}" r="4" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

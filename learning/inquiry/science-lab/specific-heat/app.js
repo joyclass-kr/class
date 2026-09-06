@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // thermometer standing in it
             out += `<rect class="therm-tube" x="${cx + 12}" y="40" width="10" height="104" rx="5"/>`;
             out += `<rect class="therm-fill" x="${cx + 14}" y="${(142 - 100 * frac).toFixed(1)}" width="6" height="${(100 * frac + 2).toFixed(1)}" rx="3"/>`;
-            out += `<text class="temp-text" fill="${temp >= 99.5 && s.boil ? '#ffcc66' : '#ff9d8a'}" x="${cx - 8}" y="${34}" text-anchor="middle">${temp.toFixed(1)} ℃</text>`;
+            out += `<text class="temp-text" fill="${temp >= 99.5 && s.boil ? '#d97706' : '#dc2626'}" x="${cx - 8}" y="${34}" text-anchor="middle">${temp.toFixed(1)} ℃</text>`;
             out += `<text class="sub-name" x="${cx}" y="188" text-anchor="middle">${s.name}</text>`;
             out += `<text class="sub-c" x="${cx}" y="201" text-anchor="middle">비열 ${s.c.toFixed(2)}</text>`;
             if (s.boil && temp >= s.boil - 0.05) {
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tMax > 100) {
             g += `<line class="boil-line" x1="${GRAPH.x0}" y1="${gy(100, tMax)}" x2="${GRAPH.x1}" y2="${gy(100, tMax)}"/>`;
             // label sits inside the plot: placed past x1 it ran off the canvas
-            g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${gy(100, tMax) - 5}" fill="#ffcc66" text-anchor="end">물의 끓는점 100℃</text>`;
+            g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${gy(100, tMax) - 5}" fill="#d97706" text-anchor="end">물의 끓는점 100℃</text>`;
         }
         SUBS.forEach(s => {
             const pts = [];

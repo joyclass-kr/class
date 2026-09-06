@@ -61,13 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let label, tone;
         if (kind === 'animal') {
             if (burst) { label = '터짐 (용혈)'; tone = '#ff7d7d'; }
-            else if (v > 1.02) { label = '부풀어 오름'; tone = '#7fd4f0'; }
+            else if (v > 1.02) { label = '부풀어 오름'; tone = '#0284c7'; }
             else if (v < 0.98) { label = '쭈그러듦'; tone = '#ffb86b'; }
-            else { label = '정상'; tone = '#54e6c1'; }
+            else { label = '정상'; tone = '#059669'; }
         } else {
             if (v < 0.98) { label = '원형질 분리'; tone = '#ffb86b'; }
-            else if (targetVolume(c, 'plant') >= V0 && c < 0.98) { label = '팽팽함 (터지지 않음)'; tone = '#54e6c1'; }
-            else { label = '정상'; tone = '#54e6c1'; }
+            else if (targetVolume(c, 'plant') >= V0 && c < 0.98) { label = '팽팽함 (터지지 않음)'; tone = '#059669'; }
+            else { label = '정상'; tone = '#059669'; }
         }
         return { v, burst, burstTime: bt, label, tone, target: targetVolume(c, kind) };
     }
@@ -137,9 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ax = x2 - dx * 7, ay = y2 - dy * 7 * 0.8;
                 out += `<path class="water-arrow ${cls}" d="M${(ax - dy * 5).toFixed(1)},${(ay - dx * 5).toFixed(1)} L${x2.toFixed(1)},${y2.toFixed(1)} L${(ax + dy * 5).toFixed(1)},${(ay + dx * 5).toFixed(1)}"/>`;
             });
-            out += `<text class="part-label" fill="${inward ? '#7fd4f0' : '#ffb86b'}" x="358" y="150">물이 ${inward ? '들어옴' : '빠져나감'}</text>`;
+            out += `<text class="part-label" fill="${inward ? '#0284c7' : '#ffb86b'}" x="358" y="150">물이 ${inward ? '들어옴' : '빠져나감'}</text>`;
         } else {
-            out += `<text class="part-label" fill="#54e6c1" x="358" y="150">물의 출입 균형</text>`;
+            out += `<text class="part-label" fill="#059669" x="358" y="150">물의 출입 균형</text>`;
         }
         out += `<text class="state-label" fill="${s.tone}" x="358" y="60">${s.label}</text>`;
         out += `<text class="part-label" x="358" y="78">부피 ${(s.v * 100).toFixed(0)}%</text>`;
@@ -165,9 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // starts at the plot edge, not over the tick numbers
         out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 6}">최종 부피 (%)</text>`;
         out += `<line class="iso-line" x1="${gx(1).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(1).toFixed(1)}" y2="${GRAPH.y0}"/>`;
-        out += `<text class="zone-text" fill="#54e6c1" x="${(gx(1) + 4).toFixed(1)}" y="${GRAPH.y1 + 10}">등장액</text>`;
+        out += `<text class="zone-text" fill="#059669" x="${(gx(1) + 4).toFixed(1)}" y="${GRAPH.y1 + 10}">등장액</text>`;
         out += `<line class="burst-line" x1="${GRAPH.x0}" y1="${gy(BURST_V).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(BURST_V).toFixed(1)}"/>`;
-        out += `<text class="zone-text" fill="#ff9d8a" x="${GRAPH.x1 - 4}" y="${(gy(BURST_V) - 5).toFixed(1)}" text-anchor="end">동물세포가 터지는 부피 140%</text>`;
+        out += `<text class="zone-text" fill="#dc2626" x="${GRAPH.x1 - 4}" y="${(gy(BURST_V) - 5).toFixed(1)}" text-anchor="end">동물세포가 터지는 부피 140%</text>`;
 
         [['animal', '#ff8a8a'], ['plant', '#6fbf73']].forEach(([kind, col]) => {
             const pts = [];
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<path class="trace${kind === cell ? '' : ' dim'}" style="stroke:${col}" d="M${pts.join('L')}"/>`;
         });
         out += `<text class="zone-text" fill="#6fbf73" x="${gx(0.35).toFixed(1)}" y="${(gy(1) - 8).toFixed(1)}">식물세포 — 세포벽이 100%에서 멈춤</text>`;
-        out += `<circle class="trace-dot" cx="${gx(conc()).toFixed(1)}" cy="${gy(Math.min(2.2, s.v)).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(conc()).toFixed(1)}" cy="${gy(Math.min(2.2, s.v)).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

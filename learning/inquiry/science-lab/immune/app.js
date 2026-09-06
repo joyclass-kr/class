@@ -217,12 +217,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const sick = P > SICK;
         out += `<text class="gen-text" x="320" y="42">${fmtDay(t)}일째</text>`;
         out += `<text class="trait-text" style="fill:#c084fc" x="320" y="62">병원체 ${P >= 1 ? fmtGerms(P) : '없음'}</text>`;
-        out += `<text class="trait-text" style="fill:#54e6c1" x="320" y="78">항체 ${fmtA(A)}</text>`;
+        out += `<text class="trait-text" style="fill:#059669" x="320" y="78">항체 ${fmtA(A)}</text>`;
         out += `<text class="small-label" x="320" y="90">(1을 넘으면 병원체를 막음)</text>`;
         out += `<rect class="fever" x="320" y="102" width="120" height="14" rx="7"/><rect class="fever-fill" x="322" y="104" width="${(116 * clamp(P >= 1 ? log10(P) / 9 : 0, 0, 1)).toFixed(1)}" height="10" rx="5"/>`;
         out += `<line class="ref-line" x1="${(322 + 116 * 4 / 9).toFixed(1)}" y1="99" x2="${(322 + 116 * 4 / 9).toFixed(1)}" y2="119"/>`;
         out += `<text class="small-label" x="320" y="130">막대: 병원체 수 (로그 눈금)</text><text class="small-label" x="320" y="141">점선(1만 마리)을 넘으면 열이 남</text>`;
-        out += `<text class="trait-text" style="fill:${sick ? '#ff7a59' : '#9cb6b4'}" x="320" y="157">${sick ? '열이 나 앓는 중' : P >= 1 ? '병원체 있지만 괜찮음' : nV ? '백신 항원만 있음 — 앓지 않음' : '병원체 없음'}</text>`;
+        out += `<text class="trait-text" style="fill:${sick ? '#ff7a59' : '#475569'}" x="320" y="157">${sick ? '열이 나 앓는 중' : P >= 1 ? '병원체 있지만 괜찮음' : nV ? '백신 항원만 있음 — 앓지 않음' : '병원체 없음'}</text>`;
         let phase;
         if (!lymph) phase = P > 0 ? '림프구가 없어 항체가 안 나옴' : '';
         else if (P < 1 && Ag < 100 && A < 1) phase = M > 0 ? '기억 세포가 지키는 중' : '아직 아무 일 없음';
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="trait-text" x="320" y="171">${phase}</text>`;
         const title = a.kind === 'infect' ? `${INFECTS[state.infect].label} · ${DOSES[state.dose].hint}` : `${SHOTS[state.shot].label} · ${WHENS[state.when].label}`;
         const VERD = { week: `${run.sick.toFixed(1)}일 앓음`, days: `${run.sick.toFixed(1)}일 앓음`, none: run.sick > 0 ? `거의 앓지 않음 (${run.sick.toFixed(1)}일)` : '앓지 않음', unbeaten: '3주 뒤에도 병원체 그대로' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${title}: ${VERD[a.verdict]}${run.clearDay !== null ? `, ${run.clearDay - (run.infectDay || 0) < 0.5 ? '반나절 안에' : `${fmtDay(run.clearDay - (run.infectDay || 0))}일 만에`} 병원체 사라짐` : ''}` : title}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${title}: ${VERD[a.verdict]}${run.clearDay !== null ? `, ${run.clearDay - (run.infectDay || 0) < 0.5 ? '반나절 안에' : `${fmtDay(run.clearDay - (run.infectDay || 0))}일 만에`} 병원체 사라짐` : ''}` : title}</text>`;
         return out;
     }
 
@@ -249,8 +249,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = `<text class="axis-title" x="${X0}" y="14">보라 선: 병원체 수(왼쪽 눈금) · 초록 선: 항체(오른쪽 눈금) · 붉은 띠: 열이 나는 범위</text>`;
         out += `<rect class="band" x="${X0}" y="${Y1}" width="${X1 - X0}" height="${(yP(SICK) - Y1).toFixed(1)}"/>`;
         [0, 2, 4, 6, 8].forEach(e => { out += `<line class="grid-line" x1="${X0}" y1="${yP(10 ** e).toFixed(1)}" x2="${X1}" y2="${yP(10 ** e).toFixed(1)}"/><text class="axis-text" style="fill:#c084fc" x="${X0 - 5}" y="${(yP(10 ** e) + 3.5).toFixed(1)}" text-anchor="end">${['1', '100', '1만', '100만', '1억'][e / 2]}</text>`; });
-        [-2, -1, 0, 1, 2, 3].forEach(e => { out += `<text class="axis-text" style="fill:#54e6c1" x="${X1 + 5}" y="${(yA(10 ** e) + 3.5).toFixed(1)}">${e < 0 ? (10 ** e).toFixed(-e) : 10 ** e}</text>`; });
-        out += `<line class="ref-line" style="stroke:#54e6c1" x1="${X0}" y1="${yA(1).toFixed(1)}" x2="${X1}" y2="${yA(1).toFixed(1)}"/>`;
+        [-2, -1, 0, 1, 2, 3].forEach(e => { out += `<text class="axis-text" style="fill:#059669" x="${X1 + 5}" y="${(yA(10 ** e) + 3.5).toFixed(1)}">${e < 0 ? (10 ** e).toFixed(-e) : 10 ** e}</text>`; });
+        out += `<line class="ref-line" style="stroke:#059669" x1="${X0}" y1="${yA(1).toFixed(1)}" x2="${X1}" y2="${yA(1).toFixed(1)}"/>`;
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/><line class="axis" x1="${X1}" y1="${Y1}" x2="${X1}" y2="${Y0}"/>`;
         // ticks
         const ticks = [];
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (run.P[i] >= 1) { dP += `${penUp ? 'M' : 'L'}${x.toFixed(1)},${yP(run.P[i]).toFixed(1)} `; penUp = false; } else penUp = true;
             dA += `${dA ? 'L' : 'M'}${x.toFixed(1)},${yA(run.A[i]).toFixed(1)} `;
         });
-        out += `<path class="trace" style="stroke:#54e6c1" d="${dA}"/>`;
+        out += `<path class="trace" style="stroke:#059669" d="${dA}"/>`;
         out += `<path class="trace" style="stroke:#c084fc" d="${dP}"/>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">${a.kind === 'infect' ? '병원체가 들어온 뒤 날수' : '첫 접종 뒤 날수 (점선 자리에서 몇 달을 건너뜀)'}</text>`;
         return out;
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // blood: red cells carrying their antigens, plasma carrying its antibodies
     const AG_COLOR = { A: 'antigen-a', B: 'antigen-b', D: 'antigen-d' };
-    const AB_STROKE = { A: '#ffd166', B: '#52c7ff', D: '#b29bff' };
+    const AB_STROKE = { A: '#d97706', B: '#0284c7', D: '#7c3aed' };
     function rbc(x, y, antigens, r = 7) {
         let s = `<circle class="rbc" cx="${x}" cy="${y}" r="${r}"/><circle class="rbc-hole" cx="${x}" cy="${y}" r="${r * 0.38}"/>`;
         antigens.forEach((ag, i) => {
@@ -320,10 +320,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (clumpNow && p > 0.6 && i > 0) { const prev = i - 1, ang0 = prev * 0.785, ang = i * 0.785; out += `<line class="clump-link" x1="${(cx + Math.cos(ang0) * 12).toFixed(1)}" y1="${(cy + Math.sin(ang0) * 12).toFixed(1)}" x2="${(cx + Math.cos(ang) * 12).toFixed(1)}" y2="${(cy + Math.sin(ang) * 12).toFixed(1)}"/>`; }
         }
         if (clumpNow && p > 0.6) { const hit = a.hits[0] || 'D'; out += yShape(cx, cy - 2, 'plasma-ab', 6).replace('class="plasma-ab"', `class="plasma-ab" style="stroke:${AB_STROKE[hit]};stroke-width:2.2"`); out += `<text class="trait-text" style="fill:#ff7a59" x="${cx}" y="${cy + 30}" text-anchor="middle">응집 — 항${hit} 응집소가 응집원 ${hit}를 붙잡음</text>`; }
-        if (a.verdict === 'sensitize' && p > 0.6) { out += `<circle class="cell cell-b" cx="404" cy="118" r="7"/><text class="cell-text" x="404" y="134" text-anchor="middle">B 림프구</text>`; for (let k = 0; k < Math.round((p - 0.6) * 10); k += 1) out += yShape(388 + k * 8, 102, 'plasma-ab', 3).replace('class="plasma-ab"', 'class="plasma-ab" style="stroke:#b29bff"'); out += `<text class="trait-text" style="fill:#b29bff" x="320" y="146" text-anchor="middle">처음 본 응집원 D → 항D 응집소를 만들기 시작</text>`; }
-        if (a.verdict === 'ok' && p >= 1) out += `<text class="trait-text" style="fill:#54e6c1" x="320" y="146" text-anchor="middle">붙잡을 응집원이 없어 그대로 흐름</text>`;
+        if (a.verdict === 'sensitize' && p > 0.6) { out += `<circle class="cell cell-b" cx="404" cy="118" r="7"/><text class="cell-text" x="404" y="134" text-anchor="middle">B 림프구</text>`; for (let k = 0; k < Math.round((p - 0.6) * 10); k += 1) out += yShape(388 + k * 8, 102, 'plasma-ab', 3).replace('class="plasma-ab"', 'class="plasma-ab" style="stroke:#7c3aed"'); out += `<text class="trait-text" style="fill:#7c3aed" x="320" y="146" text-anchor="middle">처음 본 응집원 D → 항D 응집소를 만들기 시작</text>`; }
+        if (a.verdict === 'ok' && p >= 1) out += `<text class="trait-text" style="fill:#059669" x="320" y="146" text-anchor="middle">붙잡을 응집원이 없어 그대로 흐름</text>`;
         const VERD = { ok: '응집 없음 — 수혈 가능', clump: '응집 — 수혈 불가', sensitize: '이번엔 괜찮지만 항D 응집소가 생김' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${state.progress >= 1 ? `${a.d}형 → ${a.r}형 (${RHS[state.rh].label}): ${VERD[a.verdict]}` : `${a.d}형 적혈구 → ${a.r}형 (${RHS[state.rh].label})`}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${a.d}형 → ${a.r}형 (${RHS[state.rh].label}): ${VERD[a.verdict]}` : `${a.d}형 적혈구 → ${a.r}형 (${RHS[state.rh].label})`}</text>`;
         out += `<text class="note-text" x="20" y="194">응집원 = 적혈구 표면의 표지 (세모 A · 네모 B · 별 D)</text><text class="note-text" x="20" y="208">응집소 = 혈장 속 Y (같은 색끼리 짝). 짝이 맞으면 적혈구가 뭉칩니다</text>`;
         return out;
     }
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ABO.forEach((d, i) => {
                 const ok = !ANTIGENS[d].some(x => ANTIBODIES[r].includes(x));
                 out += `<rect class="chart-cell ${ok ? 'chart-ok' : 'chart-bad'}" x="${X + i * W}" y="${Y + j * H}" width="${W}" height="${H}"/>`;
-                out += `<text class="chart-text" style="fill:${ok ? '#54e6c1' : '#ff9f8a'}" x="${X + i * W + W / 2}" y="${Y + j * H + H / 2 + 4}" text-anchor="middle">${ok ? '○' : '✕ 응집'}</text>`;
+                out += `<text class="chart-text" style="fill:${ok ? '#059669' : '#dc2626'}" x="${X + i * W + W / 2}" y="${Y + j * H + H / 2 + 4}" text-anchor="middle">${ok ? '○' : '✕ 응집'}</text>`;
             });
         });
         out += `<rect class="chart-now" x="${X + ABO.indexOf(a.d) * W}" y="${Y + ABO.indexOf(a.r) * H}" width="${W}" height="${H}" rx="3"/>`;

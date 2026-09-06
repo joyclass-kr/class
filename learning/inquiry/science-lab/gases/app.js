@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="note-text" x="${RX}" y="${134}" text-anchor="middle">${a.test.name}</text>`;
         }
         const VERD = { flare: '불꽃이 활활 커진다', out: '불이 꺼진다', cloudy: '석회수가 뿌옇게 된다', none: '석회수는 그대로' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${a.gas.name} · ${a.test.name} → ${VERD[a.verdict]}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${a.gas.name} · ${a.test.name} → ${VERD[a.verdict]}</text>`;
         out += `<text class="note-text" x="20" y="34">${p < COLLECT_PART ? `기체 모으는 중 · ${Math.round(p / COLLECT_PART * COLLECT_SECONDS)}초` : '집기병이 가득 찼습니다'}</text>`;
         return out;
     }
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // the 40 mL start line
         out += `<line class="start-line" x1="${SX - W / 2 - 12}" y1="${mlToY(V0).toFixed(1)}" x2="${SX + W / 2}" y2="${mlToY(V0).toFixed(1)}"/>`;
-        out += `<text class="axis-text" style="fill:#54e6c1" x="${SX - W / 2 - 16}" y="${(mlToY(V0) + 3).toFixed(1)}" text-anchor="end">처음 40 mL</text>`;
+        out += `<text class="axis-text" style="fill:#059669" x="${SX - W / 2 - 16}" y="${(mlToY(V0) + 3).toFixed(1)}" text-anchor="end">처음 40 mL</text>`;
         // readouts
         out += `<text class="part-label" x="330" y="70">공기의 부피</text>`;
         out += `<text class="read-text" x="330" y="90">${V.toFixed(1)} mL</text>`;
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="part-label" x="330" y="156">온도</text>`;
         out += `<text class="note-text" x="330" y="172">${state.temp} ℃ ${state.temp > 20 ? '(데움)' : state.temp < 20 ? '(식힘)' : '(실온)'}</text>`;
         const VERD = { smaller: '부피가 줄어든다', bigger: '부피가 늘어난다', same: '부피가 그대로다' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="208">${state.weight ? `추 ${state.weight} kg` : '추 없음'} · ${state.temp} ℃ → ${VERD[a.verdict]}</text>`;
+        out += `<text class="verdict-text" fill="#d97706" x="20" y="208">${state.weight ? `추 ${state.weight} kg` : '추 없음'} · ${state.temp} ℃ → ${VERD[a.verdict]}</text>`;
         return out;
     }
 
@@ -279,8 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const y = 44 + (i < 2 ? 0 : 68) + (i % 2) * 22 + 14;
             const mine = r.gas === state.gas && r.test === state.test;
             const done = mine && testAt(p) > 0.45;
-            out += `<rect class="bar" x="${GRAPH.x0 + 90}" y="${y - 12}" width="270" height="18" rx="4" fill="${mine ? (done ? '#ffd166' : 'rgba(255,209,102,.25)') : 'rgba(150,210,235,.08)'}" opacity=".9"/>`;
-            out += `<text class="bar-text" fill="${mine && done ? '#10202a' : '#cfe6ee'}" x="${GRAPH.x0 + 98}" y="${y + 1}">${mine && !done ? `${TESTS[r.test].name} — 실험이 끝나면 알 수 있습니다` : r.text}</text>`;
+            out += `<rect class="bar" x="${GRAPH.x0 + 90}" y="${y - 12}" width="270" height="18" rx="4" fill="${mine ? (done ? '#d97706' : 'rgba(217, 119, 6, .25)') : 'rgba(150,210,235,.08)'}" opacity=".9"/>`;
+            out += `<text class="bar-text" fill="${mine && done ? '#10202a' : '#0f172a'}" x="${GRAPH.x0 + 98}" y="${y + 1}">${mine && !done ? `${TESTS[r.test].name} — 실험이 끝나면 알 수 있습니다` : r.text}</text>`;
         });
         out += `<text class="note-text" x="${GRAPH.x0}" y="${GRAPH.y0 + 30}">두 기체 모두 색과 냄새가 없어, 향불과 석회수로 가려냅니다.</text>`;
         return out;
@@ -292,18 +292,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const gx = v => GRAPH.x0 + (v / vMax) * (GRAPH.x1 - GRAPH.x0);
         let out = graphFrame([0, 10, 20, 30, 40, 50].map(v => [`${v}`, gx(v)]), [], '공기의 부피 (mL)', '');
         const rows = [
-            ...WEIGHTS.map(w => ({ label: `${w ? `추 ${w} kg` : '추 없음'} · ${state.temp} ℃`, v: volumeOf(w, state.temp), mine: w === state.weight, colour: '#ff9d6b' })),
-            ...TEMPS.map(t => ({ label: `${state.weight ? `추 ${state.weight} kg` : '추 없음'} · ${t} ℃`, v: volumeOf(state.weight, t), mine: t === state.temp, colour: '#52c7ff' })),
+            ...WEIGHTS.map(w => ({ label: `${w ? `추 ${w} kg` : '추 없음'} · ${state.temp} ℃`, v: volumeOf(w, state.temp), mine: w === state.weight, colour: '#ea580c' })),
+            ...TEMPS.map(t => ({ label: `${state.weight ? `추 ${state.weight} kg` : '추 없음'} · ${t} ℃`, v: volumeOf(state.weight, t), mine: t === state.temp, colour: '#0284c7' })),
         ];
         rows.forEach((r, i) => {
             const y = GRAPH.y1 + 14 + i * 19 + (i >= 3 ? 8 : 0);
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 5}" width="${(gx(r.v) - GRAPH.x0).toFixed(1)}" height="11" rx="3" fill="${r.colour}" opacity="${r.mine ? '.95' : '.35'}"/>`;
             // a long bar carries its label inside, a short one to its right
             const inside = gx(r.v) > 300;
-            out += `<text class="bar-text" fill="${inside ? '#10202a' : r.mine ? '#fff' : '#b6d3d9'}" x="${(gx(r.v) + (inside ? -6 : 6)).toFixed(1)}" y="${y + 4}" text-anchor="${inside ? 'end' : 'start'}">${r.label} → ${r.v.toFixed(1)} mL</text>`;
+            out += `<text class="bar-text" fill="${inside ? '#10202a' : r.mine ? '#fff' : '#334155'}" x="${(gx(r.v) + (inside ? -6 : 6)).toFixed(1)}" y="${y + 4}" text-anchor="${inside ? 'end' : 'start'}">${r.label} → ${r.v.toFixed(1)} mL</text>`;
         });
         out += `<line class="start-line" x1="${gx(V0).toFixed(1)}" y1="${GRAPH.y1 + 4}" x2="${gx(V0).toFixed(1)}" y2="${GRAPH.y0}"/>`;
-        out += `<text class="axis-text" style="fill:#54e6c1" x="${(gx(V0) - 4).toFixed(1)}" y="${GRAPH.y1 + 4}" text-anchor="end">처음 40 mL</text>`;
+        out += `<text class="axis-text" style="fill:#059669" x="${(gx(V0) - 4).toFixed(1)}" y="${GRAPH.y1 + 4}" text-anchor="end">처음 40 mL</text>`;
         return out;
     }
 

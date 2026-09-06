@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const y = BY + 32 + i * 14;
             out += `<rect x="${BX}" y="${y - 8}" width="9" height="9" rx="2" fill="${s.c}"/>`;
             out += `<text class="salt-text" style="fill:${s.c}" x="${BX + 14}" y="${y}">${s.n} ${s.pct}%</text>`;
-            out += `<text class="salt-text" style="fill:#cfe6ee" x="448" y="${y}" text-anchor="end">${a.grams[i].toFixed(2)} g</text>`;
+            out += `<text class="salt-text" style="fill:#0f172a" x="448" y="${y}" text-anchor="end">${a.grams[i].toFixed(2)} g</text>`;
         });
         out += `<text class="note-text" x="${BX}" y="${BY + 32 + SALTS.length * 14 + 8}">염분이 달라져도 비율은 그대로입니다</text>`;
 
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pts = [];
         for (let m = 0; m <= MAX_DEPTH; m += 5) pts.push(`${gx(tempAt(m, a)).toFixed(1)},${gy(m).toFixed(1)}`);
         out += `<path class="trace" d="M${pts.join('L')}"/>`;
-        out += `<circle class="trace-dot" cx="${gx(a.T).toFixed(1)}" cy="${gy(0).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(a.T).toFixed(1)}" cy="${gy(0).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = out;
     }
 

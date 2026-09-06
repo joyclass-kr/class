@@ -3,15 +3,15 @@
 .mode-field, .pick-field { margin: 4px 0 14px; padding: 0; border: 0; }
 .mode-field legend, .pick-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .mode-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
-.mode-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
-.mode-buttons button small { color: var(--muted-light); font-size: 12px; font-weight: 800; }
+.mode-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
+.mode-buttons button small { color: var(--muted-light); font-size: 13.5px; font-weight: 800; }
 .mode-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
 .mode-buttons button.selected small { color: #0369a1; }
 
 .pick-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 9px; }
 .pick-buttons.cols3 { grid-template-columns: repeat(3, 1fr); }
 .pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 7px 2px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 13px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 12px; font-weight: 800; }
+.pick-buttons button small { color: var(--muted-light); font-size: 13.5px; font-weight: 800; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -65,29 +65,29 @@
 .meter-text { fill: var(--mint); font-size: 13px; font-weight: 900; }
 .electron { fill: #c2410c; }
 .bubble { fill: rgba(230, 250, 255, .8); }
-.battery-long { stroke: #ffd166; stroke-width: 2.6; }
-.battery-short { stroke: #ffd166; stroke-width: 5; }
-.pole-text { font-size: 12.5px; font-weight: 900; }
-.pole-text.minus { fill: #7fd4f0; }
-.pole-text.plus { fill: #ff9d6b; }
+.battery-long { stroke: #d97706; stroke-width: 2.6; }
+.battery-short { stroke: #d97706; stroke-width: 5; }
+.pole-text { font-size: 14px; font-weight: 900; }
+.pole-text.minus { fill: #0284c7; }
+.pole-text.plus { fill: #ea580c; }
 
-.part-label { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.small-label { fill: #475569; font-size: 12px; font-weight: 800; }
+.part-label { fill: #334155; font-size: 14px; font-weight: 800; }
+.small-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
 .read-text { fill: var(--mint); font-size: 13px; font-weight: 900; }
-.note-text { fill: #475569; font-size: 12.5px; font-weight: 800; }
+.note-text { fill: #475569; font-size: 14px; font-weight: 800; }
 .verdict-text { font-size: 13px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.rung { stroke: rgba(214, 245, 250, .35); stroke-width: 1.4; }
-.rung.on { stroke: #ffd166; stroke-width: 2.6; }
-.rung-text { font-size: 12.5px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.rung { stroke: rgba(148, 163, 184, 0.40); stroke-width: 1.4; }
+.rung.on { stroke: #d97706; stroke-width: 2.6; }
+.rung-text { font-size: 14px; font-weight: 900; }
 .gap-band { fill: rgba(84, 230, 193, .16); }
-.gap-text { fill: var(--mint); font-size: 12.5px; font-weight: 900; }
+.gap-text { fill: var(--mint); font-size: 14px; font-weight: 900; }
 .bar { stroke: rgba(255, 255, 255, .25); stroke-width: .8; }
-.bar-text { font-size: 12.5px; font-weight: 900; }
+.bar-text { font-size: 14px; font-weight: 900; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 136px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }

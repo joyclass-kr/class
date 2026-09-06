@@ -138,14 +138,14 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 6}">산화마그네슘 (g)</text>`;
         const pts = [];
         for (let v = 0; v <= MAX_G; v += 0.25) pts.push(`${gx(v, MAX_G).toFixed(1)},${gy(react(v, ox()).product, 0, yMax).toFixed(1)}`);
-        g += `<path class="trace" style="stroke:#54e6c1" d="M${pts.join('L')}"/>`;
+        g += `<path class="trace" style="stroke:#059669" d="M${pts.join('L')}"/>`;
         const knee = (ox() * R_MG) / R_OX;
         if (ox() > 0 && knee <= MAX_G) {
             g += `<line class="knee-line" x1="${gx(knee, MAX_G).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(knee, MAX_G).toFixed(1)}" y2="${GRAPH.y0}"/>`;
             const flip = gx(knee, MAX_G) > (GRAPH.x0 + GRAPH.x1) / 2;
             g += `<text class="knee-text" x="${(gx(knee, MAX_G) + (flip ? -5 : 5)).toFixed(1)}" y="${GRAPH.y1 + 10}"${flip ? ' text-anchor="end"' : ''}>산소가 다 쓰이는 ${knee.toFixed(1)} g</text>`;
         }
-        g += `<circle class="trace-dot" cx="${gx(mg(), MAX_G).toFixed(1)}" cy="${gy(a.product, 0, yMax).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        g += `<circle class="trace-dot" cx="${gx(mg(), MAX_G).toFixed(1)}" cy="${gy(a.product, 0, yMax).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = g;
 
         stageBadge.textContent = `${a.before.toFixed(1)} g → ${a.after.toFixed(1)} g`;
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="rxn-label" x="${TX + 18}" y="76">${temp.toFixed(1)} ℃</text>`;
         out += `<text class="axis-text" x="${TX + 18}" y="92">시작 ${T0} ℃</text>`;
         out += `<text class="rxn-label" x="${(BX.x0 + BX.x1) / 2}" y="182" text-anchor="middle">${r.name}</text>`;
-        out += `<text class="rxn-kind" fill="${warming ? '#ff9d6b' : '#7fd4f0'}" x="${(BX.x0 + BX.x1) / 2}" y="200" text-anchor="middle">${r.kind} 반응 · 주위 온도 ${warming ? '상승' : '하강'}</text>`;
+        out += `<text class="rxn-kind" fill="${warming ? '#ea580c' : '#0284c7'}" x="${(BX.x0 + BX.x1) / 2}" y="200" text-anchor="middle">${r.kind} 반응 · 주위 온도 ${warming ? '상승' : '하강'}</text>`;
         mainGroup.innerHTML = out;
 
         const lo = 0, hi = 50;
@@ -194,10 +194,10 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let s = 0; s <= 60; s += 1) {
                 pts.push(`${gx(s, 60).toFixed(1)},${gy(T0 + rr.delta * (1 - Math.exp(-s / rr.tau)), lo, hi).toFixed(1)}`);
             }
-            const col = rr.delta > 0 ? '#ff9d6b' : '#7fd4f0';
+            const col = rr.delta > 0 ? '#ea580c' : '#0284c7';
             g += `<path class="trace" style="stroke:${col};opacity:${key === rxn ? 1 : .32}" d="M${pts.join('L')}"/>`;
         });
-        g += `<circle class="trace-dot" cx="${gx(t, 60).toFixed(1)}" cy="${gy(temp, lo, hi).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        g += `<circle class="trace-dot" cx="${gx(t, 60).toFixed(1)}" cy="${gy(temp, lo, hi).toFixed(1)}" r="5" fill="#d97706"/>`;
         graphGroup.innerHTML = g;
 
         stageBadge.textContent = `${r.kind} · ${temp.toFixed(1)} ℃`;

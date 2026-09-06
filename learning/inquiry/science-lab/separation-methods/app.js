@@ -41,32 +41,32 @@ document.addEventListener('DOMContentLoaded', () => {
         filter: [
             { id: 'sandWater', label: '모래 + 물', hint: '녹지 않는 알갱이',
               parts: [{ n: '모래', size: 0.5, dissolved: false, colour: '#c8a86a' },
-                      { n: '물', size: 0.0000003, dissolved: true, colour: '#7fd4f0' }] },
+                      { n: '물', size: 0.0000003, dissolved: true, colour: '#0284c7' }] },
             { id: 'saltWater', label: '소금물', hint: '녹아 있는 물질',
               parts: [{ n: '소금', size: 0.0000006, dissolved: true, colour: '#e6ecf0' },
-                      { n: '물', size: 0.0000003, dissolved: true, colour: '#7fd4f0' }] },
+                      { n: '물', size: 0.0000003, dissolved: true, colour: '#0284c7' }] },
             { id: 'sandSalt', label: '모래 + 소금물', hint: '둘이 섞인 것',
               parts: [{ n: '모래', size: 0.5, dissolved: false, colour: '#c8a86a' },
                       { n: '소금', size: 0.0000006, dissolved: true, colour: '#e6ecf0' },
-                      { n: '물', size: 0.0000003, dissolved: true, colour: '#7fd4f0' }] },
+                      { n: '물', size: 0.0000003, dissolved: true, colour: '#0284c7' }] },
         ],
         distill: [
             { id: 'saltWater', label: '소금물', hint: '물만 끓어 나감',
-              parts: [{ n: '물', bp: 100, frac: 0.9, colour: '#7fd4f0' }],
+              parts: [{ n: '물', bp: 100, frac: 0.9, colour: '#0284c7' }],
               residue: { n: '소금', pure: true, colour: '#e6ecf0' } },
             { id: 'waterEthanol', label: '물 + 에탄올', hint: '끓는점 78 ℃와 100 ℃',
               parts: [{ n: '에탄올', bp: 78, frac: 0.4, colour: '#b8a6f0' },
-                      { n: '물', bp: 100, frac: 0.6, colour: '#7fd4f0' }],
+                      { n: '물', bp: 100, frac: 0.6, colour: '#0284c7' }],
               residue: null },
             { id: 'seaWater', label: '바닷물', hint: '여러 물질이 녹아 있음',
-              parts: [{ n: '물', bp: 100, frac: 0.9, colour: '#7fd4f0' }],
+              parts: [{ n: '물', bp: 100, frac: 0.9, colour: '#0284c7' }],
               residue: { n: '소금과 여러 물질', pure: false, colour: '#d8cbb0' } },
         ],
         chroma: [
             { id: 'blackInk', label: '검정 사인펜 잉크', hint: '색소 3가지',
-              parts: [{ n: '노랑', rf: 0.86, colour: '#ffd166' },
+              parts: [{ n: '노랑', rf: 0.86, colour: '#d97706' },
                       { n: '빨강', rf: 0.62, colour: '#ff7d6b' },
-                      { n: '파랑', rf: 0.34, colour: '#52c7ff' }] },
+                      { n: '파랑', rf: 0.34, colour: '#0284c7' }] },
             { id: 'spinach', label: '시금치 색소', hint: '색소 4가지',
               parts: [{ n: '카로틴', rf: 0.93, colour: '#ffa94d' },
                       { n: '잔토필', rf: 0.72, colour: '#ffe066' },
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chroma: '크로마토그래피는 이동 속도 차이로 나눕니다',
     };
     const VERDICT = { full: '완전히 나뉜다', partial: '일부만 나뉜다', none: '나뉘지 않는다' };
-    const VERDICT_TONE = { full: '#54e6c1', partial: '#ffd166', none: '#ff9d6b' };
+    const VERDICT_TONE = { full: '#059669', partial: '#d97706', none: '#ea580c' };
 
     let mode = 'filter';
     let mixId = 'sandWater';
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const F = { top: 46, wide0: 138, wide1: 242, tipY: 112, stemX0: 183, stemX1: 197, stemY: 140 };
         const B = { x0: 148, x1: 232, top: 146, bottom: 196 };
         let out = '';
-        const liquidColour = a.passed.some(x => x.n === '소금') ? '#8fd0e8' : '#7fd4f0';
+        const liquidColour = a.passed.some(x => x.n === '소금') ? '#8fd0e8' : '#0284c7';
 
         // what is still waiting in the funnel
         const leftFrac = 1 - p;
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // flask contents shrinking as the run goes on
         const liqTop = FL.cy + FL.r - (2 * FL.r - 6) * leftFrac;
         if (leftFrac > 0.01) {
-            out += `<path class="liquid" fill="#7fd4f0" opacity=".5" d="M${FL.cx - Math.sqrt(Math.max(0, FL.r * FL.r - (liqTop - FL.cy) ** 2))},${liqTop.toFixed(1)} ` +
+            out += `<path class="liquid" fill="#0284c7" opacity=".5" d="M${FL.cx - Math.sqrt(Math.max(0, FL.r * FL.r - (liqTop - FL.cy) ** 2))},${liqTop.toFixed(1)} ` +
                    `A${FL.r} ${FL.r} 0 0 0 ${FL.cx + Math.sqrt(Math.max(0, FL.r * FL.r - (liqTop - FL.cy) ** 2))},${liqTop.toFixed(1)} Z"/>`;
         }
         if (a.mix.residue && totalOut > 0.05) {
@@ -305,11 +305,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const rise = BASE_Y - front;
         let out = '';
 
-        out += `<rect class="liquid" fill="#7fd4f0" opacity=".3" x="${BK.x0 + 3}" y="${SOLVENT_Y}" width="${BK.x1 - BK.x0 - 6}" height="${BK.bottom - SOLVENT_Y - 3}"/>`;
+        out += `<rect class="liquid" fill="#0284c7" opacity=".3" x="${BK.x0 + 3}" y="${SOLVENT_Y}" width="${BK.x1 - BK.x0 - 6}" height="${BK.bottom - SOLVENT_Y - 3}"/>`;
         out += `<rect class="paper" x="${PAPER.x0}" y="${PAPER.top}" width="${PAPER.x1 - PAPER.x0}" height="${PAPER.bottom - PAPER.top}" rx="2"/>`;
         // the wetted part of the paper
         if (rise > 0.5) {
-            out += `<rect fill="#7fd4f0" opacity=".13" x="${PAPER.x0}" y="${front.toFixed(1)}" width="${PAPER.x1 - PAPER.x0}" height="${(PAPER.bottom - front).toFixed(1)}"/>`;
+            out += `<rect fill="#0284c7" opacity=".13" x="${PAPER.x0}" y="${front.toFixed(1)}" width="${PAPER.x1 - PAPER.x0}" height="${(PAPER.bottom - front).toFixed(1)}"/>`;
         }
         out += `<path class="glass" fill="none" d="M${BK.x0},${BK.top} L${BK.x0},${BK.bottom} L${BK.x1},${BK.bottom} L${BK.x1},${BK.top}"/>`;
 
@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.mix.parts.forEach((part, i) => {
             const y = GRAPH.y1 + 34 + i * 34;
             const caught = a.caught.includes(part);
-            out += `<text class="bar-text" fill="${caught ? '#ff9d6b' : '#8fd4c8'}" x="${GRAPH.x0}" y="${y - 10}">` +
+            out += `<text class="bar-text" fill="${caught ? '#ea580c' : '#8fd4c8'}" x="${GRAPH.x0}" y="${y - 10}">` +
                    `${part.n} ${part.size} mm${part.dissolved ? ' (물에 녹음)' : ''} — ${caught ? '걸러짐' : '통과'}</text>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(2, gx(part.size) - GRAPH.x0).toFixed(1)}" height="11" rx="3" fill="${part.colour}" opacity=".8"/>`;
         });
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         out += line(sch.total, 'trace-done');
         if (t > 0) out += line(t, 'trace');
-        out += `<circle class="trace-dot" cx="${gx(t).toFixed(1)}" cy="${gy(tempAt(t, sch)).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        out += `<circle class="trace-dot" cx="${gx(t).toFixed(1)}" cy="${gy(tempAt(t, sch)).toFixed(1)}" r="5" fill="#d97706"/>`;
         return out;
     }
 

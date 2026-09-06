@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const BATHS = {
         cu: { label: '황산 구리 수용액', out: '구리', sym: 'Cu', n: 2, M: 63.5, gas: false, colour: '#c8783c' },
         ag: { label: '질산 은 수용액', out: '은', sym: 'Ag', n: 1, M: 107.9, gas: false, colour: '#dfe7ea' },
-        water: { label: '물 (묽은 황산)', out: '수소와 산소', sym: 'H₂', n: 2, M: 2.02, gas: true, colour: '#7fd4f0' },
+        water: { label: '물 (묽은 황산)', out: '수소와 산소', sym: 'H₂', n: 2, M: 2.02, gas: true, colour: '#0284c7' },
     };
 
     const state = { mode: 'cell', a: 'zn', b: 'cu', bath: 'cu', I: 2, mins: 30, prediction: null };
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Math.abs(ly - ry) > 0.5) {
                 out += `<line class="rung" x1="${GRAPH.x0 + 120}" y1="${ry.toFixed(1)}" x2="${GRAPH.x0 + 128}" y2="${ly.toFixed(1)}"/>`;
             }
-            out += `<text class="rung-text" fill="${on ? '#ffd166' : '#7f9298'}" x="${GRAPH.x0 + 132}" y="${(ly + 3.5).toFixed(1)}">` +
+            out += `<text class="rung-text" fill="${on ? '#d97706' : '#7f9298'}" x="${GRAPH.x0 + 132}" y="${(ly + 3.5).toFixed(1)}">` +
                    `${m.name} ${m.sym} ${m.E > 0 ? '+' : ''}${m.E.toFixed(2)} V` +
                    `${!a.same && m === a.anode ? ' ← 산화 (−)' : ''}${!a.same && m === a.cathode ? ' ← 환원 (+)' : ''}</text>`;
         });
@@ -252,8 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = [
             ['구리 Cu (2가)', (a.eMol / 2) * 63.5, '#c8783c'],
             ['은 Ag (1가)', (a.eMol / 1) * 107.9, '#dfe7ea'],
-            ['수소 H₂ (2가)', (a.eMol / 2) * 2.02, '#7fd4f0'],
-            ['산소 O₂ (4가)', (a.eMol / 4) * 32.0, '#54e6c1'],
+            ['수소 H₂ (2가)', (a.eMol / 2) * 2.02, '#0284c7'],
+            ['산소 O₂ (4가)', (a.eMol / 4) * 32.0, '#059669'],
         ];
         const max = Math.max(...rows.map(r => r[1])) * 1.18 || 1;
         const gx = m => GRAPH.x0 + (m / max) * (GRAPH.x1 - GRAPH.x0);

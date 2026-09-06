@@ -49,12 +49,12 @@
 .solid-block { stroke: rgba(255, 255, 255, .55); stroke-width: 1.2; }
 .block-edge { stroke: rgba(0, 0, 0, .22); stroke-width: 1; }
 .liquid-surface { fill: rgba(255, 255, 255, .28); }
-.sub-name { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.sub-c { fill: #7c9b98; font-size: 12.5px; font-weight: 800; }
+.sub-name { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.sub-c { fill: #475569; font-size: 14px; font-weight: 800; }
 .temp-text { font-size: 13px; font-weight: 900; }
 .therm-tube { fill: rgba(255, 255, 255, .1); stroke: #334155; stroke-width: 1.8; stroke-width: 1.2; }
 .therm-fill { fill: #ff7d6b; }
-.boil-mark { fill: var(--amber); font-size: 12.5px; font-weight: 900; }
+.boil-mark { fill: var(--amber); font-size: 14px; font-weight: 900; }
 
 .burner { fill: #4a5a63; stroke: rgba(190, 235, 242, .4); stroke-width: 1.2; }
 @keyframes flameFlicker {
@@ -67,23 +67,23 @@
 
 .rod { stroke-linecap: round; }
 .rod-base { fill: #6f7b82; stroke: rgba(220, 235, 240, .5); stroke-width: 1.2; }
-.rod-ext { fill: #ff9d6b; }
-.rod-name { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.rod-value { fill: #c2410c; font-size: 12.5px; font-weight: 900; }
-.rod-wall { fill: rgba(151, 218, 211, .25); }
-.scale-badge { fill: #c79bff; font-size: 12.5px; font-weight: 900; }
+.rod-ext { fill: #ea580c; }
+.rod-name { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.rod-value { fill: #c2410c; font-size: 14px; font-weight: 900; }
+.rod-wall { fill: rgba(148, 163, 184, 0.35); }
+.scale-badge { fill: #c79bff; font-size: 14px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .t-line { fill: none; stroke-width: 2.2; }
 .t-dot { stroke: #fff; stroke-width: 1.2; }
-.boil-line { stroke: rgba(255, 204, 102, .5); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.boil-line { stroke: rgba(217, 119, 6, .5); stroke-width: 1.2; stroke-dasharray: 4 4; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 84px 66px 1fr; gap: 8px; font-size: 13px; font-weight: 850; align-items: baseline; }
-.data-row.head { color: #7c9b98; }
+.data-row.head { color: #475569; }
 .data-name { color: #475569; font-weight: 750; }
 .data-val { color: #0f172a; font-weight: 850; text-align: right; font-variant-numeric: tabular-nums; }
 .data-extra { color: #334155; }

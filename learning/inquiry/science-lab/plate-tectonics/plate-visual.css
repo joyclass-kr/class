@@ -3,8 +3,8 @@
 .pick-field { margin: 4px 0 14px; padding: 0; border: 0; }
 .pick-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .pick-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
-.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 12.5px; font-weight: 800; }
+.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
+.pick-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
 .pick-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
 .pick-buttons button.selected small { color: #0369a1; }
 
@@ -59,26 +59,26 @@
 .slab-line { stroke: #c09a70; stroke-width: 1.6; stroke-dasharray: 4 4; fill: none; }
 .quake { fill: #ff6b6b; stroke: rgba(255, 220, 220, .5); stroke-width: .6; }
 .quake.deep { fill: #b8a6f0; }
-.move-arrow { stroke: #ffd166; stroke-width: 2.6; fill: none; stroke-linecap: round; }
-.into-page { fill: none; stroke: #ffd166; stroke-width: 1.8; }
+.move-arrow { stroke: #d97706; stroke-width: 2.6; fill: none; stroke-linecap: round; }
+.into-page { fill: none; stroke: #d97706; stroke-width: 1.8; }
 
-.surface { stroke: rgba(214, 245, 250, .55); stroke-width: 1.6; }
-.depth-tick { stroke: rgba(214, 245, 250, .28); stroke-width: 1; }
-.depth-text { fill: #475569; font-size: 12px; font-weight: 800; }
-.part-label { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.small-label { fill: #475569; font-size: 12px; font-weight: 800; }
+.surface { stroke: #64748b; stroke-width: 1.6; }
+.depth-tick { stroke: rgba(148, 163, 184, 0.38); stroke-width: 1; }
+.depth-text { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.part-label { fill: #334155; font-size: 14px; font-weight: 800; }
+.small-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
 .read-text { fill: var(--mint); font-size: 13px; font-weight: 900; }
-.note-text { fill: #475569; font-size: 12.5px; font-weight: 800; }
+.note-text { fill: #475569; font-size: 14px; font-weight: 800; }
 .scale-bar { stroke: var(--amber); stroke-width: 2.2; }
-.scale-text { fill: var(--amber); font-size: 12px; font-weight: 900; }
+.scale-text { fill: var(--amber); font-size: 13.5px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
+.axis-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .zone-line { stroke: rgba(184, 166, 240, .5); stroke-width: 1.4; stroke-dasharray: 5 4; }
-.zone-text { fill: #b8a6f0; font-size: 12.5px; font-weight: 900; }
-.legend-text { font-size: 12px; font-weight: 800; }
+.zone-text { fill: #b8a6f0; font-size: 14px; font-weight: 900; }
+.legend-text { font-size: 13.5px; font-weight: 800; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 122px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }

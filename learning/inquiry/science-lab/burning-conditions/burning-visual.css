@@ -5,8 +5,8 @@
 .pick-buttons { display: grid; gap: 7px; margin-top: 9px; }
 .pick-buttons.cols2 { grid-template-columns: 1fr 1fr; }
 .pick-buttons.cols3 { grid-template-columns: repeat(3, 1fr); }
-.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
-.pick-buttons button small { color: var(--muted-light); font-size: 12.5px; font-weight: 800; }
+.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 14px; cursor: pointer; }
+.pick-buttons button small { color: var(--muted-light); font-size: 14px; font-weight: 800; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -58,28 +58,28 @@
 .paper { fill: #e8e2d4; stroke: rgba(190, 180, 160, .8); stroke-width: 1.2; }
 .flame { fill: #ff9d4d; }
 .flame.inner { fill: #c2410c; }
-.burner-flame { fill: #7fb8ff; opacity: .8; }
+.burner-flame { fill: #0284c7; opacity: .8; }
 .smoke { stroke: rgba(200, 210, 215, .35); stroke-width: 2; fill: none; }
 .therm-tube { fill: rgba(255, 255, 255, .1); stroke: #334155; stroke-width: 1.8; stroke-width: 1.2; }
 .therm-fill { fill: #ff7d6b; }
 .ignite-line { stroke: var(--amber); stroke-width: 1.4; stroke-dasharray: 4 3; }
-.ignite-text { fill: var(--amber); font-size: 12px; font-weight: 900; }
+.ignite-text { fill: var(--amber); font-size: 13.5px; font-weight: 900; }
 
-.part-label { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.small-label { fill: #475569; font-size: 12px; font-weight: 800; }
+.part-label { fill: #334155; font-size: 14px; font-weight: 800; }
+.small-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
 .read-text { fill: var(--mint); font-size: 14px; font-weight: 900; }
-.note-text { fill: #475569; font-size: 12.5px; font-weight: 800; }
-.verdict-text { font-size: 12.5px; font-weight: 900; }
+.note-text { fill: #475569; font-size: 14px; font-weight: 800; }
+.verdict-text { font-size: 14px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }
 .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-width: 1; }
-.axis-text { fill: #334155; font-size: 12.5px; font-weight: 800; }
-.axis-title { fill: #0f172a; font-size: 12.5px; font-weight: 900; }
-.trace { fill: none; stroke-width: 2.6; stroke: #52c7ff; }
+.axis-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.axis-title { fill: #0f172a; font-size: 14px; font-weight: 900; }
+.trace { fill: none; stroke-width: 2.6; stroke: #0284c7; }
 .trace-done { fill: none; stroke-width: 2.6; stroke: rgba(82, 199, 255, .28); }
 .trace-dot { stroke: #fff; stroke-width: 1.3; }
 .limit-line { stroke: #ff7d6b; stroke-width: 1.4; stroke-dasharray: 5 4; }
-.limit-text { fill: #ff9d6b; font-size: 12.5px; font-weight: 900; }
+.limit-text { fill: #ea580c; font-size: 14px; font-weight: 900; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 122px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
