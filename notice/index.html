@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>알림장</title>
+    <title>서류 내기</title>
     <link rel="manifest" href="/notice/manifest.json">
     <meta name="theme-color" content="#101512">
     <style>
@@ -267,24 +267,15 @@
 
     <header style="flex-wrap: wrap;">
         <div class="brand-title">
-            <span>🏫</span> 알림장
+            <span>📄</span> 서류 내기
         </div>
         <div id="studentChip" class="student-chip">보호자 계정 확인 중…</div>
         <div id="childSelectorBar" style="display:none; gap:6px; flex-wrap:wrap; margin-top:8px; width:100%;"></div>
     </header>
 
     <main>
-        <!-- Tab 1: 가정통신문 -->
-        <section id="tab-notices">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <h2 style="font-size:18px; margin:0;">📬 가정통신문</h2>
-                <button class="btn-secondary" onclick="loadNotices()">🔄 새로고침</button>
-            </div>
-            <div id="noticesList">불러오는 중…</div>
-        </section>
-
-        <!-- Tab 2: 당일 출결 예고 -->
-        <section id="tab-quick-absence" class="hidden">
+        <!-- 처음 보이는 칸. 가정통신문 읽기는 알림장(/classboard/)으로 옮겼다. -->
+        <section id="tab-quick-absence">
             <h2 style="font-size:18px; margin:0 0 14px;">🤒 당일 출결 예고 (사전 알림)</h2>
             <div class="card">
                 <form id="quickAbsenceForm" onsubmit="submitQuickAbsence(event)">
@@ -480,11 +471,11 @@
 
     <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
-        <button class="nav-item active" onclick="switchTab('notices', this)">
+        <a class="nav-item" href="/classboard/">
             <span class="icon">📬</span>
-            <span>가정통신문</span>
-        </button>
-        <button class="nav-item" onclick="switchTab('quick-absence', this)">
+            <span>알림장</span>
+        </a>
+        <button class="nav-item active" onclick="switchTab('quick-absence', this)">
             <span class="icon">🤒</span>
             <span>출결예고</span>
         </button>
