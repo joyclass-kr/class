@@ -1,17 +1,17 @@
 /* Apparatus: a box of atoms turning over, and a faulted, intruded section. */
 
 .mode-field, .pick-field { margin: 4px 0 13px; padding: 0; border: 0; }
-.mode-field legend, .pick-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.mode-field legend, .pick-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .mode-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
-.mode-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #102632 0%, #091720 100%); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
-.mode-buttons button small { color: #6f8f8d; font-size: 9.5px; font-weight: 800; }
+.mode-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; border: 1px solid var(--line); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
+.mode-buttons button small { color: var(--muted-light); font-size: 9.5px; font-weight: 800; }
 .mode-buttons button.selected { border-color: var(--cyan); background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.06) 100%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--cyan); }
 .mode-buttons button.selected small { color: var(--cyan); }
 
 .pick-buttons { display: grid; gap: 6px; margin-top: 8px; }
 .pick-buttons.cols3 { grid-template-columns: repeat(3, 1fr); }
-.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 8px 2px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #102632 0%, #091720 100%); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
-.pick-buttons button small { color: #6f8f8d; font-size: 8.5px; font-weight: 800; line-height: 1.25; }
+.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 8px 2px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; border: 1px solid var(--line); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
+.pick-buttons button small { color: var(--muted-light); font-size: 8.5px; font-weight: 800; line-height: 1.25; }
 .pick-buttons button.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 .pick-buttons button.selected small { color: var(--mint); }
 
@@ -23,7 +23,7 @@
     padding: 10px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+    background: #f8fafc;
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;
@@ -66,14 +66,14 @@
 .fault-line { stroke: #e8f4f8; stroke-width: 2; stroke-dasharray: 6 3; }
 .fault-line.picked { stroke: #ffd166; stroke-width: 3; stroke-dasharray: none; }
 .unconformity { fill: none; stroke: #e8f4f8; stroke-width: 1.8; }
-.layer-tag { fill: #10202a; font-size: 10px; font-weight: 900; }
+.layer-tag { fill: #10202a; font-size: 12.5px; font-weight: 900; }
 
 .part-label { fill: #b6d3d9; font-size: 10.5px; font-weight: 800; }
 .small-label { fill: #8fa8b0; font-size: 9.5px; font-weight: 800; }
 .tiny-label { fill: #8fa8b0; font-size: 8.5px; font-weight: 800; }
 .read-text { fill: var(--mint); font-size: 13px; font-weight: 900; }
 .big-count { fill: var(--mint); font-size: 20px; font-weight: 900; }
-.note-text { fill: #8fa8b0; font-size: 10px; font-weight: 800; }
+.note-text { fill: #8fa8b0; font-size: 12.5px; font-weight: 800; }
 .warn-text { fill: #ff9d6b; font-size: 10.5px; font-weight: 900; }
 
 .axis { stroke: rgba(214, 245, 250, .6); stroke-width: 1.6; }

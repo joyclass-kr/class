@@ -5,7 +5,7 @@
     padding: 10px 4px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: linear-gradient(180deg, #102632 0%, #091720 100%);
+    background: #ffffff; border: 1px solid var(--line);
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;
@@ -22,13 +22,13 @@
 }
 
 .wiring-field { margin: 4px 0 14px; padding: 0; border: 0; }
-.wiring-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.wiring-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .wiring-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
 .wiring-buttons button {
     padding: 10px 4px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: linear-gradient(180deg, #102632 0%, #091720 100%);
+    background: #ffffff; border: 1px solid var(--line);
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;
@@ -54,7 +54,7 @@
     padding: 11px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: linear-gradient(180deg, #102632 0%, #091720 100%);
+    background: #ffffff; border: 1px solid var(--line);
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;

@@ -3,7 +3,7 @@
    except the shared page chrome in styles.css / quiz.css. */
 
 .bar-field { margin: 4px 0 16px; padding: 0; border: 0; }
-.bar-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.bar-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .bar-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 9px; }
 .bar-buttons button {
     display: flex;
@@ -13,7 +13,7 @@
     padding: 10px 4px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: linear-gradient(180deg, #102632 0%, #091720 100%);
+    background: #ffffff; border: 1px solid var(--line);
     color: var(--muted);
     font-size: 13px;
     font-weight: 850;
@@ -21,7 +21,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.bar-buttons button small { color: #6f8f8d; font-size: 11px; font-weight: 800; transition: color 0.15s ease; }
+.bar-buttons button small { color: var(--muted-light); font-size: 11px; font-weight: 800; transition: color 0.15s ease; }
 .bar-buttons button:hover {
     border-color: var(--line-bright);
     color: var(--ink);

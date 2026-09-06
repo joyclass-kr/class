@@ -7,7 +7,7 @@
     padding: 10px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+    background: #f8fafc;
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;
@@ -78,7 +78,7 @@
 .trend { fill: none; stroke-width: 2.2; stroke-linejoin: round; }
 .trend-total { fill: none; stroke: #54e6c1; stroke-width: 2.6; stroke-dasharray: 6 4; }
 .trend-tag { font-size: 9px; font-weight: 900; }
-.trend-empty { fill: #8fa8b0; font-size: 10px; font-weight: 800; }
+.trend-empty { fill: #8fa8b0; font-size: 12.5px; font-weight: 800; }
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 168px 1fr; gap: 10px; font-size: 11.5px; font-weight: 850; align-items: baseline; }
 .data-name { color: #b6d3d9; }

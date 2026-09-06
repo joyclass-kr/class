@@ -266,15 +266,10 @@
     }
 
     function openBrowse(list, index) {
-        state.browse = { topic: state.topic, poems: list };
+        state.browse = { topic: state.topic, poems: list, index };
         state.lessonIndex = -1;
-        state.readIndex = index;
-        elements.readKicker.textContent = "";
-        elements.readTitle.textContent = state.topic;
-        elements.readTotal.textContent = String(list.length);
-        setScreen(elements.readScreen);
-        renderReading();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        const poem = list[index];
+        if (poem) openReading(poem.id);
     }
 
     function renderLessonList() {
@@ -303,6 +298,7 @@
             const number = document.createElement("span");
             const copy = document.createElement("span");
             const title = document.createElement("strong");
+            const note = document.createElement("small");
             const meta = document.createElement("span");
             const record = progress[lesson.id];
 
@@ -312,7 +308,8 @@
             number.textContent = `${orderInGradeOf(lesson)}차시`;
             copy.className = "lesson-copy";
             title.textContent = lesson.title;
-            copy.append(title);
+            note.textContent = lesson.note || "";
+            copy.append(title, note);
             meta.className = "lesson-meta";
 
             if (!isReady(lesson)) {
@@ -325,7 +322,7 @@
                 meta.textContent = record
                     ? `${record.best === record.total ? "✓ 완벽" : "✓ 완료"} · ${record.best}/${record.total}`
                     : `시 ${lesson.poemIds.length}편 · 문제 ${lesson.ids.length}개`;
-                button.addEventListener("click", () => openReading(globalIndex));
+                button.addEventListener("click", () => openLessonDetail(globalIndex));
             }
 
             button.append(number, copy, meta);
@@ -347,27 +344,66 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // ── 시 읽기 ──────────────────────────────────────────────────
-    function openReading(lessonIndex) {
+    // ── 차시 상세 (시 목차 & 문제 풀기) ───────────────────────────
+    function openLessonDetail(lessonIndex) {
         state.browse = null;
         state.lessonIndex = lessonIndex;
-        state.readIndex = 0;
         const lesson = currentLesson();
-        elements.readKicker.textContent = `${orderInGradeOf(lesson)}차시`;
-        elements.readTitle.textContent = lesson.title;
-        elements.readTotal.textContent = String(currentLessonPoems().length);
-        setScreen(elements.readScreen);
-        renderReading();
+        if (!lesson) {
+            showLessonList();
+            return;
+        }
+
+        const gradeLabel = grades.find((item) => item.grade === lesson.grade);
+        elements.lessonDetailKicker.textContent = `${gradeLabel ? gradeLabel.label : ""} · ${orderInGradeOf(lesson)}차시`;
+        elements.lessonDetailTitle.textContent = lesson.title;
+        elements.lessonDetailNote.textContent = lesson.note;
+
+        const poemList = currentLessonPoems();
+        elements.lessonPoemList.replaceChildren(...poemList.map((poem, index) => {
+            const item = document.createElement("li");
+            const button = document.createElement("button");
+            const number = document.createElement("span");
+            const copy = document.createElement("span");
+            const title = document.createElement("strong");
+            const point = document.createElement("small");
+            const meta = document.createElement("span");
+
+            button.type = "button";
+            button.className = "lesson-card";
+            number.className = "lesson-number";
+            number.textContent = `${index + 1}`;
+            copy.className = "lesson-copy";
+            title.textContent = poem.title;
+            point.textContent = poem.point || "";
+            copy.append(title, point);
+            meta.className = "lesson-meta";
+            meta.textContent = poem.poet;
+
+            button.addEventListener("click", () => openReading(poem.id));
+            button.append(number, copy, meta);
+            item.append(button);
+            return item;
+        }));
+
+        setScreen(elements.lessonDetailScreen);
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function renderReading() {
-        const poemList = currentLessonPoems();
-        const poem = poemList[state.readIndex];
+    // ── 시 본문 읽기 ─────────────────────────────────────────────
+    function openReading(poemId) {
+        const poem = poemById.get(poemId);
         if (!poem) return;
-        const isLast = state.readIndex === poemList.length - 1;
 
-        elements.readIndex.textContent = String(state.readIndex + 1);
+        const lesson = currentLesson();
+        if (state.browse) {
+            elements.readKicker.textContent = `소재별 · ${state.browse.topic}`;
+        } else if (lesson) {
+            elements.readKicker.textContent = `${orderInGradeOf(lesson)}차시 · ${lesson.title}`;
+        } else {
+            elements.readKicker.textContent = "시 읽기";
+        }
+
         elements.poemTitle.textContent = poem.title;
         elements.poemByline.textContent = bylineOf(poem);
         renderPoemLines(elements.poemBody, poem);
@@ -389,33 +425,13 @@
         elements.poemWords.classList.toggle("hidden", (poem.words || []).length === 0);
 
         elements.poemPoint.textContent = poem.point || "";
-        elements.readPrevButton.disabled = state.readIndex === 0;
-        if (state.browse) {
-            elements.readNextButton.textContent = isLast ? "목록으로" : "다음 시";
-            elements.readSkipButton.classList.add("hidden");
-        } else {
-            elements.readNextButton.textContent = isLast ? "확인 문제 풀기" : "다음 시";
-            elements.readSkipButton.classList.toggle("hidden", isLast);
-        }
         elements.announcer.textContent = `${poem.title}. ${poem.poet}. ${poem.point || ""}`;
-    }
 
-    function moveReading(step) {
-        const poemList = currentLessonPoems();
-        const next = state.readIndex + step;
-        if (next < 0) return;
-        if (next >= poemList.length) {
-            if (state.browse) showLessonList();
-            else startLessonQuiz();
-            return;
-        }
-        state.readIndex = next;
-        renderReading();
-        elements.readNextButton.focus({ preventScroll: true });
+        setScreen(elements.readScreen);
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // ── 문제 ─────────────────────────────────────────────────────
+    // ── 문제 풀기 ────────────────────────────────────────────────
     function buildSession(questionIds) {
         return questionIds
             .map((id) => questionById.get(id))
@@ -426,7 +442,8 @@
     function startLessonQuiz() {
         const lesson = currentLesson();
         if (!lesson) return;
-        const session = buildSession(shuffle(lesson.ids));
+        // 시별로 묶인 원본 차시 순서를 그대로 유지하여 시별 문항이 흩어지지 않게 한다.
+        const session = buildSession(lesson.ids);
         if (session.length === 0) return;
 
         state.questions = session;
@@ -450,7 +467,6 @@
         elements.quizPoemByline.textContent = bylineOf(poem);
         renderPoemLines(elements.quizPoemBody, poem);
         if (poem.rights !== "public") {
-            // 본문을 실을 수 없는 시는 문제 화면에서도 교과서를 펴게 안내한다.
             const notice = document.createElement("p");
             notice.className = "poem-notice";
             notice.textContent = "교과서를 펴고 이 시를 읽은 뒤 답해 보세요.";
@@ -609,7 +625,7 @@
         elements.nextLessonButton.classList.toggle("hidden", !nextLesson || !isReady(nextLesson));
 
         setScreen(elements.resultScreen);
-        elements.lessonListButton.focus({ preventScroll: true });
+        elements.restartButton.focus({ preventScroll: true });
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -625,7 +641,7 @@
             showLessonList();
             return;
         }
-        openReading(lessons.indexOf(nextLesson));
+        openLessonDetail(lessons.indexOf(nextLesson));
     }
 
     function handleKeyboard(event) {
@@ -644,33 +660,61 @@
         }
     }
 
-    elements.readPrevButton.addEventListener("click", () => moveReading(-1));
-    elements.readNextButton.addEventListener("click", () => moveReading(1));
-    elements.readSkipButton.addEventListener("click", startLessonQuiz);
-    elements.readBackButton.addEventListener("click", showLessonList);
+    function handleBackNavigation(event) {
+        if (!elements.readScreen.classList.contains("hidden")) {
+            event?.preventDefault();
+            if (state.browse) {
+                showLessonList();
+            } else if (state.lessonIndex >= 0) {
+                openLessonDetail(state.lessonIndex);
+            } else {
+                showLessonList();
+            }
+            return;
+        }
+
+        if (!elements.quizScreen.classList.contains("hidden")) {
+            event?.preventDefault();
+            if (state.lessonIndex >= 0) {
+                openLessonDetail(state.lessonIndex);
+            } else {
+                showLessonList();
+            }
+            return;
+        }
+
+        if (!elements.resultScreen.classList.contains("hidden")) {
+            event?.preventDefault();
+            if (state.lessonIndex >= 0) {
+                openLessonDetail(state.lessonIndex);
+            } else {
+                showLessonList();
+            }
+            return;
+        }
+
+        if (!elements.lessonDetailScreen.classList.contains("hidden")) {
+            event?.preventDefault();
+            showLessonList();
+            return;
+        }
+
+        // lessonScreen(최상위 차시 목록)에서는 사이트 메인 링크 동작 유지
+    }
+
+    elements.startQuizButton.addEventListener("click", startLessonQuiz);
     elements.restartButton.addEventListener("click", startLessonQuiz);
     elements.nextLessonButton.addEventListener("click", goToNextLesson);
+    elements.lessonDetailButton.addEventListener("click", () => {
+        if (state.lessonIndex >= 0) openLessonDetail(state.lessonIndex);
+        else showLessonList();
+    });
     elements.lessonListButton.addEventListener("click", showLessonList);
     elements.nextButton.addEventListener("click", goToNextQuestion);
     document.addEventListener("keydown", handleKeyboard);
 
-    // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
-    // 차시 목록(집)이 아니면 사이트 밖으로 나가지 않고 차시 목록으로만 돌아간다.
-    window.addEventListener("sitebackrequest", (event) => {
-        if (elements.lessonScreen.classList.contains("hidden")) {
-            event.preventDefault();
-            showLessonList();
-        }
-    });
-
-    // 화면 왼쪽 위 화살표는 공용 뒤로가기 단추가 안 떠도 항상 같은 규칙으로 움직인다.
-    // 차시 목록이 아니면 그 목록으로만 돌아가고, 이미 목록이면 그때 메인 화면으로 나간다.
-    elements.backLink?.addEventListener("click", (event) => {
-        if (elements.lessonScreen.classList.contains("hidden")) {
-            event.preventDefault();
-            showLessonList();
-        }
-    });
+    elements.backLink?.addEventListener("click", handleBackNavigation);
+    window.addEventListener("sitebackrequest", handleBackNavigation);
 
     showLessonList();
 })();

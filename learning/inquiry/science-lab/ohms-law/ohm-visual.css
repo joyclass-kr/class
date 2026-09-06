@@ -1,9 +1,9 @@
 /* Apparatus: a two-resistor circuit and its voltage-current graph. */
 
 .wiring-field { margin: 4px 0 14px; padding: 0; border: 0; }
-.wiring-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.wiring-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .wiring-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
-.wiring-buttons button { padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #102632 0%, #091720 100%); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; cursor: pointer; }
+.wiring-buttons button { padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; border: 1px solid var(--line); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; cursor: pointer; }
 .wiring-buttons button.selected { border-color: var(--cyan); background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.06) 100%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--cyan); }
 
 .prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
@@ -38,7 +38,7 @@
 .resistor { stroke: #ffb86b; stroke-width: 2.8; fill: none; stroke-linejoin: round; }
 .resistor-box { fill: rgba(255, 184, 107, .1); stroke: rgba(255, 184, 107, .5); stroke-width: 1.2; }
 .comp-label { fill: #ffd9a8; font-size: 11px; font-weight: 900; }
-.comp-sub { fill: #b6d3d9; font-size: 10px; font-weight: 800; }
+.comp-sub { fill: #b6d3d9; font-size: 12.5px; font-weight: 800; }
 .meter { fill: rgba(12, 30, 38, .9); stroke: rgba(151, 218, 211, .55); stroke-width: 1.4; }
 .meter-text { fill: var(--mint); font-size: 11px; font-weight: 900; }
 

@@ -1,9 +1,9 @@
 /* Apparatus: a water tank that sediment is poured into, building up layers. */
 
 .mix-field { margin: 4px 0 14px; padding: 0; border: 0; }
-.mix-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.mix-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .mix-buttons { display: grid; gap: 8px; margin-top: 9px; }
-.mix-buttons button { padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #102632 0%, #091720 100%); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; cursor: pointer; text-align: left; }
+.mix-buttons button { padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; border: 1px solid var(--line); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; cursor: pointer; text-align: left; }
 .mix-buttons button.selected { border-color: var(--cyan); background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.06) 100%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--cyan); }
 
 .toggle-button { width: 100%; margin-bottom: 4px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
@@ -14,7 +14,7 @@
     padding: 10px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+    background: #f8fafc;
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;
@@ -51,7 +51,7 @@
 .sub-layer { stroke: rgba(0, 0, 0, .22); stroke-width: .6; }
 .layer-divider { stroke: rgba(255, 255, 255, .38); stroke-width: 1.2; stroke-dasharray: 5 4; }
 .layer-tag { fill: #e8f3f6; font-size: 11px; font-weight: 900; }
-.layer-age { fill: #b6d3d9; font-size: 10px; font-weight: 800; }
+.layer-age { fill: #b6d3d9; font-size: 12.5px; font-weight: 800; }
 .fossil { fill: #f0e2b8; stroke: #7a6236; stroke-width: 1; }
 .falling { opacity: .95; }
 .ruler-line { stroke: rgba(151, 218, 211, .3); stroke-width: 1; stroke-dasharray: 3 3; }
@@ -71,11 +71,11 @@
 .ord-title { fill: #cfe6ee; font-size: 10.5px; font-weight: 900; }
 .ord-row { fill: rgba(151, 218, 211, .07); }
 .ord-row.newest { fill: rgba(255, 209, 102, .14); stroke: #ffd166; stroke-width: 1.4; }
-.ord-num { fill: #cfe6ee; font-size: 10px; font-weight: 900; }
+.ord-num { fill: #cfe6ee; font-size: 12.5px; font-weight: 900; }
 .ord-name { fill: #cfe6ee; font-size: 9.5px; font-weight: 850; }
 .ord-when { fill: #8fa8b0; font-size: 9px; font-weight: 800; }
 .ord-swatch { stroke: rgba(14, 24, 30, .45); stroke-width: 1; }
-.ord-empty { fill: #8fa8b0; font-size: 10px; font-weight: 800; }
+.ord-empty { fill: #8fa8b0; font-size: 12.5px; font-weight: 800; }
 .ord-note { fill: #8fa8b0; font-size: 9px; font-weight: 800; }
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .data-row { display: grid; grid-template-columns: 164px 1fr; gap: 10px; font-size: 11.5px; font-weight: 850; align-items: baseline; }
