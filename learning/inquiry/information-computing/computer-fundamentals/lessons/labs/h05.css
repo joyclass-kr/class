@@ -1,0 +1,175 @@
+/* h05 차시에서만 쓰는 부분 */
+.lab-readout {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 10px 14px;
+    border-left: 5px solid #0c737c;
+    background: #eaf5f3;
+    color: #302922;
+    font-size: 16px;
+    line-height: 1.55;
+}
+.lab-readout b { color: #5b2d0e; }
+.file-sheet { width: 104px; min-height: 120px; display: grid; place-items: center; align-content: center; margin: 0 auto 10px; padding: 10px; background: white; color: #332d27; font-style: normal; text-align: center; box-shadow: 0 3px 10px rgba(50,42,34,.13); }
+.file-sheet::before { content: ""; width: 28px; height: 34px; margin-bottom: 8px; border: 2px solid #0b717a; background: repeating-linear-gradient(#fff 0 7px,#b9d8da 8px 9px); }
+.file-sheet b { font-size: 14px; }
+.file-sheet small { color: #0a6f78; font-size: 12px; }
+.file-sheet.copy,.file-sheet.moved,.file-sheet.deleted { display: none; }
+.transfer-state-lab { display: grid; gap: 12px; }
+.transfer-state-tabs { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 6px; }
+.transfer-state-tabs button {
+    min-height: 48px;
+    padding: 8px 10px;
+    border: 1px solid #8f7957;
+    border-radius: 6px;
+    background: #fff;
+    color: #3d2d20;
+    font-size: 15px;
+    font-weight: 900;
+}
+.transfer-state-tabs button[aria-selected="true"] { border-color: #0b747c; background: #0b747c; color: #fff; box-shadow: inset 0 -4px rgba(0,0,0,.18); }
+.transfer-state-tabs button:focus-visible,
+.transfer-state-actions button:focus-visible { outline: 4px solid #e19a39; outline-offset: 2px; }
+.transfer-state-panel { display: grid; gap: 12px; min-height: 390px; padding: 18px; border: 1px solid #b7925c; border-radius: 10px; background: #fbf7ee; }
+.transfer-state-panel[hidden] { display: none; }
+.transfer-state-panel > header { display: grid; grid-template-columns: minmax(0,auto) 1fr; gap: 18px; align-items: end; }
+.transfer-state-panel > header h3 { margin: 0; color: #4d2a12; font-size: 22px; line-height: 1.25; }
+.transfer-state-panel > header h3 small { display: block; margin-top: 3px; color: #08717c; font-size: 12px; }
+.transfer-state-panel > header p { margin: 0; color: #4d4942; line-height: 1.5; }
+.transfer-copy-scene,.cache-request-scene { display: grid; grid-template-columns: minmax(0,1fr) 116px minmax(0,1fr); gap: 12px; align-items: stretch; }
+.transfer-file-place,.cache-server-source,.browser-cache-drawer {
+    min-height: 205px;
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding: 14px;
+    border: 2px solid #687d7d;
+    border-radius: 8px;
+    background: #fff;
+}
+.transfer-file-place > strong,.cache-server-source > strong,.browser-cache-drawer > strong { font-size: 17px; }
+.transfer-file-place > strong small { display: block; color: #08717c; font-size: 11px; }
+.server-place,.cache-server-source { border-top: 9px solid #424a4b; }
+.device-place,.browser-cache-drawer { border-top: 9px solid #2c7e86; }
+.transfer-file-row { display: grid; grid-template-columns: 78px 1fr; gap: 12px; align-items: center; }
+.transfer-file-row .file-sheet { width: 78px; min-height: 88px; margin: 0; padding: 7px; }
+.transfer-file-row .file-sheet::before { width: 22px; height: 27px; margin-bottom: 5px; }
+.transfer-file-row > span { font-size: 16px; font-weight: 900; }
+.transfer-empty { min-height: 104px; display: grid; place-items: center; border: 2px dashed #9e9589; color: #70675e; font-weight: 850; }
+.transfer-new-copy { padding: 7px; background: #e5f2ef; box-shadow: inset 0 0 0 3px #74aaa4; }
+.transfer-new-copy[hidden],.transfer-empty[hidden] { display: none; }
+.transfer-route { display: grid; place-items: center; align-content: center; gap: 5px; color: #0a6f78; text-align: center; }
+.transfer-route span { font-size: 13px; font-weight: 900; line-height: 1.35; }
+.transfer-route i { font-size: 32px; font-style: normal; font-weight: 900; }
+.transfer-state-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.transfer-state-actions button { min-height: 48px; padding: 9px 16px; border: 1px solid #8f7957; border-radius: 6px; background: #fff; font-weight: 900; }
+.transfer-state-actions .transfer-primary-action { border-color: #075b63; background: #0b747c; color: #fff; }
+.transfer-state-actions button:disabled { opacity: .6; }
+.cookie-request-scene { display: grid; grid-template-columns: minmax(220px,.8fr) minmax(320px,1.2fr); gap: 14px; }
+.browser-state-window {
+    min-height: 220px;
+    display: grid;
+    align-content: center;
+    gap: 18px;
+    padding: 22px;
+    border: 8px solid #344749;
+    border-top-width: 34px;
+    border-radius: 10px;
+    background: #fff;
+}
+.browser-state-window strong { font-size: 18px; }
+.browser-state-window code,.http-message-log code {
+    display: block;
+    padding: 12px;
+    border-left: 5px solid #0b747c;
+    background: #e8f2f0;
+    color: #263c3d;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+.http-message-log { display: grid; gap: 10px; }
+.http-message-log > div { min-height: 104px; display: grid; gap: 8px; align-content: center; padding: 14px; border: 1px solid #9c8a70; border-radius: 7px; background: #fff; }
+.http-message-log b { font-size: 15px; }
+.cookie-request-panel[data-transfer-stage="stored"] .browser-state-window,
+.cookie-request-panel[data-transfer-stage="sent"] .browser-state-window { box-shadow: 0 0 0 4px #dfa14a; }
+.cookie-request-panel[data-transfer-stage="sent"] .http-message-log > div:first-child { box-shadow: inset 0 0 0 4px #6ea5a1; }
+.cache-server-source output,.browser-cache-drawer output { display: block; padding: 8px; background: #eee7da; color: #493b2e; font-weight: 850; }
+.cache-request-panel[data-transfer-stage="stored"] .browser-cache-drawer,
+.cache-request-panel[data-transfer-stage="reused"] .browser-cache-drawer { box-shadow: 0 0 0 4px #dfa14a; }
+.cache-request-panel[data-transfer-stage="reused"] .cache-server-source { opacity: .72; }
+.deploy-state-scene { display: grid; grid-template-columns: minmax(0,1fr) 38px minmax(0,1fr) 38px minmax(0,1fr); gap: 8px; align-items: stretch; }
+.deploy-environment {
+    min-height: 210px;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 10px;
+    padding: 16px;
+    border: 2px solid #657c7d;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+}
+.deploy-environment strong { font-size: 17px; }
+.deploy-environment strong small { display: block; margin-top: 3px; color: #08717c; font-size: 11px; }
+.deploy-environment p { margin: 0; }
+.local-environment { border-top: 10px solid #b66b27; }
+.public-environment { border-top: 10px solid #3e494a; }
+.student-environment { border-top: 10px solid #2f7e86; }
+.version-badge { min-width: 70px; padding: 9px 12px; border-radius: 20px; background: #d9dedc; color: #334344; font-size: 22px; font-weight: 950; }
+.deploy-arrow { display: grid; place-items: center; color: #0b747c; font-size: 31px; font-style: normal; font-weight: 900; }
+.deploy-state-panel[data-transfer-stage="public"] .public-environment,
+.deploy-state-panel[data-transfer-stage="student"] .public-environment,
+.deploy-state-panel[data-transfer-stage="student"] .student-environment { box-shadow: 0 0 0 4px #dfa14a; }
+.deploy-state-panel[data-transfer-stage="public"] .public-environment .version-badge,
+.deploy-state-panel[data-transfer-stage="student"] .public-environment .version-badge,
+.deploy-state-panel[data-transfer-stage="student"] .student-environment .version-badge { background: #cde8dd; color: #185d45; }
+@media (max-width: 820px) {
+.transfer-state-panel { min-height: 370px; padding: 14px; }
+.transfer-state-panel > header { grid-template-columns: 1fr; gap: 5px; }
+.transfer-state-tabs button { padding-inline: 6px; font-size: 14px; }
+.transfer-copy-scene,.cache-request-scene { grid-template-columns: minmax(0,1fr) 82px minmax(0,1fr); gap: 8px; }
+.transfer-route span { font-size: 12px; }
+.deploy-state-scene { grid-template-columns: minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr); gap: 5px; }
+.deploy-environment { min-height: 190px; padding: 10px; }
+}
+@media (max-width: 620px) {
+.transfer-state-tabs { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.transfer-state-panel { min-height: 0; padding: 12px; }
+.transfer-copy-scene,.cache-request-scene,.cookie-request-scene,.deploy-state-scene { grid-template-columns: 1fr; }
+.transfer-route { min-height: 48px; }
+.transfer-route i,.deploy-arrow { transform: rotate(90deg); }
+.deploy-arrow { min-height: 34px; }
+.transfer-state-actions { display: grid; grid-template-columns: 1fr 1fr; }
+}
+.gesture-lab .lab-readout { grid-column: 2; align-self: end; }
+@media (max-width: 620px) {
+.gesture-lab .lab-readout{grid-column:1}
+}
+.gesture-lab .lab-readout { grid-area: readout; }
+@media (max-width: 820px) {
+.gesture-lab .lab-readout { grid-column: 1; }
+}
+.browser-state-lab .browser-state-window { overflow: hidden; border: 2px solid #53595a; border-radius: 11px; background: #fff; box-shadow: 0 9px 22px rgba(36, 40, 40, .14); }
+.control-observation .lab-readout { min-height: 70px; margin: 0; display: grid; align-content: center; }
+@media (max-width: 900px) {
+.control-observation .lab-readout { grid-column: 1 / -1; }
+}
+.reference-actions button > small,
+.network-send-action > small,
+.web-request-action > small,
+.transfer-primary-action > small,
+.storage-lab-actions button > small,
+.analog-recorder button > small,
+.sampling-recorder button > small {
+    display: block;
+    margin-top: 2px;
+    color: #08717c;
+    font-size: 12px;
+    line-height: 1.2;
+}
+.network-send-action > small,
+.web-request-action > small,
+.transfer-primary-action > small { color: inherit; opacity: .9; }

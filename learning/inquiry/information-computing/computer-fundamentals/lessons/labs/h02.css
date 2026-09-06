@@ -1,0 +1,160 @@
+/* h02 차시에서만 쓰는 부분 */
+.foundation-lab-heading.has-context {
+    grid-template-columns: minmax(0, 1fr) auto clamp(156px, 16vw, 190px);
+    gap: 12px;
+    align-items: start;
+    padding-bottom: 12px;
+}
+.foundation-lab-heading.has-context > div { grid-column: 1; min-width: 0; }
+.foundation-lab-heading.has-context > .foundation-reset { grid-column: 2; grid-row: 1; }
+@media (max-width: 820px) {
+.foundation-lab-heading.has-context {
+        grid-template-columns: minmax(0, 1fr) auto 144px;
+        gap: 10px;
+    }
+}
+@media (max-width: 620px) {
+.foundation-lab-heading.has-context { grid-template-columns: minmax(0, 1fr) auto; }
+.foundation-lab-heading.has-context > .foundation-reset { justify-self: end; }
+}
+.lab-readout {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 10px 14px;
+    border-left: 5px solid #0c737c;
+    background: #eaf5f3;
+    color: #302922;
+    font-size: 16px;
+    line-height: 1.55;
+}
+.lab-readout b { color: #5b2d0e; }
+.network-path-lab,.web-state-lab { display: grid; gap: 12px; }
+.network-path-heading,.web-state-heading { display: grid; grid-template-columns: minmax(0,auto) 1fr; gap: 18px; align-items: end; }
+.network-path-heading h3,.web-state-heading h3 { margin: 0; color: #4d2a12; font-size: 22px; line-height: 1.25; }
+.network-path-heading h3 small,.web-state-heading h3 small { display: block; margin-top: 3px; color: #08717c; font-size: 12px; }
+.network-path-controls,.web-state-controls { display: flex; justify-content: flex-end; gap: 8px; }
+.network-path-controls button,.web-state-controls button { min-height: 48px; padding: 9px 16px; border: 1px solid #8f7957; border-radius: 6px; background: #fff; font-weight: 900; }
+.network-path-controls .network-send-action,.web-state-controls .web-request-action { border-color: #075b63; background: #0b747c; color: #fff; }
+.network-path-controls button:disabled,.web-state-controls button:disabled { opacity: .6; }
+.network-link-switch:focus-visible,.network-path-controls button:focus-visible,.web-state-controls button:focus-visible,.web-address-input-row input:focus-visible { outline: 4px solid #e19a39; outline-offset: 2px; }
+.web-address-workbench { display: grid; gap: 8px; padding: 14px; border: 1px solid #8d8170; border-radius: 9px; background: #fff; }
+.web-address-workbench > label { color: #4c3c2f; font-size: 15px; font-weight: 900; }
+.web-address-workbench > label small { margin-left: 5px; color: #08717c; font-size: 11px; }
+.web-address-input-row { min-height: 50px; display: grid; grid-template-columns: 22px 1fr; gap: 9px; align-items: center; padding: 5px 10px; border: 2px solid #8a9696; border-radius: 24px; background: #f3f6f5; }
+.web-address-input-row input { min-width: 0; min-height: 44px; padding: 7px 4px; border: 0; background: transparent; color: #253638; font-size: 16px; }
+.web-address-input-row input:disabled { color: #3c4b4b; opacity: 1; }
+.address-lock-icon { position: relative; width: 15px; height: 13px; border-radius: 2px; background: #42644d; }
+.address-lock-icon::before { content: ""; position: absolute; left: 2px; top: -8px; width: 9px; height: 10px; border: 2px solid #42644d; border-bottom: 0; border-radius: 7px 7px 0 0; }
+.url-part-readout { display: grid; grid-template-columns: .7fr 1.2fr 1fr; gap: 7px; }
+.url-part-readout > span { min-height: 66px; display: grid; align-content: center; gap: 4px; padding: 8px 10px; border-left: 5px solid #9a835e; background: #f4efe5; }
+.url-part-readout small { color: #5c5247; font-size: 11px; font-weight: 850; }
+.url-part-readout code { color: #263c3d; font-size: 14px; overflow-wrap: anywhere; }
+.web-state-lab[data-request-stage="1"] .url-part-readout > span { border-left-color: #d9822a; background: #fff0d2; }
+.web-state-lab[data-request-stage="2"] .url-part-readout > span,
+.web-state-lab[data-request-stage="3"] .url-part-readout > span,
+.web-state-lab[data-request-stage="4"] .url-part-readout > span,
+.web-state-lab[data-request-stage="5"] .url-part-readout > span { border-left-color: #0b747c; background: #e5f2ef; }
+.web-request-workspace { display: grid; grid-template-columns: minmax(320px,.9fr) minmax(380px,1.1fr); gap: 14px; align-items: stretch; }
+.request-system-column { display: grid; gap: 9px; }
+.dns-lookup-console,.web-server-console { display: grid; gap: 10px; padding: 14px; border: 2px solid #718586; border-radius: 9px; background: #fff; }
+.dns-lookup-console > header,.web-server-console > header { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.dns-lookup-console > header strong,.web-server-console > header strong { font-size: 16px; }
+.dns-lookup-console > header small,.web-server-console > header small { display: block; margin-top: 2px; color: #08717c; font-size: 10px; }
+.dns-lookup-console > header span,.web-server-console > header span { padding: 5px 8px; border-radius: 13px; background: #e5e1d9; font-size: 12px; font-weight: 900; white-space: nowrap; }
+.dns-lookup-console dl { display: grid; gap: 5px; margin: 0; }
+.dns-lookup-console dl > div { display: grid; grid-template-columns: 90px 1fr; gap: 8px; padding: 7px; background: #f2f5f4; }
+.dns-lookup-console dt { color: #554b42; font-size: 12px; font-weight: 850; }
+.dns-lookup-console dt small { display: block; margin-top: 2px; color: #08717c; font-size: 9px; line-height: 1.2; }
+.dns-lookup-console dd { margin: 0; }
+.dns-lookup-console code { color: #174f54; overflow-wrap: anywhere; }
+.request-wire { min-height: 46px; display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 5px 12px; color: #0b747c; font-weight: 900; }
+.request-wire i { font-size: 24px; font-style: normal; }
+.http-request-record,.server-file-result { display: grid; grid-template-columns: 88px 1fr; gap: 8px; align-items: center; padding: 8px; background: #f2f5f4; }
+.http-request-record b,.server-file-result b { font-size: 12px; }
+.http-request-record code { color: #174f54; font-size: 13px; white-space: pre-line; overflow-wrap: anywhere; }
+.server-file-result span { font-weight: 850; }
+.request-browser-window { min-height: 360px; overflow: hidden; border: 7px solid #37494a; border-top-width: 34px; border-radius: 11px; background: #fff; }
+.request-browser-window > header { min-height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid #b7c3c1; background: #e4ecea; }
+.request-browser-window > header span { font-weight: 900; }
+.request-browser-window > header small { display: block; color: #08717c; font-size: 10px; }
+.http-response-inbox { min-height: 88px; display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center; padding: 10px 12px; border-bottom: 1px solid #b7c3c1; background: #f5f1e7; }
+.http-response-inbox strong { font-size: 13px; }
+.http-response-inbox strong small { display: block; color: #08717c; font-size: 10px; }
+.http-response-inbox code { padding: 8px; border-left: 5px solid #9b835f; background: #fff; color: #324647; font-size: 12px; white-space: pre-line; }
+.request-browser-window > main { min-height: 205px; display: grid; place-items: center; padding: 18px; }
+.browser-empty-page { color: #776f64; font-weight: 850; }
+.browser-finished-page { width: min(100%,440px); padding: 18px; border-left: 7px solid #2d7d85; background: #e9f3f1; }
+.browser-finished-page[hidden] { display: none; }
+.browser-finished-page small { color: #08717c; font-weight: 850; }
+.browser-finished-page h4 { margin: 7px 0; color: #4c2a13; font-size: 20px; }
+.browser-finished-page p { margin: 0; line-height: 1.55; }
+.web-state-lab[data-request-stage="2"] .dns-lookup-console { outline: 4px solid #dfa14a; outline-offset: 2px; }
+.web-state-lab[data-request-stage="3"] .dns-lookup-console,
+.web-state-lab[data-request-stage="4"] .dns-lookup-console,
+.web-state-lab[data-request-stage="5"] .dns-lookup-console { box-shadow: inset 0 0 0 4px #6fa69f; }
+.web-state-lab[data-request-stage="3"] .web-server-console { outline: 4px solid #dfa14a; outline-offset: 2px; }
+.web-state-lab[data-request-stage="4"] .web-server-console,
+.web-state-lab[data-request-stage="5"] .web-server-console { box-shadow: inset 0 0 0 4px #6fa69f; }
+.web-state-lab[data-request-stage="4"] .http-response-inbox { box-shadow: inset 0 0 0 4px #dfa14a; }
+.web-state-lab[data-request-stage="5"] .http-response-inbox { box-shadow: inset 0 0 0 4px #6fa69f; }
+.web-state-lab[data-request-stage="5"] .request-browser-window > main { background: #f2f8f6; box-shadow: inset 0 0 0 4px #dfa14a; }
+@media (max-width: 820px) {
+.network-path-heading,.web-state-heading { grid-template-columns: 1fr; gap: 5px; }
+.web-request-workspace { grid-template-columns: 1fr; }
+.request-browser-window { min-height: 340px; }
+}
+@media (max-width: 620px) {
+.url-part-readout { grid-template-columns: 1fr; }
+.network-path-controls,.web-state-controls { display: grid; grid-template-columns: 1fr 1fr; }
+.http-response-inbox { grid-template-columns: 1fr; }
+.request-browser-window { min-height: 0; }
+}
+.gesture-lab .lab-readout { grid-column: 2; align-self: end; }
+@media (max-width: 620px) {
+.gesture-lab .lab-readout{grid-column:1}
+}
+.gesture-lab .lab-readout { grid-area: readout; }
+@media (max-width: 820px) {
+.gesture-lab .lab-readout { grid-column: 1; }
+}
+.control-observation .lab-readout { min-height: 70px; margin: 0; display: grid; align-content: center; }
+@media (max-width: 900px) {
+.control-observation .lab-readout { grid-column: 1 / -1; }
+}
+.network-path-heading.has-context,
+.web-state-heading.has-context {
+    grid-template-columns: minmax(0, 1fr) clamp(156px, 16vw, 190px);
+    gap: 12px;
+    align-items: start;
+}
+.network-path-heading.has-context > div,
+.web-state-heading.has-context > div { min-width: 0; }
+@media (max-width: 820px) {
+.network-path-heading.has-context,
+    .web-state-heading.has-context {
+        grid-template-columns: minmax(0, 1fr) 144px;
+        gap: 10px;
+    }
+}
+@media (max-width: 620px) {
+.network-path-heading.has-context,
+    .web-state-heading.has-context { grid-template-columns: 1fr; }
+}
+.reference-actions button > small,
+.network-send-action > small,
+.web-request-action > small,
+.transfer-primary-action > small,
+.storage-lab-actions button > small,
+.analog-recorder button > small,
+.sampling-recorder button > small {
+    display: block;
+    margin-top: 2px;
+    color: #08717c;
+    font-size: 12px;
+    line-height: 1.2;
+}
+.network-send-action > small,
+.web-request-action > small,
+.transfer-primary-action > small { color: inherit; opacity: .9; }

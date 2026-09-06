@@ -1,0 +1,108 @@
+/* e04 차시에서만 쓰는 부분 */
+.lab-readout {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 10px 14px;
+    border-left: 5px solid #0c737c;
+    background: #eaf5f3;
+    color: #302922;
+    font-size: 16px;
+    line-height: 1.55;
+}
+.lab-readout b { color: #5b2d0e; }
+.reference-workbench { display: grid; gap: 12px; }
+.reference-workbench > nav { display: flex; gap: 7px; flex-wrap: wrap; }
+.reference-workbench > nav button { padding: 8px 14px; border: 1px solid #9f835b; border-radius: 7px; background: white; font-weight: 850; }
+.reference-workbench > nav button[aria-pressed="true"] { border-color: #0a717b; background: #0a717b; color: white; }
+.reference-scenes { position: relative; min-height: 320px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.desktop-scene,.browser-scene { position: relative; overflow: hidden; border: 1px solid #928775; border-radius: 10px; }
+.desktop-scene { background: linear-gradient(145deg,#80bbc4,#c3e2df); }
+.desktop-scene > small,.browser-scene > small { position: absolute; right: 12px; bottom: 9px; padding: 4px 7px; background: rgba(255,255,255,.86); font-weight: 850; }
+.desktop-scene > small em,.browser-scene > small em { display: block; color: #08717c; font-size: 10px; }
+.desktop-file,.desktop-shortcut { position: absolute; width: 128px; display: grid; justify-items: center; gap: 7px; color: #172f32; text-align: center; }
+.desktop-file { right: 36px; top: 76px; }
+.desktop-shortcut { left: 34px; top: 76px; padding: 0; border: 0; background: transparent; }
+.desktop-file i,.desktop-shortcut i { position: relative; width: 64px; height: 78px; display: grid; place-items: center; background: white; color: #9c3e32; font-size: 17px; font-style: normal; font-weight: 900; box-shadow: 0 3px 9px rgba(28,55,58,.2); }
+.desktop-shortcut em { position: absolute; left: -6px; bottom: -6px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: #0b737c; color: white; font-size: 15px; font-style: normal; }
+.desktop-file b,.desktop-shortcut b { font-size: 14px; }
+.browser-scene { padding-top: 48px; background: white; }
+.browser-bar { position: absolute; top: 0; right: 0; left: 0; min-height: 48px; display: flex; gap: 9px; align-items: center; padding: 8px 12px; background: #e8ecee; }
+.browser-bar b { flex: 1; overflow: hidden; padding: 7px 10px; border-radius: 16px; background: white; font-size: 13px; white-space: nowrap; }
+.bookmark-row { width: calc(100% - 36px); margin: 36px 18px; padding: 13px; border: 0; border-left: 4px solid #d79b2e; background: #fff2c9; color: #4a3420; text-align: left; font-weight: 850; }
+.reference-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.reference-lines path { fill: none; stroke: #0a727b; stroke-width: 5; stroke-dasharray: 12 8; opacity: .18; }
+.reference-workbench[data-reference="shortcut"] .shortcut-line,
+.reference-workbench[data-reference="bookmark"] .bookmark-line { opacity: 1; }
+.reference-workbench[data-reference="icon"] .desktop-file i,
+.reference-workbench[data-reference="shortcut"] .desktop-shortcut i,
+.reference-workbench[data-reference="bookmark"] .bookmark-row { outline: 4px solid #d57b20; outline-offset: 4px; }
+.desktop-file > em { max-width: 138px; color: #31585a; font-size: 10px; font-style: normal; overflow-wrap: anywhere; }
+.desktop-file.has-alternate-icon > i { background: #e6f1ef; color: #165e64; font-size: 13px; }
+.reference-path-label { position: absolute; right: 12px; bottom: 44px; left: 12px; padding: 7px 9px; border-radius: 5px; background: rgba(255,255,255,.9); color: #3f4e4e; font: 800 11px/1.3 ui-monospace,monospace; overflow-wrap: anywhere; }
+.reference-state-board { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; }
+.reference-state-board span { min-height: 58px; display: grid; place-items: center; align-content: center; padding: 6px; border: 1px solid #9fb8b6; border-radius: 7px; background: #edf6f4; text-align: center; }
+.reference-state-board small { color: #526562; font-size: 10px; }
+.reference-state-board b { font-size: 14px; }
+.reference-actions { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; }
+.reference-actions button { min-height: 48px; padding: 8px; border: 1px solid #79664d; border-radius: 7px; background: #fff; color: #3d2918; font-weight: 900; }
+.reference-actions button:first-child { border-color: #075d66; background: #0b747c; color: #fff; }
+.reference-actions button[hidden],.desktop-shortcut[hidden],.bookmark-row[hidden] { display: none; }
+.reference-workbench[data-reference-connection="broken"] .reference-path-label { border: 2px solid #a74432; background: #f8e6e1; color: #7d2f20; }
+.reference-workbench[data-reference-connection="deleted"] .reference-scenes { opacity: .78; }
+.gesture-lab .lab-readout { grid-column: 2; align-self: end; }
+@media (max-width: 900px) {
+.reference-scenes { min-height: 285px; }
+}
+@media (max-width: 620px) {
+.reference-scenes { grid-template-columns:1fr;min-height:520px }
+.reference-lines{display:none}
+.reference-state-board { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.reference-actions { grid-template-columns: 1fr 1fr; }
+.gesture-lab .lab-readout{grid-column:1}
+}
+.gesture-lab .lab-readout { grid-area: readout; }
+@media (max-width: 820px) {
+.gesture-lab .lab-readout { grid-column: 1; }
+}
+.control-observation .lab-readout { min-height: 70px; margin: 0; display: grid; align-content: center; }
+@media (max-width: 900px) {
+.control-observation .lab-readout { grid-column: 1 / -1; }
+}
+.path-breadcrumb button,
+.format-controls button,
+.reference-workbench > nav button,
+.reference-actions button,
+.browser-term-key button,
+.browser-state-lab .browser-state-terms button { min-height: 44px; }
+.reference-actions button > small,
+.network-send-action > small,
+.web-request-action > small,
+.transfer-primary-action > small,
+.storage-lab-actions button > small,
+.analog-recorder button > small,
+.sampling-recorder button > small {
+    display: block;
+    margin-top: 2px;
+    color: #08717c;
+    font-size: 12px;
+    line-height: 1.2;
+}
+.reference-platform-guide { display: grid; gap: 9px; padding: 12px; border: 1px solid #9f835b; border-radius: 9px; background: #f8f3e9; }
+.reference-platform-guide > header { display: grid; gap: 3px; }
+.reference-platform-guide > header b { color: #4e2b15; font-size: 17px; }
+.reference-platform-guide > header b small { color: #08717c; font-size: 12px; }
+.reference-platform-guide > header span { color: #554b42; font-size: 14px; }
+.reference-platform-guide > div { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.reference-platform-guide article { min-width: 0; display: grid; align-content: start; gap: 4px; padding: 10px; border-left: 4px solid #0a737c; background: #fff; }
+.reference-platform-guide article strong { font-size: 15px; }
+.reference-platform-guide article span { font-size: 13px; line-height: 1.4; }
+.reference-platform-guide article > small { color: #08717c; font-size: 12px; font-weight: 800; line-height: 1.3; }
+@media (max-width: 900px) {
+.reference-platform-guide > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+.reference-platform-guide > div,
+    .file-path-pair { grid-template-columns: 1fr; }
+}

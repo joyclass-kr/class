@@ -1,0 +1,88 @@
+/* c01 차시에서만 쓰는 부분 */
+.lab-readout {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 10px 14px;
+    border-left: 5px solid #0c737c;
+    background: #eaf5f3;
+    color: #302922;
+    font-size: 16px;
+    line-height: 1.55;
+}
+.lab-readout b { color: #5b2d0e; }
+.gesture-lab .lab-readout { grid-column: 2; align-self: end; }
+@media (max-width: 620px) {
+.gesture-lab .lab-readout{grid-column:1}
+}
+.gesture-lab .lab-readout { grid-area: readout; }
+@media (max-width: 820px) {
+.gesture-lab .lab-readout { grid-column: 1; }
+}
+.concept-lab-split { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr); gap: 15px; align-items: start; }
+.connection-bench,
+.request-relay-lab,
+.program-process-lab,
+.clipboard-workbench { min-width: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
+.port-device-tabs button,
+.port-socket-board button,
+.port-actions button,
+.driver-setting button,
+.relay-controls button,
+.relay-actions button,
+.program-actions button,
+.selection-presets button,
+.clipboard-actions button { min-height: 48px; padding: 8px 10px; border: 1px solid #927b59; border-radius: 7px; background: #fff; color: #34291f; font-weight: 900; }
+.port-device-tabs button small,
+.relay-actions button small,
+.program-actions button small,
+.clipboard-actions button small { display: block; color: #08717c; font-size: 10px; }
+.port-device-tabs button[aria-pressed="true"],
+.port-socket-board button[aria-pressed="true"],
+.relay-controls button[aria-pressed="true"] { border-color: #0b747c; background: #e6f4f2; box-shadow: inset 4px 0 #0b747c; }
+.port-actions,
+.relay-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.port-actions button:first-child,
+.relay-actions button:first-child { background: #0b747c; color: #fff; }
+.relay-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.relay-controls button { display: grid; gap: 2px; text-align: left; }
+.relay-controls button small { color: #7a3d24; font-size: 11px; }
+.relay-controls button[aria-pressed="true"] small { color: #08717c; }
+.relay-flow { min-height: 160px; display: grid; grid-template-columns: repeat(4, minmax(100px, 1fr) 24px); gap: 4px; align-items: center; overflow-x: auto; padding: 14px; border: 1px solid #aa8d63; background: #eef4f3; }
+.relay-flow > div { min-height: 112px; display: grid; place-items: center; align-content: center; gap: 3px; padding: 8px; border: 2px solid #8c806e; border-radius: 9px; background: #fffdf8; text-align: center; }
+.relay-flow > div i { width: 42px; height: 34px; border-radius: 6px; background: #b9d9d7; box-shadow: inset 0 -7px #50666a; }
+.relay-flow > div small { color: #08717c; font-size: 10px; }
+.relay-flow > span { color: #0b747c; font-size: 24px; font-weight: 900; }
+.relay-flow > div.is-returning { border-color: #2f8050; background: #e4f3e8; }
+.relay-flow > div:last-child + span { display: none; }
+.relay-result { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; padding: 12px; background: #fffdf8; border: 1px solid #aa8d63; }
+.relay-result [data-relay-preview] { min-height: 105px; display: grid; place-items: center; border: 5px solid #45413d; background: #e8efed; color: #69615a; text-align: center; }
+.relay-photo { width: 100%; height: 95px; display: block; background: radial-gradient(circle at 72% 22%,#f4d260 0 11%,transparent 12%),linear-gradient(145deg,#83c0ca 0 52%,#668a55 53%); }
+.relay-result p { margin: 0; line-height: 1.55; }
+@media (max-width: 1000px) {
+.concept-lab-split { grid-template-columns: 1fr; }
+}
+@media (max-width: 820px) {
+.relay-flow { grid-template-columns: repeat(4, minmax(108px, 1fr) 22px); }
+}
+@media (max-width: 620px) {
+.relay-controls,
+    .relay-actions { grid-template-columns: 1fr; }
+}
+.control-observation .lab-readout { min-height: 70px; margin: 0; display: grid; align-content: center; }
+@media (max-width: 900px) {
+.control-observation .lab-readout { grid-column: 1 / -1; }
+}
+.path-address b small,
+.program-state-board h3 small,
+.relay-flow > div small,
+.clipboard-documents label small,
+.clipboard-shelf b small,
+.browser-state-lab [data-browser-search-form] label small,
+.browser-state-lab .browser-state-terms > span small,
+.browser-state-lab .browser-state-terms button small,
+.visual-mobile-anatomy .mobile-part-key button small { font-size: 12px; }
+@media (min-width: 821px) and (max-width: 1100px) {
+.visual-program-process .concept-lab-split { grid-template-columns: 1fr; }
+}

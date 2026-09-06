@@ -1,0 +1,73 @@
+/* g02 차시에서만 쓰는 부분 */
+.bit-unit-lab { display: grid; gap: 16px; color: #2f2924; }
+.bit-unit-lab .bit-pattern-panel,
+.bit-unit-lab .unit-ladder-panel { display: grid; gap: 14px; padding: 18px; border: 1px solid #9f825b; border-radius: 11px; background: #fffdf8; }
+.bit-unit-lab .bit-lab-heading { display: grid; grid-template-columns: minmax(260px, .75fr) minmax(320px, 1.25fr); gap: 18px; align-items: end; }
+.bit-unit-lab .bit-lab-heading h3 { margin: 0; color: #4c2b14; font-size: 22px; line-height: 1.25; }
+.bit-unit-lab .bit-lab-heading > div > small { display: block; margin-top: 3px; color: #08717c; font-size: 12px; font-weight: 850; }
+.bit-unit-lab .bit-lab-heading p { margin: 0; padding-left: 13px; border-left: 4px solid #0b747c; font-size: 14px; line-height: 1.5; }
+.bit-unit-lab .bit-switch-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; }
+.bit-unit-lab .bit-switch-grid button { min-width: 0; min-height: 104px; display: grid; place-items: center; align-content: center; gap: 7px; padding: 9px 5px; border: 2px solid #667b7c; border-radius: 8px; background: #283b3d; color: #fff; touch-action: manipulation; }
+.bit-unit-lab .bit-switch-grid button small { color: #c8e3e0; font-size: 10px; font-weight: 850; }
+.bit-unit-lab .bit-switch-grid button i { position: relative; width: 30px; height: 46px; border-radius: 17px; background: #111c1d; box-shadow: inset 0 0 0 1px #617273; }
+.bit-unit-lab .bit-switch-grid button i::after { content: ""; position: absolute; left: 5px; bottom: 5px; width: 20px; height: 20px; border-radius: 50%; background: #aab7b7; transition: bottom .16s ease, background .16s ease; }
+.bit-unit-lab .bit-switch-grid button b { font-size: 21px; line-height: 1; }
+.bit-unit-lab .bit-switch-grid button[aria-pressed="true"] { border-color: #d89431; background: #5b3a1c; }
+.bit-unit-lab .bit-switch-grid button[aria-pressed="true"] i::after { bottom: 21px; background: #f0b44f; }
+.bit-unit-lab .bit-switch-grid button:focus-visible,
+.bit-unit-lab .decimal-unit-ladder button:focus-visible { outline: 4px solid #ef9e31; outline-offset: 2px; }
+.bit-unit-lab .bit-readout-strip { display: grid; grid-template-columns: 1.35fr repeat(3, 1fr); border-block: 1px solid #b8aaa0; background: #edf5f3; }
+.bit-unit-lab .bit-readout-strip > div { min-width: 0; min-height: 88px; display: grid; align-content: center; gap: 3px; padding: 11px 13px; }
+.bit-unit-lab .bit-readout-strip > div + div { border-left: 1px solid #c6d4d1; }
+.bit-unit-lab .bit-readout-strip span { color: #51473f; font-size: 12px; font-weight: 900; }
+.bit-unit-lab .bit-readout-strip span small { display: block; color: #08717c; font-size: 10px; }
+.bit-unit-lab .bit-readout-strip code,
+.bit-unit-lab .bit-readout-strip strong { color: #4f2911; font-size: clamp(20px, 2.3vw, 28px); font-weight: 900; overflow-wrap: anywhere; }
+.bit-unit-lab .bit-readout-strip em { color: #61584f; font-size: 11px; font-style: normal; }
+.bit-unit-lab .bit-count-rule { margin: 0; padding: 11px 13px; border-left: 5px solid #cf7c28; background: #fff0d6; }
+.bit-unit-lab .bit-count-rule code { white-space: nowrap; color: #173f43; font-weight: 900; }
+.bit-unit-lab .decimal-unit-ladder { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; margin: 0; padding: 0; list-style: none; }
+.bit-unit-lab .decimal-unit-ladder li { position: relative; min-width: 0; }
+.bit-unit-lab .decimal-unit-ladder li + li::before { content: "×1000"; position: absolute; z-index: 2; left: -28px; top: 50%; width: 28px; color: #8b591f; font-size: 10px; font-weight: 950; text-align: center; transform: translateY(-50%); }
+.bit-unit-lab .decimal-unit-ladder button { width: 100%; min-height: 68px; display: grid; place-items: center; align-content: center; gap: 2px; padding: 8px 5px; border: 2px solid #8b7d69; border-radius: 8px; background: #f6f1e8; color: #3b332b; touch-action: manipulation; }
+.bit-unit-lab .decimal-unit-ladder button b { font-size: 20px; }
+.bit-unit-lab .decimal-unit-ladder button small { color: #08717c; font-size: 10px; font-weight: 850; }
+.bit-unit-lab .decimal-unit-ladder li.is-smaller button { border-color: #6f9999; background: #e8f3f1; }
+.bit-unit-lab .decimal-unit-ladder button[aria-pressed="true"] { border-color: #b56520; background: #ffe2a6; box-shadow: inset 0 0 0 2px #fff; }
+.bit-unit-lab .unit-experiment { display: grid; grid-template-columns: minmax(210px, .55fr) minmax(0, 1.45fr); gap: 12px; align-items: stretch; }
+.bit-unit-lab .unit-amount-control { display: grid; grid-template-columns: 1fr 48px; gap: 8px 10px; align-items: center; padding: 13px; border: 1px solid #a88d67; background: #f8f3e9; font-weight: 900; }
+.bit-unit-lab .unit-amount-control span small,
+.bit-unit-lab .unit-equation > span small { display: block; color: #08717c; font-size: 10px; }
+.bit-unit-lab .unit-amount-control input { grid-column: 1 / -1; accent-color: #0b747c; }
+.bit-unit-lab .unit-amount-control output { color: #5b2d0d; font-size: 24px; font-weight: 950; text-align: right; }
+.bit-unit-lab .unit-equation { min-width: 0; display: grid; align-content: center; gap: 7px; padding: 13px 15px; border: 1px solid #a88d67; background: #eef6f4; }
+.bit-unit-lab .unit-equation > span { color: #50483f; font-size: 12px; font-weight: 900; }
+.bit-unit-lab .unit-equation code { display: block; color: #4c2811; font-size: clamp(16px, 2vw, 22px); font-weight: 950; line-height: 1.45; white-space: normal; overflow-wrap: anywhere; }
+.bit-unit-lab .unit-equation p { margin: 0; color: #3c4d4e; font-size: 13px; }
+.bit-unit-lab .binary-unit-note { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 15px; align-items: center; padding: 12px 14px; border: 1px solid #9c7e57; background: #fff4df; }
+.bit-unit-lab .binary-unit-note > b { color: #593218; font-size: 15px; }
+.bit-unit-lab .binary-unit-note > b small { display: block; margin-top: 2px; color: #08717c; font-size: 10px; }
+.bit-unit-lab .binary-unit-note p { margin: 0; font-size: 13px; line-height: 1.55; }
+.bit-unit-lab .binary-unit-note code { white-space: nowrap; color: #16484c; font-weight: 900; }
+@media (max-width: 820px) {
+.bit-unit-lab .bit-pattern-panel,
+    .bit-unit-lab .unit-ladder-panel { padding: 14px; }
+.bit-unit-lab .bit-lab-heading { grid-template-columns: 1fr; gap: 8px; }
+.bit-unit-lab .bit-switch-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.bit-unit-lab .bit-readout-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bit-unit-lab .bit-readout-strip > div:nth-child(3) { border-left: 0; }
+.bit-unit-lab .bit-readout-strip > div:nth-child(n + 3) { border-top: 1px solid #c6d4d1; }
+.bit-unit-lab .decimal-unit-ladder { gap: 22px; }
+.bit-unit-lab .decimal-unit-ladder li + li::before { left: -22px; width: 22px; font-size: 9px; }
+.bit-unit-lab .unit-experiment { grid-template-columns: minmax(180px, .5fr) minmax(0, 1.5fr); }
+}
+@media (max-width: 620px) {
+.bit-unit-lab .bit-switch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bit-unit-lab .bit-switch-grid button { min-height: 88px; }
+.bit-unit-lab .bit-readout-strip { grid-template-columns: 1fr; }
+.bit-unit-lab .bit-readout-strip > div + div { border-left: 0; border-top: 1px solid #c6d4d1; }
+.bit-unit-lab .decimal-unit-ladder { grid-template-columns: 1fr; gap: 24px; }
+.bit-unit-lab .decimal-unit-ladder li + li::before { left: 50%; top: -22px; width: 54px; transform: translateX(-50%); }
+.bit-unit-lab .unit-experiment,
+    .bit-unit-lab .binary-unit-note { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,65 @@
+/* g01 차시에서만 쓰는 부분 */
+.sampling-lab { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 16px; align-items: center; }
+@media (max-width: 900px) {
+.layer-visual, .measurement-lab, .sampling-lab { grid-template-columns: 1fr; }
+}
+.lab-readout {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 10px 14px;
+    border-left: 5px solid #0c737c;
+    background: #eaf5f3;
+    color: #302922;
+    font-size: 16px;
+    line-height: 1.55;
+}
+.lab-readout b { color: #5b2d0e; }
+.gesture-lab .lab-readout { grid-column: 2; align-self: end; }
+.sampling-lab { display:grid;gap:14px; }
+.sampling-scene { position:relative;min-height:330px;display:grid;grid-template-columns:110px minmax(0,1fr) 190px;gap:15px;align-items:center;padding:20px;background:linear-gradient(145deg,#e6f2ef,#f2e2c8); }
+.thermometer { display:grid;place-items:center;gap:8px;text-align:center}
+.thermometer i{position:relative;width:26px;height:150px;border:5px solid #51483f;border-radius:16px;background:linear-gradient(to top,#d25931 0 54%,white 55%)}
+.thermometer i::after{content:"";position:absolute;left:50%;bottom:-22px;width:48px;height:48px;border:5px solid #51483f;border-radius:50%;background:#d25931;transform:translateX(-50%)}
+.thermometer b{margin-top:20px;font-size:15px}
+.sampling-scene svg { width:100%;height:220px;overflow:visible}
+.continuous-curve{fill:none;stroke:#a64f2b;stroke-width:6}
+.sample-guides path{stroke:#887a68;stroke-width:1;stroke-dasharray:5 5}
+.sample-dots circle{fill:#08747d;stroke:white;stroke-width:3}
+.sampling-scene::after { content:"";position:absolute;left:calc(110px + var(--sample-position));top:42px;width:4px;height:210px;background:#df8a2e;box-shadow:0 0 0 3px rgba(255,255,255,.8); }
+.quantized-readout { display:grid;gap:7px;padding:15px;background:#233537;color:white;text-align:center}
+.quantized-readout span{font-size:12px;color:#b6d9d7}
+.quantized-readout strong{font-size:21px}
+.quantized-readout b{padding:7px;background:#e5a342;color:#36200d;font-size:20px}
+.quantized-readout code{padding:6px;background:#0d1819;color:#a4e6df;font-size:15px}
+.sampling-control { display:grid;grid-template-columns:190px 1fr;gap:14px;align-items:center;font-size:15px;font-weight:900}
+.sampling-control input{width:100%;accent-color:#0b737c}
+@media (max-width: 900px) {
+.sampling-scene { grid-template-columns:90px 1fr 160px; }
+}
+@media (max-width: 620px) {
+.gesture-lab .lab-readout{grid-column:1}
+.sampling-scene{grid-template-columns:1fr}
+.sampling-scene svg{height:180px}
+.sampling-scene::after{display:none}
+.quantized-readout{grid-template-columns:repeat(2,1fr)}
+.sampling-control{grid-template-columns:1fr}
+}
+.gesture-lab .lab-readout { grid-area: readout; }
+.audio-sample-control,
+.encoding-rule,
+.model-note {
+    margin: 0;
+    padding: 13px 15px;
+    border-left: 5px solid #0b747c;
+    background: #edf5f3;
+    font-size: 15px;
+}
+@media (max-width: 820px) {
+.gesture-lab .lab-readout { grid-column: 1; }
+}
+.control-observation .lab-readout { min-height: 70px; margin: 0; display: grid; align-content: center; }
+@media (max-width: 900px) {
+.control-observation .lab-readout { grid-column: 1 / -1; }
+}
