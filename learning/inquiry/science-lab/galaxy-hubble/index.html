@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="팽대부·나선팔·막대를 골라 은하를 그리고 허블 분류표의 어느 칸인지 판정하고, 처녀자리 은하단부터 먼 퀘이사까지 스펙트럼 선이 밀린 정도로 적색 이동과 후퇴 속도를 구하고, 실제 은하들의 거리와 속도로 허블 상수와 우주의 나이를 재어 보는 고등학교 지구과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="galaxy-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>은하의 분류와 허블 법칙</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 2~3학년</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>은하 분류, 적색 이동, 허블 법칙 가운데 하나를 고릅니다.</li>
+            <li>은하의 생김새, 관측할 천체, 은하 표본과 거리 눈금을 정합니다.</li>
+            <li>어느 분류에 들지, 후퇴 속도가 얼마나 될지, 기울기가 얼마쯤 나올지 예상합니다.</li>
+            <li>시작해서 그려지는 은하, 밀려나는 스펙트럼 선, 찍히는 거리–속도 점을 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">팽대부와 나선팔, 막대의 유무로 은하의 자리가 정해집니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="classify">은하 분류<small>소리굽쇠의 어디에</small></button>
+                        <button type="button" data-mode="redshift">적색 이동<small>얼마나 빨리 멀어지나</small></button>
+                        <button type="button" data-mode="hubble">허블 법칙<small>기울기와 우주 나이</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">은하 만들기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">왼쪽은 고른 특징으로 그린 은하이고, 아래는 허블의 소리굽쇠 분류표입니다. 노란 별은 늙은 별, 파란 별은 젊은 별, 분홍은 별이 태어나는 가스 구름입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>허블의 은하 분류</strong> 허블은 은하를 생김새로 나누었습니다. 타원 은하(E0~E7)는 나선팔 없이 매끈하고 납작한 정도로 번호를 붙이며, 붉고 늙은 별이 많고 가스가 적습니다. 나선 은하는 팽대부가 크고 팔이 촘촘히 감긴 Sa부터 팽대부가 작고 팔이 느슨한 Sc까지 나뉘고, 가운데 막대가 있으면 막대 나선 은하(SBa~SBc)입니다. 나선팔에는 가스가 많아 푸른 젊은 별이 태어납니다. 어느 쪽에도 안 드는 것이 불규칙 은하입니다. 이 표는 진화 순서가 아니라 생김새의 정리입니다.</p>
+                <p><strong>적색 이동과 후퇴 속도</strong> 멀어지는 천체의 빛은 파장이 늘어나 스펙트럼 선이 붉은 쪽으로 밀립니다. 밀린 비율 z = Δλ ÷ λ₀가 적색 이동이고, 느릴 때는 후퇴 속도 v ≈ cz입니다. z가 커지면 상대성 이론의 식 v/c = [(1+z)² − 1] ÷ [(1+z)² + 1]을 써야 하며, 퀘이사는 z가 1을 넘어 광속의 절반 넘는 속도로 멀어집니다. 사실 이 속도는 천체가 공간을 달리는 것이 아니라 공간 자체가 늘어난 결과입니다.</p>
+                <p><strong>허블 법칙과 우주의 나이</strong> 은하까지 거리 d와 후퇴 속도 v는 v = H₀d로 비례합니다. 기울기 H₀는 오늘날 약 70 km/s/Mpc이고, 그 역수 1/H₀ ≈ 140억 년이 팽창이 시작된 뒤 흐른 시간의 어림값입니다. 가까운 은하들은 서로 끌어당기는 고유 운동이 팽창 속도만큼 커서 기울기를 믿을 수 없고, 먼 은하단까지 써야 법칙이 드러납니다.</p>
+                <p><strong>허블의 1929년 값</strong> 허블은 세페이드 변광성의 밝기 눈금이 틀려 거리를 실제의 7분의 1로 잰 탓에 H₀ ≈ 500 km/s/Mpc을 얻었습니다. 그러면 우주 나이가 20억 년으로 지구(46억 년)보다 젊다는 모순이 생겼고, 이 문제는 눈금을 바로잡으며 풀렸습니다. 값이 틀려도 "멀수록 빨리 멀어진다"는 법칙 자체는 옳았습니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>타원 은하와 나선 은하의 나선팔을 견주면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 타원 은하에 푸른 젊은 별이 더 많다</label>
+                        <label><input type="radio" name="q1" value="b"> 타원 은하는 붉고 늙은 별 위주이고, 나선팔에는 푸른 젊은 별이 태어난다</label>
+                        <label><input type="radio" name="q1" value="c"> 둘 다 별의 색이 같다</label>
+                        <label><input type="radio" name="q1" value="d"> 타원 은하는 나선 은하가 늙어서 된 것이다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>타원 은하는 가스가 거의 없어 새 별이 태어나지 않고 붉고 늙은 별만 남아 있습니다. 나선팔에는 가스와 먼지가 많아 푸르고 뜨거운 젊은 별이 계속 태어납니다. 소리굽쇠 표는 생김새의 정리이지 진화 순서가 아닙니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>은하의 스펙트럼 선이 실험실 값보다 붉은 쪽으로 밀려 있다면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 은하가 붉은 별로 이루어져 있다</label>
+                        <label><input type="radio" name="q2" value="b"> 은하가 우리에게 다가오고 있다</label>
+                        <label><input type="radio" name="q2" value="c"> 은하가 멀어지고 있어 빛의 파장이 늘어났다</label>
+                        <label><input type="radio" name="q2" value="d"> 은하의 온도가 낮다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>멀어지는 천체의 빛은 파장이 늘어나 선이 붉은 쪽으로 밀립니다. 밀린 비율 z = Δλ ÷ λ₀에서 후퇴 속도를 구하고, 거의 모든 외부 은하가 적색 이동을 보여 우주가 팽창한다는 것을 알았습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>허블 상수 H₀가 더 크게 재어진다면 우주의 나이 어림값은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 더 젊어진다 — 나이는 1/H₀에 비례하므로</label>
+                        <label><input type="radio" name="q3" value="b"> 더 늙어진다</label>
+                        <label><input type="radio" name="q3" value="c"> 변하지 않는다</label>
+                        <label><input type="radio" name="q3" value="d"> 은하의 수에 따라 다르다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>거리 d를 속도 v로 나눈 시간 d/v = 1/H₀가 은하들이 한 점에서 출발해 지금 자리까지 오는 데 걸린 시간입니다. H₀가 클수록 빨리 멀어진 것이니 걸린 시간, 곧 우주 나이는 짧아집니다. 70 km/s/Mpc이면 약 140억 년입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>가까운 은하 몇 개만으로 허블 상수를 재기 어려운 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 가까운 은하는 스펙트럼이 없어서</label>
+                        <label><input type="radio" name="q4" value="b"> 가까운 은하는 너무 밝아서</label>
+                        <label><input type="radio" name="q4" value="c"> 가까운 은하는 거리를 잴 수 없어서</label>
+                        <label><input type="radio" name="q4" value="d"> 서로 끌어당기는 고유 운동이 팽창 속도만큼 커서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>안드로메다은하는 우리에게 초속 300 km로 다가오는데, 그 거리의 팽창 속도는 초속 55 km에 지나지 않습니다. 이렇게 가까운 은하는 중력에 따른 고유 운동이 팽창을 덮어 버리므로, 수천만 광년 넘는 먼 은하단까지 써야 법칙이 드러납니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=5"></script>
+</body>
+</html>
