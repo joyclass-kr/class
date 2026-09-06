@@ -837,6 +837,70 @@ canvas#bohrAtomCanvas {
     font-weight: 600;
 }
 
+/* 실생활 활용 분야 비주얼 일러스트 카드 그리드 */
+.uses-visual-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.use-visual-card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 10px 6px 8px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.use-visual-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(56, 239, 125, 0.45);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 14px rgba(56, 239, 125, 0.2);
+}
+
+.use-visual-icon-box {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: radial-gradient(circle at 50% 30%, rgba(56, 239, 125, 0.12), rgba(15, 23, 42, 0.7));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 7px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.use-visual-card:hover .use-visual-icon-box {
+    transform: scale(1.08);
+    border-color: rgba(75, 207, 250, 0.35);
+}
+
+.use-visual-icon-box .use-svg {
+    width: 36px;
+    height: 36px;
+    display: block;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+}
+
+.use-visual-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #e2e8f0;
+    line-height: 1.35;
+    word-break: keep-all;
+    letter-spacing: -0.2px;
+}
+
 /* Quiz Mode Section */
 .quiz-container {
     max-width: 800px;

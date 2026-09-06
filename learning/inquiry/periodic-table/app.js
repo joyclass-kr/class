@@ -399,7 +399,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modalTrivia').textContent = el.trivia || '교과서에서 다루는 주요 특징을 확인하세요.';
 
         const usesContainer = document.getElementById('modalUses');
-        usesContainer.innerHTML = (el.uses || []).map(use => `<span class="use-tag"># ${use}</span>`).join('');
+        if (window.renderUseCardHtml) {
+            usesContainer.innerHTML = (el.uses || []).map(use => window.renderUseCardHtml(use, el)).join('');
+        } else {
+            usesContainer.innerHTML = (el.uses || []).map(use => `<span class="use-tag"># ${use}</span>`).join('');
+        }
 
         modalOverlay.classList.add('active');
         drawBohrAtom(el);
