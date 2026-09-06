@@ -64,6 +64,22 @@ UNITS = [
     ("goryeo-late", "원 간섭기와 고려 말", range(0)),
     ("goryeo-economy", "경제와 사회", range(0)),
     ("goryeo-culture", "문화와 사상", range(0)),
+    ("opening-daewongun", "흥선 대원군과 통상 수교 거부", range(0)),
+    ("opening-reform", "개항과 개화 정책", range(0)),
+    ("opening-donghak", "동학 농민 운동과 갑오개혁", range(0)),
+    ("opening-empire", "대한 제국과 독립 협회", range(0)),
+    ("opening-loss", "국권 피탈과 애국 계몽", range(0)),
+    ("occupation-rule", "일제의 식민 통치", range(0)),
+    ("occupation-samil", "3·1 운동과 임시 정부", range(0)),
+    ("occupation-domestic", "국내 민족 운동", range(0)),
+    ("occupation-army", "무장 독립 전쟁", range(0)),
+    ("occupation-uiyeol", "의열 투쟁", range(0)),
+    ("occupation-culture", "민족 문화와 국외 동포", range(0)),
+    ("contemporary-founding", "광복과 정부 수립", range(0)),
+    ("contemporary-war", "6·25 전쟁", range(0)),
+    ("contemporary-democracy", "민주주의의 발전", range(0)),
+    ("contemporary-economy", "경제 성장과 사회 변화", range(0)),
+    ("contemporary-unification", "통일 노력과 북한", range(0)),
 ]
 
 VERIFIED_UNIT_OVERRIDES = {
@@ -187,7 +203,7 @@ KEYWORDS = {
 UNIT_ORDER = [
     unit_id
     for unit_id, _, _ in UNITS
-    if unit_id != "integrated" and not unit_id.startswith("goryeo-")
+    if unit_id != "integrated" and not unit_id.startswith(("goryeo-", "opening-", "occupation-", "contemporary-"))
 ]
 
 

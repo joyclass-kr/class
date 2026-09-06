@@ -37,9 +37,41 @@
       unitIds: ["joseon-early", "joseon-late"]
     },
     {
-      id: "modern",
-      name: "근현대",
-      unitIds: ["opening", "occupation", "contemporary"]
+      id: "opening",
+      name: "개항기",
+      unitIds: [
+        "opening-daewongun",
+        "opening-reform",
+        "opening-donghak",
+        "opening-empire",
+        "opening-loss",
+        "opening"
+      ]
+    },
+    {
+      id: "occupation",
+      name: "일제강점기",
+      unitIds: [
+        "occupation-rule",
+        "occupation-samil",
+        "occupation-domestic",
+        "occupation-army",
+        "occupation-uiyeol",
+        "occupation-culture",
+        "occupation"
+      ]
+    },
+    {
+      id: "contemporary",
+      name: "현대",
+      unitIds: [
+        "contemporary-founding",
+        "contemporary-war",
+        "contemporary-democracy",
+        "contemporary-economy",
+        "contemporary-unification",
+        "contemporary"
+      ]
     },
     {
       id: "integrated",
