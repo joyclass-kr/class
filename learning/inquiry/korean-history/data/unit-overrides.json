@@ -216,7 +216,10 @@
   "18": "goryeo-late",
   "23": "joseon-late",
   "24": "joseon-late",
-  "27": "opening"
+  "27": "opening",
+  "32": "integrated",
+  "36": "opening",
+  "41": "integrated"
  },
  "60": {
   "11": "north-south",
