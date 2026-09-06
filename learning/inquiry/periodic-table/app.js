@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initModal();
     initQuiz();
     initLab3D();
-    initTeacherMode();
 
     function getExamElements() {
         return window.ELEMENTS_DATA.filter(el => el.number <= EXAM_MAX_ATOMIC_NUMBER);
@@ -1190,16 +1189,4 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.min(maximum, Math.max(minimum, value));
     }
 
-    /**
-     * Teacher & Presentation Mode Handler
-     */
-    function initTeacherMode() {
-        const toggleBtn = document.getElementById('togglePresentationBtn');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
-                document.body.classList.toggle('presentation-mode');
-                toggleBtn.classList.toggle('active');
-            });
-        }
-    }
 });

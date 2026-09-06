@@ -1336,7 +1336,7 @@ canvas#bohrAtomCanvas {
     line-height: 1.45;
 }
 
-/* Presentation / Teacher Mode */
+/* 전자칠판 등 큰 화면에서 잘 보이도록 확대된 기본 표시 */
 body.presentation-mode {
     background: #000;
 }
