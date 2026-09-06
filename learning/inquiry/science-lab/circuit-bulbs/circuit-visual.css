@@ -5,7 +5,7 @@
     padding: 10px 4px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: #ffffff; border: 1px solid var(--line);
+    background: linear-gradient(180deg, #102632 0%, #091720 100%);
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;
@@ -28,7 +28,7 @@
     padding: 10px 4px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: #ffffff; border: 1px solid var(--line);
+    background: linear-gradient(180deg, #102632 0%, #091720 100%);
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;
@@ -54,7 +54,7 @@
     padding: 11px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: #ffffff; border: 1px solid var(--line);
+    background: linear-gradient(180deg, #102632 0%, #091720 100%);
     color: var(--muted);
     font-weight: 850;
     cursor: pointer;

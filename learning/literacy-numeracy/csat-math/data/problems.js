@@ -3117,7 +3117,8 @@
         R`(가) \((b_2)^2 = 36b_3\)`,
         R`(나) 급수 \(\sum_{n=1}^\infty b_n\)은 수렴하고 그 합은 \(12\)이다.`
       ],
-      short: true,
+            bodyAfter: R`\(a_1 > 0\)이고 \(a_2 &lt; 0\)일 때, \(36 \times a_4 \times a_6\)의 값을 구하시오.`,
+short: true,
       answer: 81,
       help: R`급수가 수렴하므로 공비의 절댓값은 \(|r|&lt;1\)이고 항의 절댓값은 단조 감소한다. \(|a_n|\ge 10\)인 항의 개수를 분류하여 \(b_n\)의 규칙을 정하고 조건 (가)로부터 공비 \(r=-\dfrac{1}{2}\)을 결정한다. 급수의 합 조건을 통해 첫째항 \(a_1=24\)를 구한 뒤 구하는 값을 계산한다.`
     },
@@ -3150,7 +3151,8 @@
         R`(가) \(a_1 = b_1\), \(a_4 = b_2\)`,
         R`(나) 어떤 자연수 \(k\)에 대하여 \(a_k = b_3\)이다.`
       ],
-      short: true,
+            bodyAfter: R`급수 \(\sum_{n=1}^\infty b_n\)이 수렴할 때, \(\left|\sum_{n=1}^\infty \left(b_n\cos(a_n\pi)\right)\right|\)의 최솟값을 \(m\)이라 하자. \(10\times m\)의 값을 구하시오.`,
+short: true,
       answer: 54,
       help: R`등비수열의 공비 \(r=1+\dfrac{3d}{a_1}\)가 \(0&lt;r&lt;1\)임을 이용해 \(d&lt;0\)임을 파악하고 조건 (나)에서 \(k-7=\dfrac{9d}{a_1}\)를 유도한다. \(k=5, 6\) 중 공비 조건과 정수 조건을 만족하는 관계식을 찾고, \(\cos(a_n\pi)=(-1)^{a_n}\)의 부호 규칙에 따른 등비급수를 계산한다. 공차 \(d=-1\)일 때 최솟값 \(m=\dfrac{27}{5}\)을 얻는다.`
     },
@@ -3169,7 +3171,7 @@
       units: ["calc-integ"], memo: "접선의 y절편과 역함수의 정적분",
       body: R`함수
 \[f(x)=\dfrac{1}{2}x^2-x+\ln(1+x)\]
-와 양수 \(t\)에 대하여 점 \((s, f(s))\,(s>0)\)에서 \(y\)축에 내린 수선의 발과 곡선 \(y=f(x)\) 위의 점 \((s, f(s))\)에서의 접선이 \(y\)축과 만나는 점 사이의 거리가 \(t\)가 되도록 하는 \(s\)의 값을 \(g(t)\)라 하자. \(\int_{1/2}^{27/4} g(t)\,dt\)의 값은?`,
+와 양수 \(t\)에 대하여 점 \((s, f(s))\,(s>0)\)에서 \(y\)축에 내린 수선의 발과 곡선 \(y=f(x)\) 위의 점 \((s, f(s))\)에서의 접선이 \(y\)축과 만나는 점 사이의 거리가 \(t\)가 되도록 하는 \(s\)의 값을 \(g(t)\)라 하자. \(\int_{\frac{1}{2}}^{\frac{27}{4}} g(t)\,dt\)의 값은?`,
       choices: [R`\(\dfrac{161}{12}+\ln 3\)`, R`\(\dfrac{40}{3}+\ln 3\)`, R`\(\dfrac{53}{4}+\ln 2\)`, R`\(\dfrac{79}{6}+\ln 2\)`, R`\(\dfrac{157}{12}+\ln 2\)`],
       answer: 5,
       help: R`두 점 사이의 거리가 접선의 \(y\)절편 성질에 의해 \(t=s f'(s)=\dfrac{s^3}{1+s}\)임을 파악한다. \(s=g(t)\)는 \(h(s)=\dfrac{s^3}{1+s}\)의 역함수이므로 \(t=h(s)\)로 치환적분하여 적분 구간을 \(s=1\)부터 \(s=3\)까지로 바꾼다. 유리함수의 다항식 나눗셈 \(\dfrac{s^3}{s+1}=s^2-s+1-\dfrac{1}{s+1}\)을 통해 적분을 신속히 완결한다.`
@@ -3183,7 +3185,10 @@
 \[b_{k+i}=\dfrac{1}{a_i}-1 \quad (i=1, 2, 3)\]
 이다.`
       ],
-      short: true,
+            bodyAfter: R`부등식
+\[0 &lt; \sum_{n=1}^\infty \left(b_n - \dfrac{1}{a_n a_{n+1}}\right) &lt; 30\]
+이 성립할 때, \(a_2 \times \sum_{n=1}^\infty b_{2n} = \dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(a_1 \ne 0\)이고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 97,
       help: R`등비중항 성질 \((b_{k+2})^2=b_{k+1}b_{k+3}\)에 \(a_i=i d\)를 대입하면 공차 \(d=\dfrac{1}{4}\)과 공비 \(r=\dfrac{1}{3}\)이 바로 결정된다. 부분분수 급수 \(\sum\dfrac{1}{a_n a_{n+1}}=16\)을 구한 뒤 부등식을 만족하는 자연수 \(k=2\)를 특정한다. 짝수 번째 항들의 등비급수 합 공식 \(\dfrac{b_2}{1-r^2}\)을 적용하여 답을 계산한다.`
     },
@@ -3195,7 +3200,10 @@
         R`(가) \(|x| \le 1\)일 때, \(4\times(f^{-1}(x))^2 = x^2(x^2-5)^2\)이다.`,
         R`(나) \(|x| > 1\)일 때, \(|f^{-1}(x)| = e^{|x|-1}+1\)이다.`
       ],
-      short: true,
+            bodyAfter: R`실수 \(m\)에 대하여 기울기가 \(m\)이고 점 \((1, 0)\)을 지나는 직선이 곡선 \(y=f(x)\)와 만나는 점의 개수를 \(g(m)\)이라 하자. 함수 \(g(m)\)이 \(m=a\), \(m=b\,(a&lt;b)\)에서 불연속일 때,
+\[g(a)\times\left(\lim_{m\to a+} g(m)\right) + g(b)\times\left(\dfrac{\ln b}{b}\right)^2\]
+의 값을 구하시오. (단, \(\lim_{x\to\infty}\dfrac{\ln x}{x} = 0\))`,
+short: true,
       answer: 11,
       help: R`\(f^{-1}(x)\)의 연속성과 증가성을 통해 구간별 식을 결정하고, 원함수 \(y=f(x)\)와 점 \((1, 0)\)을 지나는 직선의 위치관계를 파악한다. \(g(m)\)의 불연속점은 직선이 곡선에 접할 때 발생하므로, 접점 방정식을 풀어 불연속이 되는 기울기 \(a\)와 \(b=1\)을 구한다. 각 경계에서의 교점 개수 \(g(a)=3\), \(\lim_{m\to a+} g(m)=4\), \(g(1)=1\)을 대입하여 답을 계산한다.`
     },
@@ -3221,7 +3229,8 @@
         R`(가) \(a_1 + a_2 &lt; 10\)`,
         R`(나) 수열 \(\{a_n\}\)의 정수인 항의 개수는 \(3\)이고, 이 세 항의 곱은 \(216\)이다.`
       ],
-      short: true,
+            bodyAfter: R`\(\sum_{n=1}^\infty a_n = \dfrac{q}{p}\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 91,
       help: R`등비수열의 항이 정수가 되는 구간은 공비의 분모·분자 거듭제곱 약분 조건에 의해 연속된 세 항으로 한정된다. 세 정수 항의 곱이 양수 \(216\)이고 \(a_1+a_2&lt;10\)을 만족하려면 공비가 음수 \(r=-\dfrac{2}{3}\)이고 정수 항이 \(a_2=-9, a_3=6, a_4=-4\)여야 한다. 첫째항 \(a_1=\dfrac{27}{2}\)을 구하여 등비급수의 합 \(\sum_{n=1}^\infty a_n=\dfrac{81}{10}\)을 도출한다.`
     },
@@ -3275,7 +3284,8 @@
         R`(가) 함수 \(g(x)\)는 \(x=0\)에서 극소이고, \(g(0)&gt;0\)이다.`,
         R`(나) \(g'(\ln 3)&lt;0\), \(\left|g'(-\ln 3)\right|=\dfrac{3}{8}g(-\ln 3)\)`
       ],
-      short: true,
+            bodyAfter: R`\(g(0)\)의 최솟값을 \(\dfrac{q}{p}\)라 할 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 25,
       help: R`\(u(x)=\frac{2}{1+e^{-x}}\)는 \((0, 2)\)로 치역을 갖는 단조증가함수이고 \(u(0)=1\)입니다. \(g(0)&gt;0\)과 미분가능성으로부터 절댓값 안의 \(f(u)\)의 부호가 일정해야 하며, 극소 조건과 도함수 부호 조건으로부터 삼차함수 \(f(u)\)의 개형을 확정합니다. \(u(-\ln 3)=\frac{1}{2}, u(\ln 3)=\frac{3}{2}\)에서의 관계식을 연립하여 \(g(0)\)의 최솟값을 계산합니다.`
     },
@@ -3311,7 +3321,10 @@
         R`(가) \(f(0)=0\), \(f(2\pi)=2\pi a+b\)`,
         R`(나) \(f'(0)=f'(t)\)인 양수 \(t\)의 최솟값은 \(4\pi\)이다.`
       ],
-      short: true,
+            bodyAfter: R`함수 \(f(x)\)가 \(x=\alpha\)에서 극대인 \(\alpha\)의 값 중 열린구간 \((0,\,4\pi)\)에 속하는 모든 값의 집합을 \(A\)라 하자. 집합 \(A\)의 원소의 개수를 \(n\), 집합 \(A\)의 원소 중 가장 작은 값을 \(\alpha_{1}\)이라 하면,
+\[n\alpha_{1}-ab=\frac{q}{p}\pi\]
+이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 17,
       help: R`\(-1\le \sin\theta\le 1\)과 \(\sin\theta=\theta\)의 유일해 성질로부터 \(2\pi a+b=0\)이어야 하므로 \(b=-2\pi a\)이고 \(\sin(-2\pi a)=0\)에서 \(a=\frac{3}{2}, b=-3\pi\)가 결정됩니다. \(f'(x)\\)의 곱 형태에서 최솟값 \(4\pi\) 조건을 만족함을 검산하고, \(f(x)=-\sin(\frac{3}{2}x+\sin x)\)의 극대점들을 \(\frac{3}{2}x+\sin x\)의 값의 범위에서 찾아내면 \(n=3\)과 \(\alpha_{1}\)을 얻어 \(p+q=17\)이 나옵니다.`
     },
@@ -3346,7 +3359,8 @@
       note: [
         R`모든 실수 \(x\)에 대하여 \(F'(x)=f(x)\)이고 \(F(x)\ge f(x)\)이다.`
       ],
-      short: true,
+            bodyAfter: R`\(g\left(\dfrac{1}{4}\right)+g\left(\dfrac{3}{2}\) = pe+q\)일 때, \(100(p+q)\)의 값을 구하시오. (단, \(\displaystyle\lim_{x\to\infty}xe^{-x}=0\)이고, \(p\)와 \(q\)는 유리수이다.)`,
+short: true,
       answer: 25,
       help: R`\(F'(x)=f(x)\)이므로 \(F(x)\)는 \(f(x)\)의 부정적분이며, \(F(x)\ge f(x)\)는 차함수 \(H(x)=F(x)-f(x)\)의 최솟값이 0 이상이라는 조건입니다. \(H'(x)=f(x)-f'(x)=0\)이 되는 극소 후보점과 \(x=0\)에서의 연속성을 이용해 \(F(0)\)의 최솟값 \(g(k)\)를 구합니다. \(k=\frac{1}{4}\)과 \(k=\frac{3}{2}\)일 때 극값의 위치를 나누어 계산하면 \(100(p+q)=25\)를 얻습니다.`
     },
@@ -3479,7 +3493,8 @@
         R`(가) 급수 \(\displaystyle\sum_{n=1}^{\infty} b_{2n-1}\)은 수렴하고 그 합은 \(-3\)이다.`,
         R`(나) 급수 \(\displaystyle\sum_{n=1}^{\infty} b_{2n}\)은 수렴하고 그 합은 \(8\)이다.`
       ],
-      short: true,
+            bodyAfter: R`\(b_3 = -1\)일 때, \(\displaystyle\sum_{n=1}^{\infty} |a_n|\)의 값을 구하시오.`,
+short: true,
       answer: 24,
       help: R`\(\sum b_{2n}=8>0\)과 \(b_3=-1\)로부터 \(a&lt;0, -1&lt;r&lt;0\)임을 파악하여 모든 짝수항은 \(b_{2n}=a_{2n}\)임을 확인합니다. 홀수항에서는 \(b_1=b_3=-1\)이고 \(n\ge 3\)부터 \(b_{2n-1}=a_{2n-1}\)이 됨을 이용해 \(r=-\dfrac{1}{2}, a=-12\)를 구하여 급수의 합 \(24\)를 도출합니다.`
     },
@@ -3502,7 +3517,10 @@
         R`(가) \(\displaystyle\lim_{x \to -\infty} \frac{f(x)+6}{e^x} = 1\)`,
         R`(나) \(f(\ln 2) = 0\)`
       ],
-      short: true,
+            bodyAfter: R`함수 \(f(x)\)의 역함수를 \(g(x)\)라 할 때,
+\[\int_{0}^{14} g(x)\,dx = p + q\ln 2\]
+이다. \(p+q\)의 값을 구하시오. (단, \(p\), \(q\)는 유리수이고, \(\ln 2\)는 무리수이다.)`,
+short: true,
       answer: 26,
       help: R`조건 (가)의 극한 수렴 조건에서 \(c=-6, b=1\)을 얻고 조건 (나)에서 \(a=1\)을 찾아 \(f(x)=e^{2x}+e^x-6\)을 완성합니다. 역함수의 정적분은 직사각형 넓이와 원래 함수의 적분을 이용한 \(\int_0^{14} g(x)dx = 14(2\ln 2) - \int_{\ln 2}^{2\ln 2} f(x)dx\) 공식으로 신속히 계산합니다.`
     },
@@ -3514,7 +3532,8 @@
         R`(가) 함수 \(h(x)\)는 \(x=0\)에서 극댓값 \(0\)을 갖는다.`,
         R`(나) 열린구간 \((0, 3)\)에서 방정식 \(h(x)=1\)의 서로 다른 실근의 개수는 \(7\)이다.`
       ],
-      short: true,
+            bodyAfter: R`\(f(3) = \dfrac{1}{2}\), \(f'(3) = 0\)일 때, \(f(2) = \dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 31,
       help: R`\(h(0)=0\)이 극대가 되기 위해 \(f(0)=k\)가 짝수이어야 하고, \(f'(0)=0, f'(3)=0\)에서 \(f(x)\)가 구간 \((0,3)\)에서 \(k\)부터 \(1/2\)까지 단조감소함을 파악합니다. \((1/2, k)\)에서 \(\sin(\pi u)=\ln 2\)의 근이 7개 생기도록 \(k=8\)을 결정한 뒤 삼차함수 식을 완성하여 \(f(2)=\dfrac{22}{9}\)를 구합니다.`
     },
@@ -3544,7 +3563,8 @@
         R`\(x\le -3\)인 모든 실수 \(x\)에 대하여 \(f(x)\ge f(-3)\)이다.`,
         R`\(x>-3\)인 모든 실수 \(x\)에 대하여 \(g(x+3)\{f(x)-f(0)\}^{2}=f'(x)\)이다.`
       ],
-      short: true,
+            bodyAfter: R`\(\displaystyle\int_{4}^{5}g(x)\,dx=\dfrac{q}{p}\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 283,
       help: R`조건 (가)에서 \(f'(-3)=0\)이고, 조건 (나)에서 \(x>-3\)일 때 \(g(x+3)\ge 0\)이므로 \(f'(x)\ge 0\)입니다. 치환적분 \(\int_4^5 g(t)\,dt = \int_1^2 \frac{f'(x)}{\{f(x)-f(0)\}^2}\,dx\)를 세워 \(\left[-\frac{1}{f(x)-f(0)}\right]_1^2\)로 계산합니다.`
     },
@@ -3603,7 +3623,8 @@
         R`\(f(1)=1\), \(\displaystyle\int_{1}^{2}f(x)\,dx=\dfrac{5}{4}\)`,
         R`함수 \(f(x)\)의 역함수를 \(g(x)\)라 할 때, \(x\ge 1\)인 모든 실수 \(x\)에 대하여 \(g(2x)=2f(x)\)이다.`
       ],
-      short: true,
+            bodyAfter: R`\(\displaystyle\int_{1}^{8}xf'(x)\,dx=\dfrac{q}{p}\)일 때, \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 143,
       help: R`부분적분법 \(\int_1^8 xf'(x)\,dx = [xf(x)]_1^8 - \int_1^8 f(x)\,dx\)를 세웁니다. 조건 (나)의 관계식을 치환하여 구간 \([1, 2], [2, 4], [4, 8]\)에서의 정적분 값을 순차적으로 유도합니다.`
     },
@@ -3624,7 +3645,8 @@
         R`\(f(a)=6\)인 \(a\)에 대하여 \(g(x)\)는 \(x=a\)에서 최댓값을 갖는다.`,
         R`\(g(x)\)는 \(x=b\), \(x=b+6\)에서 최솟값을 갖는다.`
       ],
-      short: true,
+            bodyAfter: R`방정식 \(f(x)=0\)의 서로 다른 두 실근을 \(\alpha\), \(\beta\)라 할 때, \((\alpha-\beta)^{2}\)의 값을 구하시오. (단, \(a\), \(b\)는 실수이다.)`,
+short: true,
       answer: 24,
       help: R`함수 \(h(t)=(t+2)e^t\)의 도함수 \(h'(t)=(t+3)e^t\)를 분석하여 \(t=-3\)에서 극소이자 최소임을 파악합니다. \(g(x)=h(f(x))\)의 최솟값이 두 점 \(x=b, b+6\)에서 나타나므로 이차함수 \(f(x)\)의 대칭성과 꼭짓점 좌표를 결정합니다.`
     },
@@ -3636,7 +3658,8 @@
         R`\(\displaystyle\lim_{x\to 0}\dfrac{\sin(\pi\times f(x))}{x}=0\)`,
         R`\(f(x)\)의 극댓값과 극솟값의 곱은 \(5\)이다.`
       ],
-      short: true,
+            bodyAfter: R`함수 \(g(x)\)는 \(0\le x<1\)일 때 \(g(x)=f(x)\)이고 모든 실수 \(x\)에 대하여 \(g(x+1)=g(x)\)이다. \(g(x)\)가 실수 전체의 집합에서 연속일 때, \(\displaystyle\int_{0}^{5}xg(x)\,dx=\dfrac{q}{p}\)이다. \(p+q\)의 값을 구하시오. (단, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 107,
       help: R`조건 (가)의 극한에서 \(f(0)\)이 정수이고 \(f'(0)=0\)임을 유도합니다. 연속 조건 \(f(0)=f(1)\) 및 극값의 곱 조건을 조합하여 삼차함수 \(f(x)\)를 구하고, 주기성을 활용하여 \(\int_0^5 xg(x)\,dx\)를 계산합니다.`
     },
@@ -3677,6 +3700,7 @@
         R`(가) 직선 \(\mathrm{OD}\)와 평면 \(\mathrm{ABC}\)는 서로 평행하다.`,
         R`(나) \(\overline{\mathrm{AB}}=\overline{\mathrm{AC}}=\overline{\mathrm{BC}}=\overline{\mathrm{BD}}=\overline{\mathrm{CD}}\)`
       ],
+      bodyAfter: R`삼각형 \(\mathrm{OAB}\)의 평면 \(\mathrm{OAC}\) 위로의 정사영의 넓이는?`,
       choices: [R`\(\dfrac{\sqrt{2}}{2}\)`, R`\(\dfrac{3\sqrt{2}}{4}\)`, R`\(\sqrt{2}\)`, R`\(\dfrac{5\sqrt{2}}{4}\)`, R`\(\dfrac{3\sqrt{2}}{2}\)`],
       answer: 2,
       help: R`정삼각형 \(\mathrm{ABC}\)와 이등변삼각형 \(\mathrm{BCD}\)의 대칭 구조 및 직선 \(\mathrm{OD}\)와 평면 \(\mathrm{ABC}\)의 평행 조건을 이용하여 구의 중심 \(\mathrm{O}\)와 평면 \(\mathrm{ABC}\) 사이의 거리를 구한다. \(\triangle\mathrm{OAB}\)와 \(\triangle\mathrm{OAC}\)가 이루는 이면각의 코사인값을 삼수선의 정리와 벡터 내적으로 계산하여 정사영의 넓이를 구한다.`
@@ -3698,7 +3722,8 @@
         R`(가) \(\overline{\mathrm{AB}}=24\), \(\overline{\mathrm{AD}}=\overline{\mathrm{BC}}=13\sqrt{2}\), \(\angle\mathrm{ABC}=\angle\mathrm{BAD} &lt; \dfrac{\pi}{2}\)`,
         R`(나) \(\vec{\mathrm{AB}}\cdot\vec{\mathrm{DC}} = \vec{\mathrm{AD}}\cdot\vec{\mathrm{BC}}\)`
       ],
-      short: true,
+            bodyAfter: R`\(\vec{\mathrm{XA}}\cdot\vec{\mathrm{XD}} = \vec{\mathrm{XB}}\cdot\vec{\mathrm{XC}} = 0\)을 만족시키는 평면 \(\alpha\) 위의 모든 점 \(\mathrm{X}\)에 대하여 \(\vec{\mathrm{AD}}\cdot\vec{\mathrm{AX}}\)의 값의 합을 구하시오.`,
+short: true,
       answer: 457,
       help: R`조건 (나)를 통해 등변사다리꼴의 높이와 윗변 \(\overline{\mathrm{CD}}\)의 길이를 확정한다. \(\vec{\mathrm{XA}}\cdot\vec{\mathrm{XD}}=0\)은 점 \(\mathrm{X}\)가 선분 \(\mathrm{AD}\)를 지름으로 하는 원 위에 있음을 의미하고, 마찬가지로 선분 \(\mathrm{BC}\)를 지름으로 하는 원 위의 점이기도 하므로 두 원의 교점으로 점 \(\mathrm{X}\)의 좌표들을 구하여 내적의 합을 계산한다.`
     },
@@ -3770,7 +3795,8 @@
         R`(가) 선분 \(\mathrm{OA}\) 위의 \(\overline{\mathrm{OC}}=4\)인 점 \(\mathrm{C}\)에 대하여 직선 \(\mathrm{BC}\)와 \(xy\)평면이 서로 평행하다.`,
         R`(나) 두 직선 \(\mathrm{OA}\), \(\mathrm{AB}\)와 \(xy\)평면이 이루는 예각의 크기를 각각 \(\alpha\), \(\beta\)라 하면 \(\sin\alpha=3\sin\beta\)이다.`
       ],
-      choices: [R`\(\dfrac{\sqrt{2}}{6}\)`, R`\(\dfrac{\sqrt{2}}{5}\)`, R`\(\dfrac{\sqrt{2}}{4}\)`, R`\(\dfrac{\sqrt{2}}{3}\)`, R`\(\dfrac{\sqrt{2}}{2}\)`],
+            bodyAfter: R`삼각형 \(\mathrm{OAB}\)의 \(xy\)평면 위로의 정사영이 직각삼각형일 때, 평면 \(\mathrm{OAB}\)와 \(xy\)평면이 이루는 예각의 크기를 \(\theta\)라 하자. \(\cos\theta\)의 값은? (단, \(\mathrm{O}\)는 원점이고, 점 \(\mathrm{A}\)의 \(z\)좌표는 \(6\)이 아닌 양수이다.)`,
+choices: [R`\(\dfrac{\sqrt{2}}{6}\)`, R`\(\dfrac{\sqrt{2}}{5}\)`, R`\(\dfrac{\sqrt{2}}{4}\)`, R`\(\dfrac{\sqrt{2}}{3}\)`, R`\(\dfrac{\sqrt{2}}{2}\)`],
       answer: 4,
       help: R`구의 반지름은 \(6\)이고 점 \(\mathrm{C}\)의 \(z\)좌표와 점 \(\mathrm{B}\)의 \(z\)좌표가 같다 (\(z_C=z_B=\dfrac{2}{3}z_A\)). 정사영 삼각형이 직각삼각형이 되는 기하학적 배치에서 법선벡터를 구하거나 면적비 공식 \(\cos\theta = \dfrac{S'}{S}\)를 적용하여 \(\cos\theta\)를 구한다.`
     },
@@ -3791,7 +3817,8 @@
         R`(가) \((\vec{\mathrm{PB}}+\vec{\mathrm{PQ}})\cdot\vec{\mathrm{BC}} = (\vec{\mathrm{RC}}+\vec{\mathrm{RQ}})\cdot\vec{\mathrm{BC}} = 0\)`,
         R`(나) \(\vec{\mathrm{QP}}\cdot\vec{\mathrm{QR}} = |\vec{\mathrm{QP}}|^2\)`
       ],
-      short: true,
+            bodyAfter: R`\(|3\vec{\mathrm{XP}}+\vec{\mathrm{XR}}|=|\vec{\mathrm{PR}}|\)을 만족시키는 점 \(\mathrm{X}\)에 대하여 \(|\vec{\mathrm{BX}}|\)의 최댓값과 최솟값을 각각 \(M\), \(m\)이라 할 때, \(M\times m\)의 값을 구하시오. (단, \(|\vec{\mathrm{PQ}}| &gt; 0\))`,
+short: true,
       answer: 69,
       help: R`조건 (가)에서 점 \(\mathrm{P}, \mathrm{R}\)의 정사영과 \(\mathrm{Q}\)의 위치 관계를 찾고, 조건 (나)에서 직각삼각형 관계를 도출한다. \(|3\vec{\mathrm{XP}}+\vec{\mathrm{XR}}|=|\vec{\mathrm{PR}}|\)은 점 \(\mathrm{X}\)가 선분 \(\mathrm{PR}\)을 \(1:3\)으로 내분하는 점을 중심으로 하는 원 위에 있음을 나타내므로, 점 \(\mathrm{B}\)에서 이 원의 중심까지의 거리와 반지름을 이용하여 \(M\)과 \(m\)을 구한다.`
     },
@@ -3948,7 +3975,8 @@
         R`(가) \(|\vec{\mathrm{DP}}|=|\vec{\mathrm{EQ}}|=|\vec{\mathrm{FR}}|=1\)`,
         R`(나) \(\vec{\mathrm{AX}}=\vec{\mathrm{PB}}+\vec{\mathrm{QC}}+\vec{\mathrm{RA}}\)`
       ],
-      short: true,
+            bodyAfter: R`\(|\vec{\mathrm{AX}}|\)의 값이 최대일 때, 삼각형 \(\mathrm{PQR}\)의 넓이를 \(S\)라 하자. \(16S^2\)의 값을 구하시오.`,
+short: true,
       answer: 147,
       help: R`\(\vec{\mathrm{PB}}=\vec{\mathrm{DB}}-\vec{\mathrm{DP}}\) 등으로 분해하면 \(\vec{\mathrm{AX}}=(\vec{\mathrm{DB}}+\vec{\mathrm{EC}}+\vec{\mathrm{FA}})-(\vec{\mathrm{DP}}+\vec{\mathrm{EQ}}+\vec{\mathrm{FR}})\)이다. 상수 벡터와 크기 \(1\)인 세 벡터의 합이 최대가 되는 방향(반대 방향 정렬)을 결정한 뒤, 점 \(\mathrm{P}, \mathrm{Q}, \mathrm{R}\)의 좌표를 확정하여 삼각형 \(\mathrm{PQR}\)의 넓이 \(S\)를 구한다.`
     },
@@ -3978,7 +4006,8 @@
         R`(나) \(\vec{\mathrm{AC}}\cdot\vec{\mathrm{AQ}} &lt; 0\)`,
         R`(다) \(\vec{\mathrm{PQ}}\cdot\vec{\mathrm{CB}} = 24\)`
       ],
-      short: true,
+            bodyAfter: R`선분 \(\mathrm{AQ}\) 위의 점 \(\mathrm{X}\)에 대하여 \(|\vec{\mathrm{XA}}+\vec{\mathrm{XB}}|\)의 최솟값을 \(m\)이라 할 때, \(m^2\)의 값을 구하시오.`,
+short: true,
       answer: 27,
       help: R`조건 (가)에서 벡터 \(\vec{\mathrm{PQ}}\)와 \(\vec{\mathrm{AB}}\)가 같은 방향이고 크기 관계는 \(|\vec{\mathrm{PQ}}|=\dfrac{2}{3}|\vec{\mathrm{AB}}|\)이다. 조건 (다)에서 내적값으로 삼각형의 실제 크기를 구하고, 선분 \(\mathrm{AQ}\) 위의 점 \(\mathrm{X}\)에 대해 \(|\vec{\mathrm{XA}}+\vec{\mathrm{XB}}|=2|\vec{\mathrm{XM}}|\) (\(\mathrm{M}\)은 \(\mathrm{AB}\)의 중점)의 최솟값을 점과 직선 사이 거리로 계산한다.`
     },
@@ -3990,7 +4019,8 @@
         R`(가) \(\{(\vec{\mathrm{OX}}-\vec{\mathrm{OD}})\cdot\vec{\mathrm{OC}}\}\times\{|\vec{\mathrm{OX}}-\vec{\mathrm{OC}}|-3\}=0\)`,
         R`(나) 두 벡터 \(\vec{\mathrm{OX}}-\vec{\mathrm{OP}}\)와 \(\vec{\mathrm{OC}}\)가 서로 평행하도록 하는 선분 \(\mathrm{AB}\) 위의 점 \(\mathrm{P}\)가 존재한다.`
       ],
-      choices: [R`\(25\)`, R`\(26\)`, R`\(27\)`, R`\(28\)`, R`\(29\)`],
+            bodyAfter: R`집합 \(S\)에 속하는 점 중에서 \(y\)좌표가 최대인 점을 \(\mathrm{Q}\), \(y\)좌표가 최소인 점을 \(\mathrm{R}\)이라 할 때, \(\vec{\mathrm{OQ}}\cdot\vec{\mathrm{OR}}\)의 값은? (단, \(\mathrm{O}\)는 원점이다.)`,
+choices: [R`\(25\)`, R`\(26\)`, R`\(27\)`, R`\(28\)`, R`\(29\)`],
       answer: 5,
       help: R`조건 (가)는 점 \(\mathrm{X}\)가 직선(점 \(\mathrm{D}\)를 지나고 \(\vec{\mathrm{OC}}\)에 수직) 또는 원(중심 \(\mathrm{C}\), 반지름 \(3\)) 위에 있음을 뜻한다. 조건 (나)는 점 \(\mathrm{X}\)가 선분 \(\mathrm{AB}\)를 방향벡터 \(\vec{\mathrm{OC}}=(4,4)\)로 이동시킨 띠 영역 내에 있음을 의미한다. 교집합에서 최고점 \(\mathrm{Q}\)와 최저점 \(\mathrm{R}\)의 좌표를 찾아 내적을 구한다.`
     },
@@ -4080,7 +4110,8 @@
         R`(가) \(\vec{u}=(1, 0)\)에 대하여 \((\vec{\mathrm{OP}}\cdot\vec{u})(\vec{\mathrm{OQ}}\cdot\vec{u})\ge 0\)이다.`,
         R`(나) \(|\vec{\mathrm{PQ}}|=2\)`
       ],
-      short: true,
+            bodyAfter: R`\(\vec{\mathrm{OY}}=\vec{\mathrm{OP}}+\vec{\mathrm{OQ}}\)를 만족시키는 점 \(\mathrm{Y}\)의 집합이 나타내는 도형의 길이가 \(\dfrac{q}{p}\sqrt{3}\pi\)일 때, \(p+q\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이고, \(p\)와 \(q\)는 서로소인 자연수이다.)`,
+short: true,
       answer: 17,
       help: R`도형 \(S\)는 두 원의 일부분(외부 영역) 호이다. 조건 (가)는 두 점 \(\mathrm{P}, \mathrm{Q}\)가 같은 사분면(좌반평면 또는 우반평면)의 원호 위에 있음을 뜻하고, \(|\vec{\mathrm{PQ}}|=2\)는 현의 길이가 반지름과 같아 중심각이 \(\dfrac{\pi}{3}\)임을 나타낸다. 두 벡터의 합 \(\vec{\mathrm{OY}}=2\vec{\mathrm{OM}}\)이 그리는 호의 중심각과 곡선 길이를 계산한다.`
     },
@@ -4110,7 +4141,8 @@
         R`(가) \(\vec{\mathrm{CX}} = \dfrac{1}{2}\vec{\mathrm{CP}} + \vec{\mathrm{CQ}}\)`,
         R`(나) \(\vec{\mathrm{XA}} + \vec{\mathrm{XC}} + 2\vec{\mathrm{XD}} = k\vec{\mathrm{CD}}\)`
       ],
-      short: true,
+            bodyAfter: R`\(\alpha^2+\beta^2\)의 값을 구하시오.`,
+short: true,
       answer: 8,
       help: R`조건 (나)를 점 \(\mathrm{C}\) 기준으로 정리하면 \(4\vec{\mathrm{XC}}+\vec{\mathrm{CA}}+2\vec{\mathrm{CD}}=k\vec{\mathrm{CD}}\)에서 \(\vec{\mathrm{CX}}=\dfrac{1}{4}\vec{\mathrm{CA}}+\dfrac{2-k}{4}\vec{\mathrm{CD}}\)가 되어 점 \(\mathrm{X}\)는 직선 위에 놓인다. 조건 (가)가 나타내는 영역(정육각형의 \(1/2\) 축소 도형에 반지름 \(1\) 원을 더한 띠 영역)과 직선의 교선 범위를 분석하여 \(k\)의 최소 \(\alpha\)와 최대 \(\beta\)를 구한다.`
     },
@@ -4132,7 +4164,8 @@
         R`(가) \(\vec{\mathrm{OP}}=s\vec{\mathrm{OA}}+t\vec{\mathrm{OB}}\) (\(0\le s\le 1, 0\le t\le 1\))`,
         R`(나) \(\vec{\mathrm{OP}}\cdot\vec{\mathrm{OB}}+\vec{\mathrm{BP}}\cdot\vec{\mathrm{BC}}=2\)`
       ],
-      short: true,
+            bodyAfter: R`점 \(\mathrm{O}\)를 중심으로 하고 점 \(\mathrm{A}\)를 지나는 원 위를 움직이는 점 \(\mathrm{X}\)에 대하여 \(|3\vec{\mathrm{OP}}-\vec{\mathrm{OX}}|\)의 최댓값과 최솟값을 각각 \(M, m\)이라 하자. \(M\times m=a\sqrt{6}+b\)일 때, \(a^2+b^2\)의 값을 구하시오. (단, \(a\)와 \(b\)는 유리수이다.)`,
+short: true,
       answer: 100,
       help: R`조건 (나)에 \(\vec{\mathrm{OP}}=s\vec{\mathrm{OA}}+t\vec{\mathrm{OB}}\)와 \(\vec{\mathrm{BC}}=\vec{\mathrm{OA}}\)를 대입하여 내적을 계산하면 \(2s+8t=2\), 즉 \(s+4t=1\)인 선분을 얻는다. 점 \(3\mathrm{P}\)가 그리는 선분 위의 점에서 원점까지의 최단·최장거리를 구한 뒤 반지름 \(r=\sqrt{2}\)를 더하고 빼서 \(M\)과 \(m\)을 구한다.`
     },
@@ -4202,7 +4235,8 @@
         R`(나) \(\vec{\mathrm{OA}}\cdot\vec{\mathrm{OP}}\ge -2\)이고 \(\vec{\mathrm{OB}}\cdot\vec{\mathrm{OP}}\ge 0\)이다.`,
         R`(다) \(\vec{\mathrm{OA}}\cdot\vec{\mathrm{OQ}}\ge -2\)이고 \(\vec{\mathrm{OB}}\cdot\vec{\mathrm{OQ}}\le 0\)이다.`
       ],
-      short: true,
+            bodyAfter: R`점 \(\mathrm{R}(4, 4)\)에 대하여 \(\vec{\mathrm{RP}}\cdot\vec{\mathrm{RQ}}\)의 최댓값을 \(M\), 최솟값을 \(m\)이라 할 때, \(M+m\)의 값을 구하시오. (단, \(\mathrm{O}\)는 원점이다.)`,
+short: true,
       answer: 48,
       help: R`조건 (나), (다)에 의해 점 \(\mathrm{P}\)는 정사각형의 위쪽 반, 점 \(\mathrm{Q}\)는 아래쪽 반 경계에 놓인다. 조건 (가)는 선분 \(\mathrm{PQ}\)가 변 \(\mathrm{AB}\) 또는 \(\mathrm{AD}\)에 수직(즉 변에 평행)함을 뜻한다. 점 \(\mathrm{R}(4, 4)\)로부터의 벡터 내적 \(\vec{\mathrm{RP}}\cdot\vec{\mathrm{RQ}}\)의 최대점과 최소점 배치를 기하학적으로 찾아 \(M+m\)을 계산한다.`
     }

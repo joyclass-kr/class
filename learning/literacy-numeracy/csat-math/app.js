@@ -354,7 +354,7 @@
         { left: "\\(", right: "\\)", display: false }
       ],
       preProcess: function (math) {
-        if (/\\(int|iint|iiint|oint|sum|prod|lim|bigcap|bigcup)\b/.test(math) && !math.includes("\\displaystyle") && !math.includes("\\textstyle")) {
+        if (/\\(int|iint|iiint|oint|sum|prod|lim|bigcap|bigcup)(?![a-zA-Z])/.test(math) && !math.includes("\\displaystyle") && !math.includes("\\textstyle")) {
           return "\\displaystyle " + math;
         }
         return math;
