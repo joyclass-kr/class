@@ -1,16 +1,16 @@
 /* Apparatus: a tank of liquid with a block in it, and a gas syringe. */
 
 .mode-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0 16px; }
-.mode { padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #102632 0%, #091720 100%); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; cursor: pointer; }
+.mode { padding: 10px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; cursor: pointer; }
 .mode.selected { border-color: var(--mint); background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.06) 100%); box-shadow: 0 0 16px rgba(52, 211, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--mint); }
 
 .fluid-field { margin: 16px 0 4px; padding: 0; border: 0; }
 .fluid-field legend { color: var(--ink); font-size: 14px; font-weight: 850; }
 .fluid-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 9px; }
-.fluid-buttons button { padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #102632 0%, #091720 100%); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 13px; cursor: pointer; }
+.fluid-buttons button { padding: 9px 4px; border: 1px solid var(--line); border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1); color: var(--muted); font-weight: 850; font-size: 13px; cursor: pointer; }
 .fluid-buttons button small { display: block; margin-top: 2px; color: var(--muted-light); font-size: 10.5px; font-weight: 800; }
-.fluid-buttons button.selected { border-color: var(--cyan); background: linear-gradient(180deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.06) 100%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15); color: var(--cyan); }
-.fluid-buttons button.selected small { color: var(--cyan); }
+.fluid-buttons button.selected { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); color: #0369a1; }
+.fluid-buttons button.selected small { color: #0369a1; }
 
 .range-scale { grid-template-columns: repeat(3, 1fr); }
 

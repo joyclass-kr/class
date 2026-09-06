@@ -141,7 +141,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderGraph(distance) {
         const shadowCm = CARD_HEIGHT_CM * magnification(distance);
-        let out = '';
+        let out = `
+        <defs>
+            <linearGradient id="shadowCurveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ea580c" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#ea580c" stop-opacity="0.01"/>
+            </linearGradient>
+        </defs>`;
+
         for (let k = 0; k <= 4; k += 1) {
             const cm = (SHADOW_MAX * k) / 4;
             const y = gy(cm);
@@ -162,20 +169,37 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let d = D_MIN; d <= D_MAX; d += 0.5) {
             pts.push(`${gx(d).toFixed(1)},${gy(CARD_HEIGHT_CM * magnification(d)).toFixed(1)}`);
         }
+
+        // Shaded area under curve
+        const polyPts = [`${GRAPH.x0},${GRAPH.y0}`, ...pts, `${GRAPH.x1},${GRAPH.y0}`];
+        out += `<polygon points="${polyPts.join(' ')}" fill="url(#shadowCurveGrad)"/>`;
         out += `<path class="curve" d="M${pts.join('L')}"/>`;
 
-        // the object's own height, for comparison
+        // the object's own height reference line with high-contrast badge
         const objY = gy(CARD_HEIGHT_CM);
         out += `<line class="ref-line" x1="${GRAPH.x0}" y1="${objY.toFixed(1)}" x2="${GRAPH.x1}" y2="${objY.toFixed(1)}"/>`;
-        out += `<text class="ref-text" x="${GRAPH.x1 - 4}" y="${(objY - 5).toFixed(1)}" text-anchor="end">물체 자체의 높이 ${CARD_HEIGHT_CM.toFixed(0)} cm</text>`;
+        out += `
+        <g transform="translate(${GRAPH.x1 - 138}, ${(objY - 18).toFixed(1)})">
+            <rect width="134" height="18" rx="5" fill="#f0f9ff" stroke="#0284c7" stroke-width="1"/>
+            <text x="67" y="12.5" text-anchor="middle" fill="#0369a1" font-size="10.5" font-weight="900" font-family="Pretendard, sans-serif">물체 높이 ${CARD_HEIGHT_CM.toFixed(0)} cm (기준선)</text>
+        </g>`;
 
         const px = gx(distance), py = gy(shadowCm);
         out += `<line class="op-guide" x1="${px.toFixed(1)}" y1="${GRAPH.y0}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;
         out += `<line class="op-guide" x1="${GRAPH.x0}" y1="${py.toFixed(1)}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;
         out += `<circle class="op-point" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5"/>`;
+
         const flip = px > (GRAPH.x0 + GRAPH.x1) / 2;
-        out += `<text class="op-text" x="${(px + (flip ? -9 : 9)).toFixed(1)}" y="${Math.max(GRAPH.y1 + 10, py - 9).toFixed(1)}"` +
-               `${flip ? ' text-anchor="end"' : ''}>${distance} cm에서 ${shadowCm.toFixed(1)} cm</text>`;
+        const badgeW = 124, badgeH = 22;
+        const badgeX = flip ? px - badgeW - 10 : px + 10;
+        const badgeY = Math.max(GRAPH.y1 - 2, py - badgeH / 2);
+
+        out += `
+        <g transform="translate(${badgeX.toFixed(1)}, ${badgeY.toFixed(1)})">
+            <rect width="${badgeW}" height="${badgeH}" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1.5" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.12))"/>
+            <text x="${badgeW / 2}" y="15" text-anchor="middle" fill="#c2410c" font-size="11" font-weight="900" font-family="Pretendard, monospace">${distance} cm에서 ${shadowCm.toFixed(1)} cm</text>
+        </g>`;
+
         graphGroup.innerHTML = out;
     }
 
