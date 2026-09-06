@@ -84,3 +84,15 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     font-size: 12px;
 }
+
+/* ── 피부 체온 조절 (skin-response.js) ────────────────────── */
+.skin-layer {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 40% 50%, #101a2e 0%, #05070f 100%);
+    z-index: 3;
+    padding: 50px 10px 8px;
+}
+
+.skin-layer[hidden] { display: none !important; }
+.skin-layer svg { width: 100%; height: 100%; display: block; }
