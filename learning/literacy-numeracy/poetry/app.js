@@ -14,7 +14,7 @@
     const grades = Array.isArray(window.POETRY_GRADES) ? window.POETRY_GRADES : [];
 
     // 문제는 시에 붙는다. 한 시가 여러 차시에 나와도 그 시를 열면 제 문제를 다 만난다.
-    // poemId가 없는 문제는 차시를 마무리하는 문제라 차시 배정표(lesson.ids)로만 모은다.
+    // poemId가 없는 문제는 차시를 마무리하는 문제라 차시 배정표(lesson.wrapIds)로만 모은다.
     const questionsByPoem = new Map();
     questionBank.forEach((question) => {
         if (!question.poemId) return;
@@ -177,13 +177,13 @@
 
     function wrapQuestionsOf(lesson) {
         if (!lesson) return [];
-        return (lesson.ids || [])
+        return (lesson.wrapIds || [])
             .map((id) => questionById.get(id))
             .filter((question) => question && !question.poemId);
     }
 
     function isReady(lesson) {
-        return Array.isArray(lesson.ids) && lesson.ids.length > 0;
+        return Array.isArray(lesson.poemIds) && lesson.poemIds.length > 0;
     }
 
     function lessonsOfGrade(grade) {

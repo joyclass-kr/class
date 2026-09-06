@@ -2,8 +2,9 @@
 
 // 시 읽기 검사.
 //   (1) 저작권 — 본문을 실은 시가 정말 실어도 되는 시인지
-//   (2) 차시 배정 — 모든 문제가 정확히 한 차시에만 들어가는지
-//   (3) 참조 — 문제와 차시가 가리키는 시가 실제로 있는지
+//   (2) 시마다 갖출 것 — 작품 설명(note)과 제 문제를 가지고 있는지
+//   (3) 차시 배정 — 마무리 문제가 정확히 한 차시에만 들어가는지
+//   (4) 참조 — 문제와 차시가 가리키는 시가 실제로 있는지
 // 저작권 쪽은 눈으로 훑다 놓치면 그대로 사고라 기계가 막는다.
 const assert = require("assert");
 const fs = require("fs");
@@ -46,6 +47,13 @@ for (const poem of poems) {
     assert.ok(typeof poem.title === "string" && poem.title.trim(), `${where}: 제목이 없습니다.`);
     assert.ok(typeof poem.poet === "string" && poem.poet.trim(), `${where}: 지은이가 없습니다.`);
     assert.ok(typeof poem.point === "string" && poem.point.trim(), `${where}: 배울 점이 없습니다.`);
+    // 시를 읽고 문제를 푼 뒤에 읽는 작품 설명. 이것이 없으면 마지막 화면이 텅 빈다.
+    assert.ok(Array.isArray(poem.note) && poem.note.length >= 2,
+        `${where}: 작품 설명(note)이 두 문단 이상 있어야 합니다 (지금 ${poem.note ? poem.note.length : 0}문단).`);
+    for (const paragraph of poem.note) {
+        assert.ok(typeof paragraph === "string" && paragraph.trim(),
+            `${where}: 작품 설명에 빈 문단이 있습니다.`);
+    }
     assert.ok(["public", "protected"].includes(poem.rights), `${where}: rights는 public 또는 protected여야 합니다.`);
 
     if (poem.rights === "protected") {
@@ -117,46 +125,43 @@ for (const lesson of lessons) {
     assert.ok(typeof lesson.title === "string" && lesson.title.trim(), `${where}: 이름이 없습니다.`);
     assert.ok(typeof lesson.note === "string" && lesson.note.trim(), `${where}: 설명이 없습니다.`);
     assert.ok(Array.isArray(lesson.poemIds), `${where}: poemIds가 배열이 아닙니다.`);
-    assert.ok(Array.isArray(lesson.ids), `${where}: ids가 배열이 아닙니다.`);
-
-    // 아직 만들지 않은 차시는 시도 문제도 둘 다 비어 있어야 한다. 한쪽만 채운 것은 만들다 만 것이다.
-    const hasPoems = lesson.poemIds.length > 0;
-    const hasQuestions = lesson.ids.length > 0;
-    assert.strictEqual(hasPoems, hasQuestions,
-        `${where}: 시와 문제 중 한쪽만 채워져 있습니다 (시 ${lesson.poemIds.length}편, 문제 ${lesson.ids.length}개).`);
+    assert.ok(Array.isArray(lesson.wrapIds), `${where}: wrapIds가 배열이 아닙니다.`);
 
     for (const id of lesson.poemIds) {
         assert.ok(poemIds.has(id), `${where}: 없는 시를 가리킵니다: ${id}`);
     }
-    for (const id of lesson.ids) {
+    for (const id of lesson.wrapIds) {
         assert.ok(questionIds.has(id), `${where}: 없는 문제를 가리킵니다: ${id}`);
-        assert.ok(!assigned.has(id), `문제가 두 차시에 들어 있습니다: ${id} (${assigned.get(id)}, ${lesson.id})`);
+        const question = questions.find((item) => item.id === id);
+        assert.ok(!question.poemId,
+            `${where}: 시 문제가 wrapIds에 들어 있습니다 (${id} → ${question.poemId}). 시 문제는 poemId로만 묶습니다.`);
+        assert.ok(!assigned.has(id), `마무리 문제가 두 차시에 들어 있습니다: ${id} (${assigned.get(id)}, ${lesson.id})`);
         assigned.set(id, lesson.id);
     }
 }
 
 // ── 4. 남은 것이 없는지 ──────────────────────────────────────────
-for (const id of questionIds) {
-    assert.ok(assigned.has(id), `어느 차시에도 들어가지 않은 문제가 있습니다: ${id}`);
+// 시 없는 문제는 어느 차시의 마무리 문제로든 들어가 있어야 한다. 아니면 화면에 나올 길이 없다.
+for (const question of questions) {
+    if (question.poemId) continue;
+    assert.ok(assigned.has(question.id),
+        `어느 차시의 마무리 문제도 아닌 문제가 있습니다: ${question.id}`);
 }
 
 const usedPoems = new Set(lessons.flatMap((lesson) => lesson.poemIds));
+const questionCount = new Map();
+for (const question of questions) {
+    if (!question.poemId) continue;
+    questionCount.set(question.poemId, (questionCount.get(question.poemId) || 0) + 1);
+}
 for (const poem of poems) {
     assert.ok(usedPoems.has(poem.id), `어느 차시에서도 읽지 않는 시가 있습니다: ${poem.id}`);
+    // 시 하나가 읽기 → 문제 → 작품 설명으로 이어지므로, 문제가 없으면 그 흐름이 끊긴다.
+    assert.ok((questionCount.get(poem.id) || 0) >= 2,
+        `시 ${poem.id}: 제 문제가 ${questionCount.get(poem.id) || 0}개뿐입니다. 두 개 이상이어야 합니다.`);
 }
 
-// 문제가 가리키는 시는 그 문제가 속한 차시에서 읽은 시여야 한다.
-for (const lesson of lessons) {
-    const readable = new Set(lesson.poemIds);
-    for (const id of lesson.ids) {
-        const question = questions.find((item) => item.id === id);
-        if (!question.poemId) continue;
-        assert.ok(readable.has(question.poemId),
-            `차시 ${lesson.id}: 읽지 않은 시의 문제가 들어 있습니다 (${id} → ${question.poemId}).`);
-    }
-}
-
-const readyLessons = lessons.filter((lesson) => lesson.ids.length > 0);
+const readyLessons = lessons.filter((lesson) => lesson.poemIds.length > 0);
 const publicPoems = poems.filter((poem) => poem.rights === "public");
 console.log(
     `시 읽기 검사 통과 — 시 ${poems.length}편(본문 게재 ${publicPoems.length}편), `

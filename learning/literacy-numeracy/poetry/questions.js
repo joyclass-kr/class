@@ -5979,6 +5979,22 @@ window.POETRY_QUESTIONS = Object.freeze([
         explanation: "살아 있는 눈 앞에서 마음속 불순한 것을 뱉어 내자는 거예요."
     },
     {
+        id: "nun-repeat", poemId: "suyeong-nun", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「눈」은 같은 말을 되풀이하면서 조금씩 길어집니다. 이 짜임은 어떤 힘을 갖나요?",
+        choices: ["되풀이될수록 그 말이 굳어져 다짐처럼 들려요", "처음과 끝이 같아져서 노래의 후렴처럼 들려요", "한 글자만 바꾸어 처음과 끝을 맞세워요"],
+        answer: "되풀이될수록 그 말이 굳어져 다짐처럼 들려요",
+        explanation: "뒤의 두 가지도 시가 자주 쓰는 방법이지만 다른 시의 것이에요. 후렴처럼 감싸는 것은 「반딧불」, 한 글자를 바꿔 맞세우는 것은 「산유화」예요."
+    },
+    {
+        id: "nun-against", poemId: "suyeong-nun", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「눈」에서 눈과 맞세워 놓은 것은 무엇인가요?",
+        choices: ["가래처럼 마음속에 고인 더러운 것", "겨울을 견디며 피는 매화", "바람에 몸을 눕히는 풀"],
+        answer: "가래처럼 마음속에 고인 더러운 것",
+        explanation: "깨끗한 것 앞에 서야 제 안의 더러움이 보여요. 매화는 「광야」, 풀은 「풀」에 나오는 것이에요."
+    },
+    {
         id: "pokpo-sound", poemId: "suyeong-pokpo", category: "표현 찾기",
         prompt: "교재에서 시를 읽고 답해 보세요.",
         sentence: "「폭포」의 곧은 소리는 무엇을 뜻하나요?",
@@ -5987,12 +6003,44 @@ window.POETRY_QUESTIONS = Object.freeze([
         explanation: "폭포는 두려움 없이 떨어져요. 그 곧음이 시인이 바라는 정신이에요."
     },
     {
+        id: "pokpo-calls", poemId: "suyeong-pokpo", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「폭포」에서 곧은 소리가 다른 곧은 소리를 부른다는 말은 무슨 뜻인가요?",
+        choices: ["옳은 목소리는 하나로 끝나지 않고 뒤를 잇는다는 뜻", "물소리가 골짜기에 메아리쳐 되돌아온다는 뜻", "소리가 커질수록 다른 소리가 묻힌다는 뜻"],
+        answer: "옳은 목소리는 하나로 끝나지 않고 뒤를 잇는다는 뜻",
+        explanation: "하나가 나면 뒤이어 또 하나가 난다고 했어요. 혼자 내는 소리로 그치지 않는다는 말이에요."
+    },
+    {
+        id: "pokpo-against", poemId: "suyeong-pokpo", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「폭포」가 맞세워 놓은 것은 무엇인가요?",
+        choices: ["밤이 되면 쉬려 하는 게으름과 편안함", "며칠 피었다 뚝뚝 지는 모란", "가지 말라고 붙잡지 못하는 마음"],
+        answer: "밤이 되면 쉬려 하는 게으름과 편안함",
+        explanation: "다들 쉬는 밤에도 폭포는 그치지 않아요. 모란은 「모란이 피기까지는」, 붙잡지 못하는 마음은 「가시리」의 것이에요."
+    },
+    {
         id: "gogung-self", poemId: "suyeong-gogung", category: "마음 읽기",
         prompt: "교재에서 시를 읽고 답해 보세요.",
         sentence: "「어느 날 고궁을 나오면서」의 말하는 이는 무엇을 부끄러워하나요?",
         choices: ["큰 불의에는 침묵하고 작은 일에만 화내는 자기", "고궁에 늦게 간 것", "돈이 없는 것"],
         answer: "큰 불의에는 침묵하고 작은 일에만 화내는 자기",
         explanation: "자기를 비웃는 것으로 시대를 비판해요. 소시민의 자기반성이에요."
+    },
+    {
+        id: "gogung-pair", poemId: "suyeong-gogung", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「어느 날 고궁을 나오면서」는 큰일과 작은 일을 나란히 놓습니다. 그렇게 한 까닭은 무엇인가요?",
+        choices: ["그 차이가 제 작음을 스스로 드러내 주어서", "작은 일도 큰일만큼 소중하다고 말하려고", "큰일은 혼자 힘으로 안 되니 작은 일부터 하자고"],
+        answer: "그 차이가 제 작음을 스스로 드러내 주어서",
+        explanation: "큰 불의 앞에서는 입을 다물면서 밥집에서는 성을 내는 자기를 나란히 적어 놓았어요."
+    },
+    {
+        id: "gogung-how", poemId: "suyeong-gogung", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「어느 날 고궁을 나오면서」에서 자기를 나무라는 방식은 어떤가요?",
+        choices: ["감추지 않고 부끄러운 모습을 낱낱이 적어요", "뉘우침을 다음으로 미루겠다고 적어요", "우물에 비친 자기를 미워했다 그리워했다 해요"],
+        answer: "감추지 않고 부끄러운 모습을 낱낱이 적어요",
+        explanation: "뒤의 두 가지는 윤동주의 「참회록」과 「자화상」이 하는 방식이에요."
     },
     {
         id: "kkeopdegi-what", poemId: "dongyeop-kkeopdegi", category: "표현 찾기",
@@ -6043,6 +6091,22 @@ window.POETRY_QUESTIONS = Object.freeze([
         choices: ["손대면 꽃이 사라지게 하는 위험한 짐승", "꽃을 가꾸는 정원사", "꽃을 그리는 화가"],
         answer: "손대면 꽃이 사라지게 하는 위험한 짐승",
         explanation: "참모습에 닿으려 할수록 그것이 사라져요. 얼굴 가린 신부 같아요."
+    },
+    {
+        id: "kkotseosi-pair", poemId: "chunsu-seosi", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "김춘수의 「꽃」과 「꽃을 위한 서시」는 어떻게 이어지나요?",
+        choices: ["「꽃」이 이름을 불러 뜻을 얻는 이야기라면, 이 시는 그래도 닿지 못하는 것이 있다는 이야기예요", "두 시 모두 이름을 부르면 반드시 서로를 알게 된다고 해요", "「꽃」은 봄을 노래하고 이 시는 가을을 노래해요"],
+        answer: "「꽃」이 이름을 불러 뜻을 얻는 이야기라면, 이 시는 그래도 닿지 못하는 것이 있다는 이야기예요",
+        explanation: "두 시는 짝을 이뤄요. 앞의 시가 얻은 것을 뒤의 시가 다시 묻습니다."
+    },
+    {
+        id: "kkotseosi-bride", poemId: "chunsu-seosi", category: "마음 읽기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「꽃을 위한 서시」의 얼굴 가린 신부는 무엇을 뜻하나요?",
+        choices: ["바로 앞에 있어도 참모습은 한 겹 가려져 있다는 것", "곧 만나게 될 반가운 사람", "혼례를 앞두고 부끄러워하는 마음"],
+        answer: "바로 앞에 있어도 참모습은 한 겹 가려져 있다는 것",
+        explanation: "다가가 손을 대면 사라지고 마니, 알려고 할수록 멀어지는 셈이에요."
     },
     {
         id: "gwicheon-picnic", poemId: "sangbyeong-gwicheon", category: "표현 찾기",
@@ -6125,6 +6189,22 @@ window.POETRY_QUESTIONS = Object.freeze([
         choices: ["노을에 붉게 물든 강물을 울음으로 본 것", "불난 강가", "가을 단풍"],
         answer: "노을에 붉게 물든 강물을 울음으로 본 것",
         explanation: "붉은빛이 곧 울음이에요. 첫사랑부터 끝난 사랑까지 다 그 강에 있어요."
+    },
+    {
+        id: "gaeulgang-three", poemId: "jaesam-gaeulgang", category: "장면 확인",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「울음이 타는 가을 강」은 같은 강을 세 번 보여 줍니다. 그 셋은 언제인가요?",
+        choices: ["첫사랑 때와 사랑이 한창일 때와 다 끝난 뒤", "봄과 여름과 가을", "아침과 한낮과 저녁"],
+        answer: "첫사랑 때와 사랑이 한창일 때와 다 끝난 뒤",
+        explanation: "같은 강인데 볼 때마다 달리 보여요. 사랑의 세 때가 강 하나에 겹쳐 있어요."
+    },
+    {
+        id: "gaeulgang-last", poemId: "jaesam-gaeulgang", category: "표현 찾기",
+        prompt: "교재에서 시를 읽고 답해 보세요.",
+        sentence: "「울음이 타는 가을 강」의 마지막 강은 어떤 모습인가요?",
+        choices: ["소리 없이 흐르는 강", "얼어붙어 멈춘 강", "넘칠 듯 불어난 강"],
+        answer: "소리 없이 흐르는 강",
+        explanation: "다 타 버린 뒤의 고요함이에요. 소리가 없어서 오히려 더 크게 들려요."
     },
     {
         id: "sapyeong-where", poemId: "jaegu-sapyeong", category: "장면 확인",
