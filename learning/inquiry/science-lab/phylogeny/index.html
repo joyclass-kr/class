@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="침팬지·고양이·참새·개구리·송어·소나무·버섯·대장균이 사람과 역·계·문·강·목·과·속·종의 어느 단계까지 같은 무리인지 사다리로 내려가며 확인하고, 형질표로 계통수를 한 단계씩 묶어 가장 가까운 친척을 판정하고, 사이토크롬 c의 아미노산 차이로 분자 시계를 맞춰 갈라진 때를 어림하는 고등학교 생명과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="phylo-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>생물의 분류와 계통수</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 2~3학년</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>분류 체계, 계통수 그리기, 분자 시계 가운데 하나를 고릅니다.</li>
+            <li>견줄 생물, 생물 묶음과 짝, 눈금을 맞출 생물을 정합니다.</li>
+            <li>사람과 어느 단계까지 같을지, 누가 더 가까운 친척일지, 언제 갈라졌을지 예상합니다.</li>
+            <li>시작해서 내려가는 사다리, 묶여 가는 가지, 붉게 찍히는 아미노산 차이를 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">같은 단계를 오래 나눌수록 가까운 친척입니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="rank">분류 체계<small>어느 단계까지 같나</small></button>
+                        <button type="button" data-mode="tree">계통수 그리기<small>누가 더 가까운가</small></button>
+                        <button type="button" data-mode="clock">분자 시계<small>언제 갈라졌나</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">사다리 내려가기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">역에서 종까지 여덟 단계를 내려갑니다. 초록 칸은 사람과 같은 무리, 갈라진 뒤에는 왼쪽이 사람, 오른쪽이 고른 생물입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>분류 체계</strong> 생물은 역·계·문·강·목·과·속·종의 여덟 단계로 나뉘고, 아래로 갈수록 무리가 작아지며 서로 더 닮습니다. 사람은 진핵생물역·동물계·척삭동물문·포유강·영장목·사람과·사람속·사람이고, 학명은 속명과 종소명을 붙여 Homo sapiens로 씁니다. 같은 단계를 오래 나눌수록 공통 조상이 가까운 친척입니다. 침팬지는 과까지 같고, 고양이는 강까지, 참새는 문까지, 소나무는 역까지만 같으며, 대장균은 역부터 다릅니다.</p>
+                <p><strong>계통수와 공통 조상</strong> 계통수는 생물이 갈라져 온 길을 나뭇가지처럼 그린 것입니다. 여러 생물이 함께 가진 새로운 형질(네 다리, 양막, 씨, 꽃 …)을 찾아 그 형질을 공유하는 무리끼리 묶어 나가면 가지가 정해집니다. 두 생물이 가까운지는 겉모습이 아니라 공통 조상이 얼마나 최근인가로 판단합니다. 그래서 새는 도마뱀과 같은 가지에서 나왔고, 고양이가 보기에 새와 도마뱀은 똑같이 먼 친척입니다.</p>
+                <p><strong>세 역</strong> 리보솜 RNA의 염기 서열을 견주어 생물을 세균·고세균·진핵생물의 세 역으로 나눕니다. 고세균은 핵이 없어 세균처럼 보이지만 세포벽과 유전자를 다루는 단백질이 진핵생물에 가까워, 세균보다 진핵생물과 더 가까운 친척입니다.</p>
+                <p><strong>분자 시계</strong> 두 생물의 같은 단백질이나 DNA를 견주면, 갈라진 지 오래될수록 차이가 많습니다. 차이가 쌓이는 빠르기를 화석으로 연대를 아는 갈래로 맞춰 두면 다른 갈래가 갈라진 때를 어림할 수 있습니다. 사이토크롬 c로 보면 사람과 침팬지는 아미노산 104개가 모두 같고, 말과는 12개, 효모와는 44개가 다릅니다. 다만 아주 오래된 갈래는 같은 자리가 여러 번 바뀌어 차이가 덜 늘어나므로 눈금이 어긋나고, 유전자마다 빠르기도 다릅니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>분류 단계를 큰 무리에서 작은 무리 순으로 바르게 늘어놓은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 종 – 속 – 과 – 목 – 강 – 문 – 계 – 역</label>
+                        <label><input type="radio" name="q1" value="b"> 역 – 계 – 문 – 강 – 목 – 과 – 속 – 종</label>
+                        <label><input type="radio" name="q1" value="c"> 계 – 역 – 문 – 목 – 강 – 과 – 종 – 속</label>
+                        <label><input type="radio" name="q1" value="d"> 역 – 문 – 계 – 강 – 과 – 목 – 속 – 종</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>가장 큰 무리인 역에서 시작해 계·문·강·목·과·속을 거쳐 가장 작은 무리인 종으로 내려갑니다. 사람은 진핵생물역·동물계·척삭동물문·포유강·영장목·사람과·사람속·사람입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>계통수에서 두 생물이 가까운 친척인지 판단하는 기준은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 겉모습이 얼마나 닮았는가</label>
+                        <label><input type="radio" name="q2" value="b"> 그림에서 서로 얼마나 가까이 그려졌는가</label>
+                        <label><input type="radio" name="q2" value="c"> 공통 조상이 얼마나 최근인가</label>
+                        <label><input type="radio" name="q2" value="d"> 사는 곳이 같은가</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>계통수의 가지는 돌려 그려도 같은 나무이므로 그림에서의 거리는 뜻이 없습니다. 두 생물이 갈라진 마디, 곧 가장 최근의 공통 조상이 얼마나 가까운가로 친척 관계를 읽습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>핵이 없는 고세균을 세균이 아니라 진핵생물에 더 가까운 무리로 보는 근거는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 리보솜 RNA 서열과 유전자를 다루는 단백질이 진핵생물과 닮았기 때문에</label>
+                        <label><input type="radio" name="q3" value="b"> 고세균이 세균보다 크기 때문에</label>
+                        <label><input type="radio" name="q3" value="c"> 고세균이 뜨거운 곳에 살기 때문에</label>
+                        <label><input type="radio" name="q3" value="d"> 고세균에 핵막이 있기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>겉보기로는 세균 같지만, 리보솜 RNA 서열을 견주면 고세균은 세균과 아주 다르고 진핵생물 쪽에 섭니다. 세포벽에 펩티도글리칸이 없고 히스톤 같은 단백질을 지닌 점도 진핵생물과 닮았습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>분자 시계에 대한 설명으로 옳은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 차이가 많은 두 생물이 더 최근에 갈라졌다</label>
+                        <label><input type="radio" name="q4" value="b"> 어떤 유전자를 써도 빠르기가 같다</label>
+                        <label><input type="radio" name="q4" value="c"> 화석 없이도 정확한 연대를 준다</label>
+                        <label><input type="radio" name="q4" value="d"> 차이가 많을수록 오래전에 갈라졌지만, 아주 오래된 갈래는 눈금이 어긋난다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>차이는 시간이 지날수록 쌓이므로 많을수록 오래된 갈래입니다. 그러나 눈금은 화석으로 맞춰야 하고, 유전자마다 빠르기가 다르며, 아주 오래된 갈래는 같은 자리가 되풀이 바뀌어 차이가 덜 늘어나므로 어림값일 뿐입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
