@@ -33,6 +33,7 @@ let sessionRows = [];
 let membershipRows = [];
 let guardianRows = [];
 let schoolLookupRows = [];
+let rosterEmailRows = [];
 let noticeTargetRows = [];
 const registeredTeachers = new Set();
 let teacherContextRows = [];
@@ -59,6 +60,9 @@ function answer(sql, params) {
   if (text.includes("INSERT INTO classroom_notices")) {
     return { rows: [{ id: 321, created_at: new Date() }] };
   }
+  if (text.includes("INSERT INTO classroom_absence_notes")) {
+    return { rows: [{ id: 900, created_at: new Date() }] };
+  }
   if (text.includes("FROM classroom_notice_questions")) {
     return { rows: surveyQuestionRows };
   }
@@ -68,6 +72,12 @@ function answer(sql, params) {
   if (text.includes("school_students s") && text.includes("s.school_id AS school_id")) {
     return { rows: schoolLookupRows };
   }
+  // studentMembership(): 로그인한 사람이 학생 본인인지.
+  if (text.includes("s.roster_name,") && text.includes("s.student_email IS NOT NULL")) {
+    return { rows: membershipRows };
+  }
+  // resolveNoticeStudent(): 제출하려는 학생의 명단 한 줄(학생/보호자 이메일 확인용).
+  if (text.includes("roster_name, student_email, guardian1_email")) return { rows: rosterEmailRows };
   if (text.includes("guardian1_email")) return { rows: guardianRows };
   // requireTeacher() keys off the classroom_teachers registration, not user.role,
   // so these must answer per user id -- a blanket "yes" would let the test pass
@@ -318,6 +328,64 @@ app.use((error, _req, res, _next) => {
     const teacherView = await fetch(`${base}/api/teacher/notices`, { headers: { Cookie: cookie } });
     assert.equal(teacherView.status, 200, `Expected 200, got ${teacherView.status}: ${await teacherView.clone().text()}`);
     assert.ok(Array.isArray((await teacherView.json()).notices), "The collection view must return a list.");
+
+    // ── 학생 계정의 한계 ────────────────────────────────────────────────
+    // 알림장과 가정통신문을 한 곳으로 합치면 학생도 가정통신문을 보게 된다.
+    // 보는 것은 되지만, 회신·동의와 학부모 서류 제출은 학생이 대신할 수 없다.
+    sessionRows = [{ id: 77, email: "kid@example.com", role: "student", display_name: "김철수" }];
+    guardianRows = [];
+    membershipRows = [{
+      student_number: "12", roster_name: "김철수", academic_year: 2026,
+      grade: 3, class_number: 2, school_name: "테스트초"
+    }];
+    schoolLookupRows = [{ school_id: 5 }];
+    const kidCookie = "class_session=kid-token";
+
+    // 19. 학생도 자기 반 가정통신문을 읽는다. 여기서 막으면 합칠 이유가 없어진다.
+    noticeTargetRows = [{
+      id: 1, sender_teacher_name: "담임", title: "현장체험학습 동의서", content_type: "text",
+      content_body: "안내", target_type: "class", requires_signature: false,
+      reply_type: "agree", created_at: new Date(), reply_choice: null, reply_note: null, replied_at: null
+    }];
+    const kidList = await fetch(`${base}/api/notice/list`, { headers: { Cookie: kidCookie } });
+    assert.equal(kidList.status, 200);
+    const kidBody = await kidList.json();
+    assert.equal(kidBody.notices.length, 1, "학생도 자기 반 가정통신문을 읽을 수 있어야 한다.");
+    assert.equal(kidBody.child.viewerRole, "student",
+      "화면이 회신 단추를 감추려면 보는 사람이 학생이라는 걸 알아야 한다.");
+
+    // 20. 그러나 동의서에 학생이 대신 답할 수는 없다.
+    upsertCalls = [];
+    const kidReply = await post("/api/notice/replies", { noticeId: 1, choice: "agree" }, kidCookie);
+    assert.equal(kidReply.status, 403, "학생 계정으로는 회신할 수 없어야 한다.");
+    assert.equal((await kidReply.json()).error, "GUARDIAN_ONLY");
+    assert.equal(upsertCalls.length, 0, "막힌 회신은 저장되면 안 된다.");
+
+    // 21. 결석계·체험학습·출결 예고도 보호자 서류다. 학생 본인 계정으로는 못 낸다.
+    //     (명단에는 그 학생의 이메일이 있으니 '본인'으로는 통과하던 자리다.)
+    rosterEmailRows = [{
+      roster_name: "김철수", student_email: "kid@example.com",
+      guardian1_email: "parent@example.com", guardian2_email: null
+    }];
+    const kidSubmit = await post("/api/notice/absence-notes", {
+      schoolId: 5, grade: 3, classNumber: 2, studentNumber: "12",
+      startDate: "2026-09-07", endDate: "2026-09-07", reasonType: "질병결석",
+      reasonDetail: "감기", parentName: "학부모", parentSignature: "data:image/png;base64,AAA"
+    }, kidCookie);
+    assert.equal(kidSubmit.status, 403, "학생이 자기 결석계를 낼 수 있으면 안 된다.");
+    assert.equal((await kidSubmit.json()).error, "GUARDIAN_ONLY");
+
+    // 22. 같은 서류를 보호자 계정으로 내면 통과한다 -- 막느라 기능까지 막으면 안 되니까.
+    sessionRows = [{ id: 42, email: "parent@example.com", role: "user", display_name: "학부모" }];
+    membershipRows = [];
+    const parentSubmit = await post("/api/notice/absence-notes", {
+      schoolId: 5, grade: 3, classNumber: 2, studentNumber: "12",
+      startDate: "2026-09-07", endDate: "2026-09-07", reasonType: "질병결석",
+      reasonDetail: "감기", parentName: "학부모", parentSignature: "data:image/png;base64,AAA"
+    }, cookie);
+    assert.equal(parentSubmit.status < 400, true,
+      `보호자 제출은 통과해야 한다. got ${parentSubmit.status}: ${await parentSubmit.clone().text()}`);
+    rosterEmailRows = [];
 
     console.log(`Notice replies contract: OK (${recordedQueries.length} queries checked)`);
   } finally {

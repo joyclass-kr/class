@@ -4064,7 +4064,10 @@ function createClassroomPlatform(options = {}) {
         grade: membership.grade,
         classNumber: membership.classNumber,
         studentNumber: String(membership.studentNumber || ""),
-        studentName: membership.studentName
+        studentName: membership.studentName,
+        // 학생 본인인지 보호자인지. 읽는 것은 둘 다 되지만 회신·동의는 보호자만
+        // 할 수 있다. 이 표시가 없으면 아이가 자기 동의서를 대신 눌러 버린다.
+        viewerRole: "student"
       }].filter(t => t.schoolId && t.grade && t.classNumber && t.studentNumber);
     }
     const children = await getGuardianChildren(user);
@@ -4073,7 +4076,8 @@ function createClassroomPlatform(options = {}) {
       grade: c.grade,
       classNumber: c.classNumber,
       studentNumber: c.studentNumber,
-      studentName: c.studentName
+      studentName: c.studentName,
+      viewerRole: "guardian"
     })).filter(t => t.schoolId && t.grade && t.classNumber && t.studentNumber);
   }
 
@@ -4161,7 +4165,9 @@ function createClassroomPlatform(options = {}) {
         grade: target.grade,
         classNumber: target.classNumber,
         studentNumber: target.studentNumber,
-        studentName: target.studentName
+        studentName: target.studentName,
+        // 화면이 회신 단추를 낼지, "보호자 회신 필요"만 보일지 가르는 값.
+        viewerRole: target.viewerRole
       },
       notices: noticesRes.rows.map(n => ({
         id: String(n.id),
@@ -4257,6 +4263,12 @@ function createClassroomPlatform(options = {}) {
     const targets = await noticeViewerTargets(user);
     const target = pickNoticeTarget(targets, req.body);
     if (!target) throw new HttpError(403, "NOT_ON_ROSTER", "명단에서 자녀 정보를 찾을 수 없습니다.");
+
+    // 학생도 가정통신문을 읽을 수는 있다. 다만 확인·동의·설문 회신은 보호자가 하는
+    // 것이라, 학생 계정으로는 답할 수 없다.
+    if (target.viewerRole === "student") {
+      throw new HttpError(403, "GUARDIAN_ONLY", "회신은 보호자 계정으로 할 수 있습니다.");
+    }
 
     // The notice must actually have been addressed to this child, and must be
     // one that asks for a reply at all.
@@ -4546,7 +4558,10 @@ function createClassroomPlatform(options = {}) {
   // to trusting whatever schoolId/grade/classNumber/studentNumber the client
   // sent, with no check that the signed-in account had any relationship to
   // that student at all.)
-  async function resolveNoticeStudent(user, body) {
+  // 결석계·체험학습·출결 예고는 보호자가 내는 서류다(학부모 성명과 서명을 받는다).
+  // guardianOnly 를 주면 학생 본인 계정으로는 못 낸다. 이걸 안 걸면 아이가 자기
+  // 결석을 스스로 처리할 수 있다.
+  async function resolveNoticeStudent(user, body, options) {
     const schoolId = Number(body?.schoolId);
     const grade = Number(body?.grade);
     const classNumber = Number(body?.classNumber);
@@ -4583,6 +4598,9 @@ function createClassroomPlatform(options = {}) {
     if (!isThisStudent && !isGuardian) {
       throw new HttpError(403, "NOT_AUTHORIZED_FOR_STUDENT", "본인 또는 보호자로 등록된 구글 계정으로 로그인해야 제출할 수 있습니다.");
     }
+    if (options?.guardianOnly && !isGuardian) {
+      throw new HttpError(403, "GUARDIAN_ONLY", "보호자 계정으로 제출할 수 있습니다. 명단에 보호자 구글 계정이 등록되어 있어야 합니다.");
+    }
 
     return { schoolId, grade, classNumber, studentNumber, studentName: row.roster_name };
   }
@@ -4598,7 +4616,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "DATE_AND_REASON_REQUIRED", "날짜와 사유를 입력하세요.");
     }
 
-    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
+    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body, { guardianOnly: true });
 
     const insertRes = await pool.query(
       `INSERT INTO classroom_absence_notices
@@ -4657,7 +4675,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 사유, 보호자 성명 및 전자서명)을 작성해 주세요.");
     }
 
-    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
+    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body, { guardianOnly: true });
 
     const insertRes = await pool.query(
       `INSERT INTO classroom_absence_notes
@@ -4729,7 +4747,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 목적지, 학습계획, 보호자 성명 및 서명)을 입력하세요.");
     }
 
-    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
+    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body, { guardianOnly: true });
 
     // 일반 체험학습인지, 감염병 위기경보 때의 가정학습인지. 인쇄 서식의 기간 칸이 갈린다.
     const learningType = String(req.body?.learningType || "general") === "home" ? "home" : "general";
@@ -4761,7 +4779,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 목적지, 보고서 내용, 보호자 서명)을 입력하세요.");
     }
 
-    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
+    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body, { guardianOnly: true });
 
     const insertRes = await pool.query(
       `INSERT INTO classroom_experiential_reports
