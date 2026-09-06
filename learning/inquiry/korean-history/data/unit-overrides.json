@@ -1,0 +1,21 @@
+{
+  "_설명": "문항 번호로 기계적으로 붙은 단원을 해설 내용에 맞게 바로잡은 것. scripts/import_official_basic.py와 scripts/apply_unit_overrides.py가 함께 읽는다. 회차 → 문항 번호 → 단원 아이디.",
+  "_단원": ["prehistoric", "early-states", "three-kingdoms", "north-south", "goryeo", "joseon-early", "joseon-late", "opening", "occupation", "contemporary", "integrated"],
+  "_잣대": [
+    "단원은 문항이 실제로 묻는 시대를 따른다. 번호 자리가 아니라 내용이다.",
+    "삼국 통일 전쟁(백제·고구려 멸망, 매소성·기벌포)은 삼국과 가야에 둔다.",
+    "후삼국(궁예·견훤)은 신라 말의 일이므로 남북국 시대에 둔다.",
+    "여러 시대를 나란히 묻거나 세시 풍속처럼 시대가 없는 것은 시대 통합에 둔다."
+  ],
+
+  "77": { "10": "north-south" },
+  "75": { "3": "prehistoric", "7": "three-kingdoms", "10": "goryeo" },
+  "73": { "4": "north-south", "6": "three-kingdoms", "7": "three-kingdoms", "8": "three-kingdoms" },
+  "71": { "6": "three-kingdoms", "7": "north-south", "10": "north-south" },
+  "69": { "2": "prehistoric", "6": "three-kingdoms" },
+  "67": { "6": "three-kingdoms", "7": "three-kingdoms" },
+  "66": { "4": "integrated", "6": "three-kingdoms", "8": "three-kingdoms" },
+  "64": { "6": "three-kingdoms", "10": "goryeo" },
+  "63": { "2": "prehistoric", "10": "goryeo" },
+  "61": { "2": "three-kingdoms", "3": "early-states", "6": "three-kingdoms", "7": "three-kingdoms", "10": "goryeo" }
+}

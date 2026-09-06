@@ -307,8 +307,25 @@ def parse_answers(answer_path: Path) -> dict[int, tuple[int, int]]:
     return answers
 
 
+# 문항 번호로 붙는 단원에는 어긋난 것이 섞인다. 해설을 보고 손으로 판정한 결과를
+# data/unit-overrides.json에 모아 두고 여기서 함께 읽는다.
+def _load_unit_overrides() -> dict[int, dict[int, str]]:
+    path = ROOT / "data" / "unit-overrides.json"
+    if not path.exists():
+        return {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return {
+        int(exam): {int(number): unit_id for number, unit_id in numbers.items()}
+        for exam, numbers in raw.items()
+        if not exam.startswith("_")
+    }
+
+
+HAND_UNIT_OVERRIDES = _load_unit_overrides()
+
+
 def unit_for(exam: int, number: int, text: str) -> tuple[str, str]:
-    verified_id = VERIFIED_UNIT_OVERRIDES.get(exam, {}).get(number)
+    verified_id = HAND_UNIT_OVERRIDES.get(exam, {}).get(number) or VERIFIED_UNIT_OVERRIDES.get(exam, {}).get(number)
     if verified_id:
         verified_name = next(name for unit_id, name, _ in UNITS if unit_id == verified_id)
         return verified_id, verified_name
