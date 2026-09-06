@@ -49,8 +49,12 @@ const CLASS_ROWS = {
 let sessionRows = [];
 let homeroomGroupRows = [];
 let existingClassRows = [];
+// 학년-반마다 다른 학급 행을 답해야 할 때(자녀가 둘인 학부모) 쓰는 지도.
+let existingClassBySlot = {};
 let teacherGroups = [];
 let studentGroups = [];
+let guardianRows = [];
+let guardianGroups = [];
 let postDeleteRows = [];
 let commentDeleteRows = [];
 let unreadRows = [];
@@ -61,6 +65,12 @@ const readMarks = [];
 function answer(sql, params) {
   const text = String(sql);
   if (text.includes("FROM classroom_sessions s")) return { rows: sessionRows };
+
+  // getGuardianChildren(). 학생 조회 가지보다 먼저 봐야 한다 -- 이 질의의 UNION
+  // 뒷부분도 school_students/classroom_classes 를 짚어서 거기 먼저 걸린다.
+  if (text.includes("guardian1_email") && text.includes("classroom_schools sc")) {
+    return { rows: guardianRows };
+  }
 
   // requireTeacher's registration probe
   if (text.includes("classroom_teachers t") && text.includes("sc.enabled = TRUE")) {
@@ -78,6 +88,8 @@ function answer(sql, params) {
     return { rows: Number(params?.[0]) === 4 ? homeroomGroupRows : [] };
   }
   if (text.includes("SELECT id FROM classroom_classes") && text.includes("academic_year = $2 AND grade = $3")) {
+    const slot = existingClassBySlot[`${params?.[2]}-${params?.[3]}`];
+    if (slot) return { rows: [{ id: slot }] };
     return { rows: existingClassRows };
   }
   // classboardScope's school-wide class list (subject teacher / admin)
@@ -107,6 +119,10 @@ function answer(sql, params) {
   // classboardBoards: groups a teacher runs, or groups a student belongs to
   if (text.includes("FROM teacher_groups g") && text.includes("g.teacher_user_id = $1")) {
     return { rows: teacherGroups };
+  }
+  // 학부모: 소속이 자녀의 명단 줄에서 나온다.
+  if (text.includes("FROM teacher_groups g") && text.includes("guardian1_email")) {
+    return { rows: guardianGroups };
   }
   if (text.includes("FROM teacher_groups g") && text.includes("JOIN school_students ss")) {
     return { rows: studentGroups };
@@ -432,6 +448,53 @@ const asGroupOnlyHomeroom = () => { sessionRows = [{ id: 4, email: "new@x.kr", r
 
     assert.doesNotMatch(memberSql, /ILIKE/,
       "Board membership must not fall back to a substring match.");
+
+    // ── 학부모 ──────────────────────────────────────────────────────────
+    // 알림장과 가정통신문을 한 곳으로 합치려면 학부모도 자녀 반 게시판을
+    // 읽을 수 있어야 한다. 다만 읽기만 한다.
+    sessionRows = [{ id: 8, email: "mom@x.kr", role: "user", display_name: "학부모" }];
+    guardianRows = [{
+      student_id: 21, student_number: "12", student_name: "김철수", academic_year: 2026,
+      grade: 5, class_number: 1, school_id: 5, school_name: "테스트초"
+    }];
+    existingClassRows = [{ id: 200 }];
+    guardianGroups = [{ id: 55, group_name: "오케스트라", group_type: "club" }];
+
+    const momBoards = await get("/api/classboard/boards");
+    assert.equal(momBoards.status, 200);
+    const momBody = await momBoards.json();
+    assert.equal(momBody.boards.length, 2, "학부모는 자녀 반과 자녀가 든 그룹 게시판을 받는다.");
+    assert.equal(momBody.boards[0].kind, "class");
+    assert.equal(momBody.boards[0].id, "200", "학생이 보는 바로 그 학급 게시판이어야 한다.");
+    assert.equal(momBody.boards[0].label, "5학년 1반",
+      "자녀가 하나면 이름을 덧붙이지 않는다.");
+    assert.equal(momBody.boards[1].label, "오케스트라",
+      "동아리 알림도 학부모가 알아야 한다.");
+    assert.equal(momBody.boards.every(b => b.canPost === false), true,
+      "학부모는 글을 쓸 수 없다.");
+
+    // 학부모의 댓글은 막는다. 반 전체가 보는 곳이라서.
+    const momComment = await post("/api/classboard/posts/7/comments", { content: "감사합니다" });
+    assert.equal(momComment.status, 403, "학부모는 댓글도 달 수 없어야 한다.");
+    assert.equal((await momComment.json()).error, "READ_ONLY");
+
+    // 자녀가 둘이면 어느 아이 반인지 이름이 붙어야 고를 수 있다.
+    guardianRows = [
+      { student_id: 21, student_number: "12", student_name: "김철수", academic_year: 2026,
+        grade: 5, class_number: 1, school_id: 5, school_name: "테스트초" },
+      { student_id: 22, student_number: "3", student_name: "김영희", academic_year: 2026,
+        grade: 2, class_number: 4, school_id: 5, school_name: "테스트초" }
+    ];
+    existingClassBySlot = { "5-1": 200, "2-4": 301 };
+    const twoKids = await get("/api/classboard/boards");
+    const twoBody = await twoKids.json();
+    assert.ok(twoBody.boards[0].label.includes("김철수"),
+      `자녀가 둘이면 게시판 이름에 아이 이름이 붙어야 한다. got ${twoBody.boards[0].label}`);
+    assert.equal(twoBody.boards.length, 3, "두 아이의 반과 그룹이 모두 나와야 한다.");
+    existingClassBySlot = {};
+    guardianRows = [];
+    guardianGroups = [];
+    existingClassRows = [];
 
     console.log("Classboard permissions contract: OK");
   } finally {

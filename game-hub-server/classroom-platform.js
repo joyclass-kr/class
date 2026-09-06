@@ -1525,6 +1525,7 @@ function createClassroomPlatform(options = {}) {
         studentId: String(r.student_id),
         schoolId: String(r.school_id),
         schoolName: r.school_name,
+        academicYear: r.academic_year,
         grade: r.grade,
         classNumber: r.class_number,
         studentNumber: r.student_number,
@@ -5407,6 +5408,20 @@ function createClassroomPlatform(options = {}) {
     return classIdForHomeroomGroup(groupRes.rows[0], user, info);
   }
 
+  // 자녀가 실제로 다니는 학급 행. 학부모에게는 만들어 주지 않는다 -- 학부모가
+  // 들러 봤다는 이유로 학급이 생기면 안 된다. 담임이 글을 한 번이라도 올렸으면
+  // 그때 이미 만들어져 있다.
+  async function existingClassId(schoolId, academicYear, grade, classNumber) {
+    if (!schoolId || !grade || !classNumber) return null;
+    const year = academicYear || new Date().getFullYear();
+    const res = await pool.query(
+      `SELECT id FROM classroom_classes
+       WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4`,
+      [schoolId, year, grade, classNumber]
+    );
+    return res.rows[0] ? String(res.rows[0].id) : null;
+  }
+
   async function classboardScope(user) {
     // 교사 등록은 user_id 로도, 관리자가 미리 적어 둔 구글 이메일로도 연결된다.
     // userClassId 와 같은 규칙으로 찾는다. 여기만 user_id 로 좁히면 이메일로 연결된
@@ -5432,6 +5447,26 @@ function createClassroomPlatform(options = {}) {
       // 같은 게시판을 쓰게 한다.
       if (!classId && info) {
         classId = await classIdFromHomeroomGroup(user, info);
+      }
+
+      // 학부모. 알림장을 학생만 보면 집에서는 아무것도 모른다. 자녀가 있는 학급
+      // 게시판을 읽을 수 있어야 한다. 쓰기와 댓글은 안 된다 -- 반 전체가 보는
+      // 곳이라 학부모 글이 쌓이면 아이들이 부담스럽다.
+      if (!classId && !info) {
+        const children = await getGuardianChildren(user);
+        if (children.length > 0) {
+          const classes = [];
+          for (const c of children) {
+            const id = await existingClassId(c.schoolId, c.academicYear, c.grade, c.classNumber);
+            if (!id) continue;
+            if (classes.some(x => x.id === id)) continue;
+            classes.push({
+              id, grade: c.grade, classNumber: c.classNumber, teaching: false,
+              childName: c.studentName
+            });
+          }
+          return { canPost: false, viewerRole: "guardian", children, classes };
+        }
       }
 
       // 학급이 안 잡혀도 등록된 교사면 글은 쓸 수 있어야 한다. 자기가 연 그룹
@@ -5510,13 +5545,17 @@ function createClassroomPlatform(options = {}) {
   // Every board this user can open: their class board plus each club /
   // after-school group they belong to (students) or run (teachers). A board is
   // addressed by a single key -- "class:100" or "group:5".
-  async function classboardBoards(user) {
+  async function classboardBoardsWithScope(user) {
     const scope = await classboardScope(user);
+    // 자녀가 둘 이상인 학부모는 어느 아이 반인지 이름이 붙어야 고를 수 있다.
+    const nameChildren = scope.viewerRole === "guardian" && scope.classes.length > 1;
     const boards = scope.classes.map(c => ({
       key: `class:${c.id}`,
       kind: "class",
       id: c.id,
-      label: `${c.grade}학년 ${c.classNumber}반`,
+      label: nameChildren && c.childName
+        ? `${c.grade}학년 ${c.classNumber}반 · ${c.childName}`
+        : `${c.grade}학년 ${c.classNumber}반`,
       typeLabel: "학급",
       teaching: c.teaching,
       canPost: scope.canPost
@@ -5553,6 +5592,21 @@ function createClassroomPlatform(options = {}) {
         });
       }
       groupRows = { rows: rest };
+    } else if (scope.viewerRole === "guardian") {
+      // 학부모의 소속은 자녀의 명단 줄에서 나온다. 동아리 준비물 알림 같은 건
+      // 학부모가 알아야 하니 자녀가 든 그룹 게시판을 그대로 받는다.
+      groupRows = await pool.query(
+        `SELECT DISTINCT g.id, g.group_name, g.group_type
+         FROM teacher_groups g
+         JOIN school_students ss
+           ON ss.school_id = g.school_id AND ss.academic_year = g.academic_year
+         WHERE g.group_type <> 'homeroom'
+           AND (LOWER(ss.guardian1_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1)
+                OR LOWER(ss.guardian2_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1))
+           AND (${GROUP_MEMBER_SQL})
+         ORDER BY g.id`,
+        [user.id]
+      );
     } else {
       groupRows = await pool.query(
         `SELECT DISTINCT g.id, g.group_name, g.group_type
@@ -5580,6 +5634,11 @@ function createClassroomPlatform(options = {}) {
         canPost: scope.canPost
       });
     }
+    return { scope, boards };
+  }
+
+  async function classboardBoards(user) {
+    const { boards } = await classboardBoardsWithScope(user);
     return boards;
   }
 
@@ -5797,7 +5856,12 @@ function createClassroomPlatform(options = {}) {
 
   router.post("/classboard/posts/:postId/comments", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
-    const boards = await classboardBoards(user);
+    const { scope, boards } = await classboardBoardsWithScope(user);
+    // 학부모는 읽기만 한다. 반 전체가 보는 곳에 학부모 댓글이 쌓이면 아이들이
+    // 부담스럽고, 담임에게는 응대할 창구가 하나 더 생긴다.
+    if (scope.viewerRole === "guardian") {
+      throw new HttpError(403, "READ_ONLY", "보호자 계정은 알림장을 읽을 수만 있습니다.");
+    }
     const classIds = boards.filter(b => b.kind === "class").map(b => b.id);
     const groupIds = boards.filter(b => b.kind === "group").map(b => b.id);
     if (classIds.length === 0 && groupIds.length === 0) {
