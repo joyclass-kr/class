@@ -272,43 +272,56 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderCompass(a, p) {
-        const CX = 200, CY = 118;
-        const SCALE = state.dist === 30 ? 2.6 : state.dist === 10 ? 7 : 16;   // px per cm, zoomed out for the far compasses
-        const toPx = (x, y) => ({ x: CX + x * SCALE, y: CY + y * SCALE });
+        const CX = 210, CY = 118;
+        const MAG_SCALE = 14;
+        const toPxField = (x, y) => ({ x: CX + x * MAG_SCALE, y: CY + y * MAG_SCALE });
         let out = '';
-        // field lines of the magnet
+        // field lines of the magnet (stable, fixed scale)
         [-1.6, -0.9, 0, 0.9, 1.6].forEach(dy => {
-            const pts = fieldLine(2.3, dy, toPx);
+            const pts = fieldLine(2.3, dy, toPxField);
             if (pts.length > 2) out += `<path class="field-line" d="M${pts.map(q => `${q.x.toFixed(1)},${q.y.toFixed(1)}`).join('L')}"/>`;
         });
-        // the magnet, N pole to the right
-        const MW = MAG_LEN * 100 * SCALE, MH = Math.max(10, SCALE * 0.9);
+        // the magnet, N pole to the right (stable, fixed size: 63px x 20px)
+        const MW = MAG_LEN * 100 * MAG_SCALE, MH = 20;
         out += barMagnet(CX - MW / 2, CY - MH / 2, MW, MH, 'S', 'N');
         // the needle swings from north to where it settles, overshooting a little
         const target = a.needle, start = -Math.PI / 2;
         let diff = target - start; while (diff > Math.PI) diff -= 2 * Math.PI; while (diff < -Math.PI) diff += 2 * Math.PI;
         const tt = p * 4;
         const angle = target - diff * Math.exp(-2.2 * tt) * Math.cos(5 * tt);
+
+        // Distance offset from magnet center in pixels:
+        // 3 cm: 58px (right beside pole: 31.5px + 26.5px)
+        // 10 cm: 112px (mid distance)
+        // 30 cm: 172px (far distance)
+        const distPx = state.dist === 3 ? 58 : state.dist === 10 ? 112 : 172;
+        const getCompassPos = (angDeg) => {
+            const rad = angDeg * Math.PI / 180;
+            const x = CX + distPx * Math.cos(rad);
+            const y = CY + Math.min(68, distPx * 0.44) * Math.sin(rad);
+            return { x, y };
+        };
+
         // the other three places, small and already settled, show the pattern
         Object.entries(PLACES).forEach(([k, pl]) => {
-            const ang = pl.angle * Math.PI / 180;
-            const px = state.dist * Math.cos(ang), py = state.dist * Math.sin(ang);
-            const q = toPx(px, py);
             if (k === state.place) return;
+            const pos = getCompassPos(pl.angle);
+            const angRad = pl.angle * Math.PI / 180;
+            const px = state.dist * Math.cos(angRad), py = state.dist * Math.sin(angRad);
             const b = fieldAt(px, py);
-            out += compassAt(q.x, q.y, 11, Math.atan2(b.by, b.bx), false);
+            out += compassAt(pos.x, pos.y, 11, Math.atan2(b.by, b.bx), false);
         });
-        const me = toPx(a.px, a.py);
+        const me = getCompassPos(a.place.angle);
         out += compassAt(me.x, me.y, 18, angle, true);
         // the label goes above a compass that sits low on the screen
-        const labelY = state.place === 'below' ? me.y - 26 : me.y + 32;
+        const labelY = state.place === 'below' ? me.y - 24 : me.y + 30;
         out += `<text class="small-label" x="${me.x.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle">${a.place.label} ${state.dist} cm</text>`;
         // north marker
-        out += `<text class="north-text" x="428" y="40" text-anchor="middle">북 ↑</text>`;
-        out += `<text class="note-text" x="428" y="54" text-anchor="middle">위쪽이 북쪽</text>`;
+        out += `<text class="north-text" x="428" y="36" text-anchor="middle">북 ↑</text>`;
+        out += `<text class="note-text" x="428" y="52" text-anchor="middle">위쪽이 북쪽</text>`;
         const VERD = { toS: '자석의 S극 쪽', north: '북쪽' };
-        out += `<text class="verdict-text" fill="#ffd166" x="20" y="16">${a.place.label} ${state.dist} cm → 바늘 N극은 ${VERD[a.verdict]}</text>`;
-        out += `<text class="note-text" x="20" y="34">여기서 자석의 힘은 지구의 ${a.ratio >= 10 ? Math.round(a.ratio) : a.ratio.toFixed(1)}배</text>`;
+        out += `<text class="verdict-text" fill="var(--primary)" x="20" y="18">${a.place.label} ${state.dist} cm → 바늘 N극은 ${VERD[a.verdict]}</text>`;
+        out += `<text class="note-text" x="20" y="36">여기서 자석의 힘은 지구의 ${a.ratio >= 10 ? Math.round(a.ratio) : a.ratio.toFixed(1)}배</text>`;
         out += `<text class="note-text" x="20" y="206">옅은 선: 자석의 힘이 뻗어 나가는 길 · 작은 나침반: 다른 자리에 놓았을 때</text>`;
         return out;
     }
