@@ -27,8 +27,18 @@
         { id: "M6", label: "장6도", degree: 5, semis: 9 },
         { id: "m7", label: "단7도", degree: 6, semis: 10 },
         { id: "M7", label: "장7도", degree: 6, semis: 11 },
-        { id: "P8", label: "완전8도", degree: 7, semis: 12 }
+        { id: "P8", label: "완전8도", degree: 7, semis: 12 },
+        { id: "m9", label: "단9도", degree: 8, semis: 13, roots: [28, 29] },
+        { id: "M9", label: "장9도", degree: 8, semis: 14, roots: [28, 29] },
+        { id: "m10", label: "단10도", degree: 9, semis: 15, roots: [28, 29] },
+        { id: "M10", label: "장10도", degree: 9, semis: 16, roots: [28, 29] },
+        { id: "P11", label: "완전11도", degree: 10, semis: 17, roots: [28, 29] },
+        { id: "A11", label: "증11도", degree: 10, semis: 18, roots: [28, 29] },
+        { id: "P12", label: "완전12도", degree: 11, semis: 19, roots: [28, 29] }
     ];
+
+    const SIMPLE_INTERVAL_IDS = ["m2", "M2", "m3", "M3", "P4", "A4", "P5", "m6", "M6", "m7", "M7", "P8"];
+    const COMPOUND_INTERVAL_IDS = ["m9", "M9", "m10", "M10", "P11", "A11", "P12"];
 
     /* 노래로 기억하는 음정. 올라가는 것과 내려가는 것을 따로 둔다. */
     const INTERVAL_SONGS = {
@@ -123,8 +133,9 @@
 
     function intervalQuestion(item, mode) {
         const shape = mode === "mixed" ? pick(["harmony", "up", "down"]) : mode;
-        const descending = shape === "down";
-        const given = N.natural(pick(descending ? HIGH_ROOTS : LOW_ROOTS));
+        const descending = shape === "down" && item.semis <= 12;
+        const roots = item.roots || (descending ? HIGH_ROOTS : LOW_ROOTS);
+        const given = N.natural(pick(roots));
         const other = descending
             ? N.step(given, -item.degree, -item.semis)
             : N.step(given, item.degree, item.semis);
@@ -231,7 +242,8 @@
             levels: [
                 { id: "easy", label: "쉬움", ids: ["M2", "M3", "P5", "P8"] },
                 { id: "mid", label: "보통", ids: ["m2", "M2", "m3", "M3", "P4", "P5", "M6", "m7", "P8"] },
-                { id: "hard", label: "전부", ids: INTERVALS.map(item => item.id) }
+                { id: "hard", label: "한 옥타브 전부", ids: SIMPLE_INTERVAL_IDS },
+                { id: "compound", label: "겹음정", ids: COMPOUND_INTERVAL_IDS }
             ],
             modes: [
                 { id: "harmony", label: "함께" },
@@ -321,7 +333,7 @@
 
     /* 저장 ---------------------------------------------------------------- */
     const STORAGE_KEY = "earTraining.v2";
-    const saved = { stats: {}, setup: {} };
+    const saved = { stats: {}, setup: {}, progress: {} };
 
     function loadSaved() {
         try {
@@ -331,6 +343,7 @@
             if (parsed && typeof parsed === "object") {
                 if (parsed.stats && typeof parsed.stats === "object") saved.stats = parsed.stats;
                 if (parsed.setup && typeof parsed.setup === "object") saved.setup = parsed.setup;
+                if (parsed.progress && typeof parsed.progress === "object") saved.progress = parsed.progress;
             }
         } catch (error) { /* 저장을 못 쓰면 기록 없이 쓴다. */ }
     }
@@ -380,14 +393,33 @@
     };
 
     function showScreen(name) {
-        ["menu", "setup", "drill", "result"].forEach(key => {
+        ["menu", "course", "lesson", "setup", "drill", "result"].forEach(key => {
             els[key + "Screen"].hidden = key !== name;
         });
         session.screen = name;
         window.scrollTo({ top: 0 });
     }
 
+    function courseProgress(course) {
+        const marks = saved.progress[course.id] || {};
+        const done = course.lessons.filter(lesson => marks[lesson.id]).length;
+        return { done: done, total: course.lessons.length };
+    }
+
     function renderMenu() {
+        els.courseList.innerHTML = "";
+        (window.EarCourses || []).forEach(course => {
+            const progress = courseProgress(course);
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "drill-card";
+            button.innerHTML = '<b></b><span class="drill-stat"></span>';
+            button.querySelector("b").textContent = course.name;
+            button.querySelector(".drill-stat").textContent = progress.done + " / " + progress.total + "차시";
+            button.addEventListener("click", () => openCourse(course.id));
+            els.courseList.append(button);
+        });
+
         els.drillList.innerHTML = "";
         DRILLS.forEach(drill => {
             const rate = drillRate(drill.id);
@@ -502,6 +534,143 @@
         return session.drill.pickable === false ? 1 : 2;
     }
 
+
+    /* 과정 ---------------------------------------------------------------- */
+    let course = null;
+    let lessonIndex = -1;
+
+    function courseById(id) {
+        return (window.EarCourses || []).find(entry => entry.id === id) || null;
+    }
+
+    function lessonMark(courseId, lessonId) {
+        return (saved.progress[courseId] || {})[lessonId] || null;
+    }
+
+    function setLessonMark(courseId, lessonId, mark) {
+        if (!saved.progress[courseId]) saved.progress[courseId] = {};
+        saved.progress[courseId][lessonId] = mark;
+        persist();
+    }
+
+    function openCourse(courseId) {
+        course = courseById(courseId);
+        if (!course) return;
+        els.courseTitle.textContent = course.name;
+        renderLessonList();
+        showScreen("course");
+    }
+
+    function renderLessonList() {
+        els.lessonList.innerHTML = "";
+        course.lessons.forEach((lesson, index) => {
+            const mark = lessonMark(course.id, lesson.id);
+            const row = document.createElement("button");
+            row.type = "button";
+            row.className = "lesson-row";
+            row.innerHTML = '<span class="lesson-order"></span><span class="lesson-name"></span>'
+                + '<span class="lesson-kind"></span><span class="lesson-mark"></span>';
+            row.querySelector(".lesson-order").textContent = (index + 1) + "차시";
+            row.querySelector(".lesson-name").textContent = lesson.title;
+            row.querySelector(".lesson-kind").textContent = lesson.kind === "text" ? "설명" : "연습";
+            const badge = row.querySelector(".lesson-mark");
+            if (mark && mark.read) badge.textContent = "✓";
+            else if (mark && mark.total) badge.textContent = Math.round((mark.right / mark.total) * 100) + "%";
+            if (mark) row.classList.add("is-done");
+            row.addEventListener("click", () => openLesson(index));
+            els.lessonList.append(row);
+        });
+    }
+
+    function openLesson(index) {
+        const lesson = course.lessons[index];
+        if (!lesson) return;
+        lessonIndex = index;
+        if (lesson.kind === "drill") {
+            startLessonDrill(lesson);
+            return;
+        }
+        els.lessonTitle.textContent = lesson.title;
+        els.lessonBody.innerHTML = "";
+        lesson.body.forEach(paragraph => {
+            const node = document.createElement("p");
+            node.textContent = paragraph;
+            els.lessonBody.append(node);
+        });
+        els.lessonExamples.innerHTML = "";
+        lesson.examples.forEach(id => els.lessonExamples.append(exampleBlock(id)));
+        els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
+        setLessonMark(course.id, lesson.id, { read: true });
+        showScreen("lesson");
+    }
+
+    const EXAMPLE_SHAPES = [
+        { id: "up", label: "올라가며" },
+        { id: "down", label: "내려가며" },
+        { id: "harmony", label: "함께" }
+    ];
+
+    function exampleBlock(intervalId) {
+        const item = INTERVALS.find(entry => entry.id === intervalId);
+        const root = N.natural(item.semis > 12 ? 28 : 30);
+        const top = N.step(root, item.degree, item.semis);
+        const block = document.createElement("div");
+        block.className = "example";
+
+        const caption = document.createElement("p");
+        caption.className = "example-caption";
+        caption.textContent = item.label + " · 반음 " + item.semis + "개";
+        block.append(caption);
+
+        const row = document.createElement("div");
+        row.className = "example-staves";
+        EXAMPLE_SHAPES.forEach(shape => {
+            const columns = shape.id === "harmony"
+                ? [{ notes: [root, top] }]
+                : shape.id === "down" ? [{ notes: [top] }, { notes: [root] }] : [{ notes: [root] }, { notes: [top] }];
+            const groups = shape.id === "harmony"
+                ? [[root.midi, top.midi]]
+                : shape.id === "down" ? [[top.midi], [root.midi]] : [[root.midi], [top.midi]];
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "example-play";
+            button.append(N.render(columns, { label: item.label + " " + shape.label }));
+            const tag = document.createElement("span");
+            tag.textContent = shape.label;
+            button.append(tag);
+            button.addEventListener("click", () => {
+                window.PianoEngine.playSequence(groups, shape.id === "harmony" ? 2 : .7).catch(() => {});
+            });
+            row.append(button);
+        });
+        block.append(row);
+
+        const songs = INTERVAL_SONGS[intervalId];
+        if (songs) {
+            const line = document.createElement("p");
+            line.className = "example-songs";
+            line.textContent = "올라갈 때 " + songs.up + " · 내려갈 때 " + songs.down;
+            block.append(line);
+        }
+        return block;
+    }
+
+    function startLessonDrill(lesson) {
+        const drill = DRILL_BY_ID[lesson.drill.drillId || "interval"];
+        session.drill = drill;
+        session.mode = lesson.drill.mode || (drill.modes[0] && drill.modes[0].id) || "";
+        session.input = lesson.drill.input || "buttons";
+        session.limit = lesson.drill.limit || 10;
+        session.enabled = new Set(lesson.drill.items);
+        session.fromLesson = { courseId: course.id, lessonId: lesson.id };
+        beginRound();
+    }
+
+    function nextLesson() {
+        if (lessonIndex + 1 < course.lessons.length) openLesson(lessonIndex + 1);
+        else { renderLessonList(); showScreen("course"); }
+    }
+
     /* 연습 ---------------------------------------------------------------- */
 
     function startDrill() {
@@ -518,7 +687,12 @@
             items: Array.from(session.enabled)
         };
         persist();
+        session.fromLesson = null;
+        beginRound();
+    }
 
+    function beginRound() {
+        const drill = session.drill;
         session.pool = drill.items.filter(item => session.enabled.has(item.id));
         session.right = 0;
         session.total = 0;
@@ -717,9 +891,15 @@
     function finishDrill() {
         window.clearTimeout(session.timer);
         if (!session.total) {
-            renderMenu();
-            showScreen("menu");
+            backToHub();
             return;
+        }
+        if (session.fromLesson) {
+            const previous = lessonMark(session.fromLesson.courseId, session.fromLesson.lessonId);
+            const better = !previous || !previous.total
+                || (session.right / session.total) > (previous.right / previous.total);
+            if (better) setLessonMark(session.fromLesson.courseId, session.fromLesson.lessonId,
+                { right: session.right, total: session.total });
         }
         els.resultScore.textContent = session.drill.name + " " + session.right + " / " + session.total
             + " · " + Math.round((session.right / session.total) * 100) + "%";
@@ -740,12 +920,25 @@
             line.querySelector(".pct").textContent = rate + "%";
             els.resultTable.append(line);
         });
+        els.toMenuButton.textContent = session.fromLesson ? "차시 목록" : "다른 훈련";
         showScreen("result");
+    }
+
+    function backToHub() {
+        if (session.fromLesson && course) {
+            renderLessonList();
+            showScreen("course");
+            return;
+        }
+        renderMenu();
+        showScreen("menu");
     }
 
     function goBack() {
         if (session.screen === "drill") { finishDrill(); return true; }
-        if (session.screen === "result" || session.screen === "setup") {
+        if (session.screen === "result") { backToHub(); return true; }
+        if (session.screen === "lesson") { renderLessonList(); showScreen("course"); return true; }
+        if (session.screen === "course" || session.screen === "setup") {
             renderMenu();
             showScreen("menu");
             return true;
@@ -768,7 +961,9 @@
     }
 
     function init() {
-        ["menuScreen", "setupScreen", "drillScreen", "resultScreen", "drillList", "setupTitle",
+        ["menuScreen", "courseScreen", "lessonScreen", "setupScreen", "drillScreen", "resultScreen",
+            "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
+            "lessonNext", "drillList", "setupTitle",
             "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",
             "itemPicker", "startButton", "setupWarning", "askText", "staff", "scoreText", "stopButton",
             "replayButton", "skipButton", "choices", "keyboardWrap", "pianoKeys", "typedCount",
@@ -793,10 +988,8 @@
             showScreen("drill");
             nextQuestion();
         });
-        els.toMenuButton.addEventListener("click", () => {
-            renderMenu();
-            showScreen("menu");
-        });
+        els.toMenuButton.addEventListener("click", backToHub);
+        els.lessonNext.addEventListener("click", nextLesson);
 
         window.addEventListener("sitebackrequest", event => {
             if (goBack()) event.preventDefault();

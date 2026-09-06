@@ -323,3 +323,65 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     .keyboard { height: 128px; }
     .key-mark { width: 21px; height: 21px; font-size: 13px; }
 }
+
+/* 차시 목록 */
+.lesson-list { display: grid; gap: 7px; }
+
+.lesson-row {
+    min-height: 58px;
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: var(--panel);
+    text-align: left;
+}
+
+.lesson-row:hover { border-color: var(--gold); }
+.lesson-row.is-done { border-color: #35604d; }
+.lesson-row .lesson-order { color: var(--gold); font-size: 14px; font-weight: 800; }
+.lesson-row .lesson-name { font-size: 17px; font-weight: 750; word-break: keep-all; }
+.lesson-row .lesson-kind { color: var(--muted); font-size: 14px; font-weight: 700; white-space: nowrap; }
+.lesson-row .lesson-mark { min-width: 42px; color: var(--right); font-size: 15px; font-weight: 850; text-align: right; }
+
+/* 설명 차시 */
+.lesson-body { display: grid; gap: 14px; }
+.lesson-body p { margin: 0; font-size: 17px; line-height: 1.8; word-break: keep-all; }
+
+.examples { display: grid; gap: 18px; }
+
+.example {
+    display: grid;
+    gap: 9px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: var(--panel);
+}
+
+.example-caption { margin: 0; font-size: 17px; font-weight: 800; }
+.example-staves { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+
+.example-play {
+    display: grid;
+    gap: 4px;
+    padding: 6px 4px 8px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #f6f4ee;
+}
+
+.example-play:hover { border-color: var(--gold); }
+.example-play .sheet { width: 100%; max-width: none; }
+.example-play span { color: #4a5160; font-size: 14px; font-weight: 750; }
+.example-songs { margin: 0; color: var(--gold); font-size: 15px; font-weight: 700; word-break: keep-all; }
+
+@media (max-width: 520px) {
+    .lesson-row { grid-template-columns: 54px minmax(0, 1fr) auto; row-gap: 4px; }
+    .lesson-row .lesson-kind { grid-column: 2; grid-row: 2; }
+    .lesson-row .lesson-mark { grid-row: 1 / 3; }
+    .example-staves { grid-template-columns: 1fr; }
+}
