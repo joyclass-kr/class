@@ -64,7 +64,7 @@ const CHAPTERS = [
                 emoji: "🏚️",
                 left: [
                     "다시 길을 걷다 보니 어느새 사방이 캄캄해졌어요.",
-                    "별빛도 없는 밤이었습니다.",
+                    "희미한 달빛에 기대어 걸었지요.",
                     "\"오늘은 여기서 자야겠구나.\"",
                     "그때 저 멀리 불빛 하나가 깜빡였어요. 가까이 가 보니 산속에 덩그러니 놓인 외딴집이었지요."
                 ],
@@ -285,7 +285,7 @@ const EN = {
                     emoji: "🏚️",
                     left: [
                         "He walked on, and before he knew it the dark had closed in on every side.",
-                        "There was not even starlight.",
+                        "He walked on by the thin moonlight.",
                         { t: "\"I'll have to sleep somewhere here.\"", v: "man" },
                         "Just then a light blinked far off. When he came near, it was a house standing all alone in the mountains."
                     ],
@@ -492,7 +492,7 @@ const EN = {
         "04-house.webp": [
             { w: "closed in (close in)", k: "사방이 어두워졌다", s: "the dark had closed in on every side" },
             { w: "on every side", k: "사방으로", s: "the dark had closed in on every side" },
-            { w: "starlight", k: "별빛", s: "There was not even starlight." },
+            { w: "by the thin moonlight", k: "희미한 달빛에 기대어", s: "He walked on by the thin moonlight." },
             { w: "blinked (blink)", k: "깜빡였다", s: "Just then a light blinked far off." },
             { w: "far off", k: "저 멀리", s: "a light blinked far off" },
             { w: "standing all alone", k: "덩그러니 놓인", s: "a house standing all alone in the mountains" },
