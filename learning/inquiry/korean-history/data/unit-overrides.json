@@ -245,6 +245,9 @@
   "46": "integrated"
  },
  "58": {
+  "6": "three-kingdoms",
+  "9": "north-south",
+  "10": "goryeo-culture",
   "11": "goryeo-founding",
   "12": "goryeo-founding",
   "13": "goryeo-economy",
@@ -252,7 +255,17 @@
   "15": "goryeo-culture",
   "16": "integrated",
   "17": "goryeo-war",
-  "18": "goryeo-economy"
+  "18": "goryeo-economy",
+  "23": "joseon-late",
+  "24": "joseon-late",
+  "25": "joseon-late",
+  "28": "joseon-late",
+  "33": "occupation",
+  "34": "occupation",
+  "35": "occupation",
+  "42": "contemporary",
+  "47": "integrated",
+  "48": "integrated"
  },
  "57": {
   "11": "goryeo-founding",
