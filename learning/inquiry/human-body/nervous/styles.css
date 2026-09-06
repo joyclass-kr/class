@@ -218,3 +218,15 @@
     border-radius: 8px;
     margin-bottom: 8px;
 }
+
+/* ── 동공 반사 (pupil-reflex.js) ──────────────────────────── */
+.pupil-layer {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 42% 50%, #101a2e 0%, #05070f 100%);
+    z-index: 3;
+    padding: 50px 10px 8px;
+}
+
+.pupil-layer[hidden] { display: none !important; }
+.pupil-layer svg { width: 100%; height: 100%; display: block; }
