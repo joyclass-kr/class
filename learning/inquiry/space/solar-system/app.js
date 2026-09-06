@@ -2684,12 +2684,12 @@
             if (playPauseBtn) {
                 playPauseBtn.disabled = locked;
                 playPauseBtn.classList.toggle('ufo-time-locked', locked);
-                playPauseBtn.title = locked ? 'UFO Flight의 시간은 교사가 조작합니다.' : '시뮬레이션 일시정지 / 재생';
+                playPauseBtn.title = locked ? 'UFO Flight의 시간은 방장이 조작합니다.' : '시뮬레이션 일시정지 / 재생';
             }
             if (speedSlider) {
                 speedSlider.disabled = locked;
                 speedSlider.classList.toggle('ufo-time-locked', locked);
-                speedSlider.title = locked ? 'UFO Flight의 공전 속도는 교사가 조작합니다.' : '';
+                speedSlider.title = locked ? 'UFO Flight의 공전 속도는 방장이 조작합니다.' : '';
             }
         }
 
@@ -2714,8 +2714,8 @@
                     ufoRoomStatus.textContent = isSolo
                         ? '단독 비행 · 통신 없이 탐험 계속'
                         : (isTeacher
-                            ? '교사 · 시간 및 공전 속도 조작 가능'
-                            : '학생 · 시간은 교사 화면과 동기화');
+                            ? '방장 · 시간 및 공전 속도 조작 가능'
+                            : '참가자 · 시간은 방장 화면과 동기화');
                 }
                 if (ufoControlsPanel) ufoControlsPanel.style.display = 'block';
                 if (ufoMesh) ufoMesh.visible = true;
@@ -2938,7 +2938,6 @@
                     joinCode: 'ufoJoinCode',
                     joinButton: 'ufoJoinBtn',
                     joinStatus: 'ufoJoinStatus',
-                    copyButton: 'ufoCopyBtn',
                     playerList: 'ufoLobbyPlayers',
                     guide: 'ufoLobbyGuide',
                     startButton: 'ufoStartBtn'
@@ -2946,10 +2945,10 @@
                 getLobbyPresentation: function (info) {
                     return {
                         canStart: info.role === 'host' && info.count >= 1,
-                        startText: info.role === 'host' ? 'UFO FLIGHT 시작' : '교사의 시작을 기다리는 중',
+                        startText: info.role === 'host' ? 'UFO FLIGHT 시작' : '방장의 시작을 기다리는 중',
                         guideText: info.role === 'host'
-                            ? '방번호를 학생들에게 알려주세요. 현재 ' + info.count + '명'
-                            : '교사가 비행을 시작하면 자동으로 입장합니다.'
+                            ? '방번호를 참가자들에게 알려주세요. 현재 ' + info.count + '명'
+                            : '방장이 비행을 시작하면 자동으로 입장합니다.'
                     };
                 },
                 createStartData: function () {

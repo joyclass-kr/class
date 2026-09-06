@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="인터랙티브 태양계 관찰 - 3D 태양계 공전 시뮬레이션, 행성 입체 도감, 자전 &amp; 공전주기 비교">
     <title>태양계</title>
-    <link rel="stylesheet" href="styles.css?v=floating-nav-full-quiz-20260906">
+    <link rel="stylesheet" href="styles.css?v=ufo-room-generic-20260906b">
     <link rel="stylesheet" href="../../../../assets/network/multiplayer-lobby.css">
     <!-- Three.js & OrbitControls for 3D Space WebGL Renderer -->
     <script src="assets/vendor/three-r128/three.min.js"></script>
@@ -274,14 +274,13 @@
             <div class="hidden" id="ufoLobbyScreen">
                 <p class="ufo-saved-name">탑승자 · <strong id="ufoSavedName">-</strong></p>
                 <div class="mp-lobby-tabs ufo-room-tabs">
-                    <button class="ufo-room-tab" id="ufoHostTab" type="button">교사용 방 만들기</button>
+                    <button class="ufo-room-tab" id="ufoHostTab" type="button">CREATE ROOM</button>
                     <button class="ufo-room-tab active" id="ufoJoinTab" type="button">방번호 입력</button>
                 </div>
 
                 <div class="mp-lobby-card hidden" id="ufoHostPane">
                     <div class="ufo-room-code-label">ROOM NUMBER</div>
                     <div class="mp-lobby-room-code ufo-room-code" id="ufoRoomCode">----</div>
-                    <button class="ufo-room-secondary" id="ufoCopyBtn" type="button">방번호 복사</button>
                     <div class="mp-lobby-status" id="ufoHostStatus">방을 만드는 중입니다.</div>
                 </div>
 
@@ -290,7 +289,7 @@
                         <input class="mp-lobby-code-input" id="ufoJoinCode" inputmode="numeric" maxlength="4" placeholder="4자리 방번호">
                         <button class="ufo-room-primary" id="ufoJoinBtn" type="button">참가</button>
                     </div>
-                    <div class="mp-lobby-status" id="ufoJoinStatus">교사가 알려준 4자리 방번호를 입력하세요.</div>
+                    <div class="mp-lobby-status" id="ufoJoinStatus">방장이 알려준 4자리 방번호를 입력하세요.</div>
                 </div>
 
                 <div class="ufo-room-roster">
@@ -298,12 +297,12 @@
                     <div class="mp-lobby-players" id="ufoLobbyPlayers"></div>
                     <p class="mp-lobby-guide" id="ufoLobbyGuide">방 연결을 기다리는 중입니다.</p>
                 </div>
-                <button class="ufo-room-primary" id="ufoStartBtn" type="button" disabled>교사가 비행을 시작합니다</button>
+                <button class="ufo-room-primary" id="ufoStartBtn" type="button" disabled>방장이 비행을 시작합니다</button>
             </div>
         </div>
     </section>
 
     <script src="solar-data.js?v=outer-planet-textures-20260803"></script>
-    <script src="app.js?v=floating-nav-full-quiz-20260906"></script>
+    <script src="app.js?v=ufo-room-generic-20260906b"></script>
 </body>
 </html>
