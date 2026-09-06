@@ -24,7 +24,7 @@ button { cursor: pointer; }
 
 .app-shell { height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr); }
 
-.theme-tab, .primary-button, .secondary-button, .feature-button, .answer-button, .dialog-topbar button, .map-back, .map-progress, .map-toggle { min-width: 44px; min-height: 44px; }
+.back-link, .theme-tab, .primary-button, .secondary-button, .feature-button, .answer-button, .dialog-topbar button, .map-back, .map-progress, .map-toggle { min-width: 44px; min-height: 44px; }
 
 /* 주제 탭 줄: 좁은 화면에서는 옆으로 넘긴다 */
 .theme-tabs { z-index: 800; display: flex; align-items: center; gap: 8px; padding: 6px 12px; overflow-x: auto; border-bottom: 1px solid #c7d3d0; background: #eef3ef; scrollbar-width: none; }
