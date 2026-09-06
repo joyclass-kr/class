@@ -653,6 +653,20 @@
             filterAddressBookStudents();
         }
 
+        // 그룹 소속. 학교마다 명단 열을 두 가지 모양 중 하나로 쓴다.
+        //   1) 동아리마다 열이 하나씩:  {"오케스트라": "O"}      -> 열 이름이 그룹 이름
+        //   2) '동아리' 열 하나에 배정:  {"동아리": "오케스트라"} -> 열 값이 그룹 이름
+        // 둘 다 이름이 정확히 같을 때만 인정한다. 부분 일치를 쓰면 '1' 같은 이름의
+        // 그룹에 전교생이 들어간다.
+        function inGroup(student, group) {
+            if (group.group_type === 'homeroom') {
+                return student.grade === group.grade && student.class_number === group.class_number;
+            }
+            const fields = student.custom_fields || {};
+            if (Object.prototype.hasOwnProperty.call(fields, group.group_name)) return true;
+            return Object.values(fields).some(v => String(v) === group.group_name);
+        }
+
         function filterAddressBookStudents() {
             const listEl = document.getElementById('abStudentList');
             const search = document.getElementById('abSearchInput').value.trim().toLowerCase();
@@ -668,6 +682,11 @@
                 const g = Number(parts[1]);
                 const c = Number(parts[2]);
                 filtered = filtered.filter(s => s.grade === g && s.class_number === c);
+            } else if (activeFilterType.startsWith('GROUP_')) {
+                // 그룹은 눌러도 아무것도 걸러지지 않고 전교생이 그대로 나왔다.
+                const id = activeFilterType.slice('GROUP_'.length);
+                const group = (rawAddressBook.groups || []).find(g => String(g.id) === id);
+                filtered = group ? filtered.filter(s => inGroup(s, group)) : [];
             }
 
             if (search) {
@@ -783,7 +802,9 @@
             const deduplicateGuardians = document.getElementById('nDeduplicateGuardians')?.checked || false;
             const contentBody = document.getElementById('nTextBody').value.trim();
 
-            const targetStudentNumbers = selectedTargets.map(t => t.id).join(',');
+            // 고른 사람은 명단 id 로 보낸다. 예전에는 번호만 이어 붙여 보냈는데,
+            // 학년·반이 함께 가지 않아 서버가 받는 사람을 한 명도 못 찾았다.
+            const studentIds = selectedTargets.map(t => t.id);
 
             const questions = noticeReplyType === 'survey' ? collectSurveyQuestions() : [];
             if (noticeReplyType === 'survey') {
@@ -804,8 +825,8 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         title, contentType, contentBody,
-                        targetType: selectedTargets.length > 0 ? 'students' : 'all',
-                        targetStudentNumbers,
+                        targetType: studentIds.length > 0 ? 'students' : 'all',
+                        studentIds,
                         deduplicateGuardians,
                         replyType: noticeReplyType,
                         questions
@@ -813,7 +834,9 @@
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || '가정통신문 발송 실패');
-                alert('학부모 모바일 앱으로 알리미가 정상 발송되었습니다.');
+                alert(data.recipientCount
+                    ? `${data.recipientCount}명에게 보냈습니다.`
+                    : '전교생 학부모에게 보냈습니다.');
                 e.target.reset();
                 document.getElementById('surveyQuestionList').innerHTML = '';
                 selectedTargets = [];

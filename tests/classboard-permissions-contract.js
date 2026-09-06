@@ -463,12 +463,21 @@ const asGroupOnlyHomeroom = () => { sessionRows = [{ id: 4, email: "new@x.kr", r
     const momBoards = await get("/api/classboard/boards");
     assert.equal(momBoards.status, 200);
     const momBody = await momBoards.json();
-    assert.equal(momBody.boards.length, 2, "학부모는 자녀 반과 자녀가 든 그룹 게시판을 받는다.");
-    assert.equal(momBody.boards[0].kind, "class");
-    assert.equal(momBody.boards[0].id, "200", "학생이 보는 바로 그 학급 게시판이어야 한다.");
-    assert.equal(momBody.boards[0].label, "5학년 1반",
+    assert.equal(momBody.boards.length, 3,
+      "학부모는 가정통신문 칸과 자녀 반, 자녀가 든 그룹 게시판을 받는다.");
+
+    // 가정통신문은 학급 것이 아니다. 업무 담당자가 동아리든 골라 담은 명단이든
+    // 원하는 사람에게 보내므로, 우리 반 게시판에 매달지 않고 자기 칸을 둔다.
+    assert.equal(momBody.boards[0].kind, "notice", "가정통신문 칸이 맨 앞에 온다.");
+    assert.equal(momBody.boards[0].label, "가정통신문",
       "자녀가 하나면 이름을 덧붙이지 않는다.");
-    assert.equal(momBody.boards[1].label, "오케스트라",
+    assert.equal(momBody.boards[0].child.studentNumber, "12",
+      "어느 아이 앞으로 온 것인지 실려야 그 아이의 통신문을 부를 수 있다.");
+
+    assert.equal(momBody.boards[1].kind, "class");
+    assert.equal(momBody.boards[1].id, "200", "학생이 보는 바로 그 학급 게시판이어야 한다.");
+    assert.equal(momBody.boards[1].label, "5학년 1반");
+    assert.equal(momBody.boards[2].label, "오케스트라",
       "동아리 알림도 학부모가 알아야 한다.");
     assert.equal(momBody.boards.every(b => b.canPost === false), true,
       "학부모는 글을 쓸 수 없다.");
@@ -490,7 +499,10 @@ const asGroupOnlyHomeroom = () => { sessionRows = [{ id: 4, email: "new@x.kr", r
     const twoBody = await twoKids.json();
     assert.ok(twoBody.boards[0].label.includes("김철수"),
       `자녀가 둘이면 게시판 이름에 아이 이름이 붙어야 한다. got ${twoBody.boards[0].label}`);
-    assert.equal(twoBody.boards.length, 3, "두 아이의 반과 그룹이 모두 나와야 한다.");
+    assert.equal(twoBody.boards.filter(b => b.kind === "notice").length, 2,
+      "가정통신문은 아이마다 따로 온다.");
+    assert.equal(twoBody.boards.length, 5,
+      "아이 둘의 가정통신문 칸 둘 + 반 둘 + 그룹 하나.");
     existingClassBySlot = {};
     guardianRows = [];
     guardianGroups = [];

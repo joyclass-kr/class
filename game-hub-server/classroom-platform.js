@@ -672,6 +672,30 @@ function createClassroomPlatform(options = {}) {
       `UPDATE classroom_notices
         SET reply_type = 'agree'
         WHERE reply_type = 'none' AND requires_signature = TRUE`,
+      // 받는 사람 명단.
+      //
+      // 가정통신문은 학급 것이 아니다. 업무 담당자가 동아리든 방과후든, 이 반 저 반
+      // 골라 담은 명단이든 원하는 사람에게 보낸다. 그런데 통신문 한 줄에는
+      // (target_grade, target_class_number, target_student_numbers) 한 벌뿐이라
+      // 여러 반에 걸친 명단을 담을 수가 없었다. 실제로 주소록에서 사람을 골라
+      // 보내면 학년·반이 비어 아무에게도 도착하지 않았다.
+      //
+      // 그래서 받는 사람을 한 사람에 한 줄씩 따로 적는다. 'all'/'grade'/'class'
+      // 처럼 통째로 보내는 경우는 줄이 너무 많아지니 예전대로 조건으로 남긴다.
+      `CREATE TABLE IF NOT EXISTS classroom_notice_recipients (
+        id BIGSERIAL PRIMARY KEY,
+        notice_id BIGINT NOT NULL REFERENCES classroom_notices(id) ON DELETE CASCADE,
+        school_id BIGINT,
+        grade INTEGER NOT NULL,
+        class_number INTEGER NOT NULL,
+        student_number TEXT NOT NULL,
+        student_name TEXT,
+        UNIQUE (notice_id, grade, class_number, student_number)
+      )`,
+      `CREATE INDEX IF NOT EXISTS classroom_notice_recipients_notice_idx
+        ON classroom_notice_recipients (notice_id)`,
+      `CREATE INDEX IF NOT EXISTS classroom_notice_recipients_who_idx
+        ON classroom_notice_recipients (grade, class_number, student_number)`,
       `CREATE TABLE IF NOT EXISTS classroom_notice_replies (
         id BIGSERIAL PRIMARY KEY,
         notice_id BIGINT NOT NULL REFERENCES classroom_notices(id) ON DELETE CASCADE,
@@ -3722,6 +3746,28 @@ function createClassroomPlatform(options = {}) {
   // ----------------------------------------------------
   // Notice & Attendance Platform API Routes
   // 0. Address Book Tree Data API (Teacher)
+  // Group membership.
+  //
+  // 동아리는 학급 안의 모둠이 아니라 전교생을 배정하는 무학년 모임이다. 그래서
+  // 소속은 학년·반이 아니라 전교생 명단의 사용자 정의 열에서 온다. 학교마다
+  // 그 열을 두 가지 모양 중 하나로 쓴다.
+  //
+  //   1) 동아리마다 열이 하나씩:  {"오케스트라": "O"}      -> 열 이름이 동아리 이름
+  //   2) '동아리' 열 하나에 배정:  {"동아리": "오케스트라"} -> 열 값이 동아리 이름
+  //
+  // 둘 다 정확히 일치할 때만 인정한다. (교사용 인원수 쿼리에는
+  // `custom_fields::text ILIKE '%이름%'` 같은 통짜 검색이 있는데, 게시판을 읽을
+  // 권한을 정하는 데 쓰면 '1' 같은 이름의 그룹에 전교생이 들어간다. 여기서는 쓰지 않는다.)
+  const GROUP_MEMBER_SQL = `
+    (g.group_type = 'homeroom' AND g.grade = ss.grade AND g.class_number = ss.class_number)
+    OR (g.group_type <> 'homeroom' AND (
+          jsonb_exists(ss.custom_fields, g.group_name)
+          OR EXISTS (SELECT 1 FROM jsonb_each_text(ss.custom_fields) f
+                     WHERE f.value = g.group_name)
+       ))
+    OR EXISTS (SELECT 1 FROM teacher_group_students gs
+               WHERE gs.group_id = g.id AND gs.student_id = ss.id)`;
+
   router.get("/teacher/addressbook", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
@@ -3743,29 +3789,14 @@ function createClassroomPlatform(options = {}) {
 
     // 2. Additional Groups with integrated student counts (homeroom, club, afterschool, shuttle)
     const groupsRes = await pool.query(
-      `SELECT g.id, g.group_name, g.group_type,
+      // 소속 판정은 게시판과 같은 규칙을 쓴다. 예전에는 custom_fields 전체를 통짜로
+      // 훑는 ILIKE 가 섞여 있어서, '1' 같은 이름의 그룹에 전교생이 들어갔다.
+      `SELECT g.id, g.group_name, g.group_type, g.grade, g.class_number,
               (
                 SELECT COUNT(*)::INTEGER
-                FROM (
-                  SELECT ss.id FROM school_students ss
-                  WHERE g.group_type = 'homeroom' AND g.grade IS NOT NULL AND g.class_number IS NOT NULL
-                    AND ss.school_id = g.school_id AND ss.academic_year = g.academic_year AND ss.grade = g.grade AND ss.class_number = g.class_number
-                  UNION
-                  SELECT ss.id FROM school_students ss
-                  WHERE g.group_type != 'homeroom'
-                    AND ss.school_id = g.school_id AND ss.academic_year = g.academic_year
-                    AND (
-                      ss.custom_fields->>'club' = g.group_name OR
-                      ss.custom_fields->>'afterschool' = g.group_name OR
-                      ss.custom_fields->>'shuttle' = g.group_name OR
-                      ss.custom_fields->>'bus' = g.group_name OR
-                      ss.custom_fields->>'subject' = g.group_name OR
-                      ss.custom_fields->>'group' = g.group_name OR
-                      ss.custom_fields::text ILIKE '%' || g.group_name || '%'
-                    )
-                  UNION
-                  SELECT gs.student_id FROM teacher_group_students gs WHERE gs.group_id = g.id
-                ) AS st_union
+                FROM school_students ss
+                WHERE ss.school_id = g.school_id AND ss.academic_year = g.academic_year
+                  AND (${GROUP_MEMBER_SQL})
               ) AS student_count
        FROM teacher_groups g
        WHERE g.school_id = $1 AND g.academic_year = $2
@@ -3855,6 +3886,14 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "QUESTIONS_REQUIRED", "설문 문항을 하나 이상 만들어 주세요.");
     }
 
+    // 주소록에서 고른 사람들. 반이 섞여 있어도 상관없다.
+    const pickedStudentIds = Array.isArray(req.body?.studentIds)
+      ? [...new Set(req.body.studentIds.map(Number).filter(Number.isInteger))].slice(0, 5000)
+      : [];
+    if (targetType === "students" && pickedStudentIds.length === 0 && !targetStudentNumbers) {
+      throw new HttpError(400, "RECIPIENTS_REQUIRED", "받는 사람을 한 명 이상 고르세요.");
+    }
+
     const teacherProfileRes = await pool.query(
       `SELECT t.school_id, t.teacher_name
        FROM classroom_teachers t
@@ -3869,6 +3908,7 @@ function createClassroomPlatform(options = {}) {
     // with no way to answer it.
     const client = await pool.connect();
     let noticeId;
+    let recipientCount = 0;
     try {
       await client.query("BEGIN");
       const insertRes = await client.query(
@@ -3888,6 +3928,24 @@ function createClassroomPlatform(options = {}) {
           [noticeId, q.position, q.text, q.type, JSON.stringify(q.options), q.required]
         );
       }
+
+      // 고른 사람을 한 사람에 한 줄씩 적는다. 학년·반·번호는 요청이 아니라 명단에서
+      // 가져온다 -- 보내는 쪽이 아무 번호나 적어 남의 반 명단을 만들 수 없도록.
+      if (pickedStudentIds.length > 0) {
+        recipientCount = (await client.query(
+          `INSERT INTO classroom_notice_recipients
+             (notice_id, school_id, grade, class_number, student_number, student_name)
+           SELECT $1, s.school_id, s.grade, s.class_number, s.student_number::TEXT, s.roster_name
+           FROM school_students s
+           WHERE s.id = ANY($2::BIGINT[]) AND s.school_id = $3
+           ON CONFLICT (notice_id, grade, class_number, student_number) DO NOTHING`,
+          [noticeId, pickedStudentIds, schoolId]
+        )).rowCount;
+        if (recipientCount === 0) {
+          throw new HttpError(400, "RECIPIENTS_NOT_FOUND", "고른 사람을 명단에서 찾지 못했습니다.");
+        }
+      }
+
       await client.query("COMMIT");
     } catch (error) {
       await client.query("ROLLBACK");
@@ -3896,7 +3954,12 @@ function createClassroomPlatform(options = {}) {
       client.release();
     }
 
-    res.status(201).json({ ok: true, noticeId: String(noticeId), questionCount: questions.length });
+    res.status(201).json({
+      ok: true,
+      noticeId: String(noticeId),
+      questionCount: questions.length,
+      recipientCount
+    });
   }));
 
   // ── General School Events (일반 행사) ──
@@ -4106,6 +4169,12 @@ function createClassroomPlatform(options = {}) {
       n.target_type = 'all'
       OR (n.target_type = 'grade' AND n.target_grade = $2)
       OR (n.target_type = 'class' AND n.target_grade = $2 AND n.target_class_number = $3)
+      OR (n.target_type = 'students' AND EXISTS (
+            SELECT 1 FROM classroom_notice_recipients nr
+            WHERE nr.notice_id = n.id
+              AND nr.grade = $2 AND nr.class_number = $3
+              AND nr.student_number = $4))
+      -- 명단 표가 생기기 전에 보낸 글. 그때는 한 반 안에서만 고를 수 있었다.
       OR (n.target_type = 'students' AND n.target_grade = $2 AND n.target_class_number = $3
           AND (n.target_student_numbers IS NULL
                OR BTRIM(n.target_student_numbers) = ''
@@ -4432,19 +4501,35 @@ function createClassroomPlatform(options = {}) {
     // Everyone the notice was addressed to, so unanswered students can be listed.
     const rosterFilters = ["s.school_id = $1"];
     const rosterParams = [ctx.school_id];
-    if (notice.target_type === "grade" || notice.target_type === "class" || notice.target_type === "students") {
+    if (notice.target_type === "grade" || notice.target_type === "class") {
       rosterParams.push(notice.target_grade);
       rosterFilters.push(`s.grade = $${rosterParams.length}`);
     }
-    if (notice.target_type === "class" || notice.target_type === "students") {
+    if (notice.target_type === "class") {
       rosterParams.push(notice.target_class_number);
       rosterFilters.push(`s.class_number = $${rosterParams.length}`);
     }
-    const pickedNumbers = String(notice.target_student_numbers || "")
-      .split(",").map(s => s.trim()).filter(Boolean);
-    if (notice.target_type === "students" && pickedNumbers.length > 0) {
-      rosterParams.push(pickedNumbers);
-      rosterFilters.push(`s.student_number::TEXT = ANY($${rosterParams.length}::TEXT[])`);
+    if (notice.target_type === "students") {
+      // 고른 사람은 명단 표에 있다. 반이 섞여 있을 수 있으니 학년·반으로 좁히면 안 된다.
+      // 명단 표가 생기기 전 글은 (학년, 반, 번호목록)으로만 적혀 있으므로 그것도 받는다.
+      rosterParams.push(noticeId);
+      const idParam = `$${rosterParams.length}`;
+      const legacyNumbers = String(notice.target_student_numbers || "")
+        .split(",").map(s => s.trim()).filter(Boolean);
+      let legacy = "FALSE";
+      if (legacyNumbers.length > 0 && notice.target_grade && notice.target_class_number) {
+        rosterParams.push(notice.target_grade, notice.target_class_number, legacyNumbers);
+        const g = `$${rosterParams.length - 2}`;
+        const c = `$${rosterParams.length - 1}`;
+        const nums = `$${rosterParams.length}`;
+        legacy = `(s.grade = ${g} AND s.class_number = ${c} AND s.student_number::TEXT = ANY(${nums}::TEXT[]))`;
+      }
+      rosterFilters.push(`(EXISTS (
+        SELECT 1 FROM classroom_notice_recipients nr
+        WHERE nr.notice_id = ${idParam}
+          AND nr.grade = s.grade AND nr.class_number = s.class_number
+          AND nr.student_number = s.student_number::TEXT
+      ) OR ${legacy})`);
     }
     // A homeroom teacher only ever sees their own class, even on a school-wide notice.
     if (!isAdmin) {
@@ -5455,6 +5540,15 @@ function createClassroomPlatform(options = {}) {
       if (!classId && !info) {
         const children = await getGuardianChildren(user);
         if (children.length > 0) {
+          // 가정통신문은 학급 게시판이 아니라 자기 칸으로 간다. 학급이 아직
+          // 안 열린 아이라도 통신문은 받으므로, 아이 목록은 따로 들고 간다.
+          const readers = children.map(c => ({
+            schoolId: c.schoolId,
+            grade: c.grade,
+            classNumber: c.classNumber,
+            studentNumber: c.studentNumber,
+            name: c.studentName
+          }));
           const classes = [];
           for (const c of children) {
             const id = await existingClassId(c.schoolId, c.academicYear, c.grade, c.classNumber);
@@ -5465,6 +5559,7 @@ function createClassroomPlatform(options = {}) {
               // 가정통신문은 학급이 아니라 '이 아이'에게 온 것이라, 게시판이
               // 어느 아이 것인지 화면이 알아야 그 아이의 통신문을 부를 수 있다.
               child: {
+                schoolId: c.schoolId,
                 grade: c.grade,
                 classNumber: c.classNumber,
                 studentNumber: c.studentNumber,
@@ -5473,7 +5568,7 @@ function createClassroomPlatform(options = {}) {
               childName: c.studentName
             });
           }
-          return { canPost: false, viewerRole: "guardian", children, classes };
+          return { canPost: false, viewerRole: "guardian", children, classes, readers };
         }
       }
 
@@ -5485,9 +5580,29 @@ function createClassroomPlatform(options = {}) {
         `SELECT id, grade, class_number FROM classroom_classes WHERE id = $1`,
         [classId]
       );
+
+      // 학생 본인도 자기 가정통신문이 몇 통 왔는지 세려면 학년·반·번호가 필요하다.
+      // 교사에게는 없다 -- 교사는 자기 앞으로 오는 통신문이 없다.
+      let self = null;
+      if (!info) {
+        const targets = await noticeViewerTargets(user);
+        const mine = targets.find(t => t.viewerRole === "student");
+        if (mine) {
+          self = {
+            schoolId: mine.schoolId,
+            grade: mine.grade,
+            classNumber: mine.classNumber,
+            studentNumber: mine.studentNumber,
+            name: mine.studentName
+          };
+        }
+      }
+
       return {
         canPost: Boolean(info),
         info,
+        viewerRole: info ? "teacher" : "student",
+        readers: self ? [self] : [],
         classes: own.rows.map(c => ({
           id: String(c.id), grade: c.grade, classNumber: c.class_number, teaching: true
         }))
@@ -5528,36 +5643,40 @@ function createClassroomPlatform(options = {}) {
     other: "기타"
   };
 
-  // Group membership.
-  //
-  // 동아리는 학급 안의 모둠이 아니라 전교생을 배정하는 무학년 모임이다. 그래서
-  // 소속은 학년·반이 아니라 전교생 명단의 사용자 정의 열에서 온다. 학교마다
-  // 그 열을 두 가지 모양 중 하나로 쓴다.
-  //
-  //   1) 동아리마다 열이 하나씩:  {"오케스트라": "O"}      -> 열 이름이 동아리 이름
-  //   2) '동아리' 열 하나에 배정:  {"동아리": "오케스트라"} -> 열 값이 동아리 이름
-  //
-  // 둘 다 정확히 일치할 때만 인정한다. (교사용 인원수 쿼리에는
-  // `custom_fields::text ILIKE '%이름%'` 같은 통짜 검색이 있는데, 게시판을 읽을
-  // 권한을 정하는 데 쓰면 '1' 같은 이름의 그룹에 전교생이 들어간다. 여기서는 쓰지 않는다.)
-  const GROUP_MEMBER_SQL = `
-    (g.group_type = 'homeroom' AND g.grade = ss.grade AND g.class_number = ss.class_number)
-    OR (g.group_type <> 'homeroom' AND (
-          jsonb_exists(ss.custom_fields, g.group_name)
-          OR EXISTS (SELECT 1 FROM jsonb_each_text(ss.custom_fields) f
-                     WHERE f.value = g.group_name)
-       ))
-    OR EXISTS (SELECT 1 FROM teacher_group_students gs
-               WHERE gs.group_id = g.id AND gs.student_id = ss.id)`;
 
   // Every board this user can open: their class board plus each club /
   // after-school group they belong to (students) or run (teachers). A board is
   // addressed by a single key -- "class:100" or "group:5".
   async function classboardBoardsWithScope(user) {
     const scope = await classboardScope(user);
+
+    // 가정통신문 칸.
+    //
+    // 통신문은 학급 것이 아니다. 업무 담당자가 동아리든, 이 반 저 반 골라 담은
+    // 명단이든 원하는 사람에게 보낸다. 그래서 우리 반 게시판에 매달지 않고,
+    // '나에게 온 것'을 담는 칸을 따로 둔다. 받는 사람마다 하나씩.
+    const readers = scope.readers || [];
+    const nameReaders = readers.length > 1;
+    const boards = readers.map(r => ({
+      key: `notice:${r.grade}-${r.classNumber}-${r.studentNumber}`,
+      kind: "notice",
+      id: `${r.grade}-${r.classNumber}-${r.studentNumber}`,
+      label: nameReaders ? `가정통신문 · ${r.name}` : "가정통신문",
+      typeLabel: "학교",
+      teaching: false,
+      canPost: false,
+      child: {
+        schoolId: r.schoolId,
+        grade: r.grade,
+        classNumber: r.classNumber,
+        studentNumber: r.studentNumber,
+        name: r.name
+      }
+    }));
+
     // 자녀가 둘 이상인 학부모는 어느 아이 반인지 이름이 붙어야 고를 수 있다.
     const nameChildren = scope.viewerRole === "guardian" && scope.classes.length > 1;
-    const boards = scope.classes.map(c => ({
+    boards.push(...scope.classes.map(c => ({
       key: `class:${c.id}`,
       kind: "class",
       id: c.id,
@@ -5566,12 +5685,8 @@ function createClassroomPlatform(options = {}) {
         : `${c.grade}학년 ${c.classNumber}반`,
       typeLabel: "학급",
       teaching: c.teaching,
-      canPost: scope.canPost,
-      // 학급 게시판에는 가정통신문이 같이 흐른다. 학부모는 어느 아이 것인지
-      // 실어 보내고, 학생 본인은 서버가 알아서 자기 것을 찾는다.
-      child: c.child || null,
-      hasNotices: true
-    }));
+      canPost: scope.canPost
+    })));
 
     let groupRows;
     if (scope.canPost) {
@@ -5691,7 +5806,25 @@ function createClassroomPlatform(options = {}) {
        GROUP BY board_key`,
       [user.id, classIds, groupIds]
     );
-    return new Map(result.rows.map(r => [r.board_key, Number(r.unread)]));
+    const counts = new Map(result.rows.map(r => [r.board_key, Number(r.unread)]));
+
+    // 가정통신문 칸에도 불이 켜져야 한다. 새 통신문이 왔는데 게시판이 조용하면
+    // 들어가 볼 까닭이 없다. 읽음 표시는 게시판 글과 같은 것을 쓴다 -- 그 칸을
+    // 열어 본 시각이니까.
+    for (const board of boards.filter(b => b.kind === "notice")) {
+      const c = board.child || {};
+      const res = await pool.query(
+        `SELECT COUNT(*)::INTEGER AS unread
+         FROM classroom_notices n
+         LEFT JOIN classroom_classboard_reads r
+           ON r.user_id = $5 AND r.board_key = $6
+         WHERE ${NOTICE_TARGET_SQL}
+           AND (r.last_read_at IS NULL OR n.created_at > r.last_read_at)`,
+        [c.schoolId, c.grade, c.classNumber, c.studentNumber, user.id, board.key]
+      );
+      counts.set(board.key, Number(res.rows[0]?.unread || 0));
+    }
+    return counts;
   }
 
   // Which boards this user may switch between, with unread counts.

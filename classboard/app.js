@@ -180,28 +180,19 @@ function renderFilters() {
         chips.push(btn);
     };
 
+    // 가정통신문 칸: 아직 회신 안 한 것만 골라 보기.
     const todoCount = loadedNotices.filter(n => NoticeCard.needsAction(n, viewerRole)).length;
-    // 알림장과 가정통신문이 섞여 있을 때만 종류를 나눌 뜻이 있다.
-    if (loadedNotices.length > 0 && loadedPosts.length > 0) {
-        add('전체', activeKindFilter === null, () => { activeKindFilter = null; renderFeed(); });
-        add('알림장', activeKindFilter === 'post', () => { activeKindFilter = 'post'; renderFeed(); });
-        add('가정통신문', activeKindFilter === 'notice', () => { activeKindFilter = 'notice'; renderFeed(); });
-    }
     if (todoCount > 0) {
-        add(`할 일 ${todoCount}`, activeKindFilter === 'todo',
+        add(`아직 회신 안 함 ${todoCount}`, activeKindFilter === 'todo',
             () => { activeKindFilter = activeKindFilter === 'todo' ? null : 'todo'; renderFeed(); },
             'filter-chip-todo');
+    } else if (activeKindFilter === 'todo') {
+        activeKindFilter = null;
     }
 
-    // 선생님 이름표는 한 번 더 누르면 풀린다. '전체' 칩을 또 두면 위의 것과
-    // 나란히 놓여 어느 쪽 전체인지 알 수 없다.
+    // 게시판 칸: 담임 글만, 또는 과목별로. 한 번 더 누르면 풀린다.
     const labels = [...new Set(loadedPosts.map(p => p.authorLabel).filter(Boolean))];
-    if (labels.length >= 2 && activeKindFilter !== 'notice' && activeKindFilter !== 'todo') {
-        if (chips.length > 0) {
-            const divider = document.createElement('span');
-            divider.className = 'filter-divider';
-            chips.push(divider);
-        }
+    if (labels.length >= 2) {
         labels.forEach(label => add(label, activeSubjectFilter === label, () => {
             activeSubjectFilter = activeSubjectFilter === label ? null : label;
             renderFeed();
@@ -218,6 +209,8 @@ async function loadPosts() {
     const board = boards.find(b => b.key === activeBoardKey);
     try {
         const query = activeBoardKey ? `?board=${encodeURIComponent(activeBoardKey)}` : '';
+        // 가정통신문 칸에는 게시판 글이 없다. 그래도 목록은 불러야 한다 --
+        // 그 칸을 열었다는 표시(읽음)를 서버가 거기서 남기기 때문이다.
         const [postsRes, notices] = await Promise.all([
             fetch(`${API_BASE}/classboard/posts${query}`),
             loadNotices(board)
@@ -240,10 +233,11 @@ async function loadPosts() {
     }
 }
 
-// 가정통신문은 학급으로 오지 동아리로 오지 않는다. 학부모는 어느 아이 것인지
-// 함께 보내고, 학생 본인은 서버가 알아서 자기 것을 찾는다.
+// 가정통신문은 학급 것이 아니다. 학교 업무 담당자가 동아리든, 이 반 저 반 골라
+// 담은 명단이든 원하는 사람에게 보낸다. 그래서 우리 반 게시판이 아니라 '나에게
+// 온 것'을 담는 자기 칸에서만 불러온다.
 async function loadNotices(board) {
-    if (!board || board.kind !== 'class' || !board.hasNotices) return [];
+    if (!board || board.kind !== 'notice') return [];
     try {
         const params = new URLSearchParams();
         if (board.child) {
@@ -277,27 +271,24 @@ function renderFeed() {
         onChanged: loadPosts
     };
 
-    // 두 줄기를 시간순으로 하나로 엮는다.
     let items = [
         ...loadedPosts.map(p => ({ kind: 'post', at: p.createdAt, data: p })),
         ...loadedNotices.map(n => ({ kind: 'notice', at: n.createdAt, data: n }))
     ];
 
-    if (activeKindFilter === 'post') items = items.filter(i => i.kind === 'post');
-    else if (activeKindFilter === 'notice') items = items.filter(i => i.kind === 'notice');
-    else if (activeKindFilter === 'todo') {
+    if (activeKindFilter === 'todo') {
         items = items.filter(i => i.kind === 'notice' && NoticeCard.needsAction(i.data, viewerRole));
     }
-    if (activeSubjectFilter && activeKindFilter !== 'notice' && activeKindFilter !== 'todo') {
+    if (activeSubjectFilter) {
         items = items.filter(i => i.kind !== 'post' || i.data.authorLabel === activeSubjectFilter);
     }
 
     items.sort((a, b) => new Date(b.at) - new Date(a.at));
 
     if (items.length === 0) {
-        const empty = (loadedPosts.length + loadedNotices.length) === 0
-            ? '아직 올라온 글이 없습니다.'
-            : '고른 조건에 맞는 글이 없습니다.';
+        const nothingAtAll = (loadedPosts.length + loadedNotices.length) === 0;
+        const empty = !nothingAtAll ? '고른 조건에 맞는 글이 없습니다.'
+            : (board && board.kind === 'notice' ? '아직 받은 가정통신문이 없습니다.' : '아직 올라온 글이 없습니다.');
         feedSection.innerHTML = `<div class="loader" style="color: #666;">${empty}</div>`;
         return;
     }

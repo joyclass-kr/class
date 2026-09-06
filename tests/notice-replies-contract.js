@@ -41,6 +41,8 @@ let surveyQuestionRows = [];
 let upsertCalls = [];
 let answerInserts = [];
 let questionInserts = [];
+let recipientInserts = [];
+let recipientRowCount = 0;
 
 function answer(sql, params) {
   const text = String(sql);
@@ -62,6 +64,10 @@ function answer(sql, params) {
   }
   if (text.includes("INSERT INTO classroom_absence_notes")) {
     return { rows: [{ id: 900, created_at: new Date() }] };
+  }
+  if (text.includes("INSERT INTO classroom_notice_recipients")) {
+    recipientInserts.push(params);
+    return { rows: [], rowCount: recipientRowCount };
   }
   if (text.includes("FROM classroom_notice_questions")) {
     return { rows: surveyQuestionRows };
@@ -101,6 +107,9 @@ class FakePool {
     return {
       query: async (sql, params) => {
         assertPlaceholderArity(sql, params);
+        // 트랜잭션 안에서 도는 질의도 함께 적는다. 안 적으면 발송처럼 트랜잭션으로
+        // 묶인 자리를 시험이 들여다볼 수 없다.
+        recordedQueries.push({ sql: String(sql), params });
         return answer(sql, params);
       },
       release() {}
@@ -120,6 +129,11 @@ Module._load = function stubbedLoad(request, parent, isMain) {
 const platformPath = path.join(serverDir, "classroom-platform.js");
 delete require.cache[require.resolve(platformPath)];
 const { createClassroomPlatform } = require(platformPath);
+
+// 받는 사람을 가리는 조건문. 스텁 풀은 WHERE 를 계산하지 못하므로 조건문 자체를 읽는다.
+const NOTICE_TARGET_SQL_TEXT = require("node:fs")
+  .readFileSync(platformPath, "utf8")
+  .match(/const NOTICE_TARGET_SQL = `[\s\S]*?`;/)[0];
 
 const platform = createClassroomPlatform({
   databaseUrl: "postgres://stub/stub",
@@ -314,6 +328,47 @@ app.use((error, _req, res, _next) => {
     assert.equal(questionInserts.length, 2, "Both questions must be stored.");
     assert.equal(questionInserts[0][1], 0, "Question order must be recorded.");
     assert.equal(questionInserts[1][3], "text");
+
+    // ── 받는 사람 고르기 ────────────────────────────────────────────────
+    // 가정통신문은 학급 것이 아니다. 업무 담당자가 동아리든, 이 반 저 반 골라
+    // 담은 명단이든 원하는 사람에게 보낸다. 예전에는 고른 사람을 번호만 이어
+    // 붙여 보내서 학년·반이 비었고, 그래서 아무에게도 도착하지 않았다.
+    recipientInserts = [];
+    recipientRowCount = 3;
+    const picked = await post("/api/teacher/notices", {
+      title: "오케스트라 연습 안내", contentBody: "본문",
+      targetType: "students", studentIds: [21, 22, 30]
+    }, cookie);
+    assert.equal(picked.status, 201, `Expected 201, got ${picked.status}: ${await picked.clone().text()}`);
+    assert.equal(recipientInserts.length, 1, "고른 사람은 명단 표에 적혀야 한다.");
+    assert.deepEqual(recipientInserts[0][1], [21, 22, 30], "고른 사람이 그대로 실려야 한다.");
+    assert.equal((await picked.json()).recipientCount, 3, "몇 명에게 갔는지 알려 줘야 한다.");
+
+    // 받는 사람의 학년·반·번호는 요청이 아니라 명단에서 가져와야 한다. 요청에서
+    // 받으면 남의 반 아무 번호나 적어 통신문을 꽂을 수 있다.
+    const recipientSql = recordedQueries
+      .map(q => q.sql).filter(s => s.includes("INSERT INTO classroom_notice_recipients")).pop();
+    assert.match(recipientSql, /SELECT \$1, s\.school_id, s\.grade, s\.class_number/,
+      "받는 사람의 학년·반·번호는 명단(school_students)에서 와야 한다.");
+    assert.match(recipientSql, /s\.school_id = \$3/,
+      "다른 학교 학생을 명단에 넣을 수 없어야 한다.");
+
+    // 아무도 안 골랐는데 '고른 사람에게' 보내면 조용히 아무에게도 안 가는 게 아니라
+    // 거절해야 한다.
+    recipientInserts = [];
+    const noOne = await post("/api/teacher/notices", {
+      title: "빈 명단", contentBody: "본문", targetType: "students", studentIds: []
+    }, cookie);
+    assert.equal(noOne.status, 400, "받는 사람이 없으면 보낼 수 없어야 한다.");
+    assert.equal(recipientInserts.length, 0);
+
+    // 읽는 쪽도 그 명단을 봐야 한다. 스텁은 WHERE 를 계산하지 못하니 조건문 자체를
+    // 확인한다 -- 여기가 빠지면 고른 사람에게 보낸 글이 다시 사라진다.
+    assert.match(NOTICE_TARGET_SQL_TEXT, /FROM classroom_notice_recipients nr/,
+      "받는 사람 판정이 명단 표를 봐야 한다.");
+    assert.match(NOTICE_TARGET_SQL_TEXT, /nr\.grade = \$2 AND nr\.class_number = \$3/,
+      "명단 표를 볼 때도 반이 섞인 채로 사람을 맞춰야 한다.");
+    recipientRowCount = 0;
 
     // 17. The teacher collection view is teacher-only.
     sessionRows = [{ id: 42, email: "parent@example.com", role: "user", display_name: "학부모" }];
