@@ -23,8 +23,8 @@
 body {
   min-height: 100vh;
   background-color: var(--bg-dark);
-  background-image: linear-gradient(rgba(7, 10, 24, 0.38), rgba(7, 10, 24, 0.58)), url("/assets/images/math-ox-bg.jpg");
-  background-position: center;
+  background-image: url("/assets/images/math-ox-bg.webp");
+  background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
