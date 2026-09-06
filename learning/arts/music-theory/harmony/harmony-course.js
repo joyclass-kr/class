@@ -727,7 +727,7 @@
 
   function renderDashboard() {
     els.unitList.innerHTML = curriculum.strands.map(function (group) {
-      return '<details class="unit-block skill-strand"><summary><span class="strand-mark" aria-hidden="true">'+strandIcon(group.id)+'</span><span class="unit-summary-copy"><strong>'+escapeHtml(group.title)+'</strong><small>'+escapeHtml(group.description)+'</small></span></summary><div class="lesson-list">'+group.skills.map(skillButtonMarkup).join("")+'</div></details>';
+      return '<details class="unit-block skill-strand"><summary><span class="strand-mark" aria-hidden="true">'+strandIcon(group.id)+'</span><strong>'+escapeHtml(group.title)+'</strong></summary><div class="lesson-list">'+group.skills.map(skillButtonMarkup).join("")+'</div></details>';
     }).join("");
   }
   function strandIcon(id) {
@@ -755,7 +755,7 @@
     const lessonNumber = strand.skills.indexOf(id) + 1;
     const complete = state.completed.has(id);
     const ready = prereqsMet(id);
-    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'"><span class="lesson-copy"><span class="lesson-order">'+lessonNumber+'차시</span><strong>'+escapeHtml(skill.title)+'</strong><small>'+escapeHtml(skill.summary)+'</small>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
+    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'"><span class="lesson-copy"><span class="lesson-order">'+lessonNumber+'차시</span><strong>'+escapeHtml(skill.title)+'</strong>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
   }
 
   function dashboardUrl() {
