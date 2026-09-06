@@ -5,9 +5,17 @@
   --line-soft: #eef1f5;
   --bg: #f5f7fa;
   --card: #ffffff;
-  /* 문항 그림 원본이 1,870px쯤이다. 2배 화면에서 900px이면 거의 원본 그대로
-     찍혀 글씨가 뭉개지지 않는다. 보기·해설도 같은 폭으로 맞춘다. */
-  --sheet: 900px;
+  /* 문항 그림은 원본이 모두 1,240px로 같다. 그래서 화면 폭 하나만 정하면
+     어느 문항이든 배율이 똑같다.
+     그 폭은 가장 길쭉한 문항(1:1.68)이 한 화면에 들어오도록 화면 높이에서
+     거꾸로 잰다. 짧은 문항은 아래가 남는다 — 그게 배율을 지키는 값이다.
+     290px은 거르개와 문항 머리·보기·해설 단추가 차지하는 세로다.
+
+     다만 크롬북 가로(768)처럼 낮은 화면에서는 이 셈이 285px까지 내려가
+     글씨를 못 읽는다. 그래서 바닥을 400px로 둔다. 낮은 화면에서는 가장
+     길쭉한 축의 문항만 조금 밀려 내려가고 나머지는 한 화면에 들어온다.
+     위쪽 620px은 원본(1,240px)의 절반이라 2배 화면에서 딱 떨어지는 한계다. */
+  --sheet: clamp(400px, calc((100vh - 290px) / 1.68), 620px);
   --accent: #2f6bd8;
   --accent-soft: #eaf1fd;
   --right: #1a7f4b;
@@ -79,15 +87,15 @@ main {
 .picker-row {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 8px 0;
+  gap: 10px;
+  padding: 5px 0;
 }
 .picker-row + .picker-row { border-top: 1px solid var(--line-soft); }
 .picker-row[hidden] { display: none; }
-.picker-row--tail { align-items: center; flex-wrap: wrap; gap: 8px 16px; padding-top: 10px; }
+.picker-row--tail { align-items: center; flex-wrap: wrap; gap: 6px 14px; padding-top: 6px; }
 .picker-label {
-  flex: 0 0 40px;
-  padding-top: 6px;
+  flex: 0 0 34px;
+  padding-top: 4px;
   font-size: 0.84rem;
   font-weight: 700;
   color: var(--ink-soft);
@@ -131,15 +139,15 @@ main {
 }
 
 /* 단원 칩 */
-.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
 .chip {
   border: 1px solid var(--line);
   background: #fff;
   color: var(--ink);
   border-radius: 999px;
-  padding: 5px 12px;
+  padding: 3px 9px;
   font: inherit;
-  font-size: 0.86rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -254,8 +262,8 @@ main {
 .figure img {
   display: block;
   margin: 0 auto;
-  width: 100%;
-  max-width: var(--sheet);
+  width: var(--sheet);
+  max-width: 100%;
   height: auto;
   border: 1px solid var(--line-soft);
   border-radius: 6px;
@@ -377,3 +385,37 @@ main {
   .picker-row { flex-wrap: wrap; }
   .choice { min-height: 40px; font-size: 1.15rem; }
 }
+
+/* ── 그림에 세로를 몰아주기 ──
+   문항 그림 말고 차지하는 세로가 400px을 넘으면 길쭉한 문항이 한 화면에
+   들어오지 못한다. 거르개는 회차와 꼬리를 한 줄에 나란히 두고, 시대·단원
+   단추는 한 줄로 흘려 보낸다. 카드 안에서는 보기와 해설 단추를 한 줄에 둔다. */
+.picker {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  align-items: center;
+}
+.picker-row--era,
+.picker-row--unit { grid-column: 1 / -1; }
+.picker-row--select { grid-column: 1; border-top: 1px solid var(--line-soft); }
+.picker-row--tail { grid-column: 2; border-top: 1px solid var(--line-soft); justify-content: flex-end; }
+
+.era-tabs,
+.chips {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding-bottom: 2px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 10px;
+  padding: 8px 10px 8px;
+}
+.item-head { grid-column: 1 / -1; }
+.figure { grid-column: 1 / -1; margin-bottom: 6px; }
+.choices { grid-column: 1; margin-top: 0; }
+.aids { grid-column: 2; margin-top: 0; width: auto; align-self: center; }
+
