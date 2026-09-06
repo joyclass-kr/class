@@ -82,8 +82,7 @@ const CHAPTERS = [
                     "소년은 고양이를 품에 안고 다시 길을 나섰어요.",
                     "그다음 집에서는 고양이를 맡겼습니다. 소년은 이번에도 똑같은 말을 했지요.",
                     "\"제가 가진 것 전부예요. 잘 부탁드립니다.\"",
-                    "\"허, 그 말 참 자주 하는구먼.\"",
-                    "주인이 껄껄 웃었어요."
+                    "주인이 껄껄 웃으며 고양이를 받아 주었어요."
                 ],
                 right: [
                     "그런데 아침에 보니 그 집 개가 고양이를 담 밖으로 쫓아내 버렸지 뭐예요. 고양이는 그길로 어디론가 사라졌지요.",
@@ -162,7 +161,7 @@ const CHAPTERS = [
                     "문을 열고 나온 어머니는 눈이 휘둥그레졌어요. 마당에 황소가 떡하니 서 있었으니까요.",
                     "\"아니, 이 소는 대체 어디서 났느냐?\"",
                     "\"어머니, 놀라지 마세요.\"",
-                    "어머니는 마당과 아들을 번갈아 보았답니다."
+                    "어머니는 소와 아들을 번갈아 보았답니다."
                 ]
             },
             {
@@ -296,8 +295,7 @@ const EN = {
                         "The boy tucked the cat under his arm and set off again.",
                         "At the next house he left the cat. He said the very same words.",
                         { t: "\"This is everything I own. Please take good care of it.\"", v: "boy" },
-                        { t: "\"Ha! You say that a lot.\"", v: "man" },
-                        "The owner laughed out loud."
+                        "The owner laughed out loud and took the cat in."
                     ],
                     right: [
                         "But in the morning the house dog had chased the cat over the wall. The cat ran off and was never seen again.",
@@ -373,7 +371,7 @@ const EN = {
                         "His mother opened the door and her eyes went round. There was an ox standing right there in the yard.",
                         { t: "\"Goodness! Where did this ox come from?\"", v: "mother" },
                         { t: "\"Mother, don't be scared.\"", v: "boy" },
-                        "She looked from the yard to her son and back again."
+                        "She looked from the ox to her son and back again."
                     ]
                 },
                 {
@@ -566,8 +564,8 @@ const EN = {
             { w: "set off again", k: "다시 길을 나섰다", s: "and set off again" },
             { w: "left (leave)", k: "맡기다, 두고 가다", s: "At the next house he left the cat." },
             { w: "the very same words", k: "똑같은 그 말", s: "He said the very same words." },
-            { w: "a lot", k: "자주, 많이", s: "Ha! You say that a lot." },
-            { w: "laughed out loud (laugh out loud)", k: "소리 내어 웃었다", s: "The owner laughed out loud." },
+            { w: "took ~ in (take in)", k: "받아 주었다", s: "The owner laughed out loud and took the cat in." },
+            { w: "laughed out loud (laugh out loud)", k: "소리 내어 웃었다", s: "The owner laughed out loud and took the cat in." },
             { w: "had chased (chase)", k: "쫓아냈다", s: "the house dog had chased the cat" },
             { w: "over the wall", k: "담 너머로", s: "chased the cat over the wall" },
             { w: "ran off (run off)", k: "달아나 버렸다", s: "The cat ran off" },
@@ -645,7 +643,7 @@ const EN = {
             { w: "Goodness!", k: "아이고, 세상에!", s: "Goodness! Where did this ox come from?" },
             { w: "Where did ~ come from?", k: "~은 어디서 났느냐?", s: "Where did this ox come from?" },
             { w: "don't be scared", k: "놀라지 마세요", s: "Mother, don't be scared." },
-            { w: "looked from ~ to ... (look)", k: "~와 ...을 번갈아 보았다", s: "She looked from the yard to her son and back again." }
+            { w: "looked from ~ to ... (look)", k: "~와 ...을 번갈아 보았다", s: "She looked from the ox to her son and back again." }
         ],
         "10-millet.webp": [
             { w: "took ~ out of ... (take out of)", k: "...에서 ~을 꺼냈다", s: "The boy took a sheet of paper out of his coat" },

@@ -32,7 +32,7 @@ const CHAPTERS = [
                 right: [
                     "손바닥 위에 하얀 구슬 하나가 놓였어요. 등잔불을 받아 은은하게 빛났지요.",
                     "\"이만한 진주는 이 고을에 다시없을 게요.\"",
-                    "나그네도 저도 모르게 몸을 기울였어요.",
+                    "나그네는 저도 모르게 몸을 기울였어요.",
                     "\"참으로 곱습니다.\"",
                     "그때 마당에 있던 거위가 뒤뚱뒤뚱 방문 앞까지 걸어 들어왔어요."
                 ]
@@ -42,10 +42,10 @@ const CHAPTERS = [
                 emoji: "🦢",
                 left: [
                     "주인이 진주를 도로 주머니에 넣으려던 참이었어요.",
-                    "그런데 그만 손끝이 미끄러졌지 뭐예요.",
+                    "그런데 그만 진주가 손끝에서 미끄러졌지 뭐예요.",
                     "\"어이쿠!\"",
                     "데구루루—",
-                    "진주가 방바닥을 굴러갔습니다."
+                    "그대로 방바닥을 굴러갔습니다."
                 ],
                 right: [
                     "하필 그때 주인은 등을 돌리고 보따리를 뒤지고 있었지요.",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                     "나그네는 순순히 두 팔을 벌렸어요. 소매를 털고 봇짐까지 풀어 보였지요.",
                     "그런데도 나그네는 끝내 그 말을 하지 않았습니다.",
                     "거위가 삼켰다는 말이었어요.",
-                    "말만 하면 풀려날 수 있었는데도요.",
+                    "말만 하면 오해를 풀 수 있었는데도요.",
                     "주인의 얼굴이 붉으락푸르락해졌습니다."
                 ]
             },
@@ -139,9 +139,9 @@ const CHAPTERS = [
                 emoji: "✨",
                 left: [
                     "이튿날 아침이었어요.",
-                    "거위가 기지개를 켜며 뒤뚱뒤뚱 자리를 옮겼습니다.",
-                    "\"저 거위가 왜 저기 있었지?\"",
-                    "그러자 거위가 앉아 있던 자리에서 무언가 반짝했지요."
+                    "거위가 기지개를 켜더니 묶인 자리에 똥을 누었어요.",
+                    "그때에야 나그네가 주인을 불렀습니다. 거위가 누어 놓은 똥을 좀 보시라고요.",
+                    "그 똥 속에서 무언가 반짝했지요."
                 ],
                 right: [
                     "\"저게 뭐야?\"",
@@ -155,7 +155,7 @@ const CHAPTERS = [
                 art: "09-untie.webp",
                 emoji: "🙇",
                 left: [
-                    "주인이 맨발로 뛰어나와 밧줄을 풀었어요.",
+                    "주인이 허겁지겁 밧줄을 풀었어요.",
                     "\"여보시오! 여보시오!\"",
                     "손이 어찌나 떨리는지 매듭이 자꾸 미끄러졌습니다.",
                     "\"내가 큰 잘못을 했소. 정말 미안하오.\""
@@ -181,8 +181,8 @@ const CHAPTERS = [
                     "\"어젯밤에 저 거위의 배를 갈랐겠지요.\"",
                     "주인이 숨을 들이켰습니다.",
                     "\"저는 하룻밤 묶여 있으면 그만이지만요.\"",
-                    "\"진주 한 알에 목숨을 빼앗을 수는 없지 않습니까.\"",
-                    "주인은 그 자리에 고개를 숙이고 말았답니다."
+                    "\"진주 한 알에 거위 목숨을 빼앗을 수는 없지 않습니까.\"",
+                    "주인은 깊이 고개를 숙였어요. 아침상을 차려 대접하고 나그네를 배웅했답니다."
                 ]
             }
         ],
@@ -199,7 +199,7 @@ const COVER = {
     intro: [
         "진주를 삼킨 거위는 지은이가 없는 구전 설화예요. 불교와 함께 전해진 이야기로 보는 학자가 많아, 절에서 스님이 들려주던 이야기로도 전한답니다.",
         "인도와 중국에도 이와 아주 닮은 이야기가 있어요. 이야기가 나라를 건너오면 등장인물과 배경이 그 나라 것으로 바뀌지요. 같은 뼈대에 우리 옷을 입혀 놓은 셈이랍니다.",
-        "거위는 옛날 시골집 마당에서 흔히 기르던 새예요. 낯선 사람이 오면 요란하게 울어서 개 대신 집을 지키는 노릇도 했지요. 하필 거위가 진주를 삼킨 것도, 마당을 늘 어슬렁거리던 새였기 때문이랍니다."
+        "거위는 옛날 시골집 마당에서 흔히 기르던 가축이에요. 낯선 사람이 오면 요란하게 울어서 개 대신 집을 지키는 노릇도 했지요. 하필 거위가 진주를 삼킨 것도, 마당을 늘 어슬렁거리던 새였기 때문이랍니다."
     ]
 };
 
@@ -215,7 +215,7 @@ const EN = {
         intro: [
             "The Goose That Swallowed the Pearl is an old Korean tale with no known author. Many think it came here with Buddhism.",
             "India and China have tales very much like it. When a story crosses into a new country, the people and places turn into that country's own.",
-            "Geese were kept in farmyards long ago. They honk at strangers, so they guarded the house the way a dog does."
+            "Geese were kept as farm animals long ago. They honk at strangers, so they guarded the house the way a dog does."
         ]
     },
     chapters: [
@@ -261,10 +261,10 @@ const EN = {
                     emoji: "🦢",
                     left: [
                         "The owner was putting the pearl back into the pouch.",
-                        "And then his fingers slipped.",
+                        "And then the pearl slipped from his fingers.",
                         { t: "\"Oh no!\"", v: "old" },
                         "Roll, roll, roll—",
-                        "The pearl went rolling across the floor."
+                        "It went rolling across the floor."
                     ],
                     right: [
                         "Of all moments, the owner had turned his back and was digging in a bundle.",
@@ -310,7 +310,7 @@ const EN = {
                         "The traveller spread both arms at once. He shook out his sleeves and untied his pack as well.",
                         "And still he never said the one thing.",
                         "That the goose had swallowed it.",
-                        "One sentence would have set him free.",
+                        "One sentence would have cleared it all up.",
                         "The owner's face went red, then purple."
                     ]
                 },
@@ -358,9 +358,9 @@ const EN = {
                     emoji: "✨",
                     left: [
                         "Morning came.",
-                        "The goose stretched itself and waddled off to a new spot.",
-                        { t: "\"Why was that goose sitting over there?\"", v: "old" },
-                        "And on the ground where it had been sitting, something flashed."
+                        "The goose stretched itself and left a dropping where it was tethered.",
+                        "Only then did the traveller call the owner over. Would he take a look at what the goose had left.",
+                        "And in it something flashed."
                     ],
                     right: [
                         { t: "\"What is that?\"", v: "old" },
@@ -374,7 +374,7 @@ const EN = {
                     art: "09-untie.webp",
                     emoji: "🙇",
                     left: [
-                        "The owner ran out barefoot and pulled at the ropes.",
+                        "The owner pulled at the ropes in a rush.",
                         { t: "\"Sir! Sir!\"", v: "old" },
                         "His hands shook so much that the knots kept slipping.",
                         { t: "\"I have done you a great wrong. I am truly sorry.\"", v: "old" }
@@ -400,8 +400,8 @@ const EN = {
                         { t: "\"you would have cut that goose open last night.\"", v: "narration" },
                         "The owner drew in his breath.",
                         { t: "\"I only had to stay tied up for one night.\"", v: "narration" },
-                        { t: "\"You can't take a life for one pearl, can you?\"", v: "narration" },
-                        "The owner bowed his head where he stood."
+                        { t: "\"You can't take a goose's life for one pearl, can you?\"", v: "narration" },
+                        "The owner bowed his head where he stood. Then he set out a good breakfast for the traveller and saw him off."
                     ]
                 }
             ],
@@ -444,9 +444,9 @@ const EN = {
             { w: "crosses into ~", k: "~으로 건너가다", s: "When a story crosses into a new country" },
             { w: "turn into ~", k: "~으로 바뀌다", s: "the people and the places turn into that country's own" },
             { w: "the bones", k: "뼈대", s: "The bones are the same; the clothes are Korean." },
-            { w: "were kept (keep)", k: "길렀다", s: "Geese were kept in farmyards long ago." },
-            { w: "geese (goose)", k: "거위들", s: "Geese were kept in farmyards long ago." },
-            { w: "farmyard", k: "시골집 마당", s: "Geese were kept in farmyards long ago." },
+            { w: "were kept (keep)", k: "길렀다", s: "Geese were kept as farm animals long ago." },
+            { w: "geese (goose)", k: "거위들", s: "Geese were kept as farm animals long ago." },
+            { w: "farmyard", k: "시골집 마당", s: "Geese were kept as farm animals long ago." },
             { w: "honk", k: "꽥꽥 울다", s: "They honk loudly at strangers" },
             { w: "strangers", k: "낯선 사람들", s: "They honk loudly at strangers" },
             { w: "guarded (guard)", k: "지켰다", s: "so they guarded the house the way a dog does" },
@@ -490,10 +490,10 @@ const EN = {
         ],
         "03-swallow.webp": [
             { w: "was putting ~ back (put back)", k: "~을 도로 넣고 있었다", s: "The owner was putting the pearl back into the pouch." },
-            { w: "slipped (slip)", k: "미끄러졌다", s: "And then his fingers slipped." },
+            { w: "slipped (slip)", k: "미끄러졌다", s: "And then the pearl slipped from his fingers." },
             { w: "Roll, roll, roll—", k: "데구루루", s: "Roll, roll, roll—" },
-            { w: "went rolling (go rolling)", k: "굴러갔다", s: "The pearl went rolling across the floor." },
-            { w: "across the floor", k: "방바닥을 가로질러", s: "The pearl went rolling across the floor." },
+            { w: "went rolling (go rolling)", k: "굴러갔다", s: "It went rolling across the floor." },
+            { w: "across the floor", k: "방바닥을 가로질러", s: "It went rolling across the floor." },
             { w: "Of all moments", k: "하필 그때", s: "Of all moments, the owner had turned his back" },
             { w: "had turned his back", k: "등을 돌리고 있었다", s: "the owner had turned his back and was digging in a bundle" },
             { w: "digging in ~ (dig)", k: "~을 뒤지는", s: "was digging in a bundle" },
@@ -529,7 +529,7 @@ const EN = {
             { w: "sleeves", k: "소매", s: "He shook out his sleeves" },
             { w: "untied (untie)", k: "풀었다", s: "untied his pack as well" },
             { w: "the one thing", k: "그 한마디", s: "And still he never said the one thing." },
-            { w: "would have set him free", k: "그를 풀려나게 했을 것이다", s: "One sentence would have set him free." },
+            { w: "would have set him free", k: "그를 풀려나게 했을 것이다", s: "One sentence would have cleared it all up." },
             { w: "went red, then purple", k: "붉으락푸르락해졌다", s: "The owner's face went red, then purple." }
         ],
         "06-tied.webp": [
@@ -564,10 +564,10 @@ const EN = {
         ],
         "08-morning.webp": [
             { w: "stretched itself", k: "기지개를 켰다", s: "The goose stretched itself" },
-            { w: "waddled off (waddle)", k: "뒤뚱뒤뚱 갔다", s: "waddled off to a new spot" },
-            { w: "spot", k: "자리", s: "waddled off to a new spot" },
-            { w: "was sitting", k: "앉아 있었다", s: "Why was that goose sitting over there?" },
-            { w: "over there", k: "저기에", s: "Why was that goose sitting over there?" },
+            { w: "left a dropping", k: "똥을 누었다", s: "The goose stretched itself and left a dropping" },
+            { w: "tethered", k: "매여 있는", s: "where it was tethered" },
+            { w: "call ~ over (call over)", k: "불렀다", s: "Only then did the traveller call the owner over." },
+            { w: "take a look at ~", k: "좀 보다", s: "Would he take a look at what the goose had left." },
             { w: "flashed (flash)", k: "반짝했다", s: "something flashed" },
             { w: "bent down (bend)", k: "몸을 숙였다", s: "The owner went over and bent down." },
             { w: "froze (freeze)", k: "얼어붙었다", s: "Then he froze where he stood." },
@@ -577,7 +577,7 @@ const EN = {
             { w: "came rolling", k: "굴러 나왔다", s: "a white pearl came rolling" }
         ],
         "09-untie.webp": [
-            { w: "barefoot", k: "맨발로", s: "The owner ran out barefoot" },
+            { w: "in a rush", k: "허겁지겁", s: "The owner pulled at the ropes in a rush." },
             { w: "pulled at ~", k: "~을 잡아당겼다", s: "pulled at the ropes" },
             { w: "ropes", k: "밧줄", s: "pulled at the ropes" },
             { w: "so much that ~", k: "너무 ~해서", s: "His hands shook so much that the knots kept slipping." },
@@ -601,8 +601,8 @@ const EN = {
             { w: "would have cut ~ open", k: "~의 배를 갈랐을 것이다", s: "you would have cut that goose open last night" },
             { w: "drew in his breath (draw in)", k: "숨을 들이켰다", s: "The owner drew in his breath." },
             { w: "I only had to ~", k: "저는 ~하기만 하면 되었다", s: "I only had to stay tied up for one night." },
-            { w: "take a life", k: "목숨을 빼앗다", s: "You can't take a life for one pearl, can you?" },
-            { w: "bowed his head", k: "고개를 숙였다", s: "The owner bowed his head where he stood." }
+            { w: "take a life", k: "목숨을 빼앗다", s: "You can't take a goose's life for one pearl, can you?" },
+            { w: "bowed his head", k: "고개를 숙였다", s: "The owner bowed his head where he stood. Then he set out a good breakfast for the traveller and saw him off." }
         ],
         "after": [
             { w: "at the same time", k: "동시에", s: "This is an old Korean tale and at the same time a Buddhist one." },

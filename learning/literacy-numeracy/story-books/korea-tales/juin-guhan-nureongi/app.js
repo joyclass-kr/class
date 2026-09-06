@@ -31,7 +31,7 @@ const CHAPTERS = [
                     "누렁이는 주막 마루 밑에 엎드려 기다렸어요."
                 ],
                 right: [
-                    "해가 다 지고서야 김 서방이 겨우 일어났습니다. 걸음이 이리 비틀 저리 비틀했지요.",
+                    "해가 질 무렵에야 김 서방이 겨우 일어났습니다. 걸음이 이리 비틀 저리 비틀했지요.",
                     "\"어이쿠, 다리가 왜 이러나.\"",
                     "누렁이가 그 곁을 바싹 따라 걸었어요. 주인이 넘어질 것 같으면 얼른 몸으로 받쳐 주었답니다.",
                     "누렁이는 앞서가는 법이 없었답니다."
@@ -148,7 +148,7 @@ const CHAPTERS = [
                     "동그랗게 젖은 땅 한가운데, 김 서방은 아무것도 모르고 코를 골고 있었지요.",
                     "불길은 그 둘레를 삼키고 지나갔답니다.",
                     "그 옆에 누렁이가 털썩 쓰러졌습니다. 숨이 가빠 혀를 길게 늘어뜨린 채였어요.",
-                    "더는 일어설 힘이 없었답니다."
+                    "털이 까맣게 타 있었어요. 더는 일어설 힘이 없었답니다."
                 ]
             },
             {
@@ -161,8 +161,7 @@ const CHAPTERS = [
                     "김 서방은 한참을 두리번거렸어요."
                 ],
                 right: [
-                    "그리고 그 옆에 흠뻑 젖은 누렁이가 눈을 감고 누워 있었습니다.",
-                    "털이 온통 그을려 있었어요.",
+                    "그 옆에는 물에 흠뻑 젖은 채 털이 새까맣게 타 버린 누렁이가 눈을 감고 누워 있었습니다.",
                     "\"누렁아! 누렁아!\"",
                     "김 서방이 아무리 흔들어도 누렁이는 꼬리 한 번 흔들지 못했답니다.",
                     "김 서방은 그제야 무슨 일이 있었는지 알았답니다."
@@ -175,13 +174,13 @@ const CHAPTERS = [
                     "김 서방은 누렁이를 들쳐 업고 집으로 내달렸어요. 눈물이 앞을 가려 몇 번이나 넘어졌지요.",
                     "누렁이의 몸이 축 늘어져 있었어요.",
                     "\"제발 살아만 다오.\"",
-                    "며칠을 꼬박 먹이고 돌보자 누렁이는 겨우 기운을 차렸습니다."
+                    "그러나 누렁이는 끝내 살아나지 못했어요."
                 ],
                 right: [
-                    "김 서방은 불이 멈춘 자리에 나무를 심었어요. 지팡이를 꽂았더니 뿌리가 내렸다고도 해요.",
+                    "김 서방은 불이 멈춘 자리에 누렁이를 묻고 나무를 심었어요. 지팡이를 꽂았더니 뿌리가 내렸다고도 해요.",
                     "나무는 곧게 자라 큰 그늘을 드리웠어요.",
-                    "사람들은 그 나무를 개 나무라고 불렀지요. 고을 이름이 오수가 된 것도 그래서랍니다.",
-                    "개 오 자에 나무 수 자를 쓴답니다."
+                    "사람들은 그 나무를 개 나무라고 불렀어요. 고을 이름 오수도 거기서 왔지요.",
+                    "개 오(獒) 자에 나무 수(樹) 자를 씁니다."
                 ]
             }
         ],
@@ -197,7 +196,7 @@ const COVER = {
     title: "주인을 구한 누렁이",
     intro: [
         "주인을 구한 누렁이는 지은이가 없는 구전 설화예요. 오수의 의견 이야기라는 이름으로 더 널리 알려져 있답니다.",
-        "이 이야기는 전라북도 임실군 오수에 실제로 전해 내려와요. 오수라는 땅 이름은 개를 뜻하는 글자와 나무를 뜻하는 글자를 합친 말이지요. 마을에는 개를 기리는 비석과 무덤이 지금도 남아 있고, 해마다 개를 기리는 잔치도 열린답니다.",
+        "이 이야기는 전북특별자치도 임실군 오수에 실제로 전해 내려와요. 오수(獒樹)라는 땅 이름은 개를 뜻하는 글자와 나무를 뜻하는 글자를 합친 말이지요. 마을에는 개를 기리는 비석과 무덤이 지금도 남아 있고, 해마다 개를 기리는 잔치도 열린답니다.",
         "기록으로도 아주 오래된 이야기예요. 고려 시대에 엮인 책에 이미 실려 있으니, 적어도 칠백 년 넘게 전해져 온 셈이지요. 우리나라 의견 설화를 대표하는 이야기랍니다."
     ]
 };
@@ -250,7 +249,7 @@ const EN = {
                         "Nureongi lay under the inn floor and waited."
                     ],
                     right: [
-                        "Only after the sun had gone did Kim get up. He wove one way and then the other.",
+                        "Only as the sun was going down did Kim get up. He wove one way and then the other.",
                         { t: "\"Dear me. What's wrong with my legs.\"", v: "man" },
                         "Nureongi walked close beside him, propping him up with his body whenever he looked like falling.",
                         "The dog never once walked in front."
@@ -367,7 +366,7 @@ const EN = {
                         "In the middle of that round patch of wet ground, Kim snored on, knowing nothing.",
                         "The fire swallowed everything round it and passed by.",
                         "And Nureongi dropped down beside him, panting, his tongue right out.",
-                        "He had no strength left to stand."
+                        "His own coat was burnt black too. He had no strength left to stand."
                     ]
                 },
                 {
@@ -380,8 +379,7 @@ const EN = {
                         "He looked all round him for a long time."
                     ],
                     right: [
-                        "And there beside him lay Nureongi, soaking wet, his eyes shut.",
-                        "His coat was scorched all over.",
+                        "And there beside him lay Nureongi, soaking wet, his coat burnt black, his eyes shut.",
                         { t: "\"Nureongi! Nureongi!\"", v: "man" },
                         "However Kim shook him, the dog could not wag his tail once.",
                         "And then Kim understood what had happened."
@@ -394,10 +392,10 @@ const EN = {
                         "Kim took the dog on his back and ran for home. Tears blinded him and he fell more than once.",
                         "The dog's body hung limp.",
                         { t: "\"Only live. Just live.\"", v: "man" },
-                        "After days of feeding and nursing, Nureongi got his strength back."
+                        "But Nureongi never came back to himself again."
                     ],
                     right: [
-                        "Kim planted a tree where the fire had stopped. Some say he pushed his stick into the ground and it took root.",
+                        "Kim buried the dog where the fire had stopped and planted a tree beside him. Some say he pushed his stick into the ground and it took root.",
                         "The tree grew straight and threw a wide shade.",
                         "People called it the dog tree. And that is how the district came to be called Osu.",
                         "It is written with the character for dog and the character for tree."
@@ -459,7 +457,7 @@ const EN = {
             { w: "It's been a long time!", k: "오랜만일세!", s: "It's been a long time! Come and have a drink!" },
             { w: "kept coming", k: "자꾸 늘었다", s: "One cup became two, and the drinks kept coming." },
             { w: "lay under ~ (lie)", k: "밑에 엎드렸다", s: "Nureongi lay under the inn floor and waited." },
-            { w: "Only after ~ did he ...", k: "~하고서야 비로소", s: "Only after the sun had gone did Kim get up." },
+            { w: "Only after ~ did he ...", k: "~하고서야 비로소", s: "Only as the sun was going down did Kim get up." },
             { w: "wove (weave)", k: "비틀거렸다", s: "He wove one way and then the other." },
             { w: "propping ~ up (prop)", k: "몸으로 받쳐 주는", s: "propping him up with his body" },
             { w: "whenever ~", k: "~할 것 같으면", s: "whenever he looked like falling" },
@@ -544,7 +542,7 @@ const EN = {
             { w: "unburnt", k: "타지 않은", s: "The only unburnt place was where he had been lying" },
             { w: "A chill went down his back", k: "등골이 서늘해졌다", s: "A chill went down his back." },
             { w: "soaking wet", k: "흠뻑 젖은", s: "there beside him lay Nureongi, soaking wet" },
-            { w: "scorched (scorch)", k: "그을린", s: "His coat was scorched all over." },
+            { w: "burnt black", k: "새까맣게 탄", s: "his coat burnt black, his eyes shut" },
             { w: "However ~ shook him", k: "아무리 흔들어도", s: "However Kim shook him, the dog could not wag his tail once." },
             { w: "understood what had happened", k: "무슨 일이 있었는지 알았다", s: "And then Kim understood what had happened." }
         ],
@@ -553,9 +551,9 @@ const EN = {
             { w: "blinded him (blind)", k: "앞을 가렸다", s: "Tears blinded him and he fell more than once." },
             { w: "hung limp (hang)", k: "축 늘어졌다", s: "The dog's body hung limp." },
             { w: "Only live.", k: "제발 살아만 다오.", s: "Only live. Just live." },
-            { w: "nursing (nurse)", k: "돌보기", s: "After days of feeding and nursing" },
-            { w: "got his strength back", k: "기운을 차렸다", s: "Nureongi got his strength back" },
-            { w: "planted (plant)", k: "심었다", s: "Kim planted a tree where the fire had stopped." },
+            { w: "never came back to himself", k: "끝내 살아나지 못했다", s: "But Nureongi never came back to himself again." },
+            { w: "buried (bury)", k: "묻었다", s: "Kim buried the dog where the fire had stopped" },
+            { w: "planted (plant)", k: "심었다", s: "Kim buried the dog where the fire had stopped and planted a tree beside him." },
             { w: "took root", k: "뿌리가 내렸다", s: "he pushed his stick into the ground and it took root" },
             { w: "threw a wide shade (throw)", k: "큰 그늘을 드리웠다", s: "The tree grew straight and threw a wide shade." },
             { w: "came to be called ~", k: "~라 불리게 되었다", s: "that is how the district came to be called Osu" },

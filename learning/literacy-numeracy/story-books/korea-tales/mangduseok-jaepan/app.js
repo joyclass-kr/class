@@ -15,7 +15,7 @@ const CHAPTERS = [
                 right: [
                     "마침 길가에 커다란 돌기둥 하나가 서 있었습니다. 무덤 앞에 세우는 망두석이었지요.",
                     "장수는 그 그늘에 짐을 내려놓고 털썩 주저앉았어요.",
-                    "매미 소리가 요란했어요.",
+                    "날씨가 어찌나 뜨거운지 새소리마저 들리지 않았어요.",
                     "\"잠깐만 눈을 붙이자. 아주 잠깐만.\"",
                     "그러고는 그대로 코를 골며 잠이 들었답니다."
                 ]
@@ -145,26 +145,26 @@ const CHAPTERS = [
                     "사람들은 그제야 아차 싶어 고개를 숙였지요. 마당이 다시 조용해졌어요."
                 ],
                 right: [
-                    "\"웃은 자는 벌로 오늘 안에 비단 한 필씩 바쳐라!\"",
+                    "\"웃은 자는 벌로 내일 낮까지 비단 한 필씩 바쳐라!\"",
                     "\"예? 비단을요?\"",
                     "\"비단이 어디 흔한 것이오!\"",
-                    "웃던 사람들은 얼굴이 새파래져서 뿔뿔이 흩어졌답니다.",
-                    "저마다 비단을 구하느라 온 고을을 뛰어다녔지요."
+                    "아전들은 구경 온 사람들의 이름을 하나하나 적어 두고 돌려보냈어요.",
+                    "웃던 사람들은 얼굴이 새파래져서 저마다 비단을 구하느라 온 고을을 뛰어다녔답니다."
                 ]
             },
             {
                 art: "09-silk.webp",
                 emoji: "🧶",
                 left: [
-                    "저녁이 되자 관아 마당에 비단이 수북이 쌓였습니다.",
+                    "이튿날 낮이 되자 관아 마당에 비단이 수북이 쌓였습니다.",
                     "온 고을의 비단이 다 모인 것 같았어요.",
                     "원님이 비단 장수를 가까이 불렀지요.",
                     "\"이 중에 네 것이 있는지 잘 보아라.\""
                 ],
                 right: [
                     "장수는 한 필 한 필 손으로 만져 보며 살폈습니다. 그러다 갑자기 소리쳤어요.",
-                    "\"이겁니다! 이건 제가 짠 비단이 틀림없어요!\"",
-                    "원님이 고개를 끄덕였어요.",
+                    "\"이겁니다! 이것도, 이것도 제가 짠 비단이 틀림없어요!\"",
+                    "여러 필이 한꺼번에 나왔습니다. 도둑에게 비단이 있다는 소문을 듣고 가서 산 사람이 여럿이었거든요.",
                     "\"어찌 그리 잘 아느냐?\"",
                     "\"끝에다 제 이름 한 글자를 넣어 짰습니다.\""
                 ]
@@ -173,14 +173,14 @@ const CHAPTERS = [
                 art: "10-caught.webp",
                 emoji: "⚖️",
                 left: [
-                    "그 비단을 바친 사람이 곧 도둑이었습니다. 포졸들이 달려들어 그를 붙잡았지요.",
+                    "그 비단을 바치고 또 여러 사람에게 판 사람이 곧 도둑이었습니다. 포졸들이 달려들어 그를 붙잡았지요.",
                     "도둑은 고개를 푹 숙인 채 아무 말도 하지 못했어요.",
                     "원님이 그제야 빙그레 웃으며 말했습니다.",
                     "\"돌이 말을 해 줄 리가 있겠느냐.\""
                 ],
                 right: [
                     "\"나는 처음부터 사람들을 불러 모으려던 것이었다.\"",
-                    "\"도둑도 구경을 왔다가 함께 웃었을 테니까.\"",
+                    "\"고을의 비단을 죄다 걷어 놓으면 훔쳐 간 비단도 그 속에 섞여 나올 테니까.\"",
                     "\"과연 사또십니다!\"",
                     "구경꾼들은 그제야 무릎을 탁 쳤답니다. 사또의 속을 아무도 몰랐던 것이지요."
                 ]
@@ -235,7 +235,7 @@ const EN = {
                     right: [
                         "By the road stood a tall stone post — a grave post, of the kind set in front of a tomb.",
                         "The pedlar put his bundle down in its shade and dropped to the ground.",
-                        "The cicadas were loud.",
+                        "It was so hot that not even a bird could be heard.",
                         { t: "\"Just a short nap. Only a short one.\"", v: "man" },
                         "And he fell asleep there and snored."
                     ]
@@ -365,26 +365,26 @@ const EN = {
                         "Only then did people catch themselves and bow their heads. The yard went quiet again."
                     ],
                     right: [
-                        { t: "\"Everyone who laughed will bring one roll of silk before the day is out!\"", v: "old" },
+                        { t: "\"Everyone who laughed will bring one roll of silk by noon tomorrow!\"", v: "old" },
                         { t: "\"What? Silk?\"", v: "man" },
                         { t: "\"Silk isn't easy to come by!\"", v: "granny" },
-                        "The people who had laughed went white and scattered.",
-                        "They ran all over the district looking for silk."
+                        "The clerks wrote down the name of every person who had come to watch, and sent them home.",
+                        "The people who had laughed went white and ran all over the district looking for silk."
                     ]
                 },
                 {
                     art: "09-silk.webp",
                     emoji: "🧶",
                     left: [
-                        "By evening the silk was piled high in the court yard.",
+                        "By noon the next day the silk was piled high in the court yard.",
                         "It looked like all the silk in the district.",
                         "The magistrate called the pedlar closer.",
                         { t: "\"Look well and see if any of this is yours.\"", v: "old" }
                     ],
                     right: [
                         "The pedlar felt his way through the rolls one at a time. Then he suddenly cried out.",
-                        { t: "\"This one! I wove this myself, I'm certain of it!\"", v: "man" },
-                        "The magistrate nodded.",
+                        { t: "\"This one! And this, and this — I wove them myself, I'm certain of it!\"", v: "man" },
+                        "Several rolls came out at once. Others had bought silk from the thief.",
                         { t: "\"How can you be so sure?\"", v: "old" },
                         { t: "\"I wove one character of my name into the end.\"", v: "man" }
                     ]
@@ -393,7 +393,7 @@ const EN = {
                     art: "10-caught.webp",
                     emoji: "⚖️",
                     left: [
-                        "The one who had brought that roll was the thief. The constables took hold of him.",
+                        "The one who had brought a roll and sold the rest was the thief. The constables took hold of him.",
                         "He hung his head and could not say a word.",
                         "Only now did the magistrate smile.",
                         { t: "\"Did you think a stone would answer me?\"", v: "old" }
@@ -454,7 +454,7 @@ const EN = {
             { w: "shade", k: "그늘", s: "Let me rest in that shade a while." },
             { w: "post", k: "돌기둥", s: "By the road stood a tall stone post" },
             { w: "tomb", k: "무덤", s: "of the kind set in front of a tomb" },
-            { w: "cicadas", k: "매미", s: "The cicadas were loud." },
+            { w: "cicadas", k: "매미", s: "It was so hot that not even a bird could be heard." },
             { w: "nap", k: "잠깐 눈 붙이기", s: "Just a short nap." },
             { w: "snored (snore)", k: "코를 골았다", s: "And he fell asleep there and snored." }
         ],
@@ -539,21 +539,21 @@ const EN = {
             { w: "respect", k: "예의, 무엄하지 않음", s: "Where is your respect!" },
             { w: "catch themselves", k: "아차 싶어 하다", s: "Only then did people catch themselves and bow their heads." },
             { w: "a roll of silk", k: "비단 한 필", s: "Everyone who laughed will bring one roll of silk" },
-            { w: "before the day is out", k: "오늘 안에", s: "bring one roll of silk before the day is out" },
+            { w: "by noon tomorrow", k: "내일 낮까지", s: "bring one roll of silk by noon tomorrow" },
             { w: "easy to come by", k: "흔한", s: "Silk isn't easy to come by!" },
-            { w: "went white", k: "얼굴이 새파래졌다", s: "The people who had laughed went white and scattered." },
-            { w: "scattered (scatter)", k: "뿔뿔이 흩어졌다", s: "went white and scattered" }
+            { w: "went white", k: "얼굴이 새파래졌다", s: "The people who had laughed went white" },
+            { w: "wrote down (write down)", k: "적어 두었다", s: "The clerks wrote down the name of every person who had come to watch" }
         ],
         "09-silk.webp": [
-            { w: "piled high", k: "수북이 쌓인", s: "By evening the silk was piled high in the court yard." },
+            { w: "piled high", k: "수북이 쌓인", s: "By noon the next day the silk was piled high in the court yard." },
             { w: "It looked like ~", k: "~ 같았다", s: "It looked like all the silk in the district." },
             { w: "called ~ closer", k: "가까이 불렀다", s: "The magistrate called the pedlar closer." },
             { w: "Look well", k: "잘 보아라", s: "Look well and see if any of this is yours." },
             { w: "felt his way through ~", k: "손으로 만져 보며 살폈다", s: "The pedlar felt his way through the rolls" },
             { w: "one at a time", k: "한 필씩", s: "felt his way through the rolls one at a time" },
             { w: "cried out", k: "소리쳤다", s: "Then he suddenly cried out." },
-            { w: "I wove ~ (weave)", k: "내가 짰다", s: "This one! I wove this myself" },
-            { w: "I'm certain of it", k: "틀림없다", s: "I wove this myself, I'm certain of it!" },
+            { w: "I wove ~ (weave)", k: "내가 짰다", s: "I wove them myself, I'm certain of it!" },
+            { w: "I'm certain of it", k: "틀림없다", s: "I wove them myself, I'm certain of it!" },
             { w: "character", k: "글자", s: "I wove one character of my name into the end." }
         ],
         "10-caught.webp": [
@@ -607,7 +607,7 @@ const QUIZ = [
     { q: "원님이 포졸들에게 잡아 오라고 한 것은 무엇인가요?", choices: ["비단 장수", "돌기둥", "구경꾼들"], answer: 1 },
     { q: "돌은 원님의 물음에 어떻게 했나요?", choices: ["아무 말이 없었다", "크게 소리쳤다", "고개를 저었다"], answer: 0 },
     { q: "구경꾼들이 웃자 원님은 어떻게 했나요?", choices: ["돌을 노려보았다", "수염을 쓸며 생각했다", "상을 탁 내리쳤다"], answer: 2 },
-    { q: "저녁이 되자 관아 마당에 무엇이 쌓였나요?", choices: ["밧줄 더미", "온 고을의 비단", "돌기둥 여러 개"], answer: 1 },
+    { q: "이튿날 낮에 관아 마당에 무엇이 쌓였나요?", choices: ["밧줄 더미", "온 고을의 비단", "돌기둥 여러 개"], answer: 1 },
     { q: "원님이 돌을 재판한 진짜 까닭은 무엇인가요?", choices: ["사람을 모으려고", "돌이 말할까 봐", "벌을 주려고"], answer: 0 },
     {
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",

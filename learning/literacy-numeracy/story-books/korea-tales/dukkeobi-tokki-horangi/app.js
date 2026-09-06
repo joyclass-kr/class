@@ -8,7 +8,7 @@ const CHAPTERS = [
                 emoji: "🍡",
                 left: [
                     "어느 가을날, 호랑이와 토끼와 두꺼비가 모였습니다. 김이 모락모락 나는 떡시루가 놓여 있었지요.",
-                    "갓 쪄 낸 하얀 떡이 수북이 담겨 있었어요.",
+                    "갓 쪄 낸 하얀 떡이 네모나게 썰려 수북이 담겨 있었어요.",
                     "마을 잔치에서 얻어 온 떡이었지요.",
                     "셋이 시루를 빙 둘러싸고 언덕에 올라앉았답니다."
                 ],
@@ -141,14 +141,14 @@ const CHAPTERS = [
                 art: "08-eat.webp",
                 emoji: "😋",
                 left: [
-                    "두꺼비가 첫 번째 조각 앞에 멈춰 섰어요. 그러고는 떨어진 떡을 하나씩 주워 먹었습니다.",
+                    "두꺼비가 첫 번째 조각 앞에 멈춰 섰어요. 그러고는 흩어진 떡을 하나씩 주워 먹었습니다.",
                     "\"어이쿠, 이건 참 잘 익었네.\"",
                     "우물우물, 냠냠.",
                     "떡은 아직 따뜻했지요.",
                     "언덕 위에서 갓 쪄 낸 그 떡이었으니까요."
                 ],
                 right: [
-                    "떡은 주워도 주워도 자꾸자꾸 나왔어요. 몇 걸음마다 한 조각씩 놓여 있었으니까요.",
+                    "떡은 주워도 주워도 자꾸자꾸 나왔어요. 몇 걸음마다 한 조각씩 흩어져 있었으니까요.",
                     "두꺼비의 배가 점점 볼록해졌습니다.",
                     "마지막 조각을 삼키고는 배를 툭툭 두드렸지요.",
                     "두꺼비는 그렇게 흐뭇할 수가 없었답니다."
@@ -231,7 +231,7 @@ const EN = {
                     emoji: "🍡",
                     left: [
                         "One autumn day a tiger, a rabbit and a toad came together. A steaming cake pot stood in front of them.",
-                        "It was heaped with white rice cake, fresh from the steam.",
+                        "It was heaped with white rice cake in neat squares, fresh from the steam.",
                         "They had been given it at a village feast.",
                         "The three of them sat round the pot up on a hill."
                     ],
@@ -364,7 +364,7 @@ const EN = {
                     art: "08-eat.webp",
                     emoji: "😋",
                     left: [
-                        "The toad stopped at the first piece. Then he picked up the fallen cake and ate it, one piece at a time.",
+                        "The toad stopped at the first piece. Then he picked up the scattered cake and ate it, one piece at a time.",
                         { t: "\"My word, that's well steamed.\"", v: "man" },
                         "Munch, munch, chew.",
                         "The cake was still warm.",
@@ -456,7 +456,7 @@ const EN = {
             { w: "came together", k: "모였다", s: "a tiger, a rabbit and a toad came together" },
             { w: "steaming", k: "김이 모락모락 나는", s: "A steaming cake pot stood in front of them." },
             { w: "was heaped with ~ (heap)", k: "수북이 담겼다", s: "It was heaped with white rice cake" },
-            { w: "fresh from the steam", k: "갓 쪄 낸", s: "white rice cake, fresh from the steam" },
+            { w: "fresh from the steam", k: "갓 쪄 낸", s: "white rice cake in neat squares, fresh from the steam" },
             { w: "feast", k: "잔치", s: "They had been given it at a village feast." },
             { w: "sat round ~", k: "빙 둘러앉았다", s: "The three of them sat round the pot up on a hill." },
             { w: "twitched (twitch)", k: "벌름거렸다", s: "The rabbit's nose twitched." },
@@ -535,7 +535,7 @@ const EN = {
         ],
         "08-eat.webp": [
             { w: "the first piece", k: "첫 번째 조각", s: "The toad stopped at the first piece." },
-            { w: "picked up (pick up)", k: "주웠다", s: "he picked up the fallen cake and ate it" },
+            { w: "picked up (pick up)", k: "주웠다", s: "he picked up the scattered cake and ate it" },
             { w: "one piece at a time", k: "하나씩", s: "ate it, one piece at a time" },
             { w: "My word", k: "어이쿠", s: "My word, that's well steamed." },
             { w: "well steamed", k: "잘 익은", s: "My word, that's well steamed." },

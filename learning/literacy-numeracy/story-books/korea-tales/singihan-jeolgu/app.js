@@ -78,7 +78,7 @@ const CHAPTERS = [
                     "그 소문을 주막에 앉아 있던 도둑 하나가 들었지요.",
                     "도둑은 그날로 짐을 쌌어요.",
                     "'그 절구만 있으면 평생 놀고먹겠구나.'",
-                    "도둑은 침을 꿀꺽 삼켰습니다. 그날부터 밤마다 나무꾼네 담 밖을 어슬렁거렸답니다.",
+                    "도둑은 침을 꿀꺽꿀꺽 삼켰습니다. 그날부터 밤마다 나무꾼네 담 밖을 어슬렁거렸답니다.",
                     "개가 짖으면 얼른 몸을 숨겼지요."
                 ]
             },
@@ -115,8 +115,8 @@ const CHAPTERS = [
                     "\"옳지, 소금이다! 소금은 금값이지!\"",
                     "\"소금아, 나와라!\"",
                     "그러자 절구에서 하얀 소금이 콸콸 쏟아졌어요. 배 바닥에 소복이 쌓였지요.",
-                    "도둑은 손뼉을 치며 껑충껑충 뛰었어요.",
-                    "그것을 세어 보기까지 했답니다."
+                    "그때는 소금이 쌀보다 귀하던 때였거든요.",
+                    "도둑은 손뼉을 치며 껑충껑충 뛰었어요. 그것을 세어 보기까지 했답니다."
                 ]
             }
         ]
@@ -136,7 +136,7 @@ const CHAPTERS = [
                     "그제야 이상하다 싶었지요."
                 ],
                 right: [
-                    "\"멈춰! 서라! 이러다 큰일 난다!\"",
+                    "\"나오지 마! 이러다 큰일 난다!\"",
                     "도둑이 절구를 두 손으로 붙들고 마구 흔들었어요.",
                     "바다에 던지려고도 했지요.",
                     "하지만 아무 소용이 없었습니다. 훔치기만 했지 멈추는 말은 듣지 못했거든요.",
@@ -307,7 +307,7 @@ const EN = {
                         "A thief sitting in an inn heard it.",
                         "He packed his things that very day.",
                         { t: "'With that mortar I'd never work again.'", v: "man" },
-                        "He swallowed hard. From that night on he prowled outside the woodcutter's wall.",
+                        "He swallowed and swallowed. From that night on he prowled outside the woodcutter's wall.",
                         "Whenever a dog barked he ducked out of sight."
                     ]
                 },
@@ -343,9 +343,8 @@ const EN = {
                     right: [
                         { t: "\"Salt! That's it! Salt is worth its weight in gold!\"", v: "man" },
                         { t: "\"Salt, come out!\"", v: "man" },
-                        "White salt came pouring out of the mortar and heaped up in the bottom of the boat.",
-                        "The thief clapped his hands and jumped up and down.",
-                        "He even started counting it."
+                        "White salt came pouring out of the mortar and heaped up in the bottom of the boat. In those days salt was harder to come by than rice.",
+                        "The thief clapped his hands and jumped up and down. He even started counting it."
                     ]
                 }
             ]
@@ -365,7 +364,7 @@ const EN = {
                         "Only then did he think something was wrong."
                     ],
                     right: [
-                        { t: "\"Stop! Halt! This is getting bad!\"", v: "man" },
+                        { t: "\"Don't come out! This is getting bad!\"", v: "man" },
                         "He grabbed the mortar in both hands and shook it hard.",
                         "He even tried to throw it into the sea.",
                         "It was no use. He had stolen the thing without hearing the word that stops it.",
@@ -518,7 +517,7 @@ const EN = {
             { w: "packed his things", k: "짐을 쌌다", s: "He packed his things that very day." },
             { w: "that very day", k: "그날로", s: "He packed his things that very day." },
             { w: "I'd never work again", k: "평생 놀고먹겠다", s: "With that mortar I'd never work again." },
-            { w: "swallowed hard", k: "침을 꿀꺽 삼켰다", s: "He swallowed hard." },
+            { w: "swallowed hard", k: "침을 꿀꺽 삼켰다", s: "He swallowed and swallowed." },
             { w: "prowled (prowl)", k: "어슬렁거렸다", s: "he prowled outside the woodcutter's wall" },
             { w: "ducked out of sight", k: "얼른 몸을 숨겼다", s: "Whenever a dog barked he ducked out of sight." }
         ],
@@ -544,7 +543,7 @@ const EN = {
             { w: "fetches nothing (fetch)", k: "값이 안 나간다", s: "Rice is everywhere, it fetches nothing" },
             { w: "That's it!", k: "옳지!", s: "Salt! That's it!" },
             { w: "worth its weight in gold", k: "금값인", s: "Salt is worth its weight in gold!" },
-            { w: "heaped up (heap)", k: "소복이 쌓였다", s: "White salt came pouring out and heaped up in the bottom of the boat" },
+            { w: "heaped up (heap)", k: "소복이 쌓였다", s: "White salt came pouring out of the mortar and heaped up in the bottom of the boat." },
             { w: "clapped his hands", k: "손뼉을 쳤다", s: "The thief clapped his hands and jumped up and down." },
             { w: "counting (count)", k: "세는", s: "He even started counting it." }
         ],
@@ -555,7 +554,7 @@ const EN = {
             { w: "That will do!", k: "이만하면 됐다!", s: "Ha! That will do!" },
             { w: "poured and poured", k: "쏟아지고 또 쏟아졌다", s: "But the salt did not stop. It poured and poured." },
             { w: "Only then did he ~", k: "그제야 ~했다", s: "Only then did he think something was wrong." },
-            { w: "Halt!", k: "서라!", s: "Stop! Halt! This is getting bad!" },
+            { w: "Halt!", k: "서라!", s: "Don't come out! This is getting bad!" },
             { w: "shook ~ hard (shake)", k: "마구 흔들었다", s: "He grabbed the mortar in both hands and shook it hard." },
             { w: "It was no use.", k: "아무 소용이 없었다.", s: "It was no use." },
             { w: "faster and faster", k: "점점 더 빨리", s: "The salt came faster and faster." }
@@ -634,7 +633,7 @@ const QUIZ = [
     { q: "도둑은 절구를 훔쳐 어디로 갔나요?", choices: ["배를 타고 바다로", "고개 너머 산속으로", "강 건너 이웃 마을로"], answer: 0 },
     { q: "도둑은 절구에게 무엇을 달라고 했나요?", choices: ["쌀", "금", "소금"], answer: 2 },
     { q: "도둑이 소금을 그치게 하지 못한 까닭은 무엇인가요?", choices: ["멈추는 말을 몰라서", "절구가 고장 나서", "파도가 너무 세서"], answer: 0 },
-    { q: "바닷속에 가라앉은 뒤에도 절구는 어떻게 되었나요?", choices: ["널빤지에 실려 갔다", "도둑이 건져 갔다", "멈출 줄을 모른다"], answer: 2 },
+    { q: "바닷속에 가라앉은 뒤에도 절구는 어떻게 되었나요?", choices: ["널빤지에 실려 갔다", "도둑이 건져 갔다", "멈추지 않고 소금을 낸다"], answer: 2 },
     {
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         wide: true,

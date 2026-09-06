@@ -217,8 +217,9 @@ field. Kim sleeps on in the middle of the ring. Fire glowing large on the right.
 Wide night scene from above. A huge sweep of orange flame fills most of the
 frame, but stops in a clean curve at the edge of a dark wet circle of grass.
 Inside that circle, Kim lies asleep, untouched, and beside him the soaked dog has
-collapsed onto his side, sides visibly rising with breath. Smoke and sparks
-above. Dramatic and moving.
+collapsed onto his side, sides visibly rising with breath. HIS YELLOW COAT IS
+BURNT BLACK in patches — he rolled through the fire's edge to soak the grass.
+Smoke and sparks above. Dramatic and moving.
 ```
 
 ### `09-dawn.webp` — 까맣게 탄 들판 한가운데
@@ -227,8 +228,8 @@ above. Dramatic and moving.
 Wide dawn scene. A vast blackened field of ash stretches to every edge under a
 pale pink sky. In the very centre, one small green circle of unburnt grass. Kim
 has sat bolt upright there, both hands on his head, mouth open, staring around
-him. Beside him the wet dog lies with eyes closed, one ear twitching. Stark and
-striking.
+him. Beside him the dog lies with his eyes closed, still soaking wet, HIS COAT
+BURNT BLACK all over — he does not move. Stark and striking.
 ```
 
 ### `10-tree.webp` — 그 자리에 심은 나무
@@ -236,9 +237,9 @@ striking.
 ```
 Wide scene of the same field weeks later, green shoots pushing through the burnt
 ground. On the left, Kim kneels pressing earth around a young sapling with both
-hands. On the right, the dog sits beside him, healthy again, tail curled, watching
-the sapling. Warm gold light, a few villagers approaching in the distance.
-Hopeful and warm.
+hands, his face quiet and sad — the dog is buried under it. NO LIVE DOG in this
+picture. Warm gold light, a few villagers approaching in the distance. Sad but
+warm: the tree is how the village keeps him.
 ```
 
 ### `end.webp` — 마지막 (가로 4:3)

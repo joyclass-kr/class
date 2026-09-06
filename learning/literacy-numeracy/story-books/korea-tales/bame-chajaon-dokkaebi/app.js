@@ -8,9 +8,9 @@ const CHAPTERS = [
                 emoji: "🌙",
                 left: [
                     "김 서방이 밤늦게 집으로 돌아가는 길이었습니다. 주막에서 한잔 걸친 터라 걸음이 어찌나 흥겨운지 몰랐지요.",
-                    "\"에헤라, 달도 밝구나.\"",
-                    "\"이런 밤에는 호랑이가 나와도 안 무섭겠다.\"",
-                    "콧노래가 절로 나왔습니다."
+                    "그런데 주막을 나서니 앞뒤를 분간할 수 없도록 깜깜했어요. 그렇다고 주막으로 도로 들어갈 수도 없는 노릇이었지요.",
+                    "\"호랑이가 나와도 난 안 무섭다.\"",
+                    "김 서방은 술김에 용기를 내어 두 주먹을 불끈 쥐고 걸었습니다."
                 ],
                 right: [
                     "마을 앞 개울에 이르렀을 때였어요. 김 서방은 징검다리에 발을 올렸지요.",
@@ -33,7 +33,7 @@ const CHAPTERS = [
                     "\"어이, 거기 사람.\"",
                     "\"나랑 씨름 한판 하자. 심심해 죽겠다.\"",
                     "\"싫소! 나는 그냥 가겠소!\"",
-                    "도깨비가 팔을 척 벌리고 히죽 웃었지요. 이빨이 달빛에 하얗게 드러났습니다.",
+                    "도깨비가 팔을 척 벌리고 히죽 웃었지요. 어둠 속에서 이빨만 하얗게 드러났습니다.",
                     "김 서방은 술이 확 깨는 것 같았어요. 다리가 저절로 후들후들 떨렸지요."
                 ]
             },
@@ -128,7 +128,7 @@ const CHAPTERS = [
                     "\"내일 아침에 마을 사람들 다 데려올 테니 꼼짝 말고 있어라!\"",
                     "\"이거 놔라! 놓으란 말이다! 어이, 사람!\"",
                     "도깨비의 고함이 밤새 개울가에 쩌렁쩌렁 울렸답니다.",
-                    "하지만 김 서방은 뒤도 안 돌아보고 집으로 갔지요."
+                    "하지만 김 서방은 두 손으로 바지 허리춤을 꽉 붙잡고, 뒤도 안 돌아보고 의기양양하게 집으로 갔지요."
                 ]
             },
             {
@@ -225,9 +225,9 @@ const EN = {
                     emoji: "🌙",
                     left: [
                         "Kim was walking home late at night. He had had a drink at the inn, and his feet were merry.",
-                        { t: "\"Ah, what a bright moon.\"", v: "man" },
-                        { t: "\"On a night like this I wouldn't be scared of a tiger.\"", v: "man" },
-                        "He hummed as he went."
+                        "But when he stepped out of the inn it was so dark he could not tell front from back. And he could hardly go back inside again.",
+                        { t: "\"I wouldn't be scared of a tiger.\"", v: "man" },
+                        "The drink made him brave. He balled up both fists and walked on."
                     ],
                     right: [
                         "Then he came to the stream at the edge of the village and put a foot on the stepping stones.",
@@ -250,7 +250,7 @@ const EN = {
                         { t: "\"Oi. You there, human.\"", v: "beast" },
                         { t: "\"Wrestle me. I'm bored out of my mind.\"", v: "beast" },
                         { t: "\"No thank you! I'm just going home!\"", v: "man" },
-                        "The goblin spread its arms and grinned. Its teeth showed white in the moonlight.",
+                        "The goblin spread its arms and grinned. Only its teeth showed white in the dark.",
                         "Kim felt the drink go straight out of him, and his legs shook by themselves."
                     ]
                 },
@@ -344,7 +344,7 @@ const EN = {
                         { t: "\"I'm bringing the whole village in the morning, so don't you move!\"", v: "man" },
                         { t: "\"Let me go! Let me go, I said! Oi! Human!\"", v: "beast" },
                         "The goblin's shouting rang along the stream all night.",
-                        "But Kim went home without once looking back."
+                        "But Kim went home holding his trousers up with both hands, without once looking back, very pleased with himself."
                     ]
                 },
                 {
@@ -447,7 +447,7 @@ const EN = {
             { w: "inn", k: "주막", s: "He had had a drink at the inn" },
             { w: "merry", k: "흥겨운", s: "his feet were merry" },
             { w: "scared of ~", k: "~이 무서운", s: "I wouldn't be scared of a tiger" },
-            { w: "hummed (hum)", k: "콧노래를 불렀다", s: "He hummed as he went." },
+            { w: "balled up his fists", k: "주먹을 불끈 쥐었다", s: "He balled up both fists and walked on." },
             { w: "the edge of the village", k: "마을 어귀", s: "the stream at the edge of the village" },
             { w: "stepping stones", k: "징검다리", s: "put a foot on the stepping stones" },
             { w: "planted there", k: "떡 버티고 선", s: "somebody was standing, planted there" },
@@ -524,7 +524,7 @@ const EN = {
             { w: "Go on. Try it.", k: "어디 한번 풀어 보시지.", s: "Go on. Try it." },
             { w: "don't you move", k: "꼼짝 말고 있어라", s: "I'm bringing the whole village in the morning, so don't you move!" },
             { w: "rang (ring)", k: "쩌렁쩌렁 울렸다", s: "The goblin's shouting rang along the stream all night." },
-            { w: "without once looking back", k: "뒤도 안 돌아보고", s: "But Kim went home without once looking back." }
+            { w: "without once looking back", k: "뒤도 안 돌아보고", s: "But Kim went home holding his trousers up with both hands, without once looking back, very pleased with himself." }
         ],
         "08-boast.webp": [
             { w: "raised his voice", k: "목청을 높였다", s: "Kim stood in the middle of the village and raised his voice." },

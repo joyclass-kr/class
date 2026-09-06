@@ -191,9 +191,12 @@ angry. One lantern, deep indigo night.
 ```
 Wide night scene, quiet and still. The traveller sits tied to the pillar on the
 left, eyes open, breath faintly visible in the cold. On the right, the white
-goose has tucked its head under one wing, asleep on the ground beside him. A
-lantern glows low, stars above the tiled roof, a thin crescent moon. Nothing
-happens - the stillness is the point.
+goose has tucked its head under one wing, asleep on the ground beside him. THE
+GOOSE IS TETHERED: a short cord runs from its leg to a low wooden stake driven
+into the ground right beside the traveller — he asked for the goose to be tied
+there, and the whole story turns on the goose staying in that one spot. Make the
+stake and the cord clearly visible. A lantern glows low, stars above the tiled
+roof, a thin crescent moon. Nothing happens - the stillness is the point.
 ```
 
 ### `08-morning.webp` — 똥 속에서 반짝인 것
@@ -201,8 +204,10 @@ happens - the stillness is the point.
 ```
 Wide courtyard scene at dawn. On the right, the old master (elderly gentleman, white hair in topknot, long white beard, grey silk hanbok) crouches low with both
 hands on his knees, staring in shock and realization at the ground where a single pearl glints among the
-goose droppings. On the left, the goose has stood up and waddles away cheerfully.
-The traveller is still tied to the pillar behind, watching quietly. Pale pink
+goose droppings. On the left, the goose stands stretching, STILL TETHERED by a
+short cord to the low stake beside the traveller — it has not moved away, and the
+droppings lie right at the foot of the stake. The traveller is still tied to the
+pillar behind, watching quietly. Pale pink
 morning light.
 ```
 

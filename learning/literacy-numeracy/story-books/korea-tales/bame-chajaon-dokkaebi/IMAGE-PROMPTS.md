@@ -72,10 +72,13 @@ rather than clustering them in the middle.
 ```
 Children's picture book illustration, bright cel-animation style with clean bold
 outlines and vivid colors, similar to a classic Korean animated storybook.
-Setting is a Joseon-era village at night: a moonlit dirt road, a shallow stream
-with stepping stones, a big old willow on the bank, thatched roofs beyond. Deep
-indigo and silver moonlight for the night scenes, warm gold for the morning
-ones. Playful and funny, never scary. No text or letters in the image.
+Setting is a Joseon-era village at night: a dark dirt road, a shallow stream
+with stepping stones, a big old willow on the bank, thatched roofs beyond.
+NO MOON AND NO STARS in any night scene — a goblin only comes out when the air
+is damp and it is too dark to tell one thing from another. Light the night
+scenes with a faint blue-grey glow low on the horizon and a little mist, deep
+indigo everywhere else: shapes just readable, never pitch black on the page.
+Warm gold for the morning ones. Playful and funny, never scary. No text or letters in the image.
 Make every picture EXCITING to look at, like a frame from 1980s-90s Korean TV
 animation. Never a flat mid-distance shot with everyone standing in a row.
 CAMERA: use a strong angle every time - look up steeply at whoever is powerful,
@@ -150,22 +153,23 @@ smooth blue, not furry, and he is built like the others.
 ### `cover.webp` — 표지 (세로 2:3)
 
 ```
-Vertical portrait composition. Looking up a moonlit village road. In the upper
+Vertical portrait composition. Looking up a dark village road. In the upper
 half, a huge blue-grey goblin with one stubby horn and straw-like bristly hair
 stands astride the road, hands on hips, grinning down. At the bottom of the
 frame, small by comparison, a man in a topknot stands frozen with his arms out.
-An enormous full moon behind them. Funny rather than frightening.
+No moon and no stars — only a faint pale glow low behind them and drifting mist. Funny rather than frightening.
 ```
 
 ## 본문 열 장 (모두 가로 16:9)
 
-### `01-nightroad.webp` — 달 밝은 밤, 집으로 가는 길
+### `01-nightroad.webp` — 앞이 안 보이는 밤, 집으로 가는 길
 
 ```
-Wide moonlit country road scene. On the left, Kim weaves happily along a dirt
-path between fields, arms swinging wide, mouth open in song, hat askew. On the
-right, the road drops toward a shallow stream with flat stepping stones and a big
-old willow. An enormous full moon low in a deep indigo sky. Cheerful and calm.
+Wide country road scene on a moonless night. On the left, Kim weaves along a
+dirt path between fields, both fists balled up, chin out, putting on courage. On
+the right, the road drops toward a shallow stream with flat stepping stones and a
+big old willow, all of it half swallowed in mist. No moon, no stars — a faint
+blue-grey glow low in a deep indigo sky is the only light. Damp and dark.
 ```
 
 ### `02-challenge.webp` — 징검다리를 막아선 도깨비
@@ -173,9 +177,9 @@ old willow. An enormous full moon low in a deep indigo sky. Cheerful and calm.
 ```
 Wide night scene at the stream. On the right, the huge blue-grey goblin stands on
 the far end of the stepping stones with his feet planted wide and hands on his
-hips, grinning, one stubby horn catching the moonlight, bristly hair sticking out
+hips, grinning, one stubby horn catching the faint glow, bristly hair sticking out
 in all directions. On the left, Kim has stopped dead on the near bank, arms up,
-eyes like saucers. Silver moonlight on the water.
+eyes like saucers. Only a faint pale glow on the water. No moon, no stars.
 ```
 
 ### `03-grip.webp` — 허리를 맞잡은 두 사람
@@ -184,7 +188,7 @@ eyes like saucers. Silver moonlight on the water.
 Wide night scene on the sandy bank. In the centre, Kim and the goblin have taken
 Korean wrestling grips on each other's belts, foreheads almost touching, both
 braced low. The size difference is enormous and absurd - Kim's head barely
-reaches the goblin's chest. Moonlight rimming both figures, dust at their feet.
+reaches the goblin's chest. A faint glow rimming both figures, dust at their feet.
 Comic tension.
 ```
 
@@ -194,7 +198,7 @@ Comic tension.
 Wide night scene. The goblin leans in casually with one arm, almost bored, while
 Kim's feet have left the ground entirely, legs pedalling in the air, face
 squeezed with effort, sweat flying off him in droplets. Deep footprint grooves
-dragged across the sand behind him. Moonlit and very funny.
+dragged across the sand behind him. Dark, misty and very funny.
 ```
 
 ### `05-remember.webp` — 왼다리가 약하다던 말
@@ -213,7 +217,7 @@ anticipation.
 Wide night scene, explosive. The goblin crashes flat onto his back on the sand
 with his legs in the air and his club flying away, a huge dust cloud and impact
 lines around him, eyes spinning. On the left, Kim stands panting in a low finishing
-stance, one fist clenched. Sand and moonlight everywhere. Peak slapstick.
+stance, one fist clenched. Sand flying everywhere in the dark. Peak slapstick.
 ```
 
 ### `07-tied.webp` — 버드나무에 꽁꽁 묶다
@@ -222,8 +226,9 @@ stance, one fist clenched. Sand and moonlight everywhere. Peak slapstick.
 Wide night scene at the willow. In the centre, the goblin is lashed to the thick
 willow trunk with a long cloth belt wound many times around him, only his head
 and one arm free, mouth wide open bellowing, eyebrows up in outrage. On the left,
-Kim walks away backwards pointing a warning finger, grinning. Moonlight through
-willow leaves.
+Kim walks away backwards pointing a warning finger, grinning, his other hand
+holding his trousers up at the waist — he used his belt to tie the goblin. Mist
+through the willow leaves, no moon.
 ```
 
 ### `08-boast.webp` — 마을 사람들을 데리고 나서다
@@ -260,6 +265,6 @@ joyful.
 
 ```
 A quiet village lane at dusk, no people. A worn-out straw broom leans against a
-mud wall beside a gate, an enormous moon rising behind the roofs, one long shadow
+mud wall beside a gate, the last of the daylight behind the roofs, one long shadow
 stretching from the broom across the lane. Calm, with a wink.
 ```

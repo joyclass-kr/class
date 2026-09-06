@@ -145,7 +145,9 @@ tiger and rabbit figures sprint after the steamer. Warm gold and green.
 
 ```
 Wide autumn hillside scene. In the centre, a round grey steamer heaped with pale
-rice cakes sits on the grass with steam curling up. Around it: on the left the
+rice cakes sits on the grass with steam curling up. The cakes are SQUARE slabs,
+not rounds — siru cake is scored into squares before steaming and breaks into
+neat squares afterwards; white in the middle with a red bean layer. Around it: on the left the
 big striped tiger leans in sniffing deeply, in the middle the hare rises on his
 back legs with both paws up in delight, on the right the plump toad sits low and
 still, blinking. Golden afternoon light.
@@ -215,7 +217,7 @@ cake. Warm gold light.
 
 ```
 Wide hillside scene. The toad sits square in the middle of the trail of scattered
-rice cakes, one held in both front feet and pressed into his wide mouth, cheeks
+rice cakes (SQUARE slabs, never rounds — see 01-cake), one held in both front feet and pressed into his wide mouth, cheeks
 bulging, eyes closed in bliss. Several more rice cakes are lined up beside him
 like a little collection. Far below at the very bottom edge, two tiny running
 figures. Sunny and satisfying.
