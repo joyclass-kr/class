@@ -24,9 +24,12 @@ body {
     margin: 0;
     min-width: 320px;
     min-height: 100dvh;
-    background:
-        radial-gradient(circle at 86% 0%, rgba(43, 133, 104, .18), transparent 32rem),
-        var(--bg);
+    background-color: var(--bg);
+    background-image: url('assets/piano-bg.webp');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--text);
 }
 
