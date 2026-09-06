@@ -40,7 +40,9 @@
         b.className = 'scene-btn';
         b.dataset.scene = 'urine';
         b.textContent = '🚰 2. 오줌이 만들어져 나가는 길';
-        bar.appendChild(b);
+        var nephronBtn = bar.querySelector('[data-scene="nephron"]');
+        if (nephronBtn) bar.insertBefore(b, nephronBtn);
+        else bar.appendChild(b);
 
         bar.querySelectorAll('.scene-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
@@ -181,6 +183,11 @@
 
     function loop(ts) {
         if (!lastTs) lastTs = ts;
+            // 다른 파일이 나중에 더한 장면 단추도 있으므로, 누가 켜져 있는지 매 번 확인한다
+            var act = wrap.querySelector('.scene-btn.active');
+            var mine = !!(act && act.dataset.scene === 'urine');
+            if (layer.hidden === mine) setVisible(mine);
+
         var dt = Math.min((ts - lastTs) / 1000, 0.1);
         lastTs = ts;
         if (layer && !layer.hidden) step(dt);

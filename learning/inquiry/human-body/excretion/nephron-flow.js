@@ -248,6 +248,11 @@
 
     function loop(ts) {
         if (!lastTs) lastTs = ts;
+            // 다른 파일이 나중에 더한 장면 단추도 있으므로, 누가 켜져 있는지 매 번 확인한다
+            var act = wrap.querySelector('.scene-btn.active');
+            var mine = !!(act && act.dataset.scene === 'nephron');
+            if (layer.hidden === mine) setVisible(mine);
+
         var dt = Math.min((ts - lastTs) / 1000, 0.1);
         lastTs = ts;
         if (svg && layer && !layer.hidden) {
