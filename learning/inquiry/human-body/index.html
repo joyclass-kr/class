@@ -166,26 +166,6 @@
             line-height: 1.25;
         }
 
-        /* 아래 줄: 기관계 방이 아니라 전체를 훑거나 문제를 푸는 곳 */
-        .tool-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px;
-            width: 100%;
-            max-width: 500px;
-            margin: 16px auto 0;
-        }
-
-        .tool-grid .hub-card {
-            background: rgba(15, 23, 42, 0.62);
-        }
-
-        @media (max-width: 580px) {
-            .tool-grid {
-                grid-template-columns: 1fr;
-                max-width: 320px;
-            }
-        }
 
         /* Responsive Layout Optimization */
         /* PC & Chromebook: 4 Columns (4x2 Perfect Grid) */
@@ -317,31 +297,6 @@
 
         </div>
 
-        <div class="tool-grid">
-
-            <!-- 전체 훑어보기 -->
-            <a href="3d-atlas/" class="hub-card" style="--card-accent: #22d3ee;">
-                <div class="card-top">
-                    <div class="card-icon-box">🧍</div>
-                    <div class="card-title-group">
-                        <div class="card-title">온몸 360° 돌려 보기</div>
-                        <div class="card-title-en" lang="en">360° Body Atlas</div>
-                    </div>
-                </div>
-            </a>
-
-            <!-- 실전 문제 -->
-            <a href="exam-challenge/" class="hub-card" style="--card-accent: #f43f5e;">
-                <div class="card-top">
-                    <div class="card-icon-box">📝</div>
-                    <div class="card-title-group">
-                        <div class="card-title">실전 문제 풀기</div>
-                        <div class="card-title-en" lang="en">Exam Challenge</div>
-                    </div>
-                </div>
-            </a>
-
-        </div>
     </main>
 
 </body>
