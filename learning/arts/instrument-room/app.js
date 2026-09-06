@@ -454,7 +454,7 @@
             state.reverb = context.createConvolver();
             state.reverbGain = context.createGain();
 
-            state.masterGain.gain.value = .82;
+            state.masterGain.gain.value = 1;
             state.compressor.threshold.value = -18;
             state.compressor.knee.value = 14;
             state.compressor.ratio.value = 3.5;
