@@ -795,7 +795,7 @@
       const worked = section.worked ? '<div class="worked-example"><strong>'+escapeHtml(section.worked.title || "같이 풀기")+'</strong><ol>'+section.worked.steps.map(function (step) { return '<li>'+escapeHtml(step)+'</li>'; }).join("")+'</ol>'+(section.worked.answer ? '<p><b>답</b> '+escapeHtml(section.worked.answer)+'</p>' : "")+'</div>' : "";
       const intro = section.body.length ? '<p>'+escapeHtml(section.body[0])+'</p>' : "";
       const detail = section.body.slice(1).map(function (paragraph) { return '<p>'+escapeHtml(paragraph)+'</p>'; }).join("");
-      return '<section class="lesson-section"><div class="section-copy section-lead"><h2>'+escapeHtml(section.title)+'</h2>'+intro+'</div><div class="visual-board lesson-visual">'+renderVisual(section.visual)+'</div><div class="section-copy section-detail">'+detail+worked+'<p class="section-takeaway"><strong>핵심 정리</strong> '+escapeHtml(section.takeaway)+'</p>'+audio+'</div></section>';
+      return '<section class="lesson-section"><div class="section-copy section-lead"><h2>'+escapeHtml(section.title)+'</h2>'+intro+'</div><div class="visual-board lesson-visual">'+renderVisual(section.visual)+'</div><div class="section-copy section-detail">'+detail+worked+audio+'</div></section>';
     }).join("");
     Array.from(els.lessonSections.querySelectorAll(".lesson-section")).forEach(function (sectionEl, sectionIndex) {
       sectionEl.querySelectorAll("[data-section-audio]").forEach(function (button) {

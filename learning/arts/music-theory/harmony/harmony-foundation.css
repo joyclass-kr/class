@@ -31,7 +31,6 @@
 .lesson-title { position: relative; }
 .lesson-section { align-items: start; }
 .section-copy p + p { margin-top: 12px; }
-.section-takeaway { margin-top: 15px !important; padding: 11px 13px; border-left: 3px solid #b47d22; color: #4e3d20 !important; background: #eee7da; font-size: 15px !important; font-weight: 750 !important; line-height: 1.6 !important; }
 .visual-board { overflow: hidden; }
 .visual-board svg { display: block; width: 100%; height: auto; }
 .score-title { margin: 0 0 8px; color: #4d3b20; font-size: 14px; font-weight: 900; text-align: center; }

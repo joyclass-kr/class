@@ -73,7 +73,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .section-copy h2 { margin: 0 0 11px; font-family: Georgia,"Noto Serif KR",serif; font-size: 22px; line-height: 1.4; }
 .lesson-title h1, .section-copy h2, .term-summary h2, .lesson-guide > header h2, .lab-heading h2,
 .guide-principle h3, .worked-examples h3, .guide-columns h3, .guide-caution h3,
-.section-takeaway, .question-prompt, .worked-card strong, .lab-heading p { word-break: keep-all; }
+.question-prompt, .worked-card strong, .lab-heading p { word-break: keep-all; }
 
 .section-copy p { margin: 0; color: #303842; font-family: Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif; font-size: 17px; font-weight: 500; line-height: 1.8; word-break: keep-all; }
 .example-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
