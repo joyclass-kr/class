@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>인체의 구조</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260906a">
     <style>
         html, body.hub-page {
             width: 100%;
@@ -152,11 +152,9 @@
             font-size: 14.5px;
             font-weight: 750;
             color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             letter-spacing: -0.2px;
             line-height: 1.3;
+            word-break: keep-all;   /* 낱말 가운데서 끊지 않는다 */
         }
 
         .card-title-en {
@@ -164,11 +162,29 @@
             font-size: 10.5px;
             font-weight: 600;
             color: #94a3b8;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             letter-spacing: 0.01em;
-            line-height: 1.2;
+            line-height: 1.25;
+        }
+
+        /* 아래 줄: 기관계 방이 아니라 전체를 훑거나 문제를 푸는 곳 */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            width: 100%;
+            max-width: 500px;
+            margin: 16px auto 0;
+        }
+
+        .tool-grid .hub-card {
+            background: rgba(15, 23, 42, 0.62);
+        }
+
+        @media (max-width: 580px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+            }
         }
 
         /* Responsive Layout Optimization */
@@ -295,6 +311,32 @@
                     <div class="card-title-group">
                         <div class="card-title">면역계와 방어 작용</div>
                         <div class="card-title-en" lang="en">Immune System &amp; Host Defense</div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="tool-grid">
+
+            <!-- 전체 훑어보기 -->
+            <a href="3d-atlas/" class="hub-card" style="--card-accent: #22d3ee;">
+                <div class="card-top">
+                    <div class="card-icon-box">🧍</div>
+                    <div class="card-title-group">
+                        <div class="card-title">온몸 360° 돌려 보기</div>
+                        <div class="card-title-en" lang="en">360° Body Atlas</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 실전 문제 -->
+            <a href="exam-challenge/" class="hub-card" style="--card-accent: #f43f5e;">
+                <div class="card-top">
+                    <div class="card-icon-box">📝</div>
+                    <div class="card-title-group">
+                        <div class="card-title">실전 문제 풀기</div>
+                        <div class="card-title-en" lang="en">Exam Challenge</div>
                     </div>
                 </div>
             </a>

@@ -783,14 +783,18 @@
             var labelText = (typeof SimEngine !== 'undefined') ? SimEngine.pinLabel(spot) : spot.title;
             ctx.font = 'bold 11px Pretendard, sans-serif';
             var textW = ctx.measureText(labelText).width;
+            var boxW = textW + 16;
+            // 화면 가장자리에 있는 표시점은 이름표가 잘리므로 안쪽으로 당긴다
+            var boxX = Math.min(Math.max(sx - boxW / 2, 4), width - 4 - boxW);
+            var boxY = Math.min(sy + 14, height - 4 - 20);
             ctx.beginPath();
-            ctx.roundRect(sx - textW / 2 - 8, sy + 14, textW + 16, 20, 4);
+            ctx.roundRect(boxX, boxY, boxW, 20, 4);
             ctx.fill();
             ctx.stroke();
 
             ctx.fillStyle = '#f8fafc';
             ctx.textAlign = 'center';
-            ctx.fillText(labelText, sx, sy + 28);
+            ctx.fillText(labelText, boxX + boxW / 2, boxY + 14);
             ctx.restore();
         });
     }

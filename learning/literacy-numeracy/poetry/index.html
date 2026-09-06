@@ -5,73 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#24150c">
     <title>시 읽기</title>
-    <link rel="stylesheet" href="styles.css?v=20260906-6">
-    <script src="poems.js?v=20260906-5" defer></script>
-    <script src="questions.js?v=20260906-5" defer></script>
-    <script src="lessons.js?v=20260906-5" defer></script>
-    <script src="app.js?v=20260906-7" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260906-8">
+    <script src="poems.js?v=20260906-6" defer></script>
+    <script src="questions.js?v=20260906-6" defer></script>
+    <script src="lessons.js?v=20260906-6" defer></script>
+    <script src="app.js?v=20260906-8" defer></script>
 </head>
 <body>
     <div class="page-shell">
         <nav class="topbar" aria-label="페이지 기능">
-            <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기">←</a>
+            <a class="back-link" href="../../../" aria-label="뒤로 가기">←</a>
         </nav>
 
         <main>
-            <section id="lessonScreen" class="panel start-panel lesson-panel" aria-labelledby="lessonTitle">
-                <h2 id="lessonTitle">시 읽기</h2>
+            <section id="lessonScreen" class="panel sheet hidden" aria-labelledby="lessonTitle">
+                <h2 id="lessonTitle" class="sheet-title">시 읽기</h2>
                 <div id="gradeTabs" class="grade-tabs" role="tablist" aria-label="학년 선택"></div>
-                <p id="lessonProgressSummary" class="lead"></p>
+                <p id="lessonProgressSummary" class="sheet-lead"></p>
                 <ol id="lessonList" class="lesson-list" aria-label="차시 목록"></ol>
                 <div id="topicChips" class="grade-tabs topic-chips hidden" aria-label="소재 선택"></div>
                 <ol id="topicPoemList" class="lesson-list hidden" aria-label="소재별 시 목록"></ol>
             </section>
 
-            <section id="lessonDetailScreen" class="panel start-panel lesson-panel hidden" aria-labelledby="lessonDetailTitle">
-                <p id="lessonDetailKicker" class="mode-kicker"></p>
-                <h2 id="lessonDetailTitle"></h2>
-                <p id="lessonDetailNote" class="lead"></p>
+            <section id="lessonDetailScreen" class="panel sheet hidden" aria-labelledby="lessonDetailTitle">
+                <p id="lessonDetailKicker" class="sheet-kicker"></p>
+                <h2 id="lessonDetailTitle" class="sheet-title"></h2>
+                <p id="lessonDetailNote" class="sheet-lead"></p>
                 <ol id="lessonPoemList" class="lesson-list" aria-label="이 차시의 시 목록"></ol>
-                <div class="lesson-detail-actions">
-                    <button id="startQuizButton" class="primary-button" type="button">확인 문제 풀기</button>
+                <div class="sheet-actions">
+                    <button id="startWrapButton" class="primary-button" type="button">차시 마무리 문제</button>
                 </div>
             </section>
 
-            <section id="readScreen" class="panel start-panel study-panel hidden" aria-labelledby="poemTitle">
-                <p id="readKicker" class="mode-kicker"></p>
-                <div class="poem-card">
-                    <h3 id="poemTitle" class="poem-title"></h3>
+            <section id="readScreen" class="panel sheet hidden" aria-labelledby="poemTitle">
+                <p id="readKicker" class="sheet-kicker"></p>
+                <ol class="step-trail" aria-label="시 한 편의 차례">
+                    <li class="step-trail-item is-now">읽기</li>
+                    <li class="step-trail-item">문제</li>
+                    <li class="step-trail-item">작품 설명</li>
+                </ol>
+
+                <article class="poem-card">
+                    <h2 id="poemTitle" class="poem-title"></h2>
                     <p id="poemByline" class="poem-byline"></p>
                     <div id="poemBody" class="poem-body"></div>
                     <div id="poemNotice" class="poem-notice hidden"></div>
                     <dl id="poemWords" class="poem-words"></dl>
-                    <p id="poemPoint" class="poem-point"></p>
+                </article>
+
+                <p id="poemPoint" class="poem-point"></p>
+
+                <div class="sheet-actions">
+                    <button id="readQuizButton" class="primary-button" type="button">문제 풀기</button>
+                    <button id="readListButton" class="secondary-button" type="button">시 목록</button>
                 </div>
             </section>
 
-            <section id="quizScreen" class="quiz-screen hidden" aria-labelledby="questionText">
+            <section id="quizScreen" class="panel sheet hidden" aria-labelledby="questionText">
+                <p id="quizKicker" class="sheet-kicker"></p>
+                <ol class="step-trail" aria-label="시 한 편의 차례">
+                    <li class="step-trail-item">읽기</li>
+                    <li class="step-trail-item is-now">문제</li>
+                    <li class="step-trail-item">작품 설명</li>
+                </ol>
+
                 <div class="quiz-status">
-                    <div>
-                        <span id="quizModeLabel" class="mode-status"></span>
-                        <span class="status-label">문제</span>
-                        <strong><span id="questionNumber">1</span>/<span id="questionTotal">10</span></strong>
-                    </div>
-                    <div class="score-box">
-                        <span class="status-label">점수</span>
-                        <strong><span id="currentScore">0</span>점</strong>
-                    </div>
+                    <span><span class="status-label">문제</span> <strong><span id="questionNumber">1</span>/<span id="questionTotal">3</span></strong></span>
+                    <span><span class="status-label">맞힌 문제</span> <strong id="currentScore">0</strong></span>
                 </div>
                 <div class="progress-track" aria-hidden="true">
                     <span id="progressFill"></span>
                 </div>
 
-                <article id="quizPoemCard" class="poem-card quiz-poem-card">
-                    <h3 id="quizPoemTitle" class="poem-title"></h3>
-                    <p id="quizPoemByline" class="poem-byline"></p>
+                <details id="quizPoemCard" class="poem-card quiz-poem-card" open>
+                    <summary class="quiz-poem-summary">
+                        <span id="quizPoemTitle" class="poem-title"></span>
+                        <span id="quizPoemByline" class="poem-byline"></span>
+                    </summary>
                     <div id="quizPoemBody" class="poem-body"></div>
-                </article>
+                </details>
 
-                <article class="panel question-panel">
+                <div class="question-block">
                     <span id="questionCategory" class="question-category">장면 확인</span>
                     <p id="questionPrompt" class="question-prompt">시를 읽고 답해 보세요.</p>
                     <h2 id="questionText" class="question-text"></h2>
@@ -83,11 +97,37 @@
                         <p id="explanation" class="explanation"></p>
                         <button id="nextButton" class="primary-button next-button" type="button">다음 문제</button>
                     </div>
-                </article>
+                </div>
             </section>
 
-            <section id="resultScreen" class="panel result-panel hidden" aria-labelledby="resultTitle">
-                <h2 id="resultTitle"></h2>
+            <section id="afterScreen" class="panel sheet hidden" aria-labelledby="afterTitle">
+                <p id="afterKicker" class="sheet-kicker"></p>
+                <ol class="step-trail" aria-label="시 한 편의 차례">
+                    <li class="step-trail-item">읽기</li>
+                    <li class="step-trail-item">문제</li>
+                    <li class="step-trail-item is-now">작품 설명</li>
+                </ol>
+
+                <h2 id="afterTitle" class="sheet-title"></h2>
+                <p id="afterByline" class="sheet-lead"></p>
+                <p id="afterScore" class="after-score"></p>
+
+                <div id="afterBody" class="after-body"></div>
+
+                <div id="afterMissed" class="after-missed hidden">
+                    <h3>다시 볼 문제</h3>
+                    <ol id="afterMissedList" class="missed-list"></ol>
+                </div>
+
+                <div class="sheet-actions">
+                    <button id="afterNextButton" class="primary-button" type="button">다음 시</button>
+                    <button id="afterListButton" class="secondary-button" type="button">시 목록</button>
+                </div>
+            </section>
+
+            <section id="resultScreen" class="panel sheet hidden" aria-labelledby="resultTitle">
+                <p class="sheet-kicker">차시 마무리</p>
+                <h2 id="resultTitle" class="sheet-title"></h2>
                 <div class="score-medallion" aria-label="최종 점수">
                     <strong id="finalScore">0</strong>
                     <span>/ <span id="finalTotal">10</span></span>
@@ -96,15 +136,15 @@
                 <p id="bestMessage" class="best-message"></p>
 
                 <div id="reviewArea" class="review-area">
-                    <h3>나의 오답노트</h3>
+                    <h3>다시 볼 문제</h3>
                     <p id="perfectReview" class="perfect-review hidden">틀린 문제가 없어요. 완벽합니다!</p>
                     <ol id="missedList" class="missed-list"></ol>
                 </div>
 
-                <div class="result-actions">
+                <div class="sheet-actions">
                     <button id="restartButton" class="primary-button" type="button">다시 풀기</button>
                     <button id="nextLessonButton" class="primary-button hidden" type="button">다음 차시</button>
-                    <button id="lessonDetailButton" class="secondary-button" type="button">시 목차</button>
+                    <button id="lessonDetailButton" class="secondary-button" type="button">시 목록</button>
                     <button id="lessonListButton" class="secondary-button" type="button">차시 목록</button>
                 </div>
             </section>

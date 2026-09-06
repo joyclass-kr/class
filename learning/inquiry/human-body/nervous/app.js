@@ -14,8 +14,8 @@
     // Assets
     var scenes = {
         brain: {
-            src: '../assets/images/nervous-hero-v2.webp',
-            fallback: '../assets/images/nervous-hero.webp',
+            src: '../assets/images/nervous-brain.webp',
+            fallback: '../assets/images/nervous-hero-v2.webp',
             img: null,
             loaded: false
         },
@@ -25,7 +25,8 @@
             loaded: false
         },
         autonomic: {
-            src: '../assets/images/nervous-hero.webp',
+            src: '../assets/images/human_body_anatomy_biomedical_1788681351336.webp',
+            fallback: '../assets/images/nervous-hero.webp',
             img: null,
             loaded: false
         },
@@ -38,6 +39,11 @@
             src: '../assets/images/nervous-eye.jpg',
             img: null,
             loaded: false
+        },
+        ear: {
+            src: '../assets/images/nervous-ear.webp',
+            img: null,
+            loaded: false
         }
     };
 
@@ -47,32 +53,32 @@
     var selectedBrainPart = 'cerebrum';
     var brainParts = {
         cerebrum: {
-            x: 0.50, y: 0.28, r: 52, color: '#a855f7',
+            x: 0.37, y: 0.22, r: 52, side: 'below', color: '#a855f7',
             title: '대뇌 (Cerebrum) - 고등 정신 활동의 최고 사령부',
             desc: '주름진 겉질(회색질)과 속질로 구성됩니다. 감각·운동을 총괄하며 <strong>기억, 추리, 판단, 언어, 감정 등 의식적인 활동</strong>의 최고 중추입니다.'
         },
         diencephalon: {
-            x: 0.49, y: 0.42, r: 24, color: '#06b6d4',
+            x: 0.495, y: 0.435, r: 26, side: 'left', color: '#06b6d4',
             title: '간뇌 (Diencephalon - 시상 & 시상하부)',
             desc: '대뇌 아래에 위치하며, 자율신경계와 호르몬을 조절하여 <strong>체온, 혈당량, 삼투압 등 항상성을 일정하게 유지하는 최고 조절 중추</strong>입니다.'
         },
         midbrain: {
-            x: 0.49, y: 0.50, r: 20, color: '#f43f5e',
+            x: 0.545, y: 0.545, r: 22, side: 'left', color: '#f43f5e',
             title: '중간뇌 (Midbrain, 중뇌) - 눈 조절 중추',
             desc: '간뇌 아래, 소뇌 앞쪽에 위치합니다. <strong>안구 운동과 홍채의 수축·이완을 통한 동공 반사(빛의 명암 조절)</strong>의 중추입니다.'
         },
         cerebellum: {
-            x: 0.65, y: 0.54, r: 38, color: '#38bdf8',
+            x: 0.635, y: 0.655, r: 38, side: 'right', color: '#38bdf8',
             title: '소뇌 (Cerebellum) - 평형 & 정밀 운동',
             desc: '대뇌 후하방에 위치하며, 대뇌와 협력하여 정밀한 근육 운동을 조절하고 귀의 평형감각(반고리관·전정기관) 정보를 받아 <strong>몸의 균형(자세 평형)을 유지</strong>합니다.'
         },
         medulla: {
-            x: 0.49, y: 0.60, r: 24, color: '#10b981',
+            x: 0.555, y: 0.79, r: 24, side: 'left', color: '#10b981',
             title: '연수 (Medulla Oblongata) - 생명 유지 & 내장 반사',
             desc: '중간뇌와 척수를 잇는 뇌줄기로 좌우 신경이 교차합니다. <strong>호흡 운동, 심장 박동, 소화 운동 조절(생명 유지 중추)</strong>과 <strong>기침, 재채기, 딸꾹질, 하품, 침 분비</strong>의 반사 중추입니다.'
         },
         spine: {
-            x: 0.49, y: 0.76, r: 30, color: '#f59e0b',
+            x: 0.60, y: 0.90, r: 26, side: 'right', color: '#f59e0b',
             title: '척수 (Spinal Cord) - 뇌신경 통로 & 무조건 반사',
             desc: '척추 속 신경 다발로 뇌와 온몸 사이의 신호 전달 통로입니다. 위험을 피하는 <strong>무릎 반사, 뜨거운 물체 손 떼기(회피 반사), 배뇨·배변 반사</strong>의 중추입니다.'
         }
@@ -123,10 +129,11 @@
             { x: 0.65, y: 0.65, r: 45, title: '무조건 반사 경로 (~30ms)', desc: '자극 ➔ 감각기 ➔ 감각신경 ➔ <strong>척수/연수/중간뇌 (대뇌 패스!)</strong> ➔ 운동신경 ➔ 반응기' }
         ],
         autonomic: [
-            { x: 0.50, y: 0.22, r: 35, title: '동공 조절 (자율신경)', desc: '교감신경: 동공 확대 (시야 확보) | 부교감신경: 동공 축소 (안정)' },
-            { x: 0.50, y: 0.42, r: 40, title: '심장 박동 조절', desc: '교감신경: 심박 촉진 (혈압 상승, 위기 대응) | 부교감신경: 심박 억제 (심신 안정)' },
-            { x: 0.50, y: 0.58, r: 40, title: '소화관 운동 조절', desc: '교감신경: 소화 억제 (에너지 근육 집중) | 부교감신경: 소화 촉진 (위액 분비, 흡수)' },
-            { x: 0.50, y: 0.78, r: 35, title: '방광 조절', desc: '교감신경: 방광 이완 (배뇨 억제) | 부교감신경: 방광 수축 (배뇨 촉진)' }
+            { x: 0.500, y: 0.170, r: 30, title: '눈 (동공)', desc: '교감신경이 일하면 동공이 <strong>커지고</strong>(빛을 많이 받아 잘 보려고), 부교감신경이 일하면 <strong>작아집니다</strong>.' },
+            { x: 0.483, y: 0.360, r: 30, title: '심장', desc: '교감신경이 일하면 <strong>빨리 뜁니다</strong>(1분에 120회쯤). 부교감신경이 일하면 <strong>천천히 뜁니다</strong>(60회쯤).' },
+            { x: 0.500, y: 0.455, r: 28, title: '기관지', desc: '교감신경이 일하면 <strong>넓어져</strong> 산소를 많이 받아들이고, 부교감신경이 일하면 <strong>좁아집니다</strong>.' },
+            { x: 0.500, y: 0.560, r: 30, title: '소화관', desc: '교감신경이 일하면 소화가 <strong>멈추고</strong>(힘을 근육에 몰아줘야 하니까), 부교감신경이 일하면 <strong>활발해집니다</strong>.' },
+            { x: 0.500, y: 0.690, r: 28, title: '방광', desc: '교감신경이 일하면 <strong>느슨해져</strong> 오줌을 참고, 부교감신경이 일하면 <strong>오므라들어</strong> 오줌을 눕니다.' }
         ],
         synapse: [
             { x: 0.20, y: 0.50, r: 40, title: '감각 뉴런 (Sensory Neuron)', desc: '신경세포체가 축삭 옆에 볼록하게 나와 있는 구심성 뉴런으로 감각기 자극을 중추로 전달합니다.' },
@@ -134,10 +141,24 @@
             { x: 0.80, y: 0.50, r: 45, title: '운동 뉴런 (Motor Neuron)', desc: '연합 뉴런의 명령을 반응기(근육)로 전달하는 원심성 뉴런입니다.' }
         ],
         sensory: [
-            { x: 0.70, y: 0.38, r: 35, title: '홍채 (Iris) - 명암 조절', desc: '밝은 곳: 홍채 확장 ➔ 동공 축소 / 어두운 곳: 홍채 수축 ➔ 동공 확대.' },
-            { x: 0.64, y: 0.50, r: 40, title: '수정체 (Lens) - 원근 굴절', desc: '가까운 곳: 섬모체 수축 ➔ 진대 이완 ➔ <strong>수정체 두꺼워짐</strong> | 먼 곳: <strong>수정체 얇아짐</strong>.' },
-            { x: 0.25, y: 0.40, r: 40, title: '달팽이관 (Cochlea) - 청각', desc: '음파의 진동으로 림프액 파동이 생겨 청각 세포를 흥분시키는 소리 감각 기관.' },
-            { x: 0.25, y: 0.65, r: 40, title: '반고리관 & 전정기관 - 평형', desc: '반고리관: <strong>회전 감각</strong> | 전정기관: 이석이 쏠리며 <strong>기울기·중력</strong> 감지.' }
+            { x: 0.700, y: 0.615, r: 26, side: 'right', title: '각막', desc: '눈의 가장 바깥에서 빛이 처음 들어오는 투명한 창입니다. 빛을 한 번 꺾어 주는 곳이기도 합니다.' },
+            { x: 0.663, y: 0.395, r: 24, side: 'above', title: '홍채', desc: '동공의 크기를 바꿔 <strong>들어오는 빛의 양</strong>을 조절합니다. 밝은 곳에서는 동공이 작아지고, 어두운 곳에서는 동공이 커집니다.' },
+            { x: 0.625, y: 0.500, r: 30, side: 'left', title: '수정체', desc: '볼록렌즈처럼 빛을 꺾어 망막에 상을 맺습니다. 가까운 곳을 볼 때는 <strong>두꺼워지고</strong>, 먼 곳을 볼 때는 <strong>얇아집니다</strong>.' },
+            { x: 0.638, y: 0.185, r: 24, side: 'above', title: '섬모체', desc: '수정체를 잡고 있는 근육입니다. 가까운 곳을 볼 때 <strong>수축</strong>하여 진대를 느슨하게 만들고, 그래서 수정체가 두꺼워집니다.' },
+            { x: 0.618, y: 0.735, r: 24, side: 'below', title: '진대', desc: '섬모체와 수정체를 잇는 가는 끈(걸이인대)입니다. 섬모체가 수축하면 <strong>느슨해지고</strong>, 이완하면 팽팽해집니다.' },
+            { x: 0.345, y: 0.230, r: 26, side: 'left', title: '망막', desc: '상이 맺히는 눈 속 스크린입니다. 시각 세포(원뿔세포·막대세포)가 빛을 신호로 바꿉니다.' },
+            { x: 0.325, y: 0.490, r: 24, side: 'below', title: '황반', desc: '망막에서 시각 세포가 가장 빽빽하게 모인 곳으로, 여기에 상이 맺힐 때 가장 뚜렷하게 보입니다.' },
+            { x: 0.150, y: 0.655, r: 30, side: 'below', title: '시각 신경', desc: '망막이 만든 신호를 <strong>대뇌 시각 영역</strong>으로 보내는 신경 다발입니다.' }
+        ],
+        ear: [
+            { x: 0.100, y: 0.450, r: 34, side: 'below', title: '귓바퀴', desc: '바깥으로 퍼지는 소리를 모아 귓구멍으로 보내는 깔때기 노릇을 합니다.' },
+            { x: 0.350, y: 0.570, r: 30, side: 'below', title: '외이도', desc: '귓바퀴가 모은 소리가 지나가는 통로입니다. 끝에 고막이 있습니다.' },
+            { x: 0.535, y: 0.500, r: 24, side: 'left', title: '고막', desc: '소리(음파)를 받아 <strong>떨리는 얇은 막</strong>입니다. 이 떨림이 귓속뼈로 넘어갑니다.' },
+            { x: 0.565, y: 0.405, r: 22, side: 'above', title: '귓속뼈', desc: '망치뼈·모루뼈·등자뼈 세 개가 지렛대처럼 이어져 고막의 떨림을 <strong>크게 키워</strong> 달팽이관으로 넘깁니다.' },
+            { x: 0.665, y: 0.215, r: 30, side: 'above', title: '반고리관', desc: '서로 직각으로 놓인 세 개의 고리입니다. 속 림프액이 흐르며 <strong>몸의 회전</strong>을 느낍니다. 이 정보는 소뇌로 갑니다.' },
+            { x: 0.675, y: 0.450, r: 24, side: 'left', title: '전정기관', desc: '속에 든 작은 돌(이석)이 중력에 쏠리며 <strong>몸의 기울기</strong>를 느낍니다. 이 정보도 소뇌로 갑니다.' },
+            { x: 0.785, y: 0.505, r: 34, side: 'below', title: '달팽이관', desc: '소용돌이 모양의 관입니다. 속 림프액이 출렁이며 <strong>청각 세포</strong>를 흥분시켜 소리를 느끼게 합니다.' },
+            { x: 0.885, y: 0.290, r: 26, side: 'above', title: '청각 신경', desc: '달팽이관이 만든 신호를 <strong>대뇌 청각 영역</strong>으로 보내는 신경입니다.' }
         ]
     };
 
@@ -280,6 +301,8 @@
             drawNeuron3Overlay(dx, dy, dw, dh, time);
         } else if (currentSceneKey === 'sensory') {
             drawSensoryOrgansOverlay(dx, dy, dw, dh, time);
+        } else if (currentSceneKey === 'ear') {
+            drawEarOverlay(dx, dy, dw, dh, time);
         }
 
         drawHotspots(dx, dy, dw, dh, time);
@@ -288,6 +311,42 @@
     // ------------------------------------------------------------------------
     // Scene 1: Brain 5 Regions & Sagittal Cross-Section Overlay
     // ------------------------------------------------------------------------
+    /**
+     * 표시점 옆에 붙는 이름표. side로 위/아래/왼쪽/오른쪽을 정하고,
+     * 화면 밖으로 나가면 안쪽으로 밀어 넣어 글자가 잘리지 않게 한다.
+     */
+    function drawLabelTag(px, py, text, side, fillColor, lineColor) {
+        var padX = 8, boxH = 21, gap = 15;
+        ctx.font = 'bold 12px Pretendard, sans-serif';
+        var tw = ctx.measureText(text).width;
+        var boxW = tw + padX * 2;
+        var bx, by;
+
+        if (side === 'above') { bx = px - boxW / 2; by = py - gap - boxH; }
+        else if (side === 'left') { bx = px - gap - boxW; by = py - boxH / 2; }
+        else if (side === 'right') { bx = px + gap; by = py - boxH / 2; }
+        else { bx = px - boxW / 2; by = py + gap; }
+
+        // 화면 밖으로 넘치면 안으로 당긴다
+        if (bx < 4) bx = 4;
+        if (bx + boxW > width - 4) bx = width - 4 - boxW;
+        if (by < 4) by = 4;
+        if (by + boxH > height - 4) by = height - 4 - boxH;
+
+        ctx.fillStyle = fillColor;
+        ctx.strokeStyle = lineColor;
+        ctx.beginPath();
+        ctx.roundRect(bx, by, boxW, boxH, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, bx + boxW / 2, by + boxH / 2 + 0.5);
+        ctx.textBaseline = 'alphabetic';
+    }
+
     function drawBrainAnatomyOverlay(dx, dy, dw, dh, time) {
         var keys = Object.keys(brainParts);
 
@@ -332,20 +391,15 @@
             ctx.fill();
 
             // Label tag
-            ctx.fillStyle = isSelected ? 'rgba(168, 85, 247, 0.95)' : 'rgba(15, 23, 42, 0.85)';
-            ctx.strokeStyle = part.color;
             ctx.lineWidth = isSelected ? 2 : 1;
-            var labelText = part.title.split(' ')[0]; // e.g. 대뇌, 간뇌
-            ctx.font = 'bold 12px Pretendard, sans-serif';
-            var tw = ctx.measureText(labelText).width;
-            ctx.beginPath();
-            ctx.roundRect(px - tw / 2 - 8, py + 16, tw + 16, 22, 6);
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.textAlign = 'center';
-            ctx.fillText(labelText, px, py + 31);
+            ctx.shadowBlur = 0;
+            drawLabelTag(
+                px, py,
+                part.title.split(' ')[0], // 대뇌, 간뇌 …
+                part.side,
+                isSelected ? 'rgba(168, 85, 247, 0.95)' : 'rgba(9, 14, 30, 0.88)',
+                part.color
+            );
 
             ctx.restore();
         });
@@ -470,7 +524,7 @@
         ctx.fillStyle = isSympathetic ? '#fca5a5' : '#6ee7b7';
         ctx.font = 'bold 11.5px Pretendard, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(isSympathetic ? '👁️ 동공 확대' : '👁️ 동공 축소', eyeX, eyeY + 34);
+        ctx.fillText(isSympathetic ? '👁️ 동공 확대' : '👁️ 동공 축소', eyeX, eyeY - 30);
 
         // 2. Heart (심장 박동)
         var beatScale = 1.0 + Math.sin(heartBeatPhase) * (isSympathetic ? 0.25 : 0.10);
@@ -482,7 +536,10 @@
         ctx.fill();
 
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(isSympathetic ? '💓 심박 촉진 (120 bpm)' : '💓 심박 억제 (60 bpm)', heartX, heartY + 42);
+        ctx.shadowBlur = 0;
+        ctx.textAlign = 'left';
+        ctx.fillText(isSympathetic ? '💓 심박 촉진 (120 bpm)' : '💓 심박 억제 (60 bpm)', heartX + 34, heartY + 4);
+        ctx.textAlign = 'center';
 
         // 3. Stomach (소화 운동)
         ctx.fillStyle = isSympathetic ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.4)';
@@ -584,9 +641,20 @@
         ctx.fillText('(근육 연결)', mX, yPos + 38);
 
         // 4. Direction Arrow
-        ctx.fillStyle = '#facc15';
+        var arrowText = '➔ 자극 전달 방향 (감각 ➔ 연합 ➔ 운동) ➔';
         ctx.font = 'bold 14px Pretendard, sans-serif';
-        ctx.fillText('➔ 자극 전달 방향 (감각 ➔ 연합 ➔ 운동) ➔', dx + 0.50 * dw, dy + 0.28 * dh);
+        var atw = ctx.measureText(arrowText).width;
+        var acx = dx + 0.50 * dw, acy = dy + 0.24 * dh;
+        ctx.fillStyle = 'rgba(6, 10, 24, 0.82)';
+        ctx.strokeStyle = '#facc15';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.roundRect(acx - atw / 2 - 12, acy - 15, atw + 24, 28, 8);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = '#facc15';
+        ctx.textAlign = 'center';
+        ctx.fillText(arrowText, acx, acy + 5);
 
         ctx.restore();
     }
@@ -595,67 +663,173 @@
     // Scene 5: Sensory Organs (Eye & Ear) Overlay
     // ------------------------------------------------------------------------
     function drawSensoryOrgansOverlay(dx, dy, dw, dh, time) {
-        var eyeX = dx + 0.70 * dw;
-        var eyeY = dy + 0.50 * dh;
+        // 그림 속 수정체 자리에 정확히 겹치도록 좌표를 잡는다
+        var lensX = dx + 0.625 * dw;
+        var lensY = dy + 0.500 * dh;
+        var foveaX = dx + 0.325 * dw;
+        var foveaY = dy + 0.490 * dh;
 
-        // Eye ray tracing
         var isNear = targetDist < 35;
-        var lensThickness = isNear ? 18 : 10;
-        var pupilSpread = 10 + (1 - lightLevel / 100) * 16;
+        var lensHalfW = isNear ? 26 : 14;          // 가까울수록 두꺼워짐
+        var lensHalfH = 0.115 * dh;
+        var pupilSpread = (0.03 + (1 - lightLevel / 100) * 0.075) * dh; // 어두울수록 넓게
 
         ctx.save();
-        // Lens
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
-        ctx.strokeStyle = '#38bdf8';
-        ctx.lineWidth = 2;
+
+        // 수정체 (두께가 변하는 볼록렌즈)
+        ctx.fillStyle = isNear ? 'rgba(192, 132, 252, 0.45)' : 'rgba(56, 189, 248, 0.38)';
+        ctx.strokeStyle = isNear ? '#c084fc' : '#38bdf8';
+        ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.ellipse(eyeX, eyeY, lensThickness, 34, 0, 0, Math.PI * 2);
+        ctx.ellipse(lensX, lensY, lensHalfW, lensHalfH, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
 
-        // Rays
+        // 빛줄기: 오른쪽에서 들어와 수정체에서 꺾이고 황반에 모인다
         for (var r = -2; r <= 2; r++) {
             var off = r * (pupilSpread / 2);
-            ctx.strokeStyle = '#facc15';
+            ctx.strokeStyle = 'rgba(250, 204, 21, 0.9)';
             ctx.lineWidth = 1.8;
             ctx.beginPath();
-            ctx.moveTo(dx + 0.95 * dw, eyeY + off * 1.5);
-            ctx.lineTo(eyeX, eyeY + off);
-            ctx.lineTo(eyeX - 100, eyeY);
+            ctx.moveTo(dx + 0.99 * dw, lensY + off * 1.35);
+            ctx.lineTo(lensX, lensY + off);
+            ctx.lineTo(foveaX, foveaY);
             ctx.stroke();
         }
 
-        // Ear schematic on left side
-        var earX = dx + 0.25 * dw;
-        var earY = dy + 0.50 * dh;
+        // 황반에 맺히는 상 (깜빡임)
+        var blink = 0.6 + Math.sin(time * 0.006) * 0.4;
+        ctx.fillStyle = 'rgba(250, 204, 21, ' + blink.toFixed(2) + ')';
+        ctx.beginPath();
+        ctx.arc(foveaX, foveaY, 6, 0, Math.PI * 2);
+        ctx.fill();
 
-        // Tympanic membrane (고막)
-        var wave = Math.sin(earSoundPhase) * 3;
-        ctx.strokeStyle = '#38bdf8';
+        drawCaptionPlate(
+            dx + 12, dy + 12,
+            [
+                (isNear ? '가까운 물체 (' : '먼 물체 (') + targetDist + 'cm) ➔ 섬모체 ' + (isNear ? '수축' : '이완') + ' ➔ 수정체 ' + (isNear ? '두꺼워짐' : '얇아짐'),
+                (lightLevel < 40 ? '어두움 (' : '밝음 (') + lightLevel + '%) ➔ 동공 ' + (lightLevel < 40 ? '확대' : '축소')
+            ],
+            isNear ? '#c084fc' : '#38bdf8'
+        );
+
+        ctx.restore();
+    }
+
+    // ------------------------------------------------------------------------
+    // Scene 6: Ear (청각 & 평형감각) Overlay
+    // ------------------------------------------------------------------------
+    function drawEarOverlay(dx, dy, dw, dh, time) {
+        // 소리가 지나가는 길: 귓바퀴 ➔ 외이도 ➔ 고막 ➔ 귓속뼈 ➔ 달팽이관
+        var path = [
+            { x: 0.100, y: 0.450 },
+            { x: 0.350, y: 0.570 },
+            { x: 0.535, y: 0.500 },
+            { x: 0.565, y: 0.405 },
+            { x: 0.700, y: 0.470 },
+            { x: 0.785, y: 0.505 }
+        ];
+
+        ctx.save();
+
+        // 길 안내선
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        path.forEach(function (pt, i) {
+            var px = dx + pt.x * dw, py = dy + pt.y * dh;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 소리 알갱이 세 개가 길을 따라 흐른다
+        var segCount = path.length - 1;
+        for (var k = 0; k < 3; k++) {
+            var t = ((earSoundPhase * 0.09) + k / 3) % 1;
+            var fs = t * segCount;
+            var si = Math.min(Math.floor(fs), segCount - 1);
+            var lt = fs - si;
+            var ax = dx + (path[si].x + (path[si + 1].x - path[si].x) * lt) * dw;
+            var ay = dy + (path[si].y + (path[si + 1].y - path[si].y) * lt) * dh;
+
+            ctx.fillStyle = '#38bdf8';
+            ctx.shadowBlur = 16;
+            ctx.shadowColor = '#38bdf8';
+            ctx.beginPath();
+            ctx.arc(ax, ay, 6, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+
+        // 귓바퀴로 들어오는 음파
+        var waveX = dx + 0.100 * dw, waveY = dy + 0.450 * dh;
+        for (var w = 0; w < 3; w++) {
+            var rr = 14 + ((earSoundPhase * 2.2 + w * 14) % 42);
+            ctx.strokeStyle = 'rgba(56, 189, 248, ' + (1 - rr / 56).toFixed(2) + ')';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(waveX - 26, waveY, rr, -Math.PI / 3, Math.PI / 3);
+            ctx.stroke();
+        }
+
+        // 고막 떨림
+        var drumX = dx + 0.535 * dw, drumY = dy + 0.500 * dh;
+        var wobble = Math.sin(earSoundPhase * 1.6) * 4;
+        ctx.strokeStyle = '#facc15';
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.moveTo(earX - 30, earY - 25);
-        ctx.quadraticCurveTo(earX - 30 + wave, earY, earX - 30, earY + 25);
+        ctx.moveTo(drumX - 4, drumY - 0.075 * dh);
+        ctx.quadraticCurveTo(drumX - 4 + wobble, drumY, drumX - 4, drumY + 0.075 * dh);
         ctx.stroke();
 
-        // Cochlea (달팽이관 나선)
-        ctx.strokeStyle = '#a855f7';
+        // 반고리관·전정기관은 평형감각이라 소리 길과 색을 달리한다
+        var balX = dx + 0.665 * dw, balY = dy + 0.215 * dh;
+        var spin = time * 0.002;
+        ctx.strokeStyle = 'rgba(52, 211, 153, 0.9)';
         ctx.lineWidth = 2.5;
         ctx.beginPath();
-        for (var a = 0; a < Math.PI * 4; a += 0.1) {
-            var rad = a * 3;
-            var cx = earX + 30 + Math.cos(a) * rad;
-            var cy = earY + Math.sin(a) * rad;
-            if (a === 0) ctx.moveTo(cx, cy);
-            else ctx.lineTo(cx, cy);
-        }
+        ctx.arc(balX, balY, 0.085 * dh, spin, spin + Math.PI * 1.35);
         ctx.stroke();
 
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 11px Pretendard, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('고막 진동 ➔ 달팽이관 (청각)', earX, earY + 45);
+        drawCaptionPlate(
+            dx + 12, dy + 12,
+            [
+                '소리: 귓바퀴 ➔ 외이도 ➔ 고막 ➔ 귓속뼈 ➔ 달팽이관 ➔ 대뇌',
+                '평형: 반고리관(회전) · 전정기관(기울기) ➔ 소뇌'
+            ],
+            '#38bdf8'
+        );
 
+        ctx.restore();
+    }
+
+    /**
+     * 화면 왼쪽 위에 까만 판을 깔고 설명 줄을 올린다. 배경 그림이 밝아도 글자가 읽힌다.
+     */
+    function drawCaptionPlate(px, py, lines, accent) {
+        ctx.save();
+        ctx.font = 'bold 12px Pretendard, sans-serif';
+        var maxW = 0;
+        lines.forEach(function (t) { maxW = Math.max(maxW, ctx.measureText(t).width); });
+        var boxW = maxW + 24, boxH = 14 + lines.length * 19;
+
+        ctx.fillStyle = 'rgba(6, 10, 24, 0.82)';
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.roundRect(px, py, boxW, boxH, 8);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.textAlign = 'left';
+        lines.forEach(function (t, i) {
+            ctx.fillStyle = i === 0 ? '#f8fafc' : '#cbd5e1';
+            ctx.fillText(t, px + 12, py + 21 + i * 19);
+        });
+        ctx.textAlign = 'center';
         ctx.restore();
     }
 
@@ -665,6 +839,8 @@
     function drawHotspots(dx, dy, dw, dh, time) {
         if (currentSceneKey === 'brain') return; // Handled directly in overlay
 
+        // 자율신경·뉴런 장면은 그림 자체에 이름이 이미 쓰여 있어 이름표를 또 달면 글자가 겹친다
+        var labelDrawnByScene = (currentSceneKey === 'autonomic' || currentSceneKey === 'synapse');
         var list = hotspots[currentSceneKey] || [];
         list.forEach(function (spot) {
             var sx = dx + spot.x * dw;
@@ -685,20 +861,10 @@
             ctx.fill();
             ctx.stroke();
 
-            var labelText = spot.title.split(' ')[0];
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-            ctx.strokeStyle = '#a855f7';
-            ctx.lineWidth = 1;
-            ctx.font = 'bold 11px Pretendard, sans-serif';
-            var tw = ctx.measureText(labelText).width;
-            ctx.beginPath();
-            ctx.roundRect(sx - tw / 2 - 8, sy + 14, tw + 16, 20, 4);
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.fillStyle = '#f8fafc';
-            ctx.textAlign = 'center';
-            ctx.fillText(labelText, sx, sy + 28);
+            if (!labelDrawnByScene) {
+                ctx.lineWidth = 1;
+                drawLabelTag(sx, sy, spot.title.split(' (')[0], spot.side, 'rgba(9, 14, 30, 0.88)', '#a855f7');
+            }
             ctx.restore();
         });
     }
@@ -737,6 +903,7 @@
                 currentSceneKey = btn.dataset.scene;
 
                 updateHudInstruction(currentSceneKey);
+                activateSidebarTab(sidebarTabForScene(currentSceneKey));
                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
             });
         });
@@ -811,6 +978,7 @@
                     });
                     currentSceneKey = 'response';
                     updateHudInstruction('response');
+                    activateSidebarTab('focus');
                 }
 
                 isRacing = true;
@@ -905,18 +1073,25 @@
 
         // Sidebar Tab Switching
         var tabBtns = document.querySelectorAll('.sidebar-tab-btn');
-        var tabPanels = document.querySelectorAll('.sidebar-tab-panel');
         tabBtns.forEach(function (btn) {
             btn.addEventListener('click', function () {
-                tabBtns.forEach(function (b) { b.classList.remove('active'); });
-                tabPanels.forEach(function (p) { p.style.display = 'none'; });
-                btn.classList.add('active');
-                var targetId = 'tabPanel_' + btn.dataset.tab;
-                var targetPanel = document.getElementById(targetId);
-                if (targetPanel) targetPanel.style.display = 'block';
+                activateSidebarTab(btn.dataset.tab);
                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
             });
         });
+    }
+
+    function sidebarTabForScene(sceneKey) {
+        if (sceneKey === 'autonomic') return 'autonomic';
+        if (sceneKey === 'sensory' || sceneKey === 'ear' || sceneKey === 'synapse') return 'sensory';
+        return 'focus';
+    }
+
+    function activateSidebarTab(tabName) {
+        var tabBtns = document.querySelectorAll('.sidebar-tab-btn');
+        var tabPanels = document.querySelectorAll('.sidebar-tab-panel');
+        tabBtns.forEach(function (b) { b.classList.toggle('active', b.dataset.tab === tabName); });
+        tabPanels.forEach(function (p) { p.style.display = (p.id === 'tabPanel_' + tabName) ? 'block' : 'none'; });
     }
 
     function selectBrainPart(partKey) {
@@ -946,7 +1121,9 @@
         } else if (sceneKey === 'synapse') {
             hudInstructionEl.innerHTML = '<strong>감각뉴런 ➔ 연합뉴런 ➔ 운동뉴런</strong>의 구조와 단방향 시냅스 전달 원리를 확인하세요.';
         } else if (sceneKey === 'sensory') {
-            hudInstructionEl.innerHTML = '슬라이더를 조작하여 눈의 <strong>원근·명암 조절</strong>과 귀의 <strong>청각·평형감각</strong>을 실험하세요.';
+            hudInstructionEl.innerHTML = '오른쪽 슬라이더로 <strong>물체 거리</strong>와 <strong>빛의 밝기</strong>를 바꿔 수정체 두께와 동공 크기를 살펴보세요.';
+        } else if (sceneKey === 'ear') {
+            hudInstructionEl.innerHTML = '소리가 <strong>귓바퀴 ➔ 외이도 ➔ 고막 ➔ 귓속뼈 ➔ 달팽이관</strong>으로 흐르는 길을 따라가 보세요. 부위를 누르면 설명이 나옵니다.';
         }
     }
 
