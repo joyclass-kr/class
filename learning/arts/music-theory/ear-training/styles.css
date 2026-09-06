@@ -213,3 +213,113 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; }
 }
+
+/* 문제 화면: 물음 · 악보 */
+.ask { margin: 0; font-size: 19px; font-weight: 800; text-align: center; word-break: keep-all; }
+
+.staff-wrap {
+    display: grid;
+    place-items: center;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #f6f4ee;
+    overflow-x: auto;
+}
+
+.sheet { width: 100%; max-width: 460px; height: auto; color: #1b2029; }
+.sheet-staff line { stroke: #6d7078; stroke-width: 1.2; }
+.sheet-clef { font-family: "Noto Music", "Segoe UI Symbol", Georgia, serif; font-size: 58px; fill: #1b2029; }
+.sheet-unknown { font-family: Georgia, serif; font-size: 30px; font-weight: 700; fill: #8a6a22; text-anchor: middle; }
+.sheet-ink { stroke: #1b2029; fill: #1b2029; }
+.sheet-ink .sheet-head { fill: none; stroke-width: 2.1; }
+.sheet-ink .sheet-ledger { stroke: #6d7078; stroke-width: 1.2; }
+.sheet-ink.is-right { stroke: #17714f; fill: #17714f; }
+.sheet-ink.is-wrong { stroke: #ab3b3b; fill: #ab3b3b; }
+
+/* 듣기 · 넘기기 */
+.play-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; }
+
+.skip-button {
+    min-width: 64px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--panel);
+    color: var(--muted);
+    font-size: 18px;
+}
+
+.skip-button:hover { border-color: var(--gold); color: var(--ink); }
+
+/* 건반으로 답하기 */
+.keyboard-wrap { display: grid; gap: 8px; }
+
+.keyboard {
+    position: relative;
+    height: 150px;
+    padding: 8px 8px 10px;
+    border: 5px solid #10151d;
+    border-top-color: #566475;
+    border-radius: 8px;
+    background: #070a0e;
+    overflow: hidden;
+}
+
+.keyboard-whites { position: relative; display: flex; height: 100%; }
+
+.key { position: relative; padding: 0; border: 1px solid #aab2bc; cursor: pointer; }
+
+.key-white {
+    flex: 1;
+    min-width: 26px;
+    border-radius: 0 0 5px 5px;
+    background: linear-gradient(105deg, #fffefa, #dce1e6);
+    box-shadow: inset 2px 0 rgba(255,255,255,.55), inset -2px 0 rgba(0,0,0,.12), 0 3px 2px rgba(0,0,0,.5);
+}
+
+.key-black {
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    height: 58%;
+    border-color: #030509;
+    border-radius: 0 0 5px 5px;
+    background: linear-gradient(105deg, #3b4653, #05070a);
+    box-shadow: inset 2px 0 rgba(255,255,255,.18), 0 5px 4px rgba(0,0,0,.7);
+}
+
+.key:disabled { cursor: default; }
+.key-white:not(:disabled):active { background: linear-gradient(#f6d47c, #c79028); }
+.key-black:not(:disabled):active { background: linear-gradient(#d49a36, #422708); }
+
+.key-mark {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    color: #10281c;
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.key-black .key-mark { bottom: 5px; width: 21px; height: 21px; font-size: 13px; }
+.key.is-given .key-mark { background: #46d38b; clip-path: polygon(50% 4%, 96% 96%, 4% 96%); }
+.key.is-right .key-mark { background: #46d38b; }
+.key.is-typed .key-mark { background: #e7c774; }
+.key.is-wrong .key-mark { background: #f07575; }
+
+.typed-count { margin: 0; color: var(--muted); font-size: 15px; font-weight: 800; text-align: center; }
+
+.song-hint { margin: 0; color: var(--gold); font-size: 15px; font-weight: 700; text-align: center; word-break: keep-all; }
+
+@media (max-width: 520px) {
+    .ask { font-size: 18px; }
+    .keyboard { height: 128px; }
+    .key-mark { width: 21px; height: 21px; font-size: 13px; }
+}

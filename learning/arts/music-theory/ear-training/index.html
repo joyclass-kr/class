@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0e141f">
     <title>청음</title>
-    <meta name="description" content="음정·화음 성질·음계·화음 진행을 소리로 듣고 맞히는 청음 훈련">
+    <meta name="description" content="음정·화음 성질·음계·화음 진행·가락 받아쓰기를 소리로 듣고 맞히는 청음 훈련">
     <link rel="preload" href="assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260907-1">
+    <link rel="stylesheet" href="styles.css?v=20260907-3">
     <script src="piano-engine.js?v=20260907-1" defer></script>
-    <script src="app.js?v=20260907-1" defer></script>
+    <script src="notation.js?v=20260907-3" defer></script>
+    <script src="keyboard.js?v=20260907-3" defer></script>
+    <script src="app.js?v=20260907-3" defer></script>
 </head>
 <body>
     <main class="shell">
@@ -31,7 +33,17 @@
                 <div id="modeRow" class="chip-row" role="group" aria-label="들려주는 방법"></div>
             </div>
 
+            <div class="field" id="inputField">
+                <span class="field-label">답하는 방법</span>
+                <div id="inputRow" class="chip-row" role="group" aria-label="답하는 방법"></div>
+            </div>
+
             <div class="field">
+                <span class="field-label">문제 수</span>
+                <div id="limitRow" class="chip-row" role="group" aria-label="문제 수"></div>
+            </div>
+
+            <div class="field" id="itemField">
                 <span class="field-label">낼 문제</span>
                 <div id="itemPicker" class="item-picker" role="group" aria-label="낼 문제"></div>
             </div>
@@ -46,11 +58,23 @@
                 <button id="stopButton" class="quiet-button" type="button">그만하기</button>
             </header>
 
-            <button id="replayButton" class="replay-button" type="button">♪ 다시 듣기</button>
+            <p id="askText" class="ask"></p>
+            <div id="staff" class="staff-wrap"></div>
+
+            <div class="play-row">
+                <button id="replayButton" class="replay-button" type="button">♪ 다시 듣기</button>
+                <button id="skipButton" class="skip-button" type="button" aria-label="넘기고 정답 보기" title="넘기고 정답 보기">▶❙</button>
+            </div>
 
             <div id="choices" class="choices" role="group" aria-label="정답 고르기"></div>
 
+            <div id="keyboardWrap" class="keyboard-wrap" hidden>
+                <div id="pianoKeys"></div>
+                <p id="typedCount" class="typed-count"></p>
+            </div>
+
             <p id="feedback" class="feedback" aria-live="polite"></p>
+            <p id="songHint" class="song-hint" hidden></p>
             <button id="nextButton" class="primary-button" type="button" hidden>다음 문제</button>
         </section>
 

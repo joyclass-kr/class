@@ -1,63 +1,83 @@
 (function () {
     "use strict";
 
-    const pc = value => ((value % 12) + 12) % 12;
     const byId = id => document.getElementById(id);
     const pick = list => list[Math.floor(Math.random() * list.length)];
     const randomInt = (low, high) => low + Math.floor(Math.random() * (high - low + 1));
+    const N = window.Notation;
 
+    /* 건반에 보이는 범위: 가온도부터 두 옥타브 위 A까지 */
+    const KEY_LOW = 60;
+    const KEY_HIGH = 81;
+
+    /* 기준음은 임시표가 붙지 않는 자리에서 고른다. C4=28, G4=32, C5=35, G5=39 */
+    const LOW_ROOTS = [28, 29, 30, 31, 32];
+    const HIGH_ROOTS = [35, 36, 37, 38, 39];
+
+    /* 음정 ------------------------------------------------------------- */
     const INTERVALS = [
-        { id: "m2", label: "단2도", semis: 1 },
-        { id: "M2", label: "장2도", semis: 2 },
-        { id: "m3", label: "단3도", semis: 3 },
-        { id: "M3", label: "장3도", semis: 4 },
-        { id: "P4", label: "완전4도", semis: 5 },
-        { id: "TT", label: "증4도", semis: 6 },
-        { id: "P5", label: "완전5도", semis: 7 },
-        { id: "m6", label: "단6도", semis: 8 },
-        { id: "M6", label: "장6도", semis: 9 },
-        { id: "m7", label: "단7도", semis: 10 },
-        { id: "M7", label: "장7도", semis: 11 },
-        { id: "P8", label: "완전8도", semis: 12 }
+        { id: "m2", label: "단2도", degree: 1, semis: 1 },
+        { id: "M2", label: "장2도", degree: 1, semis: 2 },
+        { id: "m3", label: "단3도", degree: 2, semis: 3 },
+        { id: "M3", label: "장3도", degree: 2, semis: 4 },
+        { id: "P4", label: "완전4도", degree: 3, semis: 5 },
+        { id: "A4", label: "증4도", degree: 3, semis: 6 },
+        { id: "P5", label: "완전5도", degree: 4, semis: 7 },
+        { id: "m6", label: "단6도", degree: 5, semis: 8 },
+        { id: "M6", label: "장6도", degree: 5, semis: 9 },
+        { id: "m7", label: "단7도", degree: 6, semis: 10 },
+        { id: "M7", label: "장7도", degree: 6, semis: 11 },
+        { id: "P8", label: "완전8도", degree: 7, semis: 12 }
     ];
 
-    const CHORDS = [
-        { id: "maj", label: "장3화음", offs: [0, 4, 7] },
-        { id: "min", label: "단3화음", offs: [0, 3, 7] },
-        { id: "dim", label: "감3화음", offs: [0, 3, 6] },
-        { id: "aug", label: "증3화음", offs: [0, 4, 8] },
-        { id: "maj7", label: "장7화음", offs: [0, 4, 7, 11] },
-        { id: "dom7", label: "속7화음", offs: [0, 4, 7, 10] },
-        { id: "min7", label: "단7화음", offs: [0, 3, 7, 10] },
-        { id: "m7b5", label: "반감7화음", offs: [0, 3, 6, 10] },
-        { id: "dim7", label: "감7화음", offs: [0, 3, 6, 9] }
-    ];
-
-    const SCALES = [
-        { id: "major", label: "장음계", steps: [0, 2, 4, 5, 7, 9, 11, 12] },
-        { id: "nminor", label: "자연단음계", steps: [0, 2, 3, 5, 7, 8, 10, 12] },
-        { id: "hminor", label: "화성단음계", steps: [0, 2, 3, 5, 7, 8, 11, 12] },
-        { id: "mminor", label: "가락단음계", steps: [0, 2, 3, 5, 7, 9, 11, 12] },
-        { id: "pmaj", label: "장5음음계", steps: [0, 2, 4, 7, 9, 12] },
-        { id: "pmin", label: "단5음음계", steps: [0, 3, 5, 7, 10, 12] },
-        { id: "blues", label: "블루스음계", steps: [0, 3, 5, 6, 7, 10, 12] },
-        { id: "dorian", label: "도리아", steps: [0, 2, 3, 5, 7, 9, 10, 12] },
-        { id: "phryg", label: "프리지아", steps: [0, 1, 3, 5, 7, 8, 10, 12] },
-        { id: "lydian", label: "리디아", steps: [0, 2, 4, 6, 7, 9, 11, 12] },
-        { id: "mixo", label: "믹솔리디아", steps: [0, 2, 4, 5, 7, 9, 10, 12] },
-        { id: "locrian", label: "로크리아", steps: [0, 1, 3, 5, 6, 8, 10, 12] },
-        { id: "whole", label: "온음음계", steps: [0, 2, 4, 6, 8, 10, 12] }
-    ];
-
-    const DEGREES = {
-        "I": [0, 4, 7],
-        "ii": [2, 5, 9],
-        "iii": [4, 7, 11],
-        "IV": [5, 9, 12],
-        "V": [7, 11, 14],
-        "vi": [9, 12, 16]
+    /* 노래로 기억하는 음정. 올라가는 것과 내려가는 것을 따로 둔다. */
+    const INTERVAL_SONGS = {
+        m2: { up: "죠스 주제가", down: "엘리제를 위하여" },
+        M2: { up: "고요한 밤 거룩한 밤", down: "메리 크리스마스" },
+        m3: { up: "산토끼", down: "비행기" },
+        M3: { up: "떴다 떴다 비행기", down: "아기 상어" },
+        P4: { up: "결혼 행진곡", down: "구름 위의 산책" },
+        A4: { up: "심슨 가족 주제가", down: "유러피언 앤섬" },
+        P5: { up: "반짝반짝 작은 별", down: "플린스톤 주제가" },
+        m6: { up: "위 아 더 챔피언", down: "러브 스토리" },
+        M6: { up: "나의 사랑 클레멘타인", down: "노잉 미 노잉 유" },
+        m7: { up: "웨스트 사이드 스토리 〈마리아〉", down: "웨어 두 유 고 투 마이 러블리" },
+        M7: { up: "테이크 온 미 후렴", down: "아이 러브 유(콜 포터)" },
+        P8: { up: "무지개 너머 어딘가", down: "윌리 웡카 주제가" }
     };
 
+    /* 화음 성질: (도수, 반음 수)로 적는다 ------------------------------- */
+    const CHORDS = [
+        { id: "maj", label: "장3화음", tones: [[0, 0], [2, 4], [4, 7]] },
+        { id: "min", label: "단3화음", tones: [[0, 0], [2, 3], [4, 7]] },
+        { id: "dim", label: "감3화음", tones: [[0, 0], [2, 3], [4, 6]] },
+        { id: "aug", label: "증3화음", tones: [[0, 0], [2, 4], [4, 8]] },
+        { id: "maj7", label: "장7화음", tones: [[0, 0], [2, 4], [4, 7], [6, 11]] },
+        { id: "dom7", label: "속7화음", tones: [[0, 0], [2, 4], [4, 7], [6, 10]] },
+        { id: "min7", label: "단7화음", tones: [[0, 0], [2, 3], [4, 7], [6, 10]] },
+        { id: "m7b5", label: "반감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 10]] },
+        { id: "dim7", label: "감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 9]] }
+    ];
+
+    /* 음계 -------------------------------------------------------------- */
+    const SCALES = [
+        { id: "major", label: "장음계", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "nminor", label: "자연단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
+        { id: "hminor", label: "화성단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 11], [7, 12]] },
+        { id: "mminor", label: "가락단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "pmaj", label: "장5음음계", tones: [[0, 0], [1, 2], [2, 4], [4, 7], [5, 9], [7, 12]] },
+        { id: "pmin", label: "단5음음계", tones: [[0, 0], [2, 3], [3, 5], [4, 7], [6, 10], [7, 12]] },
+        { id: "blues", label: "블루스음계", tones: [[0, 0], [2, 3], [3, 5], [3, 6], [4, 7], [6, 10], [7, 12]] },
+        { id: "dorian", label: "도리아", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
+        { id: "phrygian", label: "프리지아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
+        { id: "lydian", label: "리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "mixolydian", label: "믹솔리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
+        { id: "locrian", label: "로크리아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 6], [5, 8], [6, 10], [7, 12]] },
+        { id: "whole", label: "온음음계", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 8], [5, 10], [7, 12]] }
+    ];
+
+    /* 화음 진행 ---------------------------------------------------------- */
+    const DEGREE_INDEX = { "I": 0, "ii": 1, "iii": 2, "IV": 3, "V": 4, "vi": 5 };
     const PROGRESSIONS = [
         ["I", "V", "vi", "IV"],
         ["I", "vi", "IV", "V"],
@@ -73,17 +93,141 @@
         ["ii", "V", "I", "vi"]
     ].map(chords => ({ id: chords.join("-"), label: chords.join("–"), chords: chords }));
 
-    function chordVoicing(tonic, symbol) {
-        const offs = DEGREES[symbol];
-        const bass = tonic - 12 + pc(offs[0]);
-        return [bass].concat(offs.map(off => tonic + pc(off)));
+    const MAJOR_TONES = [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11]];
+
+    function majorScale(tonic) {
+        return MAJOR_TONES.map(tone => N.step(tonic, tone[0], tone[1]));
+    }
+
+    function degreeTriad(scale, symbol) {
+        const index = DEGREE_INDEX[symbol];
+        return [0, 2, 4].map(offset => {
+            const note = scale[(index + offset) % 7];
+            const octaveUp = index + offset >= 7;
+            return octaveUp ? N.spell(note.letterAbs + 7, note.accidental) : note;
+        });
+    }
+
+    /* 한 옥타브 안으로 모아 좁은 자리에서 울리게 한다. */
+    function closeVoicing(tonic, notes) {
+        const floorMidi = tonic.midi;
+        return notes.map(note => {
+            let midi = note.midi;
+            while (midi - floorMidi >= 12) midi -= 12;
+            while (midi < floorMidi) midi += 12;
+            return midi;
+        });
+    }
+
+    /* 문제 만들기 --------------------------------------------------------- */
+
+    function intervalQuestion(item, mode) {
+        const shape = mode === "mixed" ? pick(["harmony", "up", "down"]) : mode;
+        const descending = shape === "down";
+        const given = N.natural(pick(descending ? HIGH_ROOTS : LOW_ROOTS));
+        const other = descending
+            ? N.step(given, -item.degree, -item.semis)
+            : N.step(given, item.degree, item.semis);
+
+        const groups = shape === "harmony"
+            ? [[given.midi, other.midi]]
+            : [[given.midi], [other.midi]];
+
+        return {
+            playback: { groups: groups, beat: shape === "harmony" ? 2 : .68 },
+            staffBefore: [{ notes: [given] }, null],
+            staffAfter: [{ notes: [given] }, { notes: [other] }],
+            keyboard: { given: [{ midi: given.midi, text: "" }], answer: [other.midi] },
+            detail: N.name(given) + " → " + N.name(other)
+        };
+    }
+
+    function chordQuestion(item, mode) {
+        const shape = mode === "mixed" ? pick(["harmony", "arp"]) : mode;
+        const root = N.natural(pick(item.id === "aug" ? [28, 29, 30, 31, 32] : LOW_ROOTS));
+        const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
+        const midis = notes.map(note => note.midi);
+        return {
+            playback: shape === "arp"
+                ? { groups: midis.map(midi => [midi]), beat: .5 }
+                : { groups: [midis], beat: 2.2 },
+            staffBefore: [null],
+            staffAfter: [{ notes: notes }],
+            keyboard: null,
+            detail: notes.map(N.name).join(" · ")
+        };
+    }
+
+    function scaleQuestion(item, mode) {
+        const shape = mode === "mixed" ? pick(["up", "down"]) : mode;
+        const root = N.natural(pick(LOW_ROOTS));
+        const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
+        const line = shape === "down" ? notes.slice().reverse() : notes;
+        return {
+            playback: { groups: line.map(note => [note.midi]), beat: .44 },
+            staffBefore: [null],
+            staffAfter: line.map(note => ({ notes: [note] })),
+            keyboard: null,
+            detail: N.name(root) + " " + item.label
+        };
+    }
+
+    function progressionQuestion(item) {
+        const tonic = N.natural(pick([28, 29, 31, 32]));
+        const scale = majorScale(tonic);
+        const groups = item.chords.map(symbol => {
+            const triad = degreeTriad(scale, symbol);
+            const voiced = closeVoicing(tonic, triad);
+            return [voiced[0] - 12].concat(voiced);
+        });
+        return {
+            playback: { groups: groups, beat: 1.1 },
+            staffBefore: [null],
+            staffAfter: item.chords.map(symbol => ({ notes: degreeTriad(scale, symbol) })),
+            keyboard: null,
+            detail: N.LETTER_NAMES[tonic.letter] + " 장조 · " + item.label
+        };
+    }
+
+    function melodyQuestion(item) {
+        const tonic = N.natural(pick([28, 31, 32]));
+        const scale = majorScale(tonic);
+        const wide = item.reach;
+        let degree = randomInt(0, 2);
+        const degrees = [degree];
+        for (let step = 1; step < item.count; step += 1) {
+            let next = degree;
+            let guard = 0;
+            while ((next === degree || next < 0 || next > 7) && guard < 30) {
+                next = degree + randomInt(-wide, wide);
+                guard += 1;
+            }
+            degree = Math.max(0, Math.min(7, next));
+            degrees.push(degree);
+        }
+        const notes = degrees.map(index => {
+            const note = scale[index % 7];
+            return index >= 7 ? N.spell(note.letterAbs + 7, note.accidental) : note;
+        });
+        return {
+            playback: { groups: notes.map(note => [note.midi]), beat: .62 },
+            staffBefore: [{ notes: [notes[0]] }].concat(notes.slice(1).map(() => null)),
+            staffAfter: notes.map(note => ({ notes: [note] })),
+            keyboard: {
+                given: [{ midi: notes[0].midi, text: "1" }],
+                answer: notes.slice(1).map(note => note.midi)
+            },
+            detail: notes.map(N.name).join(" ")
+        };
     }
 
     const DRILLS = [
         {
             id: "interval",
             name: "음정",
+            ask: "무슨 음정인가요?",
             items: INTERVALS,
+            inputs: ["buttons", "keyboard"],
             levels: [
                 { id: "easy", label: "쉬움", ids: ["M2", "M3", "P5", "P8"] },
                 { id: "mid", label: "보통", ids: ["m2", "M2", "m3", "M3", "P4", "P5", "M6", "m7", "P8"] },
@@ -91,23 +235,18 @@
             ],
             modes: [
                 { id: "harmony", label: "함께" },
-                { id: "up", label: "위로 차례로" },
-                { id: "down", label: "아래로 차례로" },
+                { id: "up", label: "위로" },
+                { id: "down", label: "아래로" },
                 { id: "mixed", label: "섞어서" }
             ],
-            build: function (item, mode) {
-                const root = randomInt(55, 64);
-                const top = root + item.semis;
-                const shape = mode === "mixed" ? pick(["harmony", "up", "down"]) : mode;
-                if (shape === "harmony") return { groups: [[root, top]], beat: 2 };
-                if (shape === "down") return { groups: [[top], [root]], beat: .68 };
-                return { groups: [[root], [top]], beat: .68 };
-            }
+            make: intervalQuestion
         },
         {
             id: "chord",
             name: "화음 성질",
+            ask: "무슨 화음인가요?",
             items: CHORDS,
+            inputs: ["buttons"],
             levels: [
                 { id: "easy", label: "쉬움", ids: ["maj", "min"] },
                 { id: "mid", label: "보통", ids: ["maj", "min", "dim", "aug"] },
@@ -118,18 +257,14 @@
                 { id: "arp", label: "펼쳐서" },
                 { id: "mixed", label: "섞어서" }
             ],
-            build: function (item, mode) {
-                const root = randomInt(50, 60);
-                const notes = item.offs.map(off => root + off);
-                const shape = mode === "mixed" ? pick(["harmony", "arp"]) : mode;
-                if (shape === "arp") return { groups: notes.map(note => [note]), beat: .5 };
-                return { groups: [notes], beat: 2.2 };
-            }
+            make: chordQuestion
         },
         {
             id: "scale",
             name: "음계",
+            ask: "무슨 음계인가요?",
             items: SCALES,
+            inputs: ["buttons"],
             levels: [
                 { id: "easy", label: "쉬움", ids: ["major", "nminor"] },
                 { id: "mid", label: "보통", ids: ["major", "nminor", "hminor", "mminor", "pmaj", "pmin"] },
@@ -140,37 +275,53 @@
                 { id: "down", label: "내려가며" },
                 { id: "mixed", label: "섞어서" }
             ],
-            build: function (item, mode) {
-                const root = randomInt(55, 62);
-                const notes = item.steps.map(step => root + step);
-                const shape = mode === "mixed" ? pick(["up", "down"]) : mode;
-                const line = shape === "down" ? notes.slice().reverse() : notes;
-                return { groups: line.map(note => [note]), beat: .44 };
-            }
+            make: scaleQuestion
         },
         {
             id: "progression",
             name: "화음 진행",
+            ask: "무슨 진행인가요?",
             items: PROGRESSIONS,
+            inputs: ["buttons"],
             levels: [
                 { id: "easy", label: "쉬움", ids: PROGRESSIONS.slice(0, 4).map(item => item.id) },
                 { id: "mid", label: "보통", ids: PROGRESSIONS.slice(0, 8).map(item => item.id) },
                 { id: "hard", label: "전부", ids: PROGRESSIONS.map(item => item.id) }
             ],
             modes: [],
-            build: function (item) {
-                const tonic = randomInt(57, 63);
-                return { groups: item.chords.map(symbol => chordVoicing(tonic, symbol)), beat: 1.1 };
-            }
+            make: progressionQuestion
+        },
+        {
+            id: "melody",
+            name: "가락 받아쓰기",
+            ask: "들은 차례대로 누르세요",
+            answerIsLabel: false,
+            pickable: false,
+            inputs: ["keyboard"],
+            items: [
+                { id: "m3", label: "세 음", count: 3, reach: 2 },
+                { id: "m4", label: "네 음", count: 4, reach: 3 },
+                { id: "m5", label: "다섯 음", count: 5, reach: 5 }
+            ],
+            levels: [
+                { id: "easy", label: "세 음", ids: ["m3"] },
+                { id: "mid", label: "네 음", ids: ["m4"] },
+                { id: "hard", label: "다섯 음", ids: ["m5"] }
+            ],
+            modes: [],
+            make: melodyQuestion
         }
     ];
+
+    /* 문제 만드는 규칙을 검사 도구에서 그대로 불러 쓸 수 있게 열어 둔다. */
+    window.EarTraining = { drills: DRILLS };
 
     const DRILL_BY_ID = {};
     DRILLS.forEach(drill => { DRILL_BY_ID[drill.id] = drill; });
 
-    /* 저장 */
-    const STORAGE_KEY = "earTraining.v1";
-    let saved = { stats: {}, setup: {} };
+    /* 저장 ---------------------------------------------------------------- */
+    const STORAGE_KEY = "earTraining.v2";
+    const saved = { stats: {}, setup: {} };
 
     function loadSaved() {
         try {
@@ -178,23 +329,19 @@
             if (!raw) return;
             const parsed = JSON.parse(raw);
             if (parsed && typeof parsed === "object") {
-                saved.stats = parsed.stats && typeof parsed.stats === "object" ? parsed.stats : {};
-                saved.setup = parsed.setup && typeof parsed.setup === "object" ? parsed.setup : {};
+                if (parsed.stats && typeof parsed.stats === "object") saved.stats = parsed.stats;
+                if (parsed.setup && typeof parsed.setup === "object") saved.setup = parsed.setup;
             }
-        } catch (error) { /* 저장을 못 쓰는 브라우저에서는 그냥 기록 없이 씁니다. */ }
+        } catch (error) { /* 저장을 못 쓰면 기록 없이 쓴다. */ }
     }
 
     function persist() {
         try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch (error) { /* 무시 */ }
     }
 
-    function statsFor(drillId) {
-        if (!saved.stats[drillId]) saved.stats[drillId] = {};
-        return saved.stats[drillId];
-    }
-
     function recordAnswer(drillId, itemId, correct) {
-        const table = statsFor(drillId);
+        if (!saved.stats[drillId]) saved.stats[drillId] = {};
+        const table = saved.stats[drillId];
         const entry = table[itemId] || { right: 0, total: 0 };
         entry.total += 1;
         if (correct) entry.right += 1;
@@ -210,21 +357,26 @@
         return total ? Math.round((right / total) * 100) : null;
     }
 
-    /* 화면 상태 */
+    /* 화면 ---------------------------------------------------------------- */
     const els = {};
+    let keyboard = null;
     const session = {
+        screen: "menu",
         drill: null,
         level: "easy",
         mode: "",
+        input: "buttons",
+        limit: 10,
         enabled: new Set(),
         pool: [],
         current: null,
-        playback: null,
+        typed: [],
         answered: false,
         right: 0,
         total: 0,
         perItem: new Map(),
-        timer: 0
+        timer: 0,
+        playTimer: 0
     };
 
     function showScreen(name) {
@@ -235,7 +387,6 @@
         window.scrollTo({ top: 0 });
     }
 
-    /* 갈래 고르기 */
     function renderMenu() {
         els.drillList.innerHTML = "";
         DRILLS.forEach(drill => {
@@ -251,59 +402,75 @@
         });
     }
 
-    /* 준비 화면 */
-    function openSetup(drillId) {
-        const drill = DRILL_BY_ID[drillId];
-        session.drill = drill;
-        const remembered = saved.setup[drillId] || {};
-        session.level = drill.levels.some(level => level.id === remembered.level) ? remembered.level : "easy";
-        session.mode = drill.modes.length
-            ? (drill.modes.some(mode => mode.id === remembered.mode) ? remembered.mode : drill.modes[0].id)
-            : "";
-        const rememberedItems = Array.isArray(remembered.items) ? remembered.items : null;
-        const valid = rememberedItems && rememberedItems.filter(id => drill.items.some(item => item.id === id));
-        session.enabled = new Set(valid && valid.length > 1 ? valid : levelIds(drill, session.level));
-        els.setupTitle.textContent = drill.name;
-        els.modeField.hidden = drill.modes.length === 0;
-        renderSetup();
-        showScreen("setup");
-    }
-
     function levelIds(drill, levelId) {
         const level = drill.levels.find(entry => entry.id === levelId) || drill.levels[0];
         return level.ids.slice();
     }
 
+    function openSetup(drillId) {
+        const drill = DRILL_BY_ID[drillId];
+        const remembered = saved.setup[drillId] || {};
+        session.drill = drill;
+        session.level = drill.levels.some(level => level.id === remembered.level) ? remembered.level : "easy";
+        session.mode = drill.modes.length
+            ? (drill.modes.some(mode => mode.id === remembered.mode) ? remembered.mode : drill.modes[0].id)
+            : "";
+        session.input = drill.inputs.indexOf(remembered.input) >= 0 ? remembered.input : drill.inputs[0];
+        session.limit = [10, 20, 0].indexOf(remembered.limit) >= 0 ? remembered.limit : 10;
+        const kept = Array.isArray(remembered.items)
+            ? remembered.items.filter(id => drill.items.some(item => item.id === id))
+            : [];
+        session.enabled = new Set(kept.length > 1 ? kept : levelIds(drill, session.level));
+        els.setupTitle.textContent = drill.name;
+        els.modeField.hidden = drill.modes.length === 0;
+        els.inputField.hidden = drill.inputs.length < 2;
+        els.itemField.hidden = drill.pickable === false;
+        renderSetup();
+        showScreen("setup");
+    }
+
+    function chipRow(row, options, current, onPick) {
+        row.innerHTML = "";
+        options.forEach(option => {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = "chip";
+            chip.textContent = option.label;
+            chip.setAttribute("aria-pressed", String(option.id === current));
+            chip.addEventListener("click", () => onPick(option.id));
+            row.append(chip);
+        });
+    }
+
     function renderSetup() {
         const drill = session.drill;
 
-        els.levelRow.innerHTML = "";
-        drill.levels.forEach(level => {
-            const chip = document.createElement("button");
-            chip.type = "button";
-            chip.className = "chip";
-            chip.textContent = level.label;
-            chip.setAttribute("aria-pressed", String(level.id === session.level));
-            chip.addEventListener("click", () => {
-                session.level = level.id;
-                session.enabled = new Set(levelIds(drill, level.id));
-                renderSetup();
-            });
-            els.levelRow.append(chip);
+        chipRow(els.levelRow, drill.levels, session.level, id => {
+            session.level = id;
+            session.enabled = new Set(levelIds(drill, id));
+            renderSetup();
         });
 
-        els.modeRow.innerHTML = "";
-        drill.modes.forEach(mode => {
-            const chip = document.createElement("button");
-            chip.type = "button";
-            chip.className = "chip";
-            chip.textContent = mode.label;
-            chip.setAttribute("aria-pressed", String(mode.id === session.mode));
-            chip.addEventListener("click", () => {
-                session.mode = mode.id;
-                renderSetup();
-            });
-            els.modeRow.append(chip);
+        chipRow(els.modeRow, drill.modes, session.mode, id => {
+            session.mode = id;
+            renderSetup();
+        });
+
+        chipRow(els.inputRow, [
+            { id: "buttons", label: "이름 단추" },
+            { id: "keyboard", label: "건반" }
+        ].filter(option => drill.inputs.indexOf(option.id) >= 0), session.input, id => {
+            session.input = id;
+            renderSetup();
+        });
+
+        chipRow(els.limitRow, [
+            { id: 10, label: "10문제" },
+            { id: 20, label: "20문제" },
+            { id: 0, label: "끝까지" }
+        ], session.limit, id => {
+            session.limit = id;
+            renderSetup();
         });
 
         const table = saved.stats[drill.id] || {};
@@ -323,17 +490,22 @@
                 if (session.enabled.has(item.id)) session.enabled.delete(item.id);
                 else session.enabled.add(item.id);
                 toggle.setAttribute("aria-pressed", String(session.enabled.has(item.id)));
-                els.setupWarning.hidden = session.enabled.size > 1;
+                els.setupWarning.hidden = session.enabled.size >= minimumItems();
             });
             els.itemPicker.append(toggle);
         });
 
-        els.setupWarning.hidden = session.enabled.size > 1;
+        els.setupWarning.hidden = session.enabled.size >= minimumItems();
     }
 
-    /* 연습 */
+    function minimumItems() {
+        return session.drill.pickable === false ? 1 : 2;
+    }
+
+    /* 연습 ---------------------------------------------------------------- */
+
     function startDrill() {
-        if (session.enabled.size < 2) {
+        if (session.enabled.size < minimumItems()) {
             els.setupWarning.hidden = false;
             return;
         }
@@ -341,6 +513,8 @@
         saved.setup[drill.id] = {
             level: session.level,
             mode: session.mode,
+            input: session.input,
+            limit: session.limit,
             items: Array.from(session.enabled)
         };
         persist();
@@ -349,29 +523,61 @@
         session.right = 0;
         session.total = 0;
         session.perItem = new Map();
+        els.askText.textContent = drill.ask;
         showScreen("drill");
         nextQuestion();
     }
 
     function nextQuestion() {
         window.clearTimeout(session.timer);
+        if (session.limit && session.total >= session.limit) {
+            finishDrill();
+            return;
+        }
+
         const drill = session.drill;
         const previous = session.current && session.current.item.id;
         let item = pick(session.pool);
         if (session.pool.length > 2 && item.id === previous) item = pick(session.pool);
 
-        session.current = { item: item, playback: drill.build(item, session.mode) };
+        const question = drill.make(item, session.mode);
+        question.item = item;
+        session.current = question;
+        session.typed = [];
         session.answered = false;
 
+        els.askText.textContent = drill.ask;
         els.feedback.textContent = "";
         els.feedback.className = "feedback";
         els.nextButton.hidden = true;
-        renderChoices();
+        els.songHint.hidden = true;
+        els.songHint.textContent = "";
+
+        drawStaff(question.staffBefore);
+        setupInput(question);
         updateScore();
         play();
     }
 
-    function renderChoices() {
+    function drawStaff(columns) {
+        els.staff.innerHTML = "";
+        els.staff.append(N.render(columns, { label: "문제 악보" }));
+    }
+
+    function setupInput(question) {
+        const useKeyboard = session.input === "keyboard" && question.keyboard;
+        els.keyboardWrap.hidden = !useKeyboard;
+        els.choices.hidden = useKeyboard;
+
+        if (useKeyboard) {
+            keyboard.clearMarks();
+            keyboard.setEnabled(true);
+            question.keyboard.given.forEach(given => keyboard.mark(given.midi, "given", given.text));
+            els.typedCount.hidden = question.keyboard.answer.length < 2;
+            els.typedCount.textContent = "0 / " + question.keyboard.answer.length;
+            return;
+        }
+
         els.choices.innerHTML = "";
         session.pool.forEach(item => {
             const button = document.createElement("button");
@@ -379,18 +585,19 @@
             button.className = "choice";
             button.textContent = item.label;
             button.dataset.itemId = item.id;
-            button.addEventListener("click", () => answer(item));
+            button.addEventListener("click", () => answerByName(item));
             els.choices.append(button);
         });
+        els.typedCount.hidden = true;
     }
 
     function play() {
         const playback = session.current && session.current.playback;
         if (!playback || !window.PianoEngine) return;
         els.replayButton.classList.add("playing");
-        window.clearTimeout(session.playing);
-        const span = playback.groups.length * playback.beat * 1000 + 300;
-        session.playing = window.setTimeout(() => els.replayButton.classList.remove("playing"), span);
+        window.clearTimeout(session.playTimer);
+        const span = playback.groups.length * playback.beat * 1000 + 320;
+        session.playTimer = window.setTimeout(() => els.replayButton.classList.remove("playing"), span);
         window.PianoEngine.playSequence(playback.groups, playback.beat).catch(() => {
             els.replayButton.classList.remove("playing");
             els.feedback.textContent = "소리를 낼 수 없습니다. 소리 설정을 확인해 주세요.";
@@ -398,12 +605,44 @@
         });
     }
 
-    function answer(chosen) {
+    function answerByName(chosen) {
         if (session.answered) return;
-        session.answered = true;
-
         const target = session.current.item;
         const correct = chosen.id === target.id;
+        Array.from(els.choices.children).forEach(button => {
+            button.disabled = true;
+            if (button.dataset.itemId === target.id) button.classList.add("right");
+            else if (button.dataset.itemId === chosen.id) button.classList.add("wrong");
+            else button.classList.add("dim");
+        });
+        settle(correct);
+    }
+
+    function answerByKey(midi) {
+        if (session.answered) return;
+        const expected = session.current.keyboard.answer;
+        window.PianoEngine.playSequence([[midi]], .6).catch(() => {});
+        session.typed.push(midi);
+        els.typedCount.textContent = session.typed.length + " / " + expected.length;
+        if (session.typed.length < expected.length) {
+            keyboard.mark(midi, "typed", String(session.typed.length + 1));
+            return;
+        }
+        const correct = expected.every((value, index) => value === session.typed[index]);
+        keyboard.clearMarks();
+        keyboard.setEnabled(false);
+        session.current.keyboard.given.forEach(given => keyboard.mark(given.midi, "given", given.text));
+        expected.forEach((value, index) => {
+            const wasRight = session.typed[index] === value;
+            keyboard.mark(value, "right", String(index + 2));
+            if (!wasRight) keyboard.mark(session.typed[index], "wrong", "");
+        });
+        settle(correct);
+    }
+
+    function settle(correct) {
+        session.answered = true;
+        const target = session.current.item;
         session.total += 1;
         if (correct) session.right += 1;
 
@@ -413,42 +652,75 @@
         session.perItem.set(target.id, tally);
         recordAnswer(session.drill.id, target.id, correct);
 
-        Array.from(els.choices.children).forEach(button => {
-            button.disabled = true;
-            if (button.dataset.itemId === target.id) button.classList.add("right");
-            else if (button.dataset.itemId === chosen.id) button.classList.add("wrong");
-            else button.classList.add("dim");
-        });
+        const before = session.current.staffBefore;
+        drawStaff(session.current.staffAfter.map((column, index) => {
+            if (!column) return column;
+            const wasHidden = !before[index];
+            return wasHidden ? Object.assign({}, column, { mark: correct ? "right" : "wrong" }) : column;
+        }));
 
+        els.feedback.textContent = correct
+            ? "맞았습니다 · " + answerText(target)
+            : "정답은 " + answerText(target) + "입니다";
+        els.feedback.className = "feedback " + (correct ? "right" : "wrong");
+
+        showSongHint(target);
         updateScore();
 
-        if (correct) {
-            els.feedback.textContent = "맞았습니다";
-            els.feedback.className = "feedback right";
-            session.timer = window.setTimeout(nextQuestion, 850);
-        } else {
-            els.feedback.textContent = "정답은 " + target.label + "입니다";
-            els.feedback.className = "feedback wrong";
+        if (correct) session.timer = window.setTimeout(nextQuestion, 1100);
+        else {
             els.nextButton.hidden = false;
-            els.nextButton.focus();
+            els.nextButton.focus({ preventScroll: true });
         }
+    }
+
+    function answerText(item) {
+        const detail = session.current.detail;
+        if (session.drill.answerIsLabel === false) return detail;
+        return item.label + (detail ? " (" + detail + ")" : "");
+    }
+
+    function showSongHint(item) {
+        if (session.drill.id !== "interval") return;
+        const songs = INTERVAL_SONGS[item.id];
+        if (!songs) return;
+        els.songHint.textContent = "올라갈 때 " + songs.up + " · 내려갈 때 " + songs.down;
+        els.songHint.hidden = false;
+    }
+
+    function skipQuestion() {
+        if (session.answered) { nextQuestion(); return; }
+        session.answered = true;
+        drawStaff(session.current.staffAfter);
+        els.feedback.textContent = "정답은 " + answerText(session.current.item) + "입니다";
+        els.feedback.className = "feedback wrong";
+        if (session.input === "keyboard" && session.current.keyboard) {
+            keyboard.setEnabled(false);
+            session.current.keyboard.answer.forEach((midi, index) => keyboard.mark(midi, "right", String(index + 2)));
+        } else {
+            Array.from(els.choices.children).forEach(button => {
+                button.disabled = true;
+                if (button.dataset.itemId === session.current.item.id) button.classList.add("right");
+                else button.classList.add("dim");
+            });
+        }
+        showSongHint(session.current.item);
+        els.nextButton.hidden = false;
     }
 
     function updateScore() {
-        els.scoreText.textContent = session.total
-            ? session.right + " / " + session.total + " · " + Math.round((session.right / session.total) * 100) + "%"
-            : "0 / 0";
+        const rate = session.total ? Math.round((session.right / session.total) * 100) : 0;
+        els.scoreText.textContent = session.right + " / " + session.total + " · " + rate + "%"
+            + (session.limit ? " (" + session.limit + "문제)" : "");
     }
 
-    /* 결과 */
     function finishDrill() {
         window.clearTimeout(session.timer);
         if (!session.total) {
-            showScreen("menu");
             renderMenu();
+            showScreen("menu");
             return;
         }
-
         els.resultScore.textContent = session.drill.name + " " + session.right + " / " + session.total
             + " · " + Math.round((session.right / session.total) * 100) + "%";
 
@@ -468,16 +740,11 @@
             line.querySelector(".pct").textContent = rate + "%";
             els.resultTable.append(line);
         });
-
         showScreen("result");
     }
 
-    /* 뒤로 가기: 한 단계만 */
     function goBack() {
-        if (session.screen === "drill") {
-            finishDrill();
-            return true;
-        }
+        if (session.screen === "drill") { finishDrill(); return true; }
         if (session.screen === "result" || session.screen === "setup") {
             renderMenu();
             showScreen("menu");
@@ -489,16 +756,9 @@
     function bindKeys() {
         document.addEventListener("keydown", event => {
             if (session.screen !== "drill") return;
-            if (event.key === " " || event.key === "Spacebar") {
-                event.preventDefault();
-                play();
-                return;
-            }
-            if (event.key === "Enter" && !els.nextButton.hidden) {
-                event.preventDefault();
-                nextQuestion();
-                return;
-            }
+            if (event.key === " ") { event.preventDefault(); play(); return; }
+            if (event.key === "Enter" && !els.nextButton.hidden) { event.preventDefault(); nextQuestion(); return; }
+            if (session.input === "keyboard") return;
             const index = "123456789".indexOf(event.key);
             if (index >= 0 && els.choices.children[index]) {
                 event.preventDefault();
@@ -509,16 +769,21 @@
 
     function init() {
         ["menuScreen", "setupScreen", "drillScreen", "resultScreen", "drillList", "setupTitle",
-            "levelRow", "modeRow", "modeField", "itemPicker", "startButton", "setupWarning",
-            "scoreText", "stopButton", "replayButton", "choices", "feedback", "nextButton",
-            "resultScore", "resultTable", "againButton", "toMenuButton"].forEach(id => { els[id] = byId(id); });
+            "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",
+            "itemPicker", "startButton", "setupWarning", "askText", "staff", "scoreText", "stopButton",
+            "replayButton", "skipButton", "choices", "keyboardWrap", "pianoKeys", "typedCount",
+            "feedback", "songHint", "nextButton", "resultScore", "resultTable", "againButton",
+            "toMenuButton"].forEach(id => { els[id] = byId(id); });
 
         loadSaved();
+        keyboard = window.Keyboard.build(els.pianoKeys, KEY_LOW, KEY_HIGH, answerByKey);
+
         renderMenu();
         showScreen("menu");
 
         els.startButton.addEventListener("click", startDrill);
         els.replayButton.addEventListener("click", play);
+        els.skipButton.addEventListener("click", skipQuestion);
         els.nextButton.addEventListener("click", nextQuestion);
         els.stopButton.addEventListener("click", finishDrill);
         els.againButton.addEventListener("click", () => {
@@ -541,7 +806,7 @@
 
         if (window.PianoEngine) {
             window.setTimeout(() => {
-                window.PianoEngine.preload().catch(() => { /* 첫 재생 때 합성음으로 대신합니다. */ });
+                window.PianoEngine.preload().catch(() => { /* 첫 재생 때 합성음으로 대신한다. */ });
             }, 900);
         }
     }
