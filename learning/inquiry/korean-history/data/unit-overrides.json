@@ -222,6 +222,11 @@
   "41": "integrated"
  },
  "60": {
+  "4": "integrated",
+  "6": "three-kingdoms",
+  "7": "three-kingdoms",
+  "8": "integrated",
+  "9": "three-kingdoms",
   "11": "north-south",
   "12": "north-south",
   "13": "goryeo-culture",
@@ -229,7 +234,15 @@
   "15": "goryeo-war",
   "16": "goryeo-military",
   "17": "goryeo-culture",
-  "18": "goryeo-late"
+  "18": "goryeo-late",
+  "20": "goryeo-late",
+  "23": "joseon-late",
+  "24": "joseon-late",
+  "28": "joseon-late",
+  "29": "joseon-late",
+  "42": "contemporary",
+  "43": "contemporary",
+  "46": "integrated"
  },
  "58": {
   "11": "goryeo-founding",
