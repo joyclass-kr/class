@@ -24,9 +24,9 @@
             img: null,
             loaded: false
         },
+        // 자율신경 장면은 사진 대신 우리가 그린 몸 도식을 쓴다 (사진 속 몸에는 심장·방광이 없다)
         autonomic: {
-            src: '../assets/images/human_body_anatomy_biomedical_1788681351336.webp',
-            fallback: '../assets/images/nervous-hero.webp',
+            src: null,
             img: null,
             loaded: false
         },
@@ -178,6 +178,7 @@
         // Preload Images
         Object.keys(scenes).forEach(function (key) {
             var item = scenes[key];
+            if (!item.src) return; // 배경 그림 없이 직접 그리는 장면
             var img = new Image();
             img.src = item.src;
             img.onload = function () {
@@ -286,7 +287,10 @@
             }
             ctx.drawImage(img, dx, dy, dw, dh);
         } else {
-            ctx.fillStyle = '#060a17';
+            var bg = ctx.createRadialGradient(width * 0.5, height * 0.45, 20, width * 0.5, height * 0.5, width * 0.75);
+            bg.addColorStop(0, '#0d1730');
+            bg.addColorStop(1, '#05070f');
+            ctx.fillStyle = bg;
             ctx.fillRect(0, 0, width, height);
         }
 
@@ -496,74 +500,182 @@
     // Scene 3: Autonomic Antagonism (Sympathetic vs Parasympathetic) Overlay
     // ------------------------------------------------------------------------
     function drawAutonomicOverlay(dx, dy, dw, dh, time) {
-        var eyeX = dx + 0.50 * dw, eyeY = dy + 0.22 * dh;
-        var heartX = dx + 0.50 * dw, heartY = dy + 0.42 * dh;
-        var stomachX = dx + 0.50 * dw, stomachY = dy + 0.58 * dh;
-        var bladderX = dx + 0.50 * dw, bladderY = dy + 0.78 * dh;
+        // 위쪽 장면 단추 줄에 머리가 가리지 않도록 그리는 범위를 아래로 물린다
+        var H = 0.82 * dh;
+        var top = dy + 0.14 * dh;
+        var cx = dx + 0.50 * dw;
+        var spineX = cx - 0.052 * dw;   // 등쪽 척수
+        var organX = cx + 0.020 * dw;   // 기관 자리
+        var labelX = cx + 0.115 * dw;   // 오른쪽 설명 줄
+
+        var accent = isSympathetic ? '#ef4444' : '#10b981';
+        var accentSoft = isSympathetic ? 'rgba(239, 68, 68, 0.25)' : 'rgba(16, 185, 129, 0.28)';
+
+        var organs = [
+            { y: 0.170, name: '눈 (동공)', sym: '동공 확대', para: '동공 축소' },
+            { y: 0.360, name: '심장', sym: '빨리 뜀 (120회/분)', para: '천천히 뜀 (60회/분)' },
+            { y: 0.455, name: '기관지', sym: '넓어짐 (산소↑)', para: '좁아짐' },
+            { y: 0.560, name: '소화관', sym: '소화 멈춤', para: '소화 활발' },
+            { y: 0.690, name: '방광', sym: '느슨해짐 (오줌 참기)', para: '오므라듦 (오줌 누기)' }
+        ];
 
         ctx.save();
 
-        // 1. Eye (동공)
-        var pupilR = isSympathetic ? 20 : 9; // Large vs Small
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.ellipse(eyeX, eyeY, 32, 20, 0, 0, Math.PI * 2);
-        ctx.fill();
+        // ── 몸 도식 (머리 + 몸통) ───────────────────────────────
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.07)';
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.55)';
+        ctx.lineWidth = 1.6;
 
-        ctx.fillStyle = isSympathetic ? '#f87171' : '#34d399';
         ctx.beginPath();
-        ctx.arc(eyeX, eyeY, pupilR + 4, 0, Math.PI * 2);
+        ctx.ellipse(cx, top + 0.155 * H, 0.048 * dw, 0.088 * dh, 0, 0, Math.PI * 2);
         ctx.fill();
+        ctx.stroke();
 
-        ctx.fillStyle = '#0f172a';
         ctx.beginPath();
-        ctx.arc(eyeX, eyeY, pupilR, 0, Math.PI * 2);
+        ctx.roundRect(cx - 0.088 * dw, top + 0.255 * H, 0.176 * dw, 0.505 * dh, [0.05 * dw, 0.05 * dw, 0.03 * dw, 0.03 * dw]);
         ctx.fill();
+        ctx.stroke();
 
-        // Eye label
-        ctx.fillStyle = isSympathetic ? '#fca5a5' : '#6ee7b7';
-        ctx.font = 'bold 11.5px Pretendard, sans-serif';
+        // ── 척수 (자율신경이 뻗어 나오는 곳) ────────────────────
+        ctx.strokeStyle = 'rgba(250, 204, 21, 0.75)';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(spineX, top + 0.245 * H);
+        ctx.lineTo(spineX, top + 0.730 * H);
+        ctx.stroke();
+
+        ctx.fillStyle = '#facc15';
+        ctx.font = 'bold 11px Pretendard, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('척수', spineX - 8, top + 0.245 * H);
+
+        // ── 기관마다: 신경 가닥 + 기관 그림 + 오른쪽 설명 ────────
+        organs.forEach(function (org, i) {
+            var oy = dy + org.y * dh;
+
+            // 척수에서 기관으로 뻗는 신경
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 2;
+            ctx.globalAlpha = 0.75;
+            ctx.beginPath();
+            ctx.moveTo(spineX, oy);
+            ctx.quadraticCurveTo(spineX + 0.02 * dw, oy, organX - 0.018 * dw, oy);
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+
+            // 신경을 타고 흐르는 신호
+            var t = ((time * 0.0009) + i * 0.2) % 1;
+            var sx = spineX + (organX - 0.018 * dw - spineX) * t;
+            ctx.fillStyle = accent;
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = accent;
+            ctx.beginPath();
+            ctx.arc(sx, oy, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // 기관 그림
+            drawAutonomicOrgan(org.name, organX, oy, dw, dh, time, accent, accentSoft);
+
+            // 오른쪽 설명 줄 (서로 세로로 떨어져 있어 겹치지 않는다)
+            var text = org.name + ' ➔ ' + (isSympathetic ? org.sym : org.para);
+            ctx.font = 'bold 12px Pretendard, sans-serif';
+            var tw = ctx.measureText(text).width;
+            var boxW = tw + 20, boxH = 24;
+            var bx = Math.min(labelX, width - 6 - boxW);
+
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 1;
+            ctx.globalAlpha = 0.6;
+            ctx.beginPath();
+            ctx.moveTo(organX + 0.022 * dw, oy);
+            ctx.lineTo(bx, oy);
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+
+            ctx.fillStyle = 'rgba(6, 10, 24, 0.86)';
+            ctx.beginPath();
+            ctx.roundRect(bx, oy - boxH / 2, boxW, boxH, 7);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#f8fafc';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, bx + 10, oy + 0.5);
+            ctx.textBaseline = 'alphabetic';
+        });
+
         ctx.textAlign = 'center';
-        ctx.fillText(isSympathetic ? '👁️ 동공 확대' : '👁️ 동공 축소', eyeX, eyeY - 30);
 
-        // 2. Heart (심장 박동)
-        var beatScale = 1.0 + Math.sin(heartBeatPhase) * (isSympathetic ? 0.25 : 0.10);
-        ctx.fillStyle = isSympathetic ? '#ef4444' : '#0284c7';
-        ctx.shadowBlur = isSympathetic ? 20 : 10;
-        ctx.shadowColor = ctx.fillStyle;
-        ctx.beginPath();
-        ctx.arc(heartX, heartY, 26 * beatScale, 0, Math.PI * 2);
-        ctx.fill();
+        drawCaptionPlate(
+            dx + 12, dy + 12,
+            [
+                isSympathetic ? '⚡ 교감신경 - 놀라거나 뛸 때' : '🌿 부교감신경 - 쉬거나 밥 먹을 때',
+                '같은 기관에 두 신경이 반대로 작용합니다 (길항 작용)'
+            ],
+            accent
+        );
 
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowBlur = 0;
-        ctx.textAlign = 'left';
-        ctx.fillText(isSympathetic ? '💓 심박 촉진 (120 bpm)' : '💓 심박 억제 (60 bpm)', heartX + 34, heartY + 4);
-        ctx.textAlign = 'center';
+        ctx.restore();
+    }
 
-        // 3. Stomach (소화 운동)
-        ctx.fillStyle = isSympathetic ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.4)';
-        ctx.strokeStyle = isSympathetic ? '#ef4444' : '#10b981';
+    /** 자율신경 도식 속 기관 하나를 그린다 */
+    function drawAutonomicOrgan(name, ox, oy, dw, dh, time, accent, accentSoft) {
+        ctx.save();
+        ctx.strokeStyle = accent;
+        ctx.fillStyle = accentSoft;
         ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(stomachX - 45, stomachY - 18, 90, 36, 10);
-        ctx.fill();
-        ctx.stroke();
 
-        ctx.fillStyle = isSympathetic ? '#fca5a5' : '#6ee7b7';
-        ctx.fillText(isSympathetic ? '🥪 소화 억제 (중단)' : '🥪 소화 촉진 (활성화)', stomachX, stomachY + 5);
-
-        // 4. Bladder (방광)
-        var bladderSize = isSympathetic ? 26 : 16;
-        ctx.fillStyle = isSympathetic ? 'rgba(239, 68, 68, 0.25)' : 'rgba(16, 185, 129, 0.4)';
-        ctx.beginPath();
-        ctx.arc(bladderX, bladderY, bladderSize, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.fillStyle = '#cbd5e1';
-        ctx.fillText(isSympathetic ? '🫘 방광 이완 (배뇨 억제)' : '🫘 방광 수축 (배뇨 촉진)', bladderX, bladderY + 34);
-
+        if (name === '눈 (동공)') {
+            var pupilR = isSympathetic ? 9 : 4;
+            ctx.fillStyle = '#e2e8f0';
+            ctx.beginPath();
+            ctx.ellipse(ox, oy, 20, 12, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = accent;
+            ctx.beginPath();
+            ctx.arc(ox, oy, pupilR + 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#0b1120';
+            ctx.beginPath();
+            ctx.arc(ox, oy, pupilR, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (name === '심장') {
+            var beat = 1 + Math.sin(heartBeatPhase) * (isSympathetic ? 0.22 : 0.09);
+            ctx.fillStyle = accent;
+            ctx.shadowBlur = isSympathetic ? 18 : 8;
+            ctx.shadowColor = accent;
+            ctx.beginPath();
+            ctx.arc(ox, oy, 17 * beat, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        } else if (name === '기관지') {
+            var open = isSympathetic ? 11 : 5;
+            ctx.beginPath();
+            ctx.moveTo(ox, oy - 14);
+            ctx.lineTo(ox, oy - 2);
+            ctx.moveTo(ox, oy - 2);
+            ctx.lineTo(ox - 15, oy + 13);
+            ctx.moveTo(ox, oy - 2);
+            ctx.lineTo(ox + 15, oy + 13);
+            ctx.lineWidth = open;
+            ctx.stroke();
+            ctx.lineWidth = 2;
+        } else if (name === '소화관') {
+            var churn = isSympathetic ? 0 : Math.sin(time * 0.005) * 4;
+            ctx.beginPath();
+            ctx.roundRect(ox - 26 - churn / 2, oy - 15, 52 + churn, 30, 12);
+            ctx.fill();
+            ctx.stroke();
+        } else {
+            var size = isSympathetic ? 17 : 11;
+            ctx.beginPath();
+            ctx.arc(ox, oy, size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+        }
         ctx.restore();
     }
 
@@ -811,6 +923,7 @@
      */
     function drawCaptionPlate(px, py, lines, accent) {
         ctx.save();
+        py = Math.max(py, 86); // 위쪽 장면 단추 줄 아래에서 시작
         ctx.font = 'bold 12px Pretendard, sans-serif';
         var maxW = 0;
         lines.forEach(function (t) { maxW = Math.max(maxW, ctx.measureText(t).width); });
@@ -839,8 +952,11 @@
     function drawHotspots(dx, dy, dw, dh, time) {
         if (currentSceneKey === 'brain') return; // Handled directly in overlay
 
-        // 자율신경·뉴런 장면은 그림 자체에 이름이 이미 쓰여 있어 이름표를 또 달면 글자가 겹친다
-        var labelDrawnByScene = (currentSceneKey === 'autonomic' || currentSceneKey === 'synapse');
+        // 자율신경 장면은 도식이 기관과 설명을 직접 그리므로 표시점을 또 찍지 않는다
+        if (currentSceneKey === 'autonomic') return;
+
+        // 뉴런 장면도 그림 안에 이름이 이미 쓰여 있어 이름표를 또 달면 글자가 겹친다
+        var labelDrawnByScene = (currentSceneKey === 'synapse');
         var list = hotspots[currentSceneKey] || [];
         list.forEach(function (spot) {
             var sx = dx + spot.x * dw;
