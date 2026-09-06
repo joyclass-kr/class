@@ -26,12 +26,9 @@
 .lesson-button { min-height: 82px; grid-template-columns: 38px 1fr auto; align-items: start; padding: 12px; }
 .lesson-number { width: 36px; height: 36px; }
 .lesson-copy strong { font-size: 16px; }
-.lesson-copy small { display: -webkit-box; margin-top: 4px; overflow: hidden; color: var(--muted); font-size: 14px; line-height: 1.45; white-space: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .lesson-check { padding-top: 7px; }
 
 .lesson-title { position: relative; }
-.lesson-outcome { margin-top: 14px; padding: 12px 14px; border-left: 4px solid #a87720; color: #303842; background: #e9e3d8; font-size: 15px; font-weight: 750; line-height: 1.6; }
-.lesson-outcome strong { color: #704d11; }
 .lesson-section { align-items: start; }
 .section-copy p + p { margin-top: 12px; }
 .section-takeaway { margin-top: 15px !important; padding: 11px 13px; border-left: 3px solid #b47d22; color: #4e3d20 !important; background: #eee7da; font-size: 15px !important; font-weight: 750 !important; line-height: 1.6 !important; }
@@ -121,7 +118,6 @@
     .course-map-heading p { margin-top: 5px; line-height: 1.5; }
     .unit-block > summary { grid-template-columns: 42px 1fr auto; padding-inline: 12px; }
     .unit-count { display: none; }
-    .lesson-outcome { font-size: 15px; }
     .lab-heading { grid-template-columns: 1fr; }
     .lab-reference { width: 100%; }
     .lab-piano { overflow-x: auto; }

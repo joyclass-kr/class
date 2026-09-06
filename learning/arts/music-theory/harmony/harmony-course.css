@@ -147,13 +147,6 @@ button, select, summary {
     display: block;
 }
 
-.prereq-note {
-    display: block;
-    margin-top: 7px;
-    color: #e6bd61;
-    font-size: 14px;
-    font-weight: 850;
-}
 
 .skill-status {
     align-self: center;
@@ -172,41 +165,10 @@ button, select, summary {
     color: #93e0cb;
 }
 
-.prereq-line {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px;
-    margin: 10px 0 0 !important;
-    color: inherit;
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-}
 
-.prereq-line > strong {
-    margin-right: 2px;
-}
 
-.prereq-chip {
-    display: inline-flex;
-    align-items: center;
-    min-height: 28px;
-    padding: 3px 9px;
-    border: 1px solid currentColor;
-    border-radius: 999px;
-    color: #a65c45;
-    background: rgba(255,255,255,.1);
-    font-weight: 800;
-}
 
-.prereq-chip.done {
-    color: #287260;
-}
 
-.lesson-outcome .prereq-line {
-    border-top: 1px solid #cdc4b6;
-    padding-top: 9px;
-}
 
 .section-audio {
     display: flex;
@@ -446,11 +408,6 @@ button, select, summary {
     font-weight: 800;
 }
 
-.practice-panel > summary span {
-    color: var(--muted);
-    font-size: 14px;
-    font-weight: 650;
-}
 
 .primary-button[hidden] {
     display: none;
@@ -615,14 +572,7 @@ button, select, summary {
     margin-top: 3px;
 }
 
-.lesson-title > p {
-    font-size: 15px;
-}
 
-.lesson-outcome {
-    margin-top: 9px;
-    padding-block: 9px;
-}
 
 .lesson-section {
     gap: clamp(18px, 3vw, 32px);
@@ -1420,13 +1370,7 @@ button, select, summary {
     margin-top: 0;
 }
 
-.lesson-title > p {
-    font-size: 15px;
-}
 
-.lesson-outcome {
-    font-size: 16px;
-}
 
 .visual-board {
     width: 100%;
@@ -1461,9 +1405,6 @@ button, select, summary {
 }
 
 @media (max-width: 700px) {
-    .lesson-outcome {
-        font-size: 15px;
-    }
 
     .meter-diagram {
         grid-template-columns: 1fr;
@@ -1537,18 +1478,13 @@ button, select, summary {
     font-size: clamp(20px, 1.8vw, 22px);
 }
 
-.lesson-title > p,
 .score-title,
 .score-line-card > strong {
     font-size: 15px;
 }
 
-.lesson-outcome {
-    font-size: 16px;
-}
 
-.lesson-order,
-.prereq-note {
+.lesson-order {
     font-size: 14px;
 }
 
@@ -1653,7 +1589,4 @@ button, select, summary {
 }
 
 @media (max-width: 700px) {
-    .lesson-outcome {
-        font-size: 16px;
-    }
 }

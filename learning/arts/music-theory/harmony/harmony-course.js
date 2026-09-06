@@ -745,17 +745,13 @@
     };
     return '<svg class="strand-icon" viewBox="0 0 40 40">'+(icons[id] || icons.application)+'</svg>';
   }
-  function prereqMarkup(skill) {
-    if (!skill.prereqs.length) return "";
-    return '<p class="prereq-line"><strong>먼저 확인</strong> '+skill.prereqs.map(function (id) { return '<span class="prereq-chip '+(state.completed.has(id) ? "done" : "")+'">'+escapeHtml(curriculum.skills[id].title)+'</span>'; }).join(" ")+'</p>';
-  }
   function skillButtonMarkup(id) {
     const skill = curriculum.skills[id];
     const strand = getStrand(id);
     const lessonNumber = strand.skills.indexOf(id) + 1;
     const complete = state.completed.has(id);
     const ready = prereqsMet(id);
-    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'"><span class="lesson-copy"><span class="lesson-order">'+lessonNumber+'차시</span><strong>'+escapeHtml(skill.title)+'</strong>'+(!ready && !complete ? '<span class="prereq-note">앞 진도를 먼저 익히면 이해하기 쉽습니다.</span>' : "")+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
+    return '<button class="lesson-button skill-button '+(complete ? "completed" : ready ? "ready" : "needs-prereq")+'" type="button" data-open-skill="'+id+'"><span class="lesson-copy"><span class="lesson-order">'+lessonNumber+'차시</span><strong>'+escapeHtml(skill.title)+'</strong>'+'</span><span class="skill-status">'+(complete ? "✓ 완료" : id === state.currentId ? "학습 중" : "열기")+'</span></button>';
   }
 
   function dashboardUrl() {
@@ -793,10 +789,7 @@
     els.nextSkillNav.disabled = !followingId;
     els.nextSkillNav.dataset.nextSkill = followingId;
     els.nextSkillNav.innerHTML = followingId ? '다음 학습 <span aria-hidden="true">→</span>' : '마지막 학습';
-    els.lessonUnit.textContent = strand.title;
     els.lessonTitle.textContent = skill.title;
-    els.lessonEnglish.textContent = skill.english;
-    els.lessonOutcome.innerHTML = '<strong>학습 목표</strong> '+escapeHtml(skill.outcome);
     els.lessonSections.innerHTML = skill.sections.map(function (section) {
       const audio = section.audioOptions && section.audioOptions.length ? '<div class="section-audio" aria-label="비교 청음">'+section.audioOptions.map(function (option, index) { return '<button type="button" data-section-audio="'+index+'">♪ '+escapeHtml(option.label)+'</button>'; }).join("")+'</div>' : "";
       const worked = section.worked ? '<div class="worked-example"><strong>'+escapeHtml(section.worked.title || "같이 풀기")+'</strong><ol>'+section.worked.steps.map(function (step) { return '<li>'+escapeHtml(step)+'</li>'; }).join("")+'</ol>'+(section.worked.answer ? '<p><b>답</b> '+escapeHtml(section.worked.answer)+'</p>' : "")+'</div>' : "";
@@ -1086,7 +1079,7 @@
     els.nextButton.addEventListener("click", nextQuestion);
   }
   function init() {
-    ["dashboard","study","resetProgress","unitList","backToCourse","nextSkillNav","currentLesson","lessonUnit","lessonTitle","lessonEnglish","lessonOutcome","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","toast"].forEach(function (id) { els[id] = byId(id); });
+    ["dashboard","study","resetProgress","unitList","backToCourse","nextSkillNav","currentLesson","lessonTitle","lessonSections","constructionLab","termList","practicePanel","roundCounter","scoreText","questionKind","questionPrompt","listenButton","questionVisual","answerChoices","feedback","nextButton","toast"].forEach(function (id) { els[id] = byId(id); });
     const requestedSkill = new URLSearchParams(window.location.hash.slice(1)).get("skill");
     window.history.replaceState({ harmonyView:"dashboard" }, "", dashboardUrl());
     renderDashboard();
