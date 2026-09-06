@@ -216,5 +216,5 @@
         });
     }
 
-    window.HarmonyPiano = { playMidi: playMidi, playNotes: playNotes, playSequence: playSequence, preload: loadSamples };
+    window.PianoEngine = { playMidi: playMidi, playNotes: playNotes, playSequence: playSequence, preload: loadSamples };
 })();
