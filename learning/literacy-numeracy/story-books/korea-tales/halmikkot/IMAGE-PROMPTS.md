@@ -209,12 +209,17 @@ golden light, long shadow behind her.
 
 ### `07-rest.webp` — 언덕 중턱에 앉은 할머니
 
+높낮이가 보여야 한다. 할머니는 위쪽에 조그맣게, 초가집은 아래쪽에 놓는다.
+언덕을 넘어 내려오다 중턱에서 주저앉은 자리이기 때문이다.
+
 ```
-Wide hillside scene at dusk. In the centre, the grandmother has sat down in the
-spring grass, stick laid beside her, hands folded in her lap, head turned toward
-the distant cottage roof, eyes closed and face peaceful. Her white hair lifts in
-the breeze. Wide open hillside, first stars in a lilac sky. Still and quiet,
-plainly resting, not lifeless.
+Tall hillside scene at dusk, seen from below so the slope reads top to bottom.
+High up and small, the grandmother has sat down in the spring grass, stick laid
+beside her, hands folded in her lap, head turned downhill, eyes closed and face
+peaceful. Her white hair lifts in the breeze. Far below at the foot of the slope,
+a single small thatched cottage with supper smoke rising straight from its
+chimney. First stars in a lilac sky. Still and quiet, plainly resting, not
+lifeless.
 ```
 
 ### `08-search.webp` — 앞치마를 벗어 던지고 뛰다
