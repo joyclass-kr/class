@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="p-n 접합 다이오드에 순방향·역방향 전압을 걸어 쇼클리 식으로 전류를 구하고 공핍층과 전자·양공의 움직임을 보고, 광속에 가까운 뮤온이 시간 지연 덕분에 지표까지 닿는지 확인하고, 길이 수축과 상대론적 운동 에너지를 뉴턴 식과 견주는 고등학교 물리학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="semi-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>다이오드와 특수 상대성 이론</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교 2~3학년</span><span>물리학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>다이오드, 시간 지연, 길이 수축과 에너지 가운데 하나를 고릅니다.</li>
+            <li>전압과 온도, 뮤온의 속력과 높이, 물체의 속력을 정합니다.</li>
+            <li>전류가 얼마나 흐를지, 뮤온이 얼마나 닿을지, 에너지가 뉴턴 식보다 얼마나 클지 예상합니다.</li>
+            <li>시작해서 회로 속 전자의 흐름, 떨어지는 뮤온, 줄어드는 우주선을 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">순방향 전압은 공핍층을 얇게 해 전류를 흘리고, 역방향은 두껍게 해 막습니다</p>
+                <fieldset class="mode-field">
+                    <legend>실험 종류</legend>
+                    <div class="mode-buttons three">
+                        <button type="button" data-mode="diode">다이오드<small>어느 쪽으로 흐르나</small></button>
+                        <button type="button" data-mode="muon">시간 지연<small>뮤온이 닿을까</small></button>
+                        <button type="button" data-mode="energy">길이 수축·에너지<small>뉴턴 식과 견주기</small></button>
+                    </div>
+                </fieldset>
+                <div id="controlArea"></div>
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons" id="predictionArea"></div>
+                </fieldset>
+                <button class="run-button" id="checkBtn" type="button">전압 걸기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">결과</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">까닭</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel burn-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">왼쪽은 전원·저항·다이오드 회로, 오른쪽은 다이오드 속 p-n 접합입니다. 가운데 점선 띠가 전하 운반자가 없는 공핍층입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>p-n 접합과 정류</strong> 양공이 많은 p형과 전자가 많은 n형 반도체를 붙이면 경계에서 전자와 양공이 만나 사라지고, 운반자가 없는 공핍층이 생겨 전류를 막습니다. p쪽에 +극을 거는 순방향에서는 공핍층이 얇아져 규소 다이오드는 0.6~0.7 V 근처부터 전류가 급히 늘고, 역방향에서는 공핍층이 두꺼워져 pA~nA의 새는 전류만 흐릅니다. 전류는 쇼클리 식 I = I₀(e^(V/V_T) − 1)을 따르며, V_T = kT/q는 실온에서 25.9 mV입니다. 온도가 오르면 I₀가 크게 늘어 다이오드가 새기 시작합니다. 이렇게 한쪽으로만 흘리는 성질이 정류이고, 교류를 직류로 바꾸는 바탕입니다.</p>
+                <p><strong>시간 지연과 뮤온</strong> 움직이는 시계는 γ = 1/√(1 − v²/c²)배 느리게 갑니다. 우주선이 대기 위 10 km 남짓에서 만드는 뮤온은 수명이 2.2 μs뿐이라 광속으로 가도 660 m밖에 못 가야 하지만, 0.99c의 뮤온은 γ ≈ 7이라 우리가 보기에 수명이 15 μs로 늘어나 지표까지 닿습니다. 뮤온이 보기에는 자기 시계는 그대로이고 대기의 두께가 1/γ로 줄어든 것입니다. 지표에서 뮤온이 잔뜩 검출되는 것이 시간 지연의 직접 증거입니다.</p>
+                <p><strong>길이 수축</strong> 움직이는 물체는 운동 방향의 길이가 L = L₀/γ로 줄어 보이고, 운동에 수직인 방향은 그대로입니다. 0.9c에서는 길이가 44 %로, 0.99c에서는 14 %로 줄지만, 일상의 속력에서는 γ가 1과 거의 같아 알아챌 수 없습니다.</p>
+                <p><strong>질량·에너지 동등성</strong> 운동 에너지는 ½mv²이 아니라 (γ − 1)mc²이고, 느릴 때만 둘이 같습니다. 광속에 가까워지면 γ가 한없이 커져 아무리 에너지를 넣어도 광속을 넘지 못합니다. 정지한 물체도 E₀ = mc²의 에너지를 지니며, 핵융합에서 줄어든 질량이 이 식대로 에너지가 됩니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>다이오드에 순방향 전압을 걸면 전류가 흐르는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 다이오드가 저항이 0인 도선이 되기 때문에</label>
+                        <label><input type="radio" name="q1" value="b"> 공핍층이 얇아져 전자와 양공이 경계를 건너기 때문에</label>
+                        <label><input type="radio" name="q1" value="c"> 다이오드가 뜨거워지기 때문에</label>
+                        <label><input type="radio" name="q1" value="d"> n형에 양공이 새로 생기기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>p쪽에 +극을 걸면 접합의 전위 장벽이 낮아지고 공핍층이 얇아져 n형의 전자와 p형의 양공이 경계를 건너 재결합하며 전류가 흐릅니다. 역방향에서는 장벽이 높아지고 공핍층이 두꺼워져 거의 흐르지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>수명이 2.2 μs뿐인 뮤온이 10 km 위에서 지표까지 닿는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 뮤온이 광속보다 빠르기 때문에</label>
+                        <label><input type="radio" name="q2" value="b"> 대기 속에서 새 뮤온이 계속 생기기 때문에</label>
+                        <label><input type="radio" name="q2" value="c"> 빠르게 움직이는 뮤온의 시계가 느리게 가서 수명이 길어지기 때문에</label>
+                        <label><input type="radio" name="q2" value="d"> 뮤온이 붕괴하지 않는 입자이기 때문에</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>0.99c로 움직이는 뮤온은 γ ≈ 7이라 지상에서 보면 수명이 15 μs로 늘어나 4 km 넘게 갑니다. 뮤온이 보기에는 대기가 1/7로 얇아진 것입니다. 시간 지연이 없다면 10 km를 지나며 거의 다 붕괴해야 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>0.9c로 지나가는 우주선은 어떻게 보일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 나아가는 방향의 길이만 약 44 %로 줄어 보인다</label>
+                        <label><input type="radio" name="q3" value="b"> 모든 방향이 똑같이 줄어 보인다</label>
+                        <label><input type="radio" name="q3" value="c"> 나아가는 방향으로 길어 보인다</label>
+                        <label><input type="radio" name="q3" value="d"> 크기는 그대로이고 시계만 빨라진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>길이 수축 L = L₀/γ는 운동 방향에만 일어납니다. 0.9c에서 γ = 2.29이므로 길이는 1/2.29 ≈ 44 %가 되고, 높이와 폭은 그대로입니다. 우주선 안 사람은 자기 우주선이 멀쩡하고 오히려 밖의 세상이 줄어 보입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>물체의 속력이 광속에 가까워질수록 운동 에너지는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> ½mv²대로 광속에서 ½mc²이 된다</label>
+                        <label><input type="radio" name="q4" value="b"> 일정한 값에 머문다</label>
+                        <label><input type="radio" name="q4" value="c"> 오히려 줄어든다</label>
+                        <label><input type="radio" name="q4" value="d"> 한없이 커져서 광속에는 결코 이르지 못한다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>운동 에너지 (γ − 1)mc²에서 γ = 1/√(1 − v²/c²)는 v가 c에 다가가면 한없이 커집니다. 0.99c에서는 뉴턴 식의 12배, 0.999c에서는 43배이고, 광속에 이르려면 무한한 에너지가 필요하므로 질량이 있는 물체는 광속을 넘지 못합니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
