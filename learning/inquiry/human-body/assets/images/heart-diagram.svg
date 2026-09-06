@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <!--
+    심장·폐·온몸 순환 도식 (2022 개정 / 시험 그림 기준)
+    ※ 이것은 뼈대용 밑그림이다. 더 예쁘게 다시 그려도 좋으나 아래 약속은 지켜야 한다.
+
+    1. viewBox 는 "0 0 1000 700" 그대로.
+    2. 다음 id 를 가진 요소를 모두 남길 것. 코드가 이름으로 찾아 쓴다.
+       lungs  bodyCapillaries
+       rightAtrium  rightVentricle  leftAtrium  leftVentricle  septum
+       valveTricuspid  valveMitral  valvePulmonary  valveAortic
+       vesselVenaCava  vesselPulmonaryArtery  vesselPulmonaryVein  vesselAorta
+    3. 피가 흐르는 길 #flowPulmonary, #flowSystemic 을 새 그림에 맞게 다시 그을 것.
+       보이지 않는 안내선이며 피 알갱이가 이 길을 따라 흐른다. 방향(그리는 순서)도 그대로:
+         flowPulmonary : 우심방 ➔ 우심실 ➔ 폐동맥 ➔ 폐 ➔ 폐정맥 ➔ 좌심방
+         flowSystemic  : 좌심방 ➔ 좌심실 ➔ 대동맥 ➔ 온몸 ➔ 대정맥 ➔ 우심방
+       길의 딱 절반 지점이 폐(또는 온몸)여야 한다. 거기서 피 색이 바뀐다.
+    4. 글자(<text>)는 넣지 않는다. 이름표는 코드가 우리말로 붙인다.
+    5. 화면 왼쪽이 우심방·우심실(환자 기준 오른쪽). 좌심실 벽은 우심실보다 두껍게.
+    6. 방과 큰 혈관의 fill 은 코드가 다시 칠하므로 단색으로 둘 것.
+  -->
+
+  <defs>
+    <style>
+      .organ { stroke: #cbd5e1; stroke-width: 3; }
+      .chamber { stroke: #e2e8f0; stroke-width: 3; }
+      .vessel { stroke: #e2e8f0; stroke-width: 2.5; }
+      .valve { stroke: #f8fafc; stroke-width: 2.5; fill: #f1f5f9; }
+    </style>
+  </defs>
+
+  <!-- ── 폐 (위) ─────────────────────────────────────────────── -->
+  <g id="lungs">
+    <path class="organ" fill="#3f4d63"
+          d="M300 34 C230 40 196 92 202 132 C208 168 246 180 286 172 C322 165 340 130 338 92 C336 56 328 32 300 34 Z"/>
+    <path class="organ" fill="#3f4d63"
+          d="M700 34 C770 40 804 92 798 132 C792 168 754 180 714 172 C678 165 660 130 662 92 C664 56 672 32 700 34 Z"/>
+    <path fill="none" stroke="#7c8ca5" stroke-width="2.4"
+          d="M300 56 L300 160 M300 88 L266 112 M300 120 L268 146 M700 56 L700 160 M700 88 L734 112 M700 120 L732 146"/>
+  </g>
+
+  <!-- ── 온몸 모세혈관 (아래) ────────────────────────────────── -->
+  <g id="bodyCapillaries">
+    <rect class="organ" fill="#3f4d63" x="360" y="596" width="280" height="72" rx="24"/>
+    <path fill="none" stroke="#7c8ca5" stroke-width="2.6"
+          d="M388 632 q18 -20 36 0 q18 20 36 0 q18 -20 36 0 q18 20 36 0 q18 -20 36 0 q18 20 36 0"/>
+  </g>
+
+  <!-- ── 큰 혈관 (심장보다 먼저 깔아 뒤로 보낸다) ────────────── -->
+  <!-- 대정맥: 온몸 ➔ 우심방 (왼쪽 바깥을 돌아 올라온다) -->
+  <path id="vesselVenaCava" class="vessel" fill="#475569"
+        d="M360 604 L300 604 C210 604 140 570 140 500 L140 300 C140 268 168 248 205 248 L318 248 L318 296 L205 296
+           C196 296 190 300 190 310 L190 496 C190 536 240 556 300 556 L360 556 Z"/>
+  <!-- 폐동맥: 우심실 ➔ 폐 (왼쪽 폐로 올라간다) -->
+  <path id="vesselPulmonaryArtery" class="vessel" fill="#475569"
+        d="M392 236 L440 236 L440 190 C440 176 424 168 402 168 L322 168 L322 214 L392 214 Z"/>
+  <!-- 폐정맥: 폐 ➔ 좌심방 (오른쪽 폐에서 내려온다) -->
+  <path id="vesselPulmonaryVein" class="vessel" fill="#475569"
+        d="M560 236 L560 190 C560 176 576 168 598 168 L678 168 L678 214 L610 214 L610 236 Z"/>
+  <!-- 대동맥: 좌심실 ➔ 온몸 (폐 아래로 지나 오른쪽 바깥으로 내려간다) -->
+  <path id="vesselAorta" class="vessel" fill="#475569"
+        d="M640 604 L700 604 C790 604 860 570 860 500 L860 260 C860 222 826 202 782 202 L646 202 L646 250 L782 250
+           C800 250 810 254 810 268 L810 496 C810 536 760 556 700 556 L640 556 Z"/>
+
+  <!-- ── 심장 바깥 벽 ────────────────────────────────────────── -->
+  <path id="heartOutline" fill="#1b2334" stroke="#94a3b8" stroke-width="3"
+        d="M330 240 C330 226 340 218 356 218 L644 218 C660 218 670 226 670 240
+           L670 430 C670 520 600 572 500 576 C400 572 330 520 330 430 Z"/>
+
+  <!-- ── 심장 네 방 ─────────────────────────────────────────── -->
+  <path id="rightAtrium" class="chamber" fill="#38bdf8"
+        d="M348 244 L482 244 L482 330 L348 330 C340 330 338 320 338 306 L338 268 C338 252 340 244 348 244 Z"/>
+  <path id="leftAtrium" class="chamber" fill="#f43f5e"
+        d="M518 244 L652 244 C660 244 662 252 662 268 L662 306 C662 320 660 330 652 330 L518 330 Z"/>
+  <path id="rightVentricle" class="chamber" fill="#38bdf8"
+        d="M356 356 L482 356 L482 546 C424 542 378 512 358 468 C348 444 350 396 356 356 Z"/>
+  <path id="leftVentricle" class="chamber" fill="#f43f5e"
+        d="M518 356 L638 356 C646 398 642 442 626 472 C602 516 566 542 518 548 Z"/>
+
+  <!-- 벽 두께 대비: 좌심실이 훨씬 두껍다 (시험에 나온다) -->
+  <path id="leftVentricleWall" fill="none" stroke="#fda4af" stroke-width="20" stroke-linecap="round" opacity="0.5"
+        d="M646 358 C660 402 654 448 634 480 C606 524 562 552 512 560"/>
+  <path id="rightVentricleWall" fill="none" stroke="#7dd3fc" stroke-width="8" stroke-linecap="round" opacity="0.5"
+        d="M350 358 C342 402 348 446 364 476 C392 522 440 552 490 560"/>
+
+  <!-- ── 심실 사이막 ────────────────────────────────────────── -->
+  <path id="septum" fill="#475569" stroke="#cbd5e1" stroke-width="2.5"
+        d="M488 244 L512 244 L512 556 C504 562 496 562 488 556 Z"/>
+
+  <!-- ── 판막 넷 ────────────────────────────────────────────── -->
+  <g id="valveTricuspid" class="valve">
+    <path d="M360 338 L410 362 L360 350 Z"/>
+    <path d="M466 338 L420 362 L466 350 Z"/>
+  </g>
+  <g id="valveMitral" class="valve">
+    <path d="M534 338 L584 362 L534 350 Z"/>
+    <path d="M640 338 L594 362 L640 350 Z"/>
+  </g>
+  <g id="valvePulmonary" class="valve">
+    <path d="M382 244 L410 220 L438 244 L410 236 Z"/>
+  </g>
+  <g id="valveAortic" class="valve">
+    <path d="M562 244 L590 220 L618 244 L590 236 Z"/>
+  </g>
+
+  <!-- ── 피가 흐르는 길 (보이지 않는 안내선) ─────────────────── -->
+  <!-- 폐순환: 우심방 ➔ 우심실 ➔ 폐동맥 ➔ 폐 ➔ 폐정맥 ➔ 좌심방  (절반 지점 = 폐) -->
+  <path id="flowPulmonary" fill="none" stroke="none"
+        d="M400 286 L400 320 C400 380 404 440 412 490
+           C414 504 420 500 420 484 L420 300 L420 236 L416 200
+           C412 186 396 186 370 188 L322 190
+           C300 168 300 120 300 100
+           C300 78 340 60 420 62 L580 62 C660 62 700 78 700 100
+           C700 124 700 168 678 190 L616 192 C598 192 590 200 588 214
+           L588 260 C588 280 578 288 566 288 L540 288 Z"/>
+  <!-- 체순환: 좌심방 ➔ 좌심실 ➔ 대동맥 ➔ 온몸 ➔ 대정맥 ➔ 우심방  (절반 지점 = 온몸) -->
+  <path id="flowSystemic" fill="none" stroke="none"
+        d="M600 286 L600 330 C600 390 596 440 588 486
+           C586 500 580 496 580 480 L580 300 L580 240 L582 226
+           L700 226 C800 226 836 250 836 300 L836 500
+           C836 560 760 580 690 580 L640 580
+           L500 632
+           L360 580 L310 580 C240 580 164 560 164 500 L164 300
+           C164 250 200 226 300 226 L360 226 C388 226 400 240 400 262 Z"/>
+</svg>
