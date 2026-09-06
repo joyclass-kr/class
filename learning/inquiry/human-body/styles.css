@@ -791,3 +791,6 @@ canvas.sim-canvas {
         max-width: calc(100% - 24px);
     }
 }
+
+/* 떠 있는 안내 띠는 그림과 표 위를 덮는다. 각 장면이 이미 제 설명을 달고 있으므로 감춘다. */
+.sim-hud-overlay { display: none !important; }

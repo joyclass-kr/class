@@ -70,6 +70,7 @@
         addSceneButton();
         buildLayer();
         watchControls();
+        firstSceneOnLoad();
         render();
     }
 
@@ -79,7 +80,7 @@
         var b = document.createElement('button');
         b.className = 'scene-btn';
         b.dataset.scene = 'lab';
-        b.textContent = '🧪 5. 영양소 검출 실험';
+        b.textContent = '🧪 4. 영양소 검출 실험';
         bar.appendChild(b);
 
         bar.querySelectorAll('.scene-btn').forEach(function (btn) {
@@ -93,6 +94,12 @@
                 if (on) openLabTab();
             });
         });
+    }
+
+    /** 없어진 장면에서 시작하지 않도록 남은 첫 단추를 눌러 준다 */
+    function firstSceneOnLoad() {
+        var first = wrap.querySelector('.scene-btn');
+        if (first) first.click();
     }
 
     function openLabTab() {

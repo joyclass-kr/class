@@ -66,6 +66,7 @@
         addSceneButton();
         buildLayer();
         watchControls();
+        firstSceneOnLoad();
         requestAnimationFrame(loop);
     }
 
@@ -75,7 +76,7 @@
         var b = document.createElement('button');
         b.className = 'scene-btn';
         b.dataset.scene = 'nephron';
-        b.textContent = '💧 4. 여과·재흡수·분비 (네프론 도식)';
+        b.textContent = '💧 2. 여과·재흡수·분비 (네프론)';
         bar.appendChild(b);
 
         bar.querySelectorAll('.scene-btn').forEach(function (btn) {
@@ -86,6 +87,12 @@
                 setVisible(btn.dataset.scene === 'nephron');
             });
         });
+    }
+
+    /** 없어진 장면에서 시작하지 않도록 남은 첫 단추를 눌러 준다 */
+    function firstSceneOnLoad() {
+        var first = wrap.querySelector('.scene-btn');
+        if (first) first.click();
     }
 
     function setVisible(on) {

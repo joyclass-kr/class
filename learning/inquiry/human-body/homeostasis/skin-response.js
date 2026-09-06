@@ -33,7 +33,7 @@
         var b = document.createElement('button');
         b.className = 'scene-btn';
         b.dataset.scene = 'skin';
-        b.textContent = '🧴 4. 피부에서 일어나는 일';
+        b.textContent = '🧴 2. 피부에서 일어나는 일';
         bar.appendChild(b);
 
         bar.querySelectorAll('.scene-btn').forEach(function (btn) {

@@ -35,7 +35,7 @@
         var b = document.createElement('button');
         b.className = 'scene-btn';
         b.dataset.scene = 'breath';
-        b.textContent = '🌬️ 4. 갈비뼈·가로막과 부피·압력';
+        b.textContent = '🌬️ 3. 갈비뼈·가로막과 부피·압력';
         bar.appendChild(b);
 
         bar.querySelectorAll('.scene-btn').forEach(function (btn) {
