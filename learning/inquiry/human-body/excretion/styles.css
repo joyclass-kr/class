@@ -144,3 +144,102 @@
     background: hsl(49, 92%, 59%);
     transition: background 0.3s;
 }
+
+/* ── 네프론 여과·재흡수 (nephron-flow.js) ─────────────────── */
+.nephron-layer {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 45% 45%, #101a2e 0%, #05070f 100%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.nephron-layer[hidden] { display: none !important; }
+
+.nephron-head {
+    margin: 52px 12px 0;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: rgba(6, 10, 24, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    color: #cbd5e1;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.nephron-stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 6px 12px 0;
+}
+
+.nephron-stage svg { width: 100%; height: 100%; display: block; }
+
+.nephron-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.nephron-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 8px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    color: #f8fafc;
+    font-size: 11.5px;
+    font-weight: 800;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.nephron-tag:hover { border-color: #10b981; }
+
+.nephron-table {
+    margin: 8px 12px 10px;
+    max-height: 168px;
+    overflow-y: auto;
+}
+
+.nephron-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.nephron-table th {
+    text-align: left;
+    padding: 6px 8px;
+    color: #94a3b8;
+    font-weight: 800;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.nephron-table td {
+    padding: 5px 8px;
+    color: #e2e8f0;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.nephron-table td i {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: -1px;
+}
+
+.nephron-table .yes { color: #6ee7b7; }
+.nephron-table .no { color: #94a3b8; }
+.nephron-table .warn { color: #fbbf24; }
+
+.nephron-error {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fca5a5; font-weight: 700;
+}
+
+#nephronDots circle { filter: drop-shadow(0 0 4px currentColor); }
