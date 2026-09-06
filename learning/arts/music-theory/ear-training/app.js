@@ -6,6 +6,11 @@
     const randomInt = (low, high) => low + Math.floor(Math.random() * (high - low + 1));
     const N = window.Notation;
 
+    /* 표기는 영어(한글)로 적는다. 괄호 앞의 U+200B는 좁은 화면에서 줄을 나눌 자리다. */
+    function label(english, korean) {
+        return english + "​(" + korean + ")";
+    }
+
     /* 건반에 보이는 범위: 가온도부터 두 옥타브 위 A까지 */
     const KEY_LOW = 60;
     const KEY_HIGH = 81;
@@ -16,25 +21,25 @@
 
     /* 음정 ------------------------------------------------------------- */
     const INTERVALS = [
-        { id: "m2", label: "단2도", degree: 1, semis: 1 },
-        { id: "M2", label: "장2도", degree: 1, semis: 2 },
-        { id: "m3", label: "단3도", degree: 2, semis: 3 },
-        { id: "M3", label: "장3도", degree: 2, semis: 4 },
-        { id: "P4", label: "완전4도", degree: 3, semis: 5 },
-        { id: "A4", label: "증4도", degree: 3, semis: 6 },
-        { id: "P5", label: "완전5도", degree: 4, semis: 7 },
-        { id: "m6", label: "단6도", degree: 5, semis: 8 },
-        { id: "M6", label: "장6도", degree: 5, semis: 9 },
-        { id: "m7", label: "단7도", degree: 6, semis: 10 },
-        { id: "M7", label: "장7도", degree: 6, semis: 11 },
-        { id: "P8", label: "완전8도", degree: 7, semis: 12 },
-        { id: "m9", label: "단9도", degree: 8, semis: 13, roots: [28, 29] },
-        { id: "M9", label: "장9도", degree: 8, semis: 14, roots: [28, 29] },
-        { id: "m10", label: "단10도", degree: 9, semis: 15, roots: [28, 29] },
-        { id: "M10", label: "장10도", degree: 9, semis: 16, roots: [28, 29] },
-        { id: "P11", label: "완전11도", degree: 10, semis: 17, roots: [28, 29] },
-        { id: "A11", label: "증11도", degree: 10, semis: 18, roots: [28, 29] },
-        { id: "P12", label: "완전12도", degree: 11, semis: 19, roots: [28, 29] }
+        { id: "m2", en: "m2", ko: "단2도", degree: 1, semis: 1 },
+        { id: "M2", en: "M2", ko: "장2도", degree: 1, semis: 2 },
+        { id: "m3", en: "m3", ko: "단3도", degree: 2, semis: 3 },
+        { id: "M3", en: "M3", ko: "장3도", degree: 2, semis: 4 },
+        { id: "P4", en: "P4", ko: "완전4도", degree: 3, semis: 5 },
+        { id: "A4", en: "A4", ko: "증4도", degree: 3, semis: 6 },
+        { id: "P5", en: "P5", ko: "완전5도", degree: 4, semis: 7 },
+        { id: "m6", en: "m6", ko: "단6도", degree: 5, semis: 8 },
+        { id: "M6", en: "M6", ko: "장6도", degree: 5, semis: 9 },
+        { id: "m7", en: "m7", ko: "단7도", degree: 6, semis: 10 },
+        { id: "M7", en: "M7", ko: "장7도", degree: 6, semis: 11 },
+        { id: "P8", en: "P8", ko: "완전8도", degree: 7, semis: 12 },
+        { id: "m9", en: "m9", ko: "단9도", degree: 8, semis: 13, roots: [28, 29] },
+        { id: "M9", en: "M9", ko: "장9도", degree: 8, semis: 14, roots: [28, 29] },
+        { id: "m10", en: "m10", ko: "단10도", degree: 9, semis: 15, roots: [28, 29] },
+        { id: "M10", en: "M10", ko: "장10도", degree: 9, semis: 16, roots: [28, 29] },
+        { id: "P11", en: "P11", ko: "완전11도", degree: 10, semis: 17, roots: [28, 29] },
+        { id: "A11", en: "A11", ko: "증11도", degree: 10, semis: 18, roots: [28, 29] },
+        { id: "P12", en: "P12", ko: "완전12도", degree: 11, semis: 19, roots: [28, 29] }
     ];
 
     const SIMPLE_INTERVAL_IDS = ["m2", "M2", "m3", "M3", "P4", "A4", "P5", "m6", "M6", "m7", "M7", "P8"];
@@ -42,33 +47,33 @@
 
     /* 노래로 기억하는 음정. 올라가는 것과 내려가는 것을 따로 둔다. */
     const INTERVAL_SONGS = {
-        m2: { up: "죠스 주제가", down: "엘리제를 위하여" },
-        M2: { up: "고요한 밤 거룩한 밤", down: "메리 크리스마스" },
-        m3: { up: "산토끼", down: "비행기" },
-        M3: { up: "떴다 떴다 비행기", down: "아기 상어" },
-        P4: { up: "결혼 행진곡", down: "구름 위의 산책" },
-        A4: { up: "심슨 가족 주제가", down: "유러피언 앤섬" },
-        P5: { up: "반짝반짝 작은 별", down: "플린스톤 주제가" },
-        m6: { up: "위 아 더 챔피언", down: "러브 스토리" },
-        M6: { up: "나의 사랑 클레멘타인", down: "노잉 미 노잉 유" },
-        m7: { up: "웨스트 사이드 스토리 〈마리아〉", down: "웨어 두 유 고 투 마이 러블리" },
-        M7: { up: "테이크 온 미 후렴", down: "아이 러브 유(콜 포터)" },
-        P8: { up: "무지개 너머 어딘가", down: "윌리 웡카 주제가" }
+        m2: { up: "White Christmas (Irving Berlin)", down: "Für Elise (Beethoven)" },
+        M2: { up: "Happy Birthday to You", down: "Yesterday (The Beatles)" },
+        m3: { up: "Greensleeves", down: "Hey Jude (The Beatles)" },
+        M3: { up: "When the Saints Go Marching In", down: "Summertime (Gershwin)" },
+        P4: { up: "Here Comes the Bride (Wagner)", down: "Eine kleine Nachtmusik (Mozart)" },
+        A4: { up: "The Simpsons (Danny Elfman)", down: "Even Flow (Pearl Jam)" },
+        P5: { up: "Twinkle Twinkle Little Star", down: "The Flintstones (Hoyt Curtin)" },
+        m6: { up: "The Entertainer (Scott Joplin)", down: "Love Story (Chick Corea)" },
+        M6: { up: "My Bonnie Lies over the Ocean", down: "Nobody Knows the Trouble I've Seen" },
+        m7: { up: "Somewhere (Leonard Bernstein)", down: "An American in Paris (Gershwin)" },
+        M7: { up: "Take On Me (a-ha)", down: "I Love You (Cole Porter)" },
+        P8: { up: "Somewhere Over the Rainbow (Harold Arlen)", down: "Willow Weep for Me (Ann Ronell)" }
     };
 
     /* 화음 성질: (도수, 반음 수)로 적는다 ------------------------------- */
     const CHORDS = [
-        { id: "maj", label: "장3화음", tones: [[0, 0], [2, 4], [4, 7]] },
-        { id: "min", label: "단3화음", tones: [[0, 0], [2, 3], [4, 7]] },
-        { id: "dim", label: "감3화음", tones: [[0, 0], [2, 3], [4, 6]] },
-        { id: "aug", label: "증3화음", tones: [[0, 0], [2, 4], [4, 8]] },
-        { id: "maj7", label: "장7화음", tones: [[0, 0], [2, 4], [4, 7], [6, 11]] },
-        { id: "dom7", label: "속7화음", tones: [[0, 0], [2, 4], [4, 7], [6, 10]] },
-        { id: "min7", label: "단7화음", tones: [[0, 0], [2, 3], [4, 7], [6, 10]] },
-        { id: "mmaj7", label: "단장7화음", tones: [[0, 0], [2, 3], [4, 7], [6, 11]] },
-        { id: "m7b5", label: "반감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 10]] },
-        { id: "dim7", label: "감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 9]] },
-        { id: "maj7s5", label: "증장7화음", tones: [[0, 0], [2, 4], [4, 8], [6, 11]] }
+        { id: "maj", en: "maj", ko: "장3화음", tones: [[0, 0], [2, 4], [4, 7]] },
+        { id: "min", en: "min", ko: "단3화음", tones: [[0, 0], [2, 3], [4, 7]] },
+        { id: "dim", en: "dim", ko: "감3화음", tones: [[0, 0], [2, 3], [4, 6]] },
+        { id: "aug", en: "aug", ko: "증3화음", tones: [[0, 0], [2, 4], [4, 8]] },
+        { id: "maj7", en: "maj7", ko: "장7화음", tones: [[0, 0], [2, 4], [4, 7], [6, 11]] },
+        { id: "dom7", en: "dom7", ko: "속7화음", tones: [[0, 0], [2, 4], [4, 7], [6, 10]] },
+        { id: "min7", en: "m7", ko: "단7화음", tones: [[0, 0], [2, 3], [4, 7], [6, 10]] },
+        { id: "mmaj7", en: "mMaj7", ko: "단장7화음", tones: [[0, 0], [2, 3], [4, 7], [6, 11]] },
+        { id: "m7b5", en: "m7♭5", ko: "반감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 10]] },
+        { id: "dim7", en: "dim7", ko: "감7화음", tones: [[0, 0], [2, 3], [4, 6], [6, 9]] },
+        { id: "maj7s5", en: "maj7♯5", ko: "증장7화음", tones: [[0, 0], [2, 4], [4, 8], [6, 11]] }
     ];
 
     const TRIAD_IDS = ["maj", "min", "dim", "aug"];
@@ -76,26 +81,26 @@
 
     /* 화음 자리 */
     const POSITIONS = [
-        { id: "root", label: "근음 자리", inversion: 0 },
-        { id: "first", label: "첫째 자리바꿈", inversion: 1 },
-        { id: "second", label: "둘째 자리바꿈", inversion: 2 }
+        { id: "root", en: "root pos.", ko: "근음 자리", inversion: 0 },
+        { id: "first", en: "1st inv.", ko: "첫째 자리바꿈", inversion: 1 },
+        { id: "second", en: "2nd inv.", ko: "둘째 자리바꿈", inversion: 2 }
     ];
 
     /* 음계 -------------------------------------------------------------- */
     const SCALES = [
-        { id: "major", label: "장음계", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
-        { id: "nminor", label: "자연단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
-        { id: "hminor", label: "화성단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 11], [7, 12]] },
-        { id: "mminor", label: "가락단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
-        { id: "pmaj", label: "장5음음계", tones: [[0, 0], [1, 2], [2, 4], [4, 7], [5, 9], [7, 12]] },
-        { id: "pmin", label: "단5음음계", tones: [[0, 0], [2, 3], [3, 5], [4, 7], [6, 10], [7, 12]] },
-        { id: "blues", label: "블루스음계", tones: [[0, 0], [2, 3], [3, 5], [3, 6], [4, 7], [6, 10], [7, 12]] },
-        { id: "dorian", label: "도리아", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
-        { id: "phrygian", label: "프리지아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
-        { id: "lydian", label: "리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 7], [5, 9], [6, 11], [7, 12]] },
-        { id: "mixolydian", label: "믹솔리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
-        { id: "locrian", label: "로크리아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 6], [5, 8], [6, 10], [7, 12]] },
-        { id: "whole", label: "온음음계", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 8], [5, 10], [7, 12]] }
+        { id: "major", en: "major", ko: "장음계", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "nminor", en: "nat. minor", ko: "자연단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
+        { id: "hminor", en: "harm. minor", ko: "화성단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 11], [7, 12]] },
+        { id: "mminor", en: "mel. minor", ko: "가락단음계", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "pmaj", en: "maj. pent.", ko: "장5음음계", tones: [[0, 0], [1, 2], [2, 4], [4, 7], [5, 9], [7, 12]] },
+        { id: "pmin", en: "min. pent.", ko: "단5음음계", tones: [[0, 0], [2, 3], [3, 5], [4, 7], [6, 10], [7, 12]] },
+        { id: "blues", en: "blues", ko: "블루스음계", tones: [[0, 0], [2, 3], [3, 5], [3, 6], [4, 7], [6, 10], [7, 12]] },
+        { id: "dorian", en: "dorian", ko: "도리아", tones: [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
+        { id: "phrygian", en: "phrygian", ko: "프리지아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10], [7, 12]] },
+        { id: "lydian", en: "lydian", ko: "리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 7], [5, 9], [6, 11], [7, 12]] },
+        { id: "mixolydian", en: "mixolydian", ko: "믹솔리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
+        { id: "locrian", en: "locrian", ko: "로크리아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 6], [5, 8], [6, 10], [7, 12]] },
+        { id: "whole", en: "whole tone", ko: "온음음계", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 8], [5, 10], [7, 12]] }
     ];
 
     /* 화음 진행 ---------------------------------------------------------- */
@@ -114,6 +119,10 @@
         ["I", "V", "vi", "iii"],
         ["ii", "V", "I", "vi"]
     ].map(chords => ({ id: chords.join("-"), label: chords.join("–"), chords: chords }));
+
+    [INTERVALS, CHORDS, SCALES, POSITIONS].forEach(list => {
+        list.forEach(item => { item.label = label(item.en, item.ko); });
+    });
 
     const MAJOR_TONES = [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11]];
 
@@ -225,7 +234,7 @@
             staffBefore: [null],
             staffAfter: [{ notes: notes }],
             keyboard: null,
-            ask: N.LETTER_NAMES[N.natural(rootAbs).letter] + " " + quality.label + "은 어느 자리인가요?",
+            ask: N.LETTER_NAMES[N.natural(rootAbs).letter] + quality.en + " — 어느 자리인가요?",
             detail: notes.map(N.name).join(" · ")
         };
     }
@@ -321,7 +330,7 @@
             items: CHORDS,
             inputs: ["buttons"],
             levels: [
-                { id: "easy", label: "장·단", ids: ["maj", "min"] },
+                { id: "easy", label: "maj·min", ids: ["maj", "min"] },
                 { id: "mid", label: "3화음", ids: TRIAD_IDS },
                 { id: "seventh", label: "7화음", ids: SEVENTH_IDS },
                 { id: "hard", label: "전부", ids: CHORDS.map(item => item.id) }
@@ -390,9 +399,9 @@
             pickable: false,
             inputs: ["keyboard"],
             items: [
-                { id: "m3", label: "세 음", count: 3, reach: 2 },
-                { id: "m4", label: "네 음", count: 4, reach: 3 },
-                { id: "m5", label: "다섯 음", count: 5, reach: 5 }
+                { id: "m3", label: label("3 notes", "세 음"), count: 3, reach: 2 },
+                { id: "m4", label: label("4 notes", "네 음"), count: 4, reach: 3 },
+                { id: "m5", label: label("5 notes", "다섯 음"), count: 5, reach: 5 }
             ],
             levels: [
                 { id: "easy", label: "세 음", ids: ["m3"] },
@@ -747,7 +756,12 @@
         return block;
     }
 
-    const POSITION_LABEL = ["근음 자리", "첫째 자리바꿈", "둘째 자리바꿈", "셋째 자리바꿈"];
+    const POSITION_LABEL = [
+        label("root pos.", "근음 자리"),
+        label("1st inv.", "첫째 자리바꿈"),
+        label("2nd inv.", "둘째 자리바꿈"),
+        label("3rd inv.", "셋째 자리바꿈")
+    ];
 
     function chordExample(entry) {
         const item = CHORDS.find(chord => chord.id === entry.chord);

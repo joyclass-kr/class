@@ -108,6 +108,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     text-align: left;
 }
 
+.item-toggle .name { line-height: 1.35; word-break: keep-all; overflow-wrap: break-word; }
 .item-toggle[aria-pressed="true"] { border-color: var(--gold); background: var(--panel-2); }
 .item-toggle[aria-pressed="false"] { color: #7c8aa1; }
 .item-toggle .rate { color: var(--muted); font-size: 14px; font-weight: 700; }
@@ -166,7 +167,9 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     background: var(--panel);
     font-size: 17px;
     font-weight: 800;
+    line-height: 1.35;
     word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .choice:hover:not(:disabled) { border-color: var(--gold); }
