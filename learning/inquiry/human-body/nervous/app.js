@@ -24,9 +24,8 @@
             img: null,
             loaded: false
         },
-        // 자율신경 장면은 사진 대신 우리가 그린 몸 도식을 쓴다 (사진 속 몸에는 심장·방광이 없다)
         autonomic: {
-            src: null,
+            src: '../assets/images/nervous-autonomic.webp',
             img: null,
             loaded: false
         },
@@ -129,11 +128,11 @@
             { x: 0.65, y: 0.65, r: 45, title: '무조건 반사 경로 (~30ms)', desc: '자극 ➔ 감각기 ➔ 감각신경 ➔ <strong>척수/연수/중간뇌 (대뇌 패스!)</strong> ➔ 운동신경 ➔ 반응기' }
         ],
         autonomic: [
-            { x: 0.500, y: 0.170, r: 30, title: '눈 (동공)', desc: '교감신경이 일하면 동공이 <strong>커지고</strong>(빛을 많이 받아 잘 보려고), 부교감신경이 일하면 <strong>작아집니다</strong>.' },
-            { x: 0.483, y: 0.360, r: 30, title: '심장', desc: '교감신경이 일하면 <strong>빨리 뜁니다</strong>(1분에 120회쯤). 부교감신경이 일하면 <strong>천천히 뜁니다</strong>(60회쯤).' },
-            { x: 0.500, y: 0.455, r: 28, title: '기관지', desc: '교감신경이 일하면 <strong>넓어져</strong> 산소를 많이 받아들이고, 부교감신경이 일하면 <strong>좁아집니다</strong>.' },
-            { x: 0.500, y: 0.560, r: 30, title: '소화관', desc: '교감신경이 일하면 소화가 <strong>멈추고</strong>(힘을 근육에 몰아줘야 하니까), 부교감신경이 일하면 <strong>활발해집니다</strong>.' },
-            { x: 0.500, y: 0.690, r: 28, title: '방광', desc: '교감신경이 일하면 <strong>느슨해져</strong> 오줌을 참고, 부교감신경이 일하면 <strong>오므라들어</strong> 오줌을 눕니다.' }
+            { x: 0.500, y: 0.130, r: 26, title: '눈 (동공)', desc: '교감신경: <strong>동공 확대</strong> (시야 확보, 빛 유입↑)<br>부교감신경: <strong>동공 축소</strong> (눈 보호)<br>• 부교감 중추: <strong>중간뇌</strong>' },
+            { x: 0.500, y: 0.415, r: 28, title: '기관지', desc: '교감신경: <strong>기관지 확장</strong> (산소 흡수량 증대)<br>부교감신경: <strong>기관지 수축</strong> (안정 호흡)<br>• 부교감 중추: <strong>연수 (미주신경)</strong>' },
+            { x: 0.508, y: 0.475, r: 28, title: '심장', desc: '교감신경: <strong>심장 박동 촉진</strong> (120회/분, 혈류 급증)<br>부교감신경: <strong>심장 박동 억제</strong> (60회/분, 혈압 안정)<br>• 부교감 중추: <strong>연수 (미주신경)</strong>' },
+            { x: 0.525, y: 0.635, r: 32, title: '소화관 (위·장)', desc: '교감신경: <strong>소화 운동 및 분비 억제</strong> (혈류 근육 전환)<br>부교감신경: <strong>소화 운동 및 분비 촉진</strong><br>• 부교감 중추: <strong>연수 (미주신경)</strong>' },
+            { x: 0.500, y: 0.925, r: 26, title: '방광', desc: '교감신경: <strong>방광 이완</strong> (배뇨 억제, 오줌 참음)<br>부교감신경: <strong>방광 수축</strong> (배뇨 촉진, 오줌 배출)<br>• 부교감 중추: <strong>척수 (엉치/골반)</strong>' }
         ],
         synapse: [
             { x: 0.20, y: 0.50, r: 40, title: '감각 뉴런 (Sensory Neuron)', desc: '신경세포체가 축삭 옆에 볼록하게 나와 있는 구심성 뉴런으로 감각기 자극을 중추로 전달합니다.' },
@@ -500,119 +499,232 @@
     // Scene 3: Autonomic Antagonism (Sympathetic vs Parasympathetic) Overlay
     // ------------------------------------------------------------------------
     function drawAutonomicOverlay(dx, dy, dw, dh, time) {
-        // 위쪽 장면 단추 줄에 머리가 가리지 않도록 그리는 범위를 아래로 물린다
-        var H = 0.82 * dh;
-        var top = dy + 0.14 * dh;
-        var cx = dx + 0.50 * dw;
-        var spineX = cx - 0.052 * dw;   // 등쪽 척수
-        var organX = cx + 0.020 * dw;   // 기관 자리
-        var labelX = cx + 0.115 * dw;   // 오른쪽 설명 줄
-
+        var cx = dx + 0.500 * dw;
+        var spineX = cx; // 척수는 인체 중심선 (x = 0.500)
         var accent = isSympathetic ? '#ef4444' : '#10b981';
-        var accentSoft = isSympathetic ? 'rgba(239, 68, 68, 0.25)' : 'rgba(16, 185, 129, 0.28)';
+        var accentSoft = isSympathetic ? 'rgba(239, 68, 68, 0.22)' : 'rgba(16, 185, 129, 0.22)';
 
         var organs = [
-            { y: 0.170, name: '눈 (동공)', sym: '동공 확대', para: '동공 축소' },
-            { y: 0.360, name: '심장', sym: '빨리 뜀 (120회/분)', para: '천천히 뜀 (60회/분)' },
-            { y: 0.455, name: '기관지', sym: '넓어짐 (산소↑)', para: '좁아짐' },
-            { y: 0.560, name: '소화관', sym: '소화 멈춤', para: '소화 활발' },
-            { y: 0.690, name: '방광', sym: '느슨해짐 (오줌 참기)', para: '오므라듦 (오줌 누기)' }
+            {
+                name: '눈 (동공)',
+                x: 0.500, y: 0.130,
+                originX: 0.500,
+                originY: isSympathetic ? 0.310 : 0.190, // 교감: 척수(가슴) vs 부교감: 중간뇌
+                originName: isSympathetic ? '척수 (가슴)' : '중간뇌',
+                symTitle: '동공 확대', symSub: '빛 유입↑ (시야 확보)',
+                paraTitle: '동공 축소', paraSub: '빛 감소 (눈 보호)',
+                labelY: 0.130
+            },
+            {
+                name: '기관지',
+                x: 0.500, y: 0.415,
+                originX: 0.500,
+                originY: isSympathetic ? 0.380 : 0.260, // 교감: 척수 vs 부교감: 연수 (미주신경)
+                originName: isSympathetic ? '척수 (가슴)' : '연수 (미주신경)',
+                symTitle: '기관지 확장', symSub: '산소 흡수량 급증↑',
+                paraTitle: '기관지 수축', paraSub: '호흡 안정·정상화',
+                labelY: 0.385
+            },
+            {
+                name: '심장',
+                x: 0.508, y: 0.475,
+                originX: 0.500,
+                originY: isSympathetic ? 0.440 : 0.260, // 교감: 척수 vs 부교감: 연수 (미주신경)
+                originName: isSympathetic ? '척수 (가슴)' : '연수 (미주신경)',
+                symTitle: '심박 촉진', symSub: '120회/분 (혈류 급증)',
+                paraTitle: '심박 억제', paraSub: '60회/분 (혈압 안정)',
+                labelY: 0.495
+            },
+            {
+                name: '소화관',
+                x: 0.525, y: 0.635,
+                originX: 0.500,
+                originY: isSympathetic ? 0.560 : 0.260, // 교감: 척수 vs 부교감: 연수 (미주신경)
+                originName: isSympathetic ? '척수 (가슴)' : '연수 (미주신경)',
+                symTitle: '소화 억제', symSub: '운동 중단 (혈류 차단)',
+                paraTitle: '소화 촉진', paraSub: '연동 운동·분비 활발',
+                labelY: 0.640
+            },
+            {
+                name: '방광',
+                x: 0.500, y: 0.925,
+                originX: 0.500,
+                originY: isSympathetic ? 0.760 : 0.840, // 교감: 척수(허리) vs 부교감: 척수(엉치)
+                originName: isSympathetic ? '척수 (허리)' : '척수 (엉치)',
+                symTitle: '방광 이완', symSub: '소변 저장 (배뇨 억제)',
+                paraTitle: '방광 수축', paraSub: '배뇨 촉진 (오줌 배출)',
+                labelY: 0.895
+            }
         ];
 
         ctx.save();
 
-        // ── 몸 도식 (머리 + 몸통) ───────────────────────────────
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.07)';
-        ctx.strokeStyle = 'rgba(148, 163, 184, 0.55)';
-        ctx.lineWidth = 1.6;
-
+        // ── 1. 척수 중심선 생체 전류 미세 가이드 ────────────────
+        ctx.strokeStyle = accentSoft;
+        ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.ellipse(cx, top + 0.155 * H, 0.048 * dw, 0.088 * dh, 0, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(spineX, dy + 0.24 * dh);
+        ctx.lineTo(spineX, dy + 0.86 * dh);
         ctx.stroke();
 
-        ctx.beginPath();
-        ctx.roundRect(cx - 0.088 * dw, top + 0.255 * H, 0.176 * dw, 0.505 * dh, [0.05 * dw, 0.05 * dw, 0.03 * dw, 0.03 * dw]);
-        ctx.fill();
-        ctx.stroke();
+        // ── 2. 중추 기원 안내 뱃지 (교육과정 핵심 함정 방어) ─────
+        if (isSympathetic) {
+            // 교감신경: 전 신경이 척수(가슴·허리)에서 출발
+            var sTop = dy + 0.31 * dh;
+            var sBottom = dy + 0.76 * dh;
+            var sMid = (sTop + sBottom) / 2;
 
-        // ── 척수 (자율신경이 뻗어 나오는 곳) ────────────────────
-        ctx.strokeStyle = 'rgba(250, 204, 21, 0.75)';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(spineX, top + 0.245 * H);
-        ctx.lineTo(spineX, top + 0.730 * H);
-        ctx.stroke();
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 1.4;
+            ctx.globalAlpha = 0.85;
+            ctx.beginPath();
+            ctx.moveTo(spineX - 12, sTop);
+            ctx.lineTo(spineX - 22, sTop);
+            ctx.lineTo(spineX - 22, sBottom);
+            ctx.lineTo(spineX - 12, sBottom);
+            ctx.stroke();
 
-        ctx.fillStyle = '#facc15';
-        ctx.font = 'bold 11px Pretendard, sans-serif';
-        ctx.textAlign = 'right';
-        ctx.fillText('척수', spineX - 8, top + 0.245 * H);
+            var badgeW = 148, badgeH = 44;
+            var bx = Math.max(16, spineX - 28 - badgeW);
+            ctx.fillStyle = 'rgba(6, 11, 25, 0.88)';
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.roundRect(bx, sMid - badgeH / 2, badgeW, badgeH, 6);
+            ctx.fill();
+            ctx.stroke();
 
-        // ── 기관마다: 신경 가닥 + 기관 그림 + 오른쪽 설명 ────────
+            ctx.fillStyle = '#fca5a5';
+            ctx.font = 'bold 11px Pretendard, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('⚡ 교감신경 중추', bx + 10, sMid - 6);
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = '10.5px Pretendard, sans-serif';
+            ctx.fillText('전부 척수 (가슴·허리)', bx + 10, sMid + 11);
+            ctx.globalAlpha = 1;
+        } else {
+            // 부교감신경: 중간뇌(동공), 연수 미주신경(폐·심·소화), 척수 엉치(방광) 분립
+            var paras = [
+                { y: dy + 0.190 * dh, label: '중간뇌', sub: '동공 축소 명령' },
+                { y: dy + 0.260 * dh, label: '연수 (미주신경)', sub: '기관지·심장·소화' },
+                { y: dy + 0.840 * dh, label: '척수 엉치', sub: '방광 수축 명령' }
+            ];
+            paras.forEach(function (p) {
+                var badgeW = 142, badgeH = 34;
+                var bx = Math.max(16, spineX - 28 - badgeW);
+
+                ctx.strokeStyle = accent;
+                ctx.lineWidth = 1;
+                ctx.globalAlpha = 0.7;
+                ctx.beginPath();
+                ctx.moveTo(spineX - 10, p.y);
+                ctx.lineTo(bx + badgeW, p.y);
+                ctx.stroke();
+
+                ctx.fillStyle = 'rgba(6, 11, 25, 0.88)';
+                ctx.strokeStyle = accent;
+                ctx.lineWidth = 1.4;
+                ctx.beginPath();
+                ctx.roundRect(bx, p.y - badgeH / 2, badgeW, badgeH, 6);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#6ee7b7';
+                ctx.font = 'bold 11px Pretendard, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('🌿 부교감: ' + p.label, bx + 8, p.y - 4);
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '10px Pretendard, sans-serif';
+                ctx.fillText(p.sub, bx + 8, p.y + 10);
+            });
+            ctx.globalAlpha = 1;
+        }
+
+        // ── 3. 신경 분지 경로 및 전기 신호 펄스 흐름 ─────────────
+        var pulseSpeed = isSympathetic ? 0.0022 : 0.0011;
         organs.forEach(function (org, i) {
+            var ox = dx + org.x * dw;
             var oy = dy + org.y * dh;
+            var sx = dx + org.originX * dw;
+            var sy = dy + org.originY * dh;
 
-            // 척수에서 기관으로 뻗는 신경
+            // 신경 섬유 궤적 (부드러운 곡선)
             ctx.strokeStyle = accent;
             ctx.lineWidth = 2;
-            ctx.globalAlpha = 0.75;
+            ctx.globalAlpha = 0.65;
             ctx.beginPath();
-            ctx.moveTo(spineX, oy);
-            ctx.quadraticCurveTo(spineX + 0.02 * dw, oy, organX - 0.018 * dw, oy);
+            ctx.moveTo(sx, sy);
+            var midX = (sx + ox) / 2 + 0.025 * dw;
+            var midY = (sy + oy) / 2;
+            ctx.quadraticCurveTo(midX, midY, ox, oy);
             ctx.stroke();
             ctx.globalAlpha = 1;
 
-            // 신경을 타고 흐르는 신호
-            var t = ((time * 0.0009) + i * 0.2) % 1;
-            var sx = spineX + (organX - 0.018 * dw - spineX) * t;
-            ctx.fillStyle = accent;
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = accent;
-            ctx.beginPath();
-            ctx.arc(sx, oy, 3.5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.shadowBlur = 0;
+            // 신경을 타고 기관으로 흐르는 신호 펄스
+            for (var pIdx = 0; pIdx < 2; pIdx++) {
+                var t = ((time * pulseSpeed) + (i * 0.18) + (pIdx * 0.5)) % 1;
+                var px = (1 - t) * (1 - t) * sx + 2 * (1 - t) * t * midX + t * t * ox;
+                var py = (1 - t) * (1 - t) * sy + 2 * (1 - t) * t * midY + t * t * oy;
 
-            // 기관 그림
-            drawAutonomicOrgan(org.name, organX, oy, dw, dh, time, accent, accentSoft);
+                ctx.fillStyle = isSympathetic ? '#ffedd5' : '#d1fae5';
+                ctx.shadowBlur = isSympathetic ? 12 : 8;
+                ctx.shadowColor = accent;
+                ctx.beginPath();
+                ctx.arc(px, py, isSympathetic ? 3.5 : 3.0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
 
-            // 오른쪽 설명 줄 (서로 세로로 떨어져 있어 겹치지 않는다)
-            var text = org.name + ' ➔ ' + (isSympathetic ? org.sym : org.para);
-            ctx.font = 'bold 12px Pretendard, sans-serif';
-            var tw = ctx.measureText(text).width;
-            var boxW = tw + 20, boxH = 24;
-            var bx = Math.min(labelX, width - 6 - boxW);
+            // ── 4. 기관별 특화 반응 애니메이션 ───────────────────
+            drawAutonomicOrgan(org.name, ox, oy, dw, dh, time, accent, accentSoft);
 
+            // ── 5. 오른쪽 반응 설명 카드 & 안내선 ─────────────────
+            var cardY = dy + org.labelY * dh;
+            var cardX = Math.min(cx + 0.18 * dw, width - 210);
+            cardX = Math.max(cardX, cx + 0.12 * dw);
+            var cardW = Math.min(200, width - cardX - 12);
+            var cardH = 34;
+
+            // 연결 가이드선
             ctx.strokeStyle = accent;
             ctx.lineWidth = 1;
-            ctx.globalAlpha = 0.6;
+            ctx.globalAlpha = 0.55;
             ctx.beginPath();
-            ctx.moveTo(organX + 0.022 * dw, oy);
-            ctx.lineTo(bx, oy);
+            ctx.moveTo(ox + 10, oy);
+            ctx.bezierCurveTo(ox + 0.05 * dw, oy, cardX - 0.03 * dw, cardY, cardX, cardY);
             ctx.stroke();
             ctx.globalAlpha = 1;
 
-            ctx.fillStyle = 'rgba(6, 10, 24, 0.86)';
+            // 카드 배경
+            ctx.fillStyle = 'rgba(6, 11, 25, 0.88)';
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 1.4;
             ctx.beginPath();
-            ctx.roundRect(bx, oy - boxH / 2, boxW, boxH, 7);
+            ctx.roundRect(cardX, cardY - cardH / 2, cardW, cardH, 7);
             ctx.fill();
             ctx.stroke();
 
-            ctx.fillStyle = '#f8fafc';
+            // 텍스트 라벨
             ctx.textAlign = 'left';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(text, bx + 10, oy + 0.5);
-            ctx.textBaseline = 'alphabetic';
+            var mainTitle = org.name + ' ➔ ' + (isSympathetic ? org.symTitle : org.paraTitle);
+            var subDesc = isSympathetic ? org.symSub : org.paraSub;
+
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = 'bold 11.5px Pretendard, sans-serif';
+            ctx.fillText(mainTitle, cardX + 10, cardY - 3, cardW - 16);
+
+            ctx.fillStyle = isSympathetic ? '#fca5a5' : '#6ee7b7';
+            ctx.font = '10.5px Pretendard, sans-serif';
+            ctx.fillText(subDesc, cardX + 10, cardY + 11, cardW - 16);
         });
 
-        ctx.textAlign = 'center';
-
+        // ── 6. 상단 요약 캡션 플레이트 ───────────────────────────
         drawCaptionPlate(
-            dx + 12, dy + 12,
+            Math.max(16, dx + 16), dy + 16,
             [
-                isSympathetic ? '⚡ 교감신경 - 놀라거나 뛸 때' : '🌿 부교감신경 - 쉬거나 밥 먹을 때',
-                '같은 기관에 두 신경이 반대로 작용합니다 (길항 작용)'
+                isSympathetic ? '⚡ 교감신경 (긴장·위기 시: Fight or Flight)' : '🌿 부교감신경 (휴식·식사 시: Rest & Digest)',
+                '같은 기관에 정반대로 작용하는 【길항 작용】으로 항상성을 유지합니다.',
+                isSympathetic ? '• 신경절 이전 뉴런 중추: 전부 척수 (가슴·허리)' : '• 신경절 이전 뉴런 중추: 중간뇌(동공) · 연수(심장/기관지/소화) · 척수엉치(방광)'
             ],
             accent
         );
@@ -620,61 +732,125 @@
         ctx.restore();
     }
 
-    /** 자율신경 도식 속 기관 하나를 그린다 */
+    /** 자율신경 도식 속 기관 부위별 실시간 반응 효과 */
     function drawAutonomicOrgan(name, ox, oy, dw, dh, time, accent, accentSoft) {
         ctx.save();
         ctx.strokeStyle = accent;
-        ctx.fillStyle = accentSoft;
         ctx.lineWidth = 2;
 
         if (name === '눈 (동공)') {
-            var pupilR = isSympathetic ? 9 : 4;
-            ctx.fillStyle = '#e2e8f0';
-            ctx.beginPath();
-            ctx.ellipse(ox, oy, 20, 12, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-            ctx.fillStyle = accent;
-            ctx.beginPath();
-            ctx.arc(ox, oy, pupilR + 3, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = '#0b1120';
-            ctx.beginPath();
-            ctx.arc(ox, oy, pupilR, 0, Math.PI * 2);
-            ctx.fill();
+            // 두 눈 각각의 위치 (양쪽 동공)
+            var eyeSpacing = 0.028 * dw;
+            var pupilR = isSympathetic ? 7.5 : 3.2;
+
+            [-eyeSpacing, eyeSpacing].forEach(function (offset) {
+                var ex = ox + offset;
+                // 홍채 테두리
+                ctx.strokeStyle = accent;
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.7)';
+                ctx.beginPath();
+                ctx.arc(ex, oy, pupilR + 3.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // 동공 (동공 확대 vs 동공 축소)
+                ctx.fillStyle = accent;
+                ctx.shadowBlur = isSympathetic ? 12 : 5;
+                ctx.shadowColor = accent;
+                ctx.beginPath();
+                ctx.arc(ex, oy, pupilR, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
         } else if (name === '심장') {
-            var beat = 1 + Math.sin(heartBeatPhase) * (isSympathetic ? 0.22 : 0.09);
+            // 심장 박동 파동 (120 bpm vs 60 bpm)
+            var beat = 1 + Math.sin(heartBeatPhase) * (isSympathetic ? 0.24 : 0.09);
+            var wavePhase = (heartBeatPhase / (Math.PI * 2)) % 1;
+
+            // 팽창하는 충격파 리플
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 1.5;
+            ctx.globalAlpha = (1 - wavePhase) * 0.75;
+            ctx.beginPath();
+            ctx.arc(ox, oy, 16 + wavePhase * 24, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+
+            // 심장 중심 박동 핵
             ctx.fillStyle = accent;
-            ctx.shadowBlur = isSympathetic ? 18 : 8;
+            ctx.shadowBlur = isSympathetic ? 22 : 10;
             ctx.shadowColor = accent;
             ctx.beginPath();
-            ctx.arc(ox, oy, 17 * beat, 0, Math.PI * 2);
+            ctx.arc(ox, oy, 13 * beat, 0, Math.PI * 2);
             ctx.fill();
             ctx.shadowBlur = 0;
         } else if (name === '기관지') {
-            var open = isSympathetic ? 11 : 5;
-            ctx.beginPath();
-            ctx.moveTo(ox, oy - 14);
-            ctx.lineTo(ox, oy - 2);
-            ctx.moveTo(ox, oy - 2);
-            ctx.lineTo(ox - 15, oy + 13);
-            ctx.moveTo(ox, oy - 2);
-            ctx.lineTo(ox + 15, oy + 13);
-            ctx.lineWidth = open;
-            ctx.stroke();
-            ctx.lineWidth = 2;
+            // 기관지 호흡 진폭 (확장 vs 수축)
+            var breath = Math.sin(time * (isSympathetic ? 0.006 : 0.003));
+            var airwayR = isSympathetic ? (16 + breath * 3) : (9 + breath * 1.5);
+
+            ctx.fillStyle = accentSoft;
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = isSympathetic ? 2.5 : 1.5;
+
+            // 좌우 폐 기관지 확장 오라
+            [-0.038 * dw, 0.038 * dw].forEach(function (bxOffset) {
+                ctx.beginPath();
+                ctx.arc(ox + bxOffset, oy + 4, airwayR, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            });
         } else if (name === '소화관') {
-            var churn = isSympathetic ? 0 : Math.sin(time * 0.005) * 4;
-            ctx.beginPath();
-            ctx.roundRect(ox - 26 - churn / 2, oy - 15, 52 + churn, 30, 12);
-            ctx.fill();
-            ctx.stroke();
-        } else {
-            var size = isSympathetic ? 17 : 11;
-            ctx.beginPath();
-            ctx.arc(ox, oy, size, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
+            // 소화관 연동 운동 (교감: 정지 vs 부교감: 연동파동)
+            ctx.fillStyle = accentSoft;
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 2;
+
+            if (isSympathetic) {
+                ctx.beginPath();
+                ctx.roundRect(ox - 24, oy - 14, 48, 28, 10);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f87171';
+                ctx.font = 'bold 10px Pretendard, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('⏸ 억제', ox, oy + 3.5);
+            } else {
+                var wave = Math.sin(time * 0.006) * 5;
+                ctx.beginPath();
+                ctx.roundRect(ox - 24 - wave / 2, oy - 14, 48 + wave, 28, 10);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#34d399';
+                ctx.font = 'bold 10px Pretendard, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('▶ 촉진', ox, oy + 3.5);
+            }
+        } else if (name === '방광') {
+            // 방광 (교감: 이완·확장 vs 부교감: 수축·압축)
+            var bladderR = isSympathetic ? 16 : 10;
+            ctx.fillStyle = accentSoft;
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 2;
+
+            if (isSympathetic) {
+                ctx.setLineDash([4, 3]);
+                ctx.beginPath();
+                ctx.arc(ox, oy, bladderR, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                ctx.setLineDash([]);
+            } else {
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = accent;
+                ctx.beginPath();
+                ctx.arc(ox, oy, bladderR, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            }
         }
         ctx.restore();
     }
@@ -923,13 +1099,15 @@
      */
     function drawCaptionPlate(px, py, lines, accent) {
         ctx.save();
+        px = Math.max(16, px);
         py = Math.max(py, 86); // 위쪽 장면 단추 줄 아래에서 시작
         ctx.font = 'bold 12px Pretendard, sans-serif';
         var maxW = 0;
         lines.forEach(function (t) { maxW = Math.max(maxW, ctx.measureText(t).width); });
-        var boxW = maxW + 24, boxH = 14 + lines.length * 19;
+        var boxW = Math.min(maxW + 24, width - px - 16);
+        var boxH = 14 + lines.length * 19;
 
-        ctx.fillStyle = 'rgba(6, 10, 24, 0.82)';
+        ctx.fillStyle = 'rgba(6, 10, 24, 0.88)';
         ctx.strokeStyle = accent;
         ctx.lineWidth = 1.5;
         ctx.beginPath();
@@ -940,7 +1118,7 @@
         ctx.textAlign = 'left';
         lines.forEach(function (t, i) {
             ctx.fillStyle = i === 0 ? '#f8fafc' : '#cbd5e1';
-            ctx.fillText(t, px + 12, py + 21 + i * 19);
+            ctx.fillText(t, px + 12, py + 21 + i * 19, boxW - 24);
         });
         ctx.textAlign = 'center';
         ctx.restore();
@@ -1020,6 +1198,7 @@
 
                 updateHudInstruction(currentSceneKey);
                 activateSidebarTab(sidebarTabForScene(currentSceneKey));
+                updateActionBtn();
                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
             });
         });
@@ -1054,39 +1233,63 @@
         var autoTitle = document.getElementById('autonomicStateTitle');
         var autoDesc = document.getElementById('autonomicStateDesc');
 
+        function updateAutonomicUI() {
+            if (btnSym && btnPara) {
+                btnSym.classList.toggle('active', isSympathetic);
+                btnPara.classList.toggle('active', !isSympathetic);
+            }
+            if (autoTitle) {
+                autoTitle.textContent = isSympathetic ? '⚡ 교감신경 활성화 (Fight or Flight)' : '🌿 부교감신경 활성화 (Rest & Digest)';
+                autoTitle.style.color = isSympathetic ? '#ef4444' : '#10b981';
+            }
+            if (autoDesc) {
+                autoDesc.textContent = isSympathetic ?
+                    '위기 상황이나 공포, 긴장 시 작동하여 동공 확대, 심박 촉진, 기관지 확장을 유도하고 소화는 억제합니다. (모든 신호 척수 가슴·허리 기원)' :
+                    '식사나 수면, 휴식 시 작동하여 심박과 호흡을 안정시키고 소화관 운동을 활성화합니다. (중간뇌·연수 미주신경·엉치척수 분립 기원)';
+            }
+            updateActionBtn();
+        }
+
+        function updateActionBtn() {
+            if (!actionTriggerBtn || !actionBtnText) return;
+            if (currentSceneKey === 'autonomic') {
+                actionBtnText.textContent = isSympathetic ? '🌿 부교감신경으로 전환' : '⚡ 교감신경으로 전환';
+                actionTriggerBtn.style.background = isSympathetic ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)';
+            } else if (currentSceneKey === 'response') {
+                actionBtnText.textContent = '반사 신호 레이스 시작';
+                actionTriggerBtn.style.background = 'linear-gradient(135deg, #a855f7, #7e22ce)';
+            } else {
+                actionBtnText.textContent = '반사 신호 레이스 시작';
+                actionTriggerBtn.style.background = 'linear-gradient(135deg, #a855f7, #7e22ce)';
+            }
+        }
+
         if (btnSym && btnPara) {
             btnSym.addEventListener('click', function () {
                 isSympathetic = true;
-                btnSym.classList.add('active');
-                btnPara.classList.remove('active');
-                if (autoTitle) {
-                    autoTitle.textContent = '⚡ 교감신경 활성화 (Fight or Flight)';
-                    autoTitle.style.color = '#ef4444';
-                }
-                if (autoDesc) {
-                    autoDesc.textContent = '위기 상황이나 공포, 긴장 시 작동하여 동공 확대, 심박 촉진, 기관지 확장을 유도하고 소화는 억제합니다.';
-                }
+                updateAutonomicUI();
                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playPulse();
             });
 
             btnPara.addEventListener('click', function () {
                 isSympathetic = false;
-                btnPara.classList.add('active');
-                btnSym.classList.remove('active');
-                if (autoTitle) {
-                    autoTitle.textContent = '🌿 부교감신경 활성화 (Rest & Digest)';
-                    autoTitle.style.color = '#10b981';
-                }
-                if (autoDesc) {
-                    autoDesc.textContent = '식사나 수면, 휴식 시 작동하여 심박과 호흡을 안정시키고 소화관 운동을 활성화합니다.';
-                }
+                updateAutonomicUI();
                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
             });
         }
 
-        // Action Trigger Button (Start Race)
+        // Action Trigger Button
         if (actionTriggerBtn) {
             actionTriggerBtn.addEventListener('click', function () {
+                if (currentSceneKey === 'autonomic') {
+                    isSympathetic = !isSympathetic;
+                    updateAutonomicUI();
+                    if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) {
+                        if (isSympathetic) SimEngine.SoundFX.playPulse();
+                        else SimEngine.SoundFX.playClick();
+                    }
+                    return;
+                }
                 if (currentSceneKey !== 'response') {
                     // switch to response scene
                     sceneBtns.forEach(function (b) {
@@ -1095,6 +1298,7 @@
                     currentSceneKey = 'response';
                     updateHudInstruction('response');
                     activateSidebarTab('focus');
+                    updateActionBtn();
                 }
 
                 isRacing = true;
@@ -1177,6 +1381,15 @@
                         var sx = dx + s.x * dw;
                         var sy = dy + s.y * dh;
                         if (Math.hypot(cx - sx, cy - sy) <= s.r + 20) {
+                            if (currentSceneKey === 'autonomic') {
+                                if (autoTitle) {
+                                    autoTitle.textContent = s.title + '의 길항 작용';
+                                    autoTitle.style.color = isSympathetic ? '#ef4444' : '#10b981';
+                                }
+                                if (autoDesc) {
+                                    autoDesc.innerHTML = s.desc;
+                                }
+                            }
                             if (organTitleEl) organTitleEl.textContent = s.title;
                             if (organDescEl) organDescEl.innerHTML = s.desc;
                             if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
