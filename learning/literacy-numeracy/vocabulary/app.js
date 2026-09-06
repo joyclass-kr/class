@@ -67,6 +67,7 @@
         "recommendedLessonButton", "recommendedLessonTitle", "recommendedLessonMeta",
         "backFromLessons", "lessonStage", "lessonScreenTitle", "lessonGrid",
     ].map((id) => [id, document.getElementById(id)]));
+    elements.backLink = document.querySelector(".back-link");
 
     const state = {
         data: null,
@@ -1293,15 +1294,26 @@
         elements.spellingReviewButton.addEventListener("click", openSpellingReview);
         elements.backFromSpelling.addEventListener("click", backFromSpelling);
 
-        // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
         // 화면 단계를 한 걸음씩만 되돌리고, 맨 처음 화면(레벨 고르기)에서만 사이트 밖으로 나간다.
+        // true를 돌려주면 실제로 한 걸음 되돌린 것이고, false면 이미 맨 처음 화면이라는 뜻이다.
+        function stepBackOneScreen() {
+            if (!elements.studyScreen.hidden) { backToLevels(); return true; }
+            if (!elements.lessonQuizScreen.hidden) { backFromLessonQuiz(); return true; }
+            if (!elements.lessonScreen.hidden) { backFromLessons(); return true; }
+            if (!elements.bandListScreen.hidden) { backFromBandList(); return true; }
+            if (!elements.gameScreen.hidden) { backFromGame(); return true; }
+            if (!elements.spellingScreen.hidden) { backFromSpelling(); return true; }
+            return false;
+        }
+
+        // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
         window.addEventListener("sitebackrequest", (event) => {
-            if (!elements.studyScreen.hidden) { event.preventDefault(); backToLevels(); return; }
-            if (!elements.lessonQuizScreen.hidden) { event.preventDefault(); backFromLessonQuiz(); return; }
-            if (!elements.lessonScreen.hidden) { event.preventDefault(); backFromLessons(); return; }
-            if (!elements.bandListScreen.hidden) { event.preventDefault(); backFromBandList(); return; }
-            if (!elements.gameScreen.hidden) { event.preventDefault(); backFromGame(); return; }
-            if (!elements.spellingScreen.hidden) { event.preventDefault(); backFromSpelling(); return; }
+            if (stepBackOneScreen()) event.preventDefault();
+        });
+
+        // 화면 왼쪽 위 화살표는 공용 뒤로가기 단추가 안 떠도 항상 같은 규칙으로 움직인다.
+        elements.backLink?.addEventListener("click", (event) => {
+            if (stepBackOneScreen()) event.preventDefault();
         });
         elements.spellingResetButton.addEventListener("click", restartSpellingMode);
         elements.spellingHintButton.addEventListener("click", showSpellingHint);

@@ -5,6 +5,7 @@
     const registry = window.ClassRaceApps;
 
     const elements = {
+        portalBackLink: document.querySelector('.back-link[href="/classtools/"]'),
         setupPanel: document.getElementById("setupPanel"),
         racePanel: document.getElementById("racePanel"),
         appGrid: document.getElementById("appGrid"),
@@ -316,6 +317,14 @@
     // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
     // 순위전이 진행 중일 때는 사이트 밖으로 나가지 않고 방금 상태로 새로고침한다.
     window.addEventListener("sitebackrequest", (event) => {
+        if (elements.racePanel.classList.contains("hidden")) return;
+        event.preventDefault();
+        location.reload();
+    });
+
+    // 왼쪽 위 "← 교사 포털" 화살표는 공용 뒤로가기 단추가 안 떠도 같은 규칙으로 움직인다.
+    // 옆의 "학생 화면" 단추는 다른 화면으로 가는 진짜 이동이라 그대로 둔다.
+    elements.portalBackLink?.addEventListener("click", (event) => {
         if (elements.racePanel.classList.contains("hidden")) return;
         event.preventDefault();
         location.reload();

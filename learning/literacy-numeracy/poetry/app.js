@@ -20,6 +20,7 @@
     const poemsByTopic = new Map(TOPICS.map((topic) => [topic, poems.filter((poem) => (poem.topics || []).includes(topic))]));
 
     const elements = {
+        backLink: document.querySelector(".back-link"),
         lessonScreen: document.getElementById("lessonScreen"),
         readScreen: document.getElementById("readScreen"),
         quizScreen: document.getElementById("quizScreen"),
@@ -656,6 +657,15 @@
     // 공용 뒤로가기 단추(assets/site-back-navigation.js)가 눌리면 먼저 물어본다.
     // 차시 목록(집)이 아니면 사이트 밖으로 나가지 않고 차시 목록으로만 돌아간다.
     window.addEventListener("sitebackrequest", (event) => {
+        if (elements.lessonScreen.classList.contains("hidden")) {
+            event.preventDefault();
+            showLessonList();
+        }
+    });
+
+    // 화면 왼쪽 위 화살표는 공용 뒤로가기 단추가 안 떠도 항상 같은 규칙으로 움직인다.
+    // 차시 목록이 아니면 그 목록으로만 돌아가고, 이미 목록이면 그때 메인 화면으로 나간다.
+    elements.backLink?.addEventListener("click", (event) => {
         if (elements.lessonScreen.classList.contains("hidden")) {
             event.preventDefault();
             showLessonList();

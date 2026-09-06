@@ -5,6 +5,7 @@
     const PLAYER_NAME_KEY = "classPlayerName";
 
     const elements = {
+        backLink: document.querySelector(".back-link"),
         missingScreen: document.getElementById("missingScreen"),
         lobbyScreen: document.getElementById("lobbyScreen"),
         quizScreen: document.getElementById("quizScreen"),
@@ -376,6 +377,14 @@
     // 문제를 푸는 중이거나 결과 화면이면 사이트 밖으로 나가지 않고 방금 상태로 새로고침해
     // 참가 화면으로 돌아간다. 참가를 기다리는 중이라면 그냥 메인으로 나간다.
     window.addEventListener("sitebackrequest", (event) => {
+        const inQuiz = !elements.quizScreen.classList.contains("hidden") || !elements.resultScreen.classList.contains("hidden");
+        if (!inQuiz) return;
+        event.preventDefault();
+        location.reload();
+    });
+
+    // 화면 왼쪽 위 화살표는 공용 뒤로가기 단추가 안 떠도 항상 같은 규칙으로 움직인다.
+    elements.backLink?.addEventListener("click", (event) => {
         const inQuiz = !elements.quizScreen.classList.contains("hidden") || !elements.resultScreen.classList.contains("hidden");
         if (!inQuiz) return;
         event.preventDefault();

@@ -181,5 +181,9 @@
   window.addEventListener("sitebackrequest", (event) => {
     if ($("dashboardView").hidden) { event.preventDefault(); show("dashboard"); }
   });
+  // 화면 왼쪽 위 화살표는 공용 뒤로가기 단추가 안 떠도 항상 같은 규칙으로 움직인다.
+  document.querySelector(".student-header a")?.addEventListener("click", (event) => {
+    if ($("dashboardView").hidden) { event.preventDefault(); show("dashboard"); }
+  });
   start();
 })();

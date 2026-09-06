@@ -75,5 +75,9 @@ $("reviewAnswer").addEventListener("click",()=>{});
 window.addEventListener("sitebackrequest",(event)=>{
     if(document.body.classList.contains("learning-active")){event.preventDefault();showOverview();}
 });
+// 화면 왼쪽 위 화살표는 공용 뒤로가기 단추가 안 떠도 항상 같은 규칙으로 움직인다.
+document.querySelector("a.back")?.addEventListener("click",(event)=>{
+    if(document.body.classList.contains("learning-active")){event.preventDefault();showOverview();}
+});
 if(!decks?.ko?.length||!decks?.en?.length)throw new Error("속담 자료를 불러오지 못했습니다.");
 renderLessonList();
