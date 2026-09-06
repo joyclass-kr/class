@@ -9,18 +9,30 @@ const courseRoot = "learning/inquiry/information-computing/computer-fundamentals
 const portal = read("index.html");
 const coursePage = read(`${courseRoot}/index.html`);
 const lessonPage = read(`${courseRoot}/lessons/index.html`);
-const lessonSource = read(`${courseRoot}/lessons/system-lessons.js`);
-const systemLessonStyles = read(`${courseRoot}/lessons/system-lessons.css`);
-const conceptLabStyles = read(`${courseRoot}/lessons/concept-labs.css`);
-const lessonStyles = `${systemLessonStyles}\n${conceptLabStyles}`;
-const conceptLabSource = read(`${courseRoot}/lessons/concept-labs.js`);
+// 차시마다 제 파일만 받도록 쪼개 두었다. 검사는 예전처럼 앱 전체를 한 덩어리로 놓고 본다.
+const labsDir = new URL(`../${courseRoot}/lessons/labs/`, import.meta.url);
+const labFiles = fs.readdirSync(labsDir).sort();
+const readLabs = (extension) => labFiles
+  .filter((file) => file.endsWith(extension))
+  .map((file) => read(`${courseRoot}/lessons/labs/${file}`))
+  .join("\n");
+const detailDir = new URL(`../${courseRoot}/lessons/detail/`, import.meta.url);
+const detailFiles = fs.readdirSync(detailDir).sort();
+const detailSource = detailFiles.map((file) => read(`${courseRoot}/lessons/detail/${file}`)).join("\n");
+const conceptLabSource = `${read(`${courseRoot}/lessons/lab-shared.js`)}\n${readLabs(".js")}`;
+const lessonSource = `${read(`${courseRoot}/lessons/shell.js`)}\n${detailSource}\n${conceptLabSource}`;
+const lessonStyles = `${read(`${courseRoot}/lessons/shell.css`)}\n${readLabs(".css")}`;
+const systemLessonStyles = lessonStyles;
+const conceptLabStyles = lessonStyles;
 const curriculum = read(`${courseRoot}/CURRICULUM.md`);
 const glossary = read(`${courseRoot}/GLOSSARY-KO-EN.md`);
 const foundationFiles = [
   "foundation-core.js",
-  "concept-visuals.js",
-  "concept-labs.js",
+  "lab-shared.js",
+  ...labFiles.filter((file) => file.endsWith(".js")).map((file) => `labs/${file}`),
   "foundation-compact.js",
+  // 다시 쓴 문항은 차시별 파일에 흩어져 있다. 검사에서는 모두 읽어 원래 문항 위에 덮는다.
+  ...fs.readdirSync(new URL(`../${courseRoot}/lessons/reviews/`, import.meta.url)).sort().map((file) => `reviews/${file}`),
   "foundation-b.js",
   "foundation-c.js",
   "foundation-d.js",
@@ -41,10 +53,14 @@ const detailedContext = vm.createContext({
   a04ConversionMarkup: () => '<section data-a04-lab="concept"></section>',
   a05DigitizerMarkup: () => '<section data-a05-lab="concept"></section>'
 });
-const detailedCut = lessonSource.indexOf("    const lessons = [...detailedLessons");
-assert.ok(detailedCut > 0, "detailed lesson extraction marker should exist");
-vm.runInContext(`${lessonSource.slice(0, detailedCut)}\nwindow.__DETAILED_LESSONS = detailedLessons;\n})();`, detailedContext);
-const detailedLessons = detailedContext.window.__DETAILED_LESSONS;
+detailedContext.window.COMPUTER_IMAGE_ASSET = (name) => `assets/images/${name}`;
+detailedContext.window.COMPUTER_A04 = { markup: () => '<section data-a04-lab="concept"></section>' };
+detailedContext.window.COMPUTER_A05 = { markup: () => '<section data-a05-lab="concept"></section>' };
+for (const file of detailFiles) {
+  vm.runInContext(read(`${courseRoot}/lessons/detail/${file}`), detailedContext, { filename: file });
+}
+const detailedLessons = detailedContext.window.COMPUTER_DETAILED_LESSONS;
+assert.equal(detailedLessons.length, 6, "앞 여섯 차시가 제 파일에서 읽혀야 합니다");
 const allLessons = [...detailedLessons, ...generatedLessons].sort((left, right) => left.number - right.number);
 for (const [lessonId, questionIndex, question] of context.window.COMPUTER_REVIEWED_QUESTIONS || []) {
   const target = allLessons.find((lesson) => lesson.id === lessonId);
@@ -75,24 +91,32 @@ test("the 36-lesson core course is loaded in dependency order", () => {
   for (const id of ["b02", "c01", "d01", "e01", "f01", "g01", "h01", "i01", "j03"]) {
     assert.ok(generatedLessons.some((lesson) => lesson.id === id), `${id} should be generated`);
   }
-  assert.match(lessonSource, /\.\.\.detailedLessons, \.\.\.\(window\.COMPUTER_FOUNDATION_LESSONS/);
+  assert.match(lessonSource, /window\.COMPUTER_DETAILED_LESSONS[\s\S]{0,160}window\.COMPUTER_FOUNDATION_LESSONS/);
+  assert.match(lessonSource, /window\.COMPUTER_LESSON_INDEX/);
   assert.match(coursePage, /data-course-root="true"/);
   assert.match(lessonPage, /id="lessonTitle"/);
+  // 두 화면 모두 boot.js 한 줄만 두고, 그 차시에 필요한 파일은 boot.js가 차례대로 넣는다.
   for (const page of [coursePage, lessonPage]) {
-    const coreAt = page.indexOf("foundation-core.js");
-    const visualsAt = page.indexOf("concept-visuals.js");
-    const labsAt = page.indexOf("concept-labs.js");
-    const compactAt = page.indexOf("foundation-compact.js");
-    const courseAt = page.indexOf("foundation-b.js");
-    const engineAt = page.indexOf("system-lessons.js");
-    assert.ok(coreAt >= 0 && coreAt < visualsAt && visualsAt < labsAt && labsAt < compactAt && compactAt < courseAt && courseAt < engineAt);
+    assert.match(page, /<script src="[^"]*boot\.js\?v=/);
+    assert.equal((page.match(/<script /g) || []).length, 1, "차시 화면은 boot.js 하나만 부른다");
+  }
+  const boot = read(`${courseRoot}/lessons/boot.js`);
+  const order = ["foundation-core.js", "index-data.js", "lab-shared.js", "shell.js"];
+  let cursor = -1;
+  for (const file of order) {
+    const at = boot.indexOf(file);
+    assert.ok(at > cursor, `${file}이 차례를 지켜야 합니다`);
+    cursor = at;
   }
 });
 
 test("all generated lessons except the direct manipulation lesson use a specific concept visual", () => {
-  const expectedIds = Array.from(generatedLessons, (lesson) => lesson.id).filter((id) => id !== "d01").sort();
-  assert.equal(context.window.COMPUTER_SPECIAL_VISUAL_IDS.length, 29);
-  assert.deepEqual(Array.from(context.window.COMPUTER_SPECIAL_VISUAL_IDS).sort(), expectedIds);
+  // 차시마다 제 그림 파일을 하나씩 가진다. h04만 예전 그림 코드를 그대로 쓴다.
+  const expectedIds = Array.from(generatedLessons, (lesson) => lesson.id).sort();
+  const labIds = labFiles.filter((file) => file.endsWith(".js")).map((file) => file.replace(".js", ""));
+  for (const id of expectedIds) {
+    assert.ok(labIds.includes(id), `${id} needs its own lab file`);
+  }
   for (const lesson of generatedLessons.filter((item) => item.id !== "d01")) {
     assert.match(lesson.visual, new RegExp(`visual-${lesson.id}`), `${lesson.id} needs its own concept diagram`);
     assert.doesNotMatch(lesson.visual, /concept-relationship-board/, `${lesson.id} must not fall back to the generic card board`);
@@ -212,7 +236,6 @@ test("every generated lesson has substantive bilingual content, manipulation, an
     assert.ok(lesson.details.length >= 4, `${lesson.id} needs four concept explanations`);
     assert.ok(lesson.workedExample.steps.length >= 4, `${lesson.id} needs a four-step example`);
     assert.ok(lesson.comparisons.cards.length >= 4, `${lesson.id} needs four comparisons`);
-    assert.ok(lesson.activity.items.length >= 6, `${lesson.id} needs at least six activity items`);
     assert.equal(lesson.questions.length, 6, `${lesson.id} needs six scenario questions`);
     for (const question of lesson.questions) {
       assert.equal(question.options.length, 4, `${lesson.id} question needs four options`);
@@ -250,7 +273,7 @@ test("all 36 lessons have complete render data without undefined text", () => {
   }
   const mobileLesson = allLessons.find((lesson) => lesson.id === "b02");
   assert.equal(mobileLesson.deviceComparison.cards.length, 4);
-  assert.equal(mobileLesson.activity.categories.length, 6, "B02 must separate SoC, RAM, storage, sensors/radios, battery, and touch display");
+  assert.equal(mobileLesson.activity.type, "none", "B02는 개념 화면의 실험 장치가 조작을 맡는다");
   for (const device of ["desktop-hardware-cutaway", "chromebook-internals-exploded", "tablet-internals-exploded", "smartphone-internals-exploded"]) {
     assert.ok(mobileLesson.deviceComparison.cards.some((card) => card.image.includes(device)));
   }
@@ -261,8 +284,10 @@ test("all 36 lessons have complete render data without undefined text", () => {
 test("every lesson activity and assessment is internally consistent", () => {
   const itemIds = [];
   for (const lesson of allLessons) {
-    assert.ok(lesson.activity?.type && lesson.activity.title && lesson.activity.instruction && lesson.activity.success, `${lesson.id} activity needs complete directions and feedback`);
-    assert.ok(["sort", "analog", "sampling"].includes(lesson.activity.type), `${lesson.id} uses an unknown activity type`);
+    assert.ok(["sort", "analog", "sampling", "none"].includes(lesson.activity?.type), `${lesson.id} uses an unknown activity type`);
+    if (lesson.activity.type !== "none") {
+      assert.ok(lesson.activity.title && lesson.activity.instruction && lesson.activity.success, `${lesson.id} activity needs complete directions and feedback`);
+    }
     if (lesson.activity.type === "sort") {
       const categoryIds = new Set(lesson.activity.categories.map((category) => category.id));
       assert.ok(categoryIds.size >= 2, `${lesson.id} needs at least two activity categories`);
@@ -358,12 +383,7 @@ test("lesson 13 teaches pointer states through direct manipulation before classi
   assert.equal(lesson.title, "포인터·텍스트 커서·클릭·드래그는 어떻게 다를까?");
   assert.equal(lesson.english, "How Are the Pointer, Text Cursor, Click, and Drag Different?");
   assert.equal(lesson.workedExample.steps.length, 4);
-  assert.equal(lesson.activity.categories.length, 4);
-  assert.deepEqual(
-    Array.from(lesson.activity.categories, (category) => category.id),
-    ["pointer", "caret", "click", "drag"]
-  );
-  assert.equal(lesson.activity.items.length, 8);
+  assert.equal(lesson.activity.type, "none", "D01은 개념 화면의 포인터 실험이 조작을 맡는다");
   assert.match(lessonSource, /function pointerConceptLabMarkup\(\)/);
   assert.match(lessonSource, /data-pointer-workspace/);
   assert.match(lessonSource, /data-demo-text/);
@@ -458,13 +478,18 @@ test("A02 shows one clear goal and a matching software-hardware pair", () => {
 });
 
 test("generic sort lessons continue directly to questions while real experiments keep three stages", () => {
-  assert.match(lessonSource, /const hasStandaloneActivity = lesson\.activity\.type !== "sort"/);
-  assert.match(lessonSource, /if \(lesson\.activity\.type === "sort"\) \{\s*resetQuiz\(\);\s*showStage\("quiz", "문제 풀이 2 \/ 2"\)/);
-  assert.match(lessonSource, /hasStandaloneActivity[\s\S]{0,180}"실험 시작 <small>Start Experiment<\/small>"[\s\S]{0,120}"문제 풀기 <small>Start Questions<\/small>"/);
+  assert.match(lessonSource, /const hasActivityStage = lesson\.activity\.type !== "none"/);
+  assert.match(lessonSource, /if \(!hasActivityStage\) \{\s*resetQuiz\(\);\s*showStage\("quiz", "문제 풀이 2 \/ 2"\)/);
+  assert.match(lessonSource, /hasActivityStage \? "장면·원리 1 \/ 3" : "장면·원리 1 \/ 2"/);
   assert.match(lessonSource, /"직접 조작 2 \/ 3"/);
+  // 조작 단계를 가진 차시는 여섯이다. 개념을 실제로 갈라 보아야 풀리는 넷과, 재고 비교하는 둘.
   assert.deepEqual(
-    allLessons.filter((lesson) => lesson.activity.type !== "sort").map((lesson) => lesson.id),
-    ["a04", "a05"]
+    allLessons.filter((lesson) => lesson.activity.type !== "none").map((lesson) => lesson.id).sort(),
+    ["a04", "a05", "c01", "c03", "e02", "g01"]
+  );
+  assert.deepEqual(
+    allLessons.filter((lesson) => lesson.activity.type === "sort").map((lesson) => lesson.id).sort(),
+    ["c01", "c03", "e02", "g01"]
   );
 });
 
@@ -501,9 +526,8 @@ test("secondary explanations use one progressive disclosure instead of three alw
 test("corrected concept models keep their real hierarchy, sequence, and distinctions", () => {
   const c02 = allLessons.find((lesson) => lesson.id === "c02");
   assert.deepEqual(Array.from(c02.details, (entry) => entry[0]), ["Windows", "ChromeOS", "Android", "iOS", "iPadOS"]);
-  assert.deepEqual(Array.from(c02.activity.categories, (entry) => entry.label), ["Windows", "ChromeOS", "Android", "iOS", "iPadOS"]);
-  assert.equal(c02.activity.items.find((item) => item.id === "c02i4").category, "ios");
-  assert.equal(c02.activity.items.find((item) => item.id === "c02i5").category, "ipados");
+  assert.match(c02.visual, /data-os-choice="ios"/, "C02는 개념 화면에서 다섯 운영체제를 눌러 본다");
+  assert.match(c02.visual, /data-os-choice="ipados"/);
   const c03 = allLessons.find((lesson) => lesson.id === "c03");
   assert.match(conceptLabSource, /실행 중인 프로세스 <small>Running Process<\/small>/);
   assert.match(conceptLabSource, /그림 앱 프로세스/);

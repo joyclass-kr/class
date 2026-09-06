@@ -6,21 +6,55 @@
     const POEM_PROGRESS_KEY = "poetryPoemProgressV1";
     const GRADE_KEY = "poetryLastGradeV1";
 
-    const questionBank = Array.isArray(window.POETRY_QUESTIONS) ? window.POETRY_QUESTIONS : [];
-    const questionById = new Map(questionBank.map((question) => [question.id, question]));
-    const poems = Array.isArray(window.POETRY_POEMS) ? window.POETRY_POEMS : [];
+    // 처음에는 제목·시인·소재만 있는 차례표를 받는다.
+    // 본문과 낱말, 작품 설명, 그 시의 문제는 시를 열 때 poems/<아이디>.js로 받아 여기에 채운다.
+    const poems = Array.isArray(window.POETRY_POEM_INDEX) ? window.POETRY_POEM_INDEX : [];
     const poemById = new Map(poems.map((poem) => [poem.id, poem]));
     const lessons = Array.isArray(window.POETRY_LESSONS) ? window.POETRY_LESSONS : [];
     const grades = Array.isArray(window.POETRY_GRADES) ? window.POETRY_GRADES : [];
+    const wrapCounts = Array.isArray(window.POETRY_WRAP_COUNTS) ? window.POETRY_WRAP_COUNTS : [];
 
     // 문제는 시에 붙는다. 한 시가 여러 차시에 나와도 그 시를 열면 제 문제를 다 만난다.
     // poemId가 없는 문제는 차시를 마무리하는 문제라 차시 배정표(lesson.wrapIds)로만 모은다.
     const questionsByPoem = new Map();
-    questionBank.forEach((question) => {
-        if (!question.poemId) return;
-        if (!questionsByPoem.has(question.poemId)) questionsByPoem.set(question.poemId, []);
-        questionsByPoem.get(question.poemId).push(question);
-    });
+    const questionById = new Map();
+
+    const here = document.currentScript ? document.currentScript.src.replace(/[^/]*$/, "") : "";
+    const version = (document.currentScript?.src.split("?v=")[1] || "");
+    const loading = new Map();
+    function fetchScript(file) {
+        if (loading.has(file)) return loading.get(file);
+        const job = new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = here + file + (version ? "?v=" + version : "");
+            script.onload = resolve;
+            script.onerror = () => reject(new Error(file + "을 받지 못했습니다."));
+            document.head.append(script);
+        });
+        loading.set(file, job);
+        return job;
+    }
+
+    // 시 한 편의 본문과 문제를 받아 차례표 항목에 채워 넣는다.
+    async function loadPoem(poem) {
+        if (!poem || poem.lines) return poem;
+        await fetchScript(`poems/${poem.id}.js`);
+        const part = (window.POETRY_PART || {})[poem.id];
+        if (!part) return poem;
+        Object.assign(poem, part.poem);
+        if (!poem.lines) poem.lines = [];
+        questionsByPoem.set(poem.id, part.questions || []);
+        (part.questions || []).forEach((question) => questionById.set(question.id, question));
+        return poem;
+    }
+
+    let wrapLoaded = false;
+    async function loadWrapQuestions() {
+        if (wrapLoaded) return;
+        await fetchScript("wrap-questions.js");
+        (window.POETRY_WRAP_QUESTIONS || []).forEach((question) => questionById.set(question.id, question));
+        wrapLoaded = true;
+    }
 
     // 소재로 고르는 문. 학년 탭 끝에 '소재별' 탭 하나로 들어간다.
     const TOPIC_TAB = "topic";
@@ -209,9 +243,22 @@
         return currentPoemList()[state.poemIndex] || null;
     }
 
+    // 문제 수는 아직 받지 않은 시도 세어야 하므로 차례표에 적어 둔 수를 쓴다.
+    function poemQuestionCount(poem) {
+        if (!poem) return 0;
+        const loaded = questionsByPoem.get(poem.id);
+        return loaded ? loaded.length : (poem.questionCount || 0);
+    }
+
+    function wrapCountOf(lesson) {
+        if (!lesson) return 0;
+        if (wrapLoaded) return wrapQuestionsOf(lesson).length;
+        return wrapCounts[lessons.indexOf(lesson)] || 0;
+    }
+
     function lessonQuestionCount(lesson) {
-        const fromPoems = lesson.poemIds.reduce((sum, id) => sum + questionsOfPoem(id).length, 0);
-        return fromPoems + wrapQuestionsOf(lesson).length;
+        const fromPoems = lesson.poemIds.reduce((sum, id) => sum + poemQuestionCount(poemById.get(id)), 0);
+        return fromPoems + wrapCountOf(lesson);
     }
 
     function setScreen(activeScreen) {
@@ -428,7 +475,7 @@
         const poemList = currentPoemList();
         elements.lessonPoemList.replaceChildren(...poemList.map((poem, index) => {
             const record = poemProgress[poem.id];
-            const count = questionsOfPoem(poem.id).length;
+            const count = poemQuestionCount(poem);
             return makeCard({
                 number: `${index + 1}`,
                 title: poem.title,
@@ -439,7 +486,7 @@
             });
         }));
 
-        const wrapCount = wrapQuestionsOf(lesson).length;
+        const wrapCount = wrapCountOf(lesson);
         elements.startWrapButton.classList.toggle("hidden", wrapCount === 0);
         elements.startWrapButton.textContent = `차시 마무리 문제 ${wrapCount}개`;
 
@@ -448,9 +495,10 @@
     }
 
     // ── 1단계 · 시 읽기 ──────────────────────────────────────────
-    function openReading(poemIndex) {
+    async function openReading(poemIndex) {
         state.poemIndex = poemIndex;
         const poem = currentPoem();
+        if (poem) await loadPoem(poem);
         if (!poem) {
             showLessonList();
             return;
@@ -499,7 +547,8 @@
         return list.map((question) => ({ ...question, choices: shuffle(question.choices) }));
     }
 
-    function startQuiz(mode) {
+    async function startQuiz(mode) {
+        if (mode === "wrap") await loadWrapQuestions();
         const lesson = currentLesson();
         const poem = currentPoem();
         const source = mode === "wrap" ? wrapQuestionsOf(lesson) : questionsOfPoem(poem ? poem.id : "");
@@ -702,7 +751,7 @@
         elements.afterMissed.classList.toggle("hidden", missed.length === 0);
 
         const isLast = state.poemIndex >= list.length - 1;
-        const wrapCount = state.browse ? 0 : wrapQuestionsOf(lesson).length;
+        const wrapCount = state.browse ? 0 : wrapCountOf(lesson);
         if (!isLast) elements.afterNextButton.textContent = `다음 시 · ${list[state.poemIndex + 1].title}`;
         else if (wrapCount > 0) elements.afterNextButton.textContent = `차시 마무리 문제 ${wrapCount}개`;
         else elements.afterNextButton.textContent = "시 목록";
@@ -719,7 +768,7 @@
             return;
         }
         const lesson = currentLesson();
-        if (!state.browse && lesson && wrapQuestionsOf(lesson).length > 0) {
+        if (!state.browse && lesson && wrapCountOf(lesson) > 0) {
             startQuiz("wrap");
             return;
         }

@@ -23,12 +23,39 @@ const read = (name) => fs.readFileSync(path.join(poetryDir, name), "utf8");
 
 const context = { window: {} };
 vm.createContext(context);
-for (const name of ["poems.js", "questions.js", "lessons.js"]) {
+for (const name of ["poems-index.js", "wrap-questions.js", "lesson-wrap-counts.js", "lessons.js"]) {
     vm.runInContext(read(name), context, { filename: name });
 }
 
-const poems = context.window.POETRY_POEMS;
-const questions = context.window.POETRY_QUESTIONS;
+// 시는 차례표(제목·지은이·저작권)와 낱낱의 시 파일(본문·낱말·설명·문제)로 나뉘어 있다.
+// 검사는 예전처럼 시 한 편을 통째로 놓고 봐야 하므로 여기서 도로 합친다.
+const partsDir = path.join(poetryDir, "poems");
+const poems = context.window.POETRY_POEM_INDEX.map((entry) => {
+    const file = path.join(partsDir, `${entry.id}.js`);
+    assert.ok(fs.existsSync(file), `시 ${entry.id}: poems/${entry.id}.js가 없습니다.`);
+    vm.runInContext(fs.readFileSync(file, "utf8"), context, { filename: `${entry.id}.js` });
+    const part = context.window.POETRY_PART[entry.id];
+    assert.ok(part, `시 ${entry.id}: 본문 파일이 자기 자리에 등록되지 않았습니다.`);
+    return { ...entry, ...part.poem, lines: part.poem.lines || [] };
+});
+const questions = [
+    ...context.window.POETRY_POEM_INDEX.flatMap((entry) => context.window.POETRY_PART[entry.id].questions || []),
+    ...context.window.POETRY_WRAP_QUESTIONS
+];
+
+// 차례표에 적어 둔 문제 수가 실제 문제 수와 어긋나면 목록 화면이 거짓말을 한다.
+for (const entry of context.window.POETRY_POEM_INDEX) {
+    const actual = (context.window.POETRY_PART[entry.id].questions || []).length;
+    assert.strictEqual(entry.questionCount, actual,
+        `시 ${entry.id}: 차례표의 문제 수(${entry.questionCount})와 실제 문제 수(${actual})가 다릅니다.`);
+}
+// 차시별 마무리 문제 수도 마찬가지다.
+const wrapIdSet = new Set(context.window.POETRY_WRAP_QUESTIONS.map((question) => question.id));
+context.window.POETRY_LESSONS.forEach((lesson, index) => {
+    const actual = (lesson.wrapIds || []).filter((id) => wrapIdSet.has(id)).length;
+    assert.strictEqual(context.window.POETRY_WRAP_COUNTS[index], actual,
+        `${index + 1}번째 차시: 적어 둔 마무리 문제 수와 실제 수가 다릅니다.`);
+});
 const lessons = context.window.POETRY_LESSONS;
 const grades = context.window.POETRY_GRADES;
 
