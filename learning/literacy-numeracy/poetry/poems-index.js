@@ -1,7 +1,7 @@
 (() => {
     "use strict";
     // 목록·소재 화면이 쓰는 칸만 모은 차례표. 본문과 문제는 시를 열 때 poems/<아이디>.js로 따로 받는다.
-    // 만드는 법은 tools/poetry-split.mjs 참고. 손으로 고치지 않는다.
+    // 문제 수는 tools/rebuild-index.mjs가 다시 적는다.
     window.POETRY_POEM_INDEX = [
         {
             "id": "jiyong-hosu",

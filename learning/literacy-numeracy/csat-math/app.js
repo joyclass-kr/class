@@ -3,6 +3,39 @@
 
   const DATA = window.CSAT_MATH;
   const STORE_KEY = "csat-math-done";
+
+  // 문제 본문과 풀이는 회차별 파일에 있다. 화면에 띄울 문항의 회차 것만 받아 차례표 항목에 채운다.
+  const problemById = new Map(DATA.problems.map((problem) => [problem.id, problem]));
+  const examJobs = new Map();
+  const assetVersion = (document.currentScript && document.currentScript.src.split("?v=")[1]) || "";
+
+  function loadExam(exam) {
+    if (examJobs.has(exam)) return examJobs.get(exam);
+    const job = new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "data/exams/" + exam + ".js" + (assetVersion ? "?v=" + assetVersion : "");
+      script.onload = resolve;
+      script.onerror = resolve;
+      document.head.appendChild(script);
+    }).then(function () {
+      const part = (window.CSAT_MATH_PART || {})[exam] || [];
+      part.forEach(function (full) {
+        const row = problemById.get(full.id);
+        if (row) Object.assign(row, full);
+      });
+    });
+    examJobs.set(exam, job);
+    return job;
+  }
+
+  function ensureBodies(problems) {
+    const wanted = new Set();
+    problems.forEach(function (problem) {
+      if (problem.body === undefined) wanted.add(problem.exam);
+    });
+    if (wanted.size === 0) return null;
+    return Promise.all(Array.from(wanted, loadExam));
+  }
   const CIRCLED = ["①", "②", "③", "④", "⑤"];
   const CHUNK_SIZE = 15;
 
@@ -376,7 +409,10 @@
       (renderedCount < items.length ? ` (${renderedCount}/${items.length}개 표시 중)` : "");
   }
 
-  function render() {
+  let renderToken = 0;
+
+  async function render() {
+    const token = ++renderToken;
     const isFilterSelected = Boolean(state.subject || state.unit || state.exam);
     const items = visibleProblems();
 
@@ -399,6 +435,12 @@
     els.empty.hidden = true;
 
     const toShow = items.slice(0, state.displayLimit);
+    // 띄울 문항의 본문을 먼저 받는다. 받는 사이에 다른 화면으로 갔으면 그리지 않는다.
+    const pending = ensureBodies(toShow);
+    if (pending) {
+      await pending;
+      if (token !== renderToken) return;
+    }
     els.list.textContent = "";
     toShow.forEach((p) => els.list.appendChild(buildCard(p)));
 

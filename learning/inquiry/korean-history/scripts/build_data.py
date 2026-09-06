@@ -94,13 +94,32 @@ def main() -> None:
     )
 
     missing = [q["id"] for q in questions if q["id"] not in explanations]
-    (DATA_DIR / "explanations.js").write_text(
-        "// scripts/build_data.py가 data/explanations.json에서 만든다. 손으로 고치지 않는다.\n"
-        "window.HANGUKSA_EXPLANATIONS = " + json.dumps(explanations, ensure_ascii=False, indent=1) + ";\n",
-        encoding="utf-8",
-    )
+
+    # 해설은 회차별로 나눈다. 한 회차를 푸는 아이가 650개를 다 받지 않도록.
+    # 화면은 고른 회차의 파일만 받아 window.HANGUKSA_EXPLANATIONS에 채워 넣는다.
+    by_exam: dict[str, dict] = {}
+    for question_id, note in explanations.items():
+        by_exam.setdefault(question_id.split("-")[0], {})[question_id] = note
+
+    exam_dir = DATA_DIR / "explanations"
+    exam_dir.mkdir(exist_ok=True)
+    for stale in exam_dir.glob("*.js"):
+        stale.unlink()
+    for exam, notes in sorted(by_exam.items()):
+        (exam_dir / f"{exam}.js").write_text(
+            "// scripts/build_data.py가 data/explanations.json에서 만든다. 손으로 고치지 않는다.\n"
+            "window.HANGUKSA_EXPLANATIONS = Object.assign(window.HANGUKSA_EXPLANATIONS || {}, "
+            + json.dumps(notes, ensure_ascii=False, indent=1)
+            + ");\n",
+            encoding="utf-8",
+        )
+
+    old_bundle = DATA_DIR / "explanations.js"
+    if old_bundle.exists():
+        old_bundle.unlink()
+
     print(f"문항 {len(slim)}개, 회차 {exams}")
-    print(f"해설 {len(explanations)}개, 아직 없는 문항 {len(missing)}개")
+    print(f"해설 {len(explanations)}개를 회차 {len(by_exam)}개로 나눔, 아직 없는 문항 {len(missing)}개")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,36 @@
   "use strict";
 
   const DATA = window.HANGUKSA;
-  const EXPLANATIONS = window.HANGUKSA_EXPLANATIONS || {};
+  // 해설은 회차별 파일로 나뉘어 있다. 화면에 띄울 문항의 회차 것만 받아 여기에 쌓인다.
+  window.HANGUKSA_EXPLANATIONS = window.HANGUKSA_EXPLANATIONS || {};
+  const EXPLANATIONS = window.HANGUKSA_EXPLANATIONS;
+  const explanationJobs = new Map();
+  // 이 파일이 실린 주소에서 판 번호를 가져다 해설 파일에도 붙인다. 캐시에 옛 해설이 남지 않게.
+  const assetVersion = (document.currentScript && document.currentScript.src.split("?v=")[1]) || "";
+
+  function loadExamNotes(exam) {
+    const key = String(exam);
+    if (explanationJobs.has(key)) return explanationJobs.get(key);
+    const job = new Promise((resolve) => {
+      const script = document.createElement("script");
+      const version = assetVersion;
+      script.src = "data/explanations/" + key + ".js" + (version ? "?v=" + version : "");
+      script.onload = resolve;
+      script.onerror = resolve; // 해설이 없어도 문항은 풀 수 있어야 한다
+      document.head.appendChild(script);
+    });
+    explanationJobs.set(key, job);
+    return job;
+  }
+
+  function ensureNotesFor(questions) {
+    const wanted = new Set();
+    questions.forEach((question) => {
+      if (!EXPLANATIONS[question.id]) wanted.add(String(question.exam));
+    });
+    if (wanted.size === 0) return null;
+    return Promise.all(Array.from(wanted, loadExamNotes));
+  }
   const CIRCLED = ["①", "②", "③", "④"];
   const CHUNK_SIZE = 15;
 
@@ -437,7 +466,10 @@
       (renderedCount < items.length ? ` (${renderedCount}/${items.length}개 표시 중)` : "");
   }
 
-  function render() {
+  let renderToken = 0;
+
+  async function render() {
+    const token = ++renderToken;
     const isFilterSelected = Boolean(state.era || state.unit || state.exam);
     const items = visibleQuestions();
 
@@ -460,6 +492,12 @@
     els.empty.hidden = true;
 
     const toShow = items.slice(0, state.displayLimit);
+    // 띄울 문항의 해설을 먼저 받는다. 받는 동안 다른 화면으로 넘어갔으면 그리지 않는다.
+    const pending = ensureNotesFor(toShow);
+    if (pending) {
+      await pending;
+      if (token !== renderToken) return;
+    }
     els.list.textContent = "";
     toShow.forEach((q) => els.list.appendChild(buildCard(q)));
 
