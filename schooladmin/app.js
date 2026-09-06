@@ -18,7 +18,6 @@ async function api(path, options = {}) {
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- Elements ---
-    const schoolNameTitle = document.getElementById('schoolNameTitle');
     const signOutButton = document.getElementById('signOutButton');
     
     // Tabs
@@ -390,10 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
             await fetchLivePublicHolidays();
             const res = await api(`/api/school-admin/annual-schedules?academicYear=${selectedAcademicYear}`);
             annualSchedulesData = res.schedules || [];
-
-            if (schoolNameTitle && res.schoolName) {
-                schoolNameTitle.textContent = res.schoolName + " 관리자 & 교육과정 포털";
-            }
 
             renderCalendarGrid();
             renderAnnualSchedulesTable();
