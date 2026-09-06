@@ -10,7 +10,6 @@
   const provinceLabels = dataset.provinceLabels || [];
   const regionOfProvince = dataset.regionOfProvince || [];
   const THEME_ORDER = ["territory", "terrain", "climate", "population", "industry", "region"];
-  const SET_SIZE = 10;
   const KOREA_BOUNDS = L.latLngBounds([[32.95, 123.85], [43.15, 131.35]]);
   const REGIONAL_RELIEF_BOUNDS = L.latLngBounds([[8.407168, 90], [60.239811, 171.5625]]);
   const DETAIL_RELIEF_BOUNDS = L.latLngBounds([[32.546813, 123.75], [43.580391, 131.484375]]);
@@ -553,21 +552,19 @@
   function updatePracticeButton() {
     const pool = poolFor("theme");
     const label = themes[currentTheme]?.label || "현재 주제";
-    $("#startPractice").textContent = `${label} 문제 풀기 (${Math.min(SET_SIZE, pool.length)}문제)`;
+    $("#startPractice").textContent = `${label} 문제 ${pool.length}개 풀기`;
     $("#startPractice").disabled = pool.length === 0;
+    $("#startMixed").textContent = `전 주제 섞어 풀기 (${questions.length}문제)`;
   }
 
+  // 한 판은 그 주제의 문제 전부다. 수를 미리 자르지 않는다. 중간에 닫아도 문제별 기록은 남는다.
   function startPractice(mode) {
     const pool = poolFor(mode);
     if (!pool.length) {
       if (mode === "review") alert("틀린 채 남아 있는 문제가 없어요.");
       return;
     }
-    session = {
-      mode,
-      questions: shuffle(pool).slice(0, mode === "review" ? Math.min(pool.length, 20) : SET_SIZE).map(shuffleQuestionOptions),
-      answers: [], index: 0, answered: false
-    };
+    session = { mode, questions: shuffle(pool).map(shuffleQuestionOptions), answers: [], index: 0, answered: false };
     openPracticeDialog();
   }
 
@@ -575,7 +572,8 @@
     if (!session.questions.length) return;
     if ($("#resultDialog").open) $("#resultDialog").close();
     $("#practiceDialog").showModal();
-    requestAnimationFrame(() => { questionMap.invalidateSize(); renderQuestion(); });
+    questionMap.invalidateSize();
+    renderQuestion();
   }
 
   function renderQuestion() {
