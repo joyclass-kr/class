@@ -321,7 +321,6 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .typed-count { margin: 0; color: var(--muted); font-size: 15px; font-weight: 800; text-align: center; }
 
-.song-hint { margin: 0; color: var(--gold); font-size: 15px; font-weight: 700; text-align: center; word-break: keep-all; }
 
 @media (max-width: 520px) {
     .ask { font-size: 18px; }
@@ -383,7 +382,6 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .example-play:hover { border-color: var(--gold); }
 .example-play .sheet { width: 100%; max-width: none; }
 .example-play span { color: #4a5160; font-size: 14px; font-weight: 750; }
-.example-songs { margin: 0; color: var(--gold); font-size: 15px; font-weight: 700; word-break: keep-all; }
 
 @media (max-width: 520px) {
     .lesson-row { grid-template-columns: 54px minmax(0, 1fr) auto; row-gap: 4px; }
@@ -395,3 +393,83 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .help-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
 .example-play.is-wide { width: 100%; }
+
+/* 음정 성질 사슬 */
+.diagram-board {
+    padding: 12px 8px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: #f6f4ee;
+    overflow-x: auto;
+}
+
+.chain { display: block; width: 100%; min-width: 480px; height: auto; }
+.chain-box rect { fill: #fffdf8; stroke: #2c3340; stroke-width: 2; }
+.chain-box.is-perfect rect { stroke: #c2413c; stroke-width: 2.4; }
+.chain-box.is-majmin rect { stroke: #2f4f9b; stroke-width: 2.4; }
+.chain-en { fill: #1b2029; font-size: 16px; font-weight: 800; text-anchor: middle; }
+.chain-ko { fill: #4d5560; font-size: 14px; font-weight: 700; text-anchor: middle; }
+.chain-family { font-size: 15px; font-weight: 850; text-anchor: middle; }
+.chain-family.is-perfect { fill: #c2413c; }
+.chain-family.is-majmin { fill: #2f4f9b; }
+.chain-arrow { stroke: #5b6472; stroke-width: 2; }
+.chain-head { fill: #5b6472; }
+.chain-note { fill: #6b7482; font-size: 13px; font-weight: 700; text-anchor: middle; }
+
+/* 오도권 원판 */
+.wheel-board {
+    display: grid;
+    place-items: center;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #f6f4ee;
+}
+
+.wheel { display: block; width: 100%; max-width: 460px; height: auto; }
+
+.wheel-mode-cell { fill: #e6e2d8; stroke: #cdc6b6; stroke-width: 1; cursor: pointer; }
+.wheel-mode-cell:hover { fill: #d8d2c2; }
+.wheel-mode-cell.is-home { fill: #dcd5c0; }
+.wheel-mode-name { fill: #4b5260; font-size: 12px; font-weight: 800; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+
+.wheel-func-cell { stroke: #b9b1a0; stroke-width: 1; cursor: pointer; }
+.wheel-func-cell.is-maj { fill: #cfe4d4; }
+.wheel-func-cell.is-min { fill: #f0d9dd; }
+.wheel-func-cell.is-dim { fill: #ded6ec; }
+.wheel-func-cell:hover { fill: #f3d79a; }
+.wheel-roman { fill: #232a35; font-size: 18px; font-weight: 850; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+
+.wheel-cell { stroke: #c4bcab; stroke-width: 1; cursor: pointer; }
+.wheel-cell-major { fill: #fffdf7; }
+.wheel-cell-minor { fill: #f1ece0; }
+.wheel-cell:hover { fill: #f7e6bd; }
+.wheel-cell-major.is-tonic { fill: #f3cf7c; stroke: #a8791f; stroke-width: 2; }
+
+.wheel-major-name { fill: #1d2430; font-size: 19px; font-weight: 850; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+.wheel-sign { fill: #6d7684; font-size: 10.5px; font-weight: 750; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+.wheel-minor-name { fill: #46505f; font-size: 14.5px; font-weight: 800; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+
+.wheel-hub-face { fill: #fffdf7; stroke: #c4bcab; stroke-width: 1; }
+.wheel-hub-major { fill: #1d2430; font-size: 21px; font-weight: 850; text-anchor: middle; }
+.wheel-hub-minor { fill: #4a5462; font-size: 15px; font-weight: 800; text-anchor: middle; }
+.wheel-hub-sign { fill: #8a6a22; font-size: 14px; font-weight: 800; text-anchor: middle; }
+
+.wheel-controls { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; }
+.wheel-chords { display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); gap: 7px; }
+
+.wheel-chord {
+    min-height: 58px;
+    display: grid;
+    gap: 2px;
+    place-content: center;
+    padding: 8px 6px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel);
+}
+
+.wheel-chord:hover { border-color: var(--gold); }
+.wheel-chord b { color: var(--gold); font-size: 15px; font-weight: 850; }
+.wheel-chord span { font-size: 16px; font-weight: 800; }
+.wheel-chord small { color: var(--muted); font-size: 13px; font-weight: 700; }

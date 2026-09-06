@@ -45,21 +45,6 @@
     const SIMPLE_INTERVAL_IDS = ["m2", "M2", "m3", "M3", "P4", "A4", "P5", "m6", "M6", "m7", "M7", "P8"];
     const COMPOUND_INTERVAL_IDS = ["m9", "M9", "m10", "M10", "P11", "A11", "P12"];
 
-    /* 노래로 기억하는 음정. 올라가는 것과 내려가는 것을 따로 둔다. */
-    const INTERVAL_SONGS = {
-        m2: { up: "White Christmas (Irving Berlin)", down: "Für Elise (Beethoven)" },
-        M2: { up: "Happy Birthday to You", down: "Yesterday (The Beatles)" },
-        m3: { up: "Greensleeves", down: "Hey Jude (The Beatles)" },
-        M3: { up: "When the Saints Go Marching In", down: "Summertime (Gershwin)" },
-        P4: { up: "Here Comes the Bride (Wagner)", down: "Eine kleine Nachtmusik (Mozart)" },
-        A4: { up: "The Simpsons (Danny Elfman)", down: "Even Flow (Pearl Jam)" },
-        P5: { up: "Twinkle Twinkle Little Star", down: "The Flintstones (Hoyt Curtin)" },
-        m6: { up: "The Entertainer (Scott Joplin)", down: "Love Story (Chick Corea)" },
-        M6: { up: "My Bonnie Lies over the Ocean", down: "Nobody Knows the Trouble I've Seen" },
-        m7: { up: "Somewhere (Leonard Bernstein)", down: "An American in Paris (Gershwin)" },
-        M7: { up: "Take On Me (a-ha)", down: "I Love You (Cole Porter)" },
-        P8: { up: "Somewhere Over the Rainbow (Harold Arlen)", down: "Willow Weep for Me (Ann Ronell)" }
-    };
 
     /* 화음 성질: (도수, 반음 수)로 적는다 ------------------------------- */
     const CHORDS = [
@@ -482,7 +467,7 @@
     };
 
     function showScreen(name) {
-        ["menu", "course", "lesson", "setup", "drill", "result"].forEach(key => {
+        ["menu", "course", "lesson", "wheel", "setup", "drill", "result"].forEach(key => {
             els[key + "Screen"].hidden = key !== name;
         });
         session.screen = name;
@@ -508,6 +493,14 @@
             button.addEventListener("click", () => openCourse(course.id));
             els.courseList.append(button);
         });
+
+        els.toolList.innerHTML = "";
+        const wheelCard = document.createElement("button");
+        wheelCard.type = "button";
+        wheelCard.className = "drill-card";
+        wheelCard.innerHTML = "<b>오도권 원판</b>";
+        wheelCard.addEventListener("click", openWheel);
+        els.toolList.append(wheelCard);
 
         els.drillList.innerHTML = "";
         DRILLS.forEach(drill => {
@@ -634,6 +627,70 @@
     }
 
 
+
+    /* 음정 성질 사슬: 반음 하나씩 넓히거나 좁힐 때 이름이 어떻게 바뀌는지 */
+    const SVG_NS = "http://www.w3.org/2000/svg";
+
+    function svgNode(tag, attrs, text) {
+        const node = document.createElementNS(SVG_NS, tag);
+        Object.keys(attrs || {}).forEach(key => node.setAttribute(key, attrs[key]));
+        if (text !== undefined) node.textContent = text;
+        return node;
+    }
+
+    function chainBox(parent, x, y, w, h, en, ko, kind) {
+        const group = svgNode("g", { class: "chain-box is-" + kind });
+        group.append(svgNode("rect", { x: x, y: y, width: w, height: h, rx: 7 }));
+        group.append(svgNode("text", { class: "chain-en", x: x + w / 2, y: y + h / 2 - 3 }, en));
+        group.append(svgNode("text", { class: "chain-ko", x: x + w / 2, y: y + h / 2 + 15 }, ko));
+        parent.append(group);
+    }
+
+    function chainArrow(parent, x1, y1, x2, y2, note, nx, ny) {
+        parent.append(svgNode("line", {
+            class: "chain-arrow", x1: x1, y1: y1, x2: x2, y2: y2, "marker-end": "url(#chainHead)"
+        }));
+        parent.append(svgNode("text", { class: "chain-note", x: nx, y: ny }, note));
+    }
+
+    function qualityChainDiagram() {
+        const svg = svgNode("svg", {
+            class: "chain",
+            viewBox: "0 0 720 286",
+            role: "img",
+            "aria-label": "완전 계열은 감과 증으로, 장·단 계열은 단에서 감으로 장에서 증으로 이름이 바뀝니다"
+        });
+        const defs = svgNode("defs");
+        const marker = svgNode("marker", {
+            id: "chainHead", viewBox: "0 0 10 10", refX: 9, refY: 5,
+            markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse"
+        });
+        marker.append(svgNode("path", { class: "chain-head", d: "M0,0 L10,5 L0,10 z" }));
+        defs.append(marker);
+        svg.append(defs);
+
+        svg.append(svgNode("text", { class: "chain-family is-perfect", x: 360, y: 22 }, "1 · 4 · 5 · 8도"));
+        svg.append(svgNode("text", { class: "chain-family is-majmin", x: 360, y: 186 }, "2 · 3 · 6 · 7도"));
+
+        chainArrow(svg, 298, 60, 264, 100, "반음 −", 244, 70);
+        chainArrow(svg, 422, 60, 456, 100, "반음 +", 476, 70);
+        chainArrow(svg, 248, 200, 220, 156, "반음 −", 196, 196);
+        chainArrow(svg, 472, 200, 500, 156, "반음 +", 524, 196);
+        chainArrow(svg, 378, 220, 350, 220, "반음 −", 364, 268);
+        chainArrow(svg, 168, 126, 138, 126, "반음 −", 153, 93);
+        chainArrow(svg, 552, 126, 582, 126, "반음 +", 567, 93);
+
+        chainBox(svg, 300, 30, 120, 50, "Perfect", "완전", "perfect");
+        chainBox(svg, 170, 100, 100, 52, "Dim.", "감", "plain");
+        chainBox(svg, 30, 100, 106, 52, "Double dim.", "겹감", "plain");
+        chainBox(svg, 450, 100, 100, 52, "Aug.", "증", "plain");
+        chainBox(svg, 586, 100, 106, 52, "Double aug.", "겹증", "plain");
+        chainBox(svg, 250, 194, 98, 52, "Minor", "단", "majmin");
+        chainBox(svg, 380, 194, 98, 52, "Major", "장", "majmin");
+
+        return svg;
+    }
+
     /* 과정 ---------------------------------------------------------------- */
     let course = null;
     let lessonIndex = -1;
@@ -697,7 +754,13 @@
             els.lessonBody.append(node);
         });
         els.lessonExamples.innerHTML = "";
-        lesson.examples.forEach(entry => els.lessonExamples.append(
+        if (lesson.diagram === "quality-chain") {
+            const board = document.createElement("div");
+            board.className = "diagram-board";
+            board.append(qualityChainDiagram());
+            els.lessonExamples.append(board);
+        }
+        (lesson.examples || []).forEach(entry => els.lessonExamples.append(
             typeof entry === "string" ? intervalExample(entry) : chordExample(entry)
         ));
         els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
@@ -746,13 +809,6 @@
         });
         block.append(row);
 
-        const songs = INTERVAL_SONGS[intervalId];
-        if (songs) {
-            const line = document.createElement("p");
-            line.className = "example-songs";
-            line.textContent = "올라갈 때 " + songs.up + " · 내려갈 때 " + songs.down;
-            block.append(line);
-        }
         return block;
     }
 
@@ -814,6 +870,74 @@
         else { renderLessonList(); showScreen("course"); }
     }
 
+
+    /* 오도권 원판 ---------------------------------------------------------- */
+    let wheel = null;
+
+    const ACC_MARK = { "-2": "♭♭", "-1": "♭", "0": "", "1": "♯", "2": "♯♯" };
+
+    /* 원판이 가리키는 조의 다이어토닉 화음을 조표대로 적는다. */
+    function wheelChordNames(home, list) {
+        const tonic = N.spell(4 * 7 + home.letter, home.acc);
+        const scale = majorScale(tonic);
+        return list.map(entry => {
+            const note = scale[entry.degree];
+            const root = N.LETTER_NAMES[note.letter] + (ACC_MARK[String(note.accidental)] || "");
+            return Object.assign({}, entry, {
+                name: root + (entry.quality === "maj" ? "" : entry.quality === "min" ? "m" : "dim"),
+                rootMidi: note.midi
+            });
+        });
+    }
+
+    /* 화음 하나를 가온도 언저리에서 울린다. 너무 높으면 통째로 한 옥타브 내린다. */
+    function voiceChord(chord) {
+        const shape = { maj: [0, 4, 7], min: [0, 3, 7], dim: [0, 3, 6] }[chord.quality];
+        let root = 60 + (((chord.rootMidi - 60) % 12) + 12) % 12;
+        const notes = shape.map(step => root + step);
+        return notes[notes.length - 1] > 76 ? notes.map(note => note - 12) : notes;
+    }
+
+    function openWheel() {
+        if (!wheel) {
+            wheel = window.Wheel.create(els.wheelBoard, {
+                onChange: (list, home) => renderWheelChords(wheelChordNames(home, list)),
+                onPlayChord: chord => {
+                    const named = wheelChordNames(wheel.home(), [chord])[0];
+                    window.PianoEngine.playSequence([voiceChord(named)], 2).catch(() => {});
+                },
+                onPlayMode: (mode, home) => {
+                    const root = 60 + home.tonic;
+                    window.PianoEngine.playSequence(mode.steps.map(step => [root + step]), .42).catch(() => {});
+                }
+            });
+        }
+        showScreen("wheel");
+    }
+
+    function renderWheelChords(chords) {
+        els.wheelChords.innerHTML = "";
+        chords.forEach(chord => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "wheel-chord";
+            button.innerHTML = '<b></b><span></span><small></small>';
+            button.querySelector("b").textContent = chord.roman;
+            button.querySelector("span").textContent = chord.name;
+            button.querySelector("small").textContent = chord.role || "";
+            button.addEventListener("click", () => {
+                window.PianoEngine.playSequence([voiceChord(chord)], 2).catch(() => {});
+            });
+            els.wheelChords.append(button);
+        });
+    }
+
+    function playCadence() {
+        const named = wheelChordNames(wheel.home(), wheel.chords());
+        const order = [0, 3, 4, 0].map(degree => named.find(chord => chord.degree === degree));
+        window.PianoEngine.playSequence(order.map(voiceChord), 1.15).catch(() => {});
+    }
+
     /* 연습 ---------------------------------------------------------------- */
 
     function startDrill() {
@@ -868,9 +992,6 @@
         els.feedback.textContent = "";
         els.feedback.className = "feedback";
         els.nextButton.hidden = true;
-        els.songHint.hidden = true;
-        els.songHint.textContent = "";
-
         els.helpRow.hidden = !question.arpeggio;
         drawStaff(question.staffBefore);
         setupInput(question);
@@ -990,7 +1111,6 @@
             : "정답은 " + answerText(target) + "입니다";
         els.feedback.className = "feedback " + (correct ? "right" : "wrong");
 
-        showSongHint(target);
         updateScore();
 
         if (correct) session.timer = window.setTimeout(nextQuestion, 1100);
@@ -1006,13 +1126,6 @@
         return item.label + (detail ? " (" + detail + ")" : "");
     }
 
-    function showSongHint(item) {
-        if (session.drill.id !== "interval") return;
-        const songs = INTERVAL_SONGS[item.id];
-        if (!songs) return;
-        els.songHint.textContent = "올라갈 때 " + songs.up + " · 내려갈 때 " + songs.down;
-        els.songHint.hidden = false;
-    }
 
     function skipQuestion() {
         if (session.answered) { nextQuestion(); return; }
@@ -1030,7 +1143,6 @@
                 else button.classList.add("dim");
             });
         }
-        showSongHint(session.current.item);
         els.nextButton.hidden = false;
     }
 
@@ -1090,7 +1202,7 @@
         if (session.screen === "drill") { finishDrill(); return true; }
         if (session.screen === "result") { backToHub(); return true; }
         if (session.screen === "lesson") { renderLessonList(); showScreen("course"); return true; }
-        if (session.screen === "course" || session.screen === "setup") {
+        if (session.screen === "wheel" || session.screen === "course" || session.screen === "setup") {
             renderMenu();
             showScreen("menu");
             return true;
@@ -1115,12 +1227,13 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "setupScreen", "drillScreen", "resultScreen",
             "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "drillList", "setupTitle", "inversionField", "inversionRow",
+            "lessonNext", "drillList", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
+            "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence", "setupTitle", "inversionField", "inversionRow",
             "helpRow", "arpButton", "rootButton",
             "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",
             "itemPicker", "startButton", "setupWarning", "askText", "staff", "scoreText", "stopButton",
             "replayButton", "skipButton", "choices", "keyboardWrap", "pianoKeys", "typedCount",
-            "feedback", "songHint", "nextButton", "resultScore", "resultTable", "againButton",
+            "feedback", "nextButton", "resultScore", "resultTable", "againButton",
             "toMenuButton"].forEach(id => { els[id] = byId(id); });
 
         loadSaved();
@@ -1145,6 +1258,10 @@
         });
         els.toMenuButton.addEventListener("click", backToHub);
         els.lessonNext.addEventListener("click", nextLesson);
+        els.wheelPrev.addEventListener("click", () => wheel.step(-1));
+        els.wheelNext.addEventListener("click", () => wheel.step(1));
+        els.wheelFlat.addEventListener("click", () => wheel.toggleFlat());
+        els.wheelCadence.addEventListener("click", playCadence);
 
         window.addEventListener("sitebackrequest", event => {
             if (goBack()) event.preventDefault();

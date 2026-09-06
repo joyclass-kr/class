@@ -7,12 +7,13 @@
     <title>청음</title>
     <meta name="description" content="음정·화음 성질·음계·화음 진행·가락 받아쓰기를 소리로 듣고 맞히는 청음 훈련">
     <link rel="preload" href="assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260907-9">
+    <link rel="stylesheet" href="styles.css?v=20260907-17">
     <script src="piano-engine.js?v=20260907-1" defer></script>
-    <script src="notation.js?v=20260907-9" defer></script>
-    <script src="keyboard.js?v=20260907-9" defer></script>
-    <script src="course.js?v=20260907-9" defer></script>
-    <script src="app.js?v=20260907-9" defer></script>
+    <script src="notation.js?v=20260907-17" defer></script>
+    <script src="keyboard.js?v=20260907-17" defer></script>
+    <script src="wheel.js?v=20260907-17" defer></script>
+    <script src="course.js?v=20260907-17" defer></script>
+    <script src="app.js?v=20260907-17" defer></script>
 </head>
 <body>
     <main class="shell">
@@ -26,6 +27,25 @@
                 <span class="field-label">혼자 연습</span>
                 <div id="drillList" class="drill-list"></div>
             </div>
+            <div class="field">
+                <span class="field-label">찾아보기</span>
+                <div id="toolList" class="drill-list"></div>
+            </div>
+        </section>
+
+        <section id="wheelScreen" class="screen" hidden>
+            <h1 class="screen-title">오도권 원판</h1>
+            <div id="wheelBoard" class="wheel-board"></div>
+            <div class="wheel-controls">
+                <button id="wheelPrev" class="quiet-button" type="button" aria-label="반시계로 한 자리">◀ ♭ 쪽</button>
+                <button id="wheelFlat" class="quiet-button" type="button">F♯ ↔ G♭</button>
+                <button id="wheelNext" class="quiet-button" type="button" aria-label="시계로 한 자리">♯ 쪽 ▶</button>
+            </div>
+            <div class="field">
+                <span class="field-label">이 조의 화음</span>
+                <div id="wheelChords" class="wheel-chords"></div>
+            </div>
+            <button id="wheelCadence" class="primary-button" type="button">I – IV – V – I 들어 보기</button>
         </section>
 
         <section id="courseScreen" class="screen" hidden>
@@ -104,7 +124,6 @@
             </div>
 
             <p id="feedback" class="feedback" aria-live="polite"></p>
-            <p id="songHint" class="song-hint" hidden></p>
             <button id="nextButton" class="primary-button" type="button" hidden>다음 문제</button>
         </section>
 
