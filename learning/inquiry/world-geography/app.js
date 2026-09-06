@@ -44,7 +44,6 @@
     featureLayer = L.layerGroup().addTo(map);
     lineLayer = L.layerGroup().addTo(map);
     fitWholeWorld(map);
-    setLayerDockCollapsed(window.innerWidth < 900); // 세로 화면·좁은 창에서는 접어 둔다
     map.on("moveend", refreshWorldCopy);
     map.on("resize", () => fitWholeWorld(map));
     bindControls();
@@ -120,7 +119,6 @@
       button.addEventListener("click", () => renderTheme(button.dataset.theme));
     });
     $("#progressButton").addEventListener("click", showProgressSummary);
-    $("#layerDockToggle").addEventListener("click", () => setLayerDockCollapsed(!$("#layerDock").classList.contains("is-collapsed")));
     $("#focusClose").addEventListener("click", clearFeatureFocus);
     $("#startPractice").addEventListener("click", startPractice);
     $("#closePractice").addEventListener("click", () => $("#practiceDialog").close());
@@ -158,12 +156,6 @@
     $("#startPractice").textContent = `문제 풀기 (${Math.min(SESSION_SIZE, pool.length)}문제 / ${pool.length}문제 중)`;
     $("#startPractice").disabled = pool.length === 0;
     fitWholeWorld(map);
-  }
-
-  function setLayerDockCollapsed(collapsed) {
-    $("#layerDock").classList.toggle("is-collapsed", collapsed);
-    $("#layerDockToggle").setAttribute("aria-expanded", String(!collapsed));
-    $("#layerDockToggle").textContent = collapsed ? "펼치기" : "접기";
   }
 
   function renderLayerDock() {
