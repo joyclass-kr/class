@@ -3787,23 +3787,6 @@ function createClassroomPlatform(options = {}) {
       [schoolId, year]
     );
 
-    // 2. Additional Groups with integrated student counts (homeroom, club, afterschool, shuttle)
-    const groupsRes = await pool.query(
-      // 소속 판정은 게시판과 같은 규칙을 쓴다. 예전에는 custom_fields 전체를 통짜로
-      // 훑는 ILIKE 가 섞여 있어서, '1' 같은 이름의 그룹에 전교생이 들어갔다.
-      `SELECT g.id, g.group_name, g.group_type, g.grade, g.class_number,
-              (
-                SELECT COUNT(*)::INTEGER
-                FROM school_students ss
-                WHERE ss.school_id = g.school_id AND ss.academic_year = g.academic_year
-                  AND (${GROUP_MEMBER_SQL})
-              ) AS student_count
-       FROM teacher_groups g
-       WHERE g.school_id = $1 AND g.academic_year = $2
-       ORDER BY g.group_type, g.group_name`,
-      [schoolId, year]
-    );
-
     // 2b. 추가 그룹은 학교 관리자가 전교생 명단에 만든 열에서 온다.
     //     열(동아리)마다 값(오케스트라·로봇코딩부…)이 있고, 그 값 하나하나가 그룹이다.
     //     교사가 따로 개설한 그룹만 보여 주면 관리자가 만든 열이 통째로 빠진다.
@@ -3844,15 +3827,13 @@ function createClassroomPlatform(options = {}) {
       column.options.push({ name: row.option_name, studentCount: Number(row.student_count) });
     }
 
-    // 명단 열에 없는데 교사가 따로 개설한 그룹은 그대로 남긴다. 없애면 그 그룹에만
-    // 사람이 담겨 있던 경우에 보낼 길이 사라진다.
-    const optionNames = new Set(optionsRes.rows.map(r => r.option_name));
-    const extraGroups = groupsRes.rows.filter(g => !optionNames.has(g.group_name));
-
+    // 교사가 개설한 그룹(teacher_groups)은 발송 대상으로 내보내지 않는다. 그 표는
+    // 등록된 교사면 누구나 아무 이름으로 만들고 아무 학생이나 넣을 수 있어서,
+    // 가정통신문을 보낼 무리를 그것으로 정하면 학교가 명단을 통제할 수 없다.
+    // 보낼 무리는 학교 관리자가 전교생 명단에 만든 열에서만 온다.
     res.json({
       classes: classesRes.rows,
       columns,
-      groups: extraGroups,
       students: studentsRes.rows
     });
   }));

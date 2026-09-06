@@ -644,11 +644,6 @@
                 const [, g, c] = key.split('_');
                 return all.filter(s => s.grade === Number(g) && s.class_number === Number(c));
             }
-            if (key.startsWith('GROUP_')) {
-                const id = key.slice('GROUP_'.length);
-                const group = (rawAddressBook.groups || []).find(x => String(x.id) === id);
-                return group ? all.filter(s => inGroup(s, group)) : [];
-            }
             // 명단 열의 값 하나(동아리 > 오케스트라). 열 전체(OPTCOL_)를 고르면
             // 그 열에 값이 적힌 학생 전부.
             if (key.startsWith('OPT_')) {
@@ -760,15 +755,6 @@
                 });
             }
 
-            // 명단 열에 없는데 교사가 따로 개설한 그룹.
-            if (rawAddressBook.groups && rawAddressBook.groups.length > 0) {
-                html += `<div style="font-weight:bold; color:var(--green); margin:10px 0 4px; font-size:12px;">👥 그 밖의 그룹</div>`;
-                rawAddressBook.groups.forEach(gr => {
-                    html += treeRow(`GROUP_${gr.id}`,
-                        `${gr.group_name} (${gr.student_count || 0}명)`, 6, '#ffe8b3');
-                });
-            }
-
             treeEl.innerHTML = html;
             // 반만 담긴 가지는 '－' 로 보여 준다. HTML 속성으로는 못 하는 상태다.
             treeEl.querySelectorAll('input[data-indeterminate="true"]').forEach(box => {
@@ -781,20 +767,6 @@
         function selectGroupFilter(filterKey) {
             activeFilterType = filterKey;
             filterAddressBookStudents();
-        }
-
-        // 그룹 소속. 학교마다 명단 열을 두 가지 모양 중 하나로 쓴다.
-        //   1) 동아리마다 열이 하나씩:  {"오케스트라": "O"}      -> 열 이름이 그룹 이름
-        //   2) '동아리' 열 하나에 배정:  {"동아리": "오케스트라"} -> 열 값이 그룹 이름
-        // 둘 다 이름이 정확히 같을 때만 인정한다. 부분 일치를 쓰면 '1' 같은 이름의
-        // 그룹에 전교생이 들어간다.
-        function inGroup(student, group) {
-            if (group.group_type === 'homeroom') {
-                return student.grade === group.grade && student.class_number === group.class_number;
-            }
-            const fields = student.custom_fields || {};
-            if (Object.prototype.hasOwnProperty.call(fields, group.group_name)) return true;
-            return Object.values(fields).some(v => String(v) === group.group_name);
         }
 
         // 지금 고른 가지 + 검색어에 걸리는 사람들. 명단 그리기와 전체선택이 같은
