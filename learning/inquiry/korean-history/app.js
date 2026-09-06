@@ -15,8 +15,24 @@
     { id: "all", name: "전체 시대", unitIds: [] },
     {
       id: "ancient",
-      name: "고대",
-      unitIds: ["prehistoric", "early-states", "three-kingdoms", "north-south"]
+      name: "선사와 여러 나라",
+      unitIds: ["prehistoric", "early-states"]
+    },
+    {
+      id: "three-kingdoms",
+      name: "삼국과 가야",
+      unitIds: [
+        "tk-goguryeo",
+        "tk-baekje",
+        "tk-silla",
+        "tk-unify",
+        "three-kingdoms"
+      ]
+    },
+    {
+      id: "north-south",
+      name: "남북국",
+      unitIds: ["ns-unified", "ns-balhae", "ns-late", "north-south"]
     },
     {
       id: "goryeo",
@@ -32,9 +48,27 @@
       ]
     },
     {
-      id: "joseon",
-      name: "조선",
-      unitIds: ["joseon-early", "joseon-late"]
+      id: "joseon-early",
+      name: "조선 전기",
+      unitIds: [
+        "je-founding",
+        "je-sarim",
+        "je-war",
+        "je-culture",
+        "joseon-early"
+      ]
+    },
+    {
+      id: "joseon-late",
+      name: "조선 후기",
+      unitIds: [
+        "jl-war",
+        "jl-tangpyeong",
+        "jl-economy",
+        "jl-silhak",
+        "jl-sedo",
+        "joseon-late"
+      ]
     },
     {
       id: "opening",
@@ -76,7 +110,7 @@
     {
       id: "integrated",
       name: "시대 통합",
-      unitIds: ["integrated"]
+      unitIds: ["it-region", "it-custom", "it-theme", "integrated"]
     }
   ];
 

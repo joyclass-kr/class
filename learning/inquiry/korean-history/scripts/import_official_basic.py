@@ -80,6 +80,25 @@ UNITS = [
     ("contemporary-democracy", "민주주의의 발전", range(0)),
     ("contemporary-economy", "경제 성장과 사회 변화", range(0)),
     ("contemporary-unification", "통일 노력과 북한", range(0)),
+    ("tk-unify", "삼국 통일 전쟁", range(0)),
+    ("tk-goguryeo", "고구려", range(0)),
+    ("tk-baekje", "백제", range(0)),
+    ("tk-silla", "신라와 가야", range(0)),
+    ("ns-balhae", "발해", range(0)),
+    ("ns-late", "신라 말과 후삼국", range(0)),
+    ("ns-unified", "통일 신라", range(0)),
+    ("je-culture", "조선 전기의 문화", range(0)),
+    ("je-war", "대외 관계와 임진왜란", range(0)),
+    ("je-sarim", "사림과 사화", range(0)),
+    ("je-founding", "건국과 통치 체제", range(0)),
+    ("jl-sedo", "세도 정치와 농민 봉기", range(0)),
+    ("jl-tangpyeong", "탕평과 개혁", range(0)),
+    ("jl-economy", "수취 제도와 경제", range(0)),
+    ("jl-silhak", "실학과 서민 문화", range(0)),
+    ("jl-war", "양 난과 붕당 정치", range(0)),
+    ("it-custom", "세시 풍속과 놀이", range(0)),
+    ("it-region", "지역의 역사", range(0)),
+    ("it-theme", "시대를 가로지르는 주제", range(0)),
 ]
 
 VERIFIED_UNIT_OVERRIDES = {
@@ -203,7 +222,10 @@ KEYWORDS = {
 UNIT_ORDER = [
     unit_id
     for unit_id, _, _ in UNITS
-    if unit_id != "integrated" and not unit_id.startswith(("goryeo-", "opening-", "occupation-", "contemporary-"))
+    if unit_id != "integrated" and not unit_id.startswith((
+        "goryeo-", "opening-", "occupation-", "contemporary-",
+        "tk-", "ns-", "je-", "jl-", "it-",
+    ))
 ]
 
 
