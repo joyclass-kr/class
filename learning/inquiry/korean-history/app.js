@@ -21,7 +21,15 @@
     {
       id: "goryeo",
       name: "고려",
-      unitIds: ["goryeo"]
+      unitIds: [
+        "goryeo-founding",
+        "goryeo-military",
+        "goryeo-war",
+        "goryeo-late",
+        "goryeo-economy",
+        "goryeo-culture",
+        "goryeo"
+      ]
     },
     {
       id: "joseon",
@@ -187,6 +195,7 @@
       const u = unitById.get(uid);
       if (!u) return;
       const n = countBy((q) => q.unitId === uid);
+      if (n === 0) return;
       els.unitChips.appendChild(makeChip(u.name, u.id, state.unit === u.id, n));
     });
   }

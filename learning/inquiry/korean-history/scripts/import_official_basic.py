@@ -58,6 +58,12 @@ UNITS = [
     ("occupation", "일제강점기", range(36, 44)),
     ("contemporary", "대한민국 현대사", range(44, 51)),
     ("integrated", "시대 통합", range(0)),
+    ("goryeo-founding", "건국과 통치 체제", range(0)),
+    ("goryeo-military", "문벌과 무신 정권", range(0)),
+    ("goryeo-war", "거란·여진·몽골 항쟁", range(0)),
+    ("goryeo-late", "원 간섭기와 고려 말", range(0)),
+    ("goryeo-economy", "경제와 사회", range(0)),
+    ("goryeo-culture", "문화와 사상", range(0)),
 ]
 
 VERIFIED_UNIT_OVERRIDES = {
@@ -178,7 +184,11 @@ KEYWORDS = {
     ),
 }
 
-UNIT_ORDER = [unit_id for unit_id, _, _ in UNITS if unit_id != "integrated"]
+UNIT_ORDER = [
+    unit_id
+    for unit_id, _, _ in UNITS
+    if unit_id != "integrated" and not unit_id.startswith("goryeo-")
+]
 
 
 def fetch(url: str, *, delay: float = 0.8) -> bytes:
