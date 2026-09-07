@@ -160,3 +160,64 @@
     display: flex; align-items: center; justify-content: center;
     color: #fca5a5; font-weight: 700;
 }
+
+/* ── 기체 교환 두 곳 (2번 장면) ─────────────────────────────── */
+
+.twoplaces-layer { position: absolute; inset: 0; display: flex; flex-direction: column; z-index: 6; }
+.twoplaces-stage { position: relative; flex: 1; min-height: 0; margin: 50px 10px 0; }
+.twoplaces-stage svg { width: 100%; height: 100%; display: block; }
+.twoplaces-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.twoplaces-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.55);
+    color: #f8fafc;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.twoplaces-tag:hover { border-color: #38bdf8; }
+
+.twoplaces-modes {
+    display: flex; gap: 8px; justify-content: center; align-items: center;
+    flex-wrap: wrap; margin: 4px 10px 0;
+}
+
+.twoplaces-modes button {
+    padding: 6px 14px; border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: rgba(6, 10, 24, 0.85);
+    color: #cbd5e1; font-size: 13px; font-weight: 800; cursor: pointer;
+}
+
+.twoplaces-modes button.on { border-color: #38bdf8; color: #f8fafc; background: rgba(56, 189, 248, 0.22); }
+
+.twoplaces-legend { color: #94a3b8; font-size: 13px; font-weight: 700; }
+.twoplaces-legend i {
+    display: inline-block; width: 11px; height: 11px; border-radius: 50%;
+    margin: 0 6px 0 12px; vertical-align: -1px;
+}
+
+.twoplaces-caption {
+    display: flex; flex-direction: column; gap: 5px;
+    margin: 6px 10px 12px; padding: 8px 12px; border-radius: 10px;
+    background: rgba(6, 10, 24, 0.85); border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #cbd5e1; font-size: 13px; font-weight: 700;
+}
+
+.twoplaces-caption b { color: #f8fafc; }
+.tp-place { color: #7dd3fc; }
+.twoplaces-note { color: #94a3b8; }
+.twoplaces-note b { color: #cbd5e1; }
+
+.twoplaces-error {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #fca5a5; font-weight: 700;
+}
