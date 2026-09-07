@@ -26,7 +26,7 @@ const CHAPTERS = [
                     "며느리는 한참을 우물쭈물하기만 했습니다.",
                     "차마 입이 떨어지지 않는 모양이었어요.",
                     "방바닥만 내려다보며 손가락을 꼼지락거렸지요. 온 식구가 며느리의 입만 쳐다보고 있었답니다.",
-                    "\"말씀을 하셔야 알지요.\""
+                    "\"말을 해야 알지!\""
                 ],
                 right: [
                     "그러다 며느리가 겨우 입을 열었습니다. 목소리가 모기 소리만 했지요.",
@@ -58,7 +58,7 @@ const CHAPTERS = [
                 art: "04-brace.webp",
                 emoji: "😬",
                 left: [
-                    "식구들은 설마 하면서도 하나씩 붙들었습니다.",
+                    "식구들은 설마설마 하면서도 하나씩 붙들었습니다.",
                     "며느리가 하도 진지하게 말하니 안 붙잡을 수도 없었지요.",
                     "시아버지는 대청 기둥을 두 팔로 끌어안았어요. 속으로는 우습다고 생각하면서요.",
                     "\"어서들 붙잡으세요.\""
@@ -114,7 +114,7 @@ const CHAPTERS = [
                 left: [
                     "시아버지가 흙투성이가 된 채 겨우 일어나 앉았어요. 상투가 다 풀어져 머리가 산발이었지요.",
                     "그러고는 부서진 집을 한참 둘러보더니 무겁게 입을 열었습니다.",
-                    "\"아무래도… 친정에 다녀오는 게 좋겠구나.\"",
+                    "\"아가야, 아무래도 친정에 다녀오는 게 좋겠구나.\"",
                     "시어머니도 말없이 고개를 끄덕였어요."
                 ],
                 right: [
@@ -130,7 +130,7 @@ const CHAPTERS = [
                 left: [
                     "한참을 걷는데 길가가 몹시 소란스러웠습니다.",
                     "무슨 일인가 싶어 고개를 들어 보았지요.",
-                    "커다란 배나무 아래에 장수들이 잔뜩 모여 웅성거리고 있었어요. 나무에는 노란 배가 주렁주렁 달려 있었답니다.",
+                    "커다란 배나무 아래에 장수들이 잔뜩 모여 웅성거리고 있었어요. 나무에는 잘 익은 노란 배가 주렁주렁 달려 있었답니다.",
                     "\"저기 무슨 일이 났나 봅니다.\""
                 ],
                 right: [
@@ -168,9 +168,8 @@ const CHAPTERS = [
                 emoji: "😤",
                 left: [
                     "며느리는 배나무 앞에 등을 돌리고 섰습니다. 치맛자락을 단단히 여미면서요.",
-                    "\"다들 뒤로 물러서세요.\"",
-                    "\"아주 멀리요.\"",
-                    "\"정말 물러서야 합니다!\"",
+                    "\"다들 뒤로 물러서세요. 아주 멀리요.\"",
+                    "\"그리고 눈을 꼭 감으세요!\"",
                     "목소리가 아까와는 딴판으로 야무졌지요."
                 ],
                 right: [
@@ -184,10 +183,10 @@ const CHAPTERS = [
                 art: "11-pears.webp",
                 emoji: "💥",
                 left: [
+                    "며느리는 치마를 걷어 올리고 힘껏 힘을 주었어요.",
                     "뿌우우우웅—!",
                     "배나무가 통째로 휘청였습니다. 뿌리째 뽑히는 게 아닌가 싶을 만큼 크게 흔들렸지요.",
-                    "새들이 놀라 하늘로 날아올랐어요.",
-                    "땅바닥이 다 울리고 흙먼지가 뿌옇게 일었어요."
+                    "새들이 놀라 날아오르고, 땅바닥이 다 울리도록 흙먼지가 뿌옇게 일었어요."
                 ],
                 right: [
                     "노란 배가 우수수, 우수수 쏟아져 내렸습니다. 눈 깜짝할 사이에 땅바닥이 온통 배로 뒤덮였지요.",
@@ -200,7 +199,7 @@ const CHAPTERS = [
                 art: "12-home.webp",
                 emoji: "🏡",
                 left: [
-                    "장수들은 약속대로 배와 엽전을 한 아름 안겨 주었습니다. 며느리 혼자서는 들지도 못할 만큼이었지요.",
+                    "장수들은 약속대로 배와 엽전을 한 아름 안겨 주었습니다. 두 사람이 들지도 못할 만큼이었지요.",
                     "남편이 며느리의 손을 꼭 잡았어요.",
                     "\"우리 그냥 집으로 갑시다. 친정은 무슨 친정이오.\"",
                     "며느리는 아무 말 없이 웃기만 했어요."
@@ -276,7 +275,7 @@ const EN = {
                         "She could not seem to get the words out.",
                         "She looked at the floor and fidgeted with her fingers.",
                         "The whole family sat watching her mouth.",
-                        { t: "\"You must speak if we are to know.\"", v: "granny" }
+                        { t: "\"You must speak if we are to know!\"", v: "old" }
                     ],
                     right: [
                         "At last the bride managed to speak. Her voice was as small as a mosquito.",
@@ -370,7 +369,7 @@ const EN = {
                         "Her father-in-law got up, covered in dirt.",
                         "His topknot had come undone and his hair stood out.",
                         "He looked a long time round the broken house, then spoke heavily.",
-                        { t: "\"I think... you had better visit your own family a while.\"", v: "old" }
+                        { t: "\"Child, I think you had better visit your own family a while.\"", v: "old" }
                     ],
                     right: [
                         "Her mother-in-law nodded without a word.",
@@ -387,7 +386,7 @@ const EN = {
                         "They had walked a long way when the roadside grew very noisy.",
                         "They lifted their heads to see what it was.",
                         "Under a great pear tree a crowd of merchants stood muttering.",
-                        "Yellow pears hung thick on the branches.",
+                        "Ripe yellow pears hung thick on the branches.",
                         { t: "\"Something is going on over there.\"", v: "man" }
                     ],
                     right: [
@@ -427,9 +426,8 @@ const EN = {
                     left: [
                         "The bride stood with her back to the pear tree.",
                         "She tucked her skirt in tight as she did it.",
-                        { t: "\"Everybody get back, please.\"", v: "woman" },
-                        { t: "\"A long way back.\"", v: "woman" },
-                        { t: "\"You really must get back!\"", v: "woman" },
+                        { t: "\"Everybody get back, please. A long way back.\"", v: "woman" },
+                        { t: "\"And shut your eyes!\"", v: "woman" },
                         "Her voice was firm now, nothing like before."
                     ],
                     right: [
@@ -462,7 +460,7 @@ const EN = {
                     emoji: "🏡",
                     left: [
                         "The merchants kept their word and loaded her with pears and coins.",
-                        "It was more than she could carry by herself.",
+                        "It was more than two people could have carried.",
                         "Her husband took her hand and held it tight.",
                         { t: "\"Let us just go home. What visit, and to whom?\"", v: "man" },
                         "The bride said nothing and only smiled."
@@ -586,7 +584,7 @@ const EN = {
         "08-road.webp": [
             { w: "roadside", k: "길가", s: "the roadside grew very noisy" },
             { w: "muttering (mutter)", k: "웅성거리는", s: "a crowd of merchants stood muttering" },
-            { w: "hung thick (hang)", k: "주렁주렁 달렸다", s: "Yellow pears hung thick on the branches." },
+            { w: "hung thick (hang)", k: "주렁주렁 달렸다", s: "Ripe yellow pears hung thick on the branches." },
             { w: "going on", k: "일이 나는", s: "Something is going on over there." },
             { w: "a fortune", k: "큰돈", s: "Get those pears down and it is a fortune!" },
             { w: "pole", k: "장대", s: "Not if no pole will reach them." },
@@ -629,7 +627,7 @@ const EN = {
         "12-home.webp": [
             { w: "kept their word (keep)", k: "약속대로 했다", s: "The merchants kept their word and loaded her with pears and coins." },
             { w: "loaded (load)", k: "한 아름 안겨 주었다", s: "loaded her with pears and coins" },
-            { w: "by herself", k: "혼자서", s: "It was more than she could carry by herself." },
+            { w: "by herself", k: "혼자서", s: "It was more than two people could have carried." },
             { w: "What visit", k: "친정은 무슨 친정", s: "Let us just go home. What visit, and to whom?" },
             { w: "past the gate", k: "대문 밖까지", s: "Her father-in-law came out past the gate to meet them." },
             { w: "At the sight of ~", k: "~을 보고", s: "At the sight of the strings of coins his mouth went wide." },
@@ -675,8 +673,8 @@ const QUIZ = [
     { q: "남편은 무엇을 붙잡았나요?", choices: ["기둥", "문고리", "솥뚜껑"], answer: 2 },
     { q: "방귀 바람에 시어머니는 어떻게 되었나요?", choices: ["문짝과 함께 마당으로 날아갔다", "기둥을 안고 빙글빙글 돌았다", "지붕 위까지 올라갔다"], answer: 0 },
     { q: "친정 가는 길에 만난 사람들은 누구인가요?", choices: ["떡 장수들", "소금 장수들", "배 장수들"], answer: 2 },
-    { q: "며느리가 배나무 앞에서 사람들에게 뭐라고 했나요?", choices: ["다들 뒤로 물러서라고", "장대를 빌려 달라고", "나무에 올라가겠다고"], answer: 0 },
-    { q: "며느리는 그 뒤에 어떻게 되었나요?", choices: ["친정에서 계속 살았다", "집으로 다시 돌아왔다", "배 장수를 따라갔다"], answer: 1 },
+    { q: "며느리가 배나무 앞에서 사람들에게 뭐라고 했나요?", choices: ["물러서서 눈을 감으라고", "장대를 빌려 달라고", "나무에 올라가겠다고"], answer: 0 },
+    { q: "며느리는 그 뒤에 어떻게 되었나요?", choices: ["친정에서 계속 살았다", "시댁으로 다시 돌아왔다", "배 장수를 따라갔다"], answer: 1 },
     {
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         wide: true,
@@ -699,7 +697,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "이런 이야기를 소화라고 합니다. 웃기려고 지은 이야기라는 뜻입니다. 우리 옛이야기에는 교훈을 주려는 것 못지않게 그저 웃자고 만든 것이 많습니다.",
+                "이런 이야기를 소화(笑話)라고 합니다. 웃기려고 지은 이야기라는 뜻입니다. 우리 옛이야기에는 교훈을 주려는 것 못지않게 그저 웃자고 만든 것이 많습니다.",
                 "그런데 웃자고 만든 이야기가 오히려 그 시절을 잘 보여 줄 때가 있습니다. 이 이야기가 그렇습니다. 며느리가 시집에서 방귀조차 마음대로 뀔 수 없었다는 것부터가 그 시절 이야기입니다.",
                 "다시 보면 며느리는 아무 잘못도 하지 않았습니다. 참느라 얼굴이 노래질 때까지 참았습니다. 흠이 된 것은 방귀가 아니라 참으라고 한 쪽이었습니다.",
                 "그리고 그 방귀는 밖에 나가자마자 쓸모가 생겼습니다. 같은 재주가 안에서는 내쫓길 까닭이었다가 밖에서는 값을 받는 재주가 된 것이지요."

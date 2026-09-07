@@ -13,10 +13,10 @@ const CHAPTERS = [
                     "\"밥값은 해야지.\""
                 ],
                 right: [
-                    "하루 종일 밥을 지어도 소녀 몫은 늘 한 줌뿐이었어요. 그마저도 식은 밥일 때가 많았어요.",
-                    "소녀는 부엌 구석에서 먹었지요.",
+                    "하루 종일 일하고 밥을 지어도 소녀 몫은 한 줌뿐, 그마저도 식은 밥일 때가 많았어요.",
+                    "소녀는 부엌 구석에서 밥을 먹었지요.",
                     "그래도 소녀는 투덜대는 법이 없었습니다. 밥그릇을 받으면 고맙다고 인사부터 했어요.",
-                    "부모님이 그리 하라고 가르쳤거든요."
+                    "부모님이 살아 계실 적에 그리 하라고 가르쳤거든요."
                 ]
             },
             {
@@ -32,7 +32,7 @@ const CHAPTERS = [
                     "들여다보니 두꺼비 한 마리가 눈을 껌뻑이고 있었습니다. 등이 울퉁불퉁하고 배가 홀쭉했지요.",
                     "두꺼비도 소녀를 올려다보았어요.",
                     "소녀는 막대를 슬며시 내려놓았어요.",
-                    "\"너도 배가 고파서 여기까지 왔구나.\"",
+                    "\"너도 배가 고파서 여기까지 왔니?\"",
                     "소녀는 저도 모르게 웃었답니다."
                 ]
             },
@@ -80,7 +80,7 @@ const CHAPTERS = [
                 art: "05-shrine.webp",
                 emoji: "⛩️",
                 left: [
-                    "그 마을에는 오랜 근심이 하나 있었어요.",
+                    "그 무렵 그 마을에는 큰 근심이 하나 있었어요.",
                     "뒷산 사당에 커다란 지네가 산다는 것이었지요.",
                     "사당은 조상을 모시는 작은 집인데, 사람 발길이 끊긴 지 오래였지요.",
                     "지네가 성이 나면 논밭이 마르고 짐승이 병든다고 했지요.",
@@ -123,7 +123,7 @@ const CHAPTERS = [
                     "두꺼비가 소녀를 올려다보았어요.",
                     "\"너… 언제부터 따라온 거니?\"",
                     "두꺼비는 대답 대신 소녀의 무릎 위로 기어 올라왔답니다.",
-                    "소녀는 그제야 눈물이 났답니다."
+                    "소녀의 뜨거운 눈물이 두꺼비의 등에 떨어졌어요."
                 ]
             },
             {
@@ -152,9 +152,9 @@ const CHAPTERS = [
                 art: "09-glow.webp",
                 emoji: "✨",
                 left: [
-                    "그때 치마폭이 들썩하더니 두꺼비가 훌쩍 뛰어나왔어요. 그러고는 소녀 앞을 딱 가로막고 섰지요.",
+                    "그때 두꺼비가 소녀의 무릎에서 펄쩍 뛰어내렸어요. 그러고는 소녀 앞을 딱 가로막고 섰지요.",
                     "두꺼비의 몸이 점점 부풀기 시작했습니다.",
-                    "등이 풍선처럼 커다랗게 불어올랐어요.",
+                    "배가 풍선처럼 커다랗게 불어올랐어요.",
                     "눈에서도 빛이 났지요."
                 ],
                 right: [
@@ -169,10 +169,10 @@ const CHAPTERS = [
                 art: "10-retreat.webp",
                 emoji: "🌀",
                 left: [
-                    "얼마나 지났을까요. 두 빛이 밀고 밀렸어요.",
+                    "얼마나 지났을까요. 두 빛이 밀치고 밀렸어요.",
                     "사당이 통째로 흔들렸지요.",
-                    "노란빛이 한 뼘, 또 한 뼘 밀고 올라갔습니다.",
-                    "시퍼런 빛이 조금씩 흐려지기 시작했어요. 지네의 몸이 힘없이 축 늘어졌지요."
+                    "두꺼비가 내뿜는 노란빛이 한 뼘, 또 한 뼘 밀고 올라갔습니다.",
+                    "지네의 시퍼렇던 빛은 조금씩 흐려지기 시작했어요. 그러다가 지네의 몸이 힘없이 축 늘어졌지요."
                 ],
                 right: [
                     "지네가 마지막으로 크게 몸부림쳤어요.",
@@ -196,7 +196,7 @@ const CHAPTERS = [
                     "소녀의 옷에는 흙 한 점 묻지 않았어요.",
                     "소녀의 품에는 축 늘어진 두꺼비가 안겨 있었습니다.",
                     "\"제발… 눈 좀 떠 봐.\"",
-                    "소녀의 목소리가 잠겨 있었답니다."
+                    "소녀의 목소리는 슬픔에 잠겨 있었답니다."
                 ]
             },
             {
@@ -265,11 +265,11 @@ const EN = {
                         "Her hands were always cracked and sore."
                     ],
                     right: [
-                        "Cook all day as she might, her own share was one handful.",
+                        "Work and cook all day as she might, her own share was one handful.",
                         "Often it was cold rice at that.",
                         "She ate it in the corner of the kitchen.",
                         "Even so she never grumbled. She said thank you first when the bowl came.",
-                        "Her parents had taught her to do that."
+                        "Her parents, while they lived, had taught her to do that."
                     ]
                 },
                 {
@@ -287,7 +287,7 @@ const EN = {
                         "Its back was bumpy and its belly was thin.",
                         "The toad looked up at her too.",
                         "The girl quietly put the stick down.",
-                        { t: "\"So you came all this way because you are hungry.\"", v: "girl" },
+                        { t: "\"Did you come all this way because you were hungry?\"", v: "girl" },
                         "She was smiling before she knew it."
                     ]
                 },
@@ -337,7 +337,7 @@ const EN = {
                     art: "05-shrine.webp",
                     emoji: "⛩️",
                     left: [
-                        "That village had one old worry.",
+                        "About then the village had one great worry.",
                         "A huge centipede was said to live in the shrine on the hill behind.",
                         "A shrine is a small house kept for the ancestors.",
                         "Nobody had gone near this one for a long time.",
@@ -384,7 +384,7 @@ const EN = {
                         "The toad looked up at her.",
                         { t: "\"You... how long have you been following me?\"", v: "girl" },
                         "Instead of answering it climbed up onto her knee.",
-                        "Only then did the girl cry."
+                        "The girl's hot tears fell on the toad's back."
                     ]
                 },
                 {
@@ -415,10 +415,10 @@ const EN = {
                     art: "09-glow.webp",
                     emoji: "✨",
                     left: [
-                        "Just then the skirt heaved and the toad leapt out.",
+                        "Just then the toad sprang down from her knee.",
                         "It planted itself square in front of the girl.",
                         "The toad's body began to swell.",
-                        "Its back blew up big as a balloon.",
+                        "Its belly blew up big as a balloon.",
                         "Light came out of its eyes as well."
                     ],
                     right: [
@@ -434,10 +434,10 @@ const EN = {
                     emoji: "🌀",
                     left: [
                         "How long it went on nobody knows.",
-                        "The two lights pushed and gave and pushed again.",
+                        "The two lights shoved and gave and shoved again.",
                         "The whole shrine shook with it.",
-                        "The yellow light pressed up a hand's breadth, and another.",
-                        "The blue light began to thin, and the centipede's body went slack."
+                        "The yellow light the toad gave off pressed up a hand's breadth, and another.",
+                        "The centipede's blue light began to thin, and then its body went slack."
                     ],
                     right: [
                         "The centipede threw itself about one last time.",
@@ -462,7 +462,8 @@ const EN = {
                         "The people stood with their mouths open.",
                         "There was not a speck of dirt on her clothes.",
                         "In her arms lay the toad, limp.",
-                        { t: "\"Please... open your eyes.\"", v: "girl" }
+                        { t: "\"Please... open your eyes.\"", v: "girl" },
+                        "Her voice was heavy with sorrow."
                     ]
                 },
                 {
@@ -523,7 +524,7 @@ const EN = {
             { w: "From dawn", k: "새벽부터", s: "From dawn she drew water, made the fire and washed up." },
             { w: "washed up", k: "설거지를 했다", s: "she drew water, made the fire and washed up" },
             { w: "cracked and sore", k: "트고 갈라진", s: "Her hands were always cracked and sore." },
-            { w: "Cook all day as she might", k: "하루 종일 밥을 지어도", s: "Cook all day as she might, her own share was one handful." },
+            { w: "Cook all day as she might", k: "하루 종일 밥을 지어도", s: "Work and cook all day as she might, her own share was one handful." },
             { w: "share", k: "몫", s: "her own share was one handful" },
             { w: "grumbled (grumble)", k: "투덜댔다", s: "Even so she never grumbled." }
         ],
@@ -535,7 +536,7 @@ const EN = {
             { w: "fire stick", k: "불 쑤시는 막대", s: "She jumped back, and her fire stick shook." },
             { w: "toad", k: "두꺼비", s: "She looked, and a toad sat there blinking." },
             { w: "bumpy", k: "울퉁불퉁한", s: "Its back was bumpy and its belly was thin." },
-            { w: "all this way", k: "여기까지", s: "So you came all this way because you are hungry." },
+            { w: "all this way", k: "여기까지", s: "\"Did you come all this way because you were hungry?\" girl She was smiling before she knew it." },
             { w: "before she knew it", k: "저도 모르게", s: "She was smiling before she knew it." }
         ],
         "03-share.webp": [
@@ -560,7 +561,7 @@ const EN = {
             { w: "told it everything (tell)", k: "속엣말을 다 했다", s: "That toad was the only friend she had, and she told it everything." }
         ],
         "05-shrine.webp": [
-            { w: "worry", k: "근심", s: "That village had one old worry." },
+            { w: "worry", k: "근심", s: "About then the village had one great worry." },
             { w: "was said to ~", k: "~한다고 했다", s: "A huge centipede was said to live in the shrine" },
             { w: "shrine", k: "사당", s: "A shrine is a small house kept for the ancestors." },
             { w: "ancestors", k: "조상", s: "a small house kept for the ancestors" },
@@ -603,22 +604,22 @@ const EN = {
             { w: "poured off ~ (pour)", k: "뿜어져 나왔다", s: "A blue light poured off it and filled the whole shrine." }
         ],
         "09-glow.webp": [
-            { w: "heaved (heave)", k: "들썩했다", s: "Just then the skirt heaved and the toad leapt out." },
-            { w: "leapt out (leap)", k: "훌쩍 뛰어나왔다", s: "the toad leapt out" },
+            { w: "heaved (heave)", k: "들썩했다", s: "Just then the toad sprang down from her knee." },
+            { w: "sprang down (spring)", k: "펄쩍 뛰어내렸다", s: "the toad sprang down from her knee" },
             { w: "planted itself", k: "딱 버티고 섰다", s: "It planted itself square in front of the girl." },
             { w: "square in front of ~", k: "~ 앞을 가로막고", s: "It planted itself square in front of the girl." },
             { w: "swell", k: "부풀다", s: "The toad's body began to swell." },
-            { w: "blew up (blow up)", k: "불어올랐다", s: "Its back blew up big as a balloon." },
+            { w: "blew up (blow up)", k: "불어올랐다", s: "Its belly blew up big as a balloon." },
             { w: "as bright as noon", k: "대낮처럼 환한", s: "The shrine went as bright as noon." },
             { w: "with a ringing crack", k: "쩌엉 하고", s: "The blue light and the yellow light met with a ringing crack." },
             { w: "kept close behind ~ (keep)", k: "뒤에 몸을 붙였다", s: "The girl kept close behind the toad and watched." }
         ],
         "10-retreat.webp": [
             { w: "How long it went on (go)", k: "얼마나 지났을까", s: "How long it went on nobody knows." },
-            { w: "pushed and gave", k: "밀고 밀렸다", s: "The two lights pushed and gave and pushed again." },
-            { w: "a hand's breadth", k: "한 뼘", s: "The yellow light pressed up a hand's breadth, and another." },
-            { w: "thin", k: "흐려지다", s: "The blue light began to thin" },
-            { w: "went slack (go)", k: "축 늘어졌다", s: "the centipede's body went slack" },
+            { w: "pushed and gave", k: "밀고 밀렸다", s: "The two lights shoved and gave and shoved again." },
+            { w: "a hand's breadth", k: "한 뼘", s: "The yellow light the toad gave off pressed up a hand's breadth, and another." },
+            { w: "thin", k: "흐려지다", s: "The centipede's blue light began to thin, and then its body went slack." },
+            { w: "went slack (go)", k: "축 늘어졌다", s: "The centipede's blue light began to thin, and then its body went slack." },
             { w: "threw itself about", k: "몸부림쳤다", s: "The centipede threw itself about one last time." },
             { w: "drifted apart", k: "스르르 흩어졌다", s: "Then it turned to black smoke and drifted apart." },
             { w: "faded (fade)", k: "스러졌다", s: "The yellow light faded too, like a candle going out." },

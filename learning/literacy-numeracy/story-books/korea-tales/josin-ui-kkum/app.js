@@ -85,7 +85,7 @@ const CHAPTERS = [
                 left: [
                     "어느 날 밤, 아내가 조신 앞에 앉았어요.",
                     "\"우리 헤어집시다.\"",
-                    "\"처음 만났을 때 당신은 고운 얼굴이었고 나는 젊었지요.\"",
+                    "\"처음 만났을 때 나는 고운 얼굴이었고 당신은 젊었지요.\"",
                     "\"이제는 서로가 서로의 짐입니다. 아이들을 둘씩 나누어 데려갑시다.\"",
                     "아내의 목소리는 차분했어요."
                 ],
@@ -143,7 +143,7 @@ const CHAPTERS = [
                 art: "08-after.webp",
                 emoji: "🙏",
                 left: [
-                    "조신은 그 뒤로 절 땅을 돌보는 일을 그만두었어요.",
+                    "조신은 그 뒤로 절 땅을 맡아보던 소임을 내놓았어요.",
                     "가진 것을 다 내놓고 절에 들어가 부처님만 모셨지요.",
                     "태수의 딸 이야기는 두 번 다시 꺼내지 않았답니다.",
                     "사람들이 물었어요.",
@@ -312,7 +312,7 @@ const EN = {
                     left: [
                         "One night his wife sat down in front of him.",
                         { t: "\"Let us part.\"", v: "woman" },
-                        { t: "\"When we first met your face was lovely and I was young.\"", v: "woman" },
+                        { t: "\"When we first met my face was lovely and you were young.\"", v: "woman" },
                         { t: "\"Now we are each other's burden. Let us take two children each.\"", v: "woman" },
                         "Her voice was quite steady."
                     ],
@@ -369,7 +369,7 @@ const EN = {
                     art: "08-after.webp",
                     emoji: "🙏",
                     left: [
-                        "After that Josin gave up looking after the temple's land.",
+                        "After that Josin gave up his post looking after the temple's land.",
                         "He gave away everything he had and served the Buddha only.",
                         "He never spoke of the governor's daughter again.",
                         "People asked him,",
@@ -507,7 +507,7 @@ const EN = {
         ],
         "05-part.webp": [
             { w: "Let us part.", k: "헤어집시다.", s: "Let us part." },
-            { w: "lovely", k: "고운", s: "When we first met your face was lovely" },
+            { w: "lovely", k: "고운", s: "\"Let us part.\" woman \"When we first met my face was lovely and you were young.\" woman \"Now we are each other's burden." },
             { w: "each other's burden", k: "서로의 짐", s: "Now we are each other's burden." },
             { w: "two children each", k: "아이 둘씩", s: "Let us take two children each." },
             { w: "quite steady", k: "아주 차분한", s: "Her voice was quite steady." },
@@ -538,7 +538,7 @@ const EN = {
             { w: "on that spot", k: "그 자리에", s: "He washed it, carried it back, and built a temple called Jeongtosa on that spot." }
         ],
         "08-after.webp": [
-            { w: "gave up ~ (give up)", k: "그만두었다", s: "Josin gave up looking after the temple's land." },
+            { w: "gave up ~ (give up)", k: "그만두었다", s: "🙏 After that Josin gave up his post looking after the temple's land." },
             { w: "gave away ~ (give away)", k: "다 내놓았다", s: "He gave away everything he had" },
             { w: "served (serve)", k: "모셨다", s: "and served the Buddha only" },
             { w: "never spoke of ~ (speak)", k: "두 번 다시 꺼내지 않았다", s: "He never spoke of the governor's daughter again." },

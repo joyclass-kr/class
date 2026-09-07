@@ -31,7 +31,7 @@ const CHAPTERS = [
                     "그날 밤 서동은 짐을 꾸렸답니다."
                 ],
                 right: [
-                    "\"어머니, 신라에 다녀오겠습니다.\"",
+                    "\"어머니, 신라에 좀 다녀오겠습니다.\"",
                     "\"신라는 백제와 사이가 나쁜 나라다. 무엇 하러 가느냐.\"",
                     "\"공주님을 한번 보고 오려고요.\"",
                     "어머니는 기가 막혀 말을 잃었어요.",
@@ -42,7 +42,7 @@ const CHAPTERS = [
                 art: "03-song.webp",
                 emoji: "🎶",
                 left: [
-                    "서라벌에 닿은 서동은 골목마다 아이들을 불러 모았어요.",
+                    "서라벌에 닿은 서동은 골목골목에서 아이들을 불러 모았어요.",
                     "\"마 줄게. 대신 노래 하나만 배워 가라.\"",
                     "아이들이 마를 받아 들고 귀를 세웠지요.",
                     "서동이 노래를 불렀어요.",
@@ -50,10 +50,10 @@ const CHAPTERS = [
                 ],
                 right: [
                     "아이들은 마를 씹으며 노래를 따라 불렀어요.",
-                    "골목에서 골목으로, 하루 만에 온 서라벌 아이들이 그 노래를 불렀지요.",
+                    "골목에서 골목으로, 순식간에 온 서라벌 아이들이 그 노래를 불렀지요.",
                     "\"선화공주님은 남몰래—\"",
-                    "무슨 뜻인지도 모르고 불렀답니다.",
-                    "서동은 담 밑에서 그 노래를 듣고 있었어요."
+                    "무슨 뜻인지도 모르고 큰 소리로 불렀답니다.",
+                    "서동은 담 밑에서 기분 좋게 그 노래를 듣고 있었어요."
                 ]
             }
         ]
@@ -86,7 +86,7 @@ const CHAPTERS = [
                 left: [
                     "공주가 산길을 홀로 걷는데 누군가 뒤따라왔어요.",
                     "\"공주님, 제가 모시겠습니다.\"",
-                    "마 자루를 진 젊은이였지요.",
+                    "마 자루를 진 젊은이였지요. 눈이 참 맑았어요.",
                     "\"그대는 누구요?\" \"서동이라 합니다.\"",
                     "공주의 눈이 커졌어요. 노래 속 그 이름이었으니까요. \"그 노래를… 그대가?\""
                 ],
@@ -171,7 +171,7 @@ const CHAPTERS = [
                 right: [
                     "미륵사는 백제에서 제일 큰 절이 되었어요.",
                     "지금은 절은 없어졌지만 돌탑이 남아 있지요. 전라도 익산에 가면 볼 수 있답니다.",
-                    "천사백 년 전 돌탑이에요. 무너진 것을 다시 세웠지요.",
+                    "천사백 년 전 돌탑이에요. 반쯤 무너져 있던 것을 오래 걸려 다시 세웠지요.",
                     "그 앞에 서면 마 캐던 아이가 생각난답니다."
                 ]
             },
@@ -258,7 +258,7 @@ const EN = {
                         "That night he packed his things."
                     ],
                     right: [
-                        { t: "\"Mother, I'm going to Silla.\"", v: "boy" },
+                        { t: "\"Mother, I'm going over to Silla for a while.\"", v: "boy" },
                         { t: "\"Silla and Baekje are on bad terms. Whatever for?\"", v: "mother" },
                         { t: "\"To see the princess, just once.\"", v: "boy" },
                         "His mother was too astonished to speak.",
@@ -269,7 +269,7 @@ const EN = {
                     art: "03-song.webp",
                     emoji: "🎶",
                     left: [
-                        "In Seorabeol he called the children together in every lane.",
+                        "In Seorabeol he went from lane to lane calling the children together.",
                         { t: "\"I'll give you a yam. You learn one song for it.\"", v: "boy" },
                         "The children took the yams and pricked up their ears.",
                         "Seodong sang.",
@@ -277,10 +277,10 @@ const EN = {
                     ],
                     right: [
                         "The children chewed their yams and sang it after him.",
-                        "From lane to lane, and in one day every child in Seorabeol was singing it.",
+                        "From lane to lane, and in no time every child in Seorabeol was singing it.",
                         { t: "\"Princess Seonhwa goes secretly—\"", v: "girl" },
-                        "They sang it without knowing what it meant.",
-                        "Seodong stood under a wall and listened."
+                        "They sang it loudly, not knowing what it meant.",
+                        "Seodong listened from under a wall, well pleased."
                     ]
                 }
             ]
@@ -313,7 +313,7 @@ const EN = {
                     left: [
                         "As she walked the mountain road alone, somebody came up behind her.",
                         { t: "\"Princess, let me go with you.\"", v: "boy" },
-                        "It was a young man with a sack of yams.",
+                        "It was a young man with a sack of yams. His eyes looked honest.",
                         { t: "\"Who are you?\" \"They call me Seodong.\"", v: "girl" },
                         "Her eyes went wide. It was the name in the song. \"That song — was it you?\""
                     ],
@@ -478,16 +478,16 @@ const EN = {
             { w: "capital", k: "서울", s: "Seorabeol, the capital of Silla" }
         ],
         "03-song.webp": [
-            { w: "called ~ together (call)", k: "불러 모았다", s: "he called the children together in every lane" },
-            { w: "lane", k: "골목", s: "in every lane" },
+            { w: "called ~ together (call)", k: "불러 모았다", s: "he went from lane to lane calling the children together" },
+            { w: "from lane to lane", k: "골목골목", s: "he went from lane to lane" },
             { w: "learn one song for it", k: "대신 노래 하나를 배우다", s: "You learn one song for it." },
             { w: "pricked up their ears", k: "귀를 세웠다", s: "The children took the yams and pricked up their ears." },
             { w: "secretly", k: "남몰래", s: "Princess Seonhwa goes secretly" },
             { w: "night after night", k: "밤마다", s: "goes secretly, night after night, to meet Seodong" },
             { w: "chewed (chew)", k: "씹었다", s: "The children chewed their yams and sang it after him." },
             { w: "sang it after him", k: "따라 불렀다", s: "sang it after him" },
-            { w: "From lane to lane", k: "골목에서 골목으로", s: "From lane to lane, and in one day every child in Seorabeol was singing it." },
-            { w: "what it meant", k: "무슨 뜻인지", s: "They sang it without knowing what it meant." }
+            { w: "From lane to lane", k: "골목에서 골목으로", s: "From lane to lane, and in no time every child in Seorabeol was singing it." },
+            { w: "what it meant", k: "무슨 뜻인지", s: "They sang it loudly, not knowing what it meant." }
         ],
         "04-banish.webp": [
             { w: "went over ~ (go over)", k: "넘어갔다", s: "The song went over walls and gates and into the palace." },
@@ -575,7 +575,7 @@ const EN = {
             { w: "neither ~ nor ~", k: "~도 ~도 아닌", s: "what Seodong used was neither strength nor money but a song" },
             { w: "spread (spread)", k: "퍼뜨렸다", s: "He gave the children yams and spread the song." },
             { w: "how a rumour moves people", k: "소문이 어떻게 사람을 움직이는지", s: "People very long ago already knew how a rumour moves people." },
-            { w: "took years to ~ (take)", k: "오랜 세월 걸려", s: "It fell and took years to raise again." },
+            { w: "took years to ~ (take)", k: "오랜 세월 걸려", s: "It was half fallen, and putting it back up took from 2001 to 2019." },
             { w: "does not blame ~ (blame)", k: "나무라지 않는다", s: "The story does not blame Seodong." },
             { w: "quietly looks at ~", k: "조용히 들여다본다", s: "Instead it quietly looks at the king" }
         ]
@@ -590,10 +590,11 @@ const EN = {
                     "This story is in the chapter on King Mu in the Samguk Yusa. It is written that the thirtieth king of Baekje was the yam-digging Seodong as a boy. Scholars differ on whether that is true.",
                     "The Seodongyo is the oldest song we have written down. It is a hyangga, a song that borrowed Chinese characters to write Korean. It is four lines long.",
                     "Look again and what Seodong used was neither strength nor money but a song. He gave the children yams and spread the song. People very long ago already knew how a rumour moves people.",
-                    "The stone pagoda still stands on the Mireuksa site in Iksan. It fell and took years to raise again. It is a place where a story stayed by staying on the ground."
+                    "The stone pagoda still stands on the Mireuksa site in Iksan. It was half fallen, and putting it back up took from 2001 to 2019."
                 ],
                 right: [
-                    "The princess lost her palace because of a song, and ended up living with the man who wrote it. A false song came true. The story does not blame Seodong. Instead it quietly looks at the king who threw out his daughter over a song.",
+                    "Then in 2009, while the pagoda was being taken apart, a gold plate came out of it. It said the temple was founded not by Princess Seonhwa but by Queen Sataek, the daughter of a great Baekje family. Scholars think the two may both have had a hand in it.",
+                    "The princess lost her palace because of a song, and ended up living with the man who wrote it. The story does not blame Seodong. Instead it quietly looks at the king who threw out his daughter over a song.",
                     "Have you ever judged somebody wrongly because of a rumour?"
                 ]
             }
@@ -633,10 +634,11 @@ const AFTERWORD = {
                 "이 이야기는 『삼국유사』 무왕 편에 실려 있습니다. 백제 서른째 임금 무왕이 어릴 적에 마를 캐던 서동이었다고 적혀 있습니다. 정말 그런지는 학자들 사이에 말이 갈립니다.",
                 "서동요는 우리 글로 적혀 남은 노래 가운데 가장 오래된 것입니다. 한자를 빌려 우리말을 적은 향가라는 노래지요. 넉 줄짜리 짧은 노래입니다.",
                 "다시 보면 서동이 쓴 것은 힘도 돈도 아니고 노래였습니다. 아이들에게 마를 주고 노래를 퍼뜨렸습니다. 소문이 어떻게 사람을 움직이는지 아주 오래전 사람들이 이미 알고 있었던 셈입니다.",
-                "익산 미륵사 터에는 돌탑이 지금도 서 있습니다. 무너진 것을 오랜 세월 걸려 다시 세웠습니다. 이야기가 땅에 붙어 남은 자리입니다."
+                "익산 미륵사 터에는 돌탑이 지금도 서 있습니다. 반쯤 무너져 있던 것을 2001년부터 2019년까지 걸려 다시 세웠습니다."
             ],
             right: [
-                "공주는 노래 때문에 궁을 잃었고, 그 노래를 지은 사람과 살게 되었습니다. 거짓 노래가 참이 된 셈입니다. 이야기는 서동을 나무라지 않습니다. 대신 노래 하나에 딸을 내친 임금 쪽을 조용히 들여다보게 합니다.",
+                "그런데 2009년, 탑을 뜯어 보다가 금판 하나가 나왔습니다. 절을 세운 사람이 선화공주가 아니라 백제 큰 집안의 딸 사택왕후라고 새겨져 있었지요. 학자들은 두 사람이 함께 나섰을 수도 있다고 봅니다.",
+                    "공주는 노래 때문에 궁을 잃었고, 그 노래를 지은 사람과 살게 되었습니다. 이야기는 서동을 나무라지 않습니다. 대신 노래 하나에 딸을 내친 임금 쪽을 조용히 들여다보게 합니다.",
                 "소문 하나로 누군가를 잘못 본 적이 있나요?"
             ]
         }

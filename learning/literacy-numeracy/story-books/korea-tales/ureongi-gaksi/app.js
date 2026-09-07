@@ -8,12 +8,12 @@ const CHAPTERS = [
                 emoji: "🌾",
                 left: [
                     "옛날 어느 마을에 가난한 총각이 혼자 살았습니다.",
-                    "부모도 형제도 없이 손바닥만 한 논을 갈며 지냈지요.",
+                    "부모도 형제도 없이 손바닥만 한 논에 농사를 지으며 살았지요.",
                     "아침에 눈을 뜨면 논에 나가고, 해가 지면 빈방으로 돌아왔어요.",
                     "말을 붙일 사람이 하나도 없었답니다."
                 ],
                 right: [
-                    "그날도 무릎까지 물에 담그고 김을 매는 참이었어요. 문득 서러운 마음이 들었지요.",
+                    "그날도 무릎까지 물에 담그고 모를 심는 참이었어요. 문득 서러운 마음이 들었지요.",
                     "허리를 펴자 논물에 제 얼굴이 비쳤어요.",
                     "\"이 농사 지어서 누구랑 먹고 사나.\"",
                     "혼잣말이 저도 모르게 절로 나왔답니다."
@@ -28,7 +28,7 @@ const CHAPTERS = [
                     "\"나랑 먹고 살지.\"",
                     "총각은 화들짝 놀라 허리를 폈습니다.",
                     "\"누, 누구요?\"",
-                    "손에 든 호미를 물에 놓칠 뻔했지요."
+                    "손에 든 벼 모를 물에 놓칠 뻔했지요."
                 ],
                 right: [
                     "논에도 논둑에도 사람 그림자 하나 없었어요. 멀리까지 둘러보아도 논에는 총각뿐이었지요.",
@@ -90,7 +90,7 @@ const CHAPTERS = [
                     "따끈한 밥에 나물이 세 가지, 그리고 구수한 된장국까지. 총각은 방 안을 두리번거렸어요.",
                     "\"누가 이걸…?\"",
                     "부엌에도 마당에도 아무도 없었지요.",
-                    "그날 총각은 밥그릇을 싹 비웠답니다.",
+                    "그날 총각은 밥과 반찬을 맛있게 다 비웠답니다.",
                     "아무리 생각해도 알 수가 없었어요."
                 ]
             },
@@ -173,7 +173,7 @@ const CHAPTERS = [
                 art: "10-wait.webp",
                 emoji: "⏳",
                 left: [
-                    "\"나와 함께 삽시다. 나와 살아 줍시다.\"",
+                    "\"나와 함께 삽시다. 나와 살아 주세요.\"",
                     "총각의 목소리가 몹시 떨렸어요. 색시는 고개를 숙이고 한참을 말이 없었어요.",
                     "치맛자락만 만지작거렸지요.",
                     "부엌 안이 물을 끼얹은 듯 조용해졌습니다.",
@@ -249,7 +249,7 @@ const COVER = {
     title: "우렁이 색시",
     intro: [
         "우렁이 색시는 지은이가 없는 구전 설화예요. 논에서 주워 온 우렁이에서 색시가 나온다는 이야기라, 우렁 각시라는 이름으로도 전해진답니다.",
-        "우렁이는 논이나 냇물에 사는 조그만 고둥이에요. 옛날에는 논에서 흔히 잡아 국을 끓여 먹었지요. 늘 보던 흔한 것에서 뜻밖의 것이 나온다는 발상이 이 이야기의 시작이랍니다.",
+        "우렁이는 논이나 냇물에 사는 조그만 고둥이에요. 옛날에는 논에서 흔히 잡아 된장국을 끓여 먹었지요. 늘 보던 흔한 것에서 뜻밖의 것이 나온다는 발상이 이 이야기의 시작이랍니다.",
         "이 이야기는 고장마다 끝이 다르게 전해요. 둘이 오래오래 함께 사는 판본도 있고, 헤어지는 판본도 있지요. 어느 쪽이든 총각이 사흘을 못 참았다는 대목만은 빠지지 않는답니다."
     ]
 };
@@ -265,7 +265,7 @@ const EN = {
         title: "The Snail Bride",
         intro: [
             "This is an oral tale with no known author. A bride comes out of a snail picked up in a rice paddy.",
-            "A pond snail is a small shellfish that lives in paddies and streams. People used to catch them there and make soup of them.",
+            "A pond snail is a small shellfish that lives in paddies and streams. People used to catch them there and make bean paste soup of them.",
             "Districts end it differently. In some the two live on together, in some they part. Either way he cannot wait three days."
         ]
     },
@@ -279,12 +279,12 @@ const EN = {
                     emoji: "🌾",
                     left: [
                         "Long ago in a village a poor young man lived alone.",
-                        "He had no parents and no brothers, and worked a paddy the size of a palm.",
+                        "He had no parents and no brothers, and farmed a paddy the size of a palm.",
                         "He went out to it when he woke and came back to an empty room at sundown.",
                         "There was nobody at all to speak to."
                     ],
                     right: [
-                        "That day too he was weeding, in water up to his knees.",
+                        "That day too he was planting rice, in water up to his knees.",
                         "A lonely feeling came over him all at once.",
                         "He straightened up and saw his own face in the paddy water.",
                         { t: "\"Who am I growing this rice to eat with?\"", v: "man" },
@@ -300,7 +300,7 @@ const EN = {
                         { t: "\"With me. You will eat it with me.\"", v: "woman" },
                         "The young man straightened up with a start.",
                         { t: "\"Wh-who is there?\"", v: "man" },
-                        "He nearly dropped his hoe in the water."
+                        "He nearly dropped the rice seedlings in the water."
                     ],
                     right: [
                         "There was not a shadow of anybody in the paddy or on the bank.",
@@ -365,7 +365,7 @@ const EN = {
                         "The young man looked all round the room.",
                         { t: "\"Who could have done this?\"", v: "man" },
                         "There was nobody in the kitchen or in the yard.",
-                        "That day he emptied his bowl clean, and still could not work it out."
+                        "That day he ate up the rice and every dish, and still could not work it out."
                     ]
                 },
                 {
@@ -449,7 +449,7 @@ const EN = {
                     art: "10-wait.webp",
                     emoji: "⏳",
                     left: [
-                        { t: "\"Live with me. Please live here with me.\"", v: "man" },
+                        { t: "\"Live with me. Please, live here with me.\"", v: "man" },
                         "His voice was shaking badly.",
                         "The bride looked down and said nothing for a long while.",
                         "She only worked at the folds of her skirt.",
@@ -549,15 +549,15 @@ const EN = {
             { w: "rice paddy", k: "논", s: "a snail picked up in a rice paddy" },
             { w: "pond snail", k: "우렁이", s: "A pond snail is a small shellfish that lives in paddies and streams." },
             { w: "shellfish", k: "고둥, 조개류", s: "a small shellfish that lives in paddies and streams" },
-            { w: "used to ~", k: "예전에는 ~했다", s: "People used to catch them there and make soup of them." },
+            { w: "used to ~", k: "예전에는 ~했다", s: "People used to catch them there and make bean paste soup of them." },
             { w: "Districts", k: "고장마다", s: "Districts end it differently." },
             { w: "part", k: "헤어지다", s: "In some the two live on together, in some they part." }
         ],
         "01-field.webp": [
-            { w: "the size of a palm", k: "손바닥만 한", s: "worked a paddy the size of a palm" },
+            { w: "the size of a palm", k: "손바닥만 한", s: "He had no parents and no brothers, and farmed a paddy the size of a palm." },
             { w: "at sundown", k: "해가 지면", s: "came back to an empty room at sundown" },
             { w: "nobody at all", k: "하나도 없는", s: "There was nobody at all to speak to." },
-            { w: "weeding (weed)", k: "김을 매는", s: "That day too he was weeding, in water up to his knees." },
+            { w: "weeding (weed)", k: "김을 매는", s: "That day too he was planting rice, in water up to his knees." },
             { w: "up to his knees", k: "무릎까지", s: "in water up to his knees" },
             { w: "came over him", k: "마음이 들었다", s: "A lonely feeling came over him all at once." },
             { w: "straightened up", k: "허리를 폈다", s: "He straightened up and saw his own face in the paddy water." },
@@ -567,7 +567,7 @@ const EN = {
             { w: "Just then", k: "그때", s: "Just then a sound came from behind him." },
             { w: "clear", k: "또랑또랑한", s: "A clear voice was speaking from somewhere." },
             { w: "with a start", k: "화들짝 놀라", s: "The young man straightened up with a start." },
-            { w: "hoe", k: "호미", s: "He nearly dropped his hoe in the water." },
+            { w: "hoe", k: "호미", s: "He nearly dropped the rice seedlings in the water." },
             { w: "not a shadow of ~", k: "그림자 하나 없는", s: "There was not a shadow of anybody in the paddy" },
             { w: "bank", k: "논둑", s: "in the paddy or on the bank" },
             { w: "Look as far as he might", k: "멀리까지 둘러보아도", s: "Look as far as he might, he was the only one out there." },
@@ -601,8 +601,8 @@ const EN = {
             { w: "greens", k: "나물", s: "Hot rice, three kinds of greens, and bean paste soup" },
             { w: "bean paste soup", k: "된장국", s: "three kinds of greens, and bean paste soup as well" },
             { w: "Who could have ~", k: "누가 ~했을까", s: "Who could have done this?" },
-            { w: "emptied his bowl", k: "밥그릇을 비웠다", s: "That day he emptied his bowl clean" },
-            { w: "work it out", k: "알아내다", s: "he emptied his bowl clean, and still could not work it out" }
+            { w: "ate up ~", k: "싹 비웠다", s: "That day he ate up the rice and every dish" },
+            { w: "work it out", k: "알아내다", s: "That day he ate up the rice and every dish, and still could not work it out." }
         ],
         "06-days.webp": [
             { w: "went on (go on)", k: "이어졌다", s: "It went on the next day, and the next, and the next." },
