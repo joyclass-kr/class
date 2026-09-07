@@ -647,7 +647,7 @@ const EN = {
                 "What began as a prank moved on to cakes and then to cloth, so the first time is the hard one and the second is easy.",
                 "He was counting every night how many he had taken, so his mind was never once at ease about it.",
                 "Only the mended patch could be seen, so the place you try to hide is the first thing anybody sees.",
-                "He put the cap in the stove, so he burned it because he could not face giving it back to the goblin."
+                "He got rid of the cap with his own hands, so he could not face giving it back to the goblin."
             ],
             answer: 3
         }
@@ -881,7 +881,7 @@ const QUIZ = [
             "처음에는 장난이던 것이 떡으로, 옷감으로 옮겨 간 것을 보면, 한 번이 어렵지 두 번은 쉬운 법이구나.",
             "돌쇠가 밤마다 가져온 개수를 세고 있었던 것을 보면, 마음이 편한 적은 한 번도 없었겠다.",
             "기운 헝겊만 보였다는 것을 보면, 숨기려 한 자리가 오히려 제일 먼저 눈에 띄네.",
-            "감투를 아궁이에 넣은 것을 보면, 도깨비에게 돌려줄 낯이 없어 태워 버린 거야."
+            "돌쇠가 감투를 제 손으로 없앤 것을 보면, 도깨비에게 돌려줄 낯이 없었던 거야."
         ],
         answer: 3
     }
