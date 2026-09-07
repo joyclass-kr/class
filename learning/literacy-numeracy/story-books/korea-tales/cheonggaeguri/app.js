@@ -54,8 +54,8 @@ const CHAPTERS = [
                     "동네 개구리들이 배를 잡고 웃었습니다.",
                     "\"저 집 아들은 우는 소리도 거꾸로네.\"",
                     "엄마 청개구리는 얼굴이 빨개져 연잎 뒤로 숨었어요.",
-                    "아들은 신이 나서 더 크게 울었지요.",
-                    "엄마는 그래도 아들을 미워하지 않았어요.",
+                    "그런 줄도 모르고 아들은 신이 나서 더 크게 울었지요.",
+                    "하지만 엄마는 그런 아들을 미워하지 않았어요.",
                     "언젠가는 철이 들겠거니 했지요."
                 ]
             }
@@ -109,7 +109,7 @@ const CHAPTERS = [
                 left: [
                     "엄마는 가만히 천장을 올려다보며 생각했어요.",
                     "숨소리가 자꾸 가빠졌어요.",
-                    "'나는 아무래도 오래 못 갈 것 같구나.'",
+                    "'나는 아무래도 오래 못 살 것 같구나.'",
                     "'저 아이는 무슨 말이든 반대로 하니…'",
                     "엄마는 눈을 감고 곰곰 헤아려 보았어요."
                 ],
@@ -138,7 +138,7 @@ const CHAPTERS = [
                     "아들이 무어라 물으려는데 엄마가 눈을 감았습니다.",
                     "아들은 엄마를 흔들었어요.",
                     "개울물 흐르는 소리만 졸졸 났어요.",
-                    "엄마는 다시 눈을 뜨지 않았답니다."
+                    "그 말을 하고 엄마는 다시 눈을 뜨지 않았답니다."
                 ]
             }
         ]
@@ -173,7 +173,7 @@ const CHAPTERS = [
                     "돌을 하나하나 옮겨 무덤을 쌓기 시작했지요.",
                     "돌이 무겁고 손이 미끄러웠어요. 앞발이 다 까지도록 옮기고 또 옮겼습니다.",
                     "해가 지고 별이 뜰 때까지 손을 멈추지 않았어요.",
-                    "개울물 소리가 밤새 곁에서 났지요."
+                    "개울물 흐르는 소리가 밤새 곁에서 났지요."
                 ],
                 right: [
                     "무덤이 동그랗게 완성되었어요.",
@@ -198,7 +198,7 @@ const CHAPTERS = [
                     "\"개굴개굴! 개굴개굴!\"",
                     "빗줄기가 굵어질수록 울음소리도 커졌어요.",
                     "청개구리는 그래도 자리를 뜨지 않았답니다.",
-                    "비 오는 날 개구리가 유난히 크게 우는 것은 그때부터라고 한답니다."
+                    "비 오는 날 청개구리가 유난히 크게 우는 것은 그때부터라고 한답니다."
                 ]
             }
         ],
@@ -290,9 +290,8 @@ const EN = {
                         "The neighbourhood frogs held their sides laughing.",
                         { t: "\"That house's son even cries backwards.\"", v: "granny" },
                         "The mother frog went red and hid behind a lotus leaf.",
-                        "Her son, delighted, cried louder still.",
-                        "And still she did not think badly of him.",
-                        "One day he would grow up, she thought."
+                        "Not knowing they laughed at him, her son cried louder still.",
+                        "But she did not think badly of him. One day he would grow up, she thought."
                     ]
                 }
             ]
@@ -373,7 +372,7 @@ const EN = {
                         "He started to ask something, and she closed her eyes.",
                         "He shook her.",
                         "There was only the sound of the stream running.",
-                        "She did not open her eyes again."
+                        "With that she did not open her eyes again."
                     ]
                 }
             ]
@@ -432,7 +431,7 @@ const EN = {
                         { t: "\"Gae-gul, gae-gul! Gae-gul, gae-gul!\"", v: "boy" },
                         "The harder the rain came, the louder he cried.",
                         "And still he would not leave the place.",
-                        "That, they say, is why frogs cry so loudly when it rains."
+                        "That, they say, is why green frogs cry so loudly when it rains."
                     ]
                 }
             ],
@@ -445,7 +444,7 @@ const EN = {
         { q: "When told to cry gae-gul, what did the son cry?", choices: ["Gae-gul", "Gul-gae", "Hoppity-hop"], answer: 1 },
         { q: "Why did the mother ask to be buried by the stream?", choices: ["She expected him to bury her by the stream", "Because he played in the stream", "She expected him to bury her on the mountain"], answer: 2 },
         { q: "What did the green frog carry one at a time all night?", choices: ["Lotus leaves", "Stones", "Willow branches"], answer: 1 },
-        { q: "What kind of day was that for the green frog?", choices: ["The first day he obeyed", "The first day he lied", "The first day he went up the mountain"], answer: 0 },
+        { q: "What kind of day was the day he built the grave?", choices: ["The first day he obeyed", "The first day he lied", "The first day he went up the mountain"], answer: 0 },
         { q: "Why does the green frog cry when it rains?", choices: ["He dislikes rain", "He is worried about the grave", "He is hungry"], answer: 1 },
         {
             q: "Which reaction to this book does NOT fit?",
@@ -506,8 +505,8 @@ const EN = {
             { w: "even ~ backwards", k: "~도 거꾸로", s: "That house's son even cries backwards." },
             { w: "went red", k: "얼굴이 빨개졌다", s: "The mother frog went red and hid behind a lotus leaf." },
             { w: "lotus leaf", k: "연잎", s: "hid behind a lotus leaf" },
-            { w: "delighted", k: "신이 난", s: "Her son, delighted, cried louder still." },
-            { w: "think badly of ~", k: "미워하다", s: "And still she did not think badly of him." },
+            { w: "Not knowing ~", k: "그런 줄도 모르고", s: "Not knowing they laughed at him, her son cried louder still." },
+            { w: "think badly of ~", k: "미워하다", s: "But she did not think badly of him." },
             { w: "grow up", k: "철이 들다", s: "One day he would grow up, she thought." }
         ],
         "04-sigh.webp": [
@@ -632,7 +631,7 @@ const QUIZ = [
     { q: "엄마가 개굴개굴 울라고 하자 아들은 뭐라고 울었나요?", choices: ["개굴개굴", "굴개굴개", "폴짝폴짝"], answer: 1 },
     { q: "엄마가 개울가에 묻어 달라고 한 까닭은 무엇인가요?", choices: ["아들이 개울가에 묻을 줄 알고", "아들이 개울에서 놀기 때문에", "아들이 산에 묻을 줄 알고"], answer: 2 },
     { q: "청개구리가 밤새 하나하나 옮긴 것은 무엇인가요?", choices: ["연잎", "돌", "버드나무 가지"], answer: 1 },
-    { q: "그날은 청개구리에게 어떤 날이었나요?", choices: ["처음 말을 따른 날", "처음 거짓말한 날", "처음 산에 간 날"], answer: 0 },
+    { q: "엄마 무덤을 만든 날은 청개구리에게 어떤 날이었나요?", choices: ["처음 말을 따른 날", "처음 거짓말한 날", "처음 산에 간 날"], answer: 0 },
     { q: "비가 오면 청개구리는 왜 우나요?", choices: ["비를 싫어해서", "무덤이 걱정돼서", "배가 고파서"], answer: 1 },
     {
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
