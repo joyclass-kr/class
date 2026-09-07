@@ -133,11 +133,12 @@ and the serpent, not by a monstrous transformation.
 ### `cover.webp` — 표지 (세로 2:3)
 
 ```
-Vertical portrait composition. A moonlit Korean mountain at night. High on the
-slope, a small old temple with a hanging bronze bell under a tiled roof, lit
-faintly blue. Two magpies fly upward toward the bell through the dark, wings
-spread, drawn small against the great mountain. Pines on either side, a full moon
-behind the peak. Quiet, dramatic, hopeful.
+Vertical portrait composition. A dark Korean mountain at night, NO MOON AND NO
+STARS anywhere — this book's night is pitch dark. High on the slope, a small old
+temple with a hanging bronze bell under a tiled roof, lit faintly blue. Two
+magpies fly upward toward the bell through the dark, wings spread, drawn small
+against the great mountain. Pines on either side, a faint grey glow low behind
+the peak is the only light. Quiet, dramatic, hopeful.
 ```
 
 ## 본문 열 장 (모두 가로 16:9)
@@ -177,8 +178,8 @@ overhead. Dynamic and clean.
 Wide night landscape. Dark forested slopes fill most of the frame. On the right,
 a single small thatched house with one paper window glowing warm yellow, the only
 light for miles. On the left, the scholar approaches along the trail, small and
-weary, one hand raised toward the door. Deep indigo night, stars above the
-ridgeline. Lonely and a little eerie.
+weary, one hand raised toward the door. Deep indigo night, NO MOON AND NO STARS —
+the one paper window is the only light in the frame. Lonely and a little eerie.
 ```
 
 ### `05-coil.webp` — 몸을 감은 구렁이
@@ -186,50 +187,52 @@ ridgeline. Lonely and a little eerie.
 ```
 Wide interior of a dim Korean room at night, seen from the side. The scholar lies
 on a sleeping mat on the right, eyes wide open in shock, arms pinned, as the huge
-stylised snake loops around him in smooth folk-art curves. On the left, the paper
-door glows faint blue with moonlight. Keep the snake decorative and rounded, not
-realistic. Tense but not frightening.
+stylised snake loops around him in smooth folk-art curves.
+THE SNAKE MUST BE ONE UNBROKEN BODY: a single continuous coil from head to tail
+with no gap, no second strand, and no place where the body seems cut off by the
+man. It has ONE head, clearly drawn, resting near his shoulder. (The last version
+split the neck into two strands and lost the head.)
+On the left, the paper door glows faint yellow from a low oil lamp — no moonlight,
+this night has no moon. Keep the snake decorative and rounded, not realistic.
+Tense but not frightening.
 ```
 
 ### `06-revenge.webp` — 낮의 그 여인
 
 ```
-Wide interior of the same room. On the right, the snake's large head rises beside
-the scholar, calm rather than snarling, eyes steady. On the left, half in shadow
-near the door, the pale woman in white hanbok stands with her back partly turned,
-long black hair down, speaking quietly. The scholar looks between them, face
-drained. Cool blue moonlight, still and quiet.
+Wide interior of the same room. The snake is STILL WOUND AROUND THE SCHOLAR — one
+unbroken body, several coils over his chest and arms, its large head risen beside
+his face, calm rather than snarling, eyes steady. He is held, not merely
+threatened. On the left, half in shadow near the door, the pale woman in white
+hanbok stands with her back partly turned, long black hair down, speaking quietly.
+The scholar's face is drained. Cool lamplight, no moonlight, still and quiet.
 ```
 
 ### `07-bell.webp` — 종을 치라는 조건
 
 ```
 Wide interior with a view through the open paper door. Inside on the left, the
-snake's head and the bound scholar. Through the doorway on the right, far up the
-dark mountain, the tiny silhouette of the temple and its hanging bell under a
-sliver of moon. The scholar stares out at it, hopeless. Strong depth between the
+snake's head and the scholar wound in its coils. Through the doorway on the right,
+far up the dark mountain, the tiny silhouette of the temple and its hanging bell
+against a moonless black sky. The scholar stares out at it, hopeless. Strong depth between the
 near room and the distant temple.
 ```
 
 ### `08-ring.webp` — 종이 울리던 순간
 
-> **이 그림은 다시 그려야 합니다.** 본문이 바뀌었습니다.
-> 구렁이는 종이 울릴 리 없다고 여기고, 날이 밝으면 선비를 잡아먹고 하늘로 오를
-> 셈으로 종 아래에 와 있습니다. 하늘만 올려다보는데 등 뒤에서 종이 울립니다.
-> **이 책에서 가장 웃긴 자리입니다.** 무섭게 그리지 마세요.
+> **이 그림은 다시 그려야 합니다.** 본문이 또 바뀌었습니다.
+> **구렁이는 이제 절에 가지 않습니다.** 절로 가 버리면 선비가 도망가면 그만이라
+> 이야기가 무너집니다. 구렁이는 방에서 선비를 감은 채 종소리를 기다립니다.
+> 그러니 이 그림에는 **까치 두 마리와 종만** 나옵니다. 구렁이를 그리지 마세요.
 
 ```
-Wide dawn scene at an old mountain temple bell pavilion. The great bronze bell
-hangs under its tiled roof, sound drawn as expanding pale golden arcs. Two
-magpies fly hard at the bell, wings beating, small and determined against the
-huge bronze.
-In front of the bell, alone, a large pale serpent sits coiled up, no one else
-around — it came up the mountain by itself to watch, certain nothing could ring.
-It has just whipped its head around toward the bell and is comically appalled:
-eyes huge and round, mouth hanging open, tongue out sideways, sweat drops flying
-off its head, tail tip curled up in shock. Flustered, not menacing. No fangs,
-no blood, nobody being squeezed.
-The sky at the right edge is turning pale grey-pink.
+Night scene at an old mountain temple bell pavilion, no moon and no stars. The
+great bronze bell hangs under its tiled roof, sound drawn as expanding pale
+golden arcs. Two magpies fly hard at the bell, wings beating, small and
+determined against the huge bronze — one is mid-strike against the rim, the other
+climbing for another run. NO SNAKE IN THIS PICTURE and no other creature: the
+temple is empty and dark, and these two did it alone. Their effort is the whole
+subject. Brave and moving, never grim; no injury shown.
 ```
 
 ### `09-temple.webp` — 혼자 오르는 용과 종 아래의 까치들

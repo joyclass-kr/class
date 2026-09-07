@@ -15,7 +15,7 @@ const CHAPTERS = [
                 right: [
                     "\"오늘 안에 저 고개를 넘어야 할 텐데.\"",
                     "선비는 걸음을 재촉했어요.",
-                    "\"산길에서 밤을 새울 수는 없는데.\"",
+                    "\"산길에서 밤을 새울 수는 없는데…\"",
                     "나뭇잎이 바스락거릴 때마다 괜히 뒤를 돌아보게 되었습니다. 짐승이라도 나올 것만 같았거든요."
                 ]
             },
@@ -26,7 +26,7 @@ const CHAPTERS = [
                     "그때 머리 위에서 요란한 소리가 들렸어요.",
                     "\"깍깍! 깍깍깍!\"",
                     "선비가 걸음을 멈췄어요.",
-                    "고개를 드니 커다란 나무 꼭대기에 까치 둥지가 하나 있었습니다. 어미 까치 두 마리가 정신없이 날개를 퍼덕이고 있었지요."
+                    "고개를 드니 커다란 나무 꼭대기에 까치 둥지가 하나 있었습니다. 까치 두 마리가 정신없이 날개를 퍼덕이고 있었지요."
                 ],
                 right: [
                     "둥지 쪽으로 시커먼 구렁이가 기어오르고 있었어요. 어른 팔뚝만 한 놈이었습니다.",
@@ -64,7 +64,7 @@ const CHAPTERS = [
                 emoji: "🏚️",
                 left: [
                     "다시 길을 걷다 보니 어느새 사방이 캄캄해졌어요.",
-                    "희미한 달빛에 기대어 걸었지요.",
+                    "별빛 하나 없는 캄캄한 밤이었습니다.",
                     "\"오늘은 여기서 자야겠구나.\"",
                     "그때 저 멀리 불빛 하나가 깜빡였어요. 가까이 가 보니 산속에 덩그러니 놓인 외딴집이었지요."
                 ],
@@ -101,7 +101,7 @@ const CHAPTERS = [
                     "목소리가 방 안에 가득 울렸어요.",
                     "\"그이가 바로 내 남편이다.\"",
                     "분명 문을 열어 주던 그 여인의 목소리였습니다.",
-                    "\"우리는 천 년을 기다렸다.\""
+                    "\"우리는 용이 되려고 천 년을 기다렸다.\""
                 ],
                 right: [
                     "\"오늘 밤 둘이 함께 용이 되어 하늘로 오르기로 한 날이었다.\"",
@@ -122,7 +122,7 @@ const CHAPTERS = [
                 ],
                 right: [
                     "\"좋다. 날이 밝기 전에 저 산 위 절의 종이 세 번 울리면 놓아주마.\"",
-                    "\"울리지 않으면 너를 잡아먹고 하늘로 오르겠다.\"",
+                    "\"울리지 않으면 너를 죽이고 하늘로 오르겠다.\"",
                     "\"그런 절이 어디 있단 말입니까!\"",
                     "그 절은 스님이 떠난 지 오래된 빈 절이었거든요."
                 ]
@@ -137,26 +137,23 @@ const CHAPTERS = [
                 art: "08-ring.webp",
                 emoji: "🌄",
                 left: [
-                    "\"나는 그 절에 가서 지켜보겠다.\"",
-                    "구렁이는 스르르 몸을 풀고 산으로 올라갔어요.",
-                    "선비는 방바닥에 주저앉은 채 밤을 새웠습니다.",
-                    "창밖이 희끄무레해질 무렵이었어요.",
-                    "이제 정말 끝이구나 싶었지요.",
-                    "그때였어요."
+                    "\"종소리는 여기서도 다 들린다.\"",
+                    "구렁이는 선비를 칭칭 감은 채 꼼짝도 하지 않았어요. 팔 하나 까딱할 수 없으니 종을 울리러 갈 수도 없었지요.",
+                    "\"이제 정말 끝이구나.\"",
+                    "밤이 깊어 자정이 가까워졌어요. 방 안에는 정적만 흘렀답니다."
                 ],
                 right: [
-                    "산 위 빈 절에서는 구렁이가 종 아래에 몸을 둥글게 감고 있었어요.",
-                    "그때 까치 두 마리가 날아와 종에 몸을 던졌습니다. 부딪히고, 다시 날아올라 또 부딪혔어요.",
+                    "그때 산 위 빈 절로 까치 두 마리가 날아올랐어요. 그러고는 낡은 종에 몸을 던졌습니다. 부딪히고, 다시 날아올라 또 부딪혔어요.",
                     "뎅— 뎅— 뎅—",
-                    "\"어? 어어? 안 돼!\"",
-                    "구렁이가 뱅뱅 돌았지만 소리는 벌써 세 번이었어요."
+                    "정적을 깨고 종소리가 세 번 울리자 구렁이도 선비도 깜짝 놀랐어요.",
+                    "그 순간 선비를 감고 있던 몸이 스르르 풀렸답니다."
                 ]
             },
             {
                 art: "09-temple.webp",
                 emoji: "⛩️",
                 left: [
-                    "구렁이의 몸이 하얀 김을 뿜으며 쑥쑥 늘어났어요.",
+                    "구렁이는 마당으로 스르르 나갔어요. 그 몸이 하얀 김을 뿜으며 쑥쑥 늘어났지요.",
                     "뿔이 돋고 비늘이 돋더니 커다란 용이 되었지요.",
                     "용은 구름 위로 올라가며 눈물을 뚝뚝 흘렸어요.",
                     "혼자였거든요."
@@ -236,7 +233,7 @@ const EN = {
                     right: [
                         { t: "\"I ought to be over that pass before dark.\"", v: "man" },
                         "The scholar walked faster.",
-                        { t: "\"I can't spend the night on a mountain road.\"", v: "man" },
+                        { t: "\"I can't spend the night on a mountain road...\"", v: "man" },
                         "Every time the leaves rustled he found himself looking back. It felt as if some animal might come out."
                     ]
                 },
@@ -247,7 +244,7 @@ const EN = {
                         "Then came a great racket over his head.",
                         { t: "\"Kak-kak! Kak-kak-kak!\"", v: "girl" },
                         "The scholar stopped.",
-                        "He looked up. At the top of a tall tree was a magpies' nest, and two parent magpies were beating their wings wildly."
+                        "He looked up. At the top of a tall tree was a magpies' nest, and two magpies were beating their wings wildly."
                     ],
                     right: [
                         "A big black snake was climbing towards the nest. It was as thick as a grown man's arm.",
@@ -285,7 +282,7 @@ const EN = {
                     emoji: "🏚️",
                     left: [
                         "He walked on, and before he knew it the dark had closed in on every side.",
-                        "He walked on by the thin moonlight.",
+                        "There was not a star in the sky.",
                         { t: "\"I'll have to sleep somewhere here.\"", v: "man" },
                         "Just then a light blinked far off. When he came near, it was a house standing all alone in the mountains."
                     ],
@@ -322,7 +319,7 @@ const EN = {
                         "The voice filled the whole room.",
                         { t: "\"That one was my husband.\"", v: "woman" },
                         "It was clearly the voice of the woman who had opened the door.",
-                        { t: "\"We waited a thousand years.\"", v: "woman" }
+                        { t: "\"We waited a thousand years to become dragons.\"", v: "woman" }
                     ],
                     right: [
                         { t: "\"Tonight was the night the two of us were to become dragons and rise into the sky.\"", v: "woman" },
@@ -343,7 +340,7 @@ const EN = {
                     ],
                     right: [
                         { t: "\"Very well. If the bell at the temple up that mountain rings three times before daybreak, I will let you go.\"", v: "woman" },
-                        { t: "\"If it does not ring, I will eat you and rise into the sky.\"", v: "woman" },
+                        { t: "\"If it does not ring, I will kill you and rise into the sky.\"", v: "woman" },
                         { t: "\"Where would such a temple be!\"", v: "man" },
                         "The monks had left that temple long ago; it stood empty."
                     ]
@@ -358,25 +355,23 @@ const EN = {
                     art: "08-ring.webp",
                     emoji: "🌄",
                     left: [
-                        { t: "\"I shall go to that temple and watch.\"", v: "woman" },
-                        "The snake slid its coils loose and went up the mountain.",
-                        "The scholar sat where he was on the floor all night.",
-                        "The window was just turning grey.",
-                        "This is the end of me, he thought. And then it happened."
+                        { t: "\"I shall hear the bell well enough from here.\"", v: "woman" },
+                        "The snake did not stir. It held him wound tight, and he could not move an arm, let alone go and ring a bell.",
+                        { t: "\"This is the end of me.\"", v: "man" },
+                        "The night deepened towards midnight. Not a sound in the room."
                     ],
                     right: [
-                        "Up at the empty temple the snake lay curled beneath the bell.",
-                        "Then two magpies flew in and threw themselves at it. They struck it, rose, and struck it again.",
+                        "Then, up at the empty temple, two magpies flew to the old bell and threw themselves at it. They struck it, rose, and struck it again.",
                         "Dong— dong— dong—",
-                        { t: "\"What? No — no!\"", v: "woman" },
-                        "The snake whirled about, but the sound had already come three times."
+                        "Three times the bell broke the silence. The snake and the scholar both started.",
+                        "And in that moment the coils around him slid loose."
                     ]
                 },
                 {
                     art: "09-temple.webp",
                     emoji: "⛩️",
                     left: [
-                        "White steam poured off the snake's body and it stretched out longer and longer.",
+                        "The snake slid out into the yard. White steam poured off its body and it stretched out longer and longer.",
                         "Horns grew, scales grew, and it became a great dragon.",
                         "The dragon rose above the clouds, and tears fell from its eyes.",
                         "It was alone."
@@ -467,7 +462,7 @@ const EN = {
         "02-nest.webp": [
             { w: "racket", k: "요란한 소리", s: "Then came a great racket over his head." },
             { w: "nest", k: "둥지", s: "At the top of a tall tree was a magpies' nest" },
-            { w: "beating their wings", k: "날개를 퍼덕이는", s: "two parent magpies were beating their wings wildly" },
+            { w: "beating their wings", k: "날개를 퍼덕이는", s: "two magpies were beating their wings wildly" },
             { w: "wildly", k: "정신없이", s: "beating their wings wildly" },
             { w: "climbing towards ~", k: "~ 쪽으로 기어오르는", s: "A big black snake was climbing towards the nest." },
             { w: "as thick as ~", k: "~만큼 굵은", s: "It was as thick as a grown man's arm." },
@@ -492,7 +487,7 @@ const EN = {
         "04-house.webp": [
             { w: "closed in (close in)", k: "사방이 어두워졌다", s: "the dark had closed in on every side" },
             { w: "on every side", k: "사방으로", s: "the dark had closed in on every side" },
-            { w: "by the thin moonlight", k: "희미한 달빛에 기대어", s: "He walked on by the thin moonlight." },
+            { w: "not a star in the sky", k: "별빛 하나 없는", s: "There was not a star in the sky." },
             { w: "blinked (blink)", k: "깜빡였다", s: "Just then a light blinked far off." },
             { w: "far off", k: "저 멀리", s: "a light blinked far off" },
             { w: "standing all alone", k: "덩그러니 놓인", s: "a house standing all alone in the mountains" },
@@ -520,7 +515,7 @@ const EN = {
             { w: "filled (fill)", k: "가득 울렸다", s: "The voice filled the whole room." },
             { w: "husband", k: "남편", s: "That one was my husband." },
             { w: "clearly", k: "분명히", s: "It was clearly the voice of the woman" },
-            { w: "a thousand years", k: "천 년", s: "We waited a thousand years." },
+            { w: "a thousand years", k: "천 년", s: "We waited a thousand years to become dragons." },
             { w: "were to ~", k: "~하기로 되어 있었다", s: "Tonight was the night the two of us were to become dragons" },
             { w: "rise into the sky", k: "하늘로 오르다", s: "become dragons and rise into the sky" },
             { w: "tightened (tighten)", k: "조여 왔다", s: "The snake tightened its coils a little at a time." },
@@ -535,28 +530,29 @@ const EN = {
             { w: "barely", k: "겨우", s: "He could barely squeeze the words out." },
             { w: "up in his throat", k: "목까지 차오른", s: "His breath was up in his throat." },
             { w: "was still (be still)", k: "가만히 있었다", s: "The snake was still for a long moment" },
-            { w: "Very well.", k: "좋다.", s: "Very well. If the bell rings three times..." },
+            { w: "Very well.", k: "좋다.", s: "Very well. If the bell at the temple up that mountain rings three times" },
             { w: "daybreak", k: "날이 밝을 때", s: "rings three times before daybreak" },
             { w: "let you go", k: "놓아주다", s: "I will let you go." },
             { w: "monks", k: "스님들", s: "The monks had left that temple long ago" },
             { w: "stood empty", k: "빈 채로 있었다", s: "it stood empty" }
         ],
         "08-ring.webp": [
-            { w: "I shall ~", k: "나는 ~하겠다", s: "I shall go to that temple and watch." },
-            { w: "slid ~ loose (slide)", k: "스르르 풀었다", s: "The snake slid its coils loose" },
-            { w: "sat where he was", k: "그 자리에 주저앉았다", s: "The scholar sat where he was on the floor all night." },
-            { w: "turning grey", k: "희끄무레해지는", s: "The window was just turning grey." },
-            { w: "the end of me", k: "이제 끝이다", s: "This is the end of me, he thought." },
-            { w: "curled (curl)", k: "몸을 둥글게 감은", s: "the snake lay curled beneath the bell" },
-            { w: "beneath ~", k: "~ 아래에", s: "the snake lay curled beneath the bell" },
-            { w: "threw themselves at ~ (throw)", k: "~에 몸을 던졌다", s: "two magpies flew in and threw themselves at it" },
+            { w: "well enough", k: "다, 충분히", s: "I shall hear the bell well enough from here." },
+            { w: "did not stir (stir)", k: "꼼짝도 하지 않았다", s: "The snake did not stir." },
+            { w: "wound tight (wind)", k: "칭칭 감은", s: "It held him wound tight" },
+            { w: "let alone ~", k: "~은커녕", s: "he could not move an arm, let alone go and ring a bell" },
+            { w: "the end of me", k: "이제 끝이다", s: "This is the end of me." },
+            { w: "deepened (deepen)", k: "깊어 갔다", s: "The night deepened towards midnight." },
+            { w: "not a sound", k: "정적만 흘렀다", s: "Not a sound in the room." },
+            { w: "threw themselves at ~ (throw)", k: "~에 몸을 던졌다", s: "two magpies flew to the old bell and threw themselves at it" },
             { w: "Dong—", k: "뎅—", s: "Dong— dong— dong—" },
-            { w: "whirled about (whirl)", k: "뱅뱅 돌았다", s: "The snake whirled about" },
-            { w: "had already come", k: "벌써 났다", s: "the sound had already come three times" }
+            { w: "broke the silence (break)", k: "정적을 깼다", s: "Three times the bell broke the silence." },
+            { w: "started (start)", k: "깜짝 놀랐다", s: "The snake and the scholar both started." },
+            { w: "slid loose (slide)", k: "스르르 풀렸다", s: "the coils around him slid loose" }
         ],
         "09-temple.webp": [
-            { w: "steam", k: "김", s: "White steam poured off the snake's body" },
-            { w: "poured off (pour)", k: "뿜어 나왔다", s: "White steam poured off the snake's body" },
+            { w: "steam", k: "김", s: "White steam poured off its body" },
+            { w: "slid out (slide)", k: "스르르 나갔다", s: "The snake slid out into the yard." },
             { w: "stretched out (stretch)", k: "쑥쑥 늘어났다", s: "it stretched out longer and longer" },
             { w: "horns", k: "뿔", s: "Horns grew, scales grew" },
             { w: "dragon", k: "용", s: "it became a great dragon" },
