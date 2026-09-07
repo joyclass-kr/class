@@ -432,8 +432,7 @@
     const DRILLS = [
         {
             id: "interval",
-            name: label("Intervals", "음정"),
-            menuName: label("Listening", "듣기"),
+            name: label("Interval Listening", "음정 듣기"),
             ask: "무슨 음정인가요?",
             items: INTERVALS,
             inputs: ["buttons", "keyboard"],
@@ -454,7 +453,6 @@
         {
             id: "reading",
             name: label("Interval Reading", "음정 읽기"),
-            menuName: label("Reading", "읽기"),
             ask: "무슨 음정인가요?",
             items: READ_ITEMS,
             inputs: ["pair"],
@@ -504,8 +502,7 @@
         },
         {
             id: "scale",
-            name: label("Scales", "음계"),
-            menuName: label("Listening", "듣기"),
+            name: label("Scale Listening", "음계 듣기"),
             ask: "무슨 음계인가요?",
             items: SCALES,
             inputs: ["buttons"],
@@ -538,7 +535,6 @@
         {
             id: "rhythmWrite",
             name: label("Rhythm Dictation", "리듬 받아쓰기"),
-            menuName: label("Dictation", "받아쓰기"),
             ask: "들은 자리를 켜세요",
             pickable: false,
             inputs: ["grid"],
@@ -569,8 +565,7 @@
         },
         {
             id: "rhythmRead",
-            name: label("Rhythm Reading", "리듬 읽기"),
-            menuName: label("Tapping", "두드리기"),
+            name: label("Rhythm Tapping", "리듬 두드리기"),
             ask: "박에 맞춰 두드리세요",
             pickable: false,
             inputs: ["tap"],
@@ -678,6 +673,7 @@
     }
     const session = {
         screen: "menu",
+        area: null,
         drill: null,
         level: "easy",
         mode: "",
@@ -698,7 +694,7 @@
     };
 
     function showScreen(name) {
-        ["menu", "course", "lesson", "wheel", "setup", "drill", "result"].forEach(key => {
+        ["menu", "area", "course", "lesson", "wheel", "setup", "drill", "result"].forEach(key => {
             els[key + "Screen"].hidden = key !== name;
         });
         session.screen = name;
@@ -733,37 +729,14 @@
 
     function renderMenu() {
         els.areaList.innerHTML = "";
-        AREAS.forEach(area => {
-            const field = document.createElement("div");
-            field.className = "field";
-            const heading = document.createElement("span");
-            heading.className = "field-label";
-            heading.textContent = area.name;
-            field.append(heading);
-
-            const list = document.createElement("div");
-            list.className = "drill-list";
-            const course = (window.EarCourses || []).find(entry => entry.id === area.courseId);
-            if (course) {
-                const progress = courseProgress(course);
-                list.append(menuCard(
-                    label("Course", "과정"),
-                    progress.done + " / " + progress.total + "차시",
-                    () => openCourse(course.id)
-                ));
-            }
-            area.drills.forEach(drillId => {
-                const drill = DRILL_BY_ID[drillId];
-                if (!drill) return;
-                const rate = drillRate(drill.id);
-                list.append(menuCard(
-                    drill.menuName || drill.name,
-                    rate === null ? "" : rate + "%",
-                    () => openSetup(drill.id)
-                ));
-            });
-            field.append(list);
-            els.areaList.append(field);
+        AREAS.forEach((area, index) => {
+            const areaCourse = courseById(area.courseId);
+            const progress = areaCourse ? courseProgress(areaCourse) : null;
+            els.areaList.append(menuCard(
+                area.name,
+                progress ? progress.done + " / " + progress.total + "차시" : "",
+                () => openArea(index)
+            ));
         });
 
         els.toolList.innerHTML = "";
@@ -772,8 +745,37 @@
         wheelCard.className = "drill-card";
         wheelCard.innerHTML = "<b></b>";
         wheelCard.querySelector("b").textContent = label("Circle of Fifths", "오도권 원판");
-        wheelCard.addEventListener("click", openWheel);
+        wheelCard.addEventListener("click", () => { session.area = null; openWheel(); });
         els.toolList.append(wheelCard);
+    }
+
+    /* 갈래 화면: 그 갈래의 과정 하나와 혼자 연습만 놓는다. */
+    function openArea(index) {
+        const area = AREAS[index];
+        if (!area) return;
+        session.area = index;
+        els.areaTitle.textContent = area.name;
+
+        els.areaCourse.innerHTML = "";
+        const areaCourse = courseById(area.courseId);
+        if (areaCourse) {
+            const progress = courseProgress(areaCourse);
+            els.areaCourse.append(menuCard(
+                areaCourse.name,
+                progress.done + " / " + progress.total + "차시",
+                () => openCourse(areaCourse.id)
+            ));
+        }
+
+        els.areaDrills.innerHTML = "";
+        area.drills.forEach(drillId => {
+            const drill = DRILL_BY_ID[drillId];
+            if (!drill) return;
+            const rate = drillRate(drill.id);
+            els.areaDrills.append(menuCard(drill.name, rate === null ? "" : rate + "%", () => openSetup(drill.id)));
+        });
+
+        showScreen("area");
     }
 
     function levelIds(drill, levelId) {
@@ -1888,6 +1890,7 @@
             showScreen("course");
             return;
         }
+        if (session.area !== null && session.area !== undefined) { openArea(session.area); return; }
         renderMenu();
         showScreen("menu");
     }
@@ -1896,7 +1899,14 @@
         if (session.screen === "drill") { finishDrill(); return true; }
         if (session.screen === "result") { backToHub(); return true; }
         if (session.screen === "lesson") { renderLessonList(); showScreen("course"); return true; }
-        if (session.screen === "wheel" || session.screen === "course" || session.screen === "setup") {
+        if (session.screen === "course" || session.screen === "setup") {
+            if (session.area !== null && session.area !== undefined) { openArea(session.area); return true; }
+            renderMenu();
+            showScreen("menu");
+            return true;
+        }
+        if (session.screen === "wheel" || session.screen === "area") {
+            session.area = null;
             renderMenu();
             showScreen("menu");
             return true;
@@ -1921,7 +1931,8 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "setupScreen", "drillScreen", "resultScreen",
             "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "lessonQuiz", "lessonKeys", "wheelKeys", "areaList", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
+            "lessonNext", "lessonQuiz", "lessonKeys", "wheelKeys", "areaList", "toolList",
+            "areaScreen", "areaTitle", "areaCourse", "areaDrills", "wheelScreen", "wheelBoard", "wheelChords",
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence", "setupTitle", "inversionField", "inversionRow",
             "helpRow", "arpButton", "rootButton",
             "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",

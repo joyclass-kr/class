@@ -70,7 +70,11 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 }
 
 /* 갈래 고르기 */
-.area-list { display: grid; gap: 14px; }
+.area-list { display: grid; gap: 12px; }
+
+/* 첫 화면은 갈래 넷뿐이므로 크게 두어 빈 자리를 남기지 않는다. */
+.area-list .drill-card { min-height: 92px; padding: 18px 22px; }
+.area-list .drill-card b { font-size: 23px; }
 .drill-list { display: grid; gap: 12px; }
 
 .drill-card {
