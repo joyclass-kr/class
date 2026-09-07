@@ -107,7 +107,18 @@ var SPECS = [
     { file: 'reflex-arc.svg', title: '반사궁' },
     { file: 'reflex-centers.svg', title: '반사 중추' },
     { file: 'ear-diagram.svg', title: '귀' },
-    { file: 'eye-diagram.svg', title: '눈' }
+    {
+        file: 'eye-diagram.svg',
+        title: '눈',
+        touch: [
+            ['cornea', 'scleraLayer', '각막은 공막에 이어진다'],
+            ['iris', 'cornea', '홍채는 각막 뒤에 붙는다'],
+            ['zonule', 'lens', '진대는 수정체에 붙는다'],
+            ['zonule', 'ciliaryBody', '진대는 섬모체에 붙는다'],
+            ['opticNerve', 'retina', '시각 신경은 망막에서 나온다'],
+            ['fovea', 'retina', '황반은 망막 위에 있다']
+        ]
+    }
 ];
 
 var stage = document.createElement('div');
