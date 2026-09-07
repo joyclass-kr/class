@@ -18,10 +18,19 @@ from collections import Counter, defaultdict
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# 잣대의 뼈대: 2022 개정 교육과정 성취기준·성취수준 원문 (fetch_curriculum_standards.py로 받는다)
+CURRICULUM_DIR = 'tmp/curriculum'
+# 보조: 아이가 실제로 읽는 이 사이트의 교과 글
 SUBJECT_DIRS = ['science-lab', 'periodic-table', 'human-body', 'space',
                 'korean-history', 'korea-geography', 'world-geography', 'age-of-exploration']
 
 # 한자어처럼 걸려들지만 실제로는 우리말인 것들
+# 성취수준 문서에만 잔뜩 나오는 평가 사무용 말. 교과 내용어가 아니라 빼고 센다.
+BOILERPLATE = set('평가 예시 답안 채점 문항 수행 도구 과목 학생 교육과정 영역 성취 기준 수준 서술 제시 활용 '
+                  '방안 내용 요소 사례 자료 이해 분석 파악 조사 탐구 해결 문제 고등학교 학교 학습 수업 교사 '
+                  '배점 정답 오답 유의 참고 진술 관련 다음 경우 대상 결과 과정 방법 능력 태도 개념 지식 소개 '
+                  '설명 작성 판단 선택 구성 제작 발표 토론 활동 실험 관찰 측정 계획 정리 확인 적용 평가지 답지'.split())
+
 STOP = set('가장 대로 하지 대한 가운 일어 이지 지고 동안 위해 남아 이의 이루 이면 지가 도록 물의 수록 '
            '그만 아니 부터 만큼 이나 어느 무리 어서 오는 되어 에서 으로 하나 이는 이를 이와 이때 아래 사이'.split())
 
@@ -83,12 +92,22 @@ def main():
     print(f'사전 표제어 {len(dictionary)}개')
 
     per_subject = {}
+    for path in sorted(glob.glob(os.path.join(ROOT, CURRICULUM_DIR, '*.txt'))):
+        runs = re.findall(r'[가-힣]{2,}', open(path, encoding='utf-8').read())
+        counted = count_words(runs, dictionary, longest)
+        for word in STOP | BOILERPLATE:
+            counted.pop(word, None)
+        name = '성취기준:' + os.path.basename(path)[:-4]
+        per_subject[name] = counted
+        print(f'  {name:28s} 한자어 {sum(counted.values())}번')
+    if not per_subject:
+        print('  (성취기준 원문이 없습니다. scripts/fetch_curriculum_standards.py를 먼저 돌리세요.)')
     for name in SUBJECT_DIRS:
         counted = count_words(read_subject_text(name), dictionary, longest)
         for word in STOP:
             counted.pop(word, None)
-        per_subject[name] = counted
-        print(f'  {name:20s} 한자어 {sum(counted.values())}번')
+        per_subject['사이트:' + name] = counted
+        print(f'  사이트:{name:22s} 한자어 {sum(counted.values())}번')
 
     # 과목마다 같은 무게(1000점)를 주어 한 과목 글이 많다고 치우치지 않게 한다
     weight, raw = Counter(), Counter()

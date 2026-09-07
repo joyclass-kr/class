@@ -19,8 +19,12 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
     if (nonContaining !== 1) errors.push(`${lesson.term} Q${questionIndex + 1}: 목표 한자가 없는 보기는 정확히 하나여야 합니다.`);
     const targetCharacter = lesson.characters.find((item) => item.character === question.target);
     const readings = (targetCharacter?.reading || '').split('·').filter(Boolean);
-    if (!question.options.every((option) => readings.some((reading) => option[0].includes(reading)))) {
+    // 우리말에 같은 소리 다른 한자가 아예 없는 글자(冷·層)는 소리가 다른 보기를 쓸 수밖에 없다
+    if (!question.noHomophone && !question.options.every((option) => readings.some((reading) => option[0].includes(reading)))) {
       errors.push(`${lesson.term} Q${questionIndex + 1}: 모든 보기에 목표 글자의 독음이 드러나야 합니다.`);
+    }
+    if (question.noHomophone && !question.options.slice(0, 3).every((option) => readings.some((reading) => option[0].includes(reading)))) {
+      errors.push(`${lesson.term} Q${questionIndex + 1}: 정답을 뺀 보기에는 목표 글자의 독음이 드러나야 합니다.`);
     }
     if (containing[question.answer] !== false) errors.push(`${lesson.term} Q${questionIndex + 1}: 정답은 목표 한자가 없는 보기여야 합니다.`);
     if (!question.options.every((option) => option[2].includes(`{{${option[0]}}}`))) {

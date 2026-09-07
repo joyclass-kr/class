@@ -66,7 +66,9 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
     else if (/(?:한자음이 아닙니다|외래어이므로 한자를 쓰지 않습니다)\.$/.test(question.note)) nonHanjaFeedback += 1;
     else errors.push(`${slug} ${question.target}: 정답 해설 형식이 올바르지 않습니다.`);
     const readings = character.reading.split('·').filter(Boolean);
-    for (const option of question.options) {
+    // 우리말에 같은 소리 다른 한자가 없는 글자(冷·層)는 정답 보기만 소리가 다를 수 있다
+    const soundChecked = question.noHomophone ? question.options.slice(0, 3) : question.options;
+    for (const option of soundChecked) {
       if (!readings.some((reading) => option[0].includes(reading))) errors.push(`${slug} ${question.target}: ${option[0]}에 표시 독음이 없습니다.`);
       if (!option[2].includes(`{{${option[0]}}}`)) errors.push(`${slug} ${question.target}: ${option[0]} 밑줄 표시가 없습니다.`);
     }

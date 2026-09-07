@@ -4,7 +4,8 @@ import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(root, p), 'utf8'));
 
-const plan = read('scripts/hanja-v2-stage15-19-plan.json');
+const plan = read('scripts/hanja-v2-subject-stages-plan.json');
+const noHomophoneDecoys = read('scripts/hanja-no-homophone-decoys.json').decoys;
 const db = read('tmp/worddb.json');
 const subjectWords = read('scripts/hanja-subject-word-weights.json');
 const hunEumTable = read('scripts/hanja-huneum-table.json');
@@ -58,7 +59,8 @@ const banned = new Set(['고려장', '처형', '극형', '사형', '피살', '�
   '시신', '시체', '사체', '부검', '강간', '성폭행', '매춘', '마약', '도박', '자해', '폭행', '고문', '참수', '유괴',
   '인신매매', '밀매', '밀수', '음주', '흡연', '담배', '술집', '유흥', '도살', '도축', '기생충', '변태', '음란',
   '화형', '천형', '참형', '태형', '전축', '수라장', '기라성', '난자', '배란', '명란',
-  '감자', '배교', '선혈', '아수라장', '삼라만상', '실탄', '육탄', '타계', '무극']);
+  '감자', '배교', '선혈', '아수라장', '삼라만상', '실탄', '육탄', '타계', '무극',
+  '계장', '강력계', '복리', '음복', '만난', '위정', '인책', '자책', '오욕', '기생']);
 /* 예문 문장에도 같은 잣대를 댄다 */
 const heavy = /사형|처형|살인|살해|자살|시신|시체|음주|흡연|담배|마약|도박|성폭|강간|매춘|낙태|폭행|고문|학살|유괴|밀수|밀매|도살|도축|죄수|복역|징역|범인|피범벅|참수/;
 const usableSentence = (sentence) =>
@@ -107,11 +109,12 @@ function distractorFor(character, sounds, avoid) {
   return found[0] || null;
 }
 
-const objectParticle = (word) => {
-  const last = word.at(-1);
-  const code = last.charCodeAt(0) - 0xac00;
-  return code >= 0 && code <= 11171 && code % 28 ? '을' : '를';
+const hasFinal = (word) => {
+  const code = word.at(-1).charCodeAt(0) - 0xac00;
+  return code >= 0 && code <= 11171 && code % 28 !== 0;
 };
+const objectParticle = (word) => (hasFinal(word) ? '을' : '를');
+const topicParticle = (word) => (hasFinal(word) ? '은' : '는');
 const mark = (sentence, term) => sentence.replaceAll(term, `{{${term}}}`).replace(/\{\{\{\{/g, '{{').replace(/\}\}\}\}/g, '}}');
 const option = (record) => [record.term, record.hanja, mark(record.ex[0], record.term)];
 
@@ -150,17 +153,31 @@ for (const stage of Object.values(plan)) {
       });
       const avoid = new Set(picked.map((r) => r.term));
       const decoy = distractorFor(character, sounds.slice(0, 2), avoid);
-      if (!decoy) {
-        problems.push(`${term}:${character} 같은 소리 다른 한자 낱말을 못 찾음`);
+      const options = picked.slice(0, 3).map(option);
+      if (decoy) {
+        options.push(option(decoy.record));
+        questions.push({
+          target: character,
+          answer: 3,
+          note: `‘${decoy.record.term}’에는 ‘${decoy.hunEum}’${objectParticle(decoy.hunEum)} 씁니다.`,
+          options
+        });
         continue;
       }
-      const options = picked.slice(0, 3).map(option);
-      const answer = 3;
-      options.push(option(decoy.record));
+      /* 우리말에 같은 소리 다른 한자가 아예 없는 글자(冷·層)는 따로 마련한 오답을 쓴다 */
+      const spare = noHomophoneDecoys[character];
+      if (!spare) {
+        problems.push(`${term}:${character} 오답으로 쓸 낱말이 없음`);
+        continue;
+      }
+      options.push([spare.term, spare.hanja, mark(spare.sentence, spare.term)]);
       questions.push({
         target: character,
-        answer,
-        note: `‘${decoy.record.term}’에는 ‘${decoy.hunEum}’${objectParticle(decoy.hunEum)} 씁니다.`,
+        answer: 3,
+        noHomophone: true,
+        note: spare.hunEum
+          ? `‘${spare.term}’에는 ‘${spare.hunEum}’${objectParticle(spare.hunEum)} 씁니다.`
+          : `‘${spare.term}’의 ‘${spare.term[0]}’은 한자음이 아닙니다.`,
         options
       });
     }
