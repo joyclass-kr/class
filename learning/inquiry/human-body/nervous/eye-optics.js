@@ -145,6 +145,21 @@
         });
     }
 
+    /** 제 가운데를 축으로 늘이고 줄인다 (자리는 그대로) */
+    function scaleAbout(el, sx, sy) {
+        if (!el) return;
+        if (!el._base) {
+            var b;
+            try { b = el.getBBox(); } catch (e) { return; }
+            el._base = { cx: b.x + b.width / 2, cy: b.y + b.height / 2 };
+        }
+        var c = el._base;
+        el.setAttribute('transform',
+            'translate(' + c.cx.toFixed(1) + ' ' + c.cy.toFixed(1) + ') ' +
+            'scale(' + sx.toFixed(3) + ' ' + sy.toFixed(3) + ') ' +
+            'translate(' + (-c.cx).toFixed(1) + ' ' + (-c.cy).toFixed(1) + ')');
+    }
+
     function centerOf(id, dflt) {
         var elm = svg.querySelector('#' + id);
         if (!elm) return dflt;
@@ -242,9 +257,14 @@
         var pup = 1.75 - ((light - 10) / 90) * 1.15;   // 1.75 ~ 0.6
         if (pupil) pupil.setAttribute('transform', 'scale(' + pup.toFixed(3) + ')');
 
-        // 섬모체는 가까운 곳을 볼 때 수축, 진대는 그때 느슨해진다
-        if (ciliary) ciliary.setAttribute('opacity', near ? 1 : 0.55);
-        if (zonule) zonule.setAttribute('opacity', near ? 0.4 : 1);
+        // 섬모체는 가까운 곳을 볼 때 수축하고, 그러면 진대가 느슨해진다.
+        // 투명도만 바꾸면 「수축」도 「느슨해짐」도 눈에 안 보인다. 실제로 움직인다.
+        var pull = 1 - ((dist - 10) / 90);              // 0 (먼 곳) ~ 1 (가까운 곳)
+        // 섬모체: 수축하면 세로로 짧아지고 안쪽으로 도톰해진다
+        scaleAbout(ciliary, 1 + pull * 0.16, 1 - pull * 0.12);
+        // 진대: 섬모체가 안으로 오면 팽팽하던 끈이 짧아지며 늘어진다
+        scaleAbout(zonule, 1 - pull * 0.22, 1 - pull * 0.20);
+        if (zonule) zonule.setAttribute('opacity', 1 - pull * 0.45);
 
         drawRays(light, thick);
 
