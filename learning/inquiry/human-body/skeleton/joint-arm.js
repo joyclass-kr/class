@@ -22,7 +22,8 @@
     var FORE_LEN = 250;                  // 아래팔 길이
     var ELBOW = { x: SHOULDER.x, y: SHOULDER.y + UPPER_LEN };
 
-    var BONE_FILL = '#e2e8f0';
+    var BONE_FILL = '#e2e8f0';       // 뼈 밑색
+    var BONE_SHADE = '#b8c2cf';      // 뼈 그늘 — 그라데이션이 아니라 납작한 두 번째 색
     var BONE_LINE = '#94a3b8';
     var TENDON = '#f1f5f9';
 
@@ -109,56 +110,134 @@
         bindDrag();
     }
 
+    /**
+     * 뼈는 겹치는 조각 여럿으로 짓는다. 조각마다 테두리를 두르면 속에 없는 금이
+     * 생기므로, 테두리 없이 같은 색으로 겹쳐 한 덩어리로 보이게 하고
+     * 뒤쪽에만 그늘색을 한 겹 깐다. 시험에 이름이 나오는 돌기는 살린다.
+     */
+    function bone(parent, tag, attrs) {
+        attrs.fill = attrs.fill || BONE_FILL;
+        attrs.stroke = 'none';
+        parent.appendChild(el(tag, attrs));
+    }
+
     /** 어깨뼈와 위팔뼈처럼 움직이지 않는 것 */
     function drawStatic() {
-        var g = el('g');
+        var g = el('g', { id: 'upperArm' });
         svg.appendChild(g);
 
-        // 어깨뼈 (견갑골) — 위팔뼈가 걸리는 자리만 간단히
-        g.appendChild(el('path', {
-            d: 'M470 96 L392 60 L360 128 L432 152 Z',
-            fill: '#cbd5e1', stroke: BONE_LINE, 'stroke-width': 2.5, 'stroke-linejoin': 'round'
-        }));
+        // ── 어깨뼈 (견갑골) 와 어깨봉우리 ──────────────────────
+        bone(g, 'path', {
+            d: 'M446 92 C420 74 386 68 358 78 L344 132 C376 142 412 140 440 128 Z',
+            fill: '#cbd5e1'
+        });
+        bone(g, 'path', {   // 어깨봉우리 — 위팔뼈 머리 위를 덮는다
+            d: 'M440 84 C458 78 476 82 486 94 L474 108 C462 98 450 96 438 100 Z',
+            fill: '#cbd5e1'
+        });
 
-        // 위팔뼈 (상완골) — 납작한 한 덩어리
+        // ── 위팔뼈 (상완골) ────────────────────────────────────
+        // 몸통
+        bone(g, 'path', { d: 'M456 132 L486 132 L482 300 L460 300 Z' });
+        // 위 끝: 둥근 관절머리 + 앞쪽 큰결절
+        bone(g, 'ellipse', { cx: 466, cy: 118, rx: 27, ry: 24 });
+        bone(g, 'ellipse', { cx: 492, cy: 130, rx: 14, ry: 15 });
+        // 아래 끝: 양옆으로 벌어진 관절융기
+        bone(g, 'path', { d: 'M460 292 L482 292 L496 344 L444 344 Z' });
+        bone(g, 'ellipse', { cx: 470, cy: 356, rx: 26, ry: 20 });   // 도르래
+        bone(g, 'ellipse', { cx: 494, cy: 352, rx: 14, ry: 13 });   // 작은머리 (앞)
+        bone(g, 'ellipse', { cx: 446, cy: 344, rx: 13, ry: 12 });   // 안쪽위관절융기 (뒤)
+
+        // 그늘: 뒤쪽(왼쪽) 모서리에만 납작한 두 번째 색
+        bone(g, 'path', { d: 'M456 132 L466 132 L462 300 L460 300 Z', fill: BONE_SHADE });
+        bone(g, 'path', { d: 'M460 292 L468 292 L452 344 L444 344 Z', fill: BONE_SHADE });
+        bone(g, 'path', {
+            d: 'M446 100 C436 108 440 128 452 138 C440 132 436 112 446 100 Z',
+            fill: BONE_SHADE
+        });
+
+        // 결절사이고랑 — 이두근 긴갈래 힘줄이 지나는 골
         g.appendChild(el('path', {
-            d: 'M470 100'
-                + ' C498 100 506 122 500 140'
-                + ' L492 330'
-                + ' C500 348 500 366 470 370'
-                + ' C440 366 440 348 448 330'
-                + ' L440 140'
-                + ' C434 122 442 100 470 100 Z',
-            fill: BONE_FILL, stroke: BONE_LINE, 'stroke-width': 2.5, 'stroke-linejoin': 'round',
-            id: 'humerusShape'
+            d: 'M480 116 L478 148', fill: 'none', stroke: BONE_LINE, 'stroke-width': 2
+        }));
+        // 도르래 한가운데 고랑
+        g.appendChild(el('path', {
+            d: 'M470 340 L470 374', fill: 'none', stroke: BONE_LINE, 'stroke-width': 2, opacity: 0.8
         }));
     }
 
     /** 각도에 따라 다시 그려지는 것 */
     function drawMoving() {
         // 아래팔은 통째로 팔꿈치를 축으로 돈다
-        foreGroup = el('g', { id: 'forearmGroup' });
+        foreGroup = el('g', { id: 'forearm' });
         svg.appendChild(foreGroup);
 
-        // 자뼈 (뒤) — 팔꿈치머리가 뒤로 튀어나온다
-        foreGroup.appendChild(el('path', {
-            d: 'M446 340 L424 346 L420 372 L446 386 L440 590 L462 596 L468 386 Z',
-            fill: BONE_FILL, stroke: BONE_LINE, 'stroke-width': 2.5, 'stroke-linejoin': 'round'
-        }));
-        // 노뼈 (앞) — 위쪽 끝이 원판이고 거친면에 이두근 힘줄이 붙는다
-        foreGroup.appendChild(el('path', {
-            d: 'M496 380 L508 386 L500 588 L478 592 L486 392 Z',
-            fill: BONE_FILL, stroke: BONE_LINE, 'stroke-width': 2.5, 'stroke-linejoin': 'round'
-        }));
-        foreGroup.appendChild(el('circle', {
-            cx: 492, cy: 376, r: 15, fill: BONE_FILL, stroke: BONE_LINE, 'stroke-width': 2.5
-        }));
+        // ── 자뼈 (뒤쪽) ───────────────────────────────────────
+        // 팔꿈치머리 — 도르래 뒤를 갈고리처럼 감싼다. 삼두근이 여기 붙는다.
+        bone(foreGroup, 'path', {
+            d: 'M452 318 C430 318 418 332 420 350'
+                + ' C422 366 434 376 450 380'
+                + ' L462 358 C450 352 444 340 448 330 Z'
+        });
+        // 갈고리돌기 — 앞쪽으로 뾰족하게
+        bone(foreGroup, 'path', { d: 'M454 372 L478 384 L466 396 L450 388 Z' });
+        // 몸통: 위는 굵고 아래로 갈수록 가늘어진다
+        bone(foreGroup, 'path', { d: 'M438 366 L466 382 L458 556 L444 556 Z' });
+        // 아래 끝 머리와 붓돌기
+        bone(foreGroup, 'ellipse', { cx: 450, cy: 566, rx: 11, ry: 12 });
+        bone(foreGroup, 'path', { d: 'M442 570 L452 570 L446 590 Z' });
 
-        // 손
-        foreGroup.appendChild(el('path', {
-            d: 'M438 592 L504 588 L512 636 L432 640 Z',
-            fill: '#cbd5e1', stroke: BONE_LINE, 'stroke-width': 2.5, 'stroke-linejoin': 'round'
+        // ── 노뼈 (앞쪽) ───────────────────────────────────────
+        bone(foreGroup, 'ellipse', { cx: 494, cy: 368, rx: 16, ry: 11 });   // 원판 모양 노뼈머리
+        bone(foreGroup, 'path', { d: 'M486 374 L502 374 L500 392 L484 392 Z' });  // 목
+        bone(foreGroup, 'ellipse', { cx: 484, cy: 400, rx: 11, ry: 13 });   // 노뼈거친면 (이두근이 붙는다)
+        // 몸통: 위는 가늘고 아래로 갈수록 굵어진다
+        bone(foreGroup, 'path', { d: 'M482 392 L500 392 L512 552 L490 552 Z' });
+        // 아래 끝 — 손목에서 가장 넓다
+        bone(foreGroup, 'path', { d: 'M488 544 L514 544 L518 584 L486 584 Z' });
+        bone(foreGroup, 'path', { d: 'M510 580 L520 580 L516 602 Z' });     // 붓돌기
+
+        // 두 뼈의 뒤쪽 그늘
+        bone(foreGroup, 'path', { d: 'M438 366 L448 371 L446 556 L444 556 Z', fill: BONE_SHADE });
+        bone(foreGroup, 'path', { d: 'M482 392 L490 392 L496 552 L490 552 Z', fill: BONE_SHADE });
+
+        // 뼈사이막 — 두 뼈를 잇는 질긴 막
+        for (var mi = 0; mi < 7; mi++) {
+            var my = 412 + mi * 22;
+            foreGroup.appendChild(el('line', {
+                x1: 452 + mi * 0.6, y1: my, x2: 490 + mi * 1.6, y2: my + 8,
+                stroke: BONE_LINE, 'stroke-width': 1.4, opacity: 0.35
+            }));
+        }
+
+        // ── 손 ───────────────────────────────────────────────
+        // 손목뼈 두 줄
+        [[456, 600], [474, 598], [492, 600], [508, 604]].forEach(function (c) {
+            bone(foreGroup, 'ellipse', { cx: c[0], cy: c[1], rx: 9, ry: 8, fill: '#cbd5e1' });
+        });
+        [[462, 616], [480, 615], [498, 617]].forEach(function (c) {
+            bone(foreGroup, 'ellipse', { cx: c[0], cy: c[1], rx: 9, ry: 8, fill: '#cbd5e1' });
+        });
+        // 손허리뼈 네 개와 엄지
+        [[458, 626, 452, 664], [474, 626, 472, 668], [490, 627, 492, 666], [504, 628, 510, 660]]
+            .forEach(function (m) {
+                foreGroup.appendChild(el('line', {
+                    x1: m[0], y1: m[1], x2: m[2], y2: m[3],
+                    stroke: '#cbd5e1', 'stroke-width': 7, 'stroke-linecap': 'round'
+                }));
+            });
+        foreGroup.appendChild(el('line', {
+            x1: 512, y1: 612, x2: 534, y2: 634,
+            stroke: '#cbd5e1', 'stroke-width': 7, 'stroke-linecap': 'round'
         }));
+        // 손가락뼈 (마디 하나로 줄임)
+        [[452, 664, 448, 690], [472, 668, 471, 694], [492, 666, 495, 692], [510, 660, 516, 682], [534, 634, 550, 646]]
+            .forEach(function (m) {
+                foreGroup.appendChild(el('line', {
+                    x1: m[0], y1: m[1], x2: m[2], y2: m[3],
+                    stroke: '#cbd5e1', 'stroke-width': 5.5, 'stroke-linecap': 'round'
+                }));
+            });
 
         // 근육은 뼈 옆에 나란히 놓아 둘 다 언제나 보이게 한다
         tricepsTendonTop = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 6, 'stroke-linecap': 'round' });
@@ -167,6 +246,8 @@
         svg.appendChild(tricepsTendonTop);
         svg.appendChild(tricepsTendonEnd);
         svg.appendChild(triceps);
+        triceps._grain = el('path', { fill: 'none', 'stroke-width': 2 });
+        svg.appendChild(triceps._grain);
 
         bicepsTendonTop = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 6, 'stroke-linecap': 'round' });
         bicepsTendonEnd = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 6, 'stroke-linecap': 'round' });
@@ -174,6 +255,8 @@
         svg.appendChild(bicepsTendonTop);
         svg.appendChild(bicepsTendonEnd);
         svg.appendChild(biceps);
+        biceps._grain = el('path', { fill: 'none', 'stroke-width': 2 });
+        svg.appendChild(biceps._grain);
 
         // 팔꿈치 관절
         svg.appendChild(el('circle', { cx: ELBOW.x, cy: ELBOW.y, r: 17, fill: '#fbbf24', opacity: 0.22 }));
@@ -298,6 +381,15 @@
 
         bodyEl.setAttribute('fill', color);
         bodyEl.setAttribute('stroke', edge);
+        // 근육 한가운데를 지나는 밝은 결 한 줄. 그라데이션이 아니라 선 하나다.
+        if (bodyEl._grain) {
+            bodyEl._grain.setAttribute('d',
+                'M' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1) +
+                ' Q' + (mid.x + px * w * 0.45).toFixed(1) + ' ' + (mid.y + py * w * 0.45).toFixed(1) +
+                ' ' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1));
+            bodyEl._grain.setAttribute('stroke', edge);
+            bodyEl._grain.setAttribute('opacity', 0.45);
+        }
         bodyEl.setAttribute('d',
             'M' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1) +
             ' Q' + out.x.toFixed(1) + ' ' + out.y.toFixed(1) + ' ' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1) +
