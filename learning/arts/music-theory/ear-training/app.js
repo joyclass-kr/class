@@ -580,7 +580,6 @@
         {
             id: "rhythmWrite",
             name: label("Rhythm Dictation", "리듬 받아쓰기"),
-            ask: "들은 자리를 켜세요",
             pickable: false,
             inputs: ["grid"],
             rhythmDrill: true,
@@ -611,7 +610,6 @@
         {
             id: "rhythmRead",
             name: label("Rhythm Tapping", "리듬 두드리기"),
-            ask: "박에 맞춰 두드리세요",
             pickable: false,
             inputs: ["tap"],
             rhythmDrill: true,
@@ -641,7 +639,6 @@
         {
             id: "melody",
             name: label("Melodic Dictation", "가락 받아쓰기"),
-            ask: "들은 차례대로 누르세요",
             answerIsLabel: false,
             pickable: false,
             inputs: ["keyboard"],
@@ -1097,7 +1094,6 @@
 
         const order = bars.slice().sort(() => Math.random() - .5);
         return {
-            ask: "들은 리듬을 고르세요",
             silentStaff: true,
             rhythm: { bar: answer, onsets: RN.onsets(answer) },
             bars: { list: order, answer: order.indexOf(answer) },
@@ -1872,7 +1868,9 @@
         session.typed = [];
         session.answered = false;
 
-        els.askText.textContent = question.ask || drill.ask;
+        const asking = question.ask || drill.ask || "";
+        els.askText.textContent = asking;
+        els.askText.hidden = !asking;
         els.feedback.textContent = "";
         els.feedback.className = "feedback";
         els.nextButton.hidden = true;
