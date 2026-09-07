@@ -67,6 +67,7 @@
   }
 
   function render() {
+    const previousRects = new Map([...boardElement.querySelectorAll('.tile[data-tile]')].map(tile => [tile.dataset.tile, tile.getBoundingClientRect()]));
     boardElement.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     boardElement.setAttribute('aria-label', `${size === 3 ? '8' : '15'} 퍼즐 게임판`);
     boardElement.replaceChildren();
@@ -85,8 +86,18 @@
       button.setAttribute('role', 'gridcell');
       button.setAttribute('aria-label', `${value}번 타일`);
       button.dataset.sfx = 'none';
+      button.dataset.tile = String(value);
       button.addEventListener('click', () => moveTile(index));
       boardElement.append(button);
+    });
+    boardElement.querySelectorAll('.tile[data-tile]').forEach(tile => {
+      const before = previousRects.get(tile.dataset.tile);
+      const after = tile.getBoundingClientRect();
+      if (!before || !tile.animate || (before.left === after.left && before.top === after.top)) return;
+      tile.animate([
+        { transform: `translate(${before.left - after.left}px, ${before.top - after.top}px)` },
+        { transform: 'translate(0, 0)' }
+      ], { duration: 105, easing: 'linear' });
     });
   }
 

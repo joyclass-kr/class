@@ -120,13 +120,18 @@ async function run() {
     const guestRolled = await guest.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.turnMode === "moving", "도둑 주사위");
     const hostRolled = await host.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.revision >= guestRolled.state.revision, "주사위 동기화");
     assert.ok(guestRolled.state.die >= 1 && guestRolled.state.die <= 6);
-    assert.deepEqual(guestRolled.state.validMoves, ["p0"]);
+    assert.ok(guestRolled.state.validMoves.length >= 1);
+    assert.equal(guestRolled.state.validMoves.includes("p0"), false, "한 칸 중간 지점은 선택 대상으로 보내면 안 됩니다.");
     assert.deepEqual(hostRolled.state.validMoves, [], "경찰 기기에는 도둑의 이동 버튼이 활성화되면 안 됩니다.");
 
-    guest.send({ type: "CITYCHASE_ACTION", action: "MOVE", nodeId: "p0" });
-    const guestMoved = await guest.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.pawns.some(pawn => pawn.id === "thief-1" && pawn.position === "p0"), "도둑 이동");
+    const destination = guestRolled.state.validMoves[0];
+    guest.send({ type: "CITYCHASE_ACTION", action: "MOVE", nodeId: destination });
+    const guestMoved = await guest.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.lastMove?.pawnId === "thief-1", "도둑 목적지 이동");
     const hostMoved = await host.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.revision >= guestMoved.state.revision, "이동 동기화");
-    assert.equal(hostMoved.state.pawns.find(pawn => pawn.id === "thief-1").position, "p0");
+    assert.equal(hostMoved.state.pawns.find(pawn => pawn.id === "thief-1").position, destination);
+    assert.equal(guestMoved.state.lastMove.path[0], "hideout");
+    assert.equal(guestMoved.state.lastMove.path.at(-1), destination);
+    assert.ok(guestMoved.state.lastMove.path.length >= 2, "모든 기기에 캐릭터 이동 경로가 전달돼야 합니다.");
 
     guest.socket.close(4000, "TEST_DISCONNECT");
     const reset = await host.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.phase === "lobby" && /플레이어가 나가/.test(message.state.lastAction), "이탈 후 대기실 복귀");

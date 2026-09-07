@@ -790,7 +790,7 @@ function tokenMarkup(player,index,decided){
   const figure=face
     ? `<span class="avatarRing" style="border-color:${colorOf(index)}"><img class="avatarImg" src="${escapeHtml(face)}" alt=""></span>`
     : meepleSvg(colorOf(index));
-  return `<div class="${classes.join(" ")}" title="${escapeHtml(tip)}">`
+  return `<div class="${classes.join(" ")}" data-player-id="${player.id}" title="${escapeHtml(tip)}">`
     +figure
     +`<span class="tokenName">${escapeHtml(initialOf(player.name))}</span>${badge}</div>`;
 }
@@ -844,7 +844,7 @@ function initialOf(name){return String(name||"?").trim().slice(-2)}
 // 숫자로만 두면 누가 얼마나 벌었는지가 판에서 안 보인다.
 function tentMarkup(player,index){
   const tip=`${player.name} · 확정 ${player.bank}`+(player.inCave?` · ${state.site} 안`:"");
-  return `<div class="tent${player.id===myId()?" me":""}${player.inCave?" away":""}" title="${escapeHtml(tip)}">`
+  return `<div class="tent${player.id===myId()?" me":""}${player.inCave?" away":""}" data-player-id="${player.id}" title="${escapeHtml(tip)}">`
     +`<svg class="tentIcon" viewBox="0 0 44 34" aria-hidden="true">`
     +`<path d="M22 3 41 31H3z" fill="${colorOf(index)}"/>`
     +`<path d="M22 3 30 31H14z" fill="#00000055"/>`
@@ -1166,8 +1166,10 @@ function renderResult(){
   $("lobbyBtn").classList.toggle("hidden",state.phase!=="gameEnd"||!host);
 }
 
+function animateTokenMoves(before){document.querySelectorAll(".token[data-player-id]").forEach(token=>{const old=before.get(token.dataset.playerId),now=token.getBoundingClientRect();if(!old||!token.animate||(old.rect.left===now.left&&old.rect.top===now.top))return;token.animate([{transform:`translate(${old.rect.left-now.left}px,${old.rect.top-now.top}px)`},{transform:"translate(0,0)"}],{duration:260,easing:"cubic-bezier(.2,.8,.2,1)"})});before.forEach((old,id)=>{if(document.querySelector(`.token[data-player-id="${id}"]`))return;const tent=document.querySelector(`.tent[data-player-id="${id}"]`),target=tent?.getBoundingClientRect();if(!target)return;const ghost=document.createElement("div");ghost.innerHTML=old.html;const token=ghost.firstElementChild;if(!token)return;token.style.cssText=`position:fixed;left:${old.rect.left}px;top:${old.rect.top}px;width:${old.rect.width}px;z-index:80;pointer-events:none`;document.body.appendChild(token);token.animate([{transform:"translate(0,0)",opacity:1},{transform:`translate(${target.left-old.rect.left}px,${target.top-old.rect.top}px) scale(.55)`,opacity:.2}],{duration:300,easing:"ease-in"}).finished.finally(()=>token.remove())})}
 function render(){
   if(!state)return;
+  const tokenBefore=new Map([...document.querySelectorAll(".token[data-player-id]")].map(token=>[token.dataset.playerId,{rect:token.getBoundingClientRect(),html:token.outerHTML}]));
   applyThemeSkin(state.theme,state.phase!=="lobby");
   preloadPhotos(state.theme);
   setTrack(state.phase==="lobby"?"lobby":state.theme);
@@ -1183,6 +1185,7 @@ function render(){
   renderCounts();
   renderTokens();
   renderTrail();
+  animateTokenMoves(tokenBefore);
   renderHazards();
   renderDecision();
   renderResult();
