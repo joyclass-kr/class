@@ -51,6 +51,14 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     .shell { padding-top: 52px; }
 }
 
+/*
+ * 설명 차시만 넓힌다. 음계 한 줄이 제 크기로 들어가야 하기 때문이다.
+ * 문제 화면까지 넓히면 악보와 보기가 멀찍이 떨어져 화면이 헐거워진다.
+ */
+@media (min-width: 1000px) {
+    body.lesson-open .shell { width: min(1180px, calc(100% - 28px)); }
+}
+
 .screen { display: grid; gap: 13px; }
 
 .app-name {
@@ -254,10 +262,10 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .sheet { max-width: 100%; height: auto; color: #1b2029; }
 .sheet-staff line { stroke: #6d7078; stroke-width: 1.2; }
-.sheet-clef { font-family: "Noto Music", "Segoe UI Symbol", Georgia, serif; font-size: 48px; fill: #1b2029; }
+.sheet-clef path { fill: none; stroke: #1b2029; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 .sheet-unknown { font-family: Georgia, serif; font-size: 26px; font-weight: 700; fill: #8a6a22; text-anchor: middle; }
 .sheet-ink { stroke: #1b2029; fill: #1b2029; }
-.sheet-ink .sheet-head { fill: none; stroke-width: 1.9; }
+.sheet-ink .sheet-head { stroke: none; }
 .sheet-ink .sheet-ledger { stroke: #6d7078; stroke-width: 1.2; }
 .sheet-ink.is-right { stroke: #17714f; fill: #17714f; }
 .sheet-ink.is-wrong { stroke: #ab3b3b; fill: #ab3b3b; }
@@ -384,32 +392,57 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .lesson-body { display: grid; gap: 14px; }
 .lesson-body p { margin: 0; font-size: 16px; line-height: 1.7; word-break: keep-all; }
 
-.examples { display: grid; gap: 12px; }
+.examples { display: grid; gap: 5px; }
 
 .example {
     display: grid;
-    gap: 7px;
-    padding: 11px;
+    gap: 5px;
+    padding: 6px 10px 7px;
     border: 1px solid var(--line);
     border-radius: 13px;
     background: var(--panel);
 }
 
-.example-caption { margin: 0; font-size: 17px; font-weight: 800; }
+.example-caption { margin: 0; font-size: 16px; font-weight: 800; word-break: keep-all; }
 
-.example-staves { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.example-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+
+/* 음정 보기: 오선 하나에 상행·하행·화성 단추를 붙인다. */
+.example-board {
+    display: grid;
+    place-items: center;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #f6f4ee;
+}
+
+.example-board .sheet { max-width: 100%; }
+.shape-row { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.shape-button {
+    min-height: 26px;
+    padding: 0 8px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--panel-2);
+    font-size: 12.5px;
+    font-weight: 750;
+}
+
+.shape-button[aria-pressed="true"] { border-color: var(--gold); color: #241a05; background: var(--gold); }
 
 .example-play {
     display: grid;
     gap: 4px;
-    padding: 6px 4px 8px;
+    padding: 3px;
     border: 1px solid var(--line);
     border-radius: 10px;
     background: #f6f4ee;
 }
 
 .example-play:hover { border-color: var(--gold); }
-.example-play .sheet { width: 100% !important; max-width: none; }
+.example-play .sheet { max-width: 100%; }
 .example-play span { color: #4a5160; font-size: 14px; font-weight: 750; }
 
 @media (max-width: 520px) {
@@ -567,22 +600,38 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
     #drillScreen #barsWrap { grid-column: 1 / -1; grid-row: 5; }
     #drillScreen #tapWrap { grid-column: 2; grid-row: 4; align-content: center; }
     #drillScreen #keyboardWrap { grid-column: 1 / -1; grid-row: 6; }
-    #drillScreen .feedback { grid-column: 1 / -1; grid-row: 7; }
-    #drillScreen #nextButton { grid-column: 1 / -1; grid-row: 8; }
+    /* 되짚는 말과 다음 문제 단추를 한 줄에 둔다. */
+    #drillScreen .feedback { grid-column: 1; grid-row: 7; align-self: center; }
+    #drillScreen #nextButton { grid-column: 2; grid-row: 7; }
 
-    /* 이론 차시도 글과 보기를 나란히 둔다. */
+    /*
+     * 이론 차시는 한 화면에 고정한다. 제목·글·건반·단추는 늘 보이고, 보기가 많은
+     * 차시에서는 보기 칸 안에서만 밀어 본다.
+     */
     #lessonScreen {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+        height: calc(100dvh - 62px);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+        grid-template-rows: auto minmax(0, 1fr) auto auto auto;
         column-gap: 22px;
-        align-content: start;
+        row-gap: 10px;
     }
 
-    #lessonScreen .lesson-body { grid-column: 1; }
-    #lessonScreen .examples { grid-column: 2; grid-row: 1 / span 3; }
-    #lessonScreen .examples.is-wide-row { grid-column: 1 / -1; grid-row: auto; }
-    #lessonScreen #lessonKeysLabel { grid-column: 1; }
-    #lessonScreen .free-keys { grid-column: 1; }
-    #lessonScreen .lesson-actions { grid-column: 1; }
+    #lessonScreen .screen-title { grid-column: 1 / -1; grid-row: 1; }
+    #lessonScreen .lesson-body { grid-column: 1; grid-row: 2; min-height: 0; overflow-y: auto; }
+    #lessonScreen .examples { grid-column: 2; grid-row: 2; min-height: 0; overflow-y: auto; align-content: start; }
+    #lessonScreen #lessonKeysLabel { grid-column: 1 / -1; grid-row: 3; }
+    #lessonScreen .free-keys { grid-column: 1 / -1; grid-row: 4; }
+    #lessonScreen .lesson-actions { grid-column: 1 / -1; grid-row: 5; }
+}
+
+/* 아이패드 세로 화면에서도 차시가 한 화면에 들어오게 한다. */
+@media (max-width: 899px) and (min-height: 820px) {
+    #lessonScreen {
+        height: calc(100dvh - 100px);
+        grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
+    }
+
+    #lessonScreen .examples { min-height: 0; overflow-y: auto; align-content: start; }
 }
 
 /* 리듬 악보 */
@@ -599,7 +648,9 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
 .rhythm-stem { stroke-width: 1.5; }
 .rhythm-beam { stroke-width: 4.2; stroke-linecap: butt; }
 .rhythm-flag { fill: none; stroke-width: 1.8; }
-.rhythm-rest { font-family: "Noto Music", "Segoe UI Symbol", serif; font-size: 26px; text-anchor: middle; stroke: none; }
+.rhythm-rest rect,
+.rhythm-rest circle { stroke: none; }
+.rhythm-rest path { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .rhythm-triplet { font-family: Georgia, serif; font-size: 11px; font-style: italic; font-weight: 700; text-anchor: middle; stroke: none; }
 
 /* 정간보처럼 칸으로 답하기 */

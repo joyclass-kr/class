@@ -128,7 +128,7 @@
                     "반음 여섯 개짜리 음정은 한 옥타브를 정확히 반으로 잘라 Tritone​(삼온음)이라고 부릅니다. P4​(완전4도)보다 반음 넓게 적으면 A4​(증4도), P5​(완전5도)보다 반음 좁게 적으면 d5​(감5도)가 됩니다. 소리는 같지만 적는 방법이 다르며, 이것을 Enharmonic​(이명동음)이라고 합니다.",
                     "한 옥타브 안에서 가장 불안하게 들리는 음정입니다."
                 ],
-                examples: ["P4", "A4", "d5", "P5"],
+                examples: ["A4", "d5"],
                 quiz: ["P4", "A4", "d5", "P5"]
             },
             {
@@ -153,9 +153,9 @@
                 title: "Compound Intervals​(겹음정)",
                 body: [
                     "한 옥타브보다 넓은 음정을 Compound Interval​(겹음정)이라고 합니다. 한 옥타브를 덜어 내면 Simple Interval​(홑음정)이 나옵니다. m9​(단9도)는 m2​(단2도), M10​(장10도)은 M3​(장3도)과 성질이 같습니다.",
-                    "그래서 겹음정은 두 음 가운데 하나를 머릿속에서 한 옥타브 옮겨 좁은 음정으로 바꿔 듣습니다. 반음 수는 열두 개씩 커집니다."
+                    "그래서 겹음정은 두 음 가운데 하나를 머릿속에서 한 옥타브 옮겨 좁은 음정으로 바꿔 듣습니다. 반음 수는 열두 개씩 커집니다. P12​(완전12도)는 P5​(완전5도)와 같습니다."
                 ],
-                examples: ["m9", "M9", "m10", "M10", "P11", "P12"],
+                examples: ["m9", "M10", "P12"],
                 quiz: ["m9", "M9", "m10", "M10", "P11", "A11", "P12"]
             },
             {
@@ -175,18 +175,31 @@
             {
                 id: "triads",
                 kind: "text",
-                title: "Triads​(3화음)",
+                title: "Major and Minor Triads​(장3화음과 단3화음)",
                 body: [
                     "Triad​(3화음)은 음 세 개로 된 화음입니다. Root​(밑음), 그 위 Third​(3도), 다시 그 위 3도로 쌓으면 맨 아래와 맨 위가 Fifth​(5도)가 됩니다.",
-                    "아래 3도가 M3​(장3도)인지 m3​(단3도)인지, 그리고 바깥 5도가 P5​(완전5도)인지 아닌지에 따라 maj​(장)·min​(단)·dim​(감)·aug​(증) 네 가지로 갈립니다."
+                    "아래 3도가 M3​(장3도)이면 Major Triad​(장3화음), m3​(단3도)이면 Minor Triad​(단3화음)입니다. 바깥 5도는 둘 다 P5​(완전5도)입니다."
                 ],
                 examples: [
                     { chord: "maj" },
-                    { chord: "min" },
+                    { chord: "min" }
+                ],
+                quiz: ["maj", "min"],
+                quizDrill: "chord"
+            },
+            {
+                id: "dim-aug",
+                kind: "text",
+                title: "Diminished and Augmented Triads​(감3화음과 증3화음)",
+                body: [
+                    "바깥 5도가 P5​(완전5도)가 아닌 3화음도 있습니다. m3​(단3도)를 두 번 쌓으면 바깥이 d5​(감5도)가 되어 Diminished Triad​(감3화음), M3​(장3도)를 두 번 쌓으면 A5​(증5도)가 되어 Augmented Triad​(증3화음)입니다.",
+                    "감3화음은 좁혀진 5도, 증3화음은 벌어진 5도로 소리가 서로 다릅니다. 증3화음은 3도를 같은 크기로 두 번 쌓았으므로 자리를 바꿔도 쌓인 모양이 그대로입니다."
+                ],
+                examples: [
                     { chord: "dim" },
                     { chord: "aug" }
                 ],
-                quiz: ["maj", "min", "dim", "aug"],
+                quiz: ["dim", "aug"],
                 quizDrill: "chord"
             },
             {
@@ -213,9 +226,7 @@
                 examples: [
                     { chord: "maj", inversion: 0 },
                     { chord: "maj", inversion: 1 },
-                    { chord: "maj", inversion: 2 },
-                    { chord: "min", inversion: 1 },
-                    { chord: "min", inversion: 2 }
+                    { chord: "maj", inversion: 2 }
                 ],
                 quiz: ["root", "first", "second"],
                 quizDrill: "position"
@@ -410,13 +421,25 @@
                 title: "Church Modes​(교회 선법)",
                 body: [
                     "장음계의 일곱 음 가운데 어느 음에서 시작하느냐에 따라 서로 다른 선법이 나옵니다. 첫째 음에서 시작하면 Ionian​(이오니아), 곧 장음계이고, 여섯째 음에서 시작하면 Aeolian​(에올리아), 곧 자연단음계입니다.",
-                    "Dorian​(도리아)은 둘째 음, Phrygian​(프리지아)은 셋째 음, Lydian​(리디아)은 넷째 음, Mixolydian​(믹솔리디아)은 다섯째 음, Locrian​(로크리아)은 일곱째 음에서 시작합니다.",
-                    "밑음을 같은 음으로 두고 견주면 Lydian​(리디아)은 장음계의 넷째 음이 반음 높고, Mixolydian​(믹솔리디아)은 일곱째 음이 반음 낮습니다. Dorian​(도리아)은 자연단음계의 여섯째 음이 반음 높고, Phrygian​(프리지아)은 둘째 음이 반음 낮습니다. Locrian​(로크리아)은 다섯째 음까지 반음 낮아 P5​(완전5도)가 없습니다."
+                    "Lydian​(리디아)은 넷째 음, Mixolydian​(믹솔리디아)은 다섯째 음에서 시작합니다. 밑음을 같은 음으로 두고 장음계와 견주면 Lydian​(리디아)은 넷째 음이 반음 높고, Mixolydian​(믹솔리디아)은 일곱째 음이 반음 낮습니다."
                 ],
-                examples: [{ scale: "dorian" }, { scale: "phrygian" }, { scale: "lydian" }, { scale: "mixolydian" }, { scale: "locrian" }],
-                quiz: ["dorian", "phrygian", "lydian", "mixolydian", "locrian"],
+                examples: [{ scale: "lydian" }, { scale: "mixolydian" }],
+                quiz: ["lydian", "mixolydian", "major"],
                 quizDrill: "scale",
-                quizLimit: 15
+                quizLimit: 12
+            },
+            {
+                id: "minor-modes",
+                kind: "text",
+                title: "Minor Modes​(단음계 쪽 선법)",
+                body: [
+                    "Dorian​(도리아)은 장음계의 둘째 음, Phrygian​(프리지아)은 셋째 음, Locrian​(로크리아)은 일곱째 음에서 시작합니다.",
+                    "밑음을 같은 음으로 두고 자연단음계와 견주면 Dorian​(도리아)은 여섯째 음이 반음 높고, Phrygian​(프리지아)은 둘째 음이 반음 낮습니다. Locrian​(로크리아)은 다섯째 음까지 반음 낮아 P5​(완전5도)가 없습니다."
+                ],
+                examples: [{ scale: "dorian" }, { scale: "phrygian" }, { scale: "locrian" }],
+                quiz: ["dorian", "phrygian", "locrian", "nminor"],
+                quizDrill: "scale",
+                quizLimit: 12
             },
             {
                 id: "bright-modes-drill",
@@ -468,8 +491,7 @@
                 examples: [
                     { pattern: "w", caption: "Whole Note​(온음표) · 네 박" },
                     { pattern: "h h", caption: "Half Notes​(2분음표) · 두 박씩" },
-                    { pattern: "q q q q", caption: "Quarter Notes​(4분음표) · 한 박씩" },
-                    { pattern: "q -q q q", caption: "Quarter Rest​(4분쉼표)가 둘째 박에" }
+                    { pattern: "q q q q", caption: "Quarter Notes​(4분음표) · 한 박씩" }
                 ],
                 quiz: ["g4"],
                 quizDrill: "rhythmWrite",

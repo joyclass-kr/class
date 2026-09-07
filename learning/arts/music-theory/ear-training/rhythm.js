@@ -10,15 +10,15 @@
     const PER_BEAT = 12;
 
     const VALUES = {
-        w: { cells: 48, hollow: true, stem: false, flags: 0, rest: "𝄻" },
-        h: { cells: 24, hollow: true, stem: true, flags: 0, rest: "𝄼" },
-        hd: { cells: 36, hollow: true, stem: true, flags: 0, dot: true, rest: "𝄼" },
-        q: { cells: 12, hollow: false, stem: true, flags: 0, rest: "𝄽" },
-        qd: { cells: 18, hollow: false, stem: true, flags: 0, dot: true, rest: "𝄽" },
-        e: { cells: 6, hollow: false, stem: true, flags: 1, rest: "𝄾" },
-        ed: { cells: 9, hollow: false, stem: true, flags: 1, dot: true, rest: "𝄾" },
-        s: { cells: 3, hollow: false, stem: true, flags: 2, rest: "𝄿" },
-        te: { cells: 4, hollow: false, stem: true, flags: 1, rest: "𝄾", triplet: true }
+        w: { cells: 48, hollow: true, stem: false, flags: 0, rest: "w" },
+        h: { cells: 24, hollow: true, stem: true, flags: 0, rest: "h" },
+        hd: { cells: 36, hollow: true, stem: true, flags: 0, dot: true, rest: "h" },
+        q: { cells: 12, hollow: false, stem: true, flags: 0, rest: "q" },
+        qd: { cells: 18, hollow: false, stem: true, flags: 0, dot: true, rest: "q" },
+        e: { cells: 6, hollow: false, stem: true, flags: 1, rest: "e" },
+        ed: { cells: 9, hollow: false, stem: true, flags: 1, dot: true, rest: "e" },
+        s: { cells: 3, hollow: false, stem: true, flags: 2, rest: "s" },
+        te: { cells: 4, hollow: false, stem: true, flags: 1, rest: "e", triplet: true }
     };
 
     Object.keys(VALUES).forEach(name => { VALUES[name].beats = VALUES[name].cells / PER_BEAT; });
@@ -35,6 +35,28 @@
         Object.keys(attrs || {}).forEach(key => node.setAttribute(key, attrs[key]));
         if (text !== undefined) node.textContent = text;
         return node;
+    }
+
+    /*
+     * 쉼표도 글꼴 글리프로 그리면 컴퓨터에 깔린 글꼴에 따라 크기와 자리가 달라진다.
+     * 온쉼표는 줄에 매달고 2분쉼표는 줄 위에 얹는다. 4분쉼표는 굽은 획, 8분·16분쉼표는
+     * 기운 획에 동그란 머리를 붙인다.
+     */
+    function restNode(kind, x) {
+        const group = make("g", { class: "rhythm-rest", transform: "translate(" + x + "," + LINE_Y + ")" });
+        if (kind === "w") {
+            group.append(make("rect", { x: -8, y: 0, width: 16, height: 7 }));
+        } else if (kind === "h") {
+            group.append(make("rect", { x: -8, y: -7, width: 16, height: 7 }));
+        } else if (kind === "q") {
+            group.append(make("path", { d: "M-4,-11 C-1,-8 3,-6 4,-3 C5,0 0,1 -1,4 C-2,7 1,9 4,11" }));
+        } else {
+            const twoHeads = kind === "s";
+            group.append(make("path", { d: twoHeads ? "M0,-10 L4,9" : "M0,-7 L4,8" }));
+            group.append(make("circle", { cx: -3, cy: twoHeads ? -9 : -6, r: 2.7 }));
+            if (twoHeads) group.append(make("circle", { cx: -1, cy: -1, r: 2.7 }));
+        }
+        return group;
     }
 
     /* 마디의 길이를 칸으로 센다. */
@@ -168,8 +190,8 @@
         const width = LEFT + beats * BEAT_W + 26;
         const svg = make("svg", {
             class: "rhythm",
-            style: "width:" + (width * 1.6) + "px",
-            viewBox: "0 0 " + width + " 84",
+            style: "width:" + Math.round(width * (settings.zoom || 1.6)) + "px",
+            viewBox: "0 8 " + width + " 78",
             role: "img",
             "aria-label": settings.label || "리듬 한 마디"
         });
@@ -201,8 +223,7 @@
             const value = VALUES[event.v];
             const x = xs[index];
             if (event.rest) {
-                const glyph = make("text", { class: "rhythm-rest", x: x, y: LINE_Y + 8 }, value.rest);
-                ink.append(glyph);
+                ink.append(restNode(value.rest, x));
                 if (value.dot) ink.append(make("circle", { class: "rhythm-dot", cx: x + 12, cy: LINE_Y - 4, r: 1.9 }));
                 return;
             }

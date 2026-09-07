@@ -42,8 +42,8 @@
     const BOTTOM_LINE_Y = TOP_LINE_Y + STEP_Y * 8;
     const E4_ABS = 4 * 7 + 2;  /* 높은음자리표 첫째 줄 E4 */
     const F5_ABS = 5 * 7 + 3;
-    const COLUMN_X = 68;
-    const COLUMN_GAP = 40;
+    const COLUMN_X = 62;
+    const COLUMN_GAP = 36;
 
     function make(tag, attrs) {
         const node = document.createElementNS(SVG_NS, tag);
@@ -94,14 +94,80 @@
      * columns: [{ notes: [spelling, ...] } | null]  — null이면 아직 모르는 음(?)으로 그린다.
      * marks: 열 번호별 색 이름 ("right" | "wrong")
      */
+    /*
+     * 자리표는 글꼴 글리프로 그리면 컴퓨터에 깔린 글꼴에 따라 크기와 자리가 달라진다.
+     * 윈도우 기본 글꼴은 음악 조판용이 아니어서 오선에 맞지 않으므로 직접 그린다.
+     * 아래 좌표는 한 칸(줄과 줄 사이)을 10으로 두고, 소용돌이 가운데를 0으로 잡은 것이다.
+     */
+    const G_LINE_ABS = 4 * 7 + 4;   /* 높은음자리표가 가리키는 G4 */
+    const CLEF_PATH = "M-4,26 C1,29 8,27 9,21 C10,13 10,5 9,-2"
+        + " C8,-12 9,-24 10,-33 C11,-40 5,-44 1,-40"
+        + " C-3,-36 -3,-28 2,-22 C6,-14 15,-10 18,-3"
+        + " C22,5 17,13 8,13 C-1,13 -7,6 -6,-1"
+        + " C-5,-8 4,-11 9,-5 C13,0 11,6 6,5";
+
+    /* 위아래로 자리표가 먹는 띠 */
+    const CLEF_TOP = 3;
+    const CLEF_BOTTOM = 79;
+
+    function clefNode(x) {
+        const y = yFor(G_LINE_ABS);
+        const group = make("g", { class: "sheet-clef", transform: "translate(" + x + "," + y + ")" });
+        group.append(make("path", { d: CLEF_PATH }));
+        return group;
+    }
+
+    /*
+     * 온음표는 단순한 동그라미가 아니다. 가운데 구멍이 비스듬히 뚫려 있어서
+     * 왼쪽 위와 오른쪽 아래가 두껍고 양 끝이 얇다. 타원 둘을 한 길로 묶고
+     * evenodd로 채워 구멍을 낸다.
+     */
+    function ellipseRing(cx, cy, rx, ry, deg) {
+        const rad = deg * Math.PI / 180;
+        const dx = rx * Math.cos(rad);
+        const dy = rx * Math.sin(rad);
+        const from = (cx - dx) + "," + (cy - dy);
+        const to = (cx + dx) + "," + (cy + dy);
+        return "M" + from + " A" + rx + "," + ry + " " + deg + " 1 1 " + to
+            + " A" + rx + "," + ry + " " + deg + " 1 1 " + from + "Z";
+    }
+
+    const HEAD_RX = 7.2;
+    const HEAD_RY = 4.7;
+
+    function wholeHead(cx, cy) {
+        return make("path", {
+            class: "sheet-head",
+            "fill-rule": "evenodd",
+            d: ellipseRing(cx, cy, HEAD_RX, HEAD_RY, -6) + ellipseRing(cx, cy, 4.5, 1.9, 36)
+        });
+    }
+
     function render(columns, options) {
         const settings = options || {};
-        const width = COLUMN_X + Math.max(1, columns.length) * COLUMN_GAP + 24;
+        const zoom = settings.zoom || 1.9;
+        const width = COLUMN_X + Math.max(1, columns.length) * COLUMN_GAP + 16;
+
+        /*
+         * 위아래 여백을 음표가 닿는 데까지만 남긴다. 임시표는 음표머리보다 위로 더
+         * 올라가므로 위쪽을 조금 더 준다. 눈금은 그대로여서 음표 크기는 변하지 않는다.
+         */
+        let top = CLEF_TOP;
+        let bottom = CLEF_BOTTOM;
+        columns.forEach(column => {
+            if (!column) return;
+            column.notes.forEach(note => {
+                const y = yFor(note.letterAbs);
+                top = Math.min(top, y - 13);
+                bottom = Math.max(bottom, y + 8);
+            });
+        });
+
         const svg = make("svg", {
             class: "sheet",
-            /* 칸 수가 달라도 음표 크기가 같아 보이도록 한 눈금을 2px로 맞춘다. */
-            style: "width:" + (width * 1.9) + "px",
-            viewBox: "0 " + (-(settings.padTop || 0)) + " " + width + " " + (80 + (settings.padTop || 0)),
+            /* 칸 수가 달라도 음표 크기가 같아 보이도록 폭을 눈금으로 못 박는다. */
+            style: "width:" + Math.round(width * zoom) + "px",
+            viewBox: "0 " + top + " " + width + " " + (bottom - top),
             role: "img",
             "aria-label": settings.label || "악보"
         });
@@ -113,9 +179,7 @@
         }
         svg.append(staff);
 
-        const clef = make("text", { class: "sheet-clef", x: 16, y: BOTTOM_LINE_Y + 7 });
-        clef.textContent = "𝄞";
-        svg.append(clef);
+        svg.append(clefNode(18));
 
         columns.forEach((column, index) => {
             const x = COLUMN_X + index * COLUMN_GAP;
@@ -141,15 +205,8 @@
                 });
                 /* 바로 아래 음과 2도로 붙으면 음표머리를 옆으로 비킨다. */
                 const previous = sorted[noteIndex - 1];
-                shift = previous && note.letterAbs - previous.letterAbs === 1 && shift === 0 ? 11 : 0;
-                group.append(make("ellipse", {
-                    class: "sheet-head",
-                    cx: x + shift,
-                    cy: y,
-                    rx: 6.2,
-                    ry: 4.4,
-                    transform: "rotate(-16 " + (x + shift) + " " + y + ")"
-                }));
+                shift = previous && note.letterAbs - previous.letterAbs === 1 && shift === 0 ? 15 : 0;
+                group.append(wholeHead(x + shift, y));
                 if (note.accidental !== 0) {
                     group.append(accidentalNode(note.accidental, x + shift - accidentalWidth(note.accidental) - 4, y));
                 }

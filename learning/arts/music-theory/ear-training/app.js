@@ -747,6 +747,7 @@
         });
         session.screen = name;
         document.body.classList.toggle("wheel-open", name === "wheel");
+        document.body.classList.toggle("lesson-open", name === "lesson");
         window.scrollTo({ top: 0 });
     }
 
@@ -1313,11 +1314,6 @@
             board.append(qualityChainDiagram());
             els.lessonExamples.append(board);
         }
-        /* 음계는 여덟 음이 한 줄에 들어가야 하므로 글 아래 한 줄을 통째로 쓴다. */
-        els.lessonExamples.classList.toggle(
-            "is-wide-row",
-            (lesson.examples || []).some(entry => entry && entry.scale)
-        );
         (lesson.examples || []).forEach(entry => els.lessonExamples.append(
             typeof entry === "string" ? intervalExample(entry)
                 : entry.pattern ? rhythmExample(entry)
@@ -1347,6 +1343,9 @@
         showScreen("lesson");
     }
 
+    /* 보기 악보는 차시가 달라도 같은 크기여야 한다. 한 눈금을 이 배율로 못 박는다. */
+    const EXAMPLE_ZOOM = 1.15;
+
     const EXAMPLE_SHAPES = [
         { id: "up", label: label("Ascending", "상행") },
         { id: "down", label: label("Descending", "하행") },
@@ -1358,53 +1357,73 @@
         const block = document.createElement("div");
         block.className = "example";
 
+        const head = document.createElement("div");
+        head.className = "example-head";
+        block.append(head);
+
         const caption = document.createElement("p");
         caption.className = "example-caption";
-        block.append(caption);
+        head.append(caption);
 
         const row = document.createElement("div");
-        row.className = "example-staves";
-        const buttons = EXAMPLE_SHAPES.map(shape => {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "example-play";
-            row.append(button);
-            return { shape: shape, node: button };
-        });
-        block.append(row);
+        row.className = "shape-row";
+        head.append(row);
+
+        const board = document.createElement("div");
+        board.className = "example-board";
+        block.append(board);
 
         const topOf = root => N.step(root, item.degree, item.semis);
+        let shapeId = "up";
 
         const draw = chosen => {
             const root = betterRoot(chosen, place => countDeep([place, topOf(place)]));
             const top = topOf(root);
-            caption.textContent = N.name(root) + " " + item.label + " · 반음 " + item.semis + "개";
-            buttons.forEach(entry => {
-                const harmony = entry.shape.id === "harmony";
-                const down = entry.shape.id === "down";
-                const columns = harmony
-                    ? [{ notes: [root, top] }]
-                    : down ? [{ notes: [top] }, { notes: [root] }] : [{ notes: [root] }, { notes: [top] }];
-                const order = harmony
-                    ? [{ column: 0, midis: [root.midi, top.midi] }]
-                    : down
-                        ? [{ column: 0, midis: [top.midi] }, { column: 1, midis: [root.midi] }]
-                        : [{ column: 0, midis: [root.midi] }, { column: 1, midis: [top.midi] }];
-                entry.node.innerHTML = "";
-                entry.node.append(N.render(columns, { label: item.label + " " + entry.shape.label, padTop: 14 }));
-                const tag = document.createElement("span");
-                tag.textContent = entry.shape.label;
-                entry.node.append(tag);
-                entry.node.setAttribute("aria-label", N.name(root) + " " + item.label + " " + entry.shape.label);
-                entry.node.onclick = () => playRun(entry.node, order, harmony ? 2 : .7);
+            const harmony = shapeId === "harmony";
+            const down = shapeId === "down";
+            const columns = harmony
+                ? [{ notes: [root, top] }]
+                : down ? [{ notes: [top] }, { notes: [root] }] : [{ notes: [root] }, { notes: [top] }];
+            const order = harmony
+                ? [{ column: 0, midis: [root.midi, top.midi] }]
+                : down
+                    ? [{ column: 0, midis: [top.midi] }, { column: 1, midis: [root.midi] }]
+                    : [{ column: 0, midis: [root.midi] }, { column: 1, midis: [top.midi] }];
+
+            caption.textContent = N.name(root) + " " + item.label;
+            board.innerHTML = "";
+            board.append(N.render(columns, { label: N.name(root) + " " + item.label, zoom: EXAMPLE_ZOOM }));
+
+            row.innerHTML = "";
+            EXAMPLE_SHAPES.forEach(shape => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "shape-button";
+                button.textContent = shape.label;
+                button.setAttribute("aria-pressed", String(shape.id === shapeId));
+                button.addEventListener("click", () => {
+                    shapeId = shape.id;
+                    draw(chosen);
+                    playRun(board, shapeId === "harmony"
+                        ? [{ column: 0, midis: [root.midi, top.midi] }]
+                        : shapeId === "down"
+                            ? [{ column: 0, midis: [top.midi] }, { column: 1, midis: [root.midi] }]
+                            : [{ column: 0, midis: [root.midi] }, { column: 1, midis: [top.midi] }],
+                    shapeId === "harmony" ? 2 : .7);
+                });
+                row.append(button);
             });
+            return order;
         };
 
         exampleBlocks.push({
             draw: draw,
             deep: root => countDeep([root, topOf(root)]),
             span: item.semis,
-            play: () => buttons[0].node.click()
+            play: () => {
+                const order = draw(currentRoot);
+                playRun(board, order, shapeId === "harmony" ? 2 : .7);
+            }
         });
         return block;
     }
@@ -1532,11 +1551,8 @@
             button.innerHTML = "";
             button.append(N.render(
                 notes.map(note => ({ notes: [note] })),
-                { label: N.name(notes[0]) + " " + item.label, padTop: 14 }
+                { label: N.name(notes[0]) + " " + item.label, zoom: EXAMPLE_ZOOM }
             ));
-            const tag = document.createElement("span");
-            tag.textContent = label("Ascending", "상행") + " · " + label("Descending", "하행");
-            button.append(tag);
             button.onclick = () => playScale(notes, button);
             return notes;
         };
@@ -1584,7 +1600,7 @@
         button.type = "button";
         button.className = "example-play is-wide";
         button.setAttribute("aria-label", entry.caption);
-        button.append(RN.render(bar, { meter: "4/4", label: entry.caption }));
+        button.append(RN.render(bar, { meter: "4/4", label: entry.caption, zoom: EXAMPLE_ZOOM }));
         button.addEventListener("click", () => {
             window.PianoEngine.playRhythm(
                 RN.onsets(bar).map(cell => cell / RN.PER_BEAT),
@@ -1642,11 +1658,8 @@
             button.innerHTML = "";
             button.append(N.render(
                 [{ notes: notes }].concat(notes.map(note => ({ notes: [note] }))),
-                { label: name + " " + item.label, padTop: 14 }
+                { label: name + " " + item.label, zoom: EXAMPLE_ZOOM }
             ));
-            const tag = document.createElement("span");
-            tag.textContent = label("Harmonic", "화성") + " · " + label("Arpeggio", "분산");
-            button.append(tag);
             button.setAttribute("aria-label", name + " " + item.label);
             button.onclick = () => playChord(notes);
         };
@@ -1822,6 +1835,8 @@
         else {
             els.replayButton.textContent = "♪ 다시 듣기";
             els.staff.hidden = false;
+            /* 리듬 문제를 보고 오면 건반이 감춰진 채로 남는다. */
+            els.keyboardWrap.hidden = false;
             els.rhythmWrap.hidden = true;
             els.gridWrap.hidden = true;
             els.tapWrap.hidden = true;
