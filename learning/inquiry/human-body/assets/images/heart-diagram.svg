@@ -187,7 +187,7 @@
 
   <!-- 삼첨판 (우심방 ➔ 우심실 입구, y=335..348, x=335..415) -->
   <g id="valveTricuspid">
-    <path class="valve-leaflet" d="M335 338 C355 352 370 352 385 342 C395 352 405 352 415 338"/>
+    <path class="valve-leaflet" d="M335 335 C355 352 370 352 385 342 C395 352 405 352 415 335"/>
     <line x1="360" y1="348" x2="362" y2="378" class="chordae-line"/>
     <line x1="385" y1="344" x2="386" y2="378" class="chordae-line"/>
     <line x1="405" y1="348" x2="403" y2="378" class="chordae-line"/>
@@ -198,7 +198,7 @@
 
   <!-- 이첨판 (좌심방 ➔ 좌심실 입구, y=335..348, x=585..665) -->
   <g id="valveMitral">
-    <path class="valve-leaflet" d="M585 338 C600 352 620 352 635 342 C645 352 655 352 665 338"/>
+    <path class="valve-leaflet" d="M585 335 C600 352 620 352 635 342 C645 352 655 352 665 335"/>
     <line x1="605" y1="348" x2="607" y2="378" class="chordae-line"/>
     <line x1="635" y1="344" x2="636" y2="378" class="chordae-line"/>
     <line x1="655" y1="348" x2="653" y2="378" class="chordae-line"/>
