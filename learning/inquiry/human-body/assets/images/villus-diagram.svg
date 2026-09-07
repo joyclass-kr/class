@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <style>
+      /* Flat Textbook Schematic Stylesheet (2.4 ~ 3.0px crisp strokes) */
+      .muscle-layer { fill: #1e293b; stroke: #475569; stroke-width: 2.6; stroke-linejoin: round; }
+      .submucosa-layer { fill: #fecaca; fill-opacity: 0.35; stroke: #fb7185; stroke-width: 2.2; }
+      .intestine-wall { fill: #fecaca; stroke: #f87171; stroke-width: 2.6; stroke-linejoin: round; }
+      .field-villus { fill: #fda4af; stroke: #f43f5e; stroke-width: 1.6; stroke-linecap: round; }
+      
+      .zoom-guide { fill: none; stroke: #64748b; stroke-width: 1.8; stroke-dasharray: 4,4; stroke-linecap: round; opacity: 0.75; }
+      .zoom-ring { fill: none; stroke: #38bdf8; stroke-width: 2.0; stroke-dasharray: 3,3; }
+      
+      .lumen-space { fill: #1e293b; fill-opacity: 0.25; }
+      .nutrient-water { fill: #38bdf8; stroke: #0284c7; stroke-width: 1.8; }
+      .nutrient-fat { fill: #fbbf24; stroke: #d97706; stroke-width: 1.8; }
+      
+      .villus-body { fill: #fecaca; stroke: none; }
+      .epith-layer { fill: #fca5a5; stroke: #fb7185; stroke-width: 2.4; stroke-linejoin: round; }
+      .epith-nucleus { fill: #9f1239; }
+      .epith-junction { stroke: #fb7185; stroke-width: 1.4; stroke-linecap: round; }
+      
+      .brush-border { fill: none; stroke: #f87171; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+      .microvillus-hair { stroke: #f87171; stroke-width: 1.6; stroke-linecap: round; }
+      
+      .lacteal-tube { fill: #fffbeb; stroke: #d4d4d8; stroke-width: 2.8; stroke-linejoin: round; stroke-linecap: round; }
+      .lacteal-valve { fill: none; stroke: #a1a1aa; stroke-width: 2.0; stroke-linecap: round; }
+      
+      .cap-net-red { fill: none; stroke: #dc2626; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+      .cap-net-mesh { fill: none; stroke: #fb7185; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+      .cap-net-blue { fill: none; stroke: #2563eb; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+      .cap-net-behind { fill: none; stroke: #fb7185; stroke-width: 2.2; stroke-dasharray: 5,4; stroke-linecap: round; opacity: 0.65; }
+      
+      .artery-vessel { fill: #dc2626; stroke: #991b1b; stroke-width: 2.8; stroke-linejoin: round; }
+      .vein-vessel { fill: #2563eb; stroke: #1e40af; stroke-width: 2.8; stroke-linejoin: round; }
+      .lymph-base { fill: #fffbeb; stroke: #d4d4d8; stroke-width: 2.8; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- ================================================================= -->
+  <!-- 1. TOP-LEFT OVERVIEW: INTESTINAL FOLDS & VILLI FIELD (~1/5 AREA)   -->
+  <!-- ================================================================= -->
+
+  <!-- Outer Intestinal Muscle Base Layer -->
+  <g opacity="0.9">
+    <path class="muscle-layer"
+          d="M 45,50
+             C 70,120 70,200 45,265
+             L 65,265
+             C 90,200 90,120 65,50
+             Z" />
+  </g>
+
+  <!-- Intestinal Wall with Circular Folds (소장 벽, id="intestineWall") -->
+  <!-- Mucosal folds (주름) that multiply absorptive surface area -->
+  <g id="intestineWall">
+    <path class="intestine-wall"
+          d="M 65,50
+             C 100,50 145,75 145,95
+             C 145,115 105,125 105,140
+             C 105,155 160,170 160,195
+             C 160,220 100,235 100,250
+             C 100,260 85,265 65,265
+             C 90,200 90,120 65,50
+             Z" />
+  </g>
+
+  <!-- Field of Dense Villi on Folds (주름 위의 빽빽한 융털들, id="villiField") -->
+  <g id="villiField">
+    <!-- Tiny finger-like projections bristling along the folds -->
+    <!-- Fold 1 (y: 60 ~ 120) -->
+    <path class="field-villus" d="M 80,56 C 88,52 94,52 96,58 L 94,66" />
+    <path class="field-villus" d="M 98,62 C 108,58 116,60 118,68 L 114,75" />
+    <path class="field-villus" d="M 118,72 C 130,68 138,72 140,82 L 134,89" />
+    <path class="field-villus" d="M 136,86 C 150,84 156,92 154,100 L 144,105" />
+    <path class="field-villus" d="M 144,102 C 154,106 154,116 146,122 L 134,121" />
+    <path class="field-villus" d="M 132,118 C 138,126 132,135 122,136 L 115,130" />
+    <path class="field-villus" d="M 116,128 C 120,136 114,144 104,143 L 99,136" />
+    
+    <!-- Fold 2 (y: 145 ~ 220) -->
+    <path class="field-villus" d="M 104,146 C 114,142 122,145 125,153 L 120,160" />
+    <path class="field-villus" d="M 124,156 C 138,152 146,156 148,166 L 141,173" />
+    <path class="field-villus" d="M 142,168 C 158,166 166,174 167,184 L 157,190" />
+    <path class="field-villus" d="M 158,186 C 172,186 176,198 168,206 L 155,207" />
+    <path class="field-villus" d="M 155,204 C 164,212 160,224 148,226 L 138,221" />
+    <path class="field-villus" d="M 138,218 C 142,228 134,236 122,236 L 114,228" />
+
+    <!-- Fold 3 (y: 225 ~ 265) -->
+    <path class="field-villus" d="M 112,232 C 122,232 126,242 118,248 L 108,247" />
+    <path class="field-villus" d="M 106,244 C 114,248 114,258 102,260 L 94,256" />
+    <path class="field-villus" d="M 94,254 C 98,260 94,268 84,267 L 78,262" />
+  </g>
+
+  <!-- Magnification Callout Guide Cone -->
+  <g opacity="0.65">
+    <circle class="zoom-ring" cx="162" cy="184" r="15" />
+    <line class="zoom-guide" x1="177" y1="180" x2="480" y2="105" />
+    <line class="zoom-guide" x1="174" y1="195" x2="445" y2="560" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 2. MAIN SECTION: MAGNIFIED VILLUS LONGITUDINAL SECTION            -->
+  <!-- ================================================================= -->
+
+  <!-- Intestinal Lumen Space (소장 안쪽 공간, id="lumen") -->
+  <!-- The cavity outside the villus where digested nutrients float -->
+  <g id="lumen">
+    <!-- Ambient subtle fluid backing in lumen -->
+    <path class="lumen-space"
+          d="M 270,50
+             L 450,50
+             C 450,50 460,95 470,120
+             C 485,160 485,460 445,560
+             L 270,560
+             Z" />
+
+    <!-- Digested Water-Soluble Nutrients in Lumen (포도당·아미노산, 파랑 비드) -->
+    <g>
+      <polygon class="nutrient-water" points="350,140 358,135 366,140 366,150 358,155 350,150" />
+      <polygon class="nutrient-water" points="395,200 403,195 411,200 411,210 403,215 395,210" />
+      <polygon class="nutrient-water" points="340,270 348,265 356,270 356,280 348,285 340,280" />
+      <polygon class="nutrient-water" points="385,340 393,335 401,340 401,350 393,355 385,350" />
+      <polygon class="nutrient-water" points="345,430 353,425 361,430 361,440 353,445 345,440" />
+      <polygon class="nutrient-water" points="400,490 408,485 416,490 416,500 408,505 400,500" />
+    </g>
+
+    <!-- Digested Fat-Soluble Nutrients in Lumen (지방산·모노글리세리드, 노랑 액적) -->
+    <g>
+      <circle class="nutrient-fat" cx="380" cy="165" r="7.5" />
+      <circle class="nutrient-fat" cx="345" cy="225" r="8.0" />
+      <circle class="nutrient-fat" cx="405" cy="285" r="7.0" />
+      <circle class="nutrient-fat" cx="355" cy="370" r="8.5" />
+      <circle class="nutrient-fat" cx="410" cy="420" r="7.0" />
+      <circle class="nutrient-fat" cx="360" cy="495" r="8.0" />
+    </g>
+  </g>
+
+
+  <!-- Magnified Villus Core Body (확대한 융털 하나 몸통, id="villus") -->
+  <!-- Lamina propria stroma interior supporting lacteal & capillary net -->
+  <g id="villus">
+    <!-- Tall finger-like stroma cavity, soft pink #fecaca -->
+    <path class="villus-body"
+          d="M 495,560
+             C 485,500 488,220 520,140
+             C 545,85 655,85 680,140
+             C 712,220 715,500 705,560
+             Z" />
+    
+    <!-- Submucosal connective tissue base platform -->
+    <path class="submucosa-layer"
+          d="M 420,560
+             L 780,560
+             L 780,665
+             L 420,665
+             Z" />
+  </g>
+
+
+  <!-- Microvilli (미세융털, id="microvilli") -->
+  <!-- Dense brush border on the luminal surface of epithelial cells (#f87171) -->
+  <g id="microvilli">
+    <!-- Outer Contour Boundary Line -->
+    <path class="brush-border"
+          d="M 460,560
+             C 450,490 452,210 488,125
+             C 520,55 680,55 712,125
+             C 748,210 750,490 740,560" />
+
+    <!-- Fine Comb-like Microvilli Bristles (표면의 촘촘한 미세융털 브러시) -->
+    <!-- Left Flank Microvilli -->
+    <line class="microvillus-hair" x1="458" y1="555" x2="450" y2="555" />
+    <line class="microvillus-hair" x1="457" y1="535" x2="449" y2="535" />
+    <line class="microvillus-hair" x1="457" y1="515" x2="449" y2="515" />
+    <line class="microvillus-hair" x1="457" y1="495" x2="449" y2="495" />
+    <line class="microvillus-hair" x1="458" y1="475" x2="450" y2="475" />
+    <line class="microvillus-hair" x1="458" y1="455" x2="450" y2="455" />
+    <line class="microvillus-hair" x1="459" y1="435" x2="451" y2="435" />
+    <line class="microvillus-hair" x1="460" y1="415" x2="452" y2="415" />
+    <line class="microvillus-hair" x1="461" y1="395" x2="453" y2="395" />
+    <line class="microvillus-hair" x1="463" y1="375" x2="455" y2="375" />
+    <line class="microvillus-hair" x1="465" y1="355" x2="457" y2="355" />
+    <line class="microvillus-hair" x1="467" y1="335" x2="458" y2="335" />
+    <line class="microvillus-hair" x1="470" y1="315" x2="461" y2="315" />
+    <line class="microvillus-hair" x1="472" y1="295" x2="463" y2="294" />
+    <line class="microvillus-hair" x1="475" y1="275" x2="466" y2="273" />
+    <line class="microvillus-hair" x1="478" y1="255" x2="469" y2="253" />
+    <line class="microvillus-hair" x1="482" y1="235" x2="473" y2="232" />
+    <line class="microvillus-hair" x1="487" y1="215" x2="478" y2="211" />
+    <line class="microvillus-hair" x1="492" y1="195" x2="483" y2="190" />
+    <line class="microvillus-hair" x1="498" y1="175" x2="489" y2="169" />
+    <line class="microvillus-hair" x1="506" y1="155" x2="497" y2="148" />
+    <line class="microvillus-hair" x1="516" y1="135" x2="508" y2="127" />
+    <line class="microvillus-hair" x1="528" y1="115" x2="521" y2="106" />
+
+    <!-- Apex Dome Microvilli -->
+    <line class="microvillus-hair" x1="544" y1="95" x2="538" y2="86" />
+    <line class="microvillus-hair" x1="562" y1="80" x2="558" y2="71" />
+    <line class="microvillus-hair" x1="582" y1="70" x2="580" y2="61" />
+    <line class="microvillus-hair" x1="600" y1="66" x2="600" y2="57" />
+    <line class="microvillus-hair" x1="618" y1="70" x2="620" y2="61" />
+    <line class="microvillus-hair" x1="638" y1="80" x2="642" y2="71" />
+    <line class="microvillus-hair" x1="656" y1="95" x2="662" y2="86" />
+
+    <!-- Right Flank Microvilli -->
+    <line class="microvillus-hair" x1="672" y1="115" x2="679" y2="106" />
+    <line class="microvillus-hair" x1="684" y1="135" x2="692" y2="127" />
+    <line class="microvillus-hair" x1="694" y1="155" x2="703" y2="148" />
+    <line class="microvillus-hair" x1="702" y1="175" x2="711" y2="169" />
+    <line class="microvillus-hair" x1="708" y1="195" x2="717" y2="190" />
+    <line class="microvillus-hair" x1="713" y1="215" x2="722" y2="211" />
+    <line class="microvillus-hair" x1="718" y1="235" x2="727" y2="232" />
+    <line class="microvillus-hair" x1="722" y1="255" x2="731" y2="253" />
+    <line class="microvillus-hair" x1="725" y1="275" x2="734" y2="273" />
+    <line class="microvillus-hair" x1="728" y1="295" x2="737" y2="294" />
+    <line class="microvillus-hair" x1="730" y1="315" x2="739" y2="315" />
+    <line class="microvillus-hair" x1="733" y1="335" x2="742" y2="335" />
+    <line class="microvillus-hair" x1="735" y1="355" x2="743" y2="355" />
+    <line class="microvillus-hair" x1="737" y1="375" x2="745" y2="375" />
+    <line class="microvillus-hair" x1="739" y1="395" x2="747" y2="395" />
+    <line class="microvillus-hair" x1="740" y1="415" x2="748" y2="415" />
+    <line class="microvillus-hair" x1="741" y1="435" x2="749" y2="435" />
+    <line class="microvillus-hair" x1="742" y1="455" x2="750" y2="455" />
+    <line class="microvillus-hair" x1="742" y1="475" x2="750" y2="475" />
+    <line class="microvillus-hair" x1="743" y1="495" x2="750" y2="495" />
+    <line class="microvillus-hair" x1="743" y1="515" x2="750" y2="515" />
+    <line class="microvillus-hair" x1="743" y1="535" x2="750" y2="535" />
+    <line class="microvillus-hair" x1="742" y1="555" x2="749" y2="555" />
+  </g>
+
+
+  <!-- Epithelial Cell Layer (상피 세포 한 겹, id="epithelium") -->
+  <!-- Single layer of simple columnar epithelial cells (#fca5a5) -->
+  <g id="epithelium">
+    <!-- Epithelial Strip (상피세포층 바깥 껍질, 두께 약 25px) -->
+    <path class="epith-layer"
+          d="M 465,560
+             C 455,490 458,215 494,130
+             C 524,65 676,65 706,130
+             C 742,215 745,490 735,560
+             L 705,560
+             C 715,500 712,220 680,140
+             C 655,85 545,85 520,140
+             C 488,220 485,500 495,560
+             Z" />
+
+    <!-- Basal Columnar Cell Nuclei (원주 상피세포 기저부 핵들) -->
+    <!-- Left side nuclei -->
+    <ellipse class="epith-nucleus" cx="478" cy="540" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="477" cy="495" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="477" cy="450" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="478" cy="405" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="481" cy="360" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="485" cy="315" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="491" cy="270" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="499" cy="225" rx="7.0" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="512" cy="182" rx="7.5" ry="9.0" />
+    <ellipse class="epith-nucleus" cx="530" cy="142" rx="8.0" ry="8.5" />
+
+    <!-- Apex nuclei -->
+    <ellipse class="epith-nucleus" cx="560" cy="106" rx="9.5" ry="7.5" />
+    <ellipse class="epith-nucleus" cx="600" cy="98" rx="9.5" ry="7.0" />
+    <ellipse class="epith-nucleus" cx="640" cy="106" rx="9.5" ry="7.5" />
+
+    <!-- Right side nuclei -->
+    <ellipse class="epith-nucleus" cx="670" cy="142" rx="8.0" ry="8.5" />
+    <ellipse class="epith-nucleus" cx="688" cy="182" rx="7.5" ry="9.0" />
+    <ellipse class="epith-nucleus" cx="701" cy="225" rx="7.0" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="709" cy="270" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="715" cy="315" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="719" cy="360" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="722" cy="405" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="723" cy="450" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="723" cy="495" rx="6.5" ry="9.5" />
+    <ellipse class="epith-nucleus" cx="722" cy="540" rx="6.5" ry="9.5" />
+
+    <!-- Cell Junction Partition Lines (단층 원주 상피세포 경계선) -->
+    <line class="epith-junction" x1="462" y1="518" x2="492" y2="518" />
+    <line class="epith-junction" x1="462" y1="472" x2="492" y2="472" />
+    <line class="epith-junction" x1="463" y1="428" x2="493" y2="428" />
+    <line class="epith-junction" x1="466" y1="382" x2="496" y2="382" />
+    <line class="epith-junction" x1="470" y1="338" x2="500" y2="338" />
+    <line class="epith-junction" x1="476" y1="292" x2="506" y2="292" />
+    <line class="epith-junction" x1="484" y1="248" x2="514" y2="248" />
+    <line class="epith-junction" x1="496" y1="202" x2="524" y2="204" />
+    <line class="epith-junction" x1="514" y1="160" x2="540" y2="166" />
+    <line class="epith-junction" x1="542" y1="120" x2="564" y2="132" />
+    <line class="epith-junction" x1="580" y1="92" x2="592" y2="114" />
+    <line class="epith-junction" x1="620" y1="92" x2="608" y2="114" />
+    <line class="epith-junction" x1="658" y1="120" x2="636" y2="132" />
+    <line class="epith-junction" x1="686" y1="160" x2="660" y2="166" />
+    <line class="epith-junction" x1="704" y1="202" x2="676" y2="204" />
+    <line class="epith-junction" x1="716" y1="248" x2="686" y2="248" />
+    <line class="epith-junction" x1="724" y1="292" x2="694" y2="292" />
+    <line class="epith-junction" x1="730" y1="338" x2="700" y2="338" />
+    <line class="epith-junction" x1="734" y1="382" x2="704" y2="382" />
+    <line class="epith-junction" x1="737" y1="428" x2="707" y2="428" />
+    <line class="epith-junction" x1="738" y1="472" x2="708" y2="472" />
+    <line class="epith-junction" x1="738" y1="518" x2="708" y2="518" />
+  </g>
+
+
+  <!-- Central Lacteal (암죽관, id="lacteal") -->
+  <!-- ★ CRITICAL EXAM POINT: In the EXACT CENTER, thick white/pale-cream blind tube -->
+  <g id="lacteal">
+    <!-- Blind-ended lymphatic capillary running up the central axis (#fffbeb, border #d4d4d8) -->
+    <path class="lacteal-tube"
+          d="M 575,660
+             L 575,200
+             C 575,152 625,152 625,200
+             L 625,660
+             Z" />
+
+    <!-- Internal Lymph Flow Guides & Endothelial Flap Valves -->
+    <path class="lacteal-valve" d="M 580,240 C 595,252 605,252 620,240" />
+    <path class="lacteal-valve" d="M 580,340 C 595,352 605,352 620,340" />
+    <path class="lacteal-valve" d="M 580,440 C 595,452 605,452 620,440" />
+    <path class="lacteal-valve" d="M 580,540 C 595,552 605,552 620,540" />
+  </g>
+
+
+  <!-- Capillary Network (모세혈관 그물, id="capillaryNet") -->
+  <!-- ★ CRITICAL EXAM POINT: Surrounds and wraps around the central lacteal -->
+  <!-- Red incoming on left, pink anastomoses mesh, blue outgoing on right -->
+  <g id="capillaryNet">
+    <!-- Left Ascending Arterial Capillary Stem (빨강: 아래 동맥에서 올라옴) -->
+    <path class="cap-net-red"
+          d="M 528,560
+             C 525,480 527,370 532,275
+             C 536,200 550,160 575,138" />
+
+    <!-- Apex Arch over Lacteal Dome -->
+    <path class="cap-net-mesh"
+          d="M 575,138
+             C 595,122 605,122 625,138" />
+
+    <!-- Right Descending Venous Capillary Stem (파랑: 위에서 아래 정맥으로 내려감) -->
+    <path class="cap-net-blue"
+          d="M 625,138
+             C 650,160 664,200 668,275
+             C 673,370 675,480 672,560" />
+
+    <!-- Transverse Anastomotic Loops wrapping across front of lacteal (#fb7185) -->
+    <path class="cap-net-mesh" d="M 529,510 C 555,496 645,496 671,510" />
+    <path class="cap-net-mesh" d="M 531,450 C 558,435 642,435 670,450" />
+    <path class="cap-net-mesh" d="M 533,390 C 560,375 640,375 669,390" />
+    <path class="cap-net-mesh" d="M 534,330 C 560,315 640,315 668,330" />
+    <path class="cap-net-mesh" d="M 538,270 C 564,256 636,256 664,270" />
+    <path class="cap-net-mesh" d="M 546,210 C 568,200 632,200 654,210" />
+
+    <!-- Diagonal Interconnecting Mesh Bridges (그물망 문합 가지들) -->
+    <!-- Level 1 (y: 450 ~ 510) -->
+    <path class="cap-net-mesh" d="M 545,502 C 555,482 568,475 578,443" />
+    <path class="cap-net-mesh" d="M 622,443 C 632,475 645,482 655,502" />
+    <path class="cap-net-mesh" d="M 585,441 C 595,470 605,470 615,498" />
+
+    <!-- Level 2 (y: 390 ~ 450) -->
+    <path class="cap-net-mesh" d="M 547,442 C 557,422 570,415 580,383" />
+    <path class="cap-net-mesh" d="M 620,383 C 630,415 643,422 653,442" />
+    <path class="cap-net-mesh" d="M 587,381 C 595,410 605,410 613,438" />
+
+    <!-- Level 3 (y: 330 ~ 390) -->
+    <path class="cap-net-mesh" d="M 550,382 C 560,362 572,355 582,323" />
+    <path class="cap-net-mesh" d="M 618,323 C 628,355 640,362 650,382" />
+    <path class="cap-net-mesh" d="M 588,321 C 596,350 604,350 612,378" />
+
+    <!-- Level 4 (y: 270 ~ 330) -->
+    <path class="cap-net-mesh" d="M 554,322 C 564,302 574,295 584,263" />
+    <path class="cap-net-mesh" d="M 616,263 C 626,295 636,302 646,322" />
+    <path class="cap-net-mesh" d="M 588,261 C 596,290 604,290 612,318" />
+
+    <!-- Level 5 (y: 210 ~ 270) -->
+    <path class="cap-net-mesh" d="M 560,262 C 570,242 580,235 588,206" />
+    <path class="cap-net-mesh" d="M 612,206 C 620,235 630,242 640,262" />
+
+    <!-- Apex Crown Loop over lacteal dome -->
+    <path class="cap-net-mesh" d="M 565,160 C 585,142 615,142 635,160" />
+    <path class="cap-net-mesh" d="M 570,203 C 580,180 588,170 592,152" />
+    <path class="cap-net-mesh" d="M 608,152 C 612,170 620,180 630,203" />
+  </g>
+
+
+  <!-- Base Blood Vessels: Arteriole & Venule (아래쪽 혈관들) -->
+
+  <!-- Incoming Arteriole (들어오는 혈관: 빨강, id="arteriole") -->
+  <g id="arteriole">
+    <path class="artery-vessel"
+          d="M 440,642
+             L 512,642
+             C 516,615 522,585 528,560
+             L 542,560
+             C 536,585 530,615 526,642
+             L 542,642
+             L 542,662
+             L 440,662
+             Z" />
+    <!-- Pulse flow arrow -->
+    <line x1="455" y1="652" x2="495" y2="652" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.85" />
+    <polygon points="495,648 505,652 495,656" fill="#ffffff" opacity="0.85" />
+  </g>
+
+  <!-- Outgoing Venule (나가는 혈관: 파랑, id="venule") -->
+  <g id="venule">
+    <path class="vein-vessel"
+          d="M 658,560
+             C 664,585 670,615 676,642
+             L 692,642
+             C 686,615 680,585 674,560
+             Z" />
+    <path class="vein-vessel"
+          d="M 676,642
+             L 760,642
+             L 760,662
+             L 658,662
+             L 658,642
+             Z" />
+    <!-- Drainage flow arrow -->
+    <line x1="705" y1="652" x2="745" y2="652" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.85" />
+    <polygon points="745,648 755,652 745,656" fill="#ffffff" opacity="0.85" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 3. INVISIBLE GUIDE PATHS (안내선)                                 -->
+  <!-- ================================================================= -->
+
+  <!-- 1. flowWater: 소장 안쪽 → 상피 세포를 지나 → 모세혈관 속 → 아래 나가는 혈관까지 -->
+  <!-- (수용성 영양소: 포도당·아미노산·무기염류·비타민 B,C 이동 경로) -->
+  <path id="flowWater" fill="none" stroke="none"
+        d="M 370,270
+           C 420,270 460,275 490,275
+           C 515,275 528,290 535,315
+           C 542,345 555,400 580,425
+           C 610,450 655,470 668,520
+           C 674,545 678,590 685,652
+           L 750,652" />
+
+  <!-- 2. flowFat: 소장 안쪽 → 상피 세포를 지나 → 암죽관 속 → 암죽관을 타고 위로 -->
+  <!-- (지용성 영양소: 지방산·모노글리세리드·비타민 A,D,E,K 이동 경로) -->
+  <path id="flowFat" fill="none" stroke="none"
+        d="M 370,360
+           C 420,360 465,360 495,360
+           C 530,360 555,355 580,350
+           C 592,348 600,340 600,310
+           L 600,180" />
+
+  <!-- 3. flowBlood: 들어오는 혈관 → 모세혈관 그물을 감고 → 나가는 혈관 -->
+  <!-- (모세혈관 혈류 순환 경로) -->
+  <path id="flowBlood" fill="none" stroke="none"
+        d="M 450,652
+           L 518,652
+           C 524,615 526,520 530,420
+           C 534,320 540,220 565,165
+           C 585,125 615,125 635,165
+           C 660,220 666,320 670,420
+           C 674,520 676,615 682,652
+           L 755,652" />
+
+</svg>
