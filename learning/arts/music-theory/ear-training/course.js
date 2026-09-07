@@ -318,6 +318,141 @@
 
 
 
+    const SCALE_COURSE = {
+        id: "scale",
+        name: "Scales​(음계)",
+        lessons: [
+            {
+                id: "major-minor",
+                kind: "text",
+                title: "Major and Natural Minor​(장음계와 자연단음계)",
+                body: [
+                    "Major Scale​(장음계)은 온음과 반음이 온-온-반-온-온-온-반으로 놓인 음계입니다. 셋째와 넷째 음 사이, 일곱째와 여덟째 음 사이가 반음입니다.",
+                    "Natural Minor​(자연단음계)는 장음계에서 셋째·여섯째·일곱째 음을 반음 내린 것입니다. 장음계의 여섯째 음에서 시작해 같은 건반만 밟아도 자연단음계가 되며, 이렇게 짝을 이루는 두 조를 나란한조라고 합니다."
+                ],
+                examples: [{ scale: "major" }, { scale: "nminor" }],
+                quiz: ["major", "nminor"],
+                quizDrill: "scale",
+                quizLimit: 8
+            },
+            {
+                id: "major-minor-drill",
+                kind: "drill",
+                title: "Major and Natural Minor​(장음계와 자연단음계) 듣기",
+                drill: { drillId: "scale", items: ["major", "nminor"], mode: "mixed", limit: 10 }
+            },
+            {
+                id: "minors",
+                kind: "text",
+                title: "Three Minor Scales​(단음계 셋)",
+                body: [
+                    "Harmonic Minor​(화성단음계)는 자연단음계의 일곱째 음만 반음 올린 것입니다. 일곱째와 여덟째 음이 반음으로 붙고, 여섯째와 일곱째 음 사이가 한 음 반으로 벌어집니다.",
+                    "Melodic Minor​(가락단음계)는 여섯째와 일곱째 음을 모두 반음 올린 것입니다. 올라갈 때 위쪽 네 음이 장음계와 같아지고, 악곡에서는 내려올 때 자연단음계로 되돌리는 일이 많습니다."
+                ],
+                examples: [{ scale: "nminor" }, { scale: "hminor" }, { scale: "mminor" }],
+                quiz: ["nminor", "hminor", "mminor"],
+                quizDrill: "scale",
+                quizLimit: 12
+            },
+            {
+                id: "minors-drill",
+                kind: "drill",
+                title: "Minor Scales​(단음계) 듣기",
+                drill: { drillId: "scale", items: ["nminor", "hminor", "mminor"], mode: "mixed", limit: 12 }
+            },
+            {
+                id: "major-minors-drill",
+                kind: "drill",
+                title: "여기까지 듣기",
+                drill: { drillId: "scale", items: ["major", "nminor", "hminor", "mminor"], mode: "mixed", limit: 15 }
+            },
+            {
+                id: "pentatonic",
+                kind: "text",
+                title: "Pentatonic Scales​(5음음계)",
+                body: [
+                    "Pentatonic Scale​(5음음계)은 한 옥타브를 다섯 음으로 밟는 음계입니다. Major Pentatonic​(장5음음계)은 장음계에서 넷째와 일곱째 음을 뺀 것으로, 반음이 하나도 없습니다.",
+                    "Minor Pentatonic​(단5음음계)은 자연단음계에서 둘째와 여섯째 음을 뺀 것입니다. 장5음음계의 여섯째 음에서 시작하면 같은 음들이 됩니다."
+                ],
+                examples: [{ scale: "pmaj" }, { scale: "pmin" }],
+                quiz: ["pmaj", "pmin", "major", "nminor"],
+                quizDrill: "scale",
+                quizLimit: 12
+            },
+            {
+                id: "pentatonic-drill",
+                kind: "drill",
+                title: "Pentatonic Scales​(5음음계) 듣기",
+                drill: { drillId: "scale", items: ["pmaj", "pmin"], mode: "mixed", limit: 10 }
+            },
+            {
+                id: "blues",
+                kind: "text",
+                title: "Blues Scale​(블루스음계)",
+                body: [
+                    "Blues Scale​(블루스음계)은 단5음음계에 음 하나를 더한 여섯 음 음계입니다. 더해진 음은 밑음에서 d5​(감5도) 떨어진 자리입니다.",
+                    "그 음은 앞뒤가 모두 반음으로 붙어 있어, 셋째 음에서 넷째 음으로 지나가는 길처럼 쓰입니다."
+                ],
+                examples: [{ scale: "pmin" }, { scale: "blues" }],
+                quiz: ["pmin", "blues", "pmaj"],
+                quizDrill: "scale",
+                quizLimit: 10
+            },
+            {
+                id: "blues-drill",
+                kind: "drill",
+                title: "Blues Scale​(블루스음계) 듣기",
+                drill: { drillId: "scale", items: ["pmin", "blues", "pmaj"], mode: "mixed", limit: 12 }
+            },
+            {
+                id: "modes",
+                kind: "text",
+                title: "Church Modes​(교회 선법)",
+                body: [
+                    "장음계의 일곱 음 가운데 어느 음에서 시작하느냐에 따라 서로 다른 선법이 나옵니다. 첫째 음에서 시작하면 Ionian​(이오니아), 곧 장음계이고, 여섯째 음에서 시작하면 Aeolian​(에올리아), 곧 자연단음계입니다.",
+                    "Dorian​(도리아)은 둘째 음, Phrygian​(프리지아)은 셋째 음, Lydian​(리디아)은 넷째 음, Mixolydian​(믹솔리디아)은 다섯째 음, Locrian​(로크리아)은 일곱째 음에서 시작합니다.",
+                    "밑음을 같은 음으로 두고 견주면 Lydian​(리디아)은 장음계의 넷째 음이 반음 높고, Mixolydian​(믹솔리디아)은 일곱째 음이 반음 낮습니다. Dorian​(도리아)은 자연단음계의 여섯째 음이 반음 높고, Phrygian​(프리지아)은 둘째 음이 반음 낮습니다. Locrian​(로크리아)은 다섯째 음까지 반음 낮아 P5​(완전5도)가 없습니다."
+                ],
+                examples: [{ scale: "dorian" }, { scale: "phrygian" }, { scale: "lydian" }, { scale: "mixolydian" }, { scale: "locrian" }],
+                quiz: ["dorian", "phrygian", "lydian", "mixolydian", "locrian"],
+                quizDrill: "scale",
+                quizLimit: 15
+            },
+            {
+                id: "bright-modes-drill",
+                kind: "drill",
+                title: "밑음이 같은 밝은 쪽 듣기",
+                drill: { drillId: "scale", items: ["major", "lydian", "mixolydian"], mode: "mixed", limit: 12 }
+            },
+            {
+                id: "dark-modes-drill",
+                kind: "drill",
+                title: "밑음이 같은 어두운 쪽 듣기",
+                drill: { drillId: "scale", items: ["nminor", "dorian", "phrygian", "locrian"], mode: "mixed", limit: 12 }
+            },
+            {
+                id: "whole",
+                kind: "text",
+                title: "Whole Tone Scale​(온음음계)",
+                body: [
+                    "Whole Tone Scale​(온음음계)은 온음만 여섯 번 쌓아 한 옥타브를 채운 음계입니다. 반음이 없어 어느 음이 으뜸음인지 정해지지 않습니다.",
+                    "장음계와 견주면 넷째 음부터 어긋나기 시작하고, Lydian​(리디아)과는 넷째 음까지 같습니다."
+                ],
+                examples: [{ scale: "whole" }, { scale: "lydian" }],
+                quiz: ["whole", "lydian", "major"],
+                quizDrill: "scale",
+                quizLimit: 10
+            },
+            {
+                id: "all-scales-drill",
+                kind: "drill",
+                title: "음계 섞어 듣기",
+                drill: { drillId: "scale", items: ["major", "nminor", "hminor", "mminor", "pmaj", "pmin", "blues", "dorian", "phrygian", "lydian", "mixolydian", "locrian", "whole"], mode: "mixed", limit: 20 }
+            }
+        ]
+    };
+
+
     const RHYTHM_COURSE = {
         id: "rhythm",
         name: "Rhythm​(리듬)",
@@ -548,5 +683,5 @@
         ]
     };
 
-    window.EarCourses = [INTERVAL_COURSE, CHORD_COURSE, RHYTHM_COURSE];
+    window.EarCourses = [INTERVAL_COURSE, CHORD_COURSE, SCALE_COURSE, RHYTHM_COURSE];
 })();

@@ -188,6 +188,13 @@
 
     const MAJOR_TONES = [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 11]];
 
+    /* 조표 자리에 붙는 기호 */
+    const ACC_MARK = { "-2": "♭♭", "-1": "♭", "0": "", "1": "♯", "2": "♯♯" };
+
+    function keyName(tonic) {
+        return N.LETTER_NAMES[tonic.letter] + (ACC_MARK[String(tonic.accidental)] || "") + " Major​(장조)";
+    }
+
     function majorScale(tonic) {
         return MAJOR_TONES.map(tone => N.step(tonic, tone[0], tone[1]));
     }
@@ -360,7 +367,7 @@
             staffBefore: [null],
             staffAfter: line.map(note => ({ notes: [note] })),
             keyboard: null,
-            detail: N.name(root) + " " + item.label
+            detail: N.name(root)
         };
     }
 
@@ -386,7 +393,7 @@
             staffBefore: [null],
             staffAfter: item.chords.map(symbol => ({ notes: degreeTriad(scale, symbol) })),
             keyboard: null,
-            detail: N.LETTER_NAMES[tonic.letter] + " 장조 · " + item.label
+            detail: keyName(tonic)
         };
     }
 
@@ -426,6 +433,7 @@
         {
             id: "interval",
             name: label("Intervals", "음정"),
+            menuName: label("Listening", "듣기"),
             ask: "무슨 음정인가요?",
             items: INTERVALS,
             inputs: ["buttons", "keyboard"],
@@ -446,6 +454,7 @@
         {
             id: "reading",
             name: label("Interval Reading", "음정 읽기"),
+            menuName: label("Reading", "읽기"),
             ask: "무슨 음정인가요?",
             items: READ_ITEMS,
             inputs: ["pair"],
@@ -496,6 +505,7 @@
         {
             id: "scale",
             name: label("Scales", "음계"),
+            menuName: label("Listening", "듣기"),
             ask: "무슨 음계인가요?",
             items: SCALES,
             inputs: ["buttons"],
@@ -528,6 +538,7 @@
         {
             id: "rhythmWrite",
             name: label("Rhythm Dictation", "리듬 받아쓰기"),
+            menuName: label("Dictation", "받아쓰기"),
             ask: "들은 자리를 켜세요",
             pickable: false,
             inputs: ["grid"],
@@ -559,6 +570,7 @@
         {
             id: "rhythmRead",
             name: label("Rhythm Reading", "리듬 읽기"),
+            menuName: label("Tapping", "두드리기"),
             ask: "박에 맞춰 두드리세요",
             pickable: false,
             inputs: ["tap"],
@@ -700,18 +712,58 @@
         return { done: done, total: course.lessons.length };
     }
 
+    /* 첫 화면은 음정·화음·음계·리듬 네 갈래로 나눈다. */
+    const AREAS = [
+        { name: label("Intervals", "음정"), courseId: "interval", drills: ["interval", "reading", "melody"] },
+        { name: label("Chords", "화음"), courseId: "chord", drills: ["chord", "position", "progression"] },
+        { name: label("Scales", "음계"), courseId: "scale", drills: ["scale"] },
+        { name: label("Rhythm", "리듬"), courseId: "rhythm", drills: ["rhythmRead", "rhythmWrite"] }
+    ];
+
+    function menuCard(name, stat, onOpen) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "drill-card";
+        button.innerHTML = '<b></b><span class="drill-stat"></span>';
+        button.querySelector("b").textContent = name;
+        button.querySelector(".drill-stat").textContent = stat;
+        button.addEventListener("click", onOpen);
+        return button;
+    }
+
     function renderMenu() {
-        els.courseList.innerHTML = "";
-        (window.EarCourses || []).forEach(course => {
-            const progress = courseProgress(course);
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "drill-card";
-            button.innerHTML = '<b></b><span class="drill-stat"></span>';
-            button.querySelector("b").textContent = course.name;
-            button.querySelector(".drill-stat").textContent = progress.done + " / " + progress.total + "차시";
-            button.addEventListener("click", () => openCourse(course.id));
-            els.courseList.append(button);
+        els.areaList.innerHTML = "";
+        AREAS.forEach(area => {
+            const field = document.createElement("div");
+            field.className = "field";
+            const heading = document.createElement("span");
+            heading.className = "field-label";
+            heading.textContent = area.name;
+            field.append(heading);
+
+            const list = document.createElement("div");
+            list.className = "drill-list";
+            const course = (window.EarCourses || []).find(entry => entry.id === area.courseId);
+            if (course) {
+                const progress = courseProgress(course);
+                list.append(menuCard(
+                    label("Course", "과정"),
+                    progress.done + " / " + progress.total + "차시",
+                    () => openCourse(course.id)
+                ));
+            }
+            area.drills.forEach(drillId => {
+                const drill = DRILL_BY_ID[drillId];
+                if (!drill) return;
+                const rate = drillRate(drill.id);
+                list.append(menuCard(
+                    drill.menuName || drill.name,
+                    rate === null ? "" : rate + "%",
+                    () => openSetup(drill.id)
+                ));
+            });
+            field.append(list);
+            els.areaList.append(field);
         });
 
         els.toolList.innerHTML = "";
@@ -722,19 +774,6 @@
         wheelCard.querySelector("b").textContent = label("Circle of Fifths", "오도권 원판");
         wheelCard.addEventListener("click", openWheel);
         els.toolList.append(wheelCard);
-
-        els.drillList.innerHTML = "";
-        DRILLS.forEach(drill => {
-            const rate = drillRate(drill.id);
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "drill-card";
-            button.innerHTML = '<b></b><span class="drill-stat"></span>';
-            button.querySelector("b").textContent = drill.name;
-            button.querySelector(".drill-stat").textContent = rate === null ? "" : rate + "%";
-            button.addEventListener("click", () => openSetup(drill.id));
-            els.drillList.append(button);
-        });
     }
 
     function levelIds(drill, levelId) {
@@ -1014,6 +1053,7 @@
     function buildGrid(cells) {
         session.grid = new Set();
         els.beatGrid.innerHTML = "";
+        els.beatGrid.dataset.cells = String(cells);
         els.beatGrid.style.gridTemplateColumns = "repeat(" + cells + ", minmax(0, 1fr))";
         const perBeat = cells / 4;
         for (let cell = 0; cell < cells; cell += 1) {
@@ -1220,10 +1260,16 @@
             board.append(qualityChainDiagram());
             els.lessonExamples.append(board);
         }
+        /* 음계는 여덟 음이 한 줄에 들어가야 하므로 글 아래 한 줄을 통째로 쓴다. */
+        els.lessonExamples.classList.toggle(
+            "is-wide-row",
+            (lesson.examples || []).some(entry => entry && entry.scale)
+        );
         (lesson.examples || []).forEach(entry => els.lessonExamples.append(
             typeof entry === "string" ? intervalExample(entry)
                 : entry.pattern ? rhythmExample(entry)
-                    : chordExample(entry)
+                    : entry.scale ? scaleExample(entry)
+                        : chordExample(entry)
         ));
         els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
         els.lessonQuiz.hidden = !lesson.quiz;
@@ -1279,6 +1325,37 @@
         });
         block.append(row);
 
+        return block;
+    }
+
+    function scaleExample(entry) {
+        const item = SCALES.find(scale => scale.id === entry.scale);
+        const root = N.natural(4 * 7);
+        const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
+        const midis = notes.map(note => note.midi);
+
+        const block = document.createElement("div");
+        block.className = "example";
+
+        const caption = document.createElement("p");
+        caption.className = "example-caption";
+        caption.textContent = N.name(root) + " " + item.label;
+        block.append(caption);
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "example-play is-wide";
+        button.append(N.render(notes.map(note => ({ notes: [note] })), { label: item.label }));
+        const tag = document.createElement("span");
+        tag.textContent = label("Ascending", "상행") + " · " + label("Descending", "하행");
+        button.append(tag);
+        button.addEventListener("click", () => {
+            window.PianoEngine.playSequence(midis.map(midi => [midi]), .44).catch(() => {});
+            window.setTimeout(() => {
+                window.PianoEngine.playSequence(midis.slice().reverse().map(midi => [midi]), .44).catch(() => {});
+            }, midis.length * 440 + 260);
+        });
+        block.append(button);
         return block;
     }
 
@@ -1396,8 +1473,6 @@
 
     /* 오도권 원판 ---------------------------------------------------------- */
     let wheel = null;
-
-    const ACC_MARK = { "-2": "♭♭", "-1": "♭", "0": "", "1": "♯", "2": "♯♯" };
 
     /* 원판이 가리키는 조의 다이어토닉 화음을 조표대로 적는다. */
     function wheelChordNames(home, list) {
@@ -1845,8 +1920,8 @@
 
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "setupScreen", "drillScreen", "resultScreen",
-            "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "lessonQuiz", "lessonKeys", "wheelKeys", "drillList", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
+            "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
+            "lessonNext", "lessonQuiz", "lessonKeys", "wheelKeys", "areaList", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence", "setupTitle", "inversionField", "inversionRow",
             "helpRow", "arpButton", "rootButton",
             "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",
