@@ -397,10 +397,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     out += `<text class="card-chip" x="${RX + 141}" y="${ry + 1}" fill="#ffffff" text-anchor="middle">${r.resultName} 반응</text>`;
                 } else {
                     out += `<rect x="${RX + 102}" y="${ry - 12}" width="78" height="17" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>`;
-                    out += `<text class="card-chip" x="${RX + 141}" y="${ry + 1}" fill="#64748b" text-anchor="middle">변화 없음</text>`;
+                    out += `<text class="card-chip" x="${RX + 141}" y="${ry + 1}" fill="#334155" font-weight="800" text-anchor="middle">변화 없음</text>`;
                 }
             } else {
-                out += `<text class="card-val" x="${RX + 112}" y="${ry}" fill="#94a3b8">대기 중…</text>`;
+                out += `<text class="card-val" x="${RX + 112}" y="${ry}" fill="#64748b" font-weight="750">대기 중…</text>`;
             }
         });
 
@@ -439,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     out += `<text class="cell-text" fill="#ffffff" x="${x + (cw - 4) / 2}" y="${y + 16}" text-anchor="middle">${r.resultName}</text>`;
                 } else {
                     out += `<rect x="${x}" y="${y}" width="${cw - 4}" height="${rh - 4}" rx="5" fill="#f8fafc" stroke="#e2e8f0"/>`;
-                    out += `<text class="cell-text" fill="#94a3b8" x="${x + (cw - 4) / 2}" y="${y + 16}" text-anchor="middle">—</text>`;
+                    out += `<text class="cell-text" fill="#64748b" x="${x + (cw - 4) / 2}" y="${y + 16}" text-anchor="middle">—</text>`;
                 }
             });
         });

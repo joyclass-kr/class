@@ -102,16 +102,16 @@
 .retro-band { fill: rgba(255, 122, 89, .16); }
 
 /* phase disk */
-.disk-dark { fill: #1b2733; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.disk-dark { fill: #070d1a; stroke: rgba(148, 163, 184, 0.45); stroke-width: 1; stroke-dasharray: 3 3; }
 .disk-lit { stroke: none; }
 
 /* eclipse */
-.sun-disk { fill: #c2410c; }
-.corona { fill: rgba(255, 230, 170, .22); }
-.moon-disk { fill: #0b1219; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
-.moon-lit { fill: #d7dde3; stroke: #9aa3ad; stroke-width: .8; }
-.umbra { fill: rgba(20, 30, 45, .9); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
-.penumbra { fill: rgba(60, 80, 105, .45); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; stroke-dasharray: 4 3; }
+.sun-disk { fill: #f59e0b; stroke: #fde68a; stroke-width: 1.5; filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.8)); }
+.corona { fill: rgba(254, 240, 138, .3); filter: drop-shadow(0 0 16px rgba(254, 240, 138, 0.5)); }
+.moon-disk { fill: #050b14; stroke: rgba(148, 163, 184, 0.5); stroke-width: 1; }
+.moon-lit { fill: #fef08a; stroke: #ca8a04; stroke-width: .8; filter: drop-shadow(0 0 4px rgba(254, 240, 138, 0.5)); }
+.umbra { fill: rgba(15, 23, 42, .92); stroke: rgba(148, 163, 184, 0.45); stroke-width: 1; }
+.penumbra { fill: rgba(51, 65, 85, .5); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; stroke-dasharray: 4 3; }
 .band { stroke: rgba(255, 255, 255, .25); stroke-width: .6; }
 .band-text { fill: #08131a; font-size: 13.5px; font-weight: 850; }
 .marker { stroke: #d97706; stroke-width: 1.6; }

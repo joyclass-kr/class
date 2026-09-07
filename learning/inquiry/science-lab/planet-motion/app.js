@@ -236,11 +236,12 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="small-label" x="${CX}" y="196" text-anchor="middle">위에서 본 궤도 (축척대로) · 밝은 쪽이 태양 쪽</text>`;
         // the disk as seen from Earth
         const DX = 330, DY = 100, r = 6 + 34 * clamp(g.size / a.sizeMax, 0, 1), litRight = !g.west;
+        out += `<rect class="sky" x="220" y="30" width="224" height="136" rx="10"/>`;
         out += `<circle class="disk-dark" cx="${DX}" cy="${DY}" r="${r.toFixed(1)}"/><path class="disk-lit" fill="${pl.col}" d="${phasePath(DX, DY, r, g.k, litRight)}"/>`;
         // the sunlit limb is outlined so even a hairline crescent stays visible
         out += `<path fill="none" stroke="${pl.col}" stroke-width="1.6" d="M${DX},${(DY - r).toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 0 ${litRight ? 1 : 0} ${DX},${(DY + r).toFixed(1)}"/>`;
-        out += `<text class="small-label" x="${DX}" y="${DY - 46}" text-anchor="middle">지구에서 본 ${pl.label} (크기는 가장 클 때에 견준 비율)</text>`;
-        out += `<text class="small-label" x="${DX + (litRight ? 52 : -52)}" y="${DY + 3.5}" text-anchor="${litRight ? 'start' : 'end'}">☀ 태양 쪽</text>`;
+        out += `<text class="small-label" style="fill:#cbd5e1" x="${DX}" y="${DY - 46}" text-anchor="middle">지구에서 본 ${pl.label} (크기는 가장 클 때에 견준 비율)</text>`;
+        out += `<text class="small-label" style="fill:#94a3b8" x="${DX + (litRight ? 52 : -52)}" y="${DY + 3.5}" text-anchor="${litRight ? 'start' : 'end'}">☀ 태양 쪽</text>`;
         out += `<text class="trait-text" x="212" y="170">지구에서 ${fmtN(g.delta, 2)} AU · 겉보기 지름 ${fmtN(g.size, 1)}″ · 태양과 ${fmtN(g.e * R2D)}° 벌어짐</text>`;
         out += `<text class="trait-text" x="212" y="186">밝은 부분 ${fmtN(g.k * 100)} % — ${g.k < 0.25 ? '가는 초승달' : g.k < 0.7 ? '반달쯤' : g.k < 0.97 ? '조금 이지러진 둥근 모양' : '둥근 모양'}</text>`;
         const VERD = { crescent: '가는 초승달, 가장 크게', half: '반달쯤', fullFar: '둥글고 가장 작게', fullNear: '둥글고 가장 크게' };
@@ -268,8 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderEclipse(a) {
-        const p = state.progress, CX = 150, CY = 112, RX = 296;
-        let out = '';
+        const p = state.progress, CX = 150, CY = 110, RX = 296;
+        let out = `<rect class="sky" x="14" y="24" width="270" height="166" rx="10"/>`;
         if (a.kindKey === 'solar') {
             const SC = 2.2, rs = RS / AU * R2D * 60 * SC, rm = RM / (a.d - RE) * R2D * 60 * SC; // arcmin → px, the Moon as seen from the closest point on Earth
             const offArc = a.type === 'total' || a.type === 'annular' ? 0 : (a.offset - RE) / a.d * R2D * 60;
@@ -277,8 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const covered = p >= 0.98 && a.type === 'total';
             if (covered) out += `<circle class="corona" cx="${CX}" cy="${CY}" r="${(rs + 22).toFixed(1)}"/><circle class="corona" cx="${CX}" cy="${CY}" r="${(rs + 9).toFixed(1)}"/>`;
             out += `<circle class="sun-disk" cx="${CX}" cy="${CY}" r="${rs.toFixed(1)}"/><circle class="moon-disk" cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="${rm.toFixed(1)}"/>`;
-            out += `<text class="small-label" x="${CX}" y="${CY + rs + 26}" text-anchor="middle">지구에서 가장 잘 보이는 곳에서 본 해와 달 (크기 비율 실제)</text>`;
-            out += `<text class="small-label" x="${CX}" y="${CY - rs - 12}" text-anchor="middle">해 반지름 ${fmtN(rs / SC, 1)}′ · 달 반지름 ${fmtN(rm / SC, 1)}′</text>`;
+            out += `<text class="small-label" style="fill:#cbd5e1" x="${CX}" y="${CY + rs + 24}" text-anchor="middle">지구에서 본 일식 (크기 비율 실제)</text>`;
+            out += `<text class="small-label" style="fill:#94a3b8" x="${CX}" y="${CY - rs - 10}" text-anchor="middle">해 반지름 ${fmtN(rs / SC, 1)}′ · 달 반지름 ${fmtN(rm / SC, 1)}′</text>`;
             out += `<text class="trait-text" x="${RX}" y="52">달까지 ${fmtN(a.d)} km (${DISTS[state.dist].label})</text>`;
             out += `<text class="trait-text" x="${RX}" y="70">본그림자 길이 ${fmtN(a.Lu)} km</text>`;
             out += `<text class="trait-text" x="${RX}" y="88">달에서 지표까지 ${fmtN(a.x)} km</text>`;
@@ -294,8 +295,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // the part of the Moon inside the umbra goes dark
             const dist = Math.hypot(mx - CX, my - CY);
             if (dist < ru + rm) out += `<clipPath id="umbraClip"><circle cx="${CX}" cy="${CY}" r="${ru.toFixed(1)}"/></clipPath><circle fill="#3b1a12" clip-path="url(#umbraClip)" cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="${rm.toFixed(1)}"/>`;
-            out += `<text class="small-label" x="${CX}" y="${CY + rp + 14}" text-anchor="middle">달의 거리에서 본 지구 그림자와 달 (크기 비율 실제)</text>`;
-            out += `<text class="small-label" x="${CX}" y="${CY - rp - 6}" text-anchor="middle">바깥 점선 반그림자 · 안쪽 본그림자</text>`;
+            out += `<text class="small-label" style="fill:#cbd5e1" x="${CX}" y="${CY + rp + 14}" text-anchor="middle">달의 거리에서 본 지구 그림자와 달 (크기 비율 실제)</text>`;
+            out += `<text class="small-label" style="fill:#94a3b8" x="${CX}" y="${CY - rp - 6}" text-anchor="middle">바깥 점선 반그림자 · 안쪽 본그림자</text>`;
             out += `<text class="trait-text" x="${RX}" y="52">달까지 ${fmtN(a.d)} km (${DISTS[state.dist].label})</text>`;
             out += `<text class="trait-text" x="${RX}" y="70">본그림자 반지름 ${fmtN(a.Ru)} km (${fmtN(toArc(a.Ru))}′)</text>`;
             out += `<text class="trait-text" x="${RX}" y="88">반그림자 반지름 ${fmtN(a.Rp)} km (${fmtN(toArc(a.Rp))}′)</text>`;
