@@ -11,14 +11,14 @@ const CHAPTERS = [
                     "부지런하기로는 마을에서 으뜸이었지요.",
                     "봄이면 씨를 뿌리고 가을이면 거두었지만 늘 곳간이 비어 있었어요.",
                     "어느 봄날이었어요.",
-                    "\"올해는 좀 나으려나.\""
+                    "\"올해는 좀 나으려나?\""
                 ],
                 right: [
                     "쨍!",
-                    "호미 날에 무언가 단단한 것이 부딪혔지요.",
+                    "삽 끝에 갑자기 무언가 단단한 것이 부딪혔지요.",
                     "돌인가 싶어 흙을 헤쳐 보았어요.",
                     "커다란 항아리가 통째로 묻혀 있었답니다. 어른 하나가 들어가고도 남을 만큼 컸지요.",
-                    "농부는 흙을 다 걷어 내고 한참을 들여다보았답니다."
+                    "농부는 삽으로 힘들여 흙을 다 걷어 내고 한참을 들여다보았답니다."
                 ]
             },
             {
@@ -27,15 +27,15 @@ const CHAPTERS = [
                 left: [
                     "\"쓸 만한 항아리로구먼.\"",
                     "흙을 털어 내고 이리저리 살펴보았지요. 농부는 항아리를 지게에 얹어 집으로 지고 왔어요.",
-                    "그런데 마당에 내려놓다가 그만 호미를 항아리 속에 툭 빠뜨렸지요.",
+                    "그런데 마당에 내려놓다가 목에 걸친 수건이 항아리 속으로 툭 떨어졌지 뭐예요.",
                     "\"어이쿠, 이걸 어쩌나.\""
                 ],
                 right: [
-                    "농부는 손을 쑥 넣어 호미를 꺼냈습니다.",
-                    "그런데 항아리 속에 호미가 또 있는 게 아니겠어요?",
+                    "농부는 손을 쑥 넣어 수건을 꺼냈습니다.",
+                    "그런데 항아리 속에 수건이 또 있는 게 아니겠어요?",
                     "농부는 제 눈을 의심했어요.",
                     "\"어라?\"",
-                    "꺼내고 또 꺼내도 호미가 계속 나왔답니다. 마당에 호미가 수북이 쌓였지요."
+                    "꺼내고 또 꺼내도 수건이 계속 나왔답니다. 마당에 수건이 잔뜩 널렸지요."
                 ]
             },
             {
@@ -43,17 +43,16 @@ const CHAPTERS = [
                 emoji: "🪙",
                 left: [
                     "\"여보! 이것 좀 봐요!\"",
-                    "농부가 목청껏 아내를 불렀어요.",
-                    "아내가 부엌에서 한달음에 뛰어나왔어요.",
-                    "아내는 마당을 보고 입을 딱 벌렸지요.",
-                    "농부가 엽전 한 닢을 넣어 보았지요.",
+                    "농부가 목청껏 부르자 아내가 부엌에서 뛰어나왔어요. 마당에 널린 수건을 보고 입을 딱 벌렸지요.",
+                    "\"이 항아리를 방으로 옮깁시다.\"",
+                    "둘이서 항아리를 방에 들여놓고 엽전 한 닢을 넣어 보았어요.",
                     "꺼내니 두 닢. 또 꺼내니 세 닢."
                 ],
                 right: [
                     "\"이게 무슨 일이래!\"",
                     "아내가 두 손으로 입을 막았어요.",
-                    "엽전은 꺼내도 꺼내도 끝이 없었습니다. 마당에 짤랑짤랑 소리가 가득했지요.",
-                    "부부는 밤새 엽전을 세다가 그만 웃음을 터뜨렸답니다.",
+                    "엽전은 꺼내도 꺼내도 끝이 없었습니다. 방 안에 짤랑짤랑 소리가 가득했지요.",
+                    "부부는 엽전을 세다가 저녁 먹는 것도 잊고 밤을 새우고 말았답니다.",
                     "\"이제 굶을 일은 없겠구려.\""
                 ]
             }
@@ -68,7 +67,7 @@ const CHAPTERS = [
                 emoji: "🏡",
                 left: [
                     "몇 달 지나지 않아 농부의 집은 몰라보게 달라졌어요.",
-                    "초가지붕을 걷고 기와를 얹었지요. 곳간을 채우고 소도 두 마리 들였습니다.",
+                    "초가지붕을 걷고 기와를 얹었지요. 곳간을 채우고 소도 두 마리나 들였습니다.",
                     "부부는 이웃에게도 쌀을 나누어 주었어요.",
                     "누구도 그 집을 미워하지 않았지요. 마당에는 웃음소리가 그치지 않았답니다."
                 ],
@@ -92,7 +91,7 @@ const CHAPTERS = [
                     "\"그 밭은 본래 우리 조상 땅이다!\"",
                     "부자가 마당에 들어서며 소리쳤어요.",
                     "\"그러니 거기서 나온 항아리도 내 것이지!\"",
-                    "농부가 뭐라 말할 틈도 없었어요. 부자는 항아리를 번쩍 안고 가 버렸답니다.",
+                    "농부가 말할 틈도 없었어요. 부자는 방문을 활짝 열고 들어와 항아리를 번쩍 안고 가 버렸답니다.",
                     "농부 내외는 그 자리에 주저앉고 말았답니다."
                 ]
             },
@@ -101,15 +100,15 @@ const CHAPTERS = [
                 emoji: "💰",
                 left: [
                     "부자는 방문을 걸어 잠그고 항아리 앞에 딱 앉았습니다. 식구한테도 아무도 못 보게 하려는 것이었어요.",
-                    "이번에는 엽전 따위를 넣지 않았어요.",
+                    "부자는 엽전 따위를 넣지 않았어요.",
                     "금덩이 하나를 넣고 꺼내 보니 두 개.",
                     "부자는 두 손을 부들부들 떨었지요."
                 ],
                 right: [
                     "또 꺼내니 세 개.",
-                    "금덩이가 마루에 산처럼 쌓였어요.",
+                    "금덩이가 방에 산처럼 쌓이더니 옆방에까지 넘쳤어요.",
                     "\"하하! 이제 내가 이 나라 제일 부자다!\"",
-                    "부자는 팔이 아픈 줄도 모르고 꺼내고 또 꺼냈어요. 밤이 새도록 그 짓을 했답니다.",
+                    "부자는 점심도 저녁도 굶고 밤이 새도록 꺼내고 또 꺼냈답니다.",
                     "곳간이 하루 만에 가득 찼답니다."
                 ]
             }
@@ -131,7 +130,7 @@ const CHAPTERS = [
                 right: [
                     "아버지가 문고리를 잡아당겼어요. 까치발을 들고 항아리 속을 들여다보았지요.",
                     "몸을 더 기울인 순간이었어요.",
-                    "풍덩!",
+                    "쿵!",
                     "그만 항아리 속으로 빠지고 말았습니다.",
                     "아버지의 다리가 허공에서 버둥거렸지요."
                 ]
@@ -140,17 +139,17 @@ const CHAPTERS = [
                 art: "08-two.webp",
                 emoji: "😳",
                 left: [
-                    "부자는 허둥지둥 팔을 뻗어 아버지를 끌어냈어요. 아버지가 물에 빠진 사람처럼 헐떡였어요.",
+                    "부자는 허둥지둥 팔을 뻗어 아버지를 끌어냈어요. 아버지가 숨이 턱에 차서 헐떡였어요.",
                     "\"아이고, 아버지! 괜찮으세요?\"",
-                    "아버지는 젖은 옷을 털며 헛기침을 했지요.",
+                    "아버지는 수염을 쓸어 만지며 헛기침을 했지요.",
                     "부자는 가슴을 쓸어내렸지요."
                 ],
                 right: [
                     "그런데 항아리 속에서 목소리가 또 들렸습니다. 분명 아버지 목소리였어요.",
-                    "\"얘야, 나도 좀 꺼내 다오.\"",
+                    "\"얘야, 나를 좀 꺼내 다오.\"",
                     "\"이, 이게 무슨 일이야!\"",
                     "부자의 얼굴이 하얗게 질렸어요.",
-                    "부자는 떨리는 손으로 항아리 속을 들여다보았답니다."
+                    "부자는 떨리는 손으로 항아리 속에서 아버지를 또 꺼냈답니다."
                 ]
             },
             {
@@ -175,15 +174,14 @@ const CHAPTERS = [
                 emoji: "😵",
                 left: [
                     "부자는 아버지들 밥을 대느라 곳간을 열었어요. 아버지가 수십 분이니 밥도 수십 그릇이었어요.",
-                    "쌀가마가 하루가 다르게 줄어들었지요.",
-                    "금덩이도 논밭도 하나둘 팔려 나갔습니다.",
-                    "부자는 밥 짓느라 하루가 다 갔지요."
+                    "쌀가마가 하루가 다르게 줄었어요. 금덩이도 논밭도 하나둘 팔려 나갔지요.",
+                    "아버지들 등쌀에 잠도 잘 수 없었지요. 부자는 결국 마음을 고쳐먹었답니다."
                 ],
                 right: [
-                    "결국 부자는 그 항아리마저 팔아 버렸어요.",
-                    "\"저 집은 효자가 났구먼. 아버지가 수십 분이니.\"",
-                    "마을 사람들은 그 말을 주고받으며 한참을 웃었답니다.",
-                    "부자는 그제야 농부를 찾아가 미안하다고 했답니다."
+                    "부자는 항아리를 들고 농부를 찾아가 마당에 내려놓고 무릎을 꿇었어요.",
+                    "\"제가 잘못했습니다. 부디 용서해 주십시오.\"",
+                    "농부는 화가 났지만 부자를 용서해 주었어요.",
+                    "부자가 집에 돌아와 보니 아버지들도 감쪽같이 사라지고 없었답니다."
                 ]
             }
         ],
@@ -231,14 +229,14 @@ const EN = {
                         "Long ago there lived a poor farmer and his wife. Their paddy and their field were the size of a hand.",
                         "For hard work there was no one like them in the village.",
                         "They sowed in spring and reaped in autumn, and the store was always empty.",
-                        { t: "\"Maybe this year will be better.\"", v: "man" }
+                        { t: "\"Maybe this year will be better?\"", v: "man" }
                     ],
                     right: [
                         "Clang!",
-                        "The blade of his hoe struck something hard.",
+                        "All at once his spade struck something hard.",
                         "Thinking it was a stone, he scraped the earth away.",
                         "A great jar was buried there whole, big enough to hold a grown man.",
-                        "He cleared off all the soil and stood looking at it a long time."
+                        "He dug all the soil away and stood looking at it a long time."
                     ]
                 },
                 {
@@ -247,15 +245,15 @@ const EN = {
                     left: [
                         { t: "\"A decent jar, this.\"", v: "man" },
                         "He brushed off the earth and turned it about. Then he loaded it on his frame and carried it home.",
-                        "As he set it down in the yard he dropped his hoe into the jar.",
+                        "As he set it down in the yard the towel round his neck dropped into the jar.",
                         { t: "\"Oh dear. Now how do I get that out?\"", v: "man" }
                     ],
                     right: [
-                        "He reached in and took out the hoe.",
-                        "And there was another hoe still inside the jar.",
+                        "He reached in and took out the towel.",
+                        "And there was another towel still inside the jar.",
                         "He could not believe his eyes.",
                         { t: "\"What?\"", v: "man" },
-                        "However many he took out, more hoes kept coming. They piled up in the yard."
+                        "However many he took out, more towels kept coming. They lay heaped all over the yard."
                     ]
                 },
                 {
@@ -263,17 +261,16 @@ const EN = {
                     emoji: "🪙",
                     left: [
                         { t: "\"Wife! Come and look at this!\"", v: "man" },
-                        "The farmer called at the top of his voice.",
-                        "She came running out of the kitchen.",
-                        "She looked at the yard and her mouth fell open.",
-                        "He dropped in one copper coin.",
+                        "His wife came running out of the kitchen and her mouth fell open at the towels.",
+                        { t: "\"Let's carry this jar into the room.\"", v: "man" },
+                        "They moved it inside and dropped in one copper coin.",
                         "He took it out and there were two. Out again, and three."
                     ],
                     right: [
                         { t: "\"Whatever is happening!\"", v: "woman" },
                         "She put both hands over her mouth.",
-                        "However many coins came out, there were always more. The yard was full of the sound of them.",
-                        "The two of them counted coins all night and then burst out laughing.",
+                        "However many coins came out, there were always more. The room was full of the sound of them.",
+                        "They counted coins until they forgot their supper and sat there all night.",
                         { t: "\"We'll never go hungry again.\"", v: "man" }
                     ]
                 }
@@ -312,7 +309,7 @@ const EN = {
                         { t: "\"That field was my family's land to begin with!\"", v: "man" },
                         "He shouted it as he came into the yard.",
                         { t: "\"So whatever came out of it is mine!\"", v: "man" },
-                        "The farmer had no chance to say a word. The rich man took the jar up in his arms and went.",
+                        "The farmer had no chance to say a word. The rich man threw the door open, walked in, took the jar up in his arms and went.",
                         "The couple sat down where they stood."
                     ]
                 },
@@ -321,15 +318,15 @@ const EN = {
                     emoji: "💰",
                     left: [
                         "The rich man bolted his door and sat down in front of the jar. Not even his own family was to see.",
-                        "This time he was not putting coppers in.",
+                        "The rich man was not putting coppers in.",
                         "He dropped in one lump of gold and took out two.",
                         "His hands shook."
                     ],
                     right: [
                         "Out again, and three.",
-                        "The gold piled up on the floor like a hill.",
+                        "The gold piled up like a hill and spilled over into the next room.",
                         { t: "\"Ha! Now I'm the richest man in the country!\"", v: "man" },
-                        "He pulled them out and out again, and never noticed his arms aching. He kept at it all night.",
+                        "He went without his midday meal and his supper and pulled them out all night long.",
                         "His storehouse was full in a single day."
                     ]
                 }
@@ -351,7 +348,7 @@ const EN = {
                     right: [
                         "He pulled the door open and stood on tiptoe to look into the jar.",
                         "He leaned in a little further—",
-                        "Splash!",
+                        "Thump!",
                         "And in he went, right into the jar.",
                         "His legs waved in the air."
                     ]
@@ -360,17 +357,17 @@ const EN = {
                     art: "08-two.webp",
                     emoji: "😳",
                     left: [
-                        "The rich man scrambled to pull his father out. The old man gasped like someone out of water.",
+                        "The rich man scrambled to pull his father out. The old man gasped with his breath right up in his throat.",
                         { t: "\"Father! Are you all right?\"", v: "man" },
-                        "His father brushed down his wet clothes and coughed.",
+                        "His father smoothed his beard and coughed.",
                         "The rich man let out his breath."
                     ],
                     right: [
                         "And then a voice came from inside the jar. It was his father's voice, without any doubt.",
-                        { t: "\"Son, get me out too.\"", v: "old" },
+                        { t: "\"Son, get me out of here.\"", v: "old" },
                         { t: "\"Wh— what is this!\"", v: "man" },
                         "The rich man went white.",
-                        "With a shaking hand he looked down into the jar."
+                        "With a shaking hand he pulled another father out of the jar."
                     ]
                 },
                 {
@@ -395,15 +392,14 @@ const EN = {
                     emoji: "😵",
                     left: [
                         "He opened his storehouses to feed all those fathers. Dozens of fathers means dozens of bowls.",
-                        "The sacks of rice went down day by day.",
-                        "The gold went, and then the fields, one after another.",
-                        "His whole day went on cooking."
+                        "The sacks of rice went down day by day, and the gold went, and then the fields, one after another.",
+                        "With all those fathers about him he could not even sleep. In the end he thought better of it."
                     ],
                     right: [
-                        "In the end he sold the jar itself.",
-                        { t: "\"That house has a fine son. Dozens of fathers to look after.\"", v: "granny" },
-                        "The villagers said it to each other and laughed for a long while.",
-                        "Only then did the rich man go to the farmer and say he was sorry."
+                        "He carried the jar to the farmer's house, set it down in the yard and went down on his knees.",
+                        { t: "\"I did you wrong. Please forgive me.\"", v: "man" },
+                        "The farmer was still angry, but he forgave him.",
+                        "And when the rich man got home, every one of the fathers had vanished too."
                     ]
                 }
             ],
@@ -412,7 +408,7 @@ const EN = {
         }
     ],
     quiz: [
-        { q: "What did the farmer drop into the jar first?", choices: ["A copper coin", "A hoe", "A lump of gold"], answer: 1 },
+        { q: "What did the farmer drop into the jar first?", choices: ["A copper coin", "A towel", "A lump of gold"], answer: 1 },
         { q: "What happened when you put something in the jar?", choices: ["It disappeared", "It turned to gold", "It kept multiplying"], answer: 2 },
         { q: "What did the rich man do when he heard the story?", choices: ["Threw his spoon down", "Opened his storehouse", "Peered over the wall"], answer: 0 },
         { q: "Who fell into the jar?", choices: ["The farmer's wife", "The village magistrate", "The rich man's father"], answer: 2 },
@@ -422,7 +418,7 @@ const EN = {
             q: "Which reaction to this book does NOT fit?",
             wide: true,
             choices: [
-                "A heap of hoes came first, so the thing that astonished him at the start was not gold but a hoe.",
+                "A yard full of towels came first, so the thing that astonished him at the start was not gold but a towel.",
                 "The rich man carried the jar off saying the land was his family's, so back then whoever had power had the law.",
                 "The couple shared rice with their neighbours, so people who have gone without know how to share.",
                 "He emptied his storehouses feeding all those fathers, so in the end he looked after his father well."
@@ -455,8 +451,8 @@ const EN = {
             { w: "reaped (reap)", k: "거두었다", s: "They sowed in spring and reaped in autumn" },
             { w: "store", k: "곳간", s: "the store was always empty" },
             { w: "Clang!", k: "쨍!", s: "Clang!" },
-            { w: "blade", k: "날", s: "The blade of his hoe struck something hard." },
-            { w: "struck (strike)", k: "부딪혔다", s: "The blade of his hoe struck something hard." },
+            { w: "blade", k: "날", s: "All at once his spade struck something hard." },
+            { w: "struck (strike)", k: "부딪혔다", s: "All at once his spade struck something hard." },
             { w: "scraped ~ away (scrape)", k: "헤쳤다", s: "he scraped the earth away" },
             { w: "was buried (bury)", k: "묻혀 있었다", s: "A great jar was buried there whole" },
             { w: "big enough to ~", k: "~할 만큼 큰", s: "big enough to hold a grown man" }
@@ -467,22 +463,22 @@ const EN = {
             { w: "turned it about", k: "이리저리 살폈다", s: "He brushed off the earth and turned it about." },
             { w: "loaded (load)", k: "얹었다", s: "Then he loaded it on his frame and carried it home." },
             { w: "set ~ down (set)", k: "내려놓았다", s: "As he set it down in the yard" },
-            { w: "dropped ~ into (drop)", k: "빠뜨렸다", s: "he dropped his hoe into the jar" },
-            { w: "reached in (reach)", k: "손을 쑥 넣었다", s: "He reached in and took out the hoe." },
+            { w: "dropped ~ into (drop)", k: "빠뜨렸다", s: "the towel round his neck dropped into the jar" },
+            { w: "reached in (reach)", k: "손을 쑥 넣었다", s: "He reached in and took out the towel." },
             { w: "could not believe his eyes", k: "제 눈을 의심했다", s: "He could not believe his eyes." },
-            { w: "However many ~", k: "꺼내고 또 꺼내도", s: "However many he took out, more hoes kept coming." },
-            { w: "piled up (pile)", k: "수북이 쌓였다", s: "They piled up in the yard." }
+            { w: "However many ~", k: "꺼내고 또 꺼내도", s: "However many he took out, more towels kept coming." },
+            { w: "lay heaped (lie)", k: "잔뜩 널렸다", s: "They lay heaped all over the yard." }
         ],
         "03-coin.webp": [
-            { w: "at the top of his voice", k: "목청껏", s: "The farmer called at the top of his voice." },
-            { w: "came running", k: "한달음에 뛰어나왔다", s: "She came running out of the kitchen." },
-            { w: "her mouth fell open", k: "입을 딱 벌렸다", s: "She looked at the yard and her mouth fell open." },
-            { w: "copper coin", k: "엽전", s: "He dropped in one copper coin." },
+            { w: "Come and look at this!", k: "이것 좀 봐요!", s: "Wife! Come and look at this!" },
+            { w: "came running", k: "한달음에 뛰어나왔다", s: "His wife came running out of the kitchen" },
+            { w: "her mouth fell open", k: "입을 딱 벌렸다", s: "her mouth fell open at the towels" },
+            { w: "copper coin", k: "엽전", s: "They moved it inside and dropped in one copper coin." },
             { w: "Whatever is happening!", k: "이게 무슨 일이래!", s: "Whatever is happening!" },
             { w: "over her mouth", k: "입을 막고", s: "She put both hands over her mouth." },
             { w: "there were always more", k: "끝이 없었다", s: "However many coins came out, there were always more." },
-            { w: "the sound of them", k: "짤랑거리는 소리", s: "The yard was full of the sound of them." },
-            { w: "burst out laughing", k: "웃음을 터뜨렸다", s: "counted coins all night and then burst out laughing" },
+            { w: "the sound of them", k: "짤랑거리는 소리", s: "The room was full of the sound of them." },
+            { w: "forgot their supper", k: "저녁 먹는 것도 잊었다", s: "They counted coins until they forgot their supper" },
             { w: "go hungry", k: "굶다", s: "We'll never go hungry again." }
         ],
         "04-rich.webp": [
@@ -506,19 +502,19 @@ const EN = {
             { w: "to begin with", k: "본래", s: "That field was my family's land to begin with!" },
             { w: "whatever came out of it", k: "거기서 나온 것", s: "So whatever came out of it is mine!" },
             { w: "had no chance to ~", k: "~할 틈도 없었다", s: "The farmer had no chance to say a word." },
-            { w: "took ~ up in his arms", k: "번쩍 안았다", s: "The rich man took the jar up in his arms and went." },
+            { w: "took ~ up in his arms", k: "번쩍 안았다", s: "The rich man threw the door open, walked in, took the jar up in his arms and went." },
             { w: "where they stood", k: "그 자리에", s: "The couple sat down where they stood." }
         ],
         "06-gold.webp": [
             { w: "bolted (bolt)", k: "걸어 잠갔다", s: "The rich man bolted his door" },
             { w: "was to see", k: "볼 수 있었다", s: "Not even his own family was to see." },
-            { w: "coppers", k: "엽전", s: "This time he was not putting coppers in." },
+            { w: "coppers", k: "엽전", s: "The rich man was not putting coppers in." },
             { w: "lump", k: "덩이", s: "He dropped in one lump of gold and took out two." },
             { w: "shook (shake)", k: "부들부들 떨렸다", s: "His hands shook." },
-            { w: "piled up like a hill", k: "산처럼 쌓였다", s: "The gold piled up on the floor like a hill." },
+            { w: "piled up like a hill", k: "산처럼 쌓였다", s: "The gold piled up like a hill and spilled over into the next room." },
             { w: "the richest man", k: "제일 부자", s: "Now I'm the richest man in the country!" },
-            { w: "never noticed ~", k: "~한 줄도 몰랐다", s: "never noticed his arms aching" },
-            { w: "kept at it (keep at)", k: "그 짓을 계속했다", s: "He kept at it all night." },
+            { w: "never noticed ~", k: "~한 줄도 몰랐다", s: "He went without his midday meal and his supper" },
+            { w: "all night long", k: "밤이 새도록", s: "pulled them out all night long" },
             { w: "in a single day", k: "하루 만에", s: "His storehouse was full in a single day." }
         ],
         "07-father.webp": [
@@ -529,19 +525,19 @@ const EN = {
             { w: "could not stand ~ing", k: "견딜 수 없었다", s: "But the old man could not stand not knowing." },
             { w: "on tiptoe", k: "까치발을 들고", s: "stood on tiptoe to look into the jar" },
             { w: "leaned in (lean)", k: "몸을 기울였다", s: "He leaned in a little further" },
-            { w: "Splash!", k: "풍덩!", s: "Splash!" },
+            { w: "Thump!", k: "쿵!", s: "Thump!" },
             { w: "waved in the air", k: "허공에서 버둥거렸다", s: "His legs waved in the air." }
         ],
         "08-two.webp": [
             { w: "scrambled to ~ (scramble)", k: "허둥지둥 ~했다", s: "The rich man scrambled to pull his father out." },
-            { w: "gasped (gasp)", k: "헐떡였다", s: "The old man gasped like someone out of water." },
-            { w: "brushed down ~", k: "털었다", s: "His father brushed down his wet clothes and coughed." },
-            { w: "coughed (cough)", k: "헛기침을 했다", s: "brushed down his wet clothes and coughed" },
+            { w: "gasped (gasp)", k: "헐떡였다", s: "The old man gasped with his breath right up in his throat." },
+            { w: "brushed down ~", k: "털었다", s: "His father smoothed his beard and coughed." },
+            { w: "coughed (cough)", k: "헛기침을 했다", s: "His father smoothed his beard and coughed." },
             { w: "let out his breath", k: "가슴을 쓸어내렸다", s: "The rich man let out his breath." },
             { w: "without any doubt", k: "분명히", s: "It was his father's voice, without any doubt." },
-            { w: "get me out", k: "나도 꺼내 다오", s: "Son, get me out too." },
+            { w: "get me out", k: "나도 꺼내 다오", s: "Son, get me out of here." },
             { w: "went white (go)", k: "하얗게 질렸다", s: "The rich man went white." },
-            { w: "with a shaking hand", k: "떨리는 손으로", s: "With a shaking hand he looked down into the jar." }
+            { w: "with a shaking hand", k: "떨리는 손으로", s: "With a shaking hand he pulled another father out of the jar." }
         ],
         "09-many.webp": [
             { w: "another ~ came", k: "또 하나가 나왔다", s: "However many he pulled out, another father came." },
@@ -558,14 +554,14 @@ const EN = {
         "10-ruined.webp": [
             { w: "to feed ~", k: "~ 밥을 대려고", s: "He opened his storehouses to feed all those fathers." },
             { w: "means (mean)", k: "~라는 뜻이다", s: "Dozens of fathers means dozens of bowls." },
-            { w: "went down (go down)", k: "줄어들었다", s: "The sacks of rice went down day by day." },
-            { w: "day by day", k: "하루가 다르게", s: "The sacks of rice went down day by day." },
-            { w: "one after another", k: "하나둘씩", s: "The gold went, and then the fields, one after another." },
-            { w: "went on ~ing", k: "~하는 데 다 갔다", s: "His whole day went on cooking." },
-            { w: "In the end", k: "결국", s: "In the end he sold the jar itself." },
-            { w: "look after ~", k: "모시다, 돌보다", s: "Dozens of fathers to look after." },
-            { w: "for a long while", k: "한참을", s: "The villagers said it to each other and laughed for a long while." },
-            { w: "Only then did he ~", k: "그제야 ~했다", s: "Only then did the rich man go to the farmer and say he was sorry." }
+            { w: "went down (go down)", k: "줄어들었다", s: "The sacks of rice went down day by day" },
+            { w: "day by day", k: "하루가 다르게", s: "The sacks of rice went down day by day" },
+            { w: "one after another", k: "하나둘씩", s: "the gold went, and then the fields, one after another" },
+            { w: "thought better of it", k: "마음을 고쳐먹었다", s: "In the end he thought better of it." },
+            { w: "went down on his knees", k: "무릎을 꿇었다", s: "set it down in the yard and went down on his knees" },
+            { w: "look after ~", k: "모시다, 돌보다", s: "I did you wrong. Please forgive me." },
+            { w: "for a long while", k: "한참을", s: "The farmer was still angry, but he forgave him." },
+            { w: "Only then did he ~", k: "그제야 ~했다", s: "every one of the fathers had vanished too" }
         ],
         "after": [
             { w: "comes back as two", k: "두 개가 되어 나온다", s: "A vessel where whatever you put in comes back as two" },
@@ -603,17 +599,17 @@ const EN = {
 };
 
 const QUIZ = [
-    { q: "농부가 항아리에 처음 빠뜨린 것은 무엇인가요?", choices: ["엽전", "호미", "금덩이"], answer: 1 },
+    { q: "농부가 항아리에 처음 빠뜨린 것은 무엇인가요?", choices: ["엽전", "수건", "금덩이"], answer: 1 },
     { q: "항아리에 물건을 넣으면 어떻게 되었나요?", choices: ["사라져 버렸다", "금으로 변했다", "자꾸 늘어났다"], answer: 2 },
     { q: "부자가 소문을 듣고 한 일은 무엇인가요?", choices: ["숟가락을 던지듯 놓았다", "곳간을 열었다", "담 너머로 기웃거렸다"], answer: 0 },
     { q: "항아리 속에 빠진 사람은 누구였나요?", choices: ["농부의 아내", "마을 원님", "부자의 아버지"], answer: 2 },
     { q: "마당에 가득한 아버지들은 무어라 했나요?", choices: ["배고프다고 했다", "항아리를 깼다", "집을 나갔다"], answer: 0 },
-    { q: "욕심 많은 부자는 결국 어떻게 되었나요?", choices: ["항아리를 도로 돌려주었다", "재산을 다 썼다", "마을을 떠났다"], answer: 1 },
+    { q: "부자는 마지막에 어떻게 했나요?", choices: ["항아리를 팔아 버렸다", "항아리를 돌려주었다", "마을을 떠나 버렸다"], answer: 1 },
     {
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         wide: true,
         choices: [
-            "호미 한 자루가 수북이 쌓인 것을 보면, 처음 놀란 것은 금이 아니라 호미였구나.",
+            "수건 한 장이 마당 가득 널린 것을 보면, 처음 놀란 것은 금이 아니라 수건이었구나.",
             "부자가 조상 땅이라며 항아리를 안고 가 버린 것을 보면, 힘 있는 쪽의 말이 곧 법이던 때였나 보다.",
             "농부 내외가 이웃에게도 쌀을 나누어 준 것을 보면, 없이 살아 본 사람이 나눌 줄도 아는구나.",
             "부자가 아버지들 밥을 대느라 곳간을 다 연 것을 보면, 끝내는 아버지를 잘 모신 셈이구나."

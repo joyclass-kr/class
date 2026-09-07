@@ -146,20 +146,25 @@ thatched roofs and hills at the bottom. Warm and magical.
 
 ```
 Wide scene in a small ploughed field in spring. On the right, a farmer in patched
-work hanbok kneels in the freshly turned soil, hoe set aside, brushing dirt off
-the shoulder of a large brown onggi jar half buried in the ground, eyebrows up in
-surprise. On the left, low green hills and a few thatched roofs. Warm morning
+work hanbok kneels in the freshly turned soil, A LONG-HANDLED SPADE stuck upright
+in the earth beside him (a spade, NOT an axe and NOT a small hand hoe — you dig
+soil with a spade), brushing dirt off the shoulder of a large brown onggi jar half
+buried in the ground, eyebrows up in surprise. On the left, low green hills and a few thatched roofs. Warm morning
 light, dark rich earth.
 ```
 
-### `02-hoe.webp` — 호미가 두 개
+### `02-hoe.webp` — 수건이 두 장 (파일 이름은 그대로 둡니다)
 
 ```
 Wide scene in a modest Korean house yard. In the centre, the jar sits on the
-ground. The farmer holds one hoe in his right hand while staring down into the
-jar where a second identical hoe lies at the bottom, his mouth open and eyes wide
-in total bewilderment, free hand scratching his head. Simple wooden veranda and
-earthen wall behind. Comic.
+ground where he has just set it down off his A-frame carrier, the carrier leaning
+behind him. He has BOTH HANDS FREE and NO TOOL IN THEM — a man carrying a jar on
+an A-frame cannot also be holding a spade or an axe.
+He holds up one white cotton TOWEL in his right hand while staring down into the
+jar where a second identical towel lies at the bottom, mouth open, eyes wide in
+total bewilderment, free hand scratching his head. (It is a towel off his neck
+that fell in, not an iron hoe — an iron hoe dropped into an earthenware jar would
+crack it.) Simple wooden veranda and earthen wall behind. Comic.
 ```
 
 ### `03-coin.webp` — 끝없이 나오는 엽전

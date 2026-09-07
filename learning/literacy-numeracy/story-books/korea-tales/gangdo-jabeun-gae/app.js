@@ -85,7 +85,7 @@ const CHAPTERS = [
                 right: [
                     "사내는 장수를 힘껏 밀치고 돈주머니를 낚아챘습니다. 장수는 그대로 나동그라졌지요.",
                     "눈 깜짝할 사이라 바둑이도 달려들 틈이 없었어요.",
-                    "사내는 숲속으로 쏜살같이 사라졌습니다.",
+                    "사내는 몽둥이를 내던지고 숲속으로 쏜살같이 사라졌습니다.",
                     "\"도, 도둑이야! 사람 살려!\""
                 ]
             },
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ],
                 right: [
                     "골짜기 하나를 넘었을 때였어요.",
-                    "커다란 바위 뒤에 웅크리고 앉은 사내가 보였습니다. 돈주머니를 품에 꼭 안고 숨을 고르고 있었지요.",
+                    "커다란 바위 뒤에 숨을 헐떡이며 웅크리고 앉은 사내가 보였습니다. 돈주머니를 품에 꼭 안고 숨을 고르고 있었지요.",
                     "이만하면 따돌렸다고 여기는 얼굴이었어요.",
                     "바둑이는 걸음을 멈추고 몸을 낮췄답니다."
                 ]
@@ -153,10 +153,10 @@ const CHAPTERS = [
                     "\"저리 가! 저리 가란 말이야!\""
                 ],
                 right: [
-                    "사내가 발을 구르고 몽둥이를 휘둘러도 바둑이는 물러서지 않았어요.",
-                    "오히려 달려들어 바짓자락을 꽉 물고 늘어졌지요.",
-                    "사내는 바둑이를 떼어 내느라 달아나지도 못했습니다.",
-                    "그 소리를 듣고 나무하러 온 사람들이 우르르 달려왔답니다."
+                    "바둑이가 힘껏 달려들어 바짓자락을 꽉 물고 늘어졌어요.",
+                    "사내는 이제 달아날 엄두도 내지 못했지요.",
+                    "떼어 내려고 아무리 발을 굴러도 소용이 없었습니다.",
+                    "그때 개 짖는 소리를 듣고 나무하러 온 사람들이 여기저기에서 달려왔답니다."
                 ]
             },
             {
@@ -164,7 +164,7 @@ const CHAPTERS = [
                 emoji: "🍖",
                 left: [
                     "사내는 그 자리에서 붙잡혔어요.",
-                    "돈주머니는 한 푼도 없어지지 않고 고스란히 돌아왔지요.",
+                    "돈주머니에 있던 돈은 한 푼도 없어지지 않고 고스란히 돌아왔지요.",
                     "장수는 바둑이를 끌어안고 한참을 놓지 못했습니다.",
                     "\"네가 아니었으면 어쩔 뻔했느냐.\""
                 ],
@@ -295,7 +295,7 @@ const EN = {
                     right: [
                         "The man shoved the pedlar hard and snatched the money pouch. The pedlar went sprawling.",
                         "It was over in a blink; Baduk had no time to spring at him.",
-                        "The man shot away into the trees.",
+                        "The man threw the club down and shot away into the trees.",
                         { t: "\"Thief! Thief! Somebody help!\"", v: "man" }
                     ]
                 },
@@ -349,7 +349,7 @@ const EN = {
                     right: [
                         "He had crossed one valley when he saw him.",
                         "Behind a big rock a man sat crouched, holding the money pouch tight against his chest and getting his breath.",
-                        "He had the face of somebody who thought he had got clean away.",
+                        "He was still getting his breath back, with the face of somebody who thought he had got clean away.",
                         "Baduk stopped and lowered himself to the ground."
                     ]
                 },
@@ -363,10 +363,10 @@ const EN = {
                         { t: "\"Get away! Get away, I said!\"", v: "man" }
                     ],
                     right: [
-                        "The man stamped and swung his club, and Baduk did not back off.",
-                        "He went for him instead and got a good hold of his trouser leg.",
-                        "The man was so busy shaking the dog off that he could not run.",
-                        "Woodcutters heard the noise and came rushing up the hill."
+                        "Baduk went straight for him and got a good hold of his trouser leg.",
+                        "Now the man could not even think of running.",
+                        "He stamped and stamped to shake the dog off, and none of it did any good.",
+                        "Then woodcutters heard the barking and came running from here and there."
                     ]
                 },
                 {
@@ -374,7 +374,7 @@ const EN = {
                     emoji: "🍖",
                     left: [
                         "The man was caught on the spot.",
-                        "The money pouch came back whole, without one coin missing.",
+                        "The money in the pouch came back whole, without one coin missing.",
                         "The pedlar held Baduk in his arms and could not let go for a long time.",
                         { t: "\"What would have become of me without you?\"", v: "man" }
                     ],
@@ -395,7 +395,7 @@ const EN = {
         { q: "What was the man at the inn glancing at?", choices: ["The pedlar's empty pack", "The pedlar's bowl", "The pedlar's money pouch"], answer: 2 },
         { q: "What did Baduk do on the mountain pass?", choices: ["Ran on ahead", "Kept looking back and slowing down", "Slept at the pedlar's feet"], answer: 1 },
         { q: "Where did Baduk find the man?", choices: ["On the inn floor", "In the fog on the pass", "Behind a big rock"], answer: 2 },
-        { q: "What did Baduk do when the man swung his club?", choices: ["Lowered himself and watched", "Ran off into the wood", "Held on to his trouser leg"], answer: 2 },
+        { q: "What did Baduk do when the man shouted at him to get away?", choices: ["Lowered himself and watched", "Ran off into the wood", "Held on to his trouser leg"], answer: 2 },
         { q: "Why did people come running?", choices: ["The pedlar shouted for them", "Because of the barking", "Because of a lot of smoke"], answer: 1 },
         {
             q: "Which reaction to this book does NOT fit?",
@@ -492,7 +492,7 @@ const EN = {
             { w: "went sprawling", k: "나동그라졌다", s: "The pedlar went sprawling." },
             { w: "in a blink", k: "눈 깜짝할 사이에", s: "It was over in a blink" },
             { w: "spring at ~", k: "~에게 달려들다", s: "Baduk had no time to spring at him" },
-            { w: "shot away (shoot)", k: "쏜살같이 사라졌다", s: "The man shot away into the trees." }
+            { w: "shot away (shoot)", k: "쏜살같이 사라졌다", s: "The man threw the club down and shot away into the trees." }
         ],
         "06-lost.webp": [
             { w: "jumped up", k: "벌떡 일어났다", s: "The pedlar jumped up and ran into the wood." },
@@ -533,17 +533,17 @@ const EN = {
             { w: "hoarse", k: "쉰", s: "He barked and barked till his throat went hoarse." },
             { w: "in fright", k: "화들짝 놀라", s: "The man leapt up in fright." },
             { w: "Get away!", k: "저리 가!", s: "Get away! Get away, I said!" },
-            { w: "stamped (stamp)", k: "발을 굴렀다", s: "The man stamped and swung his club" },
-            { w: "back off", k: "물러서다", s: "Baduk did not back off" },
-            { w: "went for him (go for)", k: "달려들었다", s: "He went for him instead" },
+            { w: "stamped (stamp)", k: "발을 굴렀다", s: "He stamped and stamped to shake the dog off" },
+            { w: "went straight for ~ (go for)", k: "곧장 달려들었다", s: "Baduk went straight for him" },
+            { w: "could not even think of ~", k: "엄두도 못 냈다", s: "Now the man could not even think of running." },
             { w: "got a good hold of ~", k: "꽉 물고 늘어졌다", s: "got a good hold of his trouser leg" },
             { w: "trouser leg", k: "바짓자락", s: "got a good hold of his trouser leg" },
-            { w: "shaking ~ off (shake off)", k: "떼어 내는", s: "The man was so busy shaking the dog off" },
-            { w: "woodcutters", k: "나무하는 사람들", s: "Woodcutters heard the noise and came rushing up the hill." }
+            { w: "shake ~ off", k: "떼어 내다", s: "He stamped and stamped to shake the dog off" },
+            { w: "woodcutters", k: "나무하는 사람들", s: "Then woodcutters heard the barking and came running from here and there." }
         ],
         "10-return.webp": [
             { w: "on the spot", k: "그 자리에서", s: "The man was caught on the spot." },
-            { w: "came back whole", k: "고스란히 돌아왔다", s: "The money pouch came back whole" },
+            { w: "came back whole", k: "고스란히 돌아왔다", s: "The money in the pouch came back whole" },
             { w: "without one coin missing", k: "한 푼도 없어지지 않고", s: "came back whole, without one coin missing" },
             { w: "could not let go", k: "놓지 못했다", s: "The pedlar held Baduk in his arms and could not let go" },
             { w: "What would have become of ~?", k: "~은 어쩔 뻔했을까?", s: "What would have become of me without you?" },
@@ -591,10 +591,10 @@ const EN = {
 
 const QUIZ = [
     { q: "바둑이라는 이름은 어디서 왔나요?", choices: ["눈 오는 날 주워 와서", "등에 까만 점이 박혀서", "국밥을 잘 먹어서"], answer: 1 },
-    { q: "주막에서 사내가 흘끔거린 것은 무엇인가요?", choices: ["장수의 빈 봇짐", "장수의 국밥그릇", "장수의 돈주머니"], answer: 2 },
+    { q: "주막에서 사내가 흘끔거리며 본 것은 무엇인가요?", choices: ["장수의 빈 봇짐", "장수의 국밥그릇", "장수의 돈주머니"], answer: 2 },
     { q: "고갯길에서 바둑이는 어떻게 했나요?", choices: ["앞장서서 달려 나갔다", "자꾸 뒤를 돌아보며 늦추었다", "장수 발치에서 잠들었다"], answer: 1 },
     { q: "바둑이는 사내를 어디에서 찾아냈나요?", choices: ["주막 마루에서", "고갯마루 안개 속에서", "커다란 바위 뒤에서"], answer: 2 },
-    { q: "사내가 몽둥이를 휘두르자 바둑이는 어떻게 했나요?", choices: ["몸을 낮추고 지켜보았다", "숲속으로 달아났다", "바짓자락을 물고 늘어졌다"], answer: 2 },
+    { q: "사내가 저리 가라고 소리치자 바둑이는 어떻게 했나요?", choices: ["몸을 낮추고 지켜보았다", "숲속으로 달아났다", "바짓자락을 물고 늘어졌다"], answer: 2 },
     { q: "사람들이 달려온 까닭은 무엇인가요?", choices: ["장수가 소리쳐 불러서", "개 짖는 소리 때문에", "연기가 크게 나서"], answer: 1 },
     {
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
