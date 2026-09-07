@@ -1792,6 +1792,20 @@
         showScreen("wheel");
     }
 
+    /* 화음 이름 뒤의 올림표·내림표도 작게 붙인다. */
+    function setChordName(node, text) {
+        node.textContent = "";
+        text.split(/([\u266F\u266D\u266E])/).forEach(part => {
+            if (!part) return;
+            if ("\u266F\u266D\u266E".indexOf(part) >= 0) {
+                const mark = document.createElement("span");
+                mark.className = "acc";
+                mark.textContent = part;
+                node.append(mark);
+            } else node.append(document.createTextNode(part));
+        });
+    }
+
     function renderWheelChords(chords) {
         els.wheelChords.innerHTML = "";
         chords.forEach(chord => {
@@ -1800,7 +1814,7 @@
             button.className = "wheel-chord";
             button.innerHTML = '<b></b><span></span><small></small>';
             button.querySelector("b").textContent = chord.roman;
-            button.querySelector("span").textContent = chord.name;
+            setChordName(button.querySelector("span"), chord.name);
             button.querySelector("small").textContent = chord.role || "";
             button.addEventListener("click", () => {
                 window.PianoEngine.playSequence([voiceChord(chord)], 2).catch(() => {});

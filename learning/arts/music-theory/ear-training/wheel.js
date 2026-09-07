@@ -68,6 +68,44 @@
         return node;
     }
 
+    /*
+     * 이름을 조각내어 적는다. 올림표·내림표는 글자와 같은 크기로 두면 자리를 너무
+     * 먹으므로 작게 붙이고, 괄호 안에 적은 같은 소리의 다른 이름은 더 작게 적는다.
+     */
+    const ACC_CHARS = "\u266F\u266D\u266E";
+
+    function setName(node, text) {
+        node.textContent = "";
+        let plain = "";
+        let inside = false;
+        const flush = () => {
+            if (!plain) return;
+            node.append(make("tspan", inside ? { class: "sub" } : {}, plain));
+            plain = "";
+        };
+        for (let index = 0; index < text.length; index += 1) {
+            const char = text.charAt(index);
+            if (char === "(" || char === ")") {
+                flush();
+                inside = char === "(";
+                node.append(make("tspan", { class: "sub" }, char));
+                continue;
+            }
+            if (!inside && ACC_CHARS.indexOf(char) >= 0) {
+                flush();
+                node.append(make("tspan", { class: "acc" }, char));
+                continue;
+            }
+            plain += char;
+        }
+        flush();
+    }
+
+    /* 같은 소리의 다른 이름은 괄호로 잇대어 적는다. F♯(G♭)처럼. */
+    function withSame(name, same) {
+        return same ? name + "(" + same + ")" : name;
+    }
+
     function point(radius, degrees) {
         const radians = (degrees - 90) * Math.PI / 180;
         return [radius * Math.cos(radians), radius * Math.sin(radians)];
@@ -167,7 +205,6 @@
         svg.append(disc);
         const majorCells = [];
         const majorTexts = [];
-        const sameTexts = [];
         const minorTexts = [];
 
         KEYS.forEach((key, position) => {
@@ -188,10 +225,9 @@
             disc.append(minor);
 
             majorTexts.push(make("text", { class: "wheel-major-name" }));
-            sameTexts.push(make("text", { class: "wheel-same-name" }));
             minorTexts.push(make("text", { class: "wheel-minor-name" }));
         });
-        majorTexts.concat(sameTexts, minorTexts).forEach(node => disc.append(node));
+        majorTexts.concat(minorTexts).forEach(node => disc.append(node));
 
         /* 가운데 */
         const hub = make("g", { class: "wheel-hub" });
@@ -199,9 +235,8 @@
         hub.append(make("circle", { class: "wheel-hub-face", cx: 0, cy: 0, r: R_MIN_IN }));
         const hubMajor = make("text", { class: "wheel-hub-major", x: 0, y: -30 });
         const hubMinor = make("text", { class: "wheel-hub-minor", x: 0, y: -9 });
-        const hubSame = make("text", { class: "wheel-hub-same", x: 0, y: 10 });
-        const hubSign = make("g", { class: "wheel-hub-sig", transform: "translate(0,30)" });
-        hub.append(hubMajor, hubMinor, hubSame, hubSign);
+        const hubSign = make("g", { class: "wheel-hub-sig", transform: "translate(0,26)" });
+        hub.append(hubMajor, hubMinor, hubSign);
 
         container.innerHTML = "";
         container.append(svg);
@@ -227,9 +262,7 @@
             KEYS.forEach((key, position) => {
                 const center = position * SECTOR;
                 const [mx, my] = point((R_MAJ_IN + R_MAJ_OUT) / 2, center);
-                const stacked = keyAt(position).same ? " translate(0,-6)" : "";
-                majorTexts[position].setAttribute("transform", "translate(" + mx + "," + my + ")" + upright + stacked);
-                sameTexts[position].setAttribute("transform", "translate(" + mx + "," + my + ")" + upright + " translate(0,12)");
+                majorTexts[position].setAttribute("transform", "translate(" + mx + "," + my + ")" + upright);
                 const [nx, ny] = point((R_MIN_IN + R_MIN_OUT) / 2, center);
                 minorTexts[position].setAttribute("transform", "translate(" + nx + "," + ny + ")" + upright);
             });
@@ -239,15 +272,13 @@
         function relabel() {
             KEYS.forEach((key, position) => {
                 const shown = keyAt(position);
-                majorTexts[position].textContent = shown.major;
-                sameTexts[position].textContent = shown.same ? "= " + shown.same : "";
-                minorTexts[position].textContent = shown.minor;
+                setName(majorTexts[position], withSame(shown.major, shown.same));
+                setName(minorTexts[position], shown.minor);
                 majorCells[position].classList.toggle("is-tonic", position === index);
             });
             const home = keyAt(index);
-            hubMajor.textContent = home.major + " Major";
-            hubMinor.textContent = home.minor.replace("m", "") + " Minor";
-            hubSame.textContent = home.same ? "= " + home.same + " Major" : "";
+            setName(hubMajor, withSame(home.major, home.same) + " Major");
+            setName(hubMinor, home.minor.replace("m", "") + " Minor");
             hubSign.innerHTML = "";
             hubSign.append(keySignature(home.count, home.sharp));
             if (settings.onChange) settings.onChange(chords(), home);
