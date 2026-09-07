@@ -49,8 +49,8 @@
 .stage-views { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 6px 0 2px; }
 .main-svg, .graph-svg { width: 100%; max-width: 560px; margin: 0 auto; height: auto; display: block; }
 
-.sky-box { fill: rgba(20, 30, 52, .55); stroke: rgba(177, 226, 230, .35); stroke-width: 1.2; }
-.far-star { fill: rgba(214, 235, 250, .55); }
+.sky-box { fill: #070d1a; stroke: rgba(148, 163, 184, 0.45); stroke-width: 1.2; }
+.far-star { fill: #ffffff; opacity: 0.85; }
 .near-star { stroke: #fff; stroke-width: 1; }
 .orbit { fill: none; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1.2; stroke-dasharray: 4 4; }
 .sun-dot { fill: #c2410c; }

@@ -298,9 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
         rows.forEach((r, i) => {
             const y = GRAPH.y1 + 14 + i * 19 + (i >= 3 ? 8 : 0);
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 5}" width="${(gx(r.v) - GRAPH.x0).toFixed(1)}" height="11" rx="3" fill="${r.colour}" opacity="${r.mine ? '.95' : '.35'}"/>`;
-            // a long bar carries its label inside, a short one to its right
             const inside = gx(r.v) > 300;
-            out += `<text class="bar-text" fill="${inside ? '#10202a' : r.mine ? '#fff' : '#334155'}" x="${(gx(r.v) + (inside ? -6 : 6)).toFixed(1)}" y="${y + 4}" text-anchor="${inside ? 'end' : 'start'}">${r.label} → ${r.v.toFixed(1)} mL</text>`;
+            out += `<text class="bar-text" fill="${inside ? '#10202a' : r.mine ? '#0f172a' : '#334155'}" font-weight="${r.mine ? '900' : '750'}" x="${(gx(r.v) + (inside ? -6 : 6)).toFixed(1)}" y="${y + 4}" text-anchor="${inside ? 'end' : 'start'}">${r.label} → ${r.v.toFixed(1)} mL</text>`;
         });
         out += `<line class="start-line" x1="${gx(V0).toFixed(1)}" y1="${GRAPH.y1 + 4}" x2="${gx(V0).toFixed(1)}" y2="${GRAPH.y0}"/>`;
         out += `<text class="axis-text" style="fill:#059669" x="${(gx(V0) - 4).toFixed(1)}" y="${GRAPH.y1 + 4}" text-anchor="end">처음 40 mL</text>`;

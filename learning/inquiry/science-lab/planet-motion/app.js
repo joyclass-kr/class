@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ref = pl.inner ? '내합' : '충';
         const inRet = a.t1 !== null && t >= a.t1 && t <= a.t2;
         out += `<text class="trait-text" x="${SX0}" y="170">${t === 0 ? ref : t < 0 ? `${ref} ${-t}일 전` : `${ref} ${t}일 후`} · 지구에서 ${fmtN(row.delta, 2)} AU · 황경 ${row.lon >= 0 ? '+' : ''}${fmtN(row.lon, 1)}°</text>`;
-        out += `<text class="trait-text" style="fill:${inRet ? '#ff7a59' : '#97dad3'}" x="${SX0}" y="186">${inRet ? '지금 서쪽으로 되돌아가는 중 (역행)' : '지금 동쪽으로 가는 중 (순행)'}</text>`;
+        out += `<text class="trait-text" style="fill:${inRet ? '#dc2626' : '#0369a1'}" x="${SX0}" y="186">${inRet ? '지금 서쪽으로 되돌아가는 중 (역행)' : '지금 동쪽으로 가는 중 (순행)'}</text>`;
         const VERD = { short: '한 달 남짓', mid: '두 달 반쯤', long: '넉 달 안팎' };
         out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${pl.label}: ${ref} ${-a.t1}일 전부터 ${a.t2}일 후까지 ${a.dur}일 동안 역행 — ${VERD[a.verdict]}` : `${pl.label} · ${ref} 앞뒤 ${W}일씩`}</text>`;
         out += `<text class="note-text" x="20" y="208">궤도는 원, 공전 주기와 반지름은 실제 값. 남북 움직임은 궤도 기울기 ${pl.i}°에서 나온 것(대략)</text>`;
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tNow = Math.round(-W + 2 * W * state.progress);
         let d = ''; rows.forEach(r => { if (r.t <= tNow) d += `${d ? 'L' : 'M'}${xOf(r.t).toFixed(1)},${yOf(r.lon).toFixed(1)} `; });
         out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
-        if (a.t1 !== null) { const r1 = rows[a.t1 + W], r2 = rows[a.t2 + W]; out += `<text class="small-label" style="fill:#ff7a59" x="${((xOf(a.t1) + xOf(a.t2)) / 2).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">역행 ${a.dur}일 · ${fmtN(a.arc, 1)}° 되돌아감</text>`; if (tNow >= a.t1) out += `<circle class="stop-dot" cx="${xOf(a.t1).toFixed(1)}" cy="${yOf(r1.lon).toFixed(1)}" r="3.5"/>`; if (tNow >= a.t2) out += `<circle class="stop-dot" cx="${xOf(a.t2).toFixed(1)}" cy="${yOf(r2.lon).toFixed(1)}" r="3.5"/>`; }
+        if (a.t1 !== null) { const r1 = rows[a.t1 + W], r2 = rows[a.t2 + W]; out += `<text class="small-label" style="fill:#dc2626" x="${((xOf(a.t1) + xOf(a.t2)) / 2).toFixed(1)}" y="${Y1 + 12}" text-anchor="middle">역행 ${a.dur}일 · ${fmtN(a.arc, 1)}° 되돌아감</text>`; if (tNow >= a.t1) out += `<circle class="stop-dot" cx="${xOf(a.t1).toFixed(1)}" cy="${yOf(r1.lon).toFixed(1)}" r="3.5"/>`; if (tNow >= a.t2) out += `<circle class="stop-dot" cx="${xOf(a.t2).toFixed(1)}" cy="${yOf(r2.lon).toFixed(1)}" r="3.5"/>`; }
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">황경은 동쪽으로 갈수록 커집니다. 동그라미가 멈추는 순간 유(留)</text>`;
         return out;
     }
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!cur || cur.type !== type) { cur = { type, from: dl, to: dl }; segs.push(cur); } else cur.to = dl;
             }
             out += `<text class="trait-text" style="fill:${kk === a.kindKey ? '#d97706' : '#334155'}" x="${X0 - 5}" y="${y + 15}" text-anchor="end">${KINDS[kk].label}</text>`;
-            segs.forEach(sg => { const x = xOf(sg.from), w = Math.max(0.5, xOf(sg.to) - x); out += `<rect class="band" fill="${COL[sg.type]}" x="${x.toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="22"/>`; if (w > 30) out += `<text class="band-text" style="fill:${sg.type === 'none' ? '#475569' : '#08131a'}" x="${(x + w / 2).toFixed(1)}" y="${y + 15}" text-anchor="middle">${NAMES[kk][sg.type]}</text>`; });
+            segs.forEach(sg => { const x = xOf(sg.from), w = Math.max(0.5, xOf(sg.to) - x); out += `<rect class="band" fill="${COL[sg.type]}" x="${x.toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="22"/>`; if (w > 30) out += `<text class="band-text" style="fill:${sg.type === 'none' ? '#cbd5e1' : '#08131a'}" x="${(x + w / 2).toFixed(1)}" y="${y + 15}" text-anchor="middle">${NAMES[kk][sg.type]}</text>`; });
             segs.forEach((sg, i) => { if (i > 0) out += `<text class="small-label" x="${xOf(sg.from).toFixed(1)}" y="${y + 33}" text-anchor="middle">${fmtN(sg.from, 1)}°</text>`; });
         });
         [0, 5, 10, 15, 20, 25].forEach(dl => { out += `<text class="axis-text" x="${xOf(dl).toFixed(1)}" y="158" text-anchor="middle">${dl}°</text>`; });

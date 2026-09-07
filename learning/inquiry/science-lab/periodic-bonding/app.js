@@ -424,10 +424,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const p = PAIRS[k], x = X0 + 8 + n * step;
             const y = yOf(p.melt), top = Math.min(y, YZ), h = Math.max(1.5, Math.abs(YZ - y));
             const mine = k === state.pair;
-            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${p.bond === 'ionic' ? '#ffb347' : '#0284c7'}" opacity="${mine ? 1 : 0.6}" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${W}" height="${h.toFixed(1)}" rx="2"/>`;
+            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${p.bond === 'ionic' ? '#d97706' : '#0284c7'}" opacity="${mine ? 1 : 0.6}" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${W}" height="${h.toFixed(1)}" rx="2"/>`;
             const ly = p.melt >= 0 ? top - 4 : YZ + h + 11;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle">${fmtNum(p.melt)}</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${YBOT + 26}" text-anchor="middle">${p.formulaHtml}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle">${fmtNum(p.melt)}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${YBOT + 26}" text-anchor="middle">${p.formulaHtml}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${YBOT + 46}" text-anchor="middle">이온끼리의 끌림은 세고, 분자끼리의 끌림은 약하다${a.p.sublimes ? ' (CO₂는 −78.5 ℃에서 곧바로 기체가 됨)' : ''}</text>`;
         return out;

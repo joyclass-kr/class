@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const H = 6.626e-34, HC = 1239.84, QE = 1.602e-19, ME = 9.109e-31, C_LIGHT = 2.998e8, MC2_EV = 0.511e6, H_EVS = 4.136e-15;
     const METALS = { cs: { label: '세슘', hint: '일함수 2.14 eV', W: 2.14 }, na: { label: '나트륨', hint: '일함수 2.28 eV', W: 2.28 }, zn: { label: '아연', hint: '일함수 4.33 eV', W: 4.33 }, pt: { label: '백금', hint: '일함수 5.65 eV', W: 5.65 } };
     const LIGHTS = {
-        red: { label: '빨강', hint: '650 nm', nm: 650, color: '#ff4b3e' },
-        green: { label: '초록', hint: '530 nm', nm: 530, color: '#4ade80' },
-        blue: { label: '파랑', hint: '450 nm', nm: 450, color: '#60a5fa' },
-        violet: { label: '보라', hint: '400 nm', nm: 400, color: '#a78bfa' },
-        uv: { label: '자외선', hint: '250 nm', nm: 250, color: '#d8b4fe', dashed: true },
+        red: { label: '빨강', hint: '650 nm', nm: 650, color: '#ff4b3e', ink: '#dc2626' },
+        green: { label: '초록', hint: '530 nm', nm: 530, color: '#4ade80', ink: '#15803d' },
+        blue: { label: '파랑', hint: '450 nm', nm: 450, color: '#60a5fa', ink: '#2563eb' },
+        violet: { label: '보라', hint: '400 nm', nm: 400, color: '#a78bfa', ink: '#7c3aed' },
+        uv: { label: '자외선', hint: '250 nm', nm: 250, color: '#d8b4fe', ink: '#6b21a8', dashed: true },
     };
     const BRIGHTS = { dim: { label: '어두운 빛', hint: '광자 수 1', rate: 1 }, bright: { label: '밝은 빛', hint: '광자 수 4배', rate: 4 } };
     const FROMS = { n2: { label: 'n = 2', n: 2 }, n3: { label: 'n = 3', n: 3 }, n4: { label: 'n = 4', n: 4 }, n5: { label: 'n = 5', n: 5 }, n6: { label: 'n = 6', n: 6 } };
@@ -166,12 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="needle" x1="${AX}" y1="${AY}" x2="${(AX + 15 * Math.sin(ang)).toFixed(1)}" y2="${(AY - 15 * Math.cos(ang)).toFixed(1)}"/>`;
         out += `<text class="meter-text" x="${AX}" y="${AY + 34}" text-anchor="middle">전류 ${a.current === 0 ? '0' : a.current === 1 ? '1' : '4'}</text>`;
         // readouts
-        out += `<text class="trait-text" style="fill:${light.color}" x="120" y="40">광자 한 개의 에너지 hf = 1240 ÷ ${light.nm} = ${fmtN(a.hf, 2)} eV</text>`;
+        out += `<text class="trait-text" style="fill:${light.ink || '#0f172a'}" x="120" y="40">광자 한 개의 에너지 hf = 1240 ÷ ${light.nm} = ${fmtN(a.hf, 2)} eV</text>`;
         out += `<text class="trait-text" x="120" y="72">일함수 ${fmtN(metal.W, 2)} eV</text>`;
-        out += `<text class="trait-text" style="fill:${a.emit ? '#059669' : '#ff7a59'}" x="120" y="88">${a.emit ? `남는 에너지 ${fmtN(a.KE, 2)} eV → 전자 나옴` : `${fmtN(-a.KE, 2)} eV 모자람 → 전자 못 나옴`}</text>`;
+        out += `<text class="trait-text" style="fill:${a.emit ? '#059669' : '#dc2626'}" x="120" y="88">${a.emit ? `남는 에너지 ${fmtN(a.KE, 2)} eV → 전자 나옴` : `${fmtN(-a.KE, 2)} eV 모자람 → 전자 못 나옴`}</text>`;
         if (a.emit) out += `<text class="small-label" x="120" y="102">전자 속력 ${fmtSpeed(a.v)} · 정지 전압 ${fmtN(a.KE, 2)} V</text>`;
         const VERD = { none: '전자가 안 나옴', slow: `전자 나옴 — 최대 ${fmtN(a.KE, 2)} eV`, fast: `전자 나옴 — 최대 ${fmtN(a.KE, 2)} eV` };
-        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${metal.label} · ${light.label} ${light.nm} nm · ${br.label}: ${VERD[a.verdict]}${a.emit ? `, 전류 ${a.current}` : ''}` : `${metal.label} · ${light.label} ${light.nm} nm · ${br.label}`}</text>`;
+        out += `<text class="verdict-text" fill="#0f172a" x="20" y="16">${state.progress >= 1 ? `${metal.label} · ${light.label} ${light.nm} nm · ${br.label}: ${VERD[a.verdict]}${a.emit ? `, 전류 ${a.current}` : ''}` : `${metal.label} · ${light.label} ${light.nm} nm · ${br.label}`}</text>`;
         out += `<text class="note-text" x="20" y="208">밝기는 광자 수(전류)만 바꾸고, 전자 한 개의 에너지 hf − W는 빛의 색(진동수)이 정합니다</text>`;
         return out;
     }
@@ -190,8 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         Object.values(LIGHTS).forEach(l => { const f = C_LIGHT / (l.nm * 1e-9); out += `<line class="ref-line" style="stroke:${l.color}" x1="${xOf(f).toFixed(1)}" y1="${Y1}" x2="${xOf(f).toFixed(1)}" y2="${Y0}"/>`; });
         const xf = xOf(a.f);
-        out += `<circle fill="${a.emit ? a.light.color : '#ff7a59'}" stroke="#fff" stroke-width="1" cx="${xf.toFixed(1)}" cy="${yOf(Math.max(0, a.KE)).toFixed(1)}" r="4.5"/>`;
-        out += `<text class="small-label" style="fill:${a.light.color}" x="${(xf + (xf > 380 ? -6 : 6)).toFixed(1)}" y="${Y1 + 10}" text-anchor="${xf > 380 ? 'end' : 'start'}">${a.light.label} ${fmtN(a.f / 1e14, 1)}×10¹⁴ Hz${a.emit ? '' : ' — 문턱 아래'}</text>`;
+        out += `<circle fill="${a.emit ? a.light.color : '#dc2626'}" stroke="#fff" stroke-width="1" cx="${xf.toFixed(1)}" cy="${yOf(Math.max(0, a.KE)).toFixed(1)}" r="4.5"/>`;
+        out += `<text class="small-label" style="fill:${a.light.ink || '#0f172a'}" x="${(xf + (xf > 380 ? -6 : 6)).toFixed(1)}" y="${Y1 + 10}" text-anchor="${xf > 380 ? 'end' : 'start'}">${a.light.label} ${fmtN(a.f / 1e14, 1)}×10¹⁴ Hz${a.emit ? '' : ' — 문턱 아래'}</text>`;
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 42}" text-anchor="middle">빛의 진동수 (×10¹⁴ Hz) — 기울기 = h = 4.14×10⁻¹⁵ eV·s, 가로축 절편 = 문턱 진동수 W/h</text>`;
         return out;
     }
@@ -225,12 +225,12 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="trait-text" style="fill:#dc2626" x="${RX}" y="160">${ni === nf ? '같은 준위 — 아무 일도 없음' : `올라가려면 ${fmtN(a.dE, 2)} eV를 흡수해야 함`}</text>`;
             out += `<text class="small-label" x="${RX}" y="176">빛을 내는 것은 내려올 때뿐입니다</text>`;
         } else {
-            out += `<text class="trait-text" style="fill:#d97706" x="${RX}" y="160">차이 ΔE = ${fmtN(a.dE, 2)} eV</text>`;
-            out += `<text class="trait-text" style="fill:${a.color}" x="${RX}" y="176">파장 λ = 1240 ÷ ${fmtN(a.dE, 2)} = ${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm</text>`;
+            out += `<text class="trait-text" style="fill:#0f172a" x="${RX}" y="160">차이 ΔE = ${fmtN(a.dE, 2)} eV</text>`;
+            out += `<text class="trait-text" style="fill:#0f172a" x="${RX}" y="176">파장 λ = 1240 ÷ ${fmtN(a.dE, 2)} = ${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm</text>`;
             out += `<text class="trait-text" x="${RX}" y="192">${a.series} 계열 · ${a.region === 'visible' ? '눈에 보이는 빛' : a.region === 'uv' ? '자외선 (안 보임)' : '적외선 (안 보임)'}</text>`;
         }
         const VERD = { visible: '눈에 보이는 빛', uv: '자외선', ir: '적외선', none: '빛이 안 나옴' };
-        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `n = ${ni} → n = ${nf}: ${a.verdict === 'none' ? VERD.none : `${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm, ${VERD[a.verdict]} (${a.series} 계열)`}` : `n = ${ni} → n = ${nf}`}</text>`;
+        out += `<text class="verdict-text" fill="#0f172a" x="20" y="16">${state.progress >= 1 ? `n = ${ni} → n = ${nf}: ${a.verdict === 'none' ? VERD.none : `${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm, ${VERD[a.verdict]} (${a.series} 계열)`}` : `n = ${ni} → n = ${nf}`}</text>`;
         out += `<text class="note-text" x="20" y="208">Eₙ = −13.6/n² eV. 준위 간격은 읽기 쉽게 벌렸고 값은 옆에 적었습니다. 내려올 때 그 차이가 광자 하나</text>`;
         return out;
     }
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const lines = [];
         for (let nf = 1; nf <= 3; nf += 1) for (let ni = nf + 1; ni <= 7; ni += 1) { const dE = 13.6 * (1 / (nf * nf) - 1 / (ni * ni)), lam = HC / dE; if (lam >= 90 && lam <= 2000) lines.push({ nf, ni, lam }); }
         lines.forEach(l => { const now = l.nf === a.nf && l.ni === a.ni; out += `<line class="line-mark" style="stroke:${now ? '#d97706' : '#64748b'};stroke-width:${now ? 3 : 1.2}" x1="${xOf(l.lam).toFixed(1)}" y1="${Y1 + (now ? -4 : 2)}" x2="${xOf(l.lam).toFixed(1)}" y2="${Y0 + (now ? 4 : -2)}"/>`; });
-        [[1, '라이먼 (n=1로)', 121.6], [2, '발머 (n=2로)', 656], [3, '파셴 (n=3으로)', 1875]].forEach(([nf, lab, nm]) => { out += `<text class="small-label" style="fill:${a.nf === nf ? '#d97706' : '#8fa8b0'}" x="${xOf(nm).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">${lab}</text>`; });
+        [[1, '라이먼 (n=1로)', 121.6], [2, '발머 (n=2로)', 656], [3, '파셴 (n=3으로)', 1875]].forEach(([nf, lab, nm]) => { out += `<text class="small-label" style="fill:${a.nf === nf ? '#d97706' : '#475569'}" x="${xOf(nm).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">${lab}</text>`; });
         if (a.lam) out += `<text class="trait-text" style="fill:#d97706" x="${clamp(xOf(a.lam), 70, 400).toFixed(1)}" y="${Y1 - 20}" text-anchor="middle">지금 ${fmtN(a.lam, a.lam < 200 ? 1 : 0)} nm</text>`;
         out += `<text class="small-label" x="${X0}" y="${Y0 + 48}">발머 계열 656·486·434·410 nm가 수소 방전관의 붉은빛과 푸른 선입니다. 흰 선은 n = 7까지의 모든 전이.</text>`;
         return out;

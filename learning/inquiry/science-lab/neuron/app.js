@@ -243,9 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const step = (X1 - X0) / 3, W = 70;
         Object.entries(AXONS).forEach(([k, ax], i) => {
             const ms = DIST_M / ax.v * 1000, x = X0 + i * step + (step - W) / 2, mine = k === state.axon;
-            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${ax.myelin ? '#059669' : '#ffb347'}" opacity="${mine ? 1 : 0.5}" x="${x.toFixed(1)}" y="${yOf(ms).toFixed(1)}" width="${W}" height="${(Y0 - yOf(ms)).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${(yOf(ms) - 4).toFixed(1)}" text-anchor="middle">${fmtN(ms)} ms</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${ax.label}</text>`;
+            out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${ax.myelin ? '#059669' : '#d97706'}" opacity="${mine ? 1 : 0.5}" x="${x.toFixed(1)}" y="${yOf(ms).toFixed(1)}" width="${W}" height="${(Y0 - yOf(ms)).toFixed(1)}" rx="2"/>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${(yOf(ms) - 4).toFixed(1)}" text-anchor="middle">${fmtN(ms)} ms</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${ax.label}</text>`;
             out += `<text class="small-label" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 26}" text-anchor="middle">초속 ${ax.v} m</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 42}" text-anchor="middle">다친 순간 날카로운 통증(빠른 신경) 뒤에 둔한 통증(느린 신경)이 오는 까닭</text>`;

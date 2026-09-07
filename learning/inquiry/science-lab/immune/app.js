@@ -216,13 +216,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // right column: day, counts, fever
         const sick = P > SICK;
         out += `<text class="gen-text" x="320" y="42">${fmtDay(t)}일째</text>`;
-        out += `<text class="trait-text" style="fill:#c084fc" x="320" y="62">병원체 ${P >= 1 ? fmtGerms(P) : '없음'}</text>`;
+        out += `<text class="trait-text" style="fill:#9333ea" x="320" y="62">병원체 ${P >= 1 ? fmtGerms(P) : '없음'}</text>`;
         out += `<text class="trait-text" style="fill:#059669" x="320" y="78">항체 ${fmtA(A)}</text>`;
         out += `<text class="small-label" x="320" y="90">(1을 넘으면 병원체를 막음)</text>`;
         out += `<rect class="fever" x="320" y="102" width="120" height="14" rx="7"/><rect class="fever-fill" x="322" y="104" width="${(116 * clamp(P >= 1 ? log10(P) / 9 : 0, 0, 1)).toFixed(1)}" height="10" rx="5"/>`;
         out += `<line class="ref-line" x1="${(322 + 116 * 4 / 9).toFixed(1)}" y1="99" x2="${(322 + 116 * 4 / 9).toFixed(1)}" y2="119"/>`;
         out += `<text class="small-label" x="320" y="130">막대: 병원체 수 (로그 눈금)</text><text class="small-label" x="320" y="141">점선(1만 마리)을 넘으면 열이 남</text>`;
-        out += `<text class="trait-text" style="fill:${sick ? '#ff7a59' : '#475569'}" x="320" y="157">${sick ? '열이 나 앓는 중' : P >= 1 ? '병원체 있지만 괜찮음' : nV ? '백신 항원만 있음 — 앓지 않음' : '병원체 없음'}</text>`;
+        out += `<text class="trait-text" style="fill:${sick ? '#dc2626' : '#475569'}" x="320" y="157">${sick ? '열이 나 앓는 중' : P >= 1 ? '병원체 있지만 괜찮음' : nV ? '백신 항원만 있음 — 앓지 않음' : '병원체 없음'}</text>`;
         let phase;
         if (!lymph) phase = P > 0 ? '림프구가 없어 항체가 안 나옴' : '';
         else if (P < 1 && Ag < 100 && A < 1) phase = M > 0 ? '기억 세포가 지키는 중' : '아직 아무 일 없음';

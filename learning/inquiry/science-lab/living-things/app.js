@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<rect class="card${mine ? ' hit' : ''}" x="${x}" y="${y}" width="134" height="56" rx="6"/>`;
             out += `<text style="font-size:22px" x="${x + 22}" y="${y + 36}" text-anchor="middle">${b.icon}</text>`;
             out += `<text class="bar-text" fill="#0f172a" x="${x + 44}" y="${y + 22}">${b.name}</text>`;
-            out += `<text class="bar-text" fill="${ok ? '#059669' : '#ff7d6b'}" x="${x + 44}" y="${y + 42}">${ok ? '✓ 잘 산다' : `✗ ${HABITATS[b.home].label}이 집`}</text>`;
+            out += `<text class="bar-text" fill="${ok ? '#059669' : '#dc2626'}" x="${x + 44}" y="${y + 42}">${ok ? '✓ 잘 산다' : `✗ ${HABITATS[b.home].label}이 집`}</text>`;
         });
         out += `<text class="note-text" x="20" y="188">몸의 특징이 그곳에 맞는 생물만 잘 살 수 있습니다</text>`;
         return out;

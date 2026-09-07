@@ -218,14 +218,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const inside = footLocal <= cornerX + 0.01;
         const [fx, fy] = rot(footLocal, HY, HX, HY, theta);
         if (psi < 1) {
-            out += `<line class="cm-line" style="stroke:${inside ? '#059669' : '#ff7a59'}" x1="${cmx.toFixed(1)}" y1="${cmy.toFixed(1)}" x2="${cmx.toFixed(1)}" y2="${(cmy + Math.max(0, fy - cmy)).toFixed(1)}"/>`;
+            out += `<line class="cm-line" style="stroke:${inside ? '#059669' : '#dc2626'}" x1="${cmx.toFixed(1)}" y1="${cmy.toFixed(1)}" x2="${cmx.toFixed(1)}" y2="${(cmy + Math.max(0, fy - cmy)).toFixed(1)}"/>`;
             out += `<circle class="cm-dot" cx="${cmx.toFixed(1)}" cy="${cmy.toFixed(1)}" r="3.2"/>`;
             const [c1x, c1y] = rot(cornerX, HY, HX, HY, theta);
-            out += `<circle fill="${inside ? '#059669' : '#ff7a59'}" cx="${c1x.toFixed(1)}" cy="${c1y.toFixed(1)}" r="2.6"/>`;
+            out += `<circle fill="${inside ? '#059669' : '#dc2626'}" cx="${c1x.toFixed(1)}" cy="${c1y.toFixed(1)}" r="2.6"/>`;
         }
         // forces: weight down from the CM, normal and friction at the foot
         out += arrow(cmx, cmy, cmx, cmy + 36, 'force-w', 'arrow-w');
-        out += `<text class="small-label" style="fill:#ff7a59" x="${(cmx + 6).toFixed(1)}" y="${(cmy + 22).toFixed(1)}">무게</text>`;
+        out += `<text class="small-label" style="fill:#dc2626" x="${(cmx + 6).toFixed(1)}" y="${(cmy + 22).toFixed(1)}">무게</text>`;
         if (verdict !== 'tip' || psi < 1) {
             const nLen = 34 * Math.cos(theta * RAD), fLen = 34 * Math.min(Math.sin(theta * RAD), mu * Math.cos(theta * RAD));
             const [nx, ny] = rot(fx, fy - nLen, fx, fy, theta);
@@ -284,11 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
             out += arrow(bcx, bcy, bcx, bcy + 14 + m * G * 0.25 * grow, 'force-w', 'arrow-w');
             const [pcx, pcy] = rot(X0 + PL_L / 2 * S, Y, x2, Y, tilt);
             out += arrow(pcx, pcy, pcx, pcy + 6 + PL_M * G * 0.25 * grow, 'force-w', 'arrow-w');
-            out += `<text class="small-label" style="fill:#ff7a59" x="${(pcx + 5).toFixed(1)}" y="${(pcy + 18 + PL_M * G * 0.25 * grow).toFixed(1)}">판 ${fmt(PL_M * G)} N</text>`;
+            out += `<text class="small-label" style="fill:#dc2626" x="${(pcx + 5).toFixed(1)}" y="${(pcy + 18 + PL_M * G * 0.25 * grow).toFixed(1)}">판 ${fmt(PL_M * G)} N</text>`;
             const n1 = Math.max(0, N1) * 0.25 * grow, n2 = N2 * 0.25 * grow;
             if (n1 > 1) out += arrow(x1, Y + 4, x1, Y + 4 - n1 - 4, 'force-n', 'arrow-n');
             out += arrow(x2, Y + 4, x2, Y + 4 - n2 - 4, 'force-n', 'arrow-n');
-            out += `<text class="trait-text" style="fill:${N1 <= 0 ? '#ff7a59' : '#059669'}" x="${x1}" y="${GY + 16}" text-anchor="middle">왼쪽 받침 ${N1 <= 0 ? `${fmt(N1)} N → 0 아래, 뜸` : `${fmt(N1 * grow)} N`}</text>`;
+            out += `<text class="trait-text" style="fill:${N1 <= 0 ? '#dc2626' : '#059669'}" x="${x1}" y="${GY + 16}" text-anchor="middle">왼쪽 받침 ${N1 <= 0 ? `${fmt(N1)} N → 0 아래, 뜸` : `${fmt(N1 * grow)} N`}</text>`;
             out += `<text class="trait-text" style="fill:#059669" x="${x2}" y="${GY + 16}" text-anchor="middle">오른쪽 받침 ${fmt(N2 * grow)} N</text>`;
         } else {
             out += `<text class="trait-text" style="fill:#059669" x="${x1}" y="${GY + 16}" text-anchor="middle">왼쪽 받침 (0.3 m)</text><text class="trait-text" style="fill:#059669" x="${x2}" y="${GY + 16}" text-anchor="middle">오른쪽 받침 (1.3 m)</text>`;
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const net = parts[0].tau + parts[1].tau;
         out += `<text class="trait-text" x="20" y="${Y0 - 14}">합 ${fmt(net)} N·m을 왼쪽 받침(축에서 ${(S2 - S1).toFixed(1)} m)이 받쳐야 하므로 왼쪽 받침 힘 = ${fmt(net)} ÷ ${(S2 - S1).toFixed(1)} = ${fmt(N1)} N</text>`;
         out += `<text class="trait-text" x="20" y="${Y0 + 4}">오른쪽 받침 힘 = 전체 ${fmt(a.W)} − ${fmt(N1)} = ${fmt(N2)} N</text>`;
-        out += `<text class="small-label" style="fill:${N1 <= 0 ? '#ff7a59' : '#059669'}" x="20" y="${Y0 + 24}">${N1 <= 0 ? '왼쪽 받침 힘이 0 아래 — 받침대는 아래로 붙잡지 못하므로 왼쪽 끝이 들리며 판이 뒤집힙니다' : N1 > N2 ? '물건이 왼쪽 받침에 더 가까워 왼쪽이 더 받습니다' : '물건이 오른쪽 받침에 더 가까워 오른쪽이 더 받습니다'}</text>`;
+        out += `<text class="small-label" style="fill:${N1 <= 0 ? '#dc2626' : '#059669'}" x="20" y="${Y0 + 24}">${N1 <= 0 ? '왼쪽 받침 힘이 0 아래 — 받침대는 아래로 붙잡지 못하므로 왼쪽 끝이 들리며 판이 뒤집힙니다' : N1 > N2 ? '물건이 왼쪽 받침에 더 가까워 왼쪽이 더 받습니다' : '물건이 오른쪽 받침에 더 가까워 오른쪽이 더 받습니다'}</text>`;
         out += `<text class="small-label" x="20" y="${Y0 + 42}">힘의 합 0 · 돌림힘의 합 0 — 이 두 식이 평형 조건입니다</text>`;
         return out;
     }

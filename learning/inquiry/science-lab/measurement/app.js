@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="card-title" x="${x + 8}" y="46">${ERAS[k].label} · ${d.year}년</text>`;
             if (shown) {
                 wrap(d.text, 13).slice(0, 3).forEach((ln, j) => { out += `<text class="card-text" x="${x + 8}" y="${62 + j * 13}">${ln}</text>`; });
-                if (p >= 1 || !active) out += `<text class="card-text" style="fill:${d.cat === 'constant' ? '#059669' : d.cat === 'artifact' ? '#ffb347' : '#9fd8ff'}" x="${x + 8}" y="108">${CAT_LABEL[d.cat]}</text>`;
+                if (p >= 1 || !active) out += `<text class="card-text" style="fill:${d.cat === 'constant' ? '#059669' : d.cat === 'artifact' ? '#d97706' : '#0284c7'}" x="${x + 8}" y="108">${CAT_LABEL[d.cat]}</text>`;
             } else out += `<text class="card-text" x="${x + 8}" y="62">?</text>`;
             out += `<line class="tick major" x1="${xOf(d.year).toFixed(1)}" y1="${TY - 10}" x2="${xOf(d.year).toFixed(1)}" y2="${TY}"/>`;
             out += `<line class="tick" style="stroke:rgba(148, 163, 184, 0.35)" x1="${x + 65}" y1="116" x2="${xOf(d.year).toFixed(1)}" y2="${TY - 10}"/>`;
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const mx = xOf(year);
         out += `<line class="marker" x1="${mx.toFixed(1)}" y1="${TY - 12}" x2="${mx.toFixed(1)}" y2="${TY + 12}"/><polygon class="marker-head" points="${mx.toFixed(1)},${TY + 12} ${(mx - 5).toFixed(1)},${TY + 20} ${(mx + 5).toFixed(1)},${TY + 20}"/>`;
         out += `<text class="trait-text" x="230" y="188" text-anchor="middle">${Math.round(year)}년${p >= 1 ? ` — ${UNITS[state.unit].label}: ${target.text}` : ''}</text>`;
-        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${ERAS[state.era].label} ${UNITS[state.unit].label.split(' ')[0]}의 기준: ${CAT_LABEL[target.cat]}` : `${UNITS[state.unit].label}의 기준은 어떻게 바뀌어 왔나`}</text>`;
+        out += `<text class="verdict-text" fill="#0f172a" x="20" y="16">${p >= 1 ? `${ERAS[state.era].label} ${UNITS[state.unit].label.split(' ')[0]}의 기준: ${CAT_LABEL[target.cat]}` : `${UNITS[state.unit].label}의 기준은 어떻게 바뀌어 왔나`}</text>`;
         out += `<text class="note-text" x="20" y="208">기준은 재기 쉽고 변하지 않는 것을 찾아 자연물 → 원기 → 자연 상수로 옮겨 왔습니다 (2019년 완성)</text>`;
         return out;
     }
@@ -269,10 +269,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const step = (X1 - X0) / 3, W = 70;
         ['old', 'mid', 'now'].forEach((k, i) => {
             const d = defs[k], x = X0 + i * step + (step - W) / 2, mine = k === state.era;
-            const color = d.cat === 'constant' ? '#059669' : d.cat === 'artifact' ? '#ffb347' : '#9fd8ff';
+            const color = d.cat === 'constant' ? '#059669' : d.cat === 'artifact' ? '#d97706' : '#0284c7';
             out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${color}" opacity="${mine ? 1 : 0.5}" x="${x.toFixed(1)}" y="${yOf(d.digits).toFixed(1)}" width="${W}" height="${(Y0 - yOf(d.digits)).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${(yOf(d.digits) - 4).toFixed(1)}" text-anchor="middle">10${sup(-d.digits)}</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${ERAS[k].label} (${d.year})</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${(yOf(d.digits) - 4).toFixed(1)}" text-anchor="middle">10${sup(-d.digits)}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${ERAS[k].label} (${d.year})</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 32}" text-anchor="middle">${state.unit === 's' ? '초는 자연 상수에 묶인 뒤 가장 정확한 단위가 되어 다른 단위의 바탕이 됨' : state.unit === 'kg' ? '원기는 100년 동안 복제품과 50 μg 어긋나 2019년 상수로 바꿈' : '색: 파랑 자연물 · 노랑 원기 · 초록 자연 상수'}</text>`;
         return out;

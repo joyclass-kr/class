@@ -273,12 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
         out += `<text class="axis-text" x="${X0 - 6}" y="${Y1 + 4}" text-anchor="end">많음</text><text class="axis-text" x="${X0 - 6}" y="${Y0 + 4}" text-anchor="end">적음</text>`;
         for (let age = 500; age >= 0; age -= 100) out += `<text class="axis-text" x="${xOf(age).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${age ? `${age / 100}억` : '지금'}</text>`;
-        out += `<path class="trace" style="stroke:#9fd8ff" d="${DIVERSITY_CURVE.map(([age, v], i) => `${i ? 'L' : 'M'}${xOf(age).toFixed(1)},${yOf(v).toFixed(1)}`).join(' ')}"/>`;
+        out += `<path class="trace" style="stroke:#0284c7" d="${DIVERSITY_CURVE.map(([age, v], i) => `${i ? 'L' : 'M'}${xOf(age).toFixed(1)},${yOf(v).toFixed(1)}`).join(' ')}"/>`;
         Object.entries(EXTINCTIONS).forEach(([k, ex]) => {
             if (!ex.age) return;
             const x = xOf(ex.age), mine = k === state.extinction;
             out += `<line class="drop-line" style="${mine ? 'stroke:#d97706;stroke-width:2.2;stroke-dasharray:none' : ''}" x1="${x.toFixed(1)}" y1="${Y1}" x2="${x.toFixed(1)}" y2="${Y0}"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#d97706' : '#ff7a59'}" x="${(x + (ex.age > 400 ? 4 : -4)).toFixed(1)}" y="${Y1 + 12 + (k === 'dev' ? 12 : 0)}" text-anchor="${ex.age > 400 ? 'start' : 'end'}">${ex.loss} %</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#d97706' : '#dc2626'}" x="${(x + (ex.age > 400 ? 4 : -4)).toFixed(1)}" y="${Y1 + 12 + (k === 'dev' ? 12 : 0)}" text-anchor="${ex.age > 400 ? 'start' : 'end'}">${ex.loss} %</text>`;
         });
         if (state.extinction === 'now') out += `<text class="axis-text" style="fill:#d97706" x="${X1}" y="${Y1 + 28}" text-anchor="end">지금 1 %, 위기 28 %</text>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">몇 년 전 — 붉은 점선이 다섯 번의 대멸종, 숫자는 사라진 종의 비율</text>`;

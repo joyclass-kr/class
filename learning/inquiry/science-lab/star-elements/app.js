@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
         UNIVERSE.forEach(([sym, v], n) => {
             const x = X0 + n * step + (step - W) / 2, mine = sym === a.el.sym;
             out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${COLOR[sym] || '#475569'}" opacity="${mine ? 1 : 0.55}" x="${x.toFixed(1)}" y="${yOf(v).toFixed(1)}" width="${W}" height="${(Y0 - yOf(v)).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${sym}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${sym}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 32}" text-anchor="middle">수소와 헬륨이 98 % — 나머지 모든 원소는 별이 만든 2 %</text>`;
         return out;

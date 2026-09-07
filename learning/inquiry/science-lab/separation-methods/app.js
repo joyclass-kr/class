@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.mix.parts.forEach((part, i) => {
             const y = GRAPH.y1 + 34 + i * 34;
             const caught = a.caught.includes(part);
-            out += `<text class="bar-text" fill="${caught ? '#ea580c' : '#8fd4c8'}" x="${GRAPH.x0}" y="${y - 10}">` +
+            out += `<text class="bar-text" fill="${caught ? '#ea580c' : '#0284c7'}" x="${GRAPH.x0}" y="${y - 10}">` +
                    `${part.n} ${part.size} mm${part.dissolved ? ' (물에 녹음)' : ''} — ${caught ? '걸러짐' : '통과'}</text>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(2, gx(part.size) - GRAPH.x0).toFixed(1)}" height="11" rx="3" fill="${part.colour}" opacity=".8"/>`;
         });
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.sorted.forEach((part, i) => {
             const y = GRAPH.y1 + 22 + i * 26;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 7}" width="${(gx(part.rf) - GRAPH.x0).toFixed(1)}" height="14" rx="3" fill="${part.colour}" opacity=".85"/>`;
-            out += `<text class="bar-text" fill="${part.colour}" x="${(gx(part.rf) + 6).toFixed(1)}" y="${y + 4}">${part.n} ${part.rf.toFixed(2)}</text>`;
+            out += `<text class="bar-text" fill="#0f172a" x="${(gx(part.rf) + 6).toFixed(1)}" y="${y + 4}">${part.n} ${part.rf.toFixed(2)}</text>`;
         });
         if (a.verdict === 'partial') {
             // pick the tightest pair by comparing gaps, not by float equality

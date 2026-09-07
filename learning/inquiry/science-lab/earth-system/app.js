@@ -277,8 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const r = RESERVOIRS[k], tau = tauOf(r), x = X0 + n * step + (step - W) / 2, mine = k === state.reservoir;
             const top = yOf(tau);
             out += `<rect class="bar ${mine ? 'chosen' : ''}" fill="${CAT_COLOR[r.cat]}" opacity="${mine ? 1 : 0.5}" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${W}" height="${(Y0 - top).toFixed(1)}" rx="2"/>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${(top - 4).toFixed(1)}" text-anchor="middle">${fmtTime(tau).replace('약 ', '')}</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${r.label}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${(top - 4).toFixed(1)}" text-anchor="middle">${fmtTime(tau).replace('약 ', '')}</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${(x + W / 2).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${r.label}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 34}" text-anchor="middle">양이 적고 드나듦이 많으면 금방, 양이 많고 드나듦이 적으면 아주 오래</text>`;
         return out;

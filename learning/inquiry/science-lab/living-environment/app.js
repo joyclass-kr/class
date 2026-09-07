@@ -288,12 +288,13 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let d = 0; d <= upTo + 1e-9; d += 0.1) pts.push(`${gx(d).toFixed(1)},${gy(heightAt(d, maxCm)).toFixed(1)}`);
             return pts.length > 1 ? `<path class="${cls}" style="stroke:${colour}" d="M${pts.join('L')}"/>` : '';
         };
-        if (!a.same) out += line(a.base.maxCm, BEAN_DAYS, 'trace other', '#6cc25a');
-        const mineColour = a.mine.hue === 'yellow' ? '#e6de7a' : a.mine.hue === 'green' ? '#0284c7' : '#8fa8b0';
+        if (!a.same) out += line(a.base.maxCm, BEAN_DAYS, 'trace other', '#16a34a');
+        const mineColour = a.mine.hue === 'yellow' ? '#d97706' : a.mine.hue === 'green' ? '#0284c7' : '#64748b';
+        const mineTextColour = a.mine.hue === 'yellow' ? '#b45309' : mineColour;
         out += line(a.mine.maxCm, day, 'trace', mineColour);
         out += `<circle class="trace-dot" cx="${gx(day).toFixed(1)}" cy="${gy(heightAt(day, a.mine.maxCm)).toFixed(1)}" r="5" fill="${mineColour}"/>`;
-        out += `<text class="axis-text" style="fill:${mineColour}" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 14}">— 내 화분</text>`;
-        if (!a.same) out += `<text class="axis-text" style="fill:#6cc25a" x="${GRAPH.x0 + 78}" y="${GRAPH.y1 + 14}">- - 기준 화분</text>`;
+        out += `<text class="axis-text" style="fill:${mineTextColour}" x="${GRAPH.x0 + 8}" y="${GRAPH.y1 + 14}">— 내 화분</text>`;
+        if (!a.same) out += `<text class="axis-text" style="fill:#15803d" x="${GRAPH.x0 + 78}" y="${GRAPH.y1 + 14}">- - 기준 화분</text>`;
         return out;
     }
 
@@ -301,9 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function graphWeb(a) {
         const tNow = state.progress * WEB_MONTHS;
         const rows = [
-            { key: 'G', name: '풀', colour: '#6fbf73', max: 100 },
-            { key: 'R', name: '토끼', colour: '#d8d3c8', max: 50 },
-            { key: 'F', name: '여우', colour: '#e0782f', max: 6 },
+            { key: 'G', name: '풀', colour: '#16a34a', textColour: '#15803d', max: 100 },
+            { key: 'R', name: '토끼', colour: '#64748b', textColour: '#334155', max: 50 },
+            { key: 'F', name: '여우', colour: '#ea580c', textColour: '#c2410c', max: 6 },
         ];
         const X0 = 70, X1 = 424, H = 40, TOP = 14, GAP = 10;
         const gx = t => X0 + (t / WEB_MONTHS) * (X1 - X0);
@@ -312,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const y0 = TOP + i * (H + GAP) + H;
             const gy = v => y0 - Math.min(1, v / r.max) * H;
             out += `<line class="axis" x1="${X0}" y1="${y0}" x2="${X1}" y2="${y0}"/>`;
-            out += `<text class="strip-title" fill="${r.colour}" x="${X0 - 8}" y="${y0 - H / 2 + 4}" text-anchor="end">${r.name}</text>`;
+            out += `<text class="strip-title" fill="${r.textColour}" x="${X0 - 8}" y="${y0 - H / 2 + 4}" text-anchor="end">${r.name}</text>`;
             out += `<text class="axis-text" x="${X0 - 8}" y="${y0 - H + 4}" text-anchor="end">${r.max}</text>`;
             const done = a.path.map(q => `${gx(q.t).toFixed(1)},${gy(q[r.key]).toFixed(1)}`);
             out += `<path class="trace-done" d="M${done.join('L')}"/>`;

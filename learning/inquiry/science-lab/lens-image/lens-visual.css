@@ -50,15 +50,15 @@
 
 .axis-line { stroke: rgba(148, 163, 184, 0.40); stroke-width: 1.3; }
 .lens-body { fill: rgba(140, 200, 240, .22); stroke: #8fd0ef; stroke-width: 2; }
-.focus-dot { fill: var(--amber); }
-.focus-text { fill: var(--amber); font-size: 13.5px; font-weight: 900; }
+.focus-dot { fill: #d97706; }
+.focus-text { fill: #b45309; font-size: 13.5px; font-weight: 900; }
 .object-arrow { stroke: #059669; stroke-width: 2.6; fill: none; stroke-linecap: round; }
 .image-arrow { stroke: #ea580c; stroke-width: 2.6; fill: none; stroke-linecap: round; }
 .image-arrow.virtual { stroke-dasharray: 5 4; }
 .ray { fill: none; stroke-width: 1.6; }
 .ray.r1 { stroke: #d97706; }
 .ray.r2 { stroke: #0284c7; }
-.ray.r3 { stroke: #c9a6f0; }
+.ray.r3 { stroke: #9333ea; }
 .ray.back { stroke-dasharray: 4 4; opacity: .75; }
 .meet-dot { fill: #fff; stroke: #ea580c; stroke-width: 2; }
 .tick { stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }

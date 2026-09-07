@@ -350,9 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
         a.all.forEach((f, n) => {
             const x = X0 + 20 + n * 92, w = 50, mine = f.key === state.floor;
             const top = yOf(f.ratio), h = (Y0 - top) * shown;
-            out += `<rect class="bar" fill="${f.broken ? '#ff7a59' : '#0284c7'}" opacity="${mine ? 1 : 0.45}" stroke="${mine ? '#fff' : 'rgba(255,255,255,.2)'}" stroke-width="${mine ? 2 : .8}" x="${x}" y="${(Y0 - h).toFixed(1)}" width="${w}" height="${h.toFixed(1)}" rx="2"/>`;
-            if (shown) out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${x + w / 2}" y="${(top - 4).toFixed(1)}" text-anchor="middle">${f.ratio < 100 ? fmt1(f.ratio) : fmtN(f.ratio)}배</text>`;
-            out += `<text class="axis-text" style="fill:${mine ? '#fff' : '#475569'}" x="${x + w / 2}" y="${Y0 + 14}" text-anchor="middle">${FLOORS[f.key].label}</text>`;
+            out += `<rect class="bar" fill="${f.broken ? '#ff7a59' : '#0284c7'}" opacity="${mine ? 1 : 0.45}" stroke="${mine ? '#0284c7' : 'rgba(2,132,199,.2)'}" stroke-width="${mine ? 2 : .8}" x="${x}" y="${(Y0 - h).toFixed(1)}" width="${w}" height="${h.toFixed(1)}" rx="2"/>`;
+            if (shown) out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${x + w / 2}" y="${(top - 4).toFixed(1)}" text-anchor="middle">${f.ratio < 100 ? fmt1(f.ratio) : fmtN(f.ratio)}배</text>`;
+            out += `<text class="axis-text" style="fill:${mine ? '#0f172a' : '#475569'};font-weight:${mine ? '900' : '750'}" x="${x + w / 2}" y="${Y0 + 14}" text-anchor="middle">${FLOORS[f.key].label}</text>`;
             out += `<text class="small-label" x="${x + w / 2}" y="${Y0 + 26}" text-anchor="middle">${shown ? `${f.dt * 1000 < 10 ? (f.dt * 1000).toFixed(1) : fmtN(f.dt * 1000)} ms 만에 멈춤` : ''}</text>`;
         });
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 40}" text-anchor="middle">${shown ? `네 바닥 모두 충격량(힘 × 시간)은 ${fmt2(a.p)} N·s로 같고, 멈추는 시간이 길수록 힘이 작다` : '같은 높이에서 떨어진 달걀을 네 바닥이 멈출 때'}</text>`;

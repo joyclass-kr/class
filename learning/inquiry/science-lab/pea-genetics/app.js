@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = graphFrame([0, 0.25, 0.5, 0.75, 1].map(f => [Math.round(f * max), gx(f * max)]), [], `개수 (${a.trait.unit})`, '');
         a.phenos.forEach((ph, i) => {
             const y = GRAPH.y1 + 24 + i * 30;
-            out += `<text class="bar-text" fill="${ph.hex}" x="${GRAPH.x0}" y="${y - 9}">${ph.label} ${counts[ph.key]}${a.trait.unit} · 기대 ${Math.round(ph.p * n)}${a.trait.unit}</text>`;
+            out += `<text class="bar-text" fill="#0f172a" x="${GRAPH.x0}" y="${y - 9}">${ph.label} ${counts[ph.key]}${a.trait.unit} · 기대 ${Math.round(ph.p * n)}${a.trait.unit}</text>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 4}" width="${Math.max(0, gx(counts[ph.key]) - GRAPH.x0).toFixed(1)}" height="11" rx="3" fill="${ph.hex}" opacity=".8"/>`;
             out += `<line class="expect-tick" x1="${gx(ph.p * n).toFixed(1)}" y1="${y - 7}" x2="${gx(ph.p * n).toFixed(1)}" y2="${y + 10}"/>`;
         });

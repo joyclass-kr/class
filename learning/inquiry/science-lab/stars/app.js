@@ -109,7 +109,7 @@ function drawScene(g) {
 
     g.appendChild(el('rect', { x: SKY.x, y: SKY.y, width: SKY.w, height: SKY.h, rx: 5, class: 'sky-box' }));
     FAR.forEach(([fx, fy]) => g.appendChild(el('circle', { cx: fx, cy: fy, r: 1.6, class: 'far-star' })));
-    g.appendChild(el('text', { x: SKY.x + 6, y: SKY.y + 12, class: 'tiny-label' }, '먼 별들을 배경으로'));
+    g.appendChild(el('text', { x: SKY.x + 6, y: SKY.y + 14, class: 'tiny-label', style: 'fill:#cbd5e1' }, '먼 별들을 배경으로'));
 
     const nx = 124 + swing * 15, ny = 58;
     g.appendChild(el('line', { x1: 124 - 15, y1: ny + 12, x2: 124 + 15, y2: ny + 12, class: 'shift-mark' }));
@@ -199,8 +199,8 @@ function drawGraph(g) {
     g.appendChild(el('circle', { cx: X(a.temp), cy: Y(a.lum), r: 6, class: 'star-dot', style: `fill:${a.colour}` }));
 
     g.appendChild(el('text', { x: X(20000), y: yTop - 4, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#0284c7' }, '주계열'));
-    g.appendChild(el('text', { x: X(4100), y: Y(3000) - 4, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#ff9d9d' }, '거성'));
-    g.appendChild(el('text', { x: X(14000), y: Y(0.0005) + 10, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#bed2e1' }, '백색왜성'));
+    g.appendChild(el('text', { x: X(4100), y: Y(3000) - 4, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#dc2626' }, '거성'));
+    g.appendChild(el('text', { x: X(14000), y: Y(0.0005) + 10, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#2563eb' }, '백색왜성'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 175, 'text-anchor': 'middle', class: 'legend-text', style: 'fill:#475569' },
         '점선은 반지름이 같은 별들이 놓이는 자리입니다'));
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, '표면 온도 (K, 왼쪽이 뜨거움) — 세로는 광도 (태양 = 1)'));

@@ -60,12 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const v = burst ? BURST_V : volumeAt(t, c, kind);
         let label, tone;
         if (kind === 'animal') {
-            if (burst) { label = '터짐 (용혈)'; tone = '#ff7d7d'; }
+            if (burst) { label = '터짐 (용혈)'; tone = '#dc2626'; }
             else if (v > 1.02) { label = '부풀어 오름'; tone = '#0284c7'; }
-            else if (v < 0.98) { label = '쭈그러듦'; tone = '#ffb86b'; }
+            else if (v < 0.98) { label = '쭈그러듦'; tone = '#ea580c'; }
             else { label = '정상'; tone = '#059669'; }
         } else {
-            if (v < 0.98) { label = '원형질 분리'; tone = '#ffb86b'; }
+            if (v < 0.98) { label = '원형질 분리'; tone = '#ea580c'; }
             else if (targetVolume(c, 'plant') >= V0 && c < 0.98) { label = '팽팽함 (터지지 않음)'; tone = '#059669'; }
             else { label = '정상'; tone = '#059669'; }
         }
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ax = x2 - dx * 7, ay = y2 - dy * 7 * 0.8;
                 out += `<path class="water-arrow ${cls}" d="M${(ax - dy * 5).toFixed(1)},${(ay - dx * 5).toFixed(1)} L${x2.toFixed(1)},${y2.toFixed(1)} L${(ax + dy * 5).toFixed(1)},${(ay + dx * 5).toFixed(1)}"/>`;
             });
-            out += `<text class="part-label" fill="${inward ? '#0284c7' : '#ffb86b'}" x="358" y="150">물이 ${inward ? '들어옴' : '빠져나감'}</text>`;
+            out += `<text class="part-label" fill="${inward ? '#0284c7' : '#ea580c'}" x="358" y="150">물이 ${inward ? '들어옴' : '빠져나감'}</text>`;
         } else {
             out += `<text class="part-label" fill="#059669" x="358" y="150">물의 출입 균형</text>`;
         }

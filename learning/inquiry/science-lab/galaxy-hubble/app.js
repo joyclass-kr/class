@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderClassify(a) {
         const p = state.progress, CX = 126, CY = 112, R = 82, rot = -p * 70 * Math.PI / 180, fade = clamp(0.25 + p, 0, 1);
-        let out = '';
+        let out = `<rect class="sky" x="18" y="24" width="216" height="176" rx="10" fill="#040814" stroke="rgba(148, 163, 184, 0.35)"/>`;
         const dot = (x, y, r, cls, op) => `<circle class="${cls}" opacity="${op.toFixed(2)}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"/>`;
         const turn = (x, y) => [CX + x * Math.cos(rot) - y * Math.sin(rot), CY + x * Math.sin(rot) + y * Math.cos(rot)];
         if (a.cls === 'e') {
@@ -170,15 +170,15 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < 40; i += 1) { const u = rnd(i + 1000), ang = rnd(i + 1200) * 2 * Math.PI, [px, py] = turn(R * u * Math.cos(ang), R * u * Math.sin(ang)); out += dot(px, py, 0.9, 'old-star', fade * 0.5); }
             for (let i = 5; i >= 0; i -= 1) out += `<circle class="bulge" opacity="${(0.18 * fade).toFixed(2)}" cx="${CX}" cy="${CY}" r="${(rb * (1 - i / 7)).toFixed(1)}"/>`;
         }
-        const RX = 236;
+        const RX = 244;
         out += `<text class="small-label" x="${RX}" y="190">노랑 늙은 별 · 파랑 젊은 별 · 분홍 별 탄생 구름</text>`;
         out += `<text class="trait-text" x="${RX}" y="52">나선팔: ${ARMS[a.arms].label}</text><text class="trait-text" x="${RX}" y="70">팽대부: ${BULGES[a.bulge].label}</text><text class="trait-text" x="${RX}" y="88">막대: ${a.arms === 'none' ? '(팔이 없으면 따지지 않음)' : BARS[a.bar].label}</text>`;
         const NAMES = { e: '타원 은하', s: '정상 나선 은하', sb: '막대 나선 은하', irr: '불규칙 은하' };
-        out += `<text class="gen-text" style="fill:#d97706" x="${RX}" y="114">${p >= 1 ? `${a.code} — ${NAMES[a.cls]}` : '분류 기호: ?'}</text>`;
+        out += `<text class="gen-text" style="fill:#0f172a" x="${RX}" y="114">${p >= 1 ? `${a.code} — ${NAMES[a.cls]}` : '분류 기호: ?'}</text>`;
         out += `<text class="small-label" x="${RX}" y="132">${p >= 1 ? a.sub : '만들어 보면 소리굽쇠의 자리가 나옵니다'}</text>`;
         out += `<text class="small-label" x="${RX}" y="156">${a.cls === 'e' ? '붉고 늙은 별 위주 · 가스 거의 없음' : a.cls === 'irr' ? '가스 많음 · 젊은 별이 여기저기 태어남' : '팽대부는 늙은 별 · 팔에서 젊은 별 탄생'}</text>`;
         out += `<text class="small-label" x="${RX}" y="172">${a.cls === 'e' ? '새 별이 거의 안 태어남' : a.cls === 'irr' ? '작은 은하가 많고 모양이 흐트러짐' : '원반이 돌며 팔이 감김'}</text>`;
-        out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${NAMES[a.cls]} (${a.code})` : '고른 특징으로 은하를 그리는 중'}</text>`;
+        out += `<text class="verdict-text" fill="#0f172a" x="20" y="16">${p >= 1 ? `${NAMES[a.cls]} (${a.code})` : '고른 특징으로 은하를 그리는 중'}</text>`;
         out += `<text class="note-text" x="20" y="208">소리굽쇠 표는 생김새의 정리이지 진화 순서가 아닙니다. 팔 사이 각(피치각)은 실제 은하의 값 범위</text>`;
         return out;
     }

@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const TILT_REAL = 23.44;
     // the sun's declination on the days the seasons are shown for
     const SEASONS = {
-        spring: { label: '봄·가을', hint: '3월 21일 · 9월 23일', dec: 0, colour: '#6cc25a' },
-        summer: { label: '여름', hint: '6월 21일', dec: TILT_REAL, colour: '#ea580c' },
-        winter: { label: '겨울', hint: '12월 21일', dec: -TILT_REAL, colour: '#0284c7' },
+        spring: { label: '봄·가을', hint: '3월 21일 · 9월 23일', dec: 0, colour: '#16a34a', ink: '#15803d' },
+        summer: { label: '여름', hint: '6월 21일', dec: TILT_REAL, colour: '#ea580c', ink: '#c2410c' },
+        winter: { label: '겨울', hint: '12월 21일', dec: -TILT_REAL, colour: '#0284c7', ink: '#0369a1' },
     };
     const TILTS = [0, 23.44, 45];
     const SPOTS = {
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let h = 3; h <= 21; h += 0.25) { const q = sunAt(h, se.dec); if (q.alt >= 0) { const r = pos(q.alt, q.az); pts.push(`${r.x.toFixed(1)},${r.y.toFixed(1)}`); } }
             if (pts.length > 1) out += `<path class="sun-path${k === state.season ? '' : ' other'}" style="stroke:${se.colour}" d="M${pts.join('L')}"/>`;
             const nq = sunAt(12, se.dec), nr = pos(nq.alt, nq.az);
-            out += `<text class="axis-text" style="fill:${se.colour}" x="${(nr.x + 14).toFixed(1)}" y="${(nr.y + 3).toFixed(1)}">${se.label} ${Math.round(nq.alt)}°</text>`;
+            out += `<text class="axis-text" style="fill:${se.ink || se.colour}" x="${(nr.x + 14).toFixed(1)}" y="${(nr.y + 3).toFixed(1)}">${se.label} ${Math.round(nq.alt)}°</text>`;
         });
         // the sun now, with a metre stick and its shadow on the ground
         const q = sunAt(hour, a.season.dec);
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         out += `<text class="sky-text" x="24" y="46">${hourText(hour)}</text>`;
         out += `<text class="sky-text" x="24" y="60">${q.alt > 0 ? `태양 높이 ${Math.round(q.alt)}°` : hour < 12 ? '해 뜨기 전' : '해 진 뒤'}</text>`;
-        out += `<text class="verdict-text" fill="${a.season.colour}" x="20" y="16">${a.season.label} · 남중 고도 ${Math.round(a.noon)}° · 낮 ${a.len.toFixed(1)}시간 (${hourText(a.rise)} ~ ${hourText(a.set)})</text>`;
+        out += `<text class="verdict-text" fill="#0f172a" x="20" y="16">${a.season.label} · 남중 고도 ${Math.round(a.noon)}° · 낮 ${a.len.toFixed(1)}시간 (${hourText(a.rise)} ~ ${hourText(a.set)})</text>`;
         out += `<text class="note-text" x="20" y="208">1 m 막대의 정오 그림자: ${a.shadow.toFixed(2)} m · 태양이 높을수록 그림자가 짧습니다</text>`;
         return out;
     }
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = Math.max(0, sunAt(hour, a.season.dec).alt);
         out += `<circle class="trace-dot" cx="${gx(hour).toFixed(1)}" cy="${gy(now).toFixed(1)}" r="5" fill="${a.season.colour}"/>`;
         let lx = GRAPH.x0 + 8;
-        Object.values(SEASONS).forEach(se => { out += `<text class="axis-text" style="fill:${se.colour}" x="${lx}" y="${GRAPH.y1 + 14}">— ${se.label}</text>`; lx += 70; });
+        Object.values(SEASONS).forEach(se => { out += `<text class="axis-text" style="fill:${se.ink || se.colour}" x="${lx}" y="${GRAPH.y1 + 14}">— ${se.label}</text>`; lx += 70; });
         return out;
     }
 
