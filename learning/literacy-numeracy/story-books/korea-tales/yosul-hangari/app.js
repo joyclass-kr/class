@@ -15,10 +15,10 @@ const CHAPTERS = [
                 ],
                 right: [
                     "쨍!",
-                    "삽 끝에 갑자기 무언가 단단한 것이 부딪혔지요.",
+                    "괭이 끝에 갑자기 무언가 단단한 것이 부딪혔지요.",
                     "돌인가 싶어 흙을 헤쳐 보았어요.",
                     "커다란 항아리가 통째로 묻혀 있었답니다. 어른 하나가 들어가고도 남을 만큼 컸지요.",
-                    "농부는 삽으로 힘들여 흙을 다 걷어 내고 한참을 들여다보았답니다."
+                    "농부는 괭이로 힘들여 흙을 다 걷어 내고 한참을 들여다보았답니다."
                 ]
             },
             {
@@ -27,15 +27,15 @@ const CHAPTERS = [
                 left: [
                     "\"쓸 만한 항아리로구먼.\"",
                     "흙을 털어 내고 이리저리 살펴보았지요. 농부는 항아리를 지게에 얹어 집으로 지고 왔어요.",
-                    "그런데 마당에 내려놓다가 목에 걸친 수건이 항아리 속으로 툭 떨어졌지 뭐예요.",
+                    "그런데 마당에 내려놓다가 그만 괭이를 항아리 속에 툭 빠뜨렸지요.",
                     "\"어이쿠, 이걸 어쩌나.\""
                 ],
                 right: [
-                    "농부는 손을 쑥 넣어 수건을 꺼냈습니다.",
-                    "그런데 항아리 속에 수건이 또 있는 게 아니겠어요?",
+                    "농부는 손을 쑥 넣어 괭이를 꺼냈습니다.",
+                    "그런데 항아리 속에 괭이가 또 있는 게 아니겠어요?",
                     "농부는 제 눈을 의심했어요.",
                     "\"어라?\"",
-                    "꺼내고 또 꺼내도 수건이 계속 나왔답니다. 마당에 수건이 잔뜩 널렸지요."
+                    "꺼내고 또 꺼내도 괭이가 계속 나왔답니다. 마당에 괭이가 수북이 쌓였지요."
                 ]
             },
             {
@@ -43,7 +43,7 @@ const CHAPTERS = [
                 emoji: "🪙",
                 left: [
                     "\"여보! 이것 좀 봐요!\"",
-                    "농부가 목청껏 부르자 아내가 부엌에서 뛰어나왔어요. 마당에 널린 수건을 보고 입을 딱 벌렸지요.",
+                    "농부가 목청껏 부르자 아내가 부엌에서 뛰어나왔어요. 마당에 쌓인 괭이를 보고 입을 딱 벌렸지요.",
                     "\"이 항아리를 방으로 옮깁시다.\"",
                     "둘이서 항아리를 방에 들여놓고 엽전 한 닢을 넣어 보았어요.",
                     "꺼내니 두 닢. 또 꺼내니 세 닢."
@@ -233,7 +233,7 @@ const EN = {
                     ],
                     right: [
                         "Clang!",
-                        "All at once his spade struck something hard.",
+                        "All at once his mattock struck something hard.",
                         "Thinking it was a stone, he scraped the earth away.",
                         "A great jar was buried there whole, big enough to hold a grown man.",
                         "He dug all the soil away and stood looking at it a long time."
@@ -245,15 +245,15 @@ const EN = {
                     left: [
                         { t: "\"A decent jar, this.\"", v: "man" },
                         "He brushed off the earth and turned it about. Then he loaded it on his frame and carried it home.",
-                        "As he set it down in the yard the towel round his neck dropped into the jar.",
+                        "As he set it down in the yard he dropped his mattock into the jar.",
                         { t: "\"Oh dear. Now how do I get that out?\"", v: "man" }
                     ],
                     right: [
-                        "He reached in and took out the towel.",
-                        "And there was another towel still inside the jar.",
+                        "He reached in and took out the mattock.",
+                        "And there was another mattock still inside the jar.",
                         "He could not believe his eyes.",
                         { t: "\"What?\"", v: "man" },
-                        "However many he took out, more towels kept coming. They lay heaped all over the yard."
+                        "However many he took out, more mattocks kept coming. They piled up all over the yard."
                     ]
                 },
                 {
@@ -261,7 +261,7 @@ const EN = {
                     emoji: "🪙",
                     left: [
                         { t: "\"Wife! Come and look at this!\"", v: "man" },
-                        "His wife came running out of the kitchen and her mouth fell open at the towels.",
+                        "His wife came running out of the kitchen and her mouth fell open at the mattocks.",
                         { t: "\"Let's carry this jar into the room.\"", v: "man" },
                         "They moved it inside and dropped in one copper coin.",
                         "He took it out and there were two. Out again, and three."
@@ -408,7 +408,7 @@ const EN = {
         }
     ],
     quiz: [
-        { q: "What did the farmer drop into the jar first?", choices: ["A copper coin", "A towel", "A lump of gold"], answer: 1 },
+        { q: "What did the farmer drop into the jar first?", choices: ["A copper coin", "A mattock", "A lump of gold"], answer: 1 },
         { q: "What happened when you put something in the jar?", choices: ["It disappeared", "It turned to gold", "It kept multiplying"], answer: 2 },
         { q: "What did the rich man do when he heard the story?", choices: ["Threw his spoon down", "Opened his storehouse", "Peered over the wall"], answer: 0 },
         { q: "Who fell into the jar?", choices: ["The farmer's wife", "The village magistrate", "The rich man's father"], answer: 2 },
@@ -418,7 +418,7 @@ const EN = {
             q: "Which reaction to this book does NOT fit?",
             wide: true,
             choices: [
-                "A yard full of towels came first, so the thing that astonished him at the start was not gold but a towel.",
+                "A heap of mattocks came first, so the thing that astonished him at the start was not gold but a mattock.",
                 "The rich man carried the jar off saying the land was his family's, so back then whoever had power had the law.",
                 "The couple shared rice with their neighbours, so people who have gone without know how to share.",
                 "He emptied his storehouses feeding all those fathers, so in the end he looked after his father well."
@@ -451,8 +451,8 @@ const EN = {
             { w: "reaped (reap)", k: "거두었다", s: "They sowed in spring and reaped in autumn" },
             { w: "store", k: "곳간", s: "the store was always empty" },
             { w: "Clang!", k: "쨍!", s: "Clang!" },
-            { w: "blade", k: "날", s: "All at once his spade struck something hard." },
-            { w: "struck (strike)", k: "부딪혔다", s: "All at once his spade struck something hard." },
+            { w: "blade", k: "날", s: "All at once his mattock struck something hard." },
+            { w: "struck (strike)", k: "부딪혔다", s: "All at once his mattock struck something hard." },
             { w: "scraped ~ away (scrape)", k: "헤쳤다", s: "he scraped the earth away" },
             { w: "was buried (bury)", k: "묻혀 있었다", s: "A great jar was buried there whole" },
             { w: "big enough to ~", k: "~할 만큼 큰", s: "big enough to hold a grown man" }
@@ -463,16 +463,16 @@ const EN = {
             { w: "turned it about", k: "이리저리 살폈다", s: "He brushed off the earth and turned it about." },
             { w: "loaded (load)", k: "얹었다", s: "Then he loaded it on his frame and carried it home." },
             { w: "set ~ down (set)", k: "내려놓았다", s: "As he set it down in the yard" },
-            { w: "dropped ~ into (drop)", k: "빠뜨렸다", s: "the towel round his neck dropped into the jar" },
-            { w: "reached in (reach)", k: "손을 쑥 넣었다", s: "He reached in and took out the towel." },
+            { w: "dropped ~ into (drop)", k: "빠뜨렸다", s: "he dropped his mattock into the jar" },
+            { w: "reached in (reach)", k: "손을 쑥 넣었다", s: "He reached in and took out the mattock." },
             { w: "could not believe his eyes", k: "제 눈을 의심했다", s: "He could not believe his eyes." },
-            { w: "However many ~", k: "꺼내고 또 꺼내도", s: "However many he took out, more towels kept coming." },
-            { w: "lay heaped (lie)", k: "잔뜩 널렸다", s: "They lay heaped all over the yard." }
+            { w: "However many ~", k: "꺼내고 또 꺼내도", s: "However many he took out, more mattocks kept coming." },
+            { w: "piled up (pile)", k: "수북이 쌓였다", s: "They piled up all over the yard." }
         ],
         "03-coin.webp": [
             { w: "Come and look at this!", k: "이것 좀 봐요!", s: "Wife! Come and look at this!" },
             { w: "came running", k: "한달음에 뛰어나왔다", s: "His wife came running out of the kitchen" },
-            { w: "her mouth fell open", k: "입을 딱 벌렸다", s: "her mouth fell open at the towels" },
+            { w: "her mouth fell open", k: "입을 딱 벌렸다", s: "her mouth fell open at the mattocks" },
             { w: "copper coin", k: "엽전", s: "They moved it inside and dropped in one copper coin." },
             { w: "Whatever is happening!", k: "이게 무슨 일이래!", s: "Whatever is happening!" },
             { w: "over her mouth", k: "입을 막고", s: "She put both hands over her mouth." },
@@ -599,7 +599,7 @@ const EN = {
 };
 
 const QUIZ = [
-    { q: "농부가 항아리에 처음 빠뜨린 것은 무엇인가요?", choices: ["엽전", "수건", "금덩이"], answer: 1 },
+    { q: "농부가 항아리에 처음 빠뜨린 것은 무엇인가요?", choices: ["엽전", "괭이", "금덩이"], answer: 1 },
     { q: "항아리에 물건을 넣으면 어떻게 되었나요?", choices: ["사라져 버렸다", "금으로 변했다", "자꾸 늘어났다"], answer: 2 },
     { q: "부자가 소문을 듣고 한 일은 무엇인가요?", choices: ["숟가락을 던지듯 놓았다", "곳간을 열었다", "담 너머로 기웃거렸다"], answer: 0 },
     { q: "항아리 속에 빠진 사람은 누구였나요?", choices: ["농부의 아내", "마을 원님", "부자의 아버지"], answer: 2 },
@@ -609,7 +609,7 @@ const QUIZ = [
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         wide: true,
         choices: [
-            "수건 한 장이 마당 가득 널린 것을 보면, 처음 놀란 것은 금이 아니라 수건이었구나.",
+            "괭이가 마당 가득 쌓인 것을 보면, 처음 놀란 것은 금이 아니라 괭이였구나.",
             "부자가 조상 땅이라며 항아리를 안고 가 버린 것을 보면, 힘 있는 쪽의 말이 곧 법이던 때였나 보다.",
             "농부 내외가 이웃에게도 쌀을 나누어 준 것을 보면, 없이 살아 본 사람이 나눌 줄도 아는구나.",
             "부자가 아버지들 밥을 대느라 곳간을 다 연 것을 보면, 끝내는 아버지를 잘 모신 셈이구나."
