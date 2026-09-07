@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <style>
+      /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
+      
+      /* Overview: Left Macroscopic Stomach Section */
+      .esophagus-tube { fill: #fca5a5; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .duodenum-tube { fill: #fca5a5; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      
+      .muscle-layer-1 { fill: #f87171; stroke: #ef4444; stroke-width: 2.4; stroke-linejoin: round; }
+      .muscle-layer-2 { fill: #ef4444; stroke: #dc2626; stroke-width: 2.4; stroke-linejoin: round; }
+      .muscle-layer-3 { fill: #dc2626; stroke: #b91c1c; stroke-width: 2.4; stroke-linejoin: round; }
+      .muscle-texture { fill: none; stroke: #fca5a5; stroke-width: 1.6; stroke-linecap: round; opacity: 0.65; }
+      
+      .stomach-cavity { fill: #1e293b; fill-opacity: 0.35; stroke: none; }
+      .stomach-wall-base { fill: #fda4af; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .rugae-fold { fill: none; stroke: #f43f5e; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+      .rugae-crest { fill: #fda4af; stroke: #f43f5e; stroke-width: 2.0; stroke-linejoin: round; }
+      
+      /* Zoom Callout Indicators */
+      .zoom-circle-ring { fill: none; stroke: #38bdf8; stroke-width: 2.4; stroke-dasharray: 5,4; }
+      .zoom-line { fill: none; stroke: #38bdf8; stroke-width: 1.8; stroke-dasharray: 5,4; opacity: 0.75; }
+      
+      /* Detailed Right Section: Enlarged Gastric Wall & Pit */
+      .lumen-bg { fill: #0f172a; fill-opacity: 0.25; }
+      .mucus-barrier { fill: #fecdd3; fill-opacity: 0.45; stroke: #fda4af; stroke-width: 1.6; stroke-dasharray: 4,4; }
+      
+      .stomach-wall-expanded { fill: #fda4af; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .surface-epith { fill: #fda4af; stroke: #f43f5e; stroke-width: 2.0; stroke-linejoin: round; }
+      .surface-epith-nucleus { fill: #9f1239; }
+      
+      .pit-lumen { fill: #fecdd3; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .pit-stream { fill: none; stroke: #fda4af; stroke-width: 1.8; stroke-dasharray: 4,4; }
+      
+      /* Micro-vascular & Glandular Lamina Propria */
+      .cap-art { fill: none; stroke: #ef4444; stroke-width: 2.2; stroke-linecap: round; opacity: 0.75; }
+      .cap-vein { fill: none; stroke: #3b82f6; stroke-width: 2.2; stroke-linecap: round; opacity: 0.75; }
+      .gland-cross-lumen { fill: #fecdd3; stroke: #fb7185; stroke-width: 1.8; }
+      
+      /* Glandular Cells */
+      .chief-cell-body { fill: #c4b5fd; stroke: #7c3aed; stroke-width: 2.6; stroke-linejoin: round; }
+      .chief-nucleus { fill: #5b21b6; }
+      .chief-zymogen { fill: #a78bfa; stroke: #6d28d9; stroke-width: 1.2; }
+      
+      .parietal-cell-body { fill: #86efac; stroke: #16a34a; stroke-width: 2.6; stroke-linejoin: round; }
+      .parietal-nucleus { fill: #15803d; }
+      .parietal-canal { fill: none; stroke: #15803d; stroke-width: 1.4; stroke-dasharray: 2,2; }
+      
+      /* Secretory Granules & Enzymes */
+      .pepsinogen-pellet { fill: #c4b5fd; stroke: #7c3aed; stroke-width: 2.2; }
+      .hcl-pellet { fill: #22c55e; stroke: #15803d; stroke-width: 1.8; }
+      .pepsin-shears { fill: #7c3aed; stroke: #5b21b6; stroke-width: 2.6; stroke-linejoin: round; }
+      
+      /* Proteins: Intact vs Cleaved Fragments */
+      .protein-bead { fill: #fbbf24; stroke: #d97706; stroke-width: 2.4; }
+      .peptide-link { fill: none; stroke: #b45309; stroke-width: 2.6; stroke-linecap: round; }
+      
+      .protein-piece-bead { fill: #fde68a; stroke: #d97706; stroke-width: 2.2; }
+      .piece-link { fill: none; stroke: #b45309; stroke-width: 2.4; stroke-linecap: round; }
+      
+      /* Cleavage Action Flash */
+      .cleave-mark { fill: none; stroke: #ef4444; stroke-width: 2.6; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <!-- ================================================================= -->
+  <!-- 1. LEFT SECTION: MACROSCOPIC STOMACH (x 35 ~ 350, y 45 ~ 660)     -->
+  <!-- ================================================================= -->
+
+  <!-- Esophagus (식도, id="esophagus") -->
+  <!-- Brings swallowed food bolus from pharynx to cardia -->
+  <g id="esophagus">
+    <path class="esophagus-tube"
+          d="M 152,45
+             L 182,45
+             C 182,85 184,120 186,142
+             L 156,142
+             C 154,120 152,85 152,45
+             Z" />
+    <path d="M 162,50 C 162,85 165,115 166,138" stroke="#f43f5e" stroke-width="1.8" fill="none" />
+    <path d="M 172,50 C 172,85 175,115 176,138" stroke="#f43f5e" stroke-width="1.8" fill="none" />
+    <!-- Lower esophageal cardiac sphincter -->
+    <path d="M 154,142 C 168,147 176,147 188,142" stroke="#ef4444" stroke-width="2.6" fill="none" stroke-linecap="round" />
+  </g>
+
+  <!-- Duodenum (십이지장, id="duodenum") -->
+  <!-- Leads chyme from pylorus to small intestine -->
+  <g id="duodenum">
+    <path class="duodenum-tube"
+          d="M 276,495
+             C 298,490 322,485 348,485
+             L 348,540
+             C 322,540 298,546 270,554
+             Z" />
+    <path d="M 292,492 C 292,512 288,532 286,546" stroke="#f43f5e" stroke-width="1.8" fill="none" />
+    <path d="M 312,488 C 312,508 310,528 308,542" stroke="#f43f5e" stroke-width="1.8" fill="none" />
+    <path d="M 332,486 C 332,506 330,526 328,540" stroke="#f43f5e" stroke-width="1.8" fill="none" />
+    <!-- Pyloric sphincter ring -->
+    <path d="M 274,493 C 271,515 269,535 266,552" stroke="#ef4444" stroke-width="2.8" fill="none" stroke-linecap="round" />
+  </g>
+
+  <!-- 3-Layered Muscularis Externa (바깥 근육층 세 겹, id="muscleLayer") -->
+  <!-- ★ CRITICAL EXAM POINT: 3 concentric muscular coats (longitudinal, circular, oblique) enabling churning -->
+  <g id="muscleLayer">
+    <!-- Layer 1: Outer Longitudinal Muscle (#f87171, border #ef4444) -->
+    <path class="muscle-layer-1"
+          d="M 156,142
+             C 135,105 108,82 82,92
+             C 54,102 38,135 32,185
+             C 25,245 26,345 36,435
+             C 45,515 72,580 115,628
+             C 155,665 212,662 254,635
+             C 278,618 288,588 280,555
+             L 272,551
+             C 278,578 268,605 246,620
+             C 208,646 158,648 122,615
+             C 82,570 58,508 49,430
+             C 40,345 39,248 45,192
+             C 50,148 64,120 86,112
+             C 106,104 130,122 148,154
+             Z" />
+
+    <!-- Layer 2: Middle Circular Muscle (#ef4444, border #dc2626) -->
+    <path class="muscle-layer-2"
+          d="M 148,154
+             C 130,122 106,104 86,112
+             C 64,120 50,148 45,192
+             C 39,248 40,345 49,430
+             C 58,508 82,570 122,615
+             C 158,648 208,646 246,620
+             C 268,605 278,578 272,551
+             L 264,547
+             C 268,570 258,595 238,608
+             C 204,630 160,632 128,602
+             C 92,560 70,502 62,425
+             C 54,345 53,252 58,200
+             C 62,160 74,136 90,130
+             C 106,124 126,140 142,166
+             Z" />
+
+    <!-- Layer 3: Inner Oblique Muscle (#dc2626, border #b91c1c) -->
+    <path class="muscle-layer-3"
+          d="M 142,166
+             C 126,140 106,124 90,130
+             C 74,136 62,160 58,200
+             C 53,252 54,345 62,425
+             C 70,502 92,560 128,602
+             C 160,632 204,630 238,608
+             C 258,595 268,570 264,547
+             L 256,543
+             C 258,562 250,582 232,595
+             C 200,615 162,616 134,588
+             C 102,550 82,495 75,420
+             C 68,345 67,256 71,208
+             C 74,172 84,152 96,148
+             C 108,144 124,156 136,178
+             Z" />
+
+    <!-- Muscle fiber striations -->
+    <path class="muscle-texture" d="M 45,300 L 65,280" />
+    <path class="muscle-texture" d="M 42,345 L 62,325" />
+    <path class="muscle-texture" d="M 44,390 L 64,370" />
+    <path class="muscle-texture" d="M 50,435 L 70,415" />
+    <path class="muscle-texture" d="M 60,480 L 80,460" />
+    <path class="muscle-texture" d="M 76,525 L 96,505" />
+    <path class="muscle-texture" d="M 98,570 L 118,550" />
+    <path class="muscle-texture" d="M 132,605 L 152,585" />
+    <path class="muscle-texture" d="M 175,628 L 195,608" />
+
+    <!-- Lesser Curvature Muscular Border (소만측 근육층) -->
+    <path class="muscle-layer-1"
+          d="M 186,142
+             C 188,185 192,245 204,305
+             C 218,375 240,440 276,495
+             L 268,506
+             C 234,455 212,390 198,315
+             C 186,250 180,192 178,145
+             Z" />
+  </g>
+
+  <!-- Whole Stomach Anatomy Cross Section (위 전체 단면, id="stomach") -->
+  <!-- Complete anatomical J-pouch: Elevated fundus dome, wide body, antrum, and lumen -->
+  <g id="stomach">
+    <!-- Gastric wall base (#fda4af, border #fb7185) seamlessly lining under muscle layers -->
+    <path class="stomach-wall-base"
+          d="M 156,142
+             C 140,140 120,135 96,144
+             C 80,150 72,170 69,208
+             C 65,256 66,345 74,420
+             C 81,495 101,550 133,588
+             C 161,616 199,615 231,595
+             C 249,582 257,562 255,543
+             L 269,554
+             C 271,538 273,518 275,495
+             C 239,440 217,375 203,305
+             C 191,245 187,185 185,142
+             Z" />
+
+    <!-- Interior Gastric Lumen Cavity -->
+    <path class="stomach-cavity"
+          d="M 162,152
+             C 146,150 125,146 106,156
+             C 92,162 82,178 80,214
+             C 76,260 77,345 84,415
+             C 90,485 110,535 138,570
+             C 164,594 198,592 224,575
+             C 239,562 246,545 246,530
+             L 256,538
+             C 258,525 260,510 262,495
+             C 230,448 210,388 198,320
+             C 188,258 184,200 182,152
+             Z" />
+  </g>
+
+  <!-- Rugae / Mucosal Folds (위 안쪽 주름벽, id="rugae") -->
+  <!-- Prominent mucosal folds rippling across body and fundus -->
+  <g id="rugae">
+    <!-- Fundus / Upper curvature fold -->
+    <path class="rugae-fold"
+          d="M 115,162
+             C 102,185 96,220 102,255
+             C 108,285 104,315 98,345" />
+
+    <!-- Mid-body greater curvature fold -->
+    <path class="rugae-fold"
+          d="M 98,345
+             C 92,380 106,415 106,450
+             C 106,480 120,515 138,540" />
+
+    <!-- Lower antrum / pyloric fold -->
+    <path class="rugae-fold"
+          d="M 138,540
+             C 155,565 182,570 208,558
+             C 226,548 238,528 250,505" />
+
+    <!-- Central longitudinal major fold -->
+    <path class="rugae-fold"
+          d="M 148,175
+             C 132,215 128,265 134,310
+             C 140,355 134,405 142,450
+             C 150,485 174,515 198,530" />
+
+    <!-- Lesser curvature interior fold -->
+    <path class="rugae-fold"
+          d="M 168,195
+             C 174,240 170,288 178,335
+             C 186,380 200,425 228,458
+             C 238,472 246,478 252,476" />
+
+    <!-- Fold crest relief pads -->
+    <path class="rugae-crest"
+          d="M 102,275
+             C 106,290 104,305 98,320
+             C 94,305 96,290 102,275
+             Z" />
+    <path class="rugae-crest"
+          d="M 130,420
+             C 138,435 136,450 128,465
+             C 124,450 126,435 130,420
+             Z" />
+  </g>
+
+  <!-- Zoom Callout (확대할 자리 동그라미와 확대선, id="zoomCircle") -->
+  <!-- Callout indicator connecting stomach wall to the enlarged microscopic view on the right -->
+  <g id="zoomCircle">
+    <!-- Focal ring on stomach wall (x: 82, y: 380) -->
+    <circle class="zoom-circle-ring" cx="82" cy="380" r="18" />
+    <circle cx="82" cy="380" r="3.5" fill="#38bdf8" />
+
+    <!-- Projection guide lines extending to expanded right panel -->
+    <line class="zoom-line" x1="98" y1="372" x2="390" y2="80" />
+    <line class="zoom-line" x1="98" y1="392" x2="390" y2="650" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 2. RIGHT SECTION: EXPANDED GASTRIC WALL & PIT (x 390 ~ 965)       -->
+  <!-- ================================================================= -->
+
+  <!-- Gastric Lumen Cavity (위 안쪽 공간: y 60 ~ 335) -->
+  <rect class="lumen-bg" x="390" y="60" width="575" height="275" rx="10" />
+
+  <!-- Protective Alkaline Mucus Barrier (위벽 보호 점액층: 점액이 위벽을 덮어 강산과 펩신으로부터 보호) -->
+  <path class="mucus-barrier"
+        d="M 390,318
+           C 430,314 460,322 505,318
+           L 505,335
+           L 390,335
+           Z" />
+  <path class="mucus-barrier"
+        d="M 615,318
+           C 660,314 710,322 760,318
+           C 810,314 860,322 910,318
+           C 935,316 955,320 965,318
+           L 965,335
+           L 615,335
+           Z" />
+
+  <!-- Expanded Stomach Wall (확대한 위벽, id="stomachWall") -->
+  <!-- Thick mucosal tissue harboring tubular gastric glands and dense surface epithelium -->
+  <g id="stomachWall">
+    <!-- Main gastric wall tissue base (#fda4af, border #fb7185) -->
+    <path class="stomach-wall-expanded"
+          d="M 390,335
+             L 515,335
+             C 518,370 520,430 520,490
+             C 520,550 525,605 530,645
+             L 590,645
+             C 595,605 600,550 600,490
+             C 600,430 602,370 605,335
+             L 965,335
+             L 965,655
+             L 390,655
+             Z" />
+
+    <!-- Cross-sections of adjacent gastric glands in lamina propria (인접 위샘 횡단면들) -->
+    <!-- Gland 1 Cross Section (x: 720, y: 440) -->
+    <circle cx="720" cy="440" r="28" fill="#fda4af" stroke="#fb7185" stroke-width="2.2" />
+    <circle class="gland-cross-lumen" cx="720" cy="440" r="10" />
+    <circle cx="704" cy="428" r="5" fill="#86efac" stroke="#16a34a" stroke-width="1.6" />
+    <circle cx="736" cy="428" r="5" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.6" />
+    <circle cx="704" cy="452" r="5" fill="#86efac" stroke="#16a34a" stroke-width="1.6" />
+    <circle cx="736" cy="452" r="5" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.6" />
+
+    <!-- Gland 2 Cross Section (x: 840, y: 490) -->
+    <circle cx="840" cy="490" r="28" fill="#fda4af" stroke="#fb7185" stroke-width="2.2" />
+    <circle class="gland-cross-lumen" cx="840" cy="490" r="10" />
+    <circle cx="824" cy="478" r="5" fill="#86efac" stroke="#16a34a" stroke-width="1.6" />
+    <circle cx="856" cy="478" r="5" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.6" />
+    <circle cx="824" cy="502" r="5" fill="#86efac" stroke="#16a34a" stroke-width="1.6" />
+    <circle cx="856" cy="502" r="5" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.6" />
+
+    <!-- Gland 3 Deep Base Cross Section (x: 740, y: 565) -->
+    <circle cx="740" cy="565" r="26" fill="#fda4af" stroke="#fb7185" stroke-width="2.2" />
+    <circle class="gland-cross-lumen" cx="740" cy="565" r="9" />
+    <circle cx="726" cy="555" r="4.8" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.6" />
+    <circle cx="754" cy="555" r="4.8" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.6" />
+    <circle cx="726" cy="575" r="4.8" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.6" />
+    <circle cx="754" cy="575" r="4.8" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.6" />
+
+    <!-- Lamina Propria Micro-vasculature (위벽 속 모세혈관망: 분비세포에 영양 및 산소 공급) -->
+    <path class="cap-art" d="M 410,480 C 430,460 450,470 470,450 C 485,435 495,445 510,440" />
+    <path class="cap-vein" d="M 410,500 C 430,480 450,490 470,470 C 485,455 495,465 510,460" />
+    <path class="cap-art" d="M 610,430 C 635,420 655,435 675,425 L 690,430" />
+    <path class="cap-vein" d="M 610,450 C 635,440 655,455 675,445 L 690,450" />
+    <path class="cap-art" d="M 755,450 C 780,440 800,455 812,465" />
+    <path class="cap-vein" d="M 755,470 C 780,460 800,475 812,485" />
+    <path class="cap-art" d="M 875,510 C 905,500 935,515 965,505" />
+    <path class="cap-vein" d="M 875,530 C 905,520 935,535 965,525" />
+
+    <!-- Continuous Surface Mucous Epithelial Cells (표면 점액 상피세포 열) -->
+    <!-- Left bank of pit (x: 395 ~ 515) -->
+    <rect class="surface-epith" x="398" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="406" cy="326" r="2.6" />
+    <rect class="surface-epith" x="417" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="425" cy="326" r="2.6" />
+    <rect class="surface-epith" x="436" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="444" cy="326" r="2.6" />
+    <rect class="surface-epith" x="455" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="463" cy="326" r="2.6" />
+    <rect class="surface-epith" x="474" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="482" cy="326" r="2.6" />
+    <rect class="surface-epith" x="493" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="501" cy="326" r="2.6" />
+    <rect class="surface-epith" x="508" y="318" width="9" height="17" rx="2" />
+
+    <!-- Right bank of pit (x: 605 ~ 965) -->
+    <rect class="surface-epith" x="605" y="318" width="9" height="17" rx="2" />
+    <rect class="surface-epith" x="616" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="624" cy="326" r="2.6" />
+    <rect class="surface-epith" x="635" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="643" cy="326" r="2.6" />
+    <rect class="surface-epith" x="648" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="656" cy="326" r="2.6" />
+    <rect class="surface-epith" x="667" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="675" cy="326" r="2.6" />
+    <rect class="surface-epith" x="686" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="694" cy="326" r="2.6" />
+    <rect class="surface-epith" x="705" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="713" cy="326" r="2.6" />
+    <rect class="surface-epith" x="724" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="732" cy="326" r="2.6" />
+    <rect class="surface-epith" x="743" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="751" cy="326" r="2.6" />
+    <rect class="surface-epith" x="762" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="770" cy="326" r="2.6" />
+    <rect class="surface-epith" x="781" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="789" cy="326" r="2.6" />
+    <rect class="surface-epith" x="800" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="808" cy="326" r="2.6" />
+    <rect class="surface-epith" x="819" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="827" cy="326" r="2.6" />
+    <rect class="surface-epith" x="838" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="846" cy="326" r="2.6" />
+    <rect class="surface-epith" x="857" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="865" cy="326" r="2.6" />
+    <rect class="surface-epith" x="876" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="884" cy="326" r="2.6" />
+    <rect class="surface-epith" x="895" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="903" cy="326" r="2.6" />
+    <rect class="surface-epith" x="914" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="922" cy="326" r="2.6" />
+    <rect class="surface-epith" x="933" y="314" width="17" height="21" rx="3" />
+    <circle class="surface-epith-nucleus" cx="941" cy="326" r="2.6" />
+    <rect class="surface-epith" x="952" y="314" width="12" height="21" rx="3" />
+  </g>
+
+  <!-- Gastric Pit (위샘: 우물 모양 관상 분비샘, id="gastricPit") -->
+  <!-- Deep tubular well descending into mucosa channeling acid and enzymes to lumen (#fecdd3) -->
+  <g id="gastricPit">
+    <path class="pit-lumen"
+          d="M 515,335
+             C 518,370 520,430 520,490
+             C 520,550 525,605 530,645
+             L 590,645
+             C 595,605 600,550 600,490
+             C 600,430 602,370 605,335
+             Z" />
+    <!-- Ascending secretion stream guidelines -->
+    <path class="pit-stream" d="M 545,630 C 543,550 545,450 543,355" />
+    <path class="pit-stream" d="M 575,630 C 577,550 575,450 577,355" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 3. GLANDULAR CELLS IN GASTRIC PIT (벽세포 & 주세포 나란히 배치)    -->
+  <!-- ================================================================= -->
+
+  <!-- Parietal Cells: 염산을 내는 세포 (벽세포, id="parietalCell") -->
+  <!-- ★ CRITICAL EXAM POINT: Secrete hydrochloric acid (HCl) providing pH 1.5~2.0 for pepsin activation & germicidal action -->
+  <!-- Positioned along the left wall of the gastric pit (#86efac, border #16a34a) -->
+  <g id="parietalCell">
+    <!-- Left Pit Wall: Parietal Cell 1 (Upper Neck) -->
+    <path class="parietal-cell-body"
+          d="M 474,360
+             C 474,348 486,344 500,346
+             L 518,350
+             L 519,384
+             L 498,386
+             C 484,386 474,375 474,360
+             Z" />
+    <circle class="parietal-nucleus" cx="492" cy="368" r="4.2" />
+    <path class="parietal-canal" d="M 498,363 C 504,363 510,366 517,366" />
+
+    <!-- Left Pit Wall: Parietal Cell 2 (Mid Neck) -->
+    <path class="parietal-cell-body"
+          d="M 474,405
+             C 474,392 486,388 500,390
+             L 519,394
+             L 520,428
+             L 498,430
+             C 484,430 474,418 474,405
+             Z" />
+    <circle class="parietal-nucleus" cx="492" cy="412" r="4.2" />
+    <path class="parietal-canal" d="M 498,407 C 504,407 510,410 518,410" />
+
+    <!-- Left Pit Wall: Parietal Cell 3 (Lower Neck) -->
+    <path class="parietal-cell-body"
+          d="M 474,450
+             C 474,438 486,434 500,436
+             L 520,440
+             L 520,474
+             L 498,476
+             C 484,476 474,465 474,450
+             Z" />
+    <circle class="parietal-nucleus" cx="492" cy="457" r="4.2" />
+    <path class="parietal-canal" d="M 498,452 C 504,452 510,455 519,455" />
+
+    <!-- Left Pit Wall: Parietal Cell 4 (Mid-gland) -->
+    <path class="parietal-cell-body"
+          d="M 474,495
+             C 474,482 486,478 500,480
+             L 520,484
+             L 521,518
+             L 498,520
+             C 484,520 474,510 474,495
+             Z" />
+    <circle class="parietal-nucleus" cx="492" cy="502" r="4.2" />
+    <path class="parietal-canal" d="M 498,497 C 504,497 510,500 520,500" />
+  </g>
+
+  <!-- Chief Cells: 펩시노젠을 내는 세포 (주세포, id="chiefCell") -->
+  <!-- ★ CRITICAL EXAM POINT: Secrete inactive zymogen pepsinogen granules (#c4b5fd, border #7c3aed) -->
+  <!-- Positioned along the right wall and base of the gastric pit (side-by-side with parietal cells!) -->
+  <g id="chiefCell">
+    <!-- Right Pit Wall: Chief Cell 1 (Upper-Mid) -->
+    <rect class="chief-cell-body" x="600" y="360" width="40" height="34" rx="4" />
+    <circle class="chief-nucleus" cx="628" cy="377" r="4.0" />
+    <circle class="chief-zymogen" cx="611" cy="368" r="2.6" />
+    <circle class="chief-zymogen" cx="607" cy="377" r="2.8" />
+    <circle class="chief-zymogen" cx="612" cy="385" r="2.6" />
+
+    <!-- Right Pit Wall: Chief Cell 2 (Mid) -->
+    <rect class="chief-cell-body" x="599" y="410" width="40" height="34" rx="4" />
+    <circle class="chief-nucleus" cx="627" cy="427" r="4.0" />
+    <circle class="chief-zymogen" cx="610" cy="418" r="2.6" />
+    <circle class="chief-zymogen" cx="606" cy="427" r="2.8" />
+    <circle class="chief-zymogen" cx="611" cy="435" r="2.6" />
+
+    <!-- Right Pit Wall: Chief Cell 3 (Lower-Mid) -->
+    <rect class="chief-cell-body" x="598" y="460" width="40" height="34" rx="4" />
+    <circle class="chief-nucleus" cx="626" cy="477" r="4.0" />
+    <circle class="chief-zymogen" cx="609" cy="468" r="2.6" />
+    <circle class="chief-zymogen" cx="605" cy="477" r="2.8" />
+    <circle class="chief-zymogen" cx="610" cy="485" r="2.6" />
+
+    <!-- Right Pit Wall: Chief Cell 4 (Base) -->
+    <rect class="chief-cell-body" x="596" y="510" width="40" height="34" rx="4" />
+    <circle class="chief-nucleus" cx="624" cy="527" r="4.0" />
+    <circle class="chief-zymogen" cx="607" cy="518" r="2.6" />
+    <circle class="chief-zymogen" cx="603" cy="527" r="2.8" />
+    <circle class="chief-zymogen" cx="608" cy="535" r="2.6" />
+
+    <!-- Pit Base Floor Chief Cells -->
+    <rect class="chief-cell-body" x="495" y="570" width="30" height="42" rx="4" />
+    <circle class="chief-nucleus" cx="507" cy="595" r="3.8" />
+    <circle class="chief-zymogen" cx="517" cy="580" r="2.6" />
+
+    <rect class="chief-cell-body" x="585" y="565" width="30" height="42" rx="4" />
+    <circle class="chief-nucleus" cx="601" cy="590" r="3.8" />
+    <circle class="chief-zymogen" cx="592" cy="575" r="2.6" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 4. BIOCHEMICAL ACTORS: SECRETIONS, ENZYME ACTIVATION, CLEAVAGE     -->
+  <!-- ================================================================= -->
+
+  <!-- Pepsinogen Granules (펩시노젠 알갱이: 둥근 알갱이, id="pepsinogen") -->
+  <!-- Inactive proenzyme: Round lavender spheres rising from chief cells (#c4b5fd, border #7c3aed) -->
+  <g id="pepsinogen">
+    <!-- Rising inside pit from chief cells on right/base -->
+    <circle class="pepsinogen-pellet" cx="572" cy="550" r="6.0" />
+    <circle class="pepsinogen-pellet" cx="576" cy="470" r="6.2" />
+    <circle class="pepsinogen-pellet" cx="570" cy="380" r="6.5" />
+
+    <!-- Ascending into gastric lumen toward activation zone -->
+    <circle class="pepsinogen-pellet" cx="568" cy="295" r="7.0" />
+    <circle class="pepsinogen-pellet" cx="572" cy="235" r="7.5" />
+    <circle class="pepsinogen-pellet" cx="585" cy="180" r="7.5" />
+  </g>
+
+  <!-- Hydrochloric Acid Particles (염산 알갱이, id="hcl") -->
+  <!-- Gastric acid (HCl): Green signaling particles from parietal cells (#22c55e, border #15803d) -->
+  <g id="hcl">
+    <!-- Secreted from parietal cells on left -->
+    <circle class="hcl-pellet" cx="538" cy="455" r="4.8" />
+    <circle class="hcl-pellet" cx="535" cy="395" r="4.8" />
+    <circle class="hcl-pellet" cx="542" cy="340" r="5.0" />
+
+    <!-- In stomach lumen meeting pepsinogen -->
+    <circle class="hcl-pellet" cx="540" cy="275" r="5.2" />
+    <circle class="hcl-pellet" cx="552" cy="220" r="5.4" />
+    <circle class="hcl-pellet" cx="555" cy="165" r="5.4" />
+    <circle class="hcl-pellet" cx="575" cy="215" r="5.0" />
+  </g>
+
+  <!-- Active Pepsin Enzyme (펩신 알갱이: 한쪽이 파인 가위 모양, id="pepsin") -->
+  <!-- ★ CRITICAL EXAM POINT: Active protease formed ONLY after acid activation; molecular shears (#7c3aed, border #5b21b6) -->
+  <g id="pepsin">
+    <!-- Active Pepsin 1: Freshly activated from pepsinogen + HCl (x: 622, y: 215) -->
+    <path class="pepsin-shears"
+          d="M 616,201
+             C 629,193 642,201 644,213
+             L 630,215
+             L 642,222
+             C 639,235 626,239 614,233
+             C 602,225 604,207 616,201
+             Z" />
+    <polygon points="630,212 642,215 630,218" fill="#5b21b6" />
+
+    <!-- Active Pepsin 2: Migrating toward intact protein substrate (x: 678, y: 160) -->
+    <path class="pepsin-shears"
+          d="M 671,147
+             C 684,139 697,147 699,159
+             L 685,161
+             L 697,168
+             C 694,181 681,185 669,179
+             C 657,171 659,153 671,147
+             Z" />
+    <polygon points="685,158 697,161 685,164" fill="#5b21b6" />
+
+    <!-- Active Pepsin 3: Molecular scissor actively cutting peptide bond (x: 732, y: 112) -->
+    <path class="pepsin-shears"
+          d="M 724,99
+             C 737,91 750,99 752,111
+             L 738,113
+             L 750,120
+             C 747,133 734,137 722,131
+             C 710,123 712,105 724,99
+             Z" />
+    <polygon points="738,110 750,113 738,116" fill="#5b21b6" />
+  </g>
+
+  <!-- Intact Dietary Protein: 덩어리 단백질 (구슬 사슬, id="protein") -->
+  <!-- ★ CRITICAL EXAM POINT: Long folded polypeptide chains of connected amino acids (#fbbf24, border #d97706) -->
+  <g id="protein">
+    <!-- Molecule A: Inflowing intact protein macromolecule in gastric juice -->
+    <path class="peptide-link"
+          d="M 425,120
+             L 448,112
+             L 472,122
+             L 495,115
+             L 515,130
+             L 508,155
+             L 485,165
+             L 460,158
+             L 442,175
+             L 418,170" />
+
+    <circle class="protein-bead" cx="425" cy="120" r="7.5" />
+    <circle class="protein-bead" cx="448" cy="112" r="7.5" />
+    <circle class="protein-bead" cx="472" cy="122" r="7.5" />
+    <circle class="protein-bead" cx="495" cy="115" r="7.5" />
+    <circle class="protein-bead" cx="515" cy="130" r="7.5" />
+    <circle class="protein-bead" cx="508" cy="155" r="7.5" />
+    <circle class="protein-bead" cx="485" cy="165" r="7.5" />
+    <circle class="protein-bead" cx="460" cy="158" r="7.5" />
+    <circle class="protein-bead" cx="442" cy="175" r="7.5" />
+    <circle class="protein-bead" cx="418" cy="170" r="7.5" />
+
+    <!-- Molecule B: Target protein chain actively undergoing cleavage (x: 630 ~ 740, y: 82 ~ 115) -->
+    <path class="peptide-link"
+          d="M 625,92
+             L 648,82
+             L 672,89
+             L 695,82
+             L 718,95
+             L 738,115" />
+
+    <circle class="protein-bead" cx="625" cy="92" r="7.5" />
+    <circle class="protein-bead" cx="648" cy="82" r="7.5" />
+    <circle class="protein-bead" cx="672" cy="89" r="7.5" />
+    <circle class="protein-bead" cx="695" cy="82" r="7.5" />
+    <circle class="protein-bead" cx="718" cy="95" r="7.5" />
+    <circle class="protein-bead" cx="738" cy="115" r="7.5" />
+
+    <!-- Enzymatic bond scissor cutting mark -->
+    <line class="cleave-mark" x1="726" y1="103" x2="748" y2="125" />
+    <line class="cleave-mark" x1="748" y1="103" x2="726" y2="125" />
+  </g>
+
+  <!-- Cleaved Protein Pieces: 잘린 단백질 조각 (토막 난 사슬, id="proteinPieces") -->
+  <!-- ★ CRITICAL EXAM POINT: Shorter polypeptide/peptone fragments (2~4 beads) resulting from pepsin digestion (#fde68a, border #d97706) -->
+  <g id="proteinPieces">
+    <!-- Piece 1: 3-bead fragment (Top right) -->
+    <path class="piece-link" d="M 772,112 L 794,104 L 816,112" />
+    <circle class="protein-piece-bead" cx="772" cy="112" r="7.0" />
+    <circle class="protein-piece-bead" cx="794" cy="104" r="7.0" />
+    <circle class="protein-piece-bead" cx="816" cy="112" r="7.0" />
+
+    <!-- Piece 2: 2-bead fragment (Mid-upper right) -->
+    <path class="piece-link" d="M 838,148 L 860,158" />
+    <circle class="protein-piece-bead" cx="838" cy="148" r="7.0" />
+    <circle class="protein-piece-bead" cx="860" cy="158" r="7.0" />
+
+    <!-- Piece 3: 4-bead fragment (Mid right) -->
+    <path class="piece-link" d="M 872,192 L 894,186 L 916,198 L 936,192" />
+    <circle class="protein-piece-bead" cx="872" cy="192" r="7.0" />
+    <circle class="protein-piece-bead" cx="894" cy="186" r="7.0" />
+    <circle class="protein-piece-bead" cx="916" cy="198" r="7.0" />
+    <circle class="protein-piece-bead" cx="936" cy="192" r="7.0" />
+
+    <!-- Piece 4: 3-bead fragment drifting downward toward duodenum (Lower right) -->
+    <path class="piece-link" d="M 865,245 L 888,255 L 910,248" />
+    <circle class="protein-piece-bead" cx="865" cy="245" r="7.0" />
+    <circle class="protein-piece-bead" cx="888" cy="255" r="7.0" />
+    <circle class="protein-piece-bead" cx="910" cy="248" r="7.0" />
+
+    <!-- Piece 5: 2-bead fragment exiting toward small intestine (Bottom right) -->
+    <path class="piece-link" d="M 895,295 L 918,305" />
+    <circle class="protein-piece-bead" cx="895" cy="295" r="7.0" />
+    <circle class="protein-piece-bead" cx="918" cy="305" r="7.0" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 5. INVISIBLE GUIDE PATHS (안내선 5종: fill="none" stroke="none")   -->
+  <!-- ================================================================= -->
+
+  <!-- 1. flowPepsinogen: 펩시노젠 세포 → 위샘을 타고 → 위 안쪽 공간으로 -->
+  <!-- (주세포에서 분비된 비활성 펩시노젠이 위샘 내강을 거쳐 위 내강으로 분비되는 길) -->
+  <path id="flowPepsinogen" fill="none" stroke="none"
+        d="M 600,530
+           C 580,530 575,480 575,430
+           C 575,370 572,310 570,250
+           C 570,210 578,190 585,180" />
+
+  <!-- 2. flowHcl: 염산 세포 → 위샘을 타고 → 위 안쪽 공간으로 -->
+  <!-- (벽세포에서 분비된 염산(HCl)이 위샘을 통해 위 내강으로 분비되는 길) -->
+  <path id="flowHcl" fill="none" stroke="none"
+        d="M 505,430
+           C 530,430 545,395 545,340
+           C 545,290 548,240 552,200
+           C 555,175 565,168 575,165" />
+
+  <!-- 3. flowActivate: 펩시노젠과 염산이 만나는 자리 → 펩신이 되는 자리까지 (짧게) -->
+  <!-- (강산성 환경에서 펩시노젠이 활성 펩신 효소로 전환되는 경로) -->
+  <path id="flowActivate" fill="none" stroke="none"
+        d="M 570,220
+           C 585,220 600,218 622,215" />
+
+  <!-- 4. flowCut: 펩신 → 덩어리 단백질에 달라붙는 자리까지 -->
+  <!-- (활성 펩신이 덩어리 단백질의 펩타이드 결합 부위에 달라붙는 경로) -->
+  <path id="flowCut" fill="none" stroke="none"
+        d="M 635,210
+           C 665,190 695,160 732,112" />
+
+  <!-- 5. flowDown: 잘린 단백질 조각 → 위 아래쪽 십이지장 쪽으로 내려가는 길 -->
+  <!-- (소화된 단백질 조각들이 십이지장 방향으로 이동하는 경로) -->
+  <path id="flowDown" fill="none" stroke="none"
+        d="M 772,112
+           C 820,125 850,165 872,205
+           C 892,245 905,275 925,315
+           C 940,350 945,410 945,470" />
+
+</svg>
