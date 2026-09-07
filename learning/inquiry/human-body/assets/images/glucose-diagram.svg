@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <style>
+      /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
+      .symmetry-axis { stroke: #334155; stroke-width: 1.4; stroke-dasharray: 6,6; opacity: 0.35; }
+      
+      /* Central Blood Vessel & Branches */
+      .vessel-wall { fill: none; stroke: #64748b; stroke-width: 3.0; stroke-linecap: round; stroke-linejoin: round; }
+      .vessel-lumen { fill: #64748b; fill-opacity: 0.15; }
+      .vessel-endo { fill: #475569; stroke: #334155; stroke-width: 1.6; }
+      
+      /* Glucose Molecules */
+      .glucose-hex { fill: #fbbf24; stroke: #d97706; stroke-width: 2.2; stroke-linejoin: round; }
+      .glucose-inner { fill: none; stroke: #d97706; stroke-width: 1.4; }
+      
+      /* Pancreas & Endocrine Islets */
+      .pancreas-body { fill: #fda4af; stroke: #f43f5e; stroke-width: 2.8; stroke-linejoin: round; }
+      .islet-border { fill: #fecdd3; stroke: #fb7185; stroke-width: 2.2; stroke-dasharray: 4,3; }
+      
+      .beta-cell-body { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.6; }
+      .beta-cell-nucleus { fill: #0369a1; opacity: 0.85; }
+      .beta-granule { fill: #0284c7; }
+      
+      .alpha-cell-body { fill: #f43f5e; stroke: #be123c; stroke-width: 2.6; }
+      .alpha-cell-nucleus { fill: #9f1239; opacity: 0.85; }
+      .alpha-granule { fill: #be123c; }
+      
+      /* Hormones */
+      .insulin-mol { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.2; stroke-linejoin: round; }
+      .glucagon-mol { fill: #f43f5e; stroke: #be123c; stroke-width: 2.2; stroke-linejoin: round; }
+      
+      /* Liver High & Low */
+      .liver-body { fill: #b45309; stroke: #78350f; stroke-width: 2.8; stroke-linejoin: round; }
+      .liver-sinusoid { fill: none; stroke: #d97706; stroke-width: 2.0; stroke-dasharray: 4,4; opacity: 0.7; }
+      .liver-receptor-in { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.0; }
+      .liver-receptor-glu { fill: #f43f5e; stroke: #be123c; stroke-width: 2.0; }
+      
+      /* Glycogen */
+      .glycogen-branch { fill: none; stroke: #78350f; stroke-width: 2.2; stroke-linecap: round; }
+      .glycogen-bead { fill: #f59e0b; stroke: #78350f; stroke-width: 2.0; }
+      .glycogen-highlight { fill: #fef08a; }
+      
+      /* Body Cell */
+      .body-cell-membrane { fill: #a78bfa; stroke: #7c3aed; stroke-width: 2.8; stroke-linejoin: round; }
+      .body-cell-nucleus { fill: #6d28d9; opacity: 0.85; }
+      .body-glut4 { fill: #c4b5fd; stroke: #7c3aed; stroke-width: 2.0; }
+      .body-receptor { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.0; }
+      .mito-body { fill: #8b5cf6; stroke: #6d28d9; stroke-width: 1.6; }
+      
+      /* Right Gauge */
+      .gauge-frame { fill: #1e293b; stroke: #94a3b8; stroke-width: 2.8; rx: 14; ry: 14; }
+      .gauge-tick { stroke: #64748b; stroke-width: 2.0; stroke-linecap: round; }
+      .gauge-tick-major { stroke: #94a3b8; stroke-width: 2.4; stroke-linecap: round; }
+      .gauge-normal-band { fill: #22c55e; fill-opacity: 0.55; stroke: #15803d; stroke-width: 2.4; }
+      .gauge-pointer { fill: #fbbf24; stroke: #d97706; stroke-width: 2.6; stroke-linejoin: round; }
+      .gauge-crosshair { stroke: #fbbf24; stroke-width: 2.6; stroke-linecap: round; }
+      
+      /* Feedback Process Cues */
+      .feedback-arrow { fill: none; stroke: #94a3b8; stroke-width: 2.2; stroke-dasharray: 4,4; stroke-linecap: round; }
+      .result-tag-high { fill: none; stroke: #38bdf8; stroke-width: 2.4; stroke-linecap: round; }
+      .result-tag-low { fill: none; stroke: #f43f5e; stroke-width: 2.4; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <!-- Horizontal Axis Guide -->
+  <line class="symmetry-axis" x1="40" y1="350" x2="820" y2="350" />
+
+
+  <!-- ================================================================= -->
+  <!-- 1. CENTRAL BLOOD VESSEL (가운데 혈관: id="vessel", y 300 ~ 400)    -->
+  <!-- ================================================================= -->
+  <g id="vessel">
+    <!-- Main Vessel Lumen Fluid Channel with branches to liver and cell -->
+    <path class="vessel-lumen"
+          d="M 180,315
+             L 395,315
+             C 405,295 415,265 425,245
+             L 455,245
+             C 445,265 435,295 430,315
+             L 660,315
+             C 665,295 670,265 675,245
+             L 705,245
+             C 700,265 695,295 690,315
+             L 820,315
+             L 820,385
+             L 480,385
+             C 475,405 470,435 465,455
+             L 435,455
+             C 440,435 445,405 450,385
+             L 180,385
+             Z" />
+
+    <!-- Upper Vessel Wall with Branch Portals -->
+    <!-- Segment 1: Pancreas to Liver Portal -->
+    <path class="vessel-wall" d="M 180,315 L 395,315" />
+    <path class="vessel-wall" d="M 395,315 C 405,295 415,265 425,245" />
+    <path class="vessel-wall" d="M 455,245 C 445,265 435,295 430,315" />
+    <!-- Segment 2: Between Liver and Body Cell -->
+    <path class="vessel-wall" d="M 430,315 L 660,315" />
+    <path class="vessel-wall" d="M 660,315 C 665,295 670,265 675,245" />
+    <path class="vessel-wall" d="M 705,245 C 700,265 695,295 690,315" />
+    <!-- Segment 3: Right end toward gauge -->
+    <path class="vessel-wall" d="M 690,315 L 820,315" />
+
+    <!-- Lower Vessel Wall with Portal to Lower Liver -->
+    <!-- Segment 1: Pancreas to Lower Liver Portal -->
+    <path class="vessel-wall" d="M 180,385 L 450,385" />
+    <path class="vessel-wall" d="M 450,385 C 445,405 440,435 435,455" />
+    <path class="vessel-wall" d="M 465,455 C 470,435 475,405 480,385" />
+    <!-- Segment 2: Lower Liver to Right end -->
+    <path class="vessel-wall" d="M 480,385 L 820,385" />
+
+    <!-- Endothelial lining nuclei along vessel walls -->
+    <ellipse class="vessel-endo" cx="220" cy="315" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="290" cy="315" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="360" cy="315" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="490" cy="315" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="560" cy="315" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="630" cy="315" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="740" cy="315" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="800" cy="315" rx="12" ry="4" />
+
+    <ellipse class="vessel-endo" cx="220" cy="385" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="290" cy="385" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="360" cy="385" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="520" cy="385" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="590" cy="385" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="660" cy="385" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="740" cy="385" rx="12" ry="4" />
+    <ellipse class="vessel-endo" cx="800" cy="385" rx="12" ry="4" />
+
+    <!-- Bloodstream Flow Orientation Arrows -->
+    <path d="M 230,350 L 250,350 M 245,346 L 251,350 L 245,354" stroke="#64748b" stroke-width="2.0" stroke-linecap="round" />
+    <path d="M 520,350 L 540,350 M 535,346 L 541,350 L 535,354" stroke="#64748b" stroke-width="2.0" stroke-linecap="round" />
+    <path d="M 750,350 L 770,350 M 765,346 L 771,350 L 765,354" stroke="#64748b" stroke-width="2.0" stroke-linecap="round" />
+  </g>
+
+
+  <!-- Blood Glucose Particles (혈관 속 포도당 알갱이들, id="glucose") -->
+  <!-- Crisp hexagonal glucose molecules floating inside the blood vessel -->
+  <g id="glucose">
+    <!-- Hexagon 1 -->
+    <g transform="translate(280, 350)">
+      <polygon class="glucose-hex" points="0,-10 9,-5 9,5 0,10 -9,5 -9,-5" />
+      <circle class="glucose-inner" cx="0" cy="0" r="3.5" />
+    </g>
+
+    <!-- Hexagon 2 -->
+    <g transform="translate(340, 342)">
+      <polygon class="glucose-hex" points="0,-10 9,-5 9,5 0,10 -9,5 -9,-5" />
+      <circle class="glucose-inner" cx="0" cy="0" r="3.5" />
+    </g>
+
+    <!-- Hexagon 3 -->
+    <g transform="translate(410, 358)">
+      <polygon class="glucose-hex" points="0,-10 9,-5 9,5 0,10 -9,5 -9,-5" />
+      <circle class="glucose-inner" cx="0" cy="0" r="3.5" />
+    </g>
+
+    <!-- Hexagon 4 -->
+    <g transform="translate(480, 345)">
+      <polygon class="glucose-hex" points="0,-10 9,-5 9,5 0,10 -9,5 -9,-5" />
+      <circle class="glucose-inner" cx="0" cy="0" r="3.5" />
+    </g>
+
+    <!-- Hexagon 5 -->
+    <g transform="translate(560, 355)">
+      <polygon class="glucose-hex" points="0,-10 9,-5 9,5 0,10 -9,5 -9,-5" />
+      <circle class="glucose-inner" cx="0" cy="0" r="3.5" />
+    </g>
+
+    <!-- Hexagon 6 -->
+    <g transform="translate(630, 342)">
+      <polygon class="glucose-hex" points="0,-10 9,-5 9,5 0,10 -9,5 -9,-5" />
+      <circle class="glucose-inner" cx="0" cy="0" r="3.5" />
+    </g>
+
+    <!-- Hexagon 7 -->
+    <g transform="translate(700, 358)">
+      <polygon class="glucose-hex" points="0,-10 9,-5 9,5 0,10 -9,5 -9,-5" />
+      <circle class="glucose-inner" cx="0" cy="0" r="3.5" />
+    </g>
+
+    <!-- Hexagon 8 -->
+    <g transform="translate(760, 346)">
+      <polygon class="glucose-hex" points="0,-10 9,-5 9,5 0,10 -9,5 -9,-5" />
+      <circle class="glucose-inner" cx="0" cy="0" r="3.5" />
+    </g>
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 2. PANCREAS & ISLETS (이자: id="pancreas", 왼쪽 끝 x 40 ~ 190)    -->
+  <!-- ================================================================= -->
+  <g id="pancreas">
+    <!-- Pancreas Main Body (#fda4af) -->
+    <!-- Anatomical gland with head on left and body tapering smoothly toward vessel -->
+    <path class="pancreas-body"
+          d="M 50,350
+             C 42,285 75,245 115,242
+             C 155,238 185,275 190,320
+             L 190,380
+             C 185,425 155,462 115,458
+             C 75,455 42,415 50,350
+             Z" />
+
+    <!-- Pancreatic lobule texture lines -->
+    <path d="M 68,295 C 88,305 105,290 120,300" stroke="#fb7185" stroke-width="1.8" fill="none" />
+    <path d="M 68,405 C 88,395 105,410 120,400" stroke="#fb7185" stroke-width="1.8" fill="none" />
+    <path d="M 145,265 C 160,285 172,285 182,305" stroke="#fb7185" stroke-width="1.8" fill="none" />
+    <path d="M 145,435 C 160,415 172,415 182,395" stroke="#fb7185" stroke-width="1.8" fill="none" />
+
+    <!-- Islets of Langerhans (랑게르한스섬 내분비 구획) -->
+    <path class="islet-border"
+          d="M 85,280
+             C 115,265 145,270 155,295
+             C 165,325 165,375 155,405
+             C 145,430 115,435 85,420
+             C 65,395 65,305 85,280
+             Z" />
+
+    <!-- Internal divider between Beta (upper) and Alpha (lower) cell zones -->
+    <line x1="72" y1="350" x2="160" y2="350" stroke="#fb7185" stroke-width="2.0" stroke-dasharray="3,3" />
+  </g>
+
+
+  <!-- Beta Cells of Pancreas (이자의 베타 세포, id="betaCell") -->
+  <!-- ★ CRITICAL EXAM POINT: Upper compartment of islet, produces INSULIN -->
+  <g id="betaCell">
+    <!-- Beta Cell 1 (Main) -->
+    <circle class="beta-cell-body" cx="102" cy="305" r="16" />
+    <circle class="beta-cell-nucleus" cx="102" cy="305" r="9" />
+
+    <!-- Beta Cell 2 -->
+    <circle class="beta-cell-body" cx="132" cy="295" r="15" />
+    <circle class="beta-cell-nucleus" cx="132" cy="295" r="8" />
+
+    <!-- Beta Cell 3 -->
+    <circle class="beta-cell-body" cx="138" cy="326" r="14" />
+    <circle class="beta-cell-nucleus" cx="138" cy="326" r="7.5" />
+
+    <!-- Insulin Secretory Granules exiting into blood vessel -->
+    <circle class="beta-granule" cx="120" cy="275" r="3.0" />
+    <circle class="beta-granule" cx="145" cy="280" r="3.0" />
+    <circle class="beta-granule" cx="156" cy="310" r="3.0" />
+  </g>
+
+
+  <!-- Alpha Cells of Pancreas (이자의 알파 세포, id="alphaCell") -->
+  <!-- ★ CRITICAL EXAM POINT: Lower compartment of islet, produces GLUCAGON -->
+  <g id="alphaCell">
+    <!-- Alpha Cell 1 (Main) -->
+    <circle class="alpha-cell-body" cx="102" cy="395" r="16" />
+    <circle class="alpha-cell-nucleus" cx="102" cy="395" r="9" />
+
+    <!-- Alpha Cell 2 -->
+    <circle class="alpha-cell-body" cx="132" cy="405" r="15" />
+    <circle class="alpha-cell-nucleus" cx="132" cy="405" r="8" />
+
+    <!-- Alpha Cell 3 -->
+    <circle class="alpha-cell-body" cx="138" cy="374" r="14" />
+    <circle class="alpha-cell-nucleus" cx="138" cy="374" r="7.5" />
+
+    <!-- Glucagon Secretory Granules exiting into blood vessel -->
+    <circle class="alpha-granule" cx="120" cy="425" r="3.0" />
+    <circle class="alpha-granule" cx="145" cy="420" r="3.0" />
+    <circle class="alpha-granule" cx="156" cy="390" r="3.0" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 3. TOP HALF: HIGH BLOOD GLUCOSE (혈당이 높을 때: y 50 ~ 300)      -->
+  <!-- ================================================================= -->
+
+  <!-- Insulin Molecules in Transit (인슐린, id="insulin") -->
+  <!-- Sky-blue (#38bdf8) hormone molecules branching to liver and body cells -->
+  <g id="insulin">
+    <!-- Molecule near Beta cell exit -->
+    <g transform="translate(175, 290) rotate(-35)">
+      <ellipse class="insulin-mol" cx="0" cy="0" rx="9" ry="5.5" />
+      <circle cx="-2" cy="0" r="2" fill="#ffffff" opacity="0.6" />
+    </g>
+
+    <!-- Molecule entering bloodstream -->
+    <g transform="translate(230, 330) rotate(5)">
+      <ellipse class="insulin-mol" cx="0" cy="0" rx="9" ry="5.5" />
+      <circle cx="-2" cy="0" r="2" fill="#ffffff" opacity="0.6" />
+    </g>
+
+    <!-- Branch A: Diverging upward from blood into Liver -->
+    <g transform="translate(320, 275) rotate(-40)">
+      <ellipse class="insulin-mol" cx="0" cy="0" rx="9" ry="5.5" />
+      <circle cx="-2" cy="0" r="2" fill="#ffffff" opacity="0.6" />
+    </g>
+    <!-- Docking on Liver insulin receptor -->
+    <g transform="translate(355, 215) rotate(-20)">
+      <ellipse class="insulin-mol" cx="0" cy="0" rx="8" ry="5" />
+    </g>
+
+    <!-- Branch B: Traveling through blood vessel toward Body Cell -->
+    <g transform="translate(510, 332) rotate(5)">
+      <ellipse class="insulin-mol" cx="0" cy="0" rx="9" ry="5.5" />
+      <circle cx="-2" cy="0" r="2" fill="#ffffff" opacity="0.6" />
+    </g>
+    <!-- Diverging upward into Body Cell portal -->
+    <g transform="translate(615, 260) rotate(-45)">
+      <ellipse class="insulin-mol" cx="0" cy="0" rx="9" ry="5.5" />
+      <circle cx="-2" cy="0" r="2" fill="#ffffff" opacity="0.6" />
+    </g>
+    <!-- Docking on Body Cell insulin receptor -->
+    <g transform="translate(635, 195) rotate(-30)">
+      <ellipse class="insulin-mol" cx="0" cy="0" rx="8" ry="5" />
+    </g>
+
+    <!-- Directional Signaling Flow Tracks (베타 세포 ➔ 혈관 ➔ 간 & 온몸 세포) -->
+    <path class="feedback-arrow" stroke="#38bdf8" d="M 180,290 C 230,310 275,290 350,215" />
+    <polygon points="348,210 356,215 348,220" fill="#38bdf8" />
+
+    <path class="feedback-arrow" stroke="#38bdf8" d="M 240,332 C 380,332 540,330 630,200" />
+    <polygon points="627,195 636,200 629,205" fill="#38bdf8" />
+  </g>
+
+
+  <!-- Upper Liver (위쪽 간: id="liverHigh", x 330 ~ 530, y 75 ~ 245) -->
+  <!-- Target Organ: Combines Blood Glucose into Glycogen Storage -->
+  <g id="liverHigh">
+    <!-- Classic Anatomical Liver Lobe Silhouette (#b45309) -->
+    <!-- Curved superior dome, lateral apex, and visceral inferior surface -->
+    <path class="liver-body"
+          d="M 345,190
+             C 335,120 380,75 440,75
+             C 495,75 530,105 535,150
+             C 540,195 500,235 450,235
+             C 395,235 360,225 345,190
+             Z" />
+
+    <!-- Sinusoid network -->
+    <path class="liver-sinusoid" d="M 370,165 C 410,145 450,155 495,135" />
+    <path class="liver-sinusoid" d="M 385,205 C 425,185 465,195 510,175" />
+
+    <!-- Insulin Surface Receptors on Hepatocytes -->
+    <path class="liver-receptor-in" d="M 350,210 L 360,214 L 352,220 Z" />
+    <path class="liver-receptor-in" d="M 360,175 L 370,180 L 362,185 Z" />
+
+    <!-- Glucose Influx Pathway Arrow into Liver (포도당 흡수 & 글리코젠 합성 저장) -->
+    <path class="feedback-arrow" stroke="#fbbf24" d="M 440,315 C 440,285 440,250 440,210" />
+    <polygon points="436,210 440,202 444,210" fill="#fbbf24" />
+
+    <!-- Result badge: Blood Glucose Drops -->
+    <path class="result-tag-high" d="M 480,95 L 505,95 M 498,90 L 506,95 L 498,100" />
+    <path class="result-tag-high" d="M 505,105 L 505,120 M 500,115 L 505,121 L 510,115" />
+  </g>
+
+
+  <!-- Body Cell (온몸 세포, id="bodyCell", x 600 ~ 775, y 85 ~ 240) -->
+  <!-- Target Organ: Absorbs glucose from blood for cellular respiration -->
+  <g id="bodyCell">
+    <!-- Cell Membrane Body (#a78bfa) -->
+    <path class="body-cell-membrane"
+          d="M 630,160
+             C 620,110 665,85 710,85
+             C 755,85 790,115 795,160
+             C 800,205 760,235 715,235
+             C 665,235 635,205 630,160
+             Z" />
+
+    <!-- Spherical Cell Nucleus (#6d28d9) -->
+    <circle class="body-cell-nucleus" cx="710" cy="155" r="22" />
+    <circle cx="710" cy="155" r="15" fill="#4c1d95" opacity="0.6" />
+
+    <!-- Mitochondria Energy Plants (세포 호흡으로 포도당 소모) -->
+    <ellipse class="mito-body" cx="660" cy="130" rx="14" ry="8" transform="rotate(-25, 660, 130)" />
+    <path d="M 652,130 C 658,127 662,133 668,130" stroke="#c4b5fd" stroke-width="1.4" fill="none" />
+
+    <ellipse class="mito-body" cx="755" cy="180" rx="14" ry="8" transform="rotate(20, 755, 180)" />
+    <path d="M 747,180 C 753,177 757,183 763,180" stroke="#c4b5fd" stroke-width="1.4" fill="none" />
+
+    <!-- Insulin Receptors on Cell Membrane -->
+    <path class="body-receptor" d="M 630,190 L 640,195 L 632,202 Z" />
+
+    <!-- Opened GLUT-4 Glucose Transporters (포도당 흡수 통로) -->
+    <rect class="body-glut4" x="670" y="226" width="18" height="12" rx="3" />
+    <rect class="body-glut4" x="730" y="226" width="18" height="12" rx="3" />
+
+    <!-- Glucose uptake arrows from blood vessel into cell -->
+    <path class="feedback-arrow" stroke="#fbbf24" d="M 679,315 C 679,285 679,260 679,242" />
+    <polygon points="675,242 679,235 683,242" fill="#fbbf24" />
+
+    <path class="feedback-arrow" stroke="#fbbf24" d="M 739,315 C 739,285 739,260 739,242" />
+    <polygon points="735,242 739,235 743,242" fill="#fbbf24" />
+
+    <!-- Absorbed Glucose Molecules inside Cell -->
+    <circle cx="678" cy="185" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="1.6" />
+    <circle cx="745" cy="135" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="1.6" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 4. BOTTOM HALF: LOW BLOOD GLUCOSE (혈당이 낮을 때: y 400 ~ 650)   -->
+  <!-- ================================================================= -->
+
+  <!-- Glucagon Molecules in Transit (글루카곤, id="glucagon") -->
+  <!-- Rose-red (#f43f5e) hormone molecules targeting lower liver -->
+  <g id="glucagon">
+    <!-- Molecule near Alpha cell exit -->
+    <g transform="translate(175, 410) rotate(35)">
+      <ellipse class="glucagon-mol" cx="0" cy="0" rx="9" ry="5.5" />
+      <circle cx="-2" cy="0" r="2" fill="#ffffff" opacity="0.6" />
+    </g>
+
+    <!-- Molecule entering bloodstream -->
+    <g transform="translate(230, 370) rotate(-5)">
+      <ellipse class="glucagon-mol" cx="0" cy="0" rx="9" ry="5.5" />
+      <circle cx="-2" cy="0" r="2" fill="#ffffff" opacity="0.6" />
+    </g>
+
+    <!-- Diverging downward into Lower Liver portal -->
+    <g transform="translate(330, 420) rotate(45)">
+      <ellipse class="glucagon-mol" cx="0" cy="0" rx="9" ry="5.5" />
+      <circle cx="-2" cy="0" r="2" fill="#ffffff" opacity="0.6" />
+    </g>
+    <!-- Docking on Liver glucagon receptor -->
+    <g transform="translate(375, 485) rotate(25)">
+      <ellipse class="glucagon-mol" cx="0" cy="0" rx="8" ry="5" />
+    </g>
+
+    <!-- Directional Signaling Flow Track (알파 세포 ➔ 혈관 ➔ 간) -->
+    <path class="feedback-arrow" stroke="#f43f5e" d="M 180,410 C 230,390 285,410 370,485" />
+    <polygon points="368,480 378,486 370,490" fill="#f43f5e" />
+  </g>
+
+
+  <!-- Lower Liver (아래쪽 간: id="liverLow", x 350 ~ 550, y 455 ~ 625) -->
+  <!-- Target Organ: Breaks down stored Glycogen into Blood Glucose -->
+  <g id="liverLow">
+    <!-- Mirror Symmetric Liver Lobe Shape (#b45309) -->
+    <path class="liver-body"
+          d="M 365,510
+             C 355,580 400,625 460,625
+             C 515,625 550,595 555,550
+             C 560,505 520,465 470,465
+             C 415,465 380,475 365,510
+             Z" />
+
+    <!-- Sinusoid network -->
+    <path class="liver-sinusoid" d="M 390,535 C 430,555 470,545 515,565" />
+    <path class="liver-sinusoid" d="M 405,495 C 445,515 485,505 530,525" />
+
+    <!-- Glucagon Receptors on Hepatocytes -->
+    <path class="liver-receptor-glu" d="M 370,490 L 380,494 L 372,501 Z" />
+    <path class="liver-receptor-glu" d="M 380,525 L 390,529 L 382,536 Z" />
+
+    <!-- Glucose Efflux Pathway Arrow into Blood Vessel (글리코젠 분해 ➔ 혈당 방출) -->
+    <path class="feedback-arrow" stroke="#fbbf24" d="M 450,465 C 450,435 450,410 450,392" />
+    <polygon points="446,392 450,385 454,392" fill="#fbbf24" />
+
+    <!-- Result badge: Blood Glucose Rises -->
+    <path class="result-tag-low" d="M 500,605 L 525,605 M 518,600 L 526,605 L 518,610" />
+    <path class="result-tag-low" d="M 525,585 L 525,600 M 520,590 L 525,584 L 530,590" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 5. GLYCOGEN CLUSTERS (간 속 글리코젠 덩어리, id="glycogen")        -->
+  <!-- ================================================================= -->
+  <!-- ★ CRITICAL EXAM POINT: Stored in LIVER; highly branched polymer -->
+  <g id="glycogen">
+    <!-- UPPER LIVER GLYCOGEN: Dense branched storage polymer -->
+    <g transform="translate(440, 150)">
+      <!-- Branching Tree Skeleton -->
+      <path class="glycogen-branch" d="M 0,0 L -25,-15 M 0,0 L 25,-15 M 0,0 L 0,22 M -25,-15 L -40,-5 M -25,-15 L -32,-30 M 25,-15 L 40,-5 M 25,-15 L 32,-30 M 0,22 L -18,34 M 0,22 L 18,34" />
+      <!-- Glucose polymer beads (#f59e0b) -->
+      <circle class="glycogen-bead" cx="0" cy="0" r="6.5" />
+      <circle class="glycogen-bead" cx="-25" cy="-15" r="6.0" />
+      <circle class="glycogen-bead" cx="25" cy="-15" r="6.0" />
+      <circle class="glycogen-bead" cx="0" cy="22" r="6.0" />
+      <circle class="glycogen-bead" cx="-40" cy="-5" r="5.5" />
+      <circle class="glycogen-bead" cx="-32" cy="-30" r="5.5" />
+      <circle class="glycogen-bead" cx="40" cy="-5" r="5.5" />
+      <circle class="glycogen-bead" cx="32" cy="-30" r="5.5" />
+      <circle class="glycogen-bead" cx="-18" cy="34" r="5.5" />
+      <circle class="glycogen-bead" cx="18" cy="34" r="5.5" />
+      <!-- Peripheral newly adding glucose subunit (condensation) -->
+      <circle cx="-10" cy="-28" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="1.6" />
+      <circle cx="10" cy="-28" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="1.6" />
+    </g>
+
+    <!-- LOWER LIVER GLYCOGEN: Debranching & breakdown polymer releasing units -->
+    <g transform="translate(460, 545)">
+      <!-- Branching Tree Skeleton -->
+      <path class="glycogen-branch" d="M 0,0 L -25,-15 M 0,0 L 25,-15 M 0,0 L 0,22 M -25,-15 L -38,-5 M 25,-15 L 38,-5 M 0,22 L -18,34 M 0,22 L 18,34" />
+      <!-- Glucose polymer beads (#f59e0b) -->
+      <circle class="glycogen-bead" cx="0" cy="0" r="6.5" />
+      <circle class="glycogen-bead" cx="-25" cy="-15" r="6.0" />
+      <circle class="glycogen-bead" cx="25" cy="-15" r="6.0" />
+      <circle class="glycogen-bead" cx="0" cy="22" r="6.0" />
+      <circle class="glycogen-bead" cx="-38" cy="-5" r="5.5" />
+      <circle class="glycogen-bead" cx="38" cy="-5" r="5.5" />
+      <circle class="glycogen-bead" cx="-18" cy="34" r="5.5" />
+      <circle class="glycogen-bead" cx="18" cy="34" r="5.5" />
+      <!-- Detaching / hydrolyzed glucose monomers leaving for bloodstream -->
+      <circle cx="-15" cy="-32" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="1.6" stroke-dasharray="2,2" />
+      <circle cx="12" cy="-34" r="5.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.8" />
+    </g>
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 6. RIGHT GAUGE: BLOOD GLUCOSE LEVEL (오른쪽 끝 x 850 ~ 930)       -->
+  <!-- ================================================================= -->
+
+  <!-- Gauge Frame (눈금자 틀, id="gauge") -->
+  <g id="gauge">
+    <!-- Thermometer / Column Frame (#94a3b8) -->
+    <rect class="gauge-frame" x="860" y="90" width="60" height="520" />
+
+    <!-- Measurement Calibration Ticks -->
+    <!-- Top zone (High Glucose: 160 ~ 200 mg/dL) -->
+    <line class="gauge-tick-major" x1="860" y1="120" x2="880" y2="120" />
+    <line class="gauge-tick" x1="860" y1="150" x2="872" y2="150" />
+    <line class="gauge-tick-major" x1="860" y1="180" x2="880" y2="180" />
+    <line class="gauge-tick" x1="860" y1="210" x2="872" y2="210" />
+    <line class="gauge-tick-major" x1="860" y1="240" x2="880" y2="240" />
+    <line class="gauge-tick" x1="860" y1="270" x2="872" y2="270" />
+    
+    <!-- Middle zone ticks (Around Normal: 100 mg/dL) -->
+    <line class="gauge-tick-major" x1="860" y1="300" x2="885" y2="300" />
+    <line class="gauge-tick-major" x1="860" y1="350" x2="890" y2="350" />
+    <line class="gauge-tick-major" x1="860" y1="400" x2="885" y2="400" />
+    
+    <!-- Bottom zone ticks (Low Glucose: 50 ~ 70 mg/dL) -->
+    <line class="gauge-tick" x1="860" y1="430" x2="872" y2="430" />
+    <line class="gauge-tick-major" x1="860" y1="460" x2="880" y2="460" />
+    <line class="gauge-tick" x1="860" y1="490" x2="872" y2="490" />
+    <line class="gauge-tick-major" x1="860" y1="520" x2="880" y2="520" />
+    <line class="gauge-tick" x1="860" y1="550" x2="872" y2="550" />
+    <line class="gauge-tick-major" x1="860" y1="580" x2="880" y2="580" />
+
+    <!-- Subtle bulb at gauge base -->
+    <circle cx="890" cy="580" r="18" fill="#1e293b" stroke="#94a3b8" stroke-width="2.6" />
+  </g>
+
+  <!-- Gauge Normal Range Belt (눈금자 가운데 정상 범위 띠, id="gaugeNormal") -->
+  <!-- Highlights healthy fasting blood glucose range (80 ~ 110 mg/dL) -->
+  <g id="gaugeNormal">
+    <rect class="gauge-normal-band" x="862" y="315" width="56" height="70" rx="4" />
+    <!-- Normal Range Center Target Line -->
+    <line x1="865" y1="350" x2="915" y2="350" stroke="#15803d" stroke-width="2.2" stroke-dasharray="3,3" />
+  </g>
+
+  <!-- Gauge Moving Marker Indicator (눈금자 위를 오르내릴 표시, id="gaugeMarker") -->
+  <!-- Dynamic pointer positioned at center normal baseline, translated by client script -->
+  <g id="gaugeMarker">
+    <!-- Golden Indicator Arrow Slider Knob (#fbbf24) -->
+    <polygon class="gauge-pointer"
+             points="928,350 952,338 952,362" />
+    <circle cx="943" cy="350" r="3" fill="#d97706" />
+    <!-- Center hairline indicator across gauge face -->
+    <line class="gauge-crosshair" x1="872" y1="350" x2="928" y2="350" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 7. INVISIBLE GUIDE PATHS (안내선 5종: fill="none" stroke="none")   -->
+  <!-- ================================================================= -->
+
+  <!-- 1. flowInsulin: 베타 세포 → 혈관 → 간(위쪽) -->
+  <path id="flowInsulin" fill="none" stroke="none"
+        d="M 120,300
+           C 170,320 220,332 260,332
+           C 310,332 335,300 355,230
+           C 365,195 385,180 410,165" />
+
+  <!-- 2. flowInsulinCell: 베타 세포 → 혈관 → 온몸 세포 -->
+  <path id="flowInsulinCell" fill="none" stroke="none"
+        d="M 120,300
+           C 170,320 220,332 260,332
+           L 560,332
+           C 600,332 630,300 655,230
+           C 665,200 680,180 700,165" />
+
+  <!-- 3. flowGlucagon: 알파 세포 → 혈관 → 간(아래쪽) -->
+  <path id="flowGlucagon" fill="none" stroke="none"
+        d="M 120,400
+           C 170,380 220,368 260,368
+           C 310,368 345,400 375,470
+           C 385,505 405,520 430,535" />
+
+  <!-- 4. flowStore: 혈관 속 포도당 → 위쪽 간 속 글리코젠으로 (저장) -->
+  <path id="flowStore" fill="none" stroke="none"
+        d="M 440,350
+           L 440,315
+           C 440,265 440,210 440,165" />
+
+  <!-- 5. flowRelease: 아래쪽 간 속 글리코젠 → 혈관으로 (방출) -->
+  <path id="flowRelease" fill="none" stroke="none"
+        d="M 450,545
+           C 450,490 450,440 450,385
+           L 450,350" />
+
+</svg>
