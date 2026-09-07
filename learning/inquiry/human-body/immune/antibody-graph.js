@@ -140,11 +140,18 @@
         return Math.min(1, sum);
     }
 
-    function loop() {
+    var lastTick = 0;
+
+    function loop(now) {
         if (layer && !layer.hidden && running) {
-            t = Math.min(1, t + 0.0016);
+            // 프레임 수가 아니라 흐른 시간으로 센다.
+            // 창이 뒤에 있으면 브라우저가 화면 갱신을 초당 한 번으로 줄이는데,
+            // 프레임마다 조금씩 더하는 방식은 그때 거의 멎어 버린다.
+            var dt = lastTick ? Math.min(0.25, (now - lastTick) / 1000) : 0.016;
+            t = Math.min(1, t + dt * 0.096);   // 처음부터 끝까지 약 10초
             render();
         }
+        lastTick = now || 0;
         requestAnimationFrame(loop);
     }
 

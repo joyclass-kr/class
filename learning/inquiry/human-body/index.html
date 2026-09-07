@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>인체 모형</title>
-    <link rel="stylesheet" href="styles.css?v=20260907ze">
+    <link rel="stylesheet" href="styles.css?v=20260907ak">
     <style>
         html, body.hub-page {
             width: 100%;
@@ -69,7 +69,7 @@
 
         .hub-container {
             width: 100%;
-            max-width: 980px;
+            max-width: 1280px;
             margin: auto;
             padding: 24px 16px;
             display: flex;
@@ -83,9 +83,9 @@
         .hub-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 14px;
+            gap: 18px;
             width: 100%;
-            max-width: 920px;
+            max-width: 1120px;
             justify-content: center;
         }
 
@@ -94,8 +94,8 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid rgba(255, 255, 255, 0.11);
-            border-radius: 12px;
-            padding: 12px 16px;
+            border-radius: 14px;
+            padding: 20px 20px;
             display: flex;
             align-items: center;
             text-decoration: none;
@@ -131,9 +131,9 @@
         }
 
         .card-icon-box {
-            width: 38px;
-            height: 38px;
-            border-radius: 9px;
+            width: 46px;
+            height: 46px;
+            border-radius: 11px;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid var(--card-accent, #38bdf8);
             display: flex;
@@ -149,21 +149,12 @@
         }
 
         .card-title {
-            font-size: 14.5px;
+            font-size: 16.5px;
             font-weight: 750;
             color: #ffffff;
             letter-spacing: -0.2px;
             line-height: 1.3;
             word-break: keep-all;   /* 낱말 가운데서 끊지 않는다 */
-        }
-
-        .card-title-en {
-            margin-top: 2px;
-            font-size: 10.5px;
-            font-weight: 600;
-            color: #94a3b8;
-            letter-spacing: 0.01em;
-            line-height: 1.25;
         }
 
 
@@ -172,7 +163,7 @@
         @media (min-width: 861px) {
             .hub-grid {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
-                max-width: 1000px;
+                max-width: 1220px;
             }
         }
 
@@ -212,8 +203,7 @@
                 <div class="card-top">
                     <div class="card-icon-box">🥪</div>
                     <div class="card-title-group">
-                        <div class="card-title">소화계와 영양소 검출</div>
-                        <div class="card-title-en" lang="en">Digestive System &amp; Nutrient Tests</div>
+                        <div class="card-title">소화계 · 소화 효소</div>
                     </div>
                 </div>
             </a>
@@ -223,8 +213,7 @@
                 <div class="card-top">
                     <div class="card-icon-box">❤️</div>
                     <div class="card-title-group">
-                        <div class="card-title">순환계와 심장 펌프</div>
-                        <div class="card-title-en" lang="en">Circulatory System &amp; Heart Pump</div>
+                        <div class="card-title">순환계 · 심장과 혈액</div>
                     </div>
                 </div>
             </a>
@@ -234,8 +223,7 @@
                 <div class="card-top">
                     <div class="card-icon-box">🫁</div>
                     <div class="card-title-group">
-                        <div class="card-title">호흡계와 기체 교환</div>
-                        <div class="card-title-en" lang="en">Respiratory System &amp; Gas Exchange</div>
+                        <div class="card-title">호흡계 · 숨쉬기와 기체 교환</div>
                     </div>
                 </div>
             </a>
@@ -245,8 +233,7 @@
                 <div class="card-top">
                     <div class="card-icon-box">🫘</div>
                     <div class="card-title-group">
-                        <div class="card-title">배설계와 네프론 여과</div>
-                        <div class="card-title-en" lang="en">Excretory System &amp; Nephron Filtration</div>
+                        <div class="card-title">배설계 · 콩팥과 네프론</div>
                     </div>
                 </div>
             </a>
@@ -256,8 +243,7 @@
                 <div class="card-top">
                     <div class="card-icon-box">⚡</div>
                     <div class="card-title-group">
-                        <div class="card-title">신경계와 자극·반응·시냅스</div>
-                        <div class="card-title-en" lang="en">Nervous System &amp; Synaptic Transmission</div>
+                        <div class="card-title">신경계 · 뇌와 반사</div>
                     </div>
                 </div>
             </a>
@@ -267,8 +253,7 @@
                 <div class="card-top">
                     <div class="card-icon-box">🦴</div>
                     <div class="card-title-group">
-                        <div class="card-title">근골격계와 운동·활주설</div>
-                        <div class="card-title-en" lang="en">Musculoskeletal &amp; Sliding Filament</div>
+                        <div class="card-title">골격계 · 관절과 길항근</div>
                     </div>
                 </div>
             </a>
@@ -278,8 +263,7 @@
                 <div class="card-top">
                     <div class="card-icon-box">🌡️</div>
                     <div class="card-title-group">
-                        <div class="card-title">통합 항상성 조절</div>
-                        <div class="card-title-en" lang="en">Homeostatic Regulation</div>
+                        <div class="card-title">항상성 · 체온과 혈당 조절</div>
                     </div>
                 </div>
             </a>
@@ -289,8 +273,7 @@
                 <div class="card-top">
                     <div class="card-icon-box">🛡️</div>
                     <div class="card-title-group">
-                        <div class="card-title">면역계와 방어 작용</div>
-                        <div class="card-title-en" lang="en">Immune System &amp; Host Defense</div>
+                        <div class="card-title">면역계 · 몸의 방어 작용</div>
                     </div>
                 </div>
             </a>

@@ -44,13 +44,14 @@
             requestAnimationFrame(function () { setVisible(true); });
         }
 
-        bar.querySelectorAll('.scene-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                bar.querySelectorAll('.scene-btn').forEach(function (x) {
-                    x.classList.toggle('active', x === btn);
-                });
-                setVisible(btn.dataset.scene === 'skin');
+        // 나중에 더해지는 단추도 듣도록 바탕 요소에 한 번만 건다
+        bar.addEventListener('click', function (event) {
+            var btn = event.target.closest ? event.target.closest('.scene-btn') : null;
+            if (!btn || !bar.contains(btn)) return;
+            bar.querySelectorAll('.scene-btn').forEach(function (x) {
+                x.classList.toggle('active', x === btn);
             });
+            setVisible(btn.dataset.scene === 'skin');
         });
     }
 

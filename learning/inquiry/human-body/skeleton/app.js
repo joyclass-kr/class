@@ -41,7 +41,7 @@
             { x: 0.42, y: 0.35, r: 45, title: '위팔두갈래근 (이두근, Biceps)', desc: '팔을 굽힐 때 <strong>수축</strong>하여 노뼈를 당겨 올리는 주동근 역할을 합니다.' },
             { x: 0.28, y: 0.45, r: 45, title: '위팔세갈래근 (삼두근, Triceps)', desc: '팔을 굽힐 때 <strong>이완</strong>하고, 팔을 펼 때 <strong>수축</strong>하여 팔을 펴는 길항근입니다.' },
             { x: 0.45, y: 0.65, r: 40, title: '팔꿈치 관절 & 윤활액', desc: '관절 연골이 마찰을 방지하고 윤활액(활액)이 충격을 흡수하여 부드러운 회전을 가능케 합니다.' },
-            { x: 0.58, y: 0.55, r: 35, title: '힘줄 (건, Tendon)', desc: '근육을 뼈에 단단히 고정하여 근육의 수축력을 뼈로 전달하는 질긴 결합 조직.' },
+            { x: 0.58, y: 0.55, r: 35, title: '힘줄 (건)', desc: '근육을 뼈에 단단히 고정하여 근육의 수축력을 뼈로 전달하는 질긴 결합 조직.' },
             { x: 0.72, y: 0.65, r: 45, title: '노뼈 & 자뼈 (Radius & Ulna)', desc: '아래팔의 2개 뼈로, 이두근이 노뼈에 붙어 팔을 회전하고 당깁니다.' }
         ],
         sarcomere: [
@@ -136,16 +136,16 @@
         // Map joint angle to sarcomere length (170° = 2.80um relaxed, 40° = 1.60um contracted)
         sarcomereLength = 2.00 + ((jointAngle - 30) / 150) * 0.80;
 
-        if (angleValEl) angleValEl.textContent = Math.round(jointAngle) + '° (' + (jointAngle < 90 ? '굽힘 Flexion 🔥' : '폄 Extension ↔️') + ')';
+        if (angleValEl) angleValEl.textContent = Math.round(jointAngle) + '° (' + (jointAngle < 90 ? '굽힘 🔥' : '폄 ↔️') + ')';
         if (romGaugeEl) romGaugeEl.textContent = Math.round(jointAngle) + '°';
 
         if (bicepsStatusEl) {
-            bicepsStatusEl.textContent = isBicepsContracted ? '수축 (Contracted 🔥)' : '이완';
+            bicepsStatusEl.textContent = isBicepsContracted ? '수축 🔥' : '이완';
             bicepsStatusEl.style.color = isBicepsContracted ? '#f43f5e' : '#94a3b8';
         }
 
         if (tricepsStatusEl) {
-            tricepsStatusEl.textContent = isBicepsContracted ? '이완' : '수축 (Contracted 🔥)';
+            tricepsStatusEl.textContent = isBicepsContracted ? '이완' : '수축 🔥';
             tricepsStatusEl.style.color = isBicepsContracted ? '#94a3b8' : '#38bdf8';
         }
     }
@@ -940,7 +940,7 @@
         ctx.font = 'bold 14.5px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(Math.round(jointAngle) + '° (ROM)', bx, by);
+        ctx.fillText(Math.round(jointAngle) + '° (관절 각도)', bx, by);
         ctx.textBaseline = 'alphabetic';
 
         ctx.restore();
@@ -1158,7 +1158,7 @@
         drawSmartTag(
             bicepsEndX, bicepsEndY,
             bicepsEndX + 0.14 * dw, bicepsEndY - 0.02 * dh,
-            '힘줄 (건, Tendon)', '근육 ➔ 뼈 고정·힘 전달', '#e2e8f0', 4
+            '힘줄 (건)', '근육 ➔ 뼈 고정·힘 전달', '#e2e8f0', 4
         );
 
         drawSmartTag(
@@ -1180,7 +1180,7 @@
         // 11. 좌측 상단 상태 판 (클램핑 적용)
         // 화면이 낮으면 판이 그림을 덮는다. 오른쪽 사이드바에 같은 내용이 이미 있으므로 건너뛴다.
         if (height >= 420) drawStatePlate(Math.max(16, dx + 16), dy + 16, [
-            { t: (isFlexed ? '팔을 굽힘 [굴곡 Flexion] (' : '팔을 폄 [신전 Extension] (') + Math.round(jointAngle) + '°)' },
+            { t: (isFlexed ? '팔을 굽힘 (' : '팔을 폄 (') + Math.round(jointAngle) + '°)' },
             { t: '• 이두근(주동근): ' + (isFlexed ? '수축 🔥 — 두꺼워지고 짧아짐' : '이완 — 얇아지고 길어짐'), c: isFlexed ? '#fca5a5' : '#94a3b8' },
             { t: '• 삼두근(길항근): ' + (isFlexed ? '이완 — 얇아지고 길어짐' : '수축 🔥 — 두꺼워지고 짧아짐'), c: isFlexed ? '#94a3b8' : '#7dd3fc' },
             { t: '두 근육은 언제나 반대로 움직입니다 [길항 작용]', c: '#facc15' }
