@@ -1981,6 +1981,12 @@
         if (session.answered) return;
         const expected = session.current.keyboard.answer;
         window.PianoEngine.playSequence([[midi]], .6).catch(() => {});
+        /*
+         * 첫 음은 이미 알려 준 음이다. 짚어 보고 시작하는 학생도 있으므로,
+         * 아직 아무것도 누르지 않았을 때 그 음을 누른 것은 답으로 세지 않는다.
+         */
+        const isGiven = session.current.keyboard.given.some(given => given.midi === midi);
+        if (!session.typed.length && isGiven) return;
         session.typed.push(midi);
         els.typedCount.textContent = session.typed.length + " / " + expected.length;
         if (session.typed.length < expected.length) {
