@@ -42,6 +42,7 @@
     const BOTTOM_LINE_Y = TOP_LINE_Y + STEP_Y * 8;
     const E4_ABS = 4 * 7 + 2;  /* 높은음자리표 첫째 줄 E4 */
     const F5_ABS = 5 * 7 + 3;
+    const ZOOM = 1.15;
     const COLUMN_X = 62;
     const COLUMN_GAP = 36;
 
@@ -55,32 +56,31 @@
         return BOTTOM_LINE_Y - (letterAbs - E4_ABS) * STEP_Y;
     }
 
-    function accidentalNode(accidental, x, y) {
-        const group = make("g", { transform: "translate(" + x + "," + y + ")", class: "sheet-ink" });
-        if (accidental === 1) {
-            group.append(make("line", { x1: -3.2, y1: -7.5, x2: -3.2, y2: 6.5, "stroke-width": 1.5 }));
-            group.append(make("line", { x1: 1.6, y1: -8.5, x2: 1.6, y2: 5.5, "stroke-width": 1.5 }));
-            group.append(make("line", { x1: -6, y1: -1.6, x2: 4.4, y2: -3.4, "stroke-width": 2.4 }));
-            group.append(make("line", { x1: -6, y1: 3.4, x2: 4.4, y2: 1.6, "stroke-width": 2.4 }));
-        } else if (accidental === -1) {
-            group.append(make("line", { x1: -2.6, y1: -11, x2: -2.6, y2: 5, "stroke-width": 1.5 }));
-            group.append(make("path", { d: "M-2.6,-1.6 C 2.4,-4.6 6,-0.4 2.6,2.8 C 1,4.3 -1.2,5 -2.6,5", "stroke-width": 1.5, fill: "none" }));
-        } else if (accidental === 2) {
-            group.append(make("line", { x1: -4, y1: -4, x2: 4, y2: 4, "stroke-width": 2.2 }));
-            group.append(make("line", { x1: -4, y1: 4, x2: 4, y2: -4, "stroke-width": 2.2 }));
-        } else if (accidental === -2) {
-            [-7.5, -1.5].forEach(offset => {
-                group.append(make("line", { x1: offset, y1: -11, x2: offset, y2: 5, "stroke-width": 1.5 }));
-                group.append(make("path", { d: "M" + offset + ",-1.6 C " + (offset + 5) + ",-4.6 " + (offset + 8.6) + ",-0.4 " + (offset + 5.2) + ",2.8 C " + (offset + 3.6) + ",4.3 " + (offset + 1.4) + ",5 " + offset + ",5", "stroke-width": 1.5, fill: "none" }));
-            });
+    /*
+     * 임시표는 유니코드 올림표·내림표 글리프를 재서 앉힌다. 겹올림표는 어느 글꼴에서나
+     * 나오지 않는 글리프여서 X 모양을 그대로 그린다.
+     */
+    function accidentalNode(accidental, right, y) {
+        const group = make("g", { class: "sheet-ink" });
+        if (accidental === 2) {
+            const cross = make("g", { transform: "translate(" + (right - 5) + "," + y + ")" });
+            cross.append(make("line", { x1: -4, y1: -4, x2: 4, y2: 4, "stroke-width": 2.2 }));
+            cross.append(make("line", { x1: -4, y1: 4, x2: 4, y2: -4, "stroke-width": 2.2 }));
+            group.append(cross);
+            return group;
+        }
+        const sharp = accidental > 0;
+        const char = sharp ? SHARP_GLYPH : FLAT_GLYPH;
+        const box = glyphBox(char, 0.2, 0.95);
+        if (!box) return group;
+        const height = sharp ? SHARP_H : FLAT_H;
+        const step = box.width * (height / box.height) + 1;
+        const times = Math.abs(accidental);
+        for (let mark = 0; mark < times; mark += 1) {
+            /* 내림표는 배가 아래쪽에 있어 가운데를 조금 올려 잡는다. */
+            group.append(glyphNode(char, box, right - mark * step, y - (sharp ? 0 : STEP_Y * 0.7), height));
         }
         return group;
-    }
-
-    function accidentalWidth(accidental) {
-        if (accidental === 0) return 0;
-        if (accidental === -2) return 20;
-        return 13;
     }
 
     function ledgerLines(letterAbs) {
@@ -91,34 +91,121 @@
     }
 
     /*
+     * 조표만 그린 작은 악보. 임시표가 어느 줄과 칸에 붙는지가 조표의 뜻이므로
+     * 오선과 자리표를 함께 두고, 대신 임시표를 촘촘히 붙여 자리를 아낀다.
+     * 되돌려 주는 width는 오선 눈금으로 잰 길이다.
+     */
+    const SIG_START = 40;
+    const SIG_STEP = 7.5;
+
+    function keySignatureGroup(count, sharp) {
+        const seats = sharp ? SHARP_SEATS : FLAT_SEATS;
+        const width = SIG_START + Math.max(count, 1) * SIG_STEP + 5;
+        const group = make("g", {});
+
+        const staff = make("g", { class: "sheet-staff" });
+        for (let line = 0; line < 5; line += 1) {
+            const y = TOP_LINE_Y + line * STEP_Y * 2;
+            staff.append(make("line", { x1: 3, y1: y, x2: width, y2: y }));
+        }
+        group.append(staff);
+
+        const clef = clefNode(6);
+        if (clef) group.append(clef);
+
+        const ink = make("g", { class: "sheet-ink" });
+        for (let mark = 0; mark < count; mark += 1) {
+            ink.append(accidentalNode(sharp ? 1 : -1, SIG_START + (mark + 1) * SIG_STEP, yFor(seats[mark])));
+        }
+        group.append(ink);
+
+        return { node: group, width: width, top: CLEF_TOP, bottom: CLEF_BOTTOM };
+    }
+
+    /*
      * columns: [{ notes: [spelling, ...] } | null]  — null이면 아직 모르는 음(?)으로 그린다.
      * marks: 열 번호별 색 이름 ("right" | "wrong")
      */
     /*
-     * 자리표는 글꼴 글리프로 그리면 컴퓨터에 깔린 글꼴에 따라 크기와 자리가 달라진다.
-     * 윈도우 기본 글꼴은 음악 조판용이 아니어서 오선에 맞지 않으므로 직접 그린다.
-     * 아래 좌표는 한 칸(줄과 줄 사이)을 10으로 두고, 소용돌이 가운데를 0으로 잡은 것이다.
+     * 자리표는 유니코드 음악 기호(U+1D11E)를 쓴다. 다만 글꼴마다 글리프가 차지하는
+     * 자리와 크기가 달라서 그냥 찍으면 오선에 맞지 않는다. 그래서 한 번 재 두고,
+     * 잰 테두리를 "위 줄 한 칸 위에서 아래 줄 두 칸 아래까지"에 맞춰 앉힌다.
+     * 자리표의 생김새는 어느 글꼴이나 같은 규격이므로, 이 띠에 맞추면 소용돌이가
+     * 저절로 G선에 온다.
      */
-    const G_LINE_ABS = 4 * 7 + 4;   /* 높은음자리표가 가리키는 G4 */
-    const CLEF_PATH = "M-5,25 C1,29 7,27 7,20 C7,12 7,4 7,-1"
-        + " C7,-14 8,-27 9,-38 C9,-44 3,-46 0,-42"
-        + " C-4,-37 -3,-29 2,-23 C7,-16 16,-13 17,-6"
-        + " C18,1 12,6 5,4 C-1,2 -2,-4 3,-5 C7,-6 8,-2 6,0";
+    const CLEF_GLYPH = "\uD834\uDD1E";
+    const SHARP_GLYPH = "\u266F";
+    const FLAT_GLYPH = "\u266D";
+    const CLEF_TOP = TOP_LINE_Y - STEP_Y * 2;        /* 위 줄에서 한 칸 위 */
+    const CLEF_BOTTOM = BOTTOM_LINE_Y + STEP_Y * 4;  /* 아래 줄에서 두 칸 아래 */
+    const PROBE_SIZE = 100;
 
-    /* 큰 굽이는 굵게 덧그어 획에 굵고 가는 맛을 준다. */
-    const CLEF_BOWL = "M1,-24 C6,-17 16,-13 17,-6 C18,1 13,6 6,4";
+    const boxCache = {};
 
-    /* 위아래로 자리표가 먹는 띠 */
-    const CLEF_TOP = 0;
-    const CLEF_BOTTOM = 78;
+    /*
+     * 글리프 테두리를 한 번만 재서 기억해 둔다. ratio는 그 글리프가 가질 만한
+     * 가로/세로 비율의 범위다. 글꼴에 글리프가 없으면 네모(.notdef)가 나오는데,
+     * 비율이 어긋나므로 여기서 걸러 낸다.
+     */
+    function glyphBox(char, low, high) {
+        if (boxCache[char] !== undefined) return boxCache[char];
+        boxCache[char] = null;
+        const probe = make("svg", {
+            width: 1, height: 1,
+            style: "position:absolute;left:-9999px;top:0;overflow:visible"
+        });
+        const text = make("text", { class: "sheet-glyph", x: 0, y: 0, "font-size": PROBE_SIZE });
+        text.textContent = char;
+        probe.append(text);
+        document.body.append(probe);
+        let box = null;
+        try { box = text.getBBox(); } catch (error) { box = null; }
+        probe.remove();
+        if (box && box.height > 0 && box.width > 0) {
+            const ratio = box.width / box.height;
+            if (ratio > low && ratio < high) boxCache[char] = box;
+        }
+        return boxCache[char];
+    }
+
+    /*
+     * 글리프를 오선 좌표에 앉힌다. right는 글리프의 오른쪽 끝, middle은 가운데 높이,
+     * height는 글리프 테두리의 높이다.
+     */
+    function glyphNode(char, box, right, middle, height) {
+        const scale = height / box.height;
+        const node = make("text", {
+            class: "sheet-glyph",
+            x: 0, y: 0,
+            "font-size": PROBE_SIZE * scale,
+            transform: "translate(" + (right - (box.x + box.width) * scale) + ","
+                + (middle - (box.y + box.height / 2) * scale) + ")"
+        });
+        node.textContent = char;
+        return node;
+    }
 
     function clefNode(x) {
-        const y = yFor(G_LINE_ABS);
-        const group = make("g", { class: "sheet-clef", transform: "translate(" + x + "," + y + ")" });
-        group.append(make("path", { class: "is-bowl", d: CLEF_BOWL }));
-        group.append(make("path", { d: CLEF_PATH }));
-        return group;
+        const box = glyphBox(CLEF_GLYPH, 0.2, 0.62);
+        if (!box) return null;
+        const scale = (CLEF_BOTTOM - CLEF_TOP) / box.height;
+        const node = make("text", {
+            class: "sheet-clef",
+            x: 0, y: 0,
+            "font-size": PROBE_SIZE * scale,
+            transform: "translate(" + (x - box.x * scale) + "," + (CLEF_TOP - box.y * scale) + ")"
+        });
+        node.textContent = CLEF_GLYPH;
+        return node;
     }
+
+    /* 올림표는 두 칸, 내림표는 두 칸 반을 차지한다. */
+    const SHARP_H = STEP_Y * 4;
+    const FLAT_H = STEP_Y * 5;
+
+    /* 높은음자리표에서 조표가 붙는 자리. 붙는 차례대로 적은 음자리 번호다. */
+    const SHARP_SEATS = [38, 35, 39, 36, 33, 37, 34];
+    const FLAT_SEATS = [34, 37, 33, 36, 32, 35, 31];
 
     /*
      * 온음표는 단순한 동그라미가 아니다. 가운데 구멍이 비스듬히 뚫려 있어서
@@ -148,8 +235,13 @@
 
     function render(columns, options) {
         const settings = options || {};
-        const zoom = settings.zoom || 1.9;
-        const width = COLUMN_X + Math.max(1, columns.length) * COLUMN_GAP + 16;
+        /* 악보는 어느 화면에서나 같은 크기여야 하므로 눈금 배율을 하나로 못 박는다. */
+        const zoom = settings.zoom || ZOOM;
+        /* 칸 수가 적어도 오선 길이는 같게 둔다. 짧은 오선이 넓은 자리에 떠 보이지 않게. */
+        const width = Math.max(
+            settings.minWidth || 0,
+            COLUMN_X + Math.max(1, columns.length) * COLUMN_GAP + 16
+        );
 
         /*
          * 위아래 여백을 음표가 닿는 데까지만 남긴다. 임시표는 음표머리보다 위로 더
@@ -182,7 +274,8 @@
         }
         svg.append(staff);
 
-        svg.append(clefNode(18));
+        const clef = clefNode(14);
+        if (clef) svg.append(clef);
 
         columns.forEach((column, index) => {
             const x = COLUMN_X + index * COLUMN_GAP;
@@ -211,7 +304,7 @@
                 shift = previous && note.letterAbs - previous.letterAbs === 1 && shift === 0 ? 15 : 0;
                 group.append(wholeHead(x + shift, y));
                 if (note.accidental !== 0) {
-                    group.append(accidentalNode(note.accidental, x + shift - accidentalWidth(note.accidental) - 4, y));
+                    group.append(accidentalNode(note.accidental, x + shift - HEAD_RX - 3, y));
                 }
             });
             svg.append(group);
@@ -226,6 +319,7 @@
         step: step,
         name: name,
         render: render,
+        keySignatureGroup: keySignatureGroup,
         LETTER_NAMES: LETTER_NAMES,
         LETTER_SEMIS: LETTER_SEMIS
     };

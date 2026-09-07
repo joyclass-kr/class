@@ -23,7 +23,7 @@
 
     Object.keys(VALUES).forEach(name => { VALUES[name].beats = VALUES[name].cells / PER_BEAT; });
 
-    const BEAT_W = 54;
+    const BEAT_W = 74;
     const LEFT = 44;
     const LINE_Y = 62;
     const STEM_TOP = 24;
@@ -191,7 +191,7 @@
         const svg = make("svg", {
             class: "rhythm",
             style: "width:" + Math.round(width * (settings.zoom || 1.6)) + "px",
-            viewBox: "0 8 " + width + " 78",
+            viewBox: "0 11 " + width + " 75",
             role: "img",
             "aria-label": settings.label || "리듬 한 마디"
         });

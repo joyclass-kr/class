@@ -1345,6 +1345,8 @@
 
     /* 보기 악보는 차시가 달라도 같은 크기여야 한다. 한 눈금을 이 배율로 못 박는다. */
     const EXAMPLE_ZOOM = 1.15;
+    /* 어느 보기든 오선 길이를 같게 둔다. 여덟 음 음계가 들어가는 길이다. */
+    const STAFF_UNITS = 366;
 
     const EXAMPLE_SHAPES = [
         { id: "up", label: label("Ascending", "상행") },
@@ -1392,7 +1394,7 @@
 
             caption.textContent = N.name(root) + " " + item.label;
             board.innerHTML = "";
-            board.append(N.render(columns, { label: N.name(root) + " " + item.label, zoom: EXAMPLE_ZOOM }));
+            board.append(N.render(columns, { label: N.name(root) + " " + item.label, zoom: EXAMPLE_ZOOM, minWidth: STAFF_UNITS }));
 
             row.innerHTML = "";
             EXAMPLE_SHAPES.forEach(shape => {
@@ -1551,7 +1553,7 @@
             button.innerHTML = "";
             button.append(N.render(
                 notes.map(note => ({ notes: [note] })),
-                { label: N.name(notes[0]) + " " + item.label, zoom: EXAMPLE_ZOOM }
+                { label: N.name(notes[0]) + " " + item.label, zoom: EXAMPLE_ZOOM, minWidth: STAFF_UNITS }
             ));
             button.onclick = () => playScale(notes, button);
             return notes;
@@ -1658,7 +1660,7 @@
             button.innerHTML = "";
             button.append(N.render(
                 [{ notes: notes }].concat(notes.map(note => ({ notes: [note] }))),
-                { label: name + " " + item.label, zoom: EXAMPLE_ZOOM }
+                { label: name + " " + item.label, zoom: EXAMPLE_ZOOM, minWidth: STAFF_UNITS }
             ));
             button.setAttribute("aria-label", name + " " + item.label);
             button.onclick = () => playChord(notes);
@@ -1850,7 +1852,7 @@
 
     function drawStaff(columns) {
         els.staff.innerHTML = "";
-        els.staff.append(N.render(columns, { label: "문제 악보" }));
+        els.staff.append(N.render(columns, { label: "문제 악보", minWidth: STAFF_UNITS }));
     }
 
     function setupInput(question) {

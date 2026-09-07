@@ -78,34 +78,23 @@
      * 한눈에 보이면 되므로 오선과 자리표는 자리만 차지한다. 글꼴 글리프는
      * 컴퓨터마다 크기가 달라지므로 획을 직접 그린다.
      */
-    const MARK_GAP = 12;
-
-    function sharpMark() {
-        const group = make("g", {});
-        group.append(make("line", { x1: -1.7, y1: -5.4, x2: -1.7, y2: 5.6 }));
-        group.append(make("line", { x1: 1.7, y1: -6.4, x2: 1.7, y2: 4.6 }));
-        group.append(make("line", { class: "is-bar", x1: -3.9, y1: -1.4, x2: 3.9, y2: -2.6 }));
-        group.append(make("line", { class: "is-bar", x1: -3.9, y1: 2.6, x2: 3.9, y2: 1.4 }));
-        return group;
-    }
-
-    function flatMark() {
-        const group = make("g", {});
-        group.append(make("line", { x1: -2, y1: -7, x2: -2, y2: 4.6 }));
-        group.append(make("path", { d: "M-2,-1.2 C2.4,-3.8 5.4,-0.6 2.6,2.4 C1.4,3.6 -0.6,4.4 -2,4.6" }));
-        return group;
-    }
+    /*
+     * 가운데에 붙이는 조표는 청음 악보와 같은 그림을 쓴다. 임시표가 어느 줄과 칸에
+     * 붙는지가 조표의 뜻이므로 오선과 자리표를 함께 두고, 대신 통째로 줄여 작게 놓는다.
+     */
+    const SIG_SCALE = 0.52;
 
     function keySignature(count, sharp) {
-        const group = make("g", { class: "wheel-key-sig" });
-        if (!count) return group;
-        const width = (count - 1) * MARK_GAP;
-        for (let mark = 0; mark < count; mark += 1) {
-            const one = sharp ? sharpMark() : flatMark();
-            one.setAttribute("transform", "translate(" + (mark * MARK_GAP - width / 2) + ",0)");
-            group.append(one);
-        }
-        return group;
+        const holder = make("g", { class: "wheel-key-sig" });
+        if (!window.Notation || !window.Notation.keySignatureGroup) return holder;
+        const sig = window.Notation.keySignatureGroup(count, sharp);
+        const middle = (sig.top + sig.bottom) / 2;
+        sig.node.setAttribute(
+            "transform",
+            "scale(" + SIG_SCALE + ") translate(" + (-sig.width / 2) + "," + (-middle) + ")"
+        );
+        holder.append(sig.node);
+        return holder;
     }
 
     function sectorPath(rIn, rOut, from, to) {
