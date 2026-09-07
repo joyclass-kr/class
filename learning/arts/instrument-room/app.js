@@ -178,13 +178,24 @@
         "drums-808": 4.10
     });
 
+    // Measured peak level of each source file puts closed hi-hat 20+ dB under the
+    // kick/snare in several kits, well past the rest of the kit's spread. Nudge just
+    // that piece back up rather than re-touching the whole kit's printed balance.
+    const DRUM_PIECE_BOOST_DB = Object.freeze({
+        "drums-rock": Object.freeze({ hat: 8 }),
+        "drums-metal": Object.freeze({ hat: 8 }),
+        "drums-pop": Object.freeze({ hat: 8, openhat: 8 }),
+        "drums-funk": Object.freeze({ hat: 8 }),
+        "drums-linn": Object.freeze({ hat: 8 })
+    });
+
     const DRUM_SAMPLE_SETS = Object.freeze({
-        "rock-kit": Object.freeze({ id: "drums-rock", root: "assets/audio/drums-rock/", gainDb: DRUM_KIT_GAIN_DB["drums-rock"] }),
-        "metal-kit": Object.freeze({ id: "drums-metal", root: "assets/audio/drums-metal/", gainDb: DRUM_KIT_GAIN_DB["drums-metal"] }),
-        "pop-kit": Object.freeze({ id: "drums-pop", root: "assets/audio/drums-pop/", gainDb: DRUM_KIT_GAIN_DB["drums-pop"] }),
+        "rock-kit": Object.freeze({ id: "drums-rock", root: "assets/audio/drums-rock/", gainDb: DRUM_KIT_GAIN_DB["drums-rock"], pieceBoostDb: DRUM_PIECE_BOOST_DB["drums-rock"] }),
+        "metal-kit": Object.freeze({ id: "drums-metal", root: "assets/audio/drums-metal/", gainDb: DRUM_KIT_GAIN_DB["drums-metal"], pieceBoostDb: DRUM_PIECE_BOOST_DB["drums-metal"] }),
+        "pop-kit": Object.freeze({ id: "drums-pop", root: "assets/audio/drums-pop/", gainDb: DRUM_KIT_GAIN_DB["drums-pop"], pieceBoostDb: DRUM_PIECE_BOOST_DB["drums-pop"] }),
         "jazz-kit": Object.freeze({ id: "drums-jazz", root: "assets/audio/drums-jazz/", gainDb: DRUM_KIT_GAIN_DB["drums-jazz"] }),
-        "funk-kit": Object.freeze({ id: "drums-funk", root: "assets/audio/drums-funk/", gainDb: DRUM_KIT_GAIN_DB["drums-funk"] }),
-        "linn-machine": Object.freeze({ id: "drums-linn", root: "assets/audio/drums-linn/", gainDb: DRUM_KIT_GAIN_DB["drums-linn"] }),
+        "funk-kit": Object.freeze({ id: "drums-funk", root: "assets/audio/drums-funk/", gainDb: DRUM_KIT_GAIN_DB["drums-funk"], pieceBoostDb: DRUM_PIECE_BOOST_DB["drums-funk"] }),
+        "linn-machine": Object.freeze({ id: "drums-linn", root: "assets/audio/drums-linn/", gainDb: DRUM_KIT_GAIN_DB["drums-linn"], pieceBoostDb: DRUM_PIECE_BOOST_DB["drums-linn"] }),
         "drum-808": Object.freeze({ id: "drums-808", root: "assets/audio/drums-808/", gainDb: DRUM_KIT_GAIN_DB["drums-808"] }),
         "orchestral-percussion": Object.freeze({ id: "orchestral-percussion", root: "assets/audio/orchestral-percussion/", available: Object.freeze(["ride"]), gainDb: Object.freeze({ ride: 3 }) })
     });
@@ -1227,7 +1238,8 @@
             const context = ensureAudio();
             const source = context.createBufferSource();
             const gain = context.createGain();
-            const gainDb = typeof current.gainDb === "number" ? current.gainDb : Number(current.gainDb[id] || 0);
+            const baseGainDb = typeof current.gainDb === "number" ? current.gainDb : Number(current.gainDb[id] || 0);
+            const gainDb = baseGainDb + Number((current.pieceBoostDb && current.pieceBoostDb[id]) || 0);
             source.buffer = sample.buffer;
             const sampledVelocity = Math.max(.08, Math.min(1.2, velocity));
             const koreanPercussion = current.id.indexOf("korean-") === 0;
