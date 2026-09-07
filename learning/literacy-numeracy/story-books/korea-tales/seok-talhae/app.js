@@ -143,7 +143,7 @@ const CHAPTERS = [
                 art: "09-trick.webp",
                 emoji: "⚒️",
                 left: [
-                    "탈해는 한밤중에 그 집 담 밑을 슬슬 파기 시작했어요. 달도 없는 캄캄한 밤이었지요.",
+                    "탈해는 한밤중에 그 집 담 밑을 슬슬 파기 시작했어요. 가느다란 초승달만 걸린 밤이었지요.",
                     "그러고는 판 자리에 숯과 칼 가는 숫돌을 묻었습니다.",
                     "대장간에서나 쓰는 물건들이었지요.",
                     "흙을 도로 덮고 발로 꾹꾹 밟아 두었답니다."
@@ -452,7 +452,7 @@ const EN = {
                     emoji: "⚒️",
                     left: [
                         "In the middle of the night Talhae began digging under that wall.",
-                        "It was pitch dark, with no moon.",
+                        "Only a thin crescent moon hung in the sky.",
                         "In the hole he buried charcoal and a whetstone for sharpening knives.",
                         "They were the things a smithy uses.",
                         "He put the earth back and trod it down hard."
@@ -694,7 +694,7 @@ const EN = {
         ],
         "09-trick.webp": [
             { w: "digging (dig)", k: "파는", s: "Talhae began digging under that wall" },
-            { w: "pitch dark", k: "캄캄한", s: "It was pitch dark, with no moon." },
+            { w: "a thin crescent moon", k: "가느다란 초승달", s: "Only a thin crescent moon hung in the sky." },
             { w: "charcoal", k: "숯", s: "he buried charcoal and a whetstone" },
             { w: "whetstone", k: "숫돌", s: "he buried charcoal and a whetstone for sharpening knives" },
             { w: "sharpening (sharpen)", k: "가는", s: "a whetstone for sharpening knives" },

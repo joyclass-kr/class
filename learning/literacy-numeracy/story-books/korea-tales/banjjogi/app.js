@@ -130,7 +130,7 @@ const CHAPTERS = [
                 left: [
                     "그날 밤 반쪽이가 혼자 마을 어귀로 나갔어요. 제 손으로 호랑이를 잡을 셈이었지요.",
                     "어깨에 커다란 밧줄 한 타래를 메고서요.",
-                    "달도 별도 없는 캄캄한 밤이었지요.",
+                    "보름달이 훤한 밤이었지요.",
                     "\"어흥!\"",
                     "풀숲에서 시퍼런 눈 두 개가 번쩍였어요. 반쪽이는 물러서지 않았답니다."
                 ],
@@ -407,7 +407,7 @@ const EN = {
                         "That night Banjjogi went out to the edge of the village alone.",
                         "He meant to catch the tiger with his own hand.",
                         "He had a great coil of rope over his shoulder.",
-                        "The night was pitch dark, with no moon and no stars.",
+                        "The full moon was bright that night.",
                         { t: "\"Rrraaargh!\"", v: "beast" }
                     ],
                     right: [
@@ -628,7 +628,7 @@ const EN = {
             { w: "the edge of the village", k: "마을 어귀", s: "Banjjogi went out to the edge of the village alone." },
             { w: "meant to ~ (mean)", k: "~할 셈이었다", s: "He meant to catch the tiger with his own hand." },
             { w: "coil", k: "한 타래", s: "He had a great coil of rope over his shoulder." },
-            { w: "pitch dark", k: "캄캄한", s: "The night was pitch dark, with no moon and no stars." },
+            { w: "The full moon", k: "보름달", s: "The full moon was bright that night." },
             { w: "flashed (flash)", k: "번쩍였다", s: "Two blue eyes flashed in the grass." },
             { w: "step back", k: "물러서다", s: "Banjjogi did not step back." },
             { w: "sprang (spring)", k: "덮쳤다", s: "The moment the tiger sprang, he caught it by the scruff." },

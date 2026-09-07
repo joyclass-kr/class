@@ -183,10 +183,11 @@ long shadows.
 ### `05-steal.webp` — 한밤중의 도둑질
 
 ```
-Wide moonlit night scene. On the left, the thief straddles the top of a low
+Wide night scene with NO MOON — the text says there was none. Only faint
+starlight and a pale glimmer far out on the water. On the left, the thief straddles the top of a low
 earthen wall, a bulging sack on his back with the round shape of the mortar
 inside, one leg already over. On the right, the sleeping house with its dark
-paper windows, and beyond it a path leading toward a strip of moonlit sea on the
+paper windows, and beyond it a path leading toward a strip of pale sea on the
 horizon. Deep blue night, tiptoeing tension.
 ```
 
