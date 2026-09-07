@@ -18,7 +18,7 @@
 
     var wrap, layer, svg, tagBox, verdictTag;
     var ribs = [], lungLeft, lungRight, diaphragm, chestFill, airArrow, airText;
-    var jarMembrane, jarBalloonL, jarBalloonR, jarHand;
+    var jarMembrane, jarBalloonL, jarBalloonR, jarHand, jarKnob, jarShineL, jarShineR;
     var volBar, volText, presNeedle, presText, verdict;
     var raf;
 
@@ -145,31 +145,72 @@
 
         tag(120, 46, '종 모형 (고무막 실험)', 'head');
 
-        // 유리종
+        // ── 유리종 ── 실험 기구로 보이게 유리 반사선을 넣는다.
+        // 몸속 그림과 똑같이 생기면 「무엇이 무엇에 해당하는가」를 가르칠 수 없다.
         g.appendChild(el('path', {
-            d: 'M30 120 L30 380 L210 380 L210 120 C210 96 176 82 120 82 C64 82 30 96 30 120 Z',
-            fill: 'rgba(226,232,240,0.07)', stroke: '#cbd5e1', 'stroke-width': 3
+            d: 'M30 122 L30 384 L210 384 L210 122 C210 96 176 80 120 80 C64 80 30 96 30 122 Z',
+            fill: 'rgba(186,230,253,0.06)', stroke: '#cbd5e1', 'stroke-width': 3.5,
+            'stroke-linejoin': 'round'
         }));
-        // 유리관
+        // 유리 반사선 두 줄
         g.appendChild(el('path', {
-            d: 'M120 60 L120 140 M120 140 L92 172 M120 140 L148 172',
-            fill: 'none', stroke: '#cbd5e1', 'stroke-width': 7, 'stroke-linecap': 'round'
+            d: 'M52 134 C48 190 48 260 52 344', fill: 'none',
+            stroke: '#f1f5f9', 'stroke-width': 3.5, 'stroke-linecap': 'round', opacity: 0.5
+        }));
+        g.appendChild(el('path', {
+            d: 'M64 130 C61 176 61 228 64 288', fill: 'none',
+            stroke: '#f1f5f9', 'stroke-width': 2, 'stroke-linecap': 'round', opacity: 0.32
+        }));
+        // 유리종 바닥 테 (두꺼운 유리)
+        g.appendChild(el('rect', { x: 24, y: 380, width: 192, height: 9, rx: 4, fill: '#cbd5e1' }));
+
+        // ── 고무마개와 유리관 ──
+        g.appendChild(el('rect', { x: 96, y: 66, width: 48, height: 20, rx: 5, fill: '#78716c' }));
+        g.appendChild(el('path', {
+            d: 'M120 52 L120 146 M120 146 L94 176 M120 146 L146 176',
+            fill: 'none', stroke: '#e2e8f0', 'stroke-width': 6, 'stroke-linecap': 'round'
         }));
 
-        jarBalloonL = el('ellipse', { fill: 'rgba(244,63,94,0.42)', stroke: '#fda4af', 'stroke-width': 2.5 });
-        jarBalloonR = el('ellipse', { fill: 'rgba(244,63,94,0.42)', stroke: '#fda4af', 'stroke-width': 2.5 });
+        // ── 고무 풍선 두 개 ── 목이 묶여 유리관에 달려 있다
+        jarBalloonL = el('path', { fill: '#f9a8b8', stroke: '#fecdd3', 'stroke-width': 2 });
+        jarBalloonR = el('path', { fill: '#f9a8b8', stroke: '#fecdd3', 'stroke-width': 2 });
         g.appendChild(jarBalloonL);
         g.appendChild(jarBalloonR);
+        // 묶은 자리
+        [94, 146].forEach(function (bx) {
+            g.appendChild(el('rect', { x: bx - 7, y: 172, width: 14, height: 9, rx: 3, fill: '#e2e8f0' }));
+        });
+        // 고무의 빛 반사 점
+        jarShineL = el('ellipse', { rx: 5, ry: 9, fill: '#ffffff', opacity: 0.45 });
+        jarShineR = el('ellipse', { rx: 5, ry: 9, fill: '#ffffff', opacity: 0.45 });
+        g.appendChild(jarShineL);
+        g.appendChild(jarShineR);
 
-        // 고무막
-        jarMembrane = el('path', { fill: 'none', stroke: '#f59e0b', 'stroke-width': 9, 'stroke-linecap': 'round' });
+        // ── 고무막 (유리종 바닥을 막은 고무 시트) ──
+        jarMembrane = el('path', { fill: 'none', stroke: '#f59e0b', 'stroke-width': 11, 'stroke-linecap': 'round' });
         g.appendChild(jarMembrane);
 
-        // 잡아당기는 손
-        jarHand = el('path', { fill: 'none', stroke: '#fbbf24', 'stroke-width': 5, 'stroke-linecap': 'round' });
+        // 잡아당기는 손잡이 (고무막 한가운데에 달린 꼭지)
+        jarHand = el('path', { fill: 'none', stroke: '#fbbf24', 'stroke-width': 6, 'stroke-linecap': 'round' });
         g.appendChild(jarHand);
+        jarKnob = el('circle', { r: 11, fill: '#fbbf24', stroke: '#fef3c7', 'stroke-width': 2.5 });
+        g.appendChild(jarKnob);
 
         tag(8, 470, '고무막 = 가로막 · 풍선 = 폐 · 유리종 = 흉강', 'dim', 'start');
+    }
+
+    /** 목이 묶인 고무 풍선 모양 */
+    function balloonPath(cx, ty, w, h) {
+        return 'M' + cx + ' ' + ty +
+            ' C' + (cx - w * 0.30) + ' ' + (ty + h * 0.16) +
+            ' ' + (cx - w) + ' ' + (ty + h * 0.40) +
+            ' ' + (cx - w) + ' ' + (ty + h * 0.68) +
+            ' C' + (cx - w) + ' ' + (ty + h * 0.98) +
+            ' ' + (cx + w) + ' ' + (ty + h * 0.98) +
+            ' ' + (cx + w) + ' ' + (ty + h * 0.68) +
+            ' C' + (cx + w) + ' ' + (ty + h * 0.40) +
+            ' ' + (cx + w * 0.30) + ' ' + (ty + h * 0.16) +
+            ' ' + cx + ' ' + ty + ' Z';
     }
 
     /* ── 오른쪽: 부피·압력 눈금 ───────────────────────────── */
@@ -273,9 +314,14 @@
         var mDome = -k * 44 + 34;
         jarMembrane.setAttribute('d', 'M30 ' + mY + ' Q120 ' + (mY - mDome) + ' 210 ' + mY);
         jarHand.setAttribute('d', 'M120 ' + (mY - mDome + 6) + ' L120 ' + (mY + 46));
-        var br = 28 + k * 9, bh = 46 + k * 14;
-        setAttrs(jarBalloonL, { cx: 84, cy: 234, rx: br, ry: bh });
-        setAttrs(jarBalloonR, { cx: 156, cy: 234, rx: br, ry: bh });
+        // 풍선은 목이 유리관에 묶여 있으므로 위쪽은 그대로, 아래로 부푼다
+        var bw = 27 + k * 9, bh = 92 + k * 30;
+        jarBalloonL.setAttribute('d', balloonPath(94, 178, bw, bh));
+        jarBalloonR.setAttribute('d', balloonPath(146, 178, bw, bh));
+        setAttrs(jarShineL, { cx: 94 - bw * 0.45, cy: 178 + bh * 0.42 });
+        setAttrs(jarShineR, { cx: 146 - bw * 0.45, cy: 178 + bh * 0.42 });
+        jarKnob.setAttribute('cx', 120);
+        jarKnob.setAttribute('cy', mY + 52);
 
         /* 눈금 */
         volBar.setAttribute('width', Math.max(6, ((volumeL - 1.6) / 2.9) * 170).toFixed(1));
