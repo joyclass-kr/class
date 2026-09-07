@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <style>
+      /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
+      
+      /* Central Nervous System (뇌와 척수 단면) */
+      .cerebrum-cortex { fill: #a855f7; stroke: #7c3aed; stroke-width: 2.8; stroke-linejoin: round; }
+      .cerebrum-sulcus { fill: none; stroke: #6d28d9; stroke-width: 2.2; stroke-linecap: round; }
+      .corpus-callosum { fill: #ddd6fe; stroke: #7c3aed; stroke-width: 2.2; stroke-linejoin: round; }
+      .thalamus-bg { fill: #c4b5fd; stroke: #7c3aed; stroke-width: 2.0; }
+      
+      .midbrain-body { fill: #f59e0b; stroke: #b45309; stroke-width: 2.8; stroke-linejoin: round; }
+      .midbrain-colliculus { fill: #d97706; stroke: #b45309; stroke-width: 1.8; }
+      
+      .cerebellum-bg { fill: #1e293b; stroke: #475569; stroke-width: 2.2; stroke-linejoin: round; opacity: 0.85; }
+      .arbor-vitae { fill: none; stroke: #64748b; stroke-width: 1.8; stroke-linecap: round; }
+      
+      .medulla-body { fill: #34d399; stroke: #059669; stroke-width: 2.8; stroke-linejoin: round; }
+      .medulla-detail { fill: none; stroke: #059669; stroke-width: 2.0; stroke-linecap: round; }
+      .medulla-olive { fill: #059669; stroke: #047857; stroke-width: 1.5; }
+      
+      .spinal-cord-column { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.8; stroke-linejoin: round; }
+      .spinal-nerve-root { fill: none; stroke: #0284c7; stroke-width: 2.2; stroke-linecap: round; }
+      .spinal-gray-matter { fill: #bae6fd; stroke: #0284c7; stroke-width: 1.8; stroke-linejoin: round; }
+      
+      /* Peripheral Example Outlines (네 귀퉁이 보기 그림 윤곽) */
+      .person-body { fill: #334155; fill-opacity: 0.85; stroke: #64748b; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+      .person-line { fill: none; stroke: #64748b; stroke-width: 2.0; stroke-linecap: round; }
+      
+      /* Example Accents: Cerebrum Conscious Action (대뇌 · 의식적 반응) */
+      .thought-spark { fill: none; stroke: #a855f7; stroke-width: 2.4; stroke-linecap: round; }
+      .thought-core { fill: #a855f7; stroke: #7c3aed; stroke-width: 1.8; }
+      .motion-arc { fill: none; stroke: #a855f7; stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 4,4; }
+      
+      /* Example Accents: Midbrain Pupillary Reflex (중간뇌 · 동공 반사) */
+      .eye-sclera { fill: #e2e8f0; stroke: #64748b; stroke-width: 2.6; stroke-linejoin: round; }
+      .eye-iris { fill: #f59e0b; stroke: #b45309; stroke-width: 2.4; }
+      .eye-pupil { fill: #090d16; stroke: #000000; stroke-width: 1.5; }
+      .light-ray { fill: #fef08a; fill-opacity: 0.35; stroke: #f59e0b; stroke-width: 2.0; stroke-dasharray: 5,4; }
+      .torch-body { fill: #94a3b8; stroke: #64748b; stroke-width: 2.2; stroke-linejoin: round; }
+      .torch-lens { fill: #fde047; stroke: #ca8a04; stroke-width: 2.0; }
+      .pupil-arrow { fill: none; stroke: #b45309; stroke-width: 2.0; stroke-linecap: round; }
+      
+      /* Example Accents: Medulla Sneezing Reflex (연수 · 재채기/기침/침 분비) */
+      .sneeze-blast { fill: none; stroke: #34d399; stroke-width: 2.4; stroke-linecap: round; }
+      .sneeze-droplet { fill: #34d399; stroke: #059669; stroke-width: 1.6; }
+      .tickle-spark { fill: none; stroke: #f59e0b; stroke-width: 2.0; stroke-linecap: round; }
+      
+      /* Example Accents: Spinal Knee-Jerk Reflex (척수 · 무릎 반사) */
+      .hammer-head { fill: #94a3b8; stroke: #475569; stroke-width: 2.4; stroke-linejoin: round; }
+      .hammer-handle { fill: #cbd5e1; stroke: #64748b; stroke-width: 2.4; stroke-linecap: round; }
+      .tap-spark { fill: none; stroke: #38bdf8; stroke-width: 2.4; stroke-linecap: round; }
+      .knee-kick-arc { fill: none; stroke: #38bdf8; stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 5,4; }
+      .kicked-leg { fill: none; stroke: #38bdf8; stroke-width: 2.4; stroke-dasharray: 5,4; stroke-linecap: round; stroke-linejoin: round; opacity: 0.7; }
+      
+      /* Connecting Neural Tracks */
+      .track-cerebrum { fill: none; stroke: #a855f7; stroke-width: 2.0; stroke-dasharray: 6,6; opacity: 0.55; }
+      .track-midbrain { fill: none; stroke: #f59e0b; stroke-width: 2.0; stroke-dasharray: 6,6; opacity: 0.55; }
+      .track-medulla { fill: none; stroke: #34d399; stroke-width: 2.0; stroke-dasharray: 6,6; opacity: 0.55; }
+      .track-spinal { fill: none; stroke: #38bdf8; stroke-width: 2.0; stroke-dasharray: 6,6; opacity: 0.55; }
+    </style>
+  </defs>
+
+  <!-- ================================================================= -->
+  <!-- 0. VISIBLE CONNECTING PATHWAYS (중추 ➔ 대표 사례 점선 유도선)      -->
+  <!-- ================================================================= -->
+  <g>
+    <!-- Cerebrum ➔ Hand Track (Purple) -->
+    <path class="track-cerebrum" d="M 450,150 C 350,140 280,115 160,85" />
+    <!-- Midbrain ➔ Eye Track (Amber) -->
+    <path class="track-midbrain" d="M 525,285 C 610,260 680,210 755,165" />
+    <!-- Medulla ➔ Sneeze Track (Emerald) -->
+    <path class="track-medulla" d="M 525,385 C 610,410 670,460 750,520" />
+    <!-- Spinal Cord ➔ Knee Track (Sky Blue) -->
+    <path class="track-spinal" d="M 480,530 C 390,530 305,525 215,525" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 1. CENTER SECTION: BRAIN & SPINAL CORD (x 370 ~ 630)              -->
+  <!-- ================================================================= -->
+
+  <!-- Cerebellum (소뇌: 후두엽 아래 뒤통수 쪽, 정밀 운동/평형 감각 보조 - 중립적 배경) -->
+  <g id="cerebellumBg">
+    <path class="cerebellum-bg"
+          d="M 535,235
+             C 565,230 605,250 622,280
+             C 638,310 635,350 618,380
+             C 598,405 565,412 530,398
+             C 525,370 524,330 528,290
+             Z" />
+    <!-- Cerebellar folia (나무 모양 주름선) -->
+    <path class="arbor-vitae" d="M 545,265 C 570,270 598,280 610,295" />
+    <path class="arbor-vitae" d="M 540,305 C 568,310 595,325 608,345" />
+    <path class="arbor-vitae" d="M 540,345 C 562,352 585,365 595,380" />
+  </g>
+
+  <!-- 1) Cerebrum (대뇌, id="cerebrum", #a855f7) -->
+  <!-- ★ CRITICAL EXAM POINT: 감각, 언어, 기억, 의식적 반응(마음먹고 하는 움직임)의 최고 중추 -->
+  <g id="cerebrum">
+    <!-- Anatomical Sagittal Cerebral Hemisphere Cortex Dome -->
+    <!-- Frontal lobe on left, Parietal on top, Occipital on right, Temporal on lower-left -->
+    <path class="cerebrum-cortex"
+          d="M 455,230
+             C 435,235 415,225 402,205
+             C 388,175 392,130 422,95
+             C 458,55 520,45 570,68
+             C 620,92 636,145 625,195
+             C 615,225 578,235 538,235
+             C 528,235 522,225 512,215
+             C 495,215 475,225 455,230
+             Z" />
+
+    <!-- Corpus Callosum (뇌들보 / 뇌량: 좌우 반구 연결 C자형 백질 아치) -->
+    <path class="corpus-callosum"
+          d="M 445,182
+             C 440,152 472,132 515,132
+             C 555,132 582,152 582,178
+             C 582,190 570,196 558,186
+             C 542,170 522,166 502,166
+             C 480,166 460,174 452,190
+             Z" />
+
+    <!-- Thalamus / Diencephalon (간뇌 / 시상: 항상성 중추 바로 윗부분) -->
+    <ellipse class="thalamus-bg" cx="508" cy="198" rx="26" ry="16" />
+
+    <!-- Characteristic Cerebral Sulci / Fissures (대뇌 고유 겉질 주름선) -->
+    <path class="cerebrum-sulcus" d="M 430,105 C 455,120 480,110 505,92" />
+    <path class="cerebrum-sulcus" d="M 405,150 C 430,160 460,148 485,152" />
+    <path class="cerebrum-sulcus" d="M 495,70 C 522,85 550,75 572,62" />
+    <path class="cerebrum-sulcus" d="M 535,102 C 562,116 588,106 612,92" />
+    <path class="cerebrum-sulcus" d="M 552,145 C 578,155 600,145 618,132" />
+    <path class="cerebrum-sulcus" d="M 572,188 C 595,198 612,190 622,180" />
+    <path class="cerebrum-sulcus" d="M 418,202 C 438,210 458,208 476,198" />
+  </g>
+
+  <!-- 2) Midbrain (중간뇌, id="midbrain", #f59e0b) -->
+  <!-- ★ CRITICAL EXAM POINT: 동공 반사, 안구 운동의 중추 (무조건 반사) -->
+  <g id="midbrain">
+    <path class="midbrain-body"
+          d="M 482,235
+             C 502,232 518,232 530,235
+             L 528,325
+             L 472,325
+             C 472,295 476,265 482,235
+             Z" />
+    <!-- Superior Colliculi (상구: 시각 반사/동공 반사의 중추 신경핵) -->
+    <circle class="midbrain-colliculus" cx="518" cy="265" r="7.5" />
+    <circle class="midbrain-colliculus" cx="516" cy="295" r="6.5" />
+    <path d="M 495,248 C 494,270 494,295 492,318" fill="none" stroke="#b45309" stroke-width="2.0" stroke-linecap="round" />
+  </g>
+
+  <!-- 3) Medulla (연수, id="medulla", #34d399) -->
+  <!-- ★ CRITICAL EXAM POINT: 재채기, 기침, 하품, 침 분비, 호흡/심장/소화 운동의 중추 (무조건 반사) -->
+  <g id="medulla">
+    <path class="medulla-body"
+          d="M 472,325
+             L 528,325
+             L 522,435
+             L 478,435
+             C 468,400 468,360 472,325
+             Z" />
+    <!-- Medullary Fissure & Olive (피라미드 및 올리브핵) -->
+    <path class="medulla-detail" d="M 500,330 L 500,430" />
+    <ellipse class="medulla-olive" cx="488" cy="380" rx="5" ry="12" />
+    <ellipse class="medulla-olive" cx="512" cy="380" rx="5" ry="12" />
+  </g>
+
+  <!-- 4) Spinal Cord (척수, id="spinalCord", #38bdf8) -->
+  <!-- ★ CRITICAL EXAM POINT: 무릎 반사, 회피 반사(뜨겁거나 뾰족한 것)의 중추 (무조건 반사) -->
+  <g id="spinalCord">
+    <path class="spinal-cord-column"
+          d="M 478,435
+             L 522,435
+             L 522,645
+             C 522,655 516,660 500,660
+             C 484,660 478,655 478,645
+             Z" />
+
+    <!-- Central Spinal Gray Matter (척수 내부 나비 모양 회백질) -->
+    <path class="spinal-gray-matter"
+          d="M 492,470 C 489,480 489,490 492,500 C 496,496 500,496 504,500 C 507,490 507,480 504,470 C 500,474 496,474 492,470 Z" />
+    <path class="spinal-gray-matter"
+          d="M 492,535 C 489,545 489,555 492,565 C 496,561 500,561 504,565 C 507,555 507,545 504,535 C 500,539 496,539 492,535 Z" />
+    <path class="spinal-gray-matter"
+          d="M 492,600 C 489,610 489,620 492,630 C 496,626 500,626 504,630 C 507,620 507,610 504,600 C 500,604 496,604 492,600 Z" />
+
+    <!-- Spinal Nerve Rootlets (좌우로 뻗는 척수신경 뿌리들) -->
+    <line class="spinal-nerve-root" x1="478" y1="465" x2="462" y2="470" />
+    <line class="spinal-nerve-root" x1="522" y1="465" x2="538" y2="470" />
+    <line class="spinal-nerve-root" x1="478" y1="510" x2="462" y2="515" />
+    <line class="spinal-nerve-root" x1="522" y1="510" x2="538" y2="515" />
+    <line class="spinal-nerve-root" x1="478" y1="555" x2="462" y2="560" />
+    <line class="spinal-nerve-root" x1="522" y1="555" x2="538" y2="560" />
+    <line class="spinal-nerve-root" x1="478" y1="600" x2="462" y2="605" />
+    <line class="spinal-nerve-root" x1="522" y1="600" x2="538" y2="605" />
+    <line class="spinal-nerve-root" x1="478" y1="635" x2="462" y2="640" />
+    <line class="spinal-nerve-root" x1="522" y1="635" x2="538" y2="640" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 2. FOUR CORNERS: EXAMPLE ACTIONS (네 귀퉁이 대표 보기 그림)        -->
+  <!-- ================================================================= -->
+
+  <!-- Top-Left: Person Raising Hand (손을 드는 사람, id="handExample") -->
+  <!-- ★ CEREBRUM: Conscious voluntary response (마음먹고 하는 움직임) -->
+  <g id="handExample">
+    <!-- Seated Student / Upper Body Torso -->
+    <path class="person-body"
+          d="M 100,285
+             C 105,245 125,220 155,212
+             L 190,212
+             C 215,220 230,242 238,285
+             Z" />
+
+    <!-- Head & Expressive Friendly Face Profile -->
+    <path class="person-body"
+          d="M 160,212
+             L 160,185
+             C 142,180 135,165 135,145
+             C 135,115 152,95 182,95
+             C 208,95 224,115 224,142
+             C 224,162 215,178 198,185
+             L 198,212
+             Z" />
+    <!-- Facial Features: Eye, Nose, Smile -->
+    <circle cx="204" cy="135" r="2.8" fill="#64748b" />
+    <path class="person-line" d="M 212,140 L 220,146 L 210,150" />
+    <path class="person-line" d="M 205,160 C 210,162 215,158 218,154" />
+    <!-- Ear -->
+    <path class="person-line" d="M 165,142 C 160,142 160,152 165,153" />
+
+    <!-- Raised Arm & Hand (손을 높이 든 자연스러운 팔과 손) -->
+    <path class="person-body"
+          d="M 152,212
+             C 135,185 118,145 106,105
+             C 100,82 92,62 88,48
+             C 94,48 98,55 100,65
+             C 104,50 110,50 111,62
+             C 114,54 118,55 118,68
+             C 121,62 125,64 125,76
+             C 125,92 120,115 125,135
+             C 132,160 148,185 168,202
+             Z" />
+
+    <!-- Thought Bulb / Conscious Decision Sparks (#a855f7) -->
+    <path class="thought-spark" d="M 182,75 L 182,60" />
+    <path class="thought-spark" d="M 202,80 L 214,70" />
+    <path class="thought-spark" d="M 162,80 L 150,70" />
+    <circle class="thought-core" cx="182" cy="52" r="5.0" />
+
+    <!-- Voluntary Motion Action Arcs -->
+    <path class="motion-arc" d="M 72,55 C 65,80 70,110 82,135" />
+    <path class="motion-arc" d="M 60,65 C 52,95 58,125 70,150" />
+  </g>
+
+  <!-- Top-Right: Eye with Constricted Pupil (동공이 작아진 눈, id="eyeExample") -->
+  <!-- ★ MIDBRAIN: Pupillary reflex (동공 반사 - 강한 빛에 동공 축소) -->
+  <g id="eyeExample">
+    <!-- Eyelid Contour & Sclera (#e2e8f0, #64748b) -->
+    <path class="eye-sclera"
+          d="M 720,165
+             C 755,110 845,110 895,165
+             C 845,220 755,220 720,165
+             Z" />
+
+    <!-- Eyelid Creases & Eyelashes -->
+    <path class="person-line" d="M 710,160 C 755,98 855,98 905,158" stroke-width="2.6" />
+    <path class="person-line" d="M 735,185 C 775,230 850,230 885,185" stroke-width="2.0" />
+
+    <!-- Iris (홍채: #f59e0b matching midbrain!) -->
+    <circle class="eye-iris" cx="808" cy="165" r="40" />
+
+    <!-- Constricted Small Pupil (빛 자극으로 뚜렷하게 작아진 동공: pitch black) -->
+    <circle class="eye-pupil" cx="808" cy="165" r="10" />
+    <!-- Glint of reflection -->
+    <circle cx="804" cy="161" r="2.8" fill="#ffffff" />
+
+    <!-- Pupillary Sphincter Muscle Constriction Inward Vectors -->
+    <path class="pupil-arrow" d="M 808,132 L 808,145" />
+    <polygon points="808,148 805,142 811,142" fill="#b45309" />
+    <path class="pupil-arrow" d="M 808,198 L 808,185" />
+    <polygon points="808,182 805,188 811,188" fill="#b45309" />
+    <path class="pupil-arrow" d="M 775,165 L 788,165" />
+    <polygon points="791,165 785,162 785,168" fill="#b45309" />
+    <path class="pupil-arrow" d="M 841,165 L 828,165" />
+    <polygon points="825,165 831,162 831,168" fill="#b45309" />
+
+    <!-- Flashlight Stimulus Shining Bright Light Beam (#fde047, #f59e0b) -->
+    <polygon class="light-ray" points="930,135 885,150 895,178 930,195" />
+    <path class="torch-body" d="M 945,140 L 930,140 L 930,190 L 945,190 Z" />
+    <path class="torch-body" d="M 945,148 L 980,148 L 980,182 L 945,182 Z" />
+    <line class="torch-lens" x1="930" y1="140" x2="930" y2="190" />
+    <!-- Light Ray Lines -->
+    <line x1="930" y1="150" x2="880" y2="158" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" />
+    <line x1="930" y1="165" x2="870" y2="165" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" />
+    <line x1="930" y1="180" x2="880" y2="172" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" />
+  </g>
+
+  <!-- Bottom-Right: Sneezing Nose and Mouth (재채기하는 코와 입, id="sneezeExample") -->
+  <!-- ★ MEDULLA: Sneezing, coughing, salivation reflex (재채기·기침·침 분비 반사) -->
+  <g id="sneezeExample">
+    <!-- Natural Anatomical Human Profile in Forceful Sneeze -->
+    <path class="person-body"
+          d="M 700,420
+             C 715,445 730,465 745,478
+             C 756,488 768,495 780,495
+             C 788,495 788,505 780,510
+             C 770,510 766,502 762,506
+             C 760,515 765,525 760,532
+             L 738,538
+             C 732,552 742,568 758,572
+             C 768,574 772,566 770,578
+             C 765,600 740,615 715,620
+             L 695,645
+             Z" />
+
+    <!-- Squinting Closed Eye during sneeze -->
+    <path class="person-line" d="M 724,452 L 735,458 L 724,464" />
+    <!-- Nostril Flaring -->
+    <ellipse cx="770" cy="505" rx="4" ry="2.5" fill="#1e293b" />
+
+    <!-- Wide Open Sneezing Mouth Cavity -->
+    <path d="M 748,534 C 718,540 714,560 745,570 C 730,560 734,544 748,534 Z" fill="#090d16" stroke="#64748b" stroke-width="1.8" />
+    <!-- Teeth -->
+    <rect x="740" y="534" width="7" height="5" rx="1" fill="#e2e8f0" />
+    <rect x="738" y="565" width="7" height="5" rx="1" fill="#e2e8f0" />
+
+    <!-- Irritant Stimulus: Pepper particles & Tickle Sparks (#f59e0b) -->
+    <circle cx="798" cy="492" r="3.6" fill="#f59e0b" />
+    <circle cx="808" cy="486" r="2.8" fill="#f59e0b" />
+    <circle cx="806" cy="500" r="3.2" fill="#f59e0b" />
+    <path class="tickle-spark" d="M 792,485 L 785,478" />
+    <path class="tickle-spark" d="M 805,478 L 812,470" />
+    <path class="tickle-spark" d="M 814,495 L 822,498" />
+
+    <!-- Explosive Sneeze Gust Shockwaves (#34d399 matching medulla!) -->
+    <path class="sneeze-blast" d="M 795,512 C 835,505 875,518 915,502" />
+    <path class="sneeze-blast" d="M 775,538 C 830,538 885,548 935,532" />
+    <path class="sneeze-blast" d="M 765,568 C 820,572 870,588 918,576" />
+
+    <!-- Sneeze Droplet Aerosols & Saliva Spray (#34d399, #059669) -->
+    <circle class="sneeze-droplet" cx="845" cy="508" r="4.2" />
+    <circle class="sneeze-droplet" cx="890" cy="525" r="5.0" />
+    <circle class="sneeze-droplet" cx="930" cy="512" r="4.0" />
+    <circle class="sneeze-droplet" cx="865" cy="550" r="4.5" />
+    <circle class="sneeze-droplet" cx="905" cy="562" r="4.8" />
+    <circle class="sneeze-droplet" cx="945" cy="542" r="3.8" />
+    <circle class="sneeze-droplet" cx="880" cy="585" r="4.0" />
+  </g>
+
+  <!-- Bottom-Left: Knee Tapped by Hammer (무릎을 친 다리, id="kneeExample") -->
+  <!-- ★ SPINAL CORD: Knee-jerk reflex (무릎 반사 - 슬개건 타격 시 다리 들림) -->
+  <g id="kneeExample">
+    <!-- Natural Contoured Human Thigh & Lower Leg -->
+    <path class="person-body"
+          d="M 50,475
+             L 165,475
+             C 195,475 215,492 215,512
+             C 215,524 210,534 204,544
+             C 206,552 206,565 204,580
+             C 200,610 196,635 192,652
+             C 188,660 178,665 168,665
+             C 158,665 155,658 155,650
+             C 156,625 150,575 154,555
+             C 156,544 148,536 138,536
+             L 50,536
+             Z" />
+
+    <!-- Patella (무릎뼈) & Patellar Tendon (슬개건 타격 자리) -->
+    <path d="M 204,495 C 214,505 212,520 200,528" fill="none" stroke="#e2e8f0" stroke-width="3.2" stroke-linecap="round" />
+    <!-- Tendon target strike spot -->
+    <ellipse cx="196" cy="535" rx="5.5" ry="3.5" fill="#38bdf8" opacity="0.85" />
+
+    <!-- Percussion Reflex Hammer (타진기 망치: #94a3b8, #cbd5e1) -->
+    <!-- Metallic Handle -->
+    <line class="hammer-handle" x1="275" y1="462" x2="225" y2="522" />
+    <!-- Triangular Rubber Head Striking the Patellar Tendon -->
+    <path class="hammer-head"
+          d="M 220,510
+             L 236,524
+             L 212,550
+             L 196,536
+             Z" />
+
+    <!-- Strike Impact Sparks (#38bdf8 matching spinal cord!) -->
+    <path class="tap-spark" d="M 198,525 L 190,517" />
+    <path class="tap-spark" d="M 188,535 L 178,535" />
+    <path class="tap-spark" d="M 194,546 L 186,555" />
+
+    <!-- Kicked Up Leg Ghost Trail (반사적으로 튀어 오르는 다리 잔상) -->
+    <path class="kicked-leg"
+          d="M 204,544
+             L 265,585
+             C 272,590 272,598 266,604
+             C 258,608 250,604 246,598
+             L 186,555" />
+
+    <!-- Upward Kick Dynamic Motion Arc with Arrowhead -->
+    <path class="knee-kick-arc" d="M 185,625 C 215,615 240,585 248,552" />
+    <polygon points="248,546 242,556 252,558" fill="#38bdf8" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- 3. INVISIBLE GUIDE PATHS (안내선 4종: fill="none" stroke="none")   -->
+  <!-- ================================================================= -->
+
+  <!-- 1. flowCerebrum: 대뇌 ➔ 손을 드는 사람 (중추에서 보기 그림으로 가는 길) -->
+  <path id="flowCerebrum" fill="none" stroke="none"
+        d="M 450,150
+           C 350,140 280,115 160,85" />
+
+  <!-- 2. flowMidbrain: 중간뇌 ➔ 눈 (동공이 작아진 모습) -->
+  <path id="flowMidbrain" fill="none" stroke="none"
+        d="M 510,285
+           C 605,255 680,210 765,165" />
+
+  <!-- 3. flowMedulla: 연수 ➔ 코와 입 (재채기) -->
+  <path id="flowMedulla" fill="none" stroke="none"
+        d="M 505,380
+           C 600,400 670,450 760,520" />
+
+  <!-- 4. flowSpinal: 척수 ➔ 다리 (무릎 반사) -->
+  <path id="flowSpinal" fill="none" stroke="none"
+        d="M 495,530
+           C 390,530 305,525 215,525" />
+
+</svg>
