@@ -90,3 +90,44 @@
     font-size: 13px;
     text-align: center;
 }
+
+/* ── 관절과 길항근 2D 도식 (joint-arm.js) ─────────────────── */
+.joint-layer {
+    position: absolute;
+    inset: 0;
+    background: #070b16;
+    z-index: 3;
+    padding: 50px 10px 8px;
+}
+
+.joint-layer[hidden] { display: none !important; }
+
+.joint-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.joint-stage svg { width: 100%; height: 100%; display: block; }
+
+.joint-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.joint-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 4px 10px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    color: #e2e8f0;
+    font-size: 13.5px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.joint-tag[data-for="biceps"] { border-color: #e11d48; color: #fda4af; }
+.joint-tag[data-for="triceps"] { border-color: #0284c7; color: #7dd3fc; }
