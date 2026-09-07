@@ -24,7 +24,7 @@
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
 
-    var wrap, layer, svg;
+    var wrap, layer, svg, tagLayer;
     var vessel, vesselGlow, sweatDrops = [], hairs = [], hairMuscles = [], shivers = [];
     var heatArrows = [], glandFill;
     var titleText, orderText, verdictBox, verdictText, lossBar, lossText, makeBar, makeText;
@@ -36,6 +36,8 @@
         addSceneButton();
         buildLayer();
         watchControls();
+        window.addEventListener('resize', placeTags);
+        setTimeout(placeTags, 120);
         requestAnimationFrame(loop);
     }
 
@@ -67,6 +69,7 @@
 
     function setVisible(on) {
         layer.hidden = !on;
+        if (on) { setTimeout(placeTags, 0); setTimeout(placeTags, 80); }
         var canvas = document.getElementById('homeostasisCanvas');
         // 다른 덧그림이 켜져 있으면 캔버스는 감춘 채로 둔다
         if (canvas && on) canvas.style.visibility = 'hidden';
@@ -96,6 +99,12 @@
         svg = el('svg', { viewBox: '0 0 1000 560', preserveAspectRatio: 'xMidYMid meet' });
         layer.appendChild(svg);
 
+        // 글씨는 그림 안에 넣지 않는다. 그림 안 글씨는 창이 커지면 같이 커져서
+        // 옆의 다른 글씨와 크기가 어긋난다. HTML 로 얹어야 어디서나 같다.
+        tagLayer = document.createElement('div');
+        tagLayer.className = 'skin-tags';
+        layer.appendChild(tagLayer);
+
         drawSkin();
         drawPanel();
     }
@@ -104,17 +113,16 @@
         var g = el('g');
         svg.appendChild(g);
 
-        titleText = text(330, 44, '', 16, '#f8fafc', 800);
-        g.appendChild(titleText);
+        titleText = tag(330, 44, '', 'head');
 
         // 피부 세 겹
         g.appendChild(el('rect', { x: 60, y: 120, width: 560, height: 52, fill: '#fcd9b6', stroke: '#e7b98d', 'stroke-width': 2 }));
         g.appendChild(el('rect', { x: 60, y: 172, width: 560, height: 176, fill: '#f6c3a0', stroke: '#e7b98d', 'stroke-width': 2 }));
         g.appendChild(el('rect', { x: 60, y: 348, width: 560, height: 96, fill: '#fde68a', stroke: '#e7b98d', 'stroke-width': 2, opacity: 0.75 }));
 
-        g.appendChild(text(96, 152, '표피', 13, '#7c2d12', 800, 'start'));
-        g.appendChild(text(96, 196, '진피', 13, '#7c2d12', 800, 'start'));
-        g.appendChild(text(96, 374, '피하 지방', 13, '#7c2d12', 800, 'start'));
+        tag(96, 152, '표피', 'skin', 'start');
+        tag(96, 196, '진피', 'skin', 'start');
+        tag(96, 374, '피하 지방', 'skin', 'start');
 
         // 털 (표피 위)
         [180, 300, 420, 520].forEach(function (x) {
@@ -171,32 +179,27 @@
         var g = el('g', { transform: 'translate(680, 0)' });
         svg.appendChild(g);
 
-        g.appendChild(text(0, 62, '몸이 내리는 명령', 17, '#f8fafc', 800, 'start'));
-        g.appendChild(text(0, 92, '간뇌 시상하부가 시킵니다', 13, '#94a3b8', 700, 'start'));
+        tag(680, 62, '몸이 내리는 명령', 'head', 'start');
+        tag(680, 92, '간뇌 시상하부가 시킵니다', 'dim', 'start');
 
         orderText = el('g');
         g.appendChild(orderText);
 
         // 열을 내보내는 양
-        g.appendChild(text(0, 322, '내보내는 열', 13.5, '#cbd5e1', 700, 'start'));
+        tag(680, 322, '내보내는 열', '', 'start');
         g.appendChild(el('rect', { x: 0, y: 334, width: 260, height: 22, rx: 7, fill: 'rgba(148,163,184,0.18)' }));
         lossBar = el('rect', { x: 0, y: 334, width: 120, height: 22, rx: 7, fill: '#f97316' });
         g.appendChild(lossBar);
-        lossText = text(0, 376, '', 13, '#fdba74', 800, 'start');
-        g.appendChild(lossText);
+        lossText = tag(680, 376, '', 'warm', 'start');
 
         // 열을 만드는 양
-        g.appendChild(text(0, 412, '만들어 내는 열', 13.5, '#cbd5e1', 700, 'start'));
+        tag(680, 412, '만들어 내는 열', '', 'start');
         g.appendChild(el('rect', { x: 0, y: 424, width: 260, height: 22, rx: 7, fill: 'rgba(148,163,184,0.18)' }));
         makeBar = el('rect', { x: 0, y: 424, width: 120, height: 22, rx: 7, fill: '#facc15' });
         g.appendChild(makeBar);
-        makeText = text(0, 466, '', 13, '#fde68a', 800, 'start');
-        g.appendChild(makeText);
+        makeText = tag(680, 466, '', 'hot', 'start');
 
-        verdictBox = el('rect', { x: 40, y: 500, width: 920, height: 40, rx: 12, fill: 'rgba(6,10,24,0.85)', 'stroke-width': 1.6 });
-        svg.appendChild(verdictBox);
-        verdictText = text(500, 526, '', 14.5, '#f8fafc', 800);
-        svg.appendChild(verdictText);
+        verdictText = tag(500, 520, '', 'verdict');
     }
 
     function watchControls() {
@@ -213,6 +216,7 @@
         }
         t0 = nowMs();          // 멈춰 있는 동안은 시계도 멈춘다
         render();
+        placeTags();
         requestAnimationFrame(loop);
     }
 
@@ -294,13 +298,16 @@
                 : ['피부 혈관 보통', '땀 조금', '털세움근 보통', '떨림 없음']);
         var color = hot ? '#fb923c' : (cold ? '#38bdf8' : '#94a3b8');
         while (orderText.firstChild) orderText.removeChild(orderText.firstChild);
+        if (!orderTags.length) {
+            for (var oi = 0; oi < 4; oi++) orderTags.push(tag(694, 124 + oi * 44 + 17, '', '', 'start'));
+        }
         orders.forEach(function (o, i) {
             var y = 124 + i * 44;
             orderText.appendChild(el('rect', {
                 x: 0, y: y, width: 260, height: 34, rx: 9,
                 fill: 'rgba(15,23,42,0.85)', stroke: color, 'stroke-width': 1.5
             }));
-            orderText.appendChild(text(14, y + 23, o, 13.5, '#f8fafc', 800, 'start'));
+            orderTags[i].textContent = o;
         });
 
         /* 열 막대 */
@@ -317,16 +324,46 @@
         else if (cold) line = '추움 ➔ 간뇌 시상하부 ➔ 피부 혈관 수축 · 몸 떨림 ➔ 열을 덜 내보내고 더 만들어 체온이 올라갑니다';
         else line = '슬라이더로 바깥 기온을 바꿔 보세요. 피부 혈관과 땀, 털이 어떻게 달라지는지 보입니다.';
         verdictText.textContent = line;
-        verdictText.setAttribute('fill', color);
-        verdictBox.setAttribute('stroke', color);
+        verdictText.style.color = color;
+        verdictText.style.borderColor = color;
+    }
+
+    /* ── 이름표 (HTML) ─────────────────────────────────────
+       그림 좌표에 얹되 글씨 크기는 화면 기준으로 고정한다. */
+    var TAGS = [], orderTags = [];
+
+    function tag(x, y, str, cls, anchor) {
+        var e = document.createElement('span');
+        e.className = 'skin-tag' + (cls ? ' ' + cls : '');
+        e.textContent = str || '';
+        e.dataset.anchor = anchor || 'middle';
+        tagLayer.appendChild(e);
+        TAGS.push({ el: e, x: x, y: y });
+        return e;
+    }
+
+    function placeTags() {
+        if (!svg || !tagLayer || !layer || layer.hidden) return;
+        var box = svg.getBoundingClientRect();
+        if (!box.width) return;
+        var vb = svg.viewBox.baseVal;
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var lb = tagLayer.getBoundingClientRect();
+        var offX = (box.left - lb.left) + (box.width - vb.width * k) / 2;
+        var offY = (box.top - lb.top) + (box.height - vb.height * k) / 2;
+        TAGS.forEach(function (t) {
+            t.el.style.left = (offX + t.x * k) + 'px';
+            t.el.style.top = (offY + t.y * k) + 'px';
+        });
     }
 
     /* ── 도우미 ───────────────────────────────────────────── */
 
+    /** 그림 위 딱지: 테두리 상자는 그림에, 글씨는 이름표로 */
     function tagBox(x, y, str, color) {
         var g = el('g');
         g.appendChild(el('rect', { x: x - 44, y: y - 15, width: 88, height: 26, rx: 8, fill: 'rgba(6,10,24,0.86)', stroke: color, 'stroke-width': 1.4 }));
-        g.appendChild(text(x, y + 4, str, 13, '#f8fafc', 800));
+        tag(x, y, str, 'pin');
         return g;
     }
 
@@ -336,15 +373,6 @@
         return n;
     }
 
-    function text(x, y, str, size, fill, weight, anchor) {
-        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
-        var n = el('text', {
-            x: x, y: y, fill: fill, 'font-size': size, 'font-weight': weight || 700,
-            'font-family': 'Pretendard, sans-serif', 'text-anchor': anchor || 'middle'
-        });
-        n.textContent = str;
-        return n;
-    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
