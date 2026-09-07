@@ -96,22 +96,34 @@ def place(paths, target):
 
 
 def compose_yeon():
-    """硏 = 石(研의 왼쪽 부수 획을 그대로) + 幵(KanjiVG 글자를 오른쪽에 앉힘)."""
-    stone = strokes_of('研')[:5]
-    right_of_research = strokes_of('研')[5:]
-    target = box(right_of_research)
-    gyeon = place(strokes_of('幵'), target)
-    return stone + gyeon
+    """硏(11획) = 石(研의 왼쪽 부수 획 그대로) + 幵(KanjiVG 글자를 오른쪽에 앉힘)."""
+    return strokes_of('研')[:5] + place(strokes_of('幵'), box(strokes_of('研')[5:]))
+
+
+def compose_gae():
+    """槪(15획) = 木(概의 왼쪽 부수 획 그대로) + 皀 + 旡.
+
+    概의 오른쪽은 旣가 아니라 旣에서 한 획이 준 既(10획)라, 皀(7획)와 旡(4획)를
+    概가 그 둘을 놓았던 자리에 각각 앉혀 우리 자형의 15획을 만든다.
+    """
+    base = strokes_of('概')
+    tree, left_slot, right_slot = base[:4], box(base[4:9]), box(base[9:])
+    return tree + place(strokes_of('皀'), left_slot) + place(strokes_of('旡'), right_slot)
+
+
+COMPOSED = {'硏': compose_yeon, '槪': compose_gae}
 
 
 def main():
     strokes_path = os.path.join(ROOT, 'scripts/hanja-strokes.json')
     strokes = json.load(io.open(strokes_path, encoding='utf-8'))
-    strokes['硏'] = compose_yeon()
+    for character, build in COMPOSED.items():
+        strokes[character] = build()
+        print(f'{character} 필순 {len(strokes[character])}획을 부품 글자에서 옮겨 붙였습니다.')
     with io.open(strokes_path, 'w', encoding='utf-8') as stream:
         json.dump(strokes, stream, ensure_ascii=False, indent=2)
         stream.write('\n')
-    print(f"硏 필순 {len(strokes['硏'])}획을 石(研)과 幵에서 옮겨 붙였습니다. 전체 {len(strokes)}자")
+    print(f'전체 {len(strokes)}자')
 
 
 if __name__ == '__main__':

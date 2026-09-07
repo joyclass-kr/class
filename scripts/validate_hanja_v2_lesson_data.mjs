@@ -9,8 +9,9 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
   if ([...lesson.term].length < 2 || [...lesson.term].length > 3) {
     errors.push(`${lesson.term}: 중심 한자어는 2~3글자여야 합니다.`);
   }
-  if (lesson.questions.length !== lesson.characters.length) {
-    errors.push(`${lesson.term}: 구성 글자마다 문제가 하나씩 필요합니다.`);
+  // 같은 소리 다른 한자가 우리말에 없는 글자는 문제를 억지로 만들지 않고 뜻과 예문만 가르친다
+  if (lesson.questions.length > lesson.characters.length) {
+    errors.push(`${lesson.term}: 문제가 구성 글자 수보다 많습니다.`);
   }
   for (const [questionIndex, question] of lesson.questions.entries()) {
     if (question.options.length !== 4) errors.push(`${lesson.term} Q${questionIndex + 1}: 보기는 4개여야 합니다.`);

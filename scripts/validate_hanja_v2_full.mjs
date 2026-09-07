@@ -9,6 +9,8 @@ const curriculum = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'ha
 const standard = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-grade6-300.json'), 'utf8'));
 const strokes = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-strokes.json'), 'utf8'));
 const expansionSelection = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-csat-expansion-selection.json'), 'utf8'));
+// 문제를 낼 수 없는 글자와 그 까닭
+const noQuestion = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-no-question-characters.json'), 'utf8')).characters;
 const subjectBatch = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-v2-lessons-07.json'), 'utf8'));
 const subjectCharacters = new Set(subjectBatch.flatMap((lesson) => lesson.characters.map((item) => item.character)));
 const expectedCharacterCount = 310 + [...expansionSelection.characters].length + subjectCharacters.size;
@@ -29,7 +31,14 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
   if (lessonCharacters.length < 2 || lessonCharacters.length > 3) errors.push(`${slug}: 한 차시는 2~3자여야 합니다.`);
   if (new Set(lessonCharacters).size !== lessonCharacters.length) errors.push(`${slug}: 한 차시 안에 같은 글자가 반복됩니다.`);
   if (lesson.term !== lessonCharacters.join('')) errors.push(`${slug}: term과 글자 카드의 순서가 다릅니다.`);
-  if (lesson.questions.length !== lesson.characters.length) errors.push(`${slug}: 글자마다 문제가 하나씩 필요합니다.`);
+  // 문제는 글자마다 하나씩이되, 우리말에 같은 소리 다른 한자가 없어 문제가 성립하지 않는 글자는 문제 없이 가르친다
+  if (lesson.questions.length > lesson.characters.length) errors.push(`${slug}: 문제가 글자 수보다 많습니다.`);
+  const questionTargets = lesson.questions.map((question) => question.target);
+  if (new Set(questionTargets).size !== questionTargets.length) errors.push(`${slug}: 한 글자에 문제가 둘 이상입니다.`);
+  for (const character of lesson.characters) {
+    if (questionTargets.includes(character.character)) continue;
+    if (!noQuestion[character.character]) errors.push(`${slug} ${character.character}: 문제가 없는데 까닭이 적혀 있지 않습니다.`);
+  }
   if (curriculum.lessons[lessonIndex]?.term !== lesson.term) errors.push(`${slug}: 커리큘럼 term이 다릅니다.`);
   lessonCharacters.forEach((character) => {
     const normalized = normalize(character);
@@ -91,7 +100,8 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
 const missingStandard = [...standard.characters].map(normalize).filter((character) => !allCharacters.has(character));
 if (missingStandard.length) errors.push(`공식 300자 누락: ${[...new Set(missingStandard)].join('')}`);
 if (allCharacters.size !== expectedCharacterCount) errors.push(`전체 고유 글자: ${allCharacters.size} (예상 ${expectedCharacterCount})`);
-if (questions !== allCharacters.size) errors.push(`전체 문제: ${questions} (예상 ${allCharacters.size})`);
+const expectedQuestions = allCharacters.size - Object.keys(noQuestion).length;
+if (questions !== expectedQuestions) errors.push(`전체 문제: ${questions} (예상 ${expectedQuestions} = 글자 ${allCharacters.size} - 문제를 낼 수 없는 글자 ${Object.keys(noQuestion).length})`);
 
 const progress = fs.readFileSync(path.join(lessonRoot, 'index.html'), 'utf8');
 const progressLinks = [...progress.matchAll(/class="lesson-item" href="\.\/(\d{3})\//g)].map((match) => match[1]);

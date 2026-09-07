@@ -6,6 +6,7 @@ const read = (p) => JSON.parse(fs.readFileSync(path.join(root, p), 'utf8'));
 
 const plan = read('scripts/hanja-v2-subject-stages-plan.json');
 const noHomophoneDecoys = read('scripts/hanja-no-homophone-decoys.json').decoys;
+const noQuestion = read('scripts/hanja-no-question-characters.json').characters;
 const db = read('tmp/worddb.json');
 const subjectWords = read('scripts/hanja-subject-word-weights.json');
 const hunEumTable = read('scripts/hanja-huneum-table.json');
@@ -60,7 +61,20 @@ const banned = new Set(['고려장', '처형', '극형', '사형', '피살', '�
   '인신매매', '밀매', '밀수', '음주', '흡연', '담배', '술집', '유흥', '도살', '도축', '기생충', '변태', '음란',
   '화형', '천형', '참형', '태형', '전축', '수라장', '기라성', '난자', '배란', '명란',
   '감자', '배교', '선혈', '아수라장', '삼라만상', '실탄', '육탄', '타계', '무극',
-  '계장', '강력계', '복리', '음복', '만난', '위정', '인책', '자책', '오욕', '기생']);
+  '계장', '강력계', '복리', '음복', '만난', '위정', '인책', '자책', '오욕', '기생',
+  // 사전에 실린 단층은 單層(한 층짜리 집)뿐이라, 과학의 단층(斷層)과 헷갈린다
+  '단층',
+  // 아이가 쓸 일 없는 옛말·한자 성어
+  '배금주의', '중과부적', '섬섬옥수', '십년감수', '미수', '강술', '고희', '희대', '영락', '다과',
+  '기상천외', '기인', '공덕', '군율', '중생', '사비', '외상', '내상', '화상', '위약', '안일',
+  // 飛行으로 읽히기 쉬워 헷갈린다
+  '비행']);
+
+/* 같은 한글인데 다른 한자를 쓰는 뜻은 헷갈리므로 그 짝만 막는다 */
+const bannedForms = new Set([
+  '배상|拜上',   // 賠償(19단계)과 헷갈린다
+  '기술|技術',   // 述을 가르치는 자리에서는 記述만 쓴다
+]);
 /* 예문 문장에도 같은 잣대를 댄다 */
 const heavy = /사형|처형|살인|살해|자살|시신|시체|음주|흡연|담배|마약|도박|성폭|강간|매춘|낙태|폭행|고문|학살|유괴|밀수|밀매|도살|도축|죄수|복역|징역|범인|피범벅|참수/;
 const usableSentence = (sentence) =>
@@ -78,7 +92,7 @@ for (const records of Object.values(db)) {
   for (const record of records) {
     record.ex = record.ex.filter(usableSentence);
     if (!record.ex.length || record.term.length < 2 || record.term.length > 4) continue;
-    if (banned.has(record.term)) continue;
+    if (banned.has(record.term) || bannedForms.has(`${record.term}|${record.hanja}`)) continue;
     for (const character of new Set(record.hanja)) {
       if (!byChar.has(character)) byChar.set(character, []);
       byChar.get(character).push(record);
@@ -94,7 +108,7 @@ function distractorFor(character, sounds, avoid) {
   for (const records of Object.values(db)) {
     for (const record of records) {
       if (!record.ex.length || record.term.length < 2 || record.term.length > 3) continue;
-      if (banned.has(record.term) || record.hanja.includes(character)) continue;
+      if (banned.has(record.term) || bannedForms.has(`${record.term}|${record.hanja}`) || record.hanja.includes(character)) continue;
       for (let i = 0; i < record.term.length; i += 1) {
         if (!sounds.includes(record.term[i])) continue;
         const other = record.hanja[i];
@@ -164,10 +178,11 @@ for (const stage of Object.values(plan)) {
         });
         continue;
       }
-      /* 우리말에 같은 소리 다른 한자가 아예 없는 글자(冷·層)는 따로 마련한 오답을 쓴다 */
+      /* 우리말에 같은 소리 다른 한자가 아예 없는 글자는 따로 마련한 오답을 쓰고,
+         그런 낱말조차 없으면 문제를 억지로 만들지 않고 뜻과 예문만 가르친다 */
       const spare = noHomophoneDecoys[character];
       if (!spare) {
-        problems.push(`${term}:${character} 오답으로 쓸 낱말이 없음`);
+        if (!noQuestion[character]) problems.push(`${term}:${character} 오답으로 쓸 낱말이 없는데 까닭이 안 적힘`);
         continue;
       }
       options.push([spare.term, spare.hanja, mark(spare.sentence, spare.term)]);
@@ -175,9 +190,9 @@ for (const stage of Object.values(plan)) {
         target: character,
         answer: 3,
         noHomophone: true,
-        note: spare.hunEum
-          ? `‘${spare.term}’에는 ‘${spare.hunEum}’${objectParticle(spare.hunEum)} 씁니다.`
-          : `‘${spare.term}’의 ‘${spare.term[0]}’은 한자음이 아닙니다.`,
+        note: spare.kind === 'loanword'
+          ? `‘${spare.term}’${topicParticle(spare.term)} 외래어이므로 한자를 쓰지 않습니다.`
+          : `‘${spare.term}’에서 ‘${readingsOf(character)[0]}’은 한자음이 아닙니다.`,
         options
       });
     }
