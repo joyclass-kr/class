@@ -790,7 +790,7 @@
         wheelCard.type = "button";
         wheelCard.className = "drill-card";
         wheelCard.innerHTML = "<b></b>";
-        wheelCard.querySelector("b").textContent = label("Circle of Fifths", "오도권 원판");
+        wheelCard.querySelector("b").textContent = label("Circle of Fifths", "5도권 원판");
         wheelCard.addEventListener("click", () => { session.area = null; openWheel(); });
         els.toolList.append(wheelCard);
     }
@@ -1750,7 +1750,7 @@
     }
 
 
-    /* 오도권 원판 ---------------------------------------------------------- */
+    /* 5도권 원판 ---------------------------------------------------------- */
     let wheel = null;
 
     /* 원판이 가리키는 조의 다이어토닉 화음을 조표대로 적는다. */

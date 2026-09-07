@@ -481,7 +481,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .chain-head { fill: #5b6472; }
 .chain-note { fill: #6b7482; font-size: 13px; font-weight: 700; text-anchor: middle; }
 
-/* 오도권 원판 */
+/* 5도권 원판 */
 .wheel-board {
     display: grid;
     place-items: center;

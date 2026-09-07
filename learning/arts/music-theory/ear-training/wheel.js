@@ -3,7 +3,7 @@
 
     const SVG_NS = "http://www.w3.org/2000/svg";
 
-    /* 오도권을 시계 방향으로 늘어놓는다. */
+    /* 5도권을 시계 방향으로 늘어놓는다. */
     const KEYS = [
         { major: "C", minor: "Am", count: 0, sharp: true, tonic: 0, letter: 0, acc: 0 },
         { major: "G", minor: "Em", count: 1, sharp: true, tonic: 7, letter: 4, acc: 0 },
@@ -23,7 +23,7 @@
     ];
 
     /*
-     * 으뜸조에서 오도권으로 이어진 일곱 자리가 그 조의 화음이 된다.
+     * 으뜸조에서 5도권으로 이어진 일곱 자리가 그 조의 화음이 된다.
      * 반시계 한 자리가 IV, 제자리가 I, 시계로 다섯 자리가 V·ii·vi·iii·vii°.
      */
     const FUNCTIONS = [
@@ -124,7 +124,7 @@
             class: "wheel",
             viewBox: "-216 -216 432 432",
             role: "group",
-            "aria-label": "오도권 원판"
+            "aria-label": "5도권 원판"
         });
 
         /* 바깥 고정 고리: 선법 */
@@ -291,7 +291,7 @@
 
         /*
          * 이명동음 자리는 돌아온 쪽으로 적는다. 샾 쪽으로 돌아 도착하면 F♯,
-         * 플랫 쪽으로 돌아 도착하면 G♭이다. 오도권을 따라 걸어온 길이 곧 조표이므로
+         * 플랫 쪽으로 돌아 도착하면 G♭이다. 5도권을 따라 걸어온 길이 곧 조표이므로
          * 음악가가 실제로 그렇게 적는다. way가 1이면 샾 쪽, -1이면 플랫 쪽이다.
          */
         function spellByArrival(way) {
