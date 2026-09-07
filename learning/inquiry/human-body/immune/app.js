@@ -890,7 +890,9 @@
         var secBtn = document.getElementById('secondaryInfectBtn');
         if (secBtn) {
             secBtn.addEventListener('click', function () {
-                switchScene('memory');
+                // 그래프 장면으로 보낸다. 단추를 실제로 눌러야 덧그림이 따라온다.
+                var g = document.querySelector('.scene-btn[data-scene="graph"]');
+                if (g) g.click();
                 hasSecondaryTriggered = true;
                 memorySimTime = 30; // jump to reinfection
                 if (typeof SimEngine !== 'undefined') SimEngine.SoundFX.playCorrect();
@@ -946,9 +948,13 @@
 
     function switchScene(sceneKey) {
         currentSceneKey = sceneKey;
-        document.querySelectorAll('.scene-btn').forEach(function (b) {
-            b.classList.toggle('active', b.dataset.scene === sceneKey);
-        });
+        // 없는 장면 키가 오면 표시를 건드리지 않는다.
+        // 건드리면 지금 켜진 장면의 표시까지 풀려 화면이 빈다.
+        if (document.querySelector('.scene-btn[data-scene="' + sceneKey + '"]')) {
+            document.querySelectorAll('.scene-btn').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.scene === sceneKey);
+            });
+        }
 
         initSceneEntities(sceneKey);
 

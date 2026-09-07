@@ -12,6 +12,17 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
+    /** 멈춰 있는 동안 흐르지 않는 공용 시계 */
+    function nowMs() {
+        return (typeof SimEngine !== 'undefined' && SimEngine.now) ? SimEngine.now() : performance.now();
+    }
+
+
     var SVG_URL = '../assets/images/heart-diagram.svg';
 
     // 방·혈관에 흐르는 피의 종류. 시험에서 제일 자주 묻는 대목이다.
@@ -356,7 +367,7 @@
             if (!show) { d.el.setAttribute('opacity', 0); return; }
             d.el.setAttribute('opacity', 1);
 
-            d.t = (d.t + speed) % 1;
+            if (!isPaused()) d.t = (d.t + speed) % 1;
             var path = d.circuit === 'pulmonary' ? pathPul : pathSys;
             var len = d.circuit === 'pulmonary' ? lenPul : lenSys;
             var p = path.getPointAtLength(d.t * len);

@@ -409,9 +409,39 @@
         bindSceneIntro();
     }
 
+    /* ── 일시정지 ─────────────────────────────────────────────
+       머리글의 [일시정지] 단추를 공용으로 받는다.
+       now() 는 멈춰 있는 동안 흐르지 않는 시계라, 시간으로 움직이는
+       장면도 이 시계만 쓰면 함께 멈춘다.                                */
+    var paused = false;
+    var clock = 0, lastReal = 0;
+
+    function tickClock(t) {
+        if (!lastReal) lastReal = t;
+        if (!paused) clock += (t - lastReal);
+        lastReal = t;
+        requestAnimationFrame(tickClock);
+    }
+    requestAnimationFrame(tickClock);
+
+    function bindPause() {
+        var b = document.getElementById('playPauseBtn');
+        if (!b || b.dataset.pauseBound) return;
+        b.dataset.pauseBound = '1';
+        b.addEventListener('click', function () { paused = !paused; });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindPause);
+    } else {
+        bindPause();
+    }
+
     return {
         SoundFX: SoundFX,
         bindSceneIntro: bindSceneIntro,
+        isPaused: function () { return paused; },
+        now: function () { return clock; },
         setupCanvas: setupCanvas,
         bindDrag: bindDrag,
         renderQuiz: renderQuiz,

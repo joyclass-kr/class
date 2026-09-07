@@ -17,6 +17,17 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
+    /** 멈춰 있는 동안 흐르지 않는 공용 시계 */
+    function nowMs() {
+        return (typeof SimEngine !== 'undefined' && SimEngine.now) ? SimEngine.now() : performance.now();
+    }
+
+
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var SVG_URL = '../assets/images/blood-diagram.svg';
     var KEY = 'blood';
@@ -182,7 +193,7 @@
     function startSpin(to) {
         target = to;
         spinFrom = sep;
-        spinAt = performance.now();
+        spinAt = nowMs();
         spinning = true;
     }
 
@@ -256,7 +267,7 @@
 
     function render() {
         if (spinning) {
-            var f = Math.min(1, (performance.now() - spinAt) / SPIN_MS);
+            var f = Math.min(1, (nowMs() - spinAt) / SPIN_MS);
             var e = f < 0.5 ? 2 * f * f : 1 - Math.pow(-2 * f + 2, 2) / 2;   // 천천히 시작해 천천히 멈춘다
             sep = spinFrom + (target - spinFrom) * e;
             if (f >= 1) { sep = target; spinning = false; placeLabels(); }
@@ -289,7 +300,7 @@
         if (!flowPath) return;
         var len = flowPath.getTotalLength();
         beads.forEach(function (bd) {
-            bd.at += bd.speed;
+            if (!isPaused()) bd.at += bd.speed;
             if (bd.at > 1) bd.at -= 1;
             // 길 양 끝은 혈관 벽에 걸리므로 안쪽만 쓴다
             var f = 0.05 + bd.at * 0.90;

@@ -1291,10 +1291,13 @@
                     return;
                 }
                 if (currentSceneKey !== 'response') {
-                    // switch to response scene
+                    // 표시만 바꾸지 말고 단추를 실제로 누른다.
+                    // 덧그림 층들이 '누름'을 듣고 있어, 표시만 바꾸면 층이 안 뜬다.
+                    var target = null;
                     sceneBtns.forEach(function (b) {
-                        b.classList.toggle('active', b.dataset.scene === 'response');
+                        if (b.dataset.scene === 'response') target = b;
                     });
+                    if (target) target.click();
                     currentSceneKey = 'response';
                     updateHudInstruction('response');
                     activateSidebarTab('focus');

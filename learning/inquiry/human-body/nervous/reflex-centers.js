@@ -16,6 +16,17 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
+    /** 멈춰 있는 동안 흐르지 않는 공용 시계 */
+    function nowMs() {
+        return (typeof SimEngine !== 'undefined' && SimEngine.now) ? SimEngine.now() : performance.now();
+    }
+
+
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var SVG_URL = '../assets/images/reflex-centers.svg';
     var KEY = 'response';
@@ -183,7 +194,7 @@
     }
 
     function start() {
-        startedAt = performance.now();
+        startedAt = nowMs();
         racing = true;
     }
 
@@ -254,7 +265,7 @@
     function render() {
         if (!dotGroup) return;
         var slowest = CASES[0].ms;                       // 대뇌가 가장 느리다
-        var elapsed = racing ? (performance.now() - startedAt) : SHOW_MS;
+        var elapsed = racing ? (nowMs() - startedAt) : SHOW_MS;
         if (elapsed >= SHOW_MS) { elapsed = SHOW_MS; racing = false; }
 
         while (dotGroup.firstChild) dotGroup.removeChild(dotGroup.firstChild);

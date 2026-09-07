@@ -16,6 +16,17 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
+    /** 멈춰 있는 동안 흐르지 않는 공용 시계 */
+    function nowMs() {
+        return (typeof SimEngine !== 'undefined' && SimEngine.now) ? SimEngine.now() : performance.now();
+    }
+
+
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var SVG_URL = '../assets/images/reflex-arc.svg';
     var KEY = 'reflex';
@@ -208,7 +219,7 @@
     function start() {
         if (!svg) return;
         totalShow = ROUTES[routeKey].steps.reduce(function (a, s) { return a + s.show; }, 0);
-        startedAt = performance.now();
+        startedAt = nowMs();
         playing = true;
     }
 
@@ -278,7 +289,7 @@
         if (!layer || layer.hidden || !svg || !dotGroup) return;
 
         var route = ROUTES[routeKey];
-        var elapsed = playing ? (performance.now() - startedAt) : totalShow;
+        var elapsed = playing ? (nowMs() - startedAt) : totalShow;
         if (elapsed >= totalShow) { elapsed = totalShow; playing = false; }
 
         while (dotGroup.firstChild) dotGroup.removeChild(dotGroup.firstChild);

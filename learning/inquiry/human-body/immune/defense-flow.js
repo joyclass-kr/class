@@ -19,6 +19,17 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
+    /** 멈춰 있는 동안 흐르지 않는 공용 시계 */
+    function nowMs() {
+        return (typeof SimEngine !== 'undefined' && SimEngine.now) ? SimEngine.now() : performance.now();
+    }
+
+
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var SVG_URL = '../assets/images/immunity-diagram.svg';
     var KEY = 'defense';
@@ -212,7 +223,7 @@
 
     function play(i) {
         stepAt = i;
-        startedAt = performance.now();
+        startedAt = nowMs();
         playing = true;
         markStep();
         drawCaption();
@@ -294,7 +305,7 @@
 
     function render() {
         var step = STEPS[stepAt];
-        var f = playing ? Math.min(1, (performance.now() - startedAt) / step.ms) : 1;
+        var f = playing ? Math.min(1, (nowMs() - startedAt) / step.ms) : 1;
 
         if (playing && f >= 1) {
             if (stepAt < STEPS.length - 1) { play(stepAt + 1); return; }

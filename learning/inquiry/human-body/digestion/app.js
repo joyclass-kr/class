@@ -240,12 +240,15 @@
 
         // 2. Swallowing Pulse Wave in Torso Scene
         if (currentSceneKey === 'torso' && isSwallowing) {
+            // 그림에 머리가 없으므로 식도에서 시작한다.
+            // 좌표는 digestion-hero-v2.webp 에 격자를 얹어 잰 기관 자리와 같다.
             var pathPoints = [
-                { x: 0.725, y: 0.14 }, // Mouth
-                { x: 0.725, y: 0.32 }, // Esophagus
-                { x: 0.755, y: 0.46 }, // Stomach
-                { x: 0.725, y: 0.66 }, // Small Intestine
-                { x: 0.725, y: 0.56 }  // Large Intestine
+                { x: 0.723, y: 0.215 }, // 식도
+                { x: 0.782, y: 0.400 }, // 위
+                { x: 0.700, y: 0.497 }, // 십이지장
+                { x: 0.700, y: 0.640 }, // 소장
+                { x: 0.790, y: 0.600 }, // 대장
+                { x: 0.712, y: 0.840 }  // 항문
             ];
             var seg = foodBolusProgress * (pathPoints.length - 1);
             var idx = Math.floor(seg);
