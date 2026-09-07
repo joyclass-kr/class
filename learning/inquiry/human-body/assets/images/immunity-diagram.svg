@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <style>
+      /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
+      .panel-divider { stroke: #334155; stroke-width: 1.6; stroke-dasharray: 6,6; opacity: 0.45; }
+      .zone-header-line { stroke: #475569; stroke-width: 1.4; opacity: 0.35; }
+      
+      /* Column 1: First Line of Defense */
+      .skin-dermis { fill: #fda4af; fill-opacity: 0.45; stroke: #fb7185; stroke-width: 2.4; }
+      .skin-epidermis { fill: #fda4af; stroke: #fb7185; stroke-width: 2.6; stroke-linejoin: round; }
+      .skin-corneum { fill: #fecdd3; stroke: #f43f5e; stroke-width: 2.6; stroke-linejoin: round; }
+      .skin-scale { stroke: #f43f5e; stroke-width: 1.8; stroke-linecap: round; }
+      .skin-cell-line { stroke: #fb7185; stroke-width: 1.4; opacity: 0.75; }
+      .skin-nucleus { fill: #e11d48; opacity: 0.75; }
+      
+      .wound-edge { stroke: #dc2626; stroke-width: 2.6; stroke-linecap: round; }
+      .wound-splinter { stroke: #a16207; stroke-width: 2.8; stroke-linecap: round; }
+
+      .mucus-tissue { fill: #fda4af; stroke: #fb7185; stroke-width: 2.6; stroke-linejoin: round; }
+      .mucus-layer { fill: #fecdd3; fill-opacity: 0.65; stroke: #f43f5e; stroke-width: 2.2; }
+      .cilia-hair { stroke: #fb7185; stroke-width: 2.2; stroke-linecap: round; }
+      
+      .lysozyme-drop { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.6; stroke-linejoin: round; }
+      .lysozyme-spark { fill: none; stroke: #7dd3fc; stroke-width: 2.2; stroke-linecap: round; }
+      
+      .pathogen-body { fill: #22c55e; stroke: #15803d; stroke-width: 2.4; stroke-linejoin: round; }
+      .pathogen-spike { stroke: #15803d; stroke-width: 2.0; stroke-linecap: round; }
+      .pathogen-flagella { fill: none; stroke: #15803d; stroke-width: 1.8; stroke-linecap: round; }
+      .bounce-arc { fill: none; stroke: #ef4444; stroke-width: 2.4; stroke-dasharray: 4,4; stroke-linecap: round; }
+      
+      /* Column 2: Innate Non-specific Defense */
+      .macrophage-body { fill: #f59e0b; stroke: #b45309; stroke-width: 2.8; stroke-linejoin: round; }
+      .macrophage-nucleus { fill: #b45309; opacity: 0.88; }
+      .phago-vesicle { fill: #d97706; fill-opacity: 0.35; stroke: #b45309; stroke-width: 1.8; stroke-dasharray: 3,3; }
+      
+      .vessel-wall { fill: #dc2626; stroke: #991b1b; stroke-width: 2.8; stroke-linejoin: round; }
+      .vessel-lumen { fill: #dc2626; fill-opacity: 0.18; }
+      .vessel-endothelial { fill: #b91c1c; stroke: #991b1b; stroke-width: 1.8; }
+      .wbc-cell { fill: #fef08a; stroke: #ca8a04; stroke-width: 2.4; }
+      .rbc-cell { fill: #ef4444; stroke: #b91c1c; stroke-width: 1.8; }
+      
+      /* Column 3: Acquired Specific Defense */
+      .mhc-receptor { fill: #d97706; stroke: #78350f; stroke-width: 2.2; }
+      .antigen-fragment { fill: #22c55e; stroke: #15803d; stroke-width: 2.2; }
+      
+      .t-cell-helper { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.8; }
+      .t-cell-nucleus { fill: #0369a1; opacity: 0.9; }
+      .t-cell-receptor { fill: #0284c7; stroke: #0369a1; stroke-width: 2.2; }
+      
+      .b-cell { fill: #34d399; stroke: #059669; stroke-width: 2.8; }
+      .b-cell-nucleus { fill: #047857; opacity: 0.9; }
+      .b-cell-receptor { fill: none; stroke: #059669; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      
+      .plasma-cell { fill: #10b981; stroke: #047857; stroke-width: 2.8; }
+      .plasma-nucleus { fill: #065f46; opacity: 0.9; }
+      .plasma-er { fill: none; stroke: #059669; stroke-width: 2.0; stroke-linecap: round; }
+      
+      .memory-cell { fill: #ec4899; stroke: #be185d; stroke-width: 2.8; }
+      .memory-nucleus { fill: #9d174d; opacity: 0.9; }
+      
+      .antibody-y { fill: none; stroke: #fbbf24; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+      .antibody-stem { fill: none; stroke: #f59e0b; stroke-width: 2.8; stroke-linecap: round; }
+      
+      .cytotoxic-cell { fill: #f43f5e; stroke: #be123c; stroke-width: 2.8; }
+      .cytotoxic-nucleus { fill: #9f1239; opacity: 0.9; }
+      .granule { fill: #881337; }
+      
+      .infected-target { fill: #94a3b8; stroke: #475569; stroke-width: 2.8; stroke-dasharray: 8,4; stroke-linejoin: round; }
+      .infected-nucleus { fill: #475569; opacity: 0.7; }
+      .perforin-hole { fill: #0f172a; stroke: #e11d48; stroke-width: 2.0; }
+      
+      .diff-arrow { fill: none; stroke: #94a3b8; stroke-width: 2.2; stroke-dasharray: 4,4; stroke-linecap: round; }
+      .signal-arrow { fill: none; stroke: #cbd5e1; stroke-width: 2.2; stroke-dasharray: 4,4; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <!-- ================================================================= -->
+  <!-- COLUMN BOUNDARY GUIDES (Subtle vertical separation cues)          -->
+  <!-- ================================================================= -->
+  <line class="panel-divider" x1="260" y1="30" x2="260" y2="670" />
+  <line class="panel-divider" x1="550" y1="30" x2="550" y2="670" />
+
+
+  <!-- ================================================================= -->
+  <!-- COLUMN 1: 1차 방어선 (First Line of Defense: x 40 ~ 250)           -->
+  <!-- ================================================================= -->
+
+  <!-- Top Half: Skin Barrier with Thick Stratum Corneum (id="skinBarrier") -->
+  <g id="skinBarrier">
+    <!-- Living Epidermal & Dermal Base Layer (#fda4af) -->
+    <path class="skin-epidermis"
+          d="M 170,40
+             L 245,40
+             L 245,315
+             L 170,315
+             Z" />
+    
+    <!-- Stratified Squamous Cell Network (다층 편평 상피세포 층) -->
+    <line class="skin-cell-line" x1="195" y1="40" x2="195" y2="315" />
+    <line class="skin-cell-line" x1="220" y1="40" x2="220" y2="315" />
+    <line class="skin-cell-line" x1="170" y1="85" x2="245" y2="85" />
+    <line class="skin-cell-line" x1="170" y1="130" x2="245" y2="130" />
+    <line class="skin-cell-line" x1="170" y1="175" x2="245" y2="175" />
+    <line class="skin-cell-line" x1="170" y1="220" x2="245" y2="220" />
+    <line class="skin-cell-line" x1="170" y1="265" x2="245" y2="265" />
+
+    <!-- Basal and spinous layer nuclei -->
+    <ellipse class="skin-nucleus" cx="182" cy="62" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="207" cy="62" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="232" cy="62" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="182" cy="107" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="207" cy="107" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="232" cy="107" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="182" cy="152" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="207" cy="152" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="232" cy="152" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="182" cy="197" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="207" cy="197" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="232" cy="197" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="182" cy="242" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="207" cy="242" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="232" cy="242" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="182" cy="290" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="207" cy="290" rx="4" ry="6" />
+    <ellipse class="skin-nucleus" cx="232" cy="290" rx="4" ry="6" />
+
+    <!-- Outermost Thick Keratinized Stratum Corneum (두꺼운 각질층: #fecdd3) -->
+    <!-- Dead keratinized scale shingles providing physical barrier -->
+    <path class="skin-corneum"
+          d="M 125,40
+             L 170,40
+             L 170,315
+             L 125,315
+             C 120,285 130,265 122,235
+             C 116,205 128,185 120,155
+             C 114,125 126,105 120,75
+             C 118,60 122,48 125,40
+             Z" />
+
+    <!-- Keratin scale boundary seams and shingles -->
+    <line class="skin-scale" x1="123" y1="75" x2="170" y2="75" />
+    <line class="skin-scale" x1="120" y1="115" x2="170" y2="115" />
+    <line class="skin-scale" x1="118" y1="155" x2="170" y2="155" />
+    <line class="skin-scale" x1="121" y1="195" x2="170" y2="195" />
+    <line class="skin-scale" x1="120" y1="235" x2="170" y2="235" />
+    <line class="skin-scale" x1="123" y1="275" x2="170" y2="275" />
+    
+    <!-- Shingle scales surface pattern -->
+    <path class="skin-scale" d="M 135,55 C 145,58 155,58 165,55" />
+    <path class="skin-scale" d="M 132,95 C 142,98 152,98 162,95" />
+    <path class="skin-scale" d="M 130,135 C 140,138 150,138 160,135" />
+    <path class="skin-scale" d="M 133,175 C 143,178 153,178 163,175" />
+    <path class="skin-scale" d="M 132,215 C 142,218 152,218 162,215" />
+    <path class="skin-scale" d="M 135,255 C 145,258 155,258 165,255" />
+    <path class="skin-scale" d="M 135,295 C 145,298 155,298 165,295" />
+  </g>
+
+  <!-- Microscopic Wound Laceration / Splinter Penetration Gap (침입 통로) -->
+  <g opacity="0.85">
+    <path class="wound-edge" d="M 170,315 C 178,328 185,335 195,338" />
+    <path class="wound-edge" d="M 170,365 C 178,352 185,345 195,342" />
+    <!-- Small splinter or thorn entry cue -->
+    <line class="wound-splinter" x1="100" y1="340" x2="175" y2="340" />
+    <polygon points="175,337 185,340 175,343" fill="#a16207" />
+  </g>
+
+  <!-- Bottom Half: Mucous Membrane with Cilia & Mucus (id="mucusBarrier") -->
+  <g id="mucusBarrier">
+    <!-- Simple Columnar Epithelium Base (#fda4af) -->
+    <path class="mucus-tissue"
+          d="M 160,365
+             L 245,365
+             L 245,660
+             L 160,660
+             Z" />
+             
+    <!-- Columnar cell boundaries -->
+    <line class="skin-cell-line" x1="160" y1="415" x2="245" y2="415" />
+    <line class="skin-cell-line" x1="160" y1="465" x2="245" y2="465" />
+    <line class="skin-cell-line" x1="160" y1="515" x2="245" y2="515" />
+    <line class="skin-cell-line" x1="160" y1="565" x2="245" y2="565" />
+    <line class="skin-cell-line" x1="160" y1="615" x2="245" y2="615" />
+    
+    <!-- Columnar cell oval nuclei in basal zone -->
+    <ellipse cx="205" cy="390" rx="10" ry="7" fill="#be123c" opacity="0.8" />
+    <ellipse cx="205" cy="440" rx="10" ry="7" fill="#be123c" opacity="0.8" />
+    <ellipse cx="205" cy="490" rx="10" ry="7" fill="#be123c" opacity="0.8" />
+    <ellipse cx="205" cy="540" rx="10" ry="7" fill="#be123c" opacity="0.8" />
+    <ellipse cx="205" cy="590" rx="10" ry="7" fill="#be123c" opacity="0.8" />
+    <ellipse cx="205" cy="638" rx="10" ry="7" fill="#be123c" opacity="0.8" />
+
+    <!-- Viscous Mucus Blanket Layer (점액층: #fecdd3) -->
+    <path class="mucus-layer"
+          d="M 115,365
+             C 105,395 120,425 110,455
+             C 102,485 118,515 108,545
+             C 100,575 116,605 108,635
+             C 106,648 110,655 115,660
+             L 160,660
+             L 160,365
+             Z" />
+
+    <!-- Coordinated Wave Cilia Bristles (정단 섬모들) -->
+    <path class="cilia-hair" d="M 160,375 C 145,371 135,377 125,370" />
+    <path class="cilia-hair" d="M 160,390 C 145,386 135,392 125,385" />
+    <path class="cilia-hair" d="M 160,405 C 145,401 135,407 125,400" />
+    <path class="cilia-hair" d="M 160,420 C 145,416 135,422 125,415" />
+    <path class="cilia-hair" d="M 160,435 C 145,431 135,437 125,430" />
+    <path class="cilia-hair" d="M 160,450 C 145,446 135,452 125,445" />
+    <path class="cilia-hair" d="M 160,465 C 145,461 135,467 125,460" />
+    <path class="cilia-hair" d="M 160,480 C 145,476 135,482 125,475" />
+    <path class="cilia-hair" d="M 160,495 C 145,491 135,497 125,490" />
+    <path class="cilia-hair" d="M 160,510 C 145,506 135,512 125,505" />
+    <path class="cilia-hair" d="M 160,525 C 145,521 135,527 125,520" />
+    <path class="cilia-hair" d="M 160,540 C 145,536 135,542 125,535" />
+    <path class="cilia-hair" d="M 160,555 C 145,551 135,557 125,550" />
+    <path class="cilia-hair" d="M 160,570 C 145,566 135,572 125,565" />
+    <path class="cilia-hair" d="M 160,585 C 145,581 135,587 125,580" />
+    <path class="cilia-hair" d="M 160,600 C 145,596 135,602 125,595" />
+    <path class="cilia-hair" d="M 160,615 C 145,611 135,617 125,610" />
+    <path class="cilia-hair" d="M 160,630 C 145,626 135,632 125,625" />
+    <path class="cilia-hair" d="M 160,645 C 145,641 135,647 125,640" />
+    <path class="cilia-hair" d="M 160,655 C 145,651 135,657 125,650" />
+  </g>
+
+  <!-- Lysozyme Tear Droplet (눈물 한 방울, id="lysozyme") -->
+  <!-- Tear droplet with bactericidal lysozyme destroying bacterial cell walls -->
+  <g id="lysozyme">
+    <!-- Classic Pearlescent Teardrop (#38bdf8) -->
+    <path class="lysozyme-drop"
+          d="M 68,540
+             C 68,540 98,580 98,605
+             C 98,622 85,635 68,635
+             C 51,635 38,622 38,605
+             C 38,580 68,540 68,540
+             Z" />
+    <!-- Specular highlight -->
+    <ellipse cx="58" cy="600" rx="4" ry="9" fill="#ffffff" opacity="0.65" transform="rotate(-25, 58, 600)" />
+    
+    <!-- Lysozyme Enzymatic Cell Wall Lysis Sparks -->
+    <line class="lysozyme-spark" x1="102" y1="575" x2="114" y2="570" />
+    <line class="lysozyme-spark" x1="106" y1="595" x2="118" y2="595" />
+    <line class="lysozyme-spark" x1="103" y1="615" x2="115" y2="620" />
+    
+    <!-- Mini dissolving bacterium by lysozyme -->
+    <circle cx="116" cy="585" r="4.5" fill="#22c55e" stroke="#15803d" stroke-width="1.4" stroke-dasharray="2,2" />
+  </g>
+
+  <!-- Blocked Pathogens Bouncing Off Skin/Mucus (1차 방어선에서 막힌 병원체들, id="blockedPathogen") -->
+  <g id="blockedPathogen">
+    <!-- Pathogen 1: Bacillus bouncing off stratum corneum -->
+    <g transform="translate(68, 105)">
+      <rect class="pathogen-body" x="-18" y="-10" width="36" height="20" rx="10" transform="rotate(-25)" />
+      <line class="pathogen-spike" x1="-15" y1="-12" x2="-22" y2="-18" />
+      <line class="pathogen-spike" x1="0" y1="-12" x2="0" y2="-20" />
+      <line class="pathogen-spike" x1="15" y1="-12" x2="22" y2="-18" />
+      <line class="pathogen-spike" x1="-15" y1="12" x2="-22" y2="18" />
+      <line class="pathogen-spike" x1="0" y1="12" x2="0" y2="20" />
+      <line class="pathogen-spike" x1="15" y1="12" x2="22" y2="18" />
+      <!-- Flagella -->
+      <path class="pathogen-flagella" d="M -18,0 C -26,-5 -30,5 -38,0" />
+    </g>
+    <!-- Bounce impact trajectory & deflection -->
+    <path class="bounce-arc" d="M 50,85 C 85,105 120,118 120,118 C 120,118 95,145 60,165" />
+    <polygon points="56,165 68,159 64,171" fill="#ef4444" />
+
+    <!-- Pathogen 2: Coccus blocked by stratum corneum -->
+    <g transform="translate(85, 215)">
+      <circle class="pathogen-body" cx="0" cy="0" r="11" />
+      <line class="pathogen-spike" x1="0" y1="-11" x2="0" y2="-17" />
+      <line class="pathogen-spike" x1="11" y1="0" x2="17" y2="0" />
+      <line class="pathogen-spike" x1="0" y1="11" x2="0" y2="17" />
+      <line class="pathogen-spike" x1="-11" y1="0" x2="-17" y2="0" />
+      <line class="pathogen-spike" x1="8" y1="8" x2="13" y2="13" />
+      <line class="pathogen-spike" x1="-8" y1="-8" x2="-13" y2="-13" />
+    </g>
+    <path class="bounce-arc" d="M 65,245 C 95,235 118,228 118,228 C 118,228 102,200 78,195" />
+    <polygon points="73,195 84,189 82,201" fill="#ef4444" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- COLUMN 2: 비특이적 방어 (Innate Non-specific Defense: x 270 ~ 540)  -->
+  <!-- ================================================================= -->
+
+  <!-- Breakthrough Pathogens in Tissue Fluid (뚫고 들어온 병원체들, id="pathogen") -->
+  <g id="pathogen">
+    <!-- Pathogen A: Just penetrated wound site -->
+    <g transform="translate(295, 335)">
+      <rect class="pathogen-body" x="-15" y="-8" width="30" height="16" rx="8" transform="rotate(15)" />
+      <line class="pathogen-spike" x1="-10" y1="-10" x2="-14" y2="-15" />
+      <line class="pathogen-spike" x1="8" y1="-10" x2="12" y2="-15" />
+      <line class="pathogen-spike" x1="-10" y1="10" x2="-14" y2="15" />
+      <line class="pathogen-spike" x1="8" y1="10" x2="12" y2="15" />
+      <path class="pathogen-flagella" d="M -15,0 C -22,-4 -25,4 -32,0" />
+    </g>
+    
+    <!-- Pathogen B: Near macrophage pseudopod -->
+    <g transform="translate(325, 260)">
+      <circle class="pathogen-body" cx="0" cy="0" r="10" />
+      <line class="pathogen-spike" x1="0" y1="-10" x2="0" y2="-15" />
+      <line class="pathogen-spike" x1="10" y1="0" x2="15" y2="0" />
+      <line class="pathogen-spike" x1="0" y1="10" x2="0" y2="15" />
+      <line class="pathogen-spike" x1="-10" y1="0" x2="-15" y2="0" />
+      <line class="pathogen-spike" x1="7" y1="7" x2="11" y2="11" />
+      <line class="pathogen-spike" x1="-7" y1="-7" x2="-11" y2="-11" />
+    </g>
+
+    <!-- Pathogen C: Advancing toward deeper tissues -->
+    <g transform="translate(305, 195)">
+      <rect class="pathogen-body" x="-14" y="-8" width="28" height="16" rx="8" transform="rotate(-30)" />
+      <line class="pathogen-spike" x1="-9" y1="-10" x2="-13" y2="-15" />
+      <line class="pathogen-spike" x1="9" y1="-10" x2="13" y2="-15" />
+      <line class="pathogen-spike" x1="-9" y1="10" x2="-13" y2="15" />
+      <line class="pathogen-spike" x1="9" y1="10" x2="13" y2="15" />
+    </g>
+  </g>
+
+  <!-- Large Engulfing Macrophage (대식세포, id="macrophage") -->
+  <!-- Actively engulfing pathogen with pseudopodia + digested pathogen inside -->
+  <g id="macrophage">
+    <!-- Large Amoeboid Body (#f59e0b) with dynamic engulfing arms -->
+    <path class="macrophage-body"
+          d="M 360,230
+             C 345,210 335,235 340,255
+             C 345,270 360,275 355,290
+             C 350,305 330,315 345,335
+             C 360,355 385,350 405,365
+             C 430,380 460,385 480,365
+             C 505,345 520,310 515,275
+             C 510,245 490,215 465,200
+             C 435,185 405,195 385,215
+             Z" />
+
+    <!-- Characteristic Large Kidney-shaped / Horseshoe Nucleus (#b45309) -->
+    <path class="macrophage-nucleus"
+          d="M 425,230
+             C 455,235 465,265 455,295
+             C 445,325 415,335 395,315
+             C 410,310 420,295 420,275
+             C 420,255 415,245 425,230
+             Z" />
+
+    <!-- Phagosome / Lysosome Digesting Chamber (세포 안에서 분해 중인 병원체) -->
+    <ellipse class="phago-vesicle" cx="390" cy="275" rx="22" ry="18" />
+    
+    <!-- Engulfed/Decomposed Pathogen Inside Macrophage (식균되어 소화되는 세균) -->
+    <g transform="translate(390, 275) rotate(20)">
+      <rect class="pathogen-body" x="-10" y="-6" width="20" height="12" rx="6" opacity="0.8" />
+      <line class="pathogen-spike" x1="-6" y1="-8" x2="-8" y2="-11" opacity="0.8" />
+      <line class="pathogen-spike" x1="6" y1="-8" x2="8" y2="-11" opacity="0.8" />
+      <circle cx="-2" cy="0" r="1.5" fill="#15803d" />
+      <circle cx="3" cy="1" r="1.5" fill="#15803d" />
+    </g>
+
+    <!-- Digestive lysosomal enzyme granules -->
+    <circle cx="430" cy="315" r="3.5" fill="#b45309" />
+    <circle cx="450" cy="245" r="3.0" fill="#b45309" />
+    <circle cx="445" cy="335" r="3.0" fill="#b45309" />
+    <circle cx="475" cy="300" r="3.5" fill="#b45309" />
+  </g>
+
+  <!-- Dilated Capillary & Extravasating Leukocytes (염증, id="inflammation") -->
+  <!-- Vasodilation (#dc2626) + Diapedesis of white blood cells into tissues -->
+  <g id="inflammation">
+    <!-- Dilated Capillary Vessel Interior / Lumen -->
+    <path class="vessel-lumen"
+          d="M 270,550
+             L 535,550
+             L 535,645
+             L 270,645
+             Z" />
+
+    <!-- Upper Vessel Wall with Endothelial Gap (백혈구가 빠져나오는 벌어진 틈) -->
+    <!-- Left segment -->
+    <path class="vessel-wall"
+          d="M 270,550
+             L 370,550
+             C 380,546 390,544 400,544" />
+    <!-- Right segment (gap at x: 400 ~ 445 for extravasation) -->
+    <path class="vessel-wall"
+          d="M 445,544
+             C 455,544 465,548 475,550
+             L 535,550" />
+
+    <!-- Lower Vessel Wall -->
+    <path class="vessel-wall"
+          d="M 270,645
+             L 535,645" />
+
+    <!-- Endothelial Cells along vessel wall -->
+    <ellipse class="vessel-endothelial" cx="295" cy="550" rx="14" ry="5" />
+    <ellipse class="vessel-endothelial" cx="335" cy="550" rx="14" ry="5" />
+    <ellipse class="vessel-endothelial" cx="495" cy="550" rx="14" ry="5" />
+    <ellipse class="vessel-endothelial" cx="295" cy="645" rx="14" ry="5" />
+    <ellipse class="vessel-endothelial" cx="350" cy="645" rx="14" ry="5" />
+    <ellipse class="vessel-endothelial" cx="410" cy="645" rx="14" ry="5" />
+    <ellipse class="vessel-endothelial" cx="470" cy="645" rx="14" ry="5" />
+
+    <!-- Flowing Red Blood Cells in dilated vessel (#ef4444) -->
+    <ellipse class="rbc-cell" cx="300" cy="600" rx="12" ry="7" transform="rotate(-15, 300, 600)" />
+    <ellipse class="rbc-cell" cx="355" cy="610" rx="12" ry="7" transform="rotate(10, 355, 610)" />
+    <ellipse class="rbc-cell" cx="470" cy="605" rx="12" ry="7" transform="rotate(-5, 470, 605)" />
+    <ellipse class="rbc-cell" cx="510" cy="590" rx="12" ry="7" transform="rotate(20, 510, 590)" />
+
+    <!-- White Blood Cell 1: Rolling along endothelial wall inside vessel -->
+    <circle class="wbc-cell" cx="330" cy="572" r="12" />
+    <path d="M 326,568 C 330,566 335,570 334,575 C 332,578 327,576 326,568 Z" fill="#ca8a04" />
+
+    <!-- White Blood Cell 2: Squeezing Through Gap (혈관벽을 비집고 나가는 백혈구 - Diapedesis) -->
+    <!-- Hourglass deformed shape transitioning from blood into tissue -->
+    <path class="wbc-cell"
+          d="M 412,568
+             C 408,555 410,540 416,530
+             C 422,520 436,520 442,530
+             C 448,540 448,555 444,568
+             C 440,578 435,584 428,584
+             C 420,584 416,578 412,568
+             Z" />
+    <!-- Multilobed nucleus of neutrophil -->
+    <ellipse cx="428" cy="535" rx="5" ry="4" fill="#ca8a04" />
+    <ellipse cx="428" cy="565" rx="5" ry="4" fill="#ca8a04" />
+
+    <!-- White Blood Cell 3: Migrating in Extravascular Tissue toward infection -->
+    <circle class="wbc-cell" cx="460" cy="490" r="13" />
+    <path d="M 454,486 C 458,483 464,487 463,492 C 461,497 455,495 454,486 Z" fill="#ca8a04" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- COLUMN 3: 특이적 방어 (Acquired Specific Defense: x 560 ~ 960)     -->
+  <!-- ================================================================= -->
+
+  <!-- Antigen Presentation Platform & Peptide Piece (항원 제시, id="antigenPiece") -->
+  <!-- ★ CRITICAL EXAM POINT: Macrophage presents digested pathogen fragment on MHC II -->
+  <g id="antigenPiece">
+    <!-- MHC II Molecule Cradle Platform on Macrophage Surface -->
+    <path class="mhc-receptor"
+          d="M 508,246
+             L 518,242
+             C 524,240 530,243 532,248
+             L 532,254
+             C 526,256 520,253 516,256
+             L 508,258
+             Z" />
+    <path class="mhc-receptor"
+          d="M 510,265
+             L 518,263
+             C 524,262 530,265 532,270
+             L 532,276
+             C 526,278 520,275 516,278
+             L 510,280
+             Z" />
+
+    <!-- Digested Antigen Peptide Fragment Presented to Helper T (#22c55e) -->
+    <polygon class="antigen-fragment"
+             points="524,250 536,244 544,252 538,262 526,258" />
+    
+    <!-- Secondary presentation fragment -->
+    <polygon class="antigen-fragment"
+             points="526,270 538,266 544,274 536,282 526,278" />
+  </g>
+
+  <!-- Helper T-Lymphocyte (보조 T림프구, id="helperT") -->
+  <!-- ★ CRITICAL EXAM POINT: Commander-in-chief activating BOTH B-cell and Cytotoxic T-cell -->
+  <g id="helperT">
+    <!-- Round T-cell Body (#38bdf8) -->
+    <circle class="t-cell-helper" cx="620" cy="225" r="32" />
+    <!-- Large Rounded Nucleus (#0369a1) -->
+    <circle class="t-cell-nucleus" cx="620" cy="225" r="22" />
+    
+    <!-- T-Cell Receptor (TCR) binding precisely with presented Antigen Piece -->
+    <path class="t-cell-receptor"
+          d="M 588,235
+             L 568,242
+             C 560,245 554,250 546,252
+             L 546,262
+             C 555,260 562,255 570,252
+             L 588,245
+             Z" />
+
+    <!-- Activation Cytokine Signal Emitters toward upper/lower branches -->
+    <!-- Upward signal cue toward B cell -->
+    <path class="signal-arrow" d="M 645,198 C 665,180 690,165 718,155" />
+    <polygon points="718,150 728,155 718,160" fill="#cbd5e1" />
+    
+    <!-- Downward signal cue toward Cytotoxic T cell -->
+    <path class="signal-arrow" d="M 645,250 C 665,280 690,340 720,380" />
+    <polygon points="715,380 725,388 723,375" fill="#cbd5e1" />
+  </g>
+
+
+  <!-- --- UPPER BRANCH: HUMORAL IMMUNITY (체액성 면역) --- -->
+
+  <!-- B-Cell to Plasma Cell / Memory Cell Differentiation Branch Cues -->
+  <g opacity="0.75">
+    <!-- Differentiation arrow to Plasma Cell -->
+    <path class="diff-arrow" d="M 792,132 C 812,126 828,124 845,124" />
+    <polygon points="845,120 855,124 845,128" fill="#94a3b8" />
+    
+    <!-- Differentiation arrow to Memory Cell -->
+    <path class="diff-arrow" d="M 782,160 C 802,185 825,215 850,235" />
+    <polygon points="846,238 857,241 852,231" fill="#94a3b8" />
+  </g>
+
+  <!-- B-Lymphocyte (B림프구, id="bCell") -->
+  <!-- Precursor cell carrying membrane BCRs; stimulated by Helper T -->
+  <g id="bCell">
+    <!-- Round B-cell Body (#34d399) -->
+    <circle class="b-cell" cx="760" cy="140" r="28" />
+    <!-- Large Rounded Nucleus (#047857) -->
+    <circle class="b-cell-nucleus" cx="760" cy="140" r="19" />
+
+    <!-- Membrane B-Cell Receptors (BCR - Membrane-bound Y-shaped Antibodies) -->
+    <path class="b-cell-receptor" d="M 760,112 L 760,102 M 755,95 L 760,102 L 765,95" />
+    <path class="b-cell-receptor" d="M 732,140 L 722,140 M 715,135 L 722,140 L 715,145" />
+    <path class="b-cell-receptor" d="M 760,168 L 760,178 M 755,185 L 760,178 L 765,185" />
+    <path class="b-cell-receptor" d="M 780,120 L 788,114 M 788,105 L 788,114 L 796,114" />
+  </g>
+
+  <!-- Plasma Cell (형질세포, id="plasmaCell") -->
+  <!-- ★ CRITICAL EXAM POINT: Matures from B-cell; SECRETES ANTIBODIES -->
+  <!-- Expanded rough endoplasmic reticulum (rER) protein factory -->
+  <g id="plasmaCell">
+    <!-- Large Oval Secretory Body (#10b981) -->
+    <ellipse class="plasma-cell" cx="890" cy="125" rx="38" ry="32" />
+    
+    <!-- Eccentric Clock-face Nucleus (#065f46) -->
+    <ellipse class="plasma-nucleus" cx="875" cy="125" rx="18" ry="19" />
+    <!-- Chromatin cartwheel spokes -->
+    <line x1="875" y1="110" x2="875" y2="140" stroke="#10b981" stroke-width="1.6" />
+    <line x1="860" y1="125" x2="890" y2="125" stroke="#10b981" stroke-width="1.6" />
+
+    <!-- Highly Developed Concentric Rough Endoplasmic Reticulum (조면소포체 rER) -->
+    <path class="plasma-er" d="M 898,105 C 915,110 920,135 905,148" />
+    <path class="plasma-er" d="M 905,100 C 924,108 928,140 912,154" />
+    <path class="plasma-er" d="M 912,95 C 932,105 935,145 918,160" />
+
+    <!-- Secretory Exocytosis Vesicles at plasma membrane -->
+    <circle cx="925" cy="115" r="2.5" fill="#fbbf24" />
+    <circle cx="930" cy="130" r="2.5" fill="#fbbf24" />
+    <circle cx="924" cy="142" r="2.5" fill="#fbbf24" />
+  </g>
+
+  <!-- Memory Cell (기억 세포, id="memoryCell") -->
+  <!-- ★ CRITICAL EXAM POINT: Branches from B-cell in parallel with plasma cell; no secretion -->
+  <g id="memoryCell">
+    <!-- Compact Long-lived Quiescent Lymphocyte (#ec4899) -->
+    <circle class="memory-cell" cx="885" cy="255" r="25" />
+    <!-- Large Densely Packed Nucleus (#9d174d) -->
+    <circle class="memory-nucleus" cx="885" cy="255" r="18" />
+    
+    <!-- High-affinity surface memory receptors -->
+    <path class="b-cell-receptor" stroke="#be185d" d="M 885,230 L 885,220 M 880,213 L 885,220 L 890,213" />
+    <path class="b-cell-receptor" stroke="#be185d" d="M 910,255 L 920,255 M 927,250 L 920,255 L 927,260" />
+    <path class="b-cell-receptor" stroke="#be185d" d="M 885,280 L 885,290 M 880,297 L 885,290 L 890,297" />
+  </g>
+
+  <!-- Antibodies & Neutralization Complex (항체, id="antibody") -->
+  <!-- ★ CRITICAL EXAM POINT: Distinct Y-shaped proteins (#fbbf24) binding antigens -->
+  <g id="antibody">
+    <!-- Antibody 1: Just released from Plasma Cell -->
+    <g transform="translate(938, 105)">
+      <line class="antibody-stem" x1="0" y1="8" x2="0" y2="0" />
+      <line class="antibody-y" x1="0" y1="0" x2="-7" y2="-7" />
+      <line class="antibody-y" x1="0" y1="0" x2="7" y2="-7" />
+    </g>
+
+    <!-- Antibody 2: Emerging from lower secretion front -->
+    <g transform="translate(936, 145) rotate(25)">
+      <line class="antibody-stem" x1="0" y1="8" x2="0" y2="0" />
+      <line class="antibody-y" x1="0" y1="0" x2="-7" y2="-7" />
+      <line class="antibody-y" x1="0" y1="0" x2="7" y2="-7" />
+    </g>
+
+    <!-- Antibody 3: Flying in tissue fluid toward target -->
+    <g transform="translate(956, 135) rotate(45)">
+      <line class="antibody-stem" x1="0" y1="9" x2="0" y2="0" />
+      <line class="antibody-y" x1="0" y1="0" x2="-8" y2="-8" />
+      <line class="antibody-y" x1="0" y1="0" x2="8" y2="-8" />
+    </g>
+
+    <!-- Antibody 4: Flying upward toward top pathogens -->
+    <g transform="translate(930, 60) rotate(-40)">
+      <line class="antibody-stem" x1="0" y1="9" x2="0" y2="0" />
+      <line class="antibody-y" x1="0" y1="0" x2="-8" y2="-8" />
+      <line class="antibody-y" x1="0" y1="0" x2="8" y2="-8" />
+    </g>
+
+    <!-- Pathogen being Neutralized / Agglutinated by Antibodies (우측 상단 항원-항체 반응) -->
+    <g transform="translate(965, 50)">
+      <!-- Bound Target Pathogen (#22c55e) -->
+      <circle class="pathogen-body" cx="0" cy="0" r="12" />
+      <line class="pathogen-spike" x1="0" y1="-12" x2="0" y2="-17" />
+      <line class="pathogen-spike" x1="12" y1="0" x2="17" y2="0" />
+      <line class="pathogen-spike" x1="0" y1="12" x2="0" y2="17" />
+      <line class="pathogen-spike" x1="-12" y1="0" x2="-17" y2="0" />
+      
+      <!-- Bound Antibody A docked on spike -->
+      <g transform="translate(-16, 0) rotate(90)">
+        <line class="antibody-stem" x1="0" y1="8" x2="0" y2="0" />
+        <line class="antibody-y" x1="0" y1="0" x2="-6" y2="-6" />
+        <line class="antibody-y" x1="0" y1="0" x2="6" y2="-6" />
+      </g>
+      <!-- Bound Antibody B docked on bottom spike -->
+      <g transform="translate(0, 16) rotate(180)">
+        <line class="antibody-stem" x1="0" y1="8" x2="0" y2="0" />
+        <line class="antibody-y" x1="0" y1="0" x2="-6" y2="-6" />
+        <line class="antibody-y" x1="0" y1="0" x2="6" y2="-6" />
+      </g>
+      <!-- Bound Antibody C docked on top spike -->
+      <g transform="translate(0, -16)">
+        <line class="antibody-stem" x1="0" y1="8" x2="0" y2="0" />
+        <line class="antibody-y" x1="0" y1="0" x2="-6" y2="-6" />
+        <line class="antibody-y" x1="0" y1="0" x2="6" y2="-6" />
+      </g>
+    </g>
+  </g>
+
+
+  <!-- --- LOWER BRANCH: CELLULAR IMMUNITY (세포성 면역) --- -->
+
+  <!-- Cytotoxic T-Lymphocyte (세포독성 T림프구, id="cytotoxicT") -->
+  <!-- Directly attacks and destroys virus-infected cells or abnormal cells -->
+  <g id="cytotoxicT">
+    <!-- Spherical Cytotoxic Body (#f43f5e) -->
+    <circle class="cytotoxic-cell" cx="770" cy="420" r="30" />
+    <!-- Large Round Nucleus (#9f1239) -->
+    <circle class="cytotoxic-nucleus" cx="770" cy="420" r="20" />
+
+    <!-- Cytotoxic Granules (Perforin & Granzyme storage granules) -->
+    <circle class="granule" cx="756" cy="410" r="3.2" />
+    <circle class="granule" cx="762" cy="432" r="3.2" />
+    <circle class="granule" cx="780" cy="412" r="3.5" />
+    <circle class="granule" cx="778" cy="428" r="3.0" />
+    <circle class="granule" cx="790" cy="420" r="3.5" />
+
+    <!-- Cytotoxic TCR Docking Contact with Target Cell -->
+    <path fill="#e11d48" stroke="#be123c" stroke-width="2.0"
+          d="M 800,412 L 818,416 L 818,424 L 800,428 Z" />
+          
+    <!-- Perforin Granule Release toward infected cell -->
+    <circle cx="826" cy="415" r="2.5" fill="#f43f5e" />
+    <circle cx="832" cy="422" r="2.5" fill="#f43f5e" />
+    <circle cx="828" cy="428" r="2.5" fill="#f43f5e" />
+  </g>
+
+  <!-- Infected Host Cell Being Destroyed (감염된 세포, id="infectedCell") -->
+  <!-- Target cell with perforated membrane holes & disintegrating apoptosis -->
+  <g id="infectedCell">
+    <!-- Irregular / Lyzing Host Cell Membrane (#94a3b8) -->
+    <path class="infected-target"
+          d="M 870,380
+             C 900,370 935,375 950,395
+             C 965,415 960,445 945,465
+             C 930,485 895,485 875,475
+             C 855,465 845,445 848,420
+             C 850,400 855,385 870,380
+             Z" />
+
+    <!-- Fragmenting Pyknotic Nucleus (#475569) -->
+    <ellipse class="infected-nucleus" cx="905" cy="430" rx="16" ry="14" />
+    
+    <!-- Intracellular Pathogen Fragments Inside Host Cell (세포 내 증식하던 바이러스/세균) -->
+    <circle cx="880" cy="405" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.6" />
+    <circle cx="925" cy="450" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.6" />
+    <circle cx="935" cy="415" r="4.5" fill="#22c55e" stroke="#15803d" stroke-width="1.6" />
+
+    <!-- Perforin Pore / Lytic Holes (세포막에 뚫린 구멍들과 세포 내용물 유출) -->
+    <ellipse class="perforin-hole" cx="850" cy="415" rx="3.5" ry="6" />
+    <ellipse class="perforin-hole" cx="854" cy="430" rx="3.5" ry="6" />
+    
+    <!-- Apoptotic Blebs / Debris Shedding -->
+    <circle cx="962" cy="410" r="4.5" fill="#94a3b8" stroke="#475569" stroke-width="1.8" />
+    <circle cx="952" cy="472" r="5.0" fill="#94a3b8" stroke="#475569" stroke-width="1.8" />
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- INVISIBLE GUIDE PATHS (안내선 8종: fill="none" stroke="none")     -->
+  <!-- ================================================================= -->
+
+  <!-- 1. flowBlocked: 병원체 → 1차 방어선에 부딪혀 튕겨 나가는 길 -->
+  <path id="flowBlocked" fill="none" stroke="none"
+        d="M 50,85
+           C 85,105 120,118 120,118
+           C 120,118 95,145 60,165" />
+
+  <!-- 2. flowInvade: 병원체 → 1차 방어선을 뚫고 2칸 안으로 -->
+  <path id="flowInvade" fill="none" stroke="none"
+        d="M 60,340
+           C 130,340 180,340 230,340
+           C 255,340 275,335 300,330" />
+
+  <!-- 3. flowPhago: 병원체 → 대식세포 속으로 (식균) -->
+  <path id="flowPhago" fill="none" stroke="none"
+        d="M 305,315
+           C 330,310 345,300 365,285
+           C 380,275 390,275 405,275" />
+
+  <!-- 4. flowPresent: 대식세포의 항원 조각 → 보조 T림프구 -->
+  <path id="flowPresent" fill="none" stroke="none"
+        d="M 500,260
+           C 530,255 550,250 570,240
+           C 585,232 595,228 610,225" />
+
+  <!-- 5. flowHumoral: 보조 T림프구 → B림프구 → 형질세포 (체액성 면역) -->
+  <path id="flowHumoral" fill="none" stroke="none"
+        d="M 645,205
+           C 680,175 715,150 760,140
+           C 800,130 840,125 885,125" />
+
+  <!-- 6. flowMemory: B림프구 → 기억 세포 -->
+  <path id="flowMemory" fill="none" stroke="none"
+        d="M 765,168
+           C 790,200 830,230 875,250" />
+
+  <!-- 7. flowAntibody: 형질세포 → 항체가 날아가 병원체에 달라붙는 곳 -->
+  <path id="flowAntibody" fill="none" stroke="none"
+        d="M 915,105
+           C 935,90 945,75 960,55" />
+
+  <!-- 8. flowCellular: 보조 T림프구 → 세포독성 T림프구 → 감염된 세포 (세포성 면역) -->
+  <path id="flowCellular" fill="none" stroke="none"
+        d="M 640,250
+           C 680,310 720,370 765,415
+           C 800,422 830,422 870,420" />
+
+</svg>
