@@ -262,8 +262,10 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .sheet { max-width: 100%; height: auto; color: #1b2029; }
 .sheet-staff line { stroke: #6d7078; stroke-width: 1.2; }
-.sheet-clef { fill: #1b2029; font-family: "Noto Music", "Segoe UI Symbol", "Segoe UI Historic", Symbola, serif; }
-.sheet-glyph { font-family: "Noto Music", "Segoe UI Symbol", Georgia, serif; stroke: none; }
+/* 자리표와 임시표는 같은 글꼴 줄에서 골라야 캔버스로 잰 값과 어긋나지 않는다. */
+.sheet-clef,
+.sheet-glyph { font-family: "Noto Music", "Segoe UI Symbol", Symbola, serif; stroke: none; }
+.sheet-clef { fill: #1b2029; }
 .sheet-unknown { font-family: Georgia, serif; font-size: 26px; font-weight: 700; fill: #8a6a22; text-anchor: middle; }
 .sheet-ink { stroke: #1b2029; fill: #1b2029; }
 .sheet-ink .sheet-head { stroke: none; }

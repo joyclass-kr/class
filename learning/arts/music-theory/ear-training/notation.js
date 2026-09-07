@@ -57,28 +57,22 @@
     }
 
     /*
-     * 임시표는 유니코드 올림표·내림표 글리프를 재서 앉힌다. 겹올림표는 어느 글꼴에서나
-     * 나오지 않는 글리프여서 X 모양을 그대로 그린다.
+     * 임시표. 겹내림표는 내림표 둘을 나란히 놓고, 겹올림표는 제 글리프를 쓴다.
      */
+    function markWidth(mark) {
+        const ink = inkBox(mark.char);
+        return ink ? ink.right * (mark.height / ink.height) : 0;
+    }
+
     function accidentalNode(accidental, right, y) {
         const group = make("g", { class: "sheet-ink" });
-        if (accidental === 2) {
-            const cross = make("g", { transform: "translate(" + (right - 5) + "," + y + ")" });
-            cross.append(make("line", { x1: -4, y1: -4, x2: 4, y2: 4, "stroke-width": 2.2 }));
-            cross.append(make("line", { x1: -4, y1: 4, x2: 4, y2: -4, "stroke-width": 2.2 }));
-            group.append(cross);
-            return group;
-        }
-        const sharp = accidental > 0;
-        const char = sharp ? SHARP_GLYPH : FLAT_GLYPH;
-        const box = glyphBox(char, 0.2, 0.95);
-        if (!box) return group;
-        const height = sharp ? SHARP_H : FLAT_H;
-        const step = box.width * (height / box.height) + 1;
-        const times = Math.abs(accidental);
-        for (let mark = 0; mark < times; mark += 1) {
-            /* 내림표는 배가 아래쪽에 있어 가운데를 조금 올려 잡는다. */
-            group.append(glyphNode(char, box, right - mark * step, y - (sharp ? 0 : STEP_Y * 0.7), height));
+        const mark = accidental === 2 ? MARKS.doubleSharp
+            : accidental > 0 ? MARKS.sharp : MARKS.flat;
+        const times = accidental === -2 ? 2 : 1;
+        const step = markWidth(mark) + 1;
+        for (let index = 0; index < times; index += 1) {
+            const node = glyphNode(mark.char, "sheet-glyph", right - index * step, y, mark.height, mark.anchor);
+            if (node) group.append(node);
         }
         return group;
     }
@@ -95,12 +89,12 @@
      * 오선과 자리표를 함께 두고, 대신 임시표를 촘촘히 붙여 자리를 아낀다.
      * 되돌려 주는 width는 오선 눈금으로 잰 길이다.
      */
-    const SIG_START = 40;
-    const SIG_STEP = 7.5;
+    const SIG_START = 38;
 
     function keySignatureGroup(count, sharp) {
         const seats = sharp ? SHARP_SEATS : FLAT_SEATS;
-        const width = SIG_START + Math.max(count, 1) * SIG_STEP + 5;
+        const step = markWidth(sharp ? MARKS.sharp : MARKS.flat) + 0.5;
+        const width = SIG_START + Math.max(count, 1) * step + 4;
         const group = make("g", {});
 
         const staff = make("g", { class: "sheet-staff" });
@@ -115,7 +109,7 @@
 
         const ink = make("g", { class: "sheet-ink" });
         for (let mark = 0; mark < count; mark += 1) {
-            ink.append(accidentalNode(sharp ? 1 : -1, SIG_START + (mark + 1) * SIG_STEP, yFor(seats[mark])));
+            ink.append(accidentalNode(sharp ? 1 : -1, SIG_START + (mark + 1) * step, yFor(seats[mark])));
         }
         group.append(ink);
 
@@ -136,72 +130,92 @@
     const CLEF_GLYPH = "\uD834\uDD1E";
     const SHARP_GLYPH = "\u266F";
     const FLAT_GLYPH = "\u266D";
-    const CLEF_TOP = TOP_LINE_Y - STEP_Y * 2;        /* 위 줄에서 한 칸 위 */
-    const CLEF_BOTTOM = BOTTOM_LINE_Y + STEP_Y * 4;  /* 아래 줄에서 두 칸 아래 */
+    const DOUBLE_SHARP_GLYPH = "\uD834\uDD2A";
+    const G_LINE_ABS = 4 * 7 + 4;   /* 높은음자리표가 가리키는 G4 */
     const PROBE_SIZE = 100;
 
-    const boxCache = {};
+    const inkCache = {};
+    let glyphFont;
 
     /*
-     * 글리프 테두리를 한 번만 재서 기억해 둔다. ratio는 그 글리프가 가질 만한
-     * 가로/세로 비율의 범위다. 글꼴에 글리프가 없으면 네모(.notdef)가 나오는데,
-     * 비율이 어긋나므로 여기서 걸러 낸다.
+     * SVG의 getBBox()는 글리프가 아니라 글꼴 줄상자를 돌려준다. ♭·♯·자리표가 모두
+     * 같은 높이로 나와서 크기를 맞출 수가 없다. 그래서 캔버스로 실제 먹이 닿는
+     * 테두리를 잰다. 잰 값은 글자 크기 PROBE_SIZE를 기준으로 한 것이다.
      */
-    function glyphBox(char, low, high) {
-        if (boxCache[char] !== undefined) return boxCache[char];
-        boxCache[char] = null;
-        const probe = make("svg", {
-            width: 1, height: 1,
-            style: "position:absolute;left:-9999px;top:0;overflow:visible"
-        });
-        const text = make("text", { class: "sheet-glyph", x: 0, y: 0, "font-size": PROBE_SIZE });
-        text.textContent = char;
-        probe.append(text);
-        document.body.append(probe);
-        let box = null;
-        try { box = text.getBBox(); } catch (error) { box = null; }
-        probe.remove();
-        if (box && box.height > 0 && box.width > 0) {
-            const ratio = box.width / box.height;
-            if (ratio > low && ratio < high) boxCache[char] = box;
+    function inkBox(char) {
+        if (inkCache[char] !== undefined) return inkCache[char];
+        inkCache[char] = null;
+        if (glyphFont === undefined) {
+            const probe = document.createElement("span");
+            probe.className = "sheet-glyph";
+            probe.style.cssText = "position:absolute;left:-9999px;top:0";
+            document.body.append(probe);
+            glyphFont = window.getComputedStyle(probe).fontFamily || "serif";
+            probe.remove();
         }
-        return boxCache[char];
+        let metrics = null;
+        try {
+            const context = document.createElement("canvas").getContext("2d");
+            context.font = PROBE_SIZE + "px " + glyphFont;
+            metrics = context.measureText(char);
+        } catch (error) { metrics = null; }
+        if (metrics && typeof metrics.actualBoundingBoxAscent === "number") {
+            const height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+            if (height > 0) {
+                inkCache[char] = {
+                    ascent: metrics.actualBoundingBoxAscent,
+                    height: height,
+                    right: metrics.actualBoundingBoxRight
+                };
+            }
+        }
+        return inkCache[char];
     }
 
     /*
-     * 글리프를 오선 좌표에 앉힌다. right는 글리프의 오른쪽 끝, middle은 가운데 높이,
-     * height는 글리프 테두리의 높이다.
+     * 글리프를 오선 좌표에 앉힌다. right는 먹이 닿는 오른쪽 끝, height는 먹의 높이,
+     * anchor는 그 높이 안에서 기준이 되는 자리(0이면 맨 위, 1이면 맨 아래)이고
+     * at은 그 기준이 놓일 y다. 예를 들어 내림표는 배가 음표에 걸리므로 anchor가 크다.
      */
-    function glyphNode(char, box, right, middle, height) {
-        const scale = height / box.height;
+    function glyphNode(char, cls, right, at, height, anchor) {
+        const ink = inkBox(char);
+        if (!ink) return null;
+        const scale = height / ink.height;
         const node = make("text", {
-            class: "sheet-glyph",
+            class: cls,
             x: 0, y: 0,
             "font-size": PROBE_SIZE * scale,
-            transform: "translate(" + (right - (box.x + box.width) * scale) + ","
-                + (middle - (box.y + box.height / 2) * scale) + ")"
+            transform: "translate(" + (right - ink.right * scale) + ","
+                + (at - anchor * height + ink.ascent * scale) + ")"
         });
         node.textContent = char;
         return node;
     }
 
+    /* 자리표는 소용돌이가 G선에 오도록 앉힌다. 소용돌이는 먹 높이의 63% 자리다. */
+    const CLEF_H = STEP_Y * 14;
+    const CLEF_SPIRAL = 0.63;
+
     function clefNode(x) {
-        const box = glyphBox(CLEF_GLYPH, 0.2, 0.62);
-        if (!box) return null;
-        const scale = (CLEF_BOTTOM - CLEF_TOP) / box.height;
-        const node = make("text", {
-            class: "sheet-clef",
-            x: 0, y: 0,
-            "font-size": PROBE_SIZE * scale,
-            transform: "translate(" + (x - box.x * scale) + "," + (CLEF_TOP - box.y * scale) + ")"
-        });
-        node.textContent = CLEF_GLYPH;
-        return node;
+        const ink = inkBox(CLEF_GLYPH);
+        if (!ink) return null;
+        const right = x + ink.right * (CLEF_H / ink.height);
+        return glyphNode(CLEF_GLYPH, "sheet-clef", right, yFor(G_LINE_ABS), CLEF_H, CLEF_SPIRAL);
     }
 
-    /* 올림표는 두 칸, 내림표는 두 칸 반을 차지한다. */
-    const SHARP_H = STEP_Y * 4;
-    const FLAT_H = STEP_Y * 5;
+    /*
+     * 올림표는 두 칸, 내림표는 두 칸 반, 겹올림표는 한 칸을 차지한다. anchor는 음표가
+     * 걸리는 자리다. 올림표는 가운데, 내림표는 배가 아래쪽에 있어 아래쪽이다.
+     */
+    const MARKS = {
+        sharp: { char: SHARP_GLYPH, height: STEP_Y * 4, anchor: 0.5 },
+        flat: { char: FLAT_GLYPH, height: STEP_Y * 5, anchor: 0.72 },
+        doubleSharp: { char: DOUBLE_SHARP_GLYPH, height: STEP_Y * 2, anchor: 0.5 }
+    };
+
+    /* 자리표가 위아래로 먹는 띠. 소용돌이를 G선에 맞춘 결과다. */
+    const CLEF_TOP = yFor(G_LINE_ABS) - STEP_Y * 14 * 0.63;
+    const CLEF_BOTTOM = CLEF_TOP + STEP_Y * 14;
 
     /* 높은음자리표에서 조표가 붙는 자리. 붙는 차례대로 적은 음자리 번호다. */
     const SHARP_SEATS = [38, 35, 39, 36, 33, 37, 34];

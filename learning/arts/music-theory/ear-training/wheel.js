@@ -82,7 +82,7 @@
      * 가운데에 붙이는 조표는 청음 악보와 같은 그림을 쓴다. 임시표가 어느 줄과 칸에
      * 붙는지가 조표의 뜻이므로 오선과 자리표를 함께 두고, 대신 통째로 줄여 작게 놓는다.
      */
-    const SIG_SCALE = 0.52;
+    const SIG_SCALE = 0.44;
 
     function keySignature(count, sharp) {
         const holder = make("g", { class: "wheel-key-sig" });
