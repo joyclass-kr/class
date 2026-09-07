@@ -281,8 +281,9 @@
                 majorCells[position].classList.toggle("is-tonic", position === index);
             });
             const home = keyAt(index);
-            setName(hubMajor, withSame(home.major, home.same) + " Major");
-            setName(hubMinor, home.minor.replace("m", "") + " Minor");
+            /* 가운데는 괄호 병기를 빼서 읽기 쉽게 둔다. 병기는 칸에만 남긴다. */
+            setName(hubMajor, home.major + " major");
+            setName(hubMinor, home.minor.replace("m", "") + " minor");
             hubSign.innerHTML = "";
             hubSign.append(keySignature(home.count, home.sharp));
             if (settings.onChange) settings.onChange(chords(), home);

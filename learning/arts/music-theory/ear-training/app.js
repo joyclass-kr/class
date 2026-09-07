@@ -194,7 +194,7 @@
     const ACC_MARK = { "-2": "♭♭", "-1": "♭", "0": "", "1": "♯", "2": "♯♯" };
 
     function keyName(tonic) {
-        return N.LETTER_NAMES[tonic.letter] + (ACC_MARK[String(tonic.accidental)] || "") + " Major​(장조)";
+        return N.LETTER_NAMES[tonic.letter] + (ACC_MARK[String(tonic.accidental)] || "") + " major​(장조)";
     }
 
     function majorScale(tonic) {

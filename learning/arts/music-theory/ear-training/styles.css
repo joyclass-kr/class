@@ -521,7 +521,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .wheel-chord .acc { font-size: .72em; }
 
 .wheel-hub-face { fill: #fffdf7; stroke: #c4bcab; stroke-width: 1; }
-.wheel-hub-major { fill: #1d2430; font-size: 18px; font-weight: 850; text-anchor: middle; }
+.wheel-hub-major { fill: #1d2430; font-size: 20px; font-weight: 850; text-anchor: middle; }
 .wheel-hub-minor { fill: #4a5462; font-size: 14px; font-weight: 800; text-anchor: middle; }
 .wheel-key-sig .sheet-staff line { stroke: #8a8f98; stroke-width: 1.6; }
 
