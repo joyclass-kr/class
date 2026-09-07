@@ -16,7 +16,7 @@
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var ATM = 760;
 
-    var wrap, layer, svg;
+    var wrap, layer, svg, tagBox, verdictTag;
     var ribs = [], lungLeft, lungRight, diaphragm, chestFill, airArrow, airText;
     var jarMembrane, jarBalloonL, jarBalloonR, jarHand;
     var volBar, volText, presNeedle, presText, verdict;
@@ -28,6 +28,8 @@
         addSceneButton();
         buildLayer();
         watchControls();
+        window.addEventListener('resize', placeTags);
+        setTimeout(placeTags, 120);
         loop();
     }
 
@@ -51,6 +53,8 @@
     }
 
     function setVisible(on) {
+        // 화면 갱신이 멈춰 있어도(다른 갈피에 있을 때 등) 자리는 잡혀 있어야 한다
+        if (on) { setTimeout(placeTags, 0); setTimeout(placeTags, 80); }
         layer.hidden = !on;
         var canvas = document.getElementById('respirationCanvas');
         if (canvas) canvas.style.visibility = on ? 'hidden' : 'visible';
@@ -79,6 +83,12 @@
         svg = el('svg', { viewBox: '0 0 1000 560', preserveAspectRatio: 'xMidYMid meet' });
         layer.appendChild(svg);
 
+        // 글씨는 그림 안에 넣지 않는다. 그림 안 글씨는 창이 커지면 같이 커져서
+        // 옆의 다른 글씨와 크기가 어긋난다. HTML 로 얹어야 어디서나 크기가 같다.
+        tagBox = document.createElement('div');
+        tagBox.className = 'breath-tags';
+        layer.appendChild(tagBox);
+
         drawBody();
         drawJar();
         drawGauges();
@@ -89,7 +99,7 @@
         var g = el('g');
         svg.appendChild(g);
 
-        g.appendChild(text(250, 46, '몸속에서 일어나는 일', 17, '#f8fafc', 800));
+        tag(250, 46, '몸속에서 일어나는 일', 'head');
 
         // 흉강 (갈비뼈와 가로막이 둘러싼 빈 곳)
         chestFill = el('path', { fill: 'rgba(56,189,248,0.14)', stroke: 'none' });
@@ -120,13 +130,12 @@
         // 가로막
         diaphragm = el('path', { fill: 'none', stroke: '#f59e0b', 'stroke-width': 10, 'stroke-linecap': 'round' });
         g.appendChild(diaphragm);
-        g.appendChild(text(250, 452, '가로막 (횡격막)', 13, '#fbbf24', 800));
+        tag(250, 438, '가로막 (횡격막)', 'warm');
 
         // 공기 화살표
         airArrow = el('path', { fill: '#38bdf8' });
         g.appendChild(airArrow);
-        airText = text(330, 96, '', 14, '#38bdf8', 800, 'start');
-        g.appendChild(airText);
+        airText = tag(330, 96, '', 'cool', 'start');
     }
 
     /* ── 가운데: 종 모형 (고무막 실험) ────────────────────── */
@@ -134,7 +143,7 @@
         var g = el('g', { transform: 'translate(470, 0)' });
         svg.appendChild(g);
 
-        g.appendChild(text(120, 46, '종 모형 (고무막 실험)', 17, '#f8fafc', 800));
+        tag(120, 46, '종 모형 (고무막 실험)', 'head');
 
         // 유리종
         g.appendChild(el('path', {
@@ -160,7 +169,7 @@
         jarHand = el('path', { fill: 'none', stroke: '#fbbf24', 'stroke-width': 5, 'stroke-linecap': 'round' });
         g.appendChild(jarHand);
 
-        g.appendChild(text(120, 452, '고무막 = 가로막 · 풍선 = 폐 · 유리종 = 흉강', 12.5, '#94a3b8', 700));
+        tag(8, 470, '고무막 = 가로막 · 풍선 = 폐 · 유리종 = 흉강', 'dim', 'start');
     }
 
     /* ── 오른쪽: 부피·압력 눈금 ───────────────────────────── */
@@ -168,27 +177,25 @@
         var g = el('g', { transform: 'translate(760, 0)' });
         svg.appendChild(g);
 
-        g.appendChild(text(0, 46, '재어 보기', 17, '#f8fafc', 800, 'start'));
+        tag(760, 46, '재어 보기', 'head', 'start');
 
         // 부피
-        g.appendChild(text(0, 92, '흉강 부피', 14, '#cbd5e1', 700, 'start'));
+        tag(760, 92, '흉강 부피', '', 'start');
         g.appendChild(el('rect', { x: 0, y: 104, width: 170, height: 26, rx: 8, fill: 'rgba(148,163,184,0.18)' }));
         volBar = el('rect', { x: 0, y: 104, width: 80, height: 26, rx: 8, fill: '#34d399' });
         g.appendChild(volBar);
-        volText = text(0, 152, '', 16, '#34d399', 800, 'start');
-        g.appendChild(volText);
+        volText = tag(760, 152, '', 'good', 'start');
 
         // 압력
-        g.appendChild(text(0, 208, '흉강 내압 (대기압 760)', 14, '#cbd5e1', 700, 'start'));
+        tag(760, 208, '흉강 내압 (대기압 760)', '', 'start');
         g.appendChild(el('line', { x1: 0, y1: 240, x2: 170, y2: 240, stroke: '#64748b', 'stroke-width': 3 }));
         g.appendChild(el('line', { x1: 85, y1: 228, x2: 85, y2: 252, stroke: '#facc15', 'stroke-width': 3 }));
-        g.appendChild(text(85, 272, '760', 12, '#facc15', 700));
-        g.appendChild(text(6, 272, '낮음', 12, '#38bdf8', 700, 'start'));
-        g.appendChild(text(164, 272, '높음', 12, '#f59e0b', 700, 'end'));
+        tag(845, 272, '760', 'warm');
+        tag(766, 272, '낮음', 'cool', 'start');
+        tag(924, 272, '높음', 'warm', 'end');
         presNeedle = el('circle', { r: 9, fill: '#38bdf8', stroke: '#ffffff', 'stroke-width': 2.5, cy: 240 });
         g.appendChild(presNeedle);
-        presText = text(0, 312, '', 16, '#38bdf8', 800, 'start');
-        g.appendChild(presText);
+        presText = tag(760, 312, '', 'cool', 'start');
 
         // 결론 한 줄
         verdict = el('g');
@@ -202,6 +209,7 @@
 
     function loop() {
         render();
+        placeTags();
         raf = requestAnimationFrame(loop);
     }
 
@@ -293,9 +301,39 @@
             line = '슬라이더를 움직여 가로막을 내려 보세요. 흉강이 넓어지면 압력이 어떻게 되는지 보입니다.';
             color = '#94a3b8';
         }
-        var box = el('rect', { x: 40, y: 496, width: 920, height: 40, rx: 12, fill: 'rgba(6,10,24,0.85)', stroke: color, 'stroke-width': 1.6 });
-        verdict.appendChild(box);
-        verdict.appendChild(text(500, 522, line, 14.5, color, 800));
+        if (!verdictTag) verdictTag = tag(500, 516, '', 'verdict');
+        verdictTag.textContent = line;
+        verdictTag.style.color = color;
+        verdictTag.style.borderColor = color;
+    }
+
+    /* ── 이름표 (HTML) ─────────────────────────────────────
+       그림 좌표(x, y)에 얹되 글씨 크기는 화면 기준으로 고정한다. */
+    var TAGS = [];
+
+    function tag(x, y, str, cls, anchor) {
+        var e = document.createElement('span');
+        e.className = 'breath-tag' + (cls ? ' ' + cls : '');
+        e.textContent = str || '';
+        e.dataset.anchor = anchor || 'middle';
+        tagBox.appendChild(e);
+        TAGS.push({ el: e, x: x, y: y });
+        return e;
+    }
+
+    function placeTags() {
+        if (!svg || !tagBox || !layer || layer.hidden) return;
+        var box = svg.getBoundingClientRect();
+        if (!box.width) return;
+        var vb = svg.viewBox.baseVal;
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var lb = tagBox.getBoundingClientRect();
+        var offX = (box.left - lb.left) + (box.width - vb.width * k) / 2;
+        var offY = (box.top - lb.top) + (box.height - vb.height * k) / 2;
+        TAGS.forEach(function (t) {
+            t.el.style.left = (offX + t.x * k) + 'px';
+            t.el.style.top = (offY + t.y * k) + 'px';
+        });
     }
 
     /* ── 도우미 ───────────────────────────────────────────── */
@@ -310,15 +348,6 @@
         return n;
     }
 
-    function text(x, y, str, size, fill, weight, anchor) {
-        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
-        var n = el('text', {
-            x: x, y: y, fill: fill, 'font-size': size, 'font-weight': weight || 700,
-            'font-family': 'Pretendard, sans-serif', 'text-anchor': anchor || 'middle'
-        });
-        n.textContent = str;
-        return n;
-    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
