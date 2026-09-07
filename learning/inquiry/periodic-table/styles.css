@@ -665,12 +665,12 @@ canvas#bohrAtomCanvas {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 4px 7px;
+    padding: 4px 8px;
     border: 1px solid var(--border-color);
     border-radius: 999px;
     color: var(--text-secondary);
     background: rgba(255, 255, 255, 0.035);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -693,7 +693,7 @@ canvas#bohrAtomCanvas {
 }
 
 .shell-info {
-    font-size: 13px;
+    font-size: 13.5px;
     color: var(--text-secondary);
     font-weight: 600;
 }
@@ -717,13 +717,13 @@ canvas#bohrAtomCanvas {
 }
 
 .modal-title-row .z-num {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
     color: #38ef7d;
 }
 
 .modal-title-row .name-ko {
-    font-size: 28px;
+    font-size: 23px;
     font-weight: 900;
 }
 
@@ -732,7 +732,7 @@ canvas#bohrAtomCanvas {
     margin-top: 6px;
     padding: 4px 10px;
     border-radius: 12px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
 }
 
@@ -744,23 +744,22 @@ canvas#bohrAtomCanvas {
 
 .property-card {
     background: rgba(255, 255, 255, 0.04);
-    padding: 10px 12px;
+    padding: 10px 14px;
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .property-card .prop-label {
-    font-size: 11px;
-    color: var(--text-muted);
+    font-size: 12.5px;
+    color: #94a3b8;
     font-weight: 600;
-
 }
 
 .property-card .prop-val {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     color: #f1f5f9;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 .property-card.exam-key-card {
@@ -789,20 +788,21 @@ canvas#bohrAtomCanvas {
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-left: 3px solid #38ef7d;
     border-radius: var(--radius-sm);
-    padding: 11px 12px;
+    padding: 12px 14px;
 }
 
 .exam-info-card h4,
 .exam-uses-section h4 {
-    margin-bottom: 5px;
+    margin-bottom: 7px;
     color: #38ef7d;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 800;
 }
 
 .exam-info-card p {
-    color: #cbd5e1;
-    font-size: 12px;
-    line-height: 1.5;
+    color: #e2e8f0;
+    font-size: 13.5px;
+    line-height: 1.6;
 }
 
 .exam-info-card.exam-trivia-card {
@@ -831,16 +831,16 @@ canvas#bohrAtomCanvas {
 .use-tag {
     background: rgba(56, 239, 125, 0.15);
     color: #38ef7d;
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
 }
 
 /* 실생활 활용 분야 비주얼 일러스트 카드 그리드 */
 .uses-visual-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
     gap: 10px;
     margin-top: 10px;
 }
@@ -849,7 +849,7 @@ canvas#bohrAtomCanvas {
     background: rgba(255, 255, 255, 0.035);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
-    padding: 10px 6px 8px 6px;
+    padding: 11px 8px 10px 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -868,8 +868,8 @@ canvas#bohrAtomCanvas {
 }
 
 .use-visual-icon-box {
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -886,16 +886,16 @@ canvas#bohrAtomCanvas {
 }
 
 .use-visual-icon-box .use-svg {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     display: block;
     filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
 }
 
 .use-visual-label {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
-    color: #e2e8f0;
+    color: #f1f5f9;
     line-height: 1.35;
     word-break: keep-all;
     letter-spacing: -0.2px;
