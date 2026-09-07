@@ -1017,8 +1017,8 @@
         gdot: { cells: 16, beat: ["quarter", "eighths", "dottedPair", "oneThenTwo", "rest"], longs: ["h", "hd"] },
         gtie: { cells: 8, beat: ["quarter", "eighths", "offEighth", "eighthRest"], longs: ["h", "hd", "w"] },
         pick: { cells: 16, beat: ["quarter", "eighths", "sixteenths", "twoThenOne", "oneThenTwo", "dottedPair", "rest", "eighthRest"], longs: ["h", "hd"] },
-        trip: { cells: 0, beat: ["quarter", "eighths", "triplet"], longs: ["h"] },
-        tripMix: { cells: 0, beat: ["quarter", "eighths", "sixteenths", "triplet", "tripletHead", "rest"], longs: ["h"] }
+        trip: { cells: 0, triplets: true, beat: ["quarter", "eighths", "triplet"], longs: ["h"] },
+        tripMix: { cells: 0, triplets: true, beat: ["quarter", "eighths", "sixteenths", "triplet", "tripletHead", "rest"], longs: ["h"] }
     };
 
     function rhythmBar(setName) {
@@ -1042,18 +1042,62 @@
     }
 
     /* 악보를 골라 답하는 문제. 보기끼리 치는 자리가 겹치지 않게 고른다. */
+    /*
+     * 치는 자리 하나를 바로 옆 자리로 옮겨 다른 마디를 만든다. 치는 수가 그대로이고
+     * 악보도 한 군데만 달라 보이므로, 개수를 세거나 모양을 훑는 것으로는 가릴 수 없고
+     * 어디서 치는지를 들어야 한다. 적을 수 없는 자리가 나오면 null을 돌려준다.
+     */
+    const NUDGES = [3, -3, 4, -4, 6, -6, 2, -2, 9, -9, 12, -12, 18, -18, 24, -24];
+
+    function nudgeOnsets(cells, allowFirst) {
+        const taken = new Set(cells);
+        /* 첫 박은 되도록 그대로 두어 시작을 견주지 못하게 한다. */
+        const movable = allowFirst ? cells.slice() : cells.filter(cell => cell > 0);
+        if (!movable.length) return null;
+        const order = movable.slice().sort(() => Math.random() - .5);
+        for (let index = 0; index < order.length; index += 1) {
+            const from = order[index];
+            const ways = NUDGES.slice().sort(() => Math.random() - .5);
+            for (let way = 0; way < ways.length; way += 1) {
+                const to = from + ways[way];
+                if (to < 0 || to >= BAR_CELLS || taken.has(to)) continue;
+                const moved = cells.filter(cell => cell !== from).concat([to]).sort((a, b) => a - b);
+                const bar = RN.fromOnsets(moved, BAR_CELLS);
+                if (bar) return bar;
+            }
+        }
+        return null;
+    }
+
+    /*
+     * 악보를 골라 답하는 문제. 보기 넷은 치는 자리 수가 모두 같아야 한다. 수가
+     * 다르면 소리를 몇 번 들었는지 손가락으로 세기만 해도 답이 나온다.
+     */
     function rhythmChoiceQuestion(item) {
         const answer = rhythmBar(item.set).bar;
+        const want = RN.onsets(answer).length;
         const bars = [answer];
-        let guard = 0;
-        while (bars.length < 4 && guard < 60) {
-            guard += 1;
-            const other = rhythmBar(item.set).bar;
-            if (bars.some(existing => RN.sameOnsets(existing, other))) continue;
-            bars.push(other);
-        }
+        const fresh = bar => bar && RN.barCells(bar) === BAR_CELLS
+            && RN.onsets(bar).length === want
+            && !bars.some(existing => RN.sameOnsets(existing, bar));
+
+        /* 정답에서 한 자리만 옮겨 만든다. 첫 박을 그대로 둔 것부터 찾는다. */
+        const fill = (make, tries) => {
+            let guard = 0;
+            while (bars.length < 4 && guard < tries) {
+                guard += 1;
+                const other = make();
+                if (fresh(other)) bars.push(other);
+            }
+        };
+        fill(() => nudgeOnsets(RN.onsets(answer), false), 300);
+        fill(() => nudgeOnsets(RN.onsets(answer), true), 300);
+        fill(() => nudgeOnsets(RN.onsets(pick(bars)), true), 200);
+        fill(() => rhythmBar(item.set).bar, 300);
+
         const order = bars.slice().sort(() => Math.random() - .5);
         return {
+            ask: "들은 리듬을 고르세요",
             silentStaff: true,
             rhythm: { bar: answer, onsets: RN.onsets(answer) },
             bars: { list: order, answer: order.indexOf(answer) },
