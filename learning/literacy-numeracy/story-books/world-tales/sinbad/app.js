@@ -1011,6 +1011,12 @@ const EN = {
         ]
     },
     words: {
+        'cover.webp': [
+            { word: 'go to sea', meaning: '바다로 나가다', sentence: 'Sindbad goes to sea seven times.' },
+            { word: 'voyage', meaning: '항해', sentence: 'The best known of those voyages.' },
+            { word: 'merchant', meaning: '상인', sentence: 'The ones Arab merchants really sailed in those days.' },
+            { word: 'sail', meaning: '항해하다', sentence: 'Arab merchants really sailed.' }
+        ],
         '01-port.webp': [
             { word: 'inherit', meaning: '물려받다', sentence: 'He had inherited a good deal.' },
             { word: 'store room', meaning: '곳간', sentence: 'One day he opened his store room.' },
@@ -1340,22 +1346,22 @@ function vocabFor() {
         : page.kind === 'after' ? page.spread.art
         : null;
     if (key && all[key]) return all[key];
-    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
-    const list = [];
-    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
-    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
-    return list;
+    // 표지에도 소개글이 있다. 그 글에 나온 낱말만 보여 준다.
+    if (page && page.kind === 'cover') return all['cover.webp'] || [];
+    // 차례·문제 쪽에는 글이 없다. 온 책의 낱말을 쏟아 놓으면 아이가 눈앞의 글에서
+    // 찾을 수가 없으니, 보여 줄 것이 없을 때는 칸을 아예 접는다.
+    return [];
 }
 
 function renderVocab() {
-    const on = HAS_WORDS && LANG === 'en';
+    const list = HAS_WORDS && LANG === 'en' ? vocabFor() : [];
+    const on = list.length > 0;
     if (vocabScreenEl) vocabScreenEl.hidden = !on;
     if (scrollDownEl) scrollDownEl.hidden = !on;
     if (!on) {
         if (window.scrollY) window.scrollTo({ top: 0 });
         return;
     }
-    const list = vocabFor();
     VOCAB_NOW = list;
     vocabPanelEl.innerHTML = `
         <ul class="vocab-list">

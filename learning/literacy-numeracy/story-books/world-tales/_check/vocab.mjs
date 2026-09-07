@@ -98,6 +98,13 @@ function pagesOf(src) {
     if (af > 0 && af < stop) seg += ' ' + src.slice(af, stop);
 
     const map = {};
+    /* 표지에도 소개글이 있고, 낱말 칸은 거기서 'cover.webp' 열쇠를 찾는다. 같이 센다. */
+    const cv = src.indexOf('cover: {', at);
+    if (cv > 0 && cv < stop) {
+        const cseg = src.slice(cv, src.indexOf('},', cv));
+        const cl = [...cseg.matchAll(/(['"])((?:(?!\1)[^\\]|\\.)*)\1/g)].map(m => m[2]);
+        map['cover.webp'] = ' ' + flat(cl.join(' '));
+    }
     for (const part of seg.split(/art:\s*['"]/).slice(1)) {
         const q = part.search(/['"]/);
         const name = part.slice(0, q);

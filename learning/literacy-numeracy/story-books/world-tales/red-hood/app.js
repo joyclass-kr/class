@@ -914,6 +914,12 @@ const EN = {
         ]
     },
     words: {
+        'cover.webp': [
+            { word: 'write down', meaning: '받아 적다', sentence: 'Written down in France by Charles Perrault in 1697.' },
+            { word: 'darkly', meaning: '어둡게', sentence: "In Perrault's telling the story ends darkly." },
+            { word: 'huntsman', meaning: '사냥꾼', sentence: 'The Grimms added the huntsman.' },
+            { word: 'ending', meaning: '결말', sentence: 'That is the ending most people know today.' }
+        ],
         '01-errand.webp': [
             { word: 'hood', meaning: '(머리에 쓰는) 모자, 두건', sentence: 'Her grandmother had made her a hood.' },
             { word: 'sew', meaning: '바느질해 짓다', sentence: 'It was sewn from soft red cloth.' },
@@ -1217,22 +1223,22 @@ function vocabFor() {
         : page.kind === 'after' ? page.spread.art
         : null;
     if (key && all[key]) return all[key];
-    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
-    const list = [];
-    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
-    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
-    return list;
+    // 표지에도 소개글이 있다. 그 글에 나온 낱말만 보여 준다.
+    if (page && page.kind === 'cover') return all['cover.webp'] || [];
+    // 차례·문제 쪽에는 글이 없다. 온 책의 낱말을 쏟아 놓으면 아이가 눈앞의 글에서
+    // 찾을 수가 없으니, 보여 줄 것이 없을 때는 칸을 아예 접는다.
+    return [];
 }
 
 function renderVocab() {
-    const on = HAS_WORDS && LANG === 'en';
+    const list = HAS_WORDS && LANG === 'en' ? vocabFor() : [];
+    const on = list.length > 0;
     if (vocabScreenEl) vocabScreenEl.hidden = !on;
     if (scrollDownEl) scrollDownEl.hidden = !on;
     if (!on) {
         if (window.scrollY) window.scrollTo({ top: 0 });
         return;
     }
-    const list = vocabFor();
     VOCAB_NOW = list;
     vocabPanelEl.innerHTML = `
         <ul class="vocab-list">

@@ -886,6 +886,12 @@ const EN = {
         ]
     },
     words: {
+        'cover.webp': [
+            { word: 'print', meaning: '책으로 찍다', sentence: 'First printed in a book of tales Charles Perrault published.' },
+            { word: 'invite', meaning: '초대하다', sentence: 'A guest who was not invited turns up at the feast.' },
+            { word: 'curse', meaning: '저주', sentence: 'Lays a curse.' },
+            { word: 'leave out', meaning: '빠뜨리다', sentence: 'Who was asked to a feast, and who was left out.' }
+        ],
         '01-birth.webp': [
             { word: 'palace', meaning: '궁궐', sentence: 'They had no child, and the palace was always quiet.' },
             { word: 'uproar', meaning: '들썩임, 큰 소동', sentence: 'The whole country was in an uproar.' },
@@ -1190,22 +1196,22 @@ function vocabFor() {
         : page.kind === 'after' ? page.spread.art
         : null;
     if (key && all[key]) return all[key];
-    // 표지·차례·문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
-    const list = [];
-    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
-    EN.afterword.spreads.forEach(sp => (all[sp.art] || []).forEach(w => list.push(w)));
-    return list;
+    // 표지에도 소개글이 있다. 그 글에 나온 낱말만 보여 준다.
+    if (page && page.kind === 'cover') return all['cover.webp'] || [];
+    // 차례·문제 쪽에는 글이 없다. 온 책의 낱말을 쏟아 놓으면 아이가 눈앞의 글에서
+    // 찾을 수가 없으니, 보여 줄 것이 없을 때는 칸을 아예 접는다.
+    return [];
 }
 
 function renderVocab() {
-    const on = HAS_WORDS && LANG === 'en';
+    const list = HAS_WORDS && LANG === 'en' ? vocabFor() : [];
+    const on = list.length > 0;
     if (vocabScreenEl) vocabScreenEl.hidden = !on;
     if (scrollDownEl) scrollDownEl.hidden = !on;
     if (!on) {
         if (window.scrollY) window.scrollTo({ top: 0 });
         return;
     }
-    const list = vocabFor();
     VOCAB_NOW = list;
     vocabPanelEl.innerHTML = `
         <ul class="vocab-list">
