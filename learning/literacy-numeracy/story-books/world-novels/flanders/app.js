@@ -360,6 +360,38 @@ const CHAPTERS = [
    글자 수로 어림잡으면 대사가 많은 문단은 실제로 차지하는 줄이 훨씬 많아 어긋나므로,
    보이지 않는 쪽을 하나 만들어 실제 높이를 재어 가며 나눈다. */
 
+/* ── 말 바꾸기 ─────────────────────────────────────────
+   영어 원고(const EN)가 있는 책은 위쪽 단추로 영어 쪽을 갈아 끼운다.
+   소설틀은 글을 재서 쪽을 나누므로, 말을 바꾸면 쪽을 통째로 다시 잰다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서', home: '학습 허브로 돌아가기',
+        page: n => `${n}쪽`, done: (n, all) => `${n} / 총 ${all}문항 완료`,
+        label: CHAPTER_LABEL, other: 'EN', otherAria: 'Read in English'
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading', home: 'Back to the learning hub',
+        page: n => `p. ${n}`, done: (n, all) => `${n} of ${all} answered`,
+        // 「n장 ·」 꼴이면 Chapter n · 로, 「n. 」 꼴이면 그대로, 없으면 없는 대로.
+        label: n => { const k = CHAPTER_LABEL(n); return !k ? '' : /장/.test(k) ? `Chapter ${n} · ` : k; },
+        other: '한국어', otherAria: '한국어로 읽기'
+    }
+};
+const LANG_KEY = 'world-novels-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장 못 하는 기기도 있다 */ } };
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+const T = () => UI[LANG];
+/* 영어 장은 제목과 문단만 다르고, 그림·번호·이모지는 우리말 장의 것을 그대로 쓴다. */
+const CHS = () => LANG === 'en'
+    ? CHAPTERS.map((ch, i) => ({ ...ch, title: EN.chapters[i].title, paras: EN.chapters[i].paras }))
+    : CHAPTERS;
+const QZ = () => (LANG === 'en' ? EN.quiz : QUIZ);
+const AFW = () => (LANG === 'en' ? { ...AFTERWORD, title: EN.afterword.title, paras: EN.afterword.paras } : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover : COVER);
+
 function makeProbe() {
     const book = document.getElementById('book');
     const holder = document.createElement('div');
@@ -436,15 +468,16 @@ function splitSegments(html) {
     return segs.length ? segs : [html];
 }
 
-const CHAPTER_SEGS = CHAPTERS.map(ch => {
+function segsOf(paras) {
     const segs = [];
-    ch.paras.forEach((html, paraIdx) => {
+    paras.forEach((html, paraIdx) => {
         splitSegments(html).forEach((piece, k) => {
             segs.push({ paraIdx, html: piece, start: k === 0 });
         });
     });
     return segs;
-});
+}
+let CHAPTER_SEGS = CHS().map(ch => segsOf(ch.paras));
 
 // 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
 const AFTERWORD = {
@@ -505,15 +538,7 @@ const AFTERWORD = {
     ]
 };
 
-const AFTER_SEGS = (() => {
-    const segs = [];
-    AFTERWORD.paras.forEach((html, paraIdx) => {
-        splitSegments(html).forEach((piece, k) => {
-            segs.push({ paraIdx, html: piece, start: k === 0 });
-        });
-    });
-    return segs;
-})();
+let AFTER_SEGS = segsOf(AFW().paras);
 
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
@@ -598,7 +623,7 @@ function paginateChapter(ch, chIndex) {
     const segs = CHAPTER_SEGS[chIndex];
     const arts = (ch.art && ch.art.length) ? ch.art : [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
+    const headHtml = `<h2>${T().label(ch.num)}${ch.title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     // 그림이 얹힌 쪽에도 그 아래에 글이 들어간다. 그래서 담을 수 있는 높이가 쪽마다 다르다.
@@ -657,16 +682,26 @@ function artFrame(src, emoji) {
  </div>`;
 }
 
+/* 표지 글. 영어판이 있으면 CV()가 그쪽을 준다. */
+const COVER = {
+    title: `플랜더스의 개`,
+    tag: `위다 원작`,
+    intro: [
+        `벨기에의 가난한 마을에 사는 넬로는 길가에 버려진 개 파트라슈를 데려다 살려 냅니다. 그때부터 둘은 한 식구가 됩니다.`,
+        `그림을 그리고 싶은 아이가 끝내 무엇을 잃고 무엇을 지켰는지에 대한 이야기입니다. 마음이 아픈 결말이 그대로 나옵니다.`
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🐕')}
  </div>
  <div class="story-page-right">
- <h1>플랜더스의 개</h1>
- <p class="cover-tag">위다 원작</p>
- <p>벨기에의 가난한 마을에 사는 넬로는 길가에 버려진 개 파트라슈를 데려다 살려 냅니다. 그때부터 둘은 한 식구가 됩니다.</p>
- <p>그림을 그리고 싶은 아이가 끝내 무엇을 잃고 무엇을 지켰는지에 대한 이야기입니다. 마음이 아픈 결말이 그대로 나옵니다.</p>
+ <h1>${cv.title}</h1>
+ <p class="cover-tag">${cv.tag}</p>
+ ${cv.intro.map(p => `<p>${p}</p>`).join('')}
  </div>
  </div>`;
 }
@@ -681,14 +716,14 @@ function tocPage(part) {
     const rowHtml = (attr, mark, title, page) => `<li>
  <button type="button" ${attr}>
  <span class="toc-num">${mark}</span>
- <span><strong>${title}</strong><small>${page}쪽</small></span>
+ <span><strong>${title}</strong><small>${T().page(page)}</small></span>
  </button>
  </li>`;
     const itemHtml = ch => rowHtml(`data-goto="${ch.num}"`, ch.num, ch.title, pageOfChapter(ch.num));
     // 낱낱의 <li>로 두어야 좌우 나누기 셈이 맞는다. 한 덩어리로 이으면 한쪽으로 쏠린다.
     const extraItems = [
-        rowHtml('data-goto-kind="quiz"', '?', '이야기 문제', pageOfKind('quiz')),
-        rowHtml('data-goto-kind="after"', '★', '읽고 나서', pageOfKind('after')),
+        rowHtml('data-goto-kind="quiz"', '?', T().quiz, pageOfKind('quiz')),
+        rowHtml('data-goto-kind="after"', '★', T().after, pageOfKind('after')),
     ];
     const group = TOC_GROUPS[part];
     const last = part === TOC_GROUPS.length - 1;
@@ -696,11 +731,11 @@ function tocPage(part) {
     const half = Math.ceil(items.length / 2);
     return `<div class="page page-toc">
  <div class="story-page-left">
- ${part === 0 ? '<h2>차례</h2>' : ''}
+ ${part === 0 ? `<h2>${T().toc}</h2>` : ''}
  <ul class="toc-list">${items.slice(0, half).join('')}</ul>
  </div>
  <div class="story-page-right">
- ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
+ ${part === 0 ? `<h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>` : ''}
  <ul class="toc-list">${items.slice(half).join('')}</ul>
  </div>
  </div>`;
@@ -708,15 +743,18 @@ function tocPage(part) {
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
 const TOC_PER_SPREAD = 16;
-const TOC_GROUPS = [];
-for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
-    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
+let TOC_GROUPS = [];
+function buildTocGroups() {
+    TOC_GROUPS = [];
+    const chs = CHS();
+    for (let i = 0; i < chs.length; i += TOC_PER_SPREAD) TOC_GROUPS.push(chs.slice(i, i + TOC_PER_SPREAD));
 }
+buildTocGroups();
 
 function chapterSpreadPage(spread) {
     const ch = spread.ch;
     const segs = CHAPTER_SEGS[spread.chIndex];
-    const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
+    const head = spread.first ? `<h2>${T().label(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
         return `<div class="page page-story">
@@ -768,9 +806,15 @@ const QUIZ = [
 const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
-const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+/* 한글 문제와 영어 문제는 따로 낸 것일 수 있어 자취도 말별로 따로 적는다.
+   한 자리에 같이 적으면 말을 바꿨을 때 누른 적 없는 보기에 표시가 앉는다. */
+const QUIZ_PICKED = {};
+const QK = i => LANG + ':' + i;
+const pickedOf = i => (QK(i) in QUIZ_PICKED ? QUIZ_PICKED[QK(i)] : null);
+const quizDone = () => QZ().filter((_, i) => pickedOf(i) !== null).length;
 // 틀리게 고른 보기도 기억해 두어, 돌아와도 빨간 채로 남는다.
-const QUIZ_WRONG = QUIZ.map(() => new Set());
+const QUIZ_WRONG = {};
+const wrongOf = i => (QUIZ_WRONG[QK(i)] = QUIZ_WRONG[QK(i)] || new Set());
 
 // 보기 차례는 책을 열 때마다 섞는다. 몇 번째가 답인지 외우지 못하게 하려는 것이다.
 function shuffledOrder(n) {
@@ -781,46 +825,45 @@ function shuffledOrder(n) {
     }
     return a;
 }
-const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
+const QUIZ_ORDER = {};
+const orderOf = (i, n) => (QUIZ_ORDER[QK(i)] = QUIZ_ORDER[QK(i)] || shuffledOrder(n));
 
 function quizPage(part) {
-    const group = QUIZ_GROUPS[part];
-    const done = QUIZ_PICKED.filter(v => v !== null).length;
-    const items = group.items.map((item, k) => {
-        const i = group.from + k;
-        const picked = QUIZ_PICKED[i];
-        const graded = picked !== null;
+    const list = QZ();
+    const items = list.map((item, i) => {
+        const graded = pickedOf(i) !== null;
+        const wrong = wrongOf(i);
         const cls = ci => (graded && ci === item.answer) ? ' correct'
-            : (QUIZ_WRONG[i].has(ci) ? ' incorrect' : '');
+            : (wrong.has(ci) ? ' incorrect' : '');
         return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
- ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
+ ${orderOf(i, item.choices.length).map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
     return `<div class="page page-quiz">
- ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
- <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ ${part === 0 ? `<h2>${T().quiz}</h2>` : ''}
+ <p class="quiz-intro-text" id="quizProgress">${T().done(quizDone(), list.length)}</p>
  <div class="quiz-list">${items}</div>
  </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
-const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+const AFTER_FOOT = () => `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>`;
 
 function paginateAfterword() {
     const segs = AFTER_SEGS;
     const arts = AFTERWORD.art || [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const headHtml = `<h2>${AFW().title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     const underArt = Math.max(60, usable - artHeight);
 
     // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
     // 마지막 쪽만 넘친다.
-    const footH = PROBE.measure(AFTER_FOOT);
+    const footH = PROBE.measure(AFTER_FOOT());
 
     const capsOf = slots => {
         const caps = [];
@@ -867,9 +910,9 @@ function paginateAfterword() {
 
 function afterSpreadPage(spread) {
     const segs = AFTER_SEGS;
-    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = spread.first ? `<h2>${AFW().title}</h2>` : '';
     // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
-    const foot = spread.last ? AFTER_FOOT : '';
+    const foot = spread.last ? AFTER_FOOT() : '';
 
     if (spread.art) {
         return `<div class="page page-story page-after">
@@ -903,11 +946,14 @@ let PAGES = [];
 let FOLIOS = [];
 
 function buildPages() {
+    CHAPTER_SEGS = CHS().map(ch => segsOf(ch.paras));
+    AFTER_SEGS = segsOf(AFW().paras);
+    buildTocGroups();
     PROBE = makeProbe();
     PAGES = [
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
-        ...CHAPTERS.flatMap(paginateChapter),
+        ...CHS().flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         ...paginateAfterword()
     ];
@@ -982,9 +1028,10 @@ function paint() {
 function initQuiz() {
     const progressEl = document.getElementById('quizProgress');
 
+    const list = QZ();
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = list[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -992,14 +1039,13 @@ function initQuiz() {
                 // 틀리면 그 보기만 빨갛게 남기고, 맞는 것을 고를 때까지 다시 고르게 한다.
                 if (chosen !== q.answer) {
                     btn.classList.add('incorrect');
-                    QUIZ_WRONG[qi].add(chosen);
+                    wrongOf(qi).add(chosen);
                     return;
                 }
                 btn.classList.add('correct');
                 item.classList.add('graded');
-                QUIZ_PICKED[qi] = chosen;
-                const done = QUIZ_PICKED.filter(v => v !== null).length;
-                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
+                QUIZ_PICKED[QK(qi)] = chosen;
+                progressEl.textContent = T().done(quizDone(), list.length);
             });
         });
     });
@@ -1034,6 +1080,39 @@ document.addEventListener('keydown', (e) => {
 });
 
 paint();
+
+/* 위쪽 말 바꾸기 단추 — 영어 원고가 있을 때만 뜬다. */
+const langBtn = document.getElementById('langLink');
+function applyLangUi() {
+    document.documentElement.lang = LANG;
+    document.title = LANG === 'en' && EN.title ? EN.title : BOOK_TITLE;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (HAS_EN) applyLangUi();
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        if (animating) return;
+        const here = PAGES[current];
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 읽던 자리로 돌아간다. 장은 그 장의 첫 쪽으로, 차례·문제·해설은 그 첫 쪽으로.
+        if (here && here.kind === 'chapter') {
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (idx >= 0) current = idx;
+        } else if (here && here.kind !== 'cover') {
+            const idx = PAGES.findIndex(p => p.kind === here.kind);
+            if (idx >= 0) current = idx;
+        }
+        applyLangUi();
+        paint();
+    });
+}
 
 // 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
 // 먼저 나눠 둔 쪽이 넘치게 된다. 그래서 글꼴을 다 받은 뒤에 한 번 다시 나눈다.

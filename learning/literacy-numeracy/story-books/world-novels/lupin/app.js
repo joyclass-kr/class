@@ -205,6 +205,294 @@ const CHAPTERS = [
    글자 수로 어림잡으면 대사가 많은 문단은 실제로 차지하는 줄이 훨씬 많아 어긋나므로,
    보이지 않는 쪽을 하나 만들어 실제 높이를 재어 가며 나눈다. */
 
+/* 영어판. 우리말 원고와 장·문단 수를 맞춘다. 대사 줄은 <br>로 나눈다. */
+const EN = {
+    title: 'Arsène Lupin, Gentleman Thief',
+    cover: {
+        title: 'Arsène Lupin, Gentleman Thief',
+        tag: 'after Maurice Leblanc',
+        intro: [
+            `A thief who empties the mansions of the rich and the vaults of banks, and who has never once hurt anybody, and never touches a poor house. While all France finds his name amusing, only Inspector Ganimard loses sleep over it.`,
+            `Eight stories are gathered here. Some of them are a pleasure from start to finish. Some leave the heart a little heavy at the end.`
+        ]
+    },
+    chapters: [
+        {
+            title: 'A Thief on the Atlantic',
+            paras: [
+                `The Provence was a great liner sailing from France to America. She had been seven days at sea, and the passengers had grown used to one another's faces. Every evening the same people sat in the same places. Everybody knew who belonged where. On board a ship, that sort of thing settles itself very quickly.`,
+                `That afternoon a telegram came to the ship. Wireless telegraphy had only just come into use. That news could fly out to the middle of the ocean at all was a wonder in itself. Before that, once a ship sailed, she was cut off from the land entirely. You heard nothing until you reached a port. The telegram said this:<br>"Arsène Lupin is aboard your ship. First-class passenger. Fair hair. Wound on the right arm. Name begins with R."`,
+                `When the news got about, the whole ship was turned upside down. In those days there was nobody in France who did not know the name of Arsène Lupin. He had emptied the houses of the nobility, opened the vaults of banks and made fools of the police more than once. He had been caught, and had got away again, more than once. And every time, the newspapers made a great deal of it.`,
+                `But he had never once hurt anybody. And he never touched a poor house. So the papers all printed his story, and people enjoyed reading it. People had taken the side of a thief. That does not happen often.`,
+                `There were about forty first-class passengers on board. From that day they began to look one another over. Fair hair, a right arm that seemed to trouble him, a name beginning with R. There were several such people. Three of them alone had a bandaged arm.`,
+                `I, who am writing this down, was on that ship myself. On that crossing I made friends with a young man called the Marquis de Rozaine. He was amusing to talk to, he knew a great deal, and he played cards very well. Whatever subject came up, he was never at a loss. But he never spoke about himself.`,
+                `And there was a young lady called Nelly Underdown. She was the person everybody on the ship noticed. The Marquis de Rozaine was always at her side. When she walked the deck, he walked with her. People saw it and smiled.`,
+                `But Rozaine had fair hair. And his name began with R. People began to whisper about it.`,
+                `Rozaine heard the talk and laughed out loud.<br>"I only wish I were Lupin. Your purses would all be empty by now."`,
+                `That night it happened. There were several thefts on board. Jewels and watches and purses disappeared. Some things went missing out of locked luggage. The locks were untouched. There was not a mark of anything being forced.`,
+                `Next morning the passengers gathered and shouted at one another. The captain searched the whole ship, and nothing turned up.`,
+                `And two days later the ship reached New York.`,
+                `On the quay stood Inspector Ganimard of the French police. Ganimard was the man who had tried to catch Lupin many times and lost him every time. The very name made his face go hard. That was why he had come all the way to New York. He had waited several days for the ship to come in. The passengers came down one by one.`,
+                `Ganimard stood at the foot of the gangway and looked at every face. Then, in front of one man, he raised his hand.<br>"Monsieur Arsène Lupin."`,
+                `People turned round. The man Ganimard had taken hold of was the Marquis de Rozaine. For a moment Rozaine said nothing at all. Then he gave a light shrug.<br>"So I am found out."`,
+                `And he looked toward Miss Nelly. Nelly was standing there with her face gone white. For a moment their eyes met. Lupin shook his head, very slightly. It meant: say nothing. In her hand was the camera Lupin had handed her a few hours before.`,
+                `Inside it were all the stolen jewels. Nelly knew it.`,
+                `In front of the customs desk Nelly stood a long while with the camera in her hand. And then she walked straight past the inspection table. Her hand was shaking. Nobody noticed a thing.`,
+                `After the passengers had come ashore and scattered, Nelly walked to the end of the quay and threw the camera into the sea. Lupin saw it through the window of the police car. And he smiled. The jewels had gone into the water, and Nelly had committed no crime. That was why Lupin smiled.`
+            ]
+        },
+        {
+            title: 'Robbing a Castle from Prison',
+            paras: [
+                `In Normandy there was an old castle called Malaquis. It was built on a rocky island in the middle of a river. The water came right up to the foot of the walls. It was joined to the land by a single bridge. Block that bridge, and nobody could come or go. The castle had been built that way on purpose.`,
+                `The master of the castle was a man called the Baron Cahorn. He was a very mean man. He kept hardly any servants. He was careful even with the lamps. In that great castle there were not five people. And yet there were remarkable things inside it.`,
+                `Four paintings by Rubens, a tapestry by a famous artist, and old silver and jewels. Rubens lived about three hundred years ago. One of his paintings would buy a castle by itself.`,
+                `One day a letter came to the baron.<br>"Monsieur le Baron. Kindly send me the four Rubens in your gallery, the tapestry, and the whole of the silver. I shall come for them on the night of the twenty-seventh of September. Arsène Lupin."`,
+                `The baron read the letter and laughed. Because at that time Arsène Lupin was in prison. He was locked up in the Santé, waiting for his trial. It had been in all the papers. So the baron had reason to laugh. But a few days later another letter came.<br>"Monsieur le Baron. I see you have not yet packed. Do hurry."`,
+                `Now the baron was frightened. He went to the police. But the local police did not take it seriously. They thought it was a joke. Letters like that were common at the time.<br>"Lupin is in prison."`,
+                `The baron wrote to Paris. He wrote to Inspector Ganimard. Ganimard was on leave just then, but when he read the letter he packed his bag. Because the name Lupin was in it. He was a man who could not rest when he saw that name.`,
+                `On the evening of the twenty-seventh of September, Ganimard came to the castle with two of his men. The three of them went over the whole place. They went down into the cellars. They put a guard on the bridge, locked the windows, and sealed the door of the gallery. They even stamped the seal. Then they sat in front of the gallery all night and kept watch. The three took turns to sleep. One of them was always awake. Not one footstep was heard.`,
+                `Nothing happened. In the morning the three of them broke the seal and went into the gallery. The walls were bare. Only the nail holes were left. On the wallpaper were four square patches where the pictures had hung. Only those patches had kept their colour.`,
+                `The four Rubens, the tapestry and the silver were all gone. The door was still sealed and the windows were still locked. Ganimard very nearly sat down on the floor. He had sat in front of that door all night. He had put on the seal with his own eyes and stamped it with his own hand. And the room was empty.`,
+                `The investigation went on for many days. And this came out. Two months before, the baron had taken on two new servants. Their letters of reference were excellent. And the day after the theft, those two men vanished. When the police went to the addresses on the references, no such houses existed. The whole thing had been set up two months in advance.`,
+                `There was one thing more. The castle had an old passage running underground. It had been dug hundreds of years before, and even the people of the castle had forgotten it. How had anybody found out about it? The old plans of the castle were still kept in a library somewhere. Anybody who took the trouble to look could see them.`,
+                `Ganimard went to the Santé to see Lupin.`,
+                `"Was it you?"<br>"I was here."<br>"I know that. That is why I am asking."`,
+                `Lupin laughed.<br>"Inspector, there are some things you cannot do if you are on the spot."<br>And then he added this:<br>"By the way, that baron. You might find out how much rent he takes from the villagers who live on his land."`,
+                `Ganimard let the remark pass. But later he did find out. He went to the villagers one by one and asked. And he told nobody what he heard. He did not even write it in his notebook. There was nothing he could have done with it anyway.`
+            ]
+        },
+        {
+            title: 'The Escape',
+            paras: [
+                `In prison, Arsène Lupin became a man the newspapers wrote about every day. The reporters printed his story daily. Even what Lupin had eaten became news. Reporters stood in a row outside the prison gate. The papers sold that well. And then one day Lupin let something drop.<br>"I shall not be going to my trial."`,
+                `That went into the papers. The prison was turned upside down. They doubled the guards, moved him to another cell, and searched him several times a day. Visitors were stopped. Every letter was opened. And still they could not feel easy.`,
+                `Then something strange happened. Lupin began to be ill. He could not eat, he lost weight, and his face went pale. In a month he was a different man. His clothes hung loose on him. The guards had to hold him up when he walked.`,
+                `The doctor came several times.<br>"If this goes on, he will not live to see his trial."`,
+                `The day of the trial came. Lupin was carried into the court on a stretcher. He could not even sit up by himself. People were shocked at the sight of him. It was not the face they had seen in the papers. There were sighs from the public gallery. People whispered, asking whether that could really be Lupin.`,
+                `The judge asked,<br>"State your name."<br>"Baudru. Désiré Baudru."`,
+                `The courtroom stirred.<br>"Are you not Arsène Lupin?"<br>"I do not even know who Lupin is."`,
+                `The man said he did not know why he had been arrested. He had been hungry and stolen a loaf of bread, he said, and suddenly here he was. His way of speaking was that of a man with no schooling. He said he could not read. The judge asked again several times. The court did not believe him. But there was one problem.`,
+                `When they measured the man's body, it did not match Lupin's record. The height was different, the shape of the ears was different, the length of the fingers was different. In those days a person's identity was checked by measuring the body. That was before fingerprints. They measured the height and the length of the arms and the shape of the ears and wrote it all down.`,
+                `Ganimard was called.<br>"Is this man Lupin?"<br>Ganimard looked at the face for a long while. And then he said this:<br>"...I do not know."`,
+                `Those were the most painful words Ganimard said in his life. That one sentence brought the trial down. The man who had chased Lupin longest had said he did not know. Whatever the other witnesses said made no difference. The trial was put off. And Désiré Baudru was released for lack of evidence.`,
+                `That day the man walked out of the prison gate. Ganimard followed him. Baudru walked about Paris all day. He walked like a man with nowhere to go. There was no direction in his steps. Ganimard did not lose him once.`,
+                `He hung about outside a bakery, and dozed on a bench. When night came he went under a bridge and slept there. He slept under a covering of newspaper. Ganimard spent the night on the bridge above him.`,
+                `Ganimard followed him for three days. And on the fourth day Baudru suddenly disappeared. It happened while he was turning a corner. At the end of that alley there was nobody at all.`,
+                `That evening a letter came to Ganimard's house.<br>"Inspector, you have had three hard days. It is very cold under that bridge. And let me tell you one thing. Pretending to be ill in prison is not difficult. What is difficult is not eating for a month. For that month I really did starve. You can put on a sick face, but you cannot put on the measurements of a body. So there was nothing for it but to make the body smaller. Unless I shrank it, the measurements would have matched. Arsène Lupin."`,
+                `Ganimard read the letter and sat a long time. Then he muttered,<br>"The fellow starved himself for a month."<br>He was less angry than dumbfounded. He had never met anybody who would go that far.`
+            ]
+        },
+        {
+            title: 'The Man in the Railway Carriage',
+            paras: [
+                `One summer morning I took the train from Paris to Rouen. In those days the carriages on that line were divided into separate compartments. Once you got in, you could not get out until the next station. You could not move to the next compartment either. There was no corridor. Each compartment had only its own door to the outside.`,
+                `I was alone in mine. Just as the train was about to leave, a man jumped in. He was tall, well dressed, and looked about forty. His only luggage was one small bag. It was not the luggage of a man going a long way. That was the first thing I noticed.`,
+                `He sat down and opened a newspaper. But he kept looking out of the window. And every time I looked at him he looked away. He never turned a page of the paper. He only held it open. They were not the eyes of a man reading.`,
+                `I remembered something I had read in that morning's paper. A week before, there had been a crime on this line. A man had died in a railway compartment, and his money had gone. Because the compartments were shut off from one another, nobody had known. It only came out at the next station.`,
+                `The criminal had not been caught. But that day's paper had printed this: a description of him. Tall, about forty, brown eyes, well dressed. There are thousands of such men in Paris. But when one is sitting opposite you, it is another matter.`,
+                `I looked at the man opposite me. And the sweat came out on my back.`,
+                `It was two hours to the next station. In those two hours I thought of a great many things. Should I pull the alarm cord? But if you pull it for nothing, you are fined and made a fool of. It would mean stopping the train. A train full of people.`,
+                `And I might be mistaken. I went on watching him. Then he seemed to fall asleep. His head tilted toward the window. His breathing came evenly.`,
+                `Very slowly I stood up and took my bag down from the rack. And I tried to get something out of it — anything.`,
+                `At that moment the man opened his eyes. Our eyes met. And in that instant he smiled. There was not a trace of surprise in it. It was the face of a man who already knew what I was about to do. I let go of the thing in my hand.`,
+                `"Monsieur, what do you mean to do with me?"<br>"..."<br>"You have read the newspaper, I see."`,
+                `I could not say a word.`,
+                `The man spoke.<br>"Let me tell you how things stand. I am not that man. But I am a man who would be in difficulty if the police took me just now."<br>"Then who are you?"<br>"I shall not tell you my name."`,
+                `The train was coming near the next station. The man said this:<br>"I have a favour to ask of you. When you get down at the station, say that you did not see me."<br>"Why should I do that?"<br>"There is no reason. It is simply a favour."<br>His voice was low. It was not the voice of a man pleading.`,
+                `The train stopped. And there were policemen standing on the platform. I got down.`,
+                `A policeman asked me,<br>"Who was in that compartment?"`,
+                `For a moment I could not answer. Then I said,<br>"I was alone."`,
+                `Why I said that, I do not know to this day. I was a man who had never told a lie. But that day the words came out by themselves.`,
+                `And then this happened. After the train had gone on, the real criminal was caught at the next station.`,
+                `The man in my compartment had tied him up and pushed him into the luggage van. He had done it in the short moment while I was on my feet. I had heard nothing. My back had been turned. And on the seat lay a visiting card. It said Arsène Lupin.`
+            ]
+        },
+        {
+            title: 'The Seven of Hearts',
+            paras: [
+                `One night I came home, went into my study, and stopped. There was a playing card lying on my desk. It was the seven of hearts. One ordinary playing card. But there was something odd about it.`,
+                `In the seven heart shapes, seven small holes had been pricked with a needle. You could only just see them if you held the card up to the light. They had been made with the point of a needle. They were inside the heart shapes, so you would never notice them at a glance. I put the card in a drawer. And I forgot about it. I took it for somebody's joke. I did not open that drawer for many months.`,
+                `But many months later, something happened.`,
+                `An inventor disappeared. All the papers were full of it. His name was Louis Lacombe. He had been making the plans for a submarine. A boat that travels under the water. At that time none had yet been built. It existed only on paper.`,
+                `In those days every country wanted such a thing very badly. Whichever country had it first would hold the sea. Even a great ship cannot stop what comes from under the water. So everybody was after it. Lacombe lived and worked in the house of a rich man. He used a whole room as a laboratory. The rich man was paying for it all. When the man who pays and the man who makes are two different people, things become difficult. The question remains of whom the thing belongs to. And then one day Lacombe disappeared.`,
+                `The plans disappeared with him. Not one sheet of paper was left. And a little while later the rich man came into a great deal of money. He did not say where it came from. Nobody asked.`,
+                `Reading about the case, something came back to me.`,
+                `I opened the drawer and took out the card. It was the first time I had held it in months. There were seven holes. I held the card to the light. Then I laid it on a sheet of paper and marked where the holes were. I marked them one by one with the point of a pencil.`,
+                `That gave me seven dots. I joined them up. I tried joining them with a ruler. They meant nothing at all.`,
+                `I stared at it for days. I stared at it while I ate. And then one night I turned the card over. When the front and back are reversed, the positions are reversed too. The holes had been pricked from the front, so they had to be read from the back. It took me days to see that. And then I understood.`,
+                `The dots marked places in the pattern on the wall of a certain room. The room was the one where Lacombe had worked.`,
+                `That night I went to the house. And I climbed the wall.`,
+                `I, who am writing this, am not a thief. I had never in my life climbed another man's wall. My palms were scraped raw. When I got down I stood a long while getting my breath. But that night I did it. I went into the room and looked for the pattern on the wall. The wallpaper had the same pattern all along it.`,
+                `I pressed the seventh place. There was a small click under my fingertip. The wall opened. A door no bigger than a hand swung inward. Inside was a bundle of papers. Dust had settled on them. Nobody had touched them for two years. The paper had gone yellow.`,
+                `They were Lacombe's plans. And on top of them lay a sheet of paper.<br>"I found this two years ago. But I did not take it. If I took it, some country would build a boat from it, and then a great many people would die. I am a thief, but I am not that kind of man. That one line is the heart of this story. It tells you what Lupin takes and what he leaves behind. If you find this, monsieur, do not hand it to the government. Burn it. Arsène Lupin."`,
+                `I looked at that paper for a long time. What I did with the plans I shall not write here. But one thing I will set down.`,
+                `The man Lacombe never came back. Nobody knows where he went. And the rich man was punished afterwards. What he had done to Lacombe came out. Lupin arranged it. How he arranged it, nobody knows. Only that the rich man confessed it himself.`
+            ]
+        },
+        {
+            title: 'The Black Pearl',
+            paras: [
+                `On the second floor of an old apartment house in Paris lived an old lady, the Countess d'Andillot. When she was young she had gone in and out of palaces. But now she was old and poor. She could not even heat her rooms properly. In winter she sat in her overcoat. Even so, she never asked anybody for anything.`,
+                `She had one thing left. A black pearl. It was so large and so fine that people said no price could be put on it. There were only a few such pearls in the world, they said. A pearl with a black sheen is a very rare thing. That was why it was worth so much.`,
+                `The countess would not sell it. Every time she looked at the pearl, she remembered when she was young. She had hidden it very well. She never told anybody where. And that made things difficult later.`,
+                `One winter morning the countess was found dead in that apartment. And the black pearl was gone. The police began their inquiry.`,
+                `The apartment was very strange. The door had been locked from inside. Yet the room had been turned upside down. Every wardrobe stood open, and the drawers had been tipped out onto the floor. It was the mark of somebody who had searched and not found. A hurried hand had been through it.`,
+                `The police suspected the maid. But the maid had been elsewhere that night. The people on the floor below were questioned too.`,
+                `On the floor below lived a young man. A few days later he moved away. When the police went to his rooms, they were empty. He had not even left his luggage.`,
+                `Six months went by. Then one day Inspector Ganimard came to see me.<br>"Do you remember the black pearl case?"<br>"I remember it."<br>"Today that pearl turned up at a jeweller's."`,
+                `The police watched the jeweller's shop. They put men inside and outside. They sat there pretending to be customers. They had waited six months. And they arrested the man who came to sell the pearl. He was an ordinary-looking man. His name was Danègre.`,
+                `But the man said this:<br>"I did not steal it. When I went into that room, the countess was already..."`,
+                `And he told this story. That night he had gone into the apartment to rob it. But when he got into the room, the countess was already dead. And the room had already been ransacked. All the drawers were open. Somebody had done before him what he had come to do. Danègre froze where he stood.`,
+                `Somebody had been there before him. He was frightened and turned to go, but before he went he looked round the room once. And he looked under the bed.`,
+                `The pearl was lying there. What the first visitor had failed to find, the second had found by chance. The countess had been holding it in her hand and let it fall. So it had not been hidden anywhere at all.`,
+                `The police did not believe him. It was a thief's story. Nobody believes a story like that. But then something strange happened. Just before the trial, a letter was printed in the newspaper.<br>"It was I who searched that room first that night. I came out without finding the pearl.<br>And I state also that the countess had already died before that.<br>I harmed nobody that night. Nor did Danègre. The man is a thief and nothing more. Arsène Lupin."`,
+                `Because of that letter, Danègre was punished for the theft alone.`,
+                `Ganimard folded the newspaper and said,<br>"The fellow writes letters even about what he failed to steal."<br>And then he added,<br>"But without that letter the man would have had a far heavier sentence. One letter saved a man."<br>Ganimard could not help admitting it.`
+            ]
+        },
+        {
+            title: "The Queen's Necklace",
+            paras: [
+                `In the family of the Count de Dreux-Soubise there was a necklace that had come down through the generations. It was said to have belonged to a queen a hundred years before. It was a thing with a story attached that the whole country knew. The queen had come to grief over that necklace, the story went. Even small children knew it.`,
+                `In truth the necklace had been broken up and sold off piece by piece, and what this family had was a few of the pieces strung together again. Even so, it was a remarkable thing. It was hard to put a price on. Every single stone was worth money. But the story attached to it was worth more.`,
+                `There was a child in that house. He was the son of a woman called Henriette. Henriette had grown up with the countess as a girl, and when times went hard for her she had come to live in an attic room of the house. The boy's name was Raoul. He was a child who ran about the house as he pleased. He was six years old. He wandered in and out among the grown-ups without a thought. Nobody paid him any attention.`,
+                `One night, on the night of a ball, the countess wore the necklace. Dozens of people saw it that night. When she came home she took it off and laid it on her dressing table. She locked the door from inside and slept. She kept the key under her pillow. She always did.`,
+                `Next morning the necklace was gone. The room had been locked. The window was fastened from inside, and outside was a drop of three floors. The chimney was too narrow for a person to get into. The police put an arm up it and wrote that down. A grown man's shoulders would not go through.`,
+                `However they looked into it, there was no answer. Even the police gave up. The count suspected everybody in the house. He called the servants in one by one and questioned them. Above all he suspected Henriette in the attic. Because she was poor. There was no other reason. Being poor was used as if it were proof.`,
+                `There was not one piece of evidence. But the count put Henriette and Raoul out of the house. Henriette said nothing, and took her son and went. All her belongings made one bundle. She did not try to explain. She knew that explaining would do no good.`,
+                `Many years went by after that. Every year the countess sent Henriette a little money. Because she felt she had done wrong. But she could not tell her husband. She only sent the money in secret. Then one year Henriette began to refuse it.`,
+                `And she wrote in her letter,<br>"Things are easier for us now. My son brings money home."`,
+                `And after that the letters stopped. She left no address. There was no way to find her.`,
+                `About twenty years later, a parcel came to the countess. Inside it was the necklace. The very necklace that had been lost. And there was a note.<br>"Madame. I return this to you. And I state that Henriette had nothing whatever to do with the matter. That woman lived for twenty years under the name of a thief, and she never told even her own son."<br>"The one who went into that room that night was a six-year-old child. The chimney is too narrow for a grown person, but a six-year-old goes through. That child did not even know what he was doing."<br>"I am that child. Arsène Lupin."`,
+                `The countess held the note for a long time. She read it over several times. She read it with her fingertip on the words. Every time she stopped at the same place. Then she showed it to the count. The count read it and could not say a word. The hand holding the note shook.`,
+                `Twenty years before, without one piece of evidence, he had put a person out of his house. And in the twenty years since, he had not once thought about it again. The one who did the sending away had forgotten and lived on. Only the one sent away had carried it for twenty years. Henriette had died some years before.`,
+                `At the end of the note there was this line:<br>"For twenty years I did not sell that necklace."<br>Because if he sold it, his mother would really have been the mother of a thief. For twenty years he had held a thing of great value in his hand, and had not.`
+            ]
+        },
+        {
+            title: 'Mr Sholmès Arrives a Step Too Late',
+            paras: [
+                `Sherlock Holmes became Herlock Sholmès, and Watson became Wilson. The names were only slightly twisted. Read out loud, they are nearly the same. Readers of the time knew perfectly well who was meant. The altered names became, if anything, more amusing. They are still printed that way today.`,
+                `This is the story. Near Paris, in a place called Crozon, there was an old castle. It was several hundred years old. The new owner was having it repaired when he found something strange. It came to light when a wall was being knocked down. Inside the old wall there was another wall. The thing was between the two.`,
+                `A great hoard of ancient relics came out. And a few days later every one of them vanished. The manner of their vanishing was strange. The door of the room was locked, and outside the window was a cliff. Look down, and there was the river. There was nowhere to fix a rope.`,
+                `The owner sent to England for Mr Herlock Sholmès. Sholmès came with his assistant Wilson. Sholmès went into the room and stayed there thirty minutes. Then he came out and said,<br>"I shall take this case. But on one condition. Nobody is to follow me about."<br>The owner agreed. Sholmès went straight out.`,
+                `For two days Sholmès went about the district. And on the morning of the third day he said,<br>"The goods will leave Paris this afternoon at three o'clock, in the luggage van from the Gare du Nord. The crate will have another name on it."`,
+                `People were astonished. Sholmès did not say how he had found it out. He did not answer those who asked. He only closed his notebook. Not saying what he had found out was a habit of his.`,
+                `That afternoon the police watched the Gare du Nord. And at three o'clock they found the crate. When they opened it, all the relics were inside. Not one was missing. Not one was broken. Each had been wrapped in cloth for the journey. And on top lay a sheet of paper.`,
+                `"To Mr Sholmès. On the evening you arrived, I already knew everything you would see. So I put the goods where you would find them. Had it not been for you, these things would have been sold to a private collector. I did not like that. When a private person buys such things, they are never seen again."<br>What came out of the ground would only go into a storeroom.<br>"These came out of the soil of this country and belong in a museum. But if I do it myself, nobody will believe it. So let it be that you found them."<br>"I had hoped to match myself against you, and I am sorry it could not be. Next time we shall do it properly. Arsène Lupin."`,
+                `Sholmès read the paper through and folded it.<br>Wilson asked,<br>"Sir, have we lost?"<br>"We have the goods."<br>"But we did exactly what that man told us to."`,
+                `For a moment Sholmès said nothing. Then he said this:<br>"Wilson, I do not like that man. A man who takes what belongs to others is a thief. That is so whatever reasons he gives."<br>"And yet?"<br>"And yet today those things are going to a museum."<br>Wilson had no answer to that.<br>It was a place where right and wrong would not stand in a single line.<br>Then Sholmès put on his hat.<br>"Wilson, the world is a little more complicated than we were taught."`,
+                `After that the two of them crossed paths many times. Sometimes one won and sometimes the other. But the first time they met was this day. Their contests go on through many stories after this. And on this day they never even saw each other's faces. One left a sheet of paper, and the other read it. And yet it was a contest all the same.`
+            ]
+        }
+    ],
+    afterword: {
+        title: 'After Reading',
+        paras: [
+            `What this book holds is not one long story but several short ones. That is how the Lupin stories first appeared. They were printed one at a time in a magazine and gathered into a book afterwards.`,
+            `The writer was Maurice Leblanc of France. What he really wanted was to write serious novels. But those novels did not sell.`,
+            `Then a magazine asked him for something. England had Sherlock Holmes, they said; would he make a character like that for France?`,
+            `Instead of a detective, Leblanc made a thief. That was Arsène Lupin. It was the year 1905.`,
+            `And for the rest of his life he wrote Lupin stories. There are more than twenty books. The man who had wanted to write serious novels made his name with tales of a thief.`,
+            `In his last years, it is said, he felt that Lupin was following him about. As though the man were always standing just behind him.`,
+            `It happens now and then that a maker is weighed down by what he has made. Conan Doyle felt the same about Holmes. Both of them tried to kill their creation off.`,
+            `What is here is a selection of the best-known stories, retold.`,
+            `Now let us pick out some places worth a second look.`,
+            `First, read the opening story again. A telegram comes to a ship crossing the Atlantic: Lupin is on board. But apart from a name, nobody knows anything.`,
+            `So the people on the ship begin to suspect one another. Is it that man? Is it this one? Those few days are the whole story.`,
+            `And at the end it comes out who Lupin was. Read it again, and you will find the clues laid down earlier.`,
+            `Second, look again at the castle robbed from prison. Lupin is locked up. And in the meantime the whole contents of a castle disappear.`,
+            `How a man in prison could do it is the riddle of the story. The answer is that he had done it all before he was locked up.`,
+            `So Lupin's whole way of working is here. He is not a man who steals things. He is a man who sets the board up beforehand.`,
+            `Third, count what Lupin steals. He does not take from the poor. He goes after the rich, the nobility, and fortunes made by wrongdoing.`,
+            `And now and then he gives back what he has taken. He does it once he has learned the story behind it. That is why he is called the gentleman thief.`,
+            `But you must not take that at face value. He is a thief. He takes what belongs to others. It is only that the stories paint him kindly.`,
+            `Fourth, count the times Lupin is in disguise. In these stories he always appears as somebody else.`,
+            `He becomes an old gentleman, a policeman, a Russian prince, and even the very inspector who is hunting him. And nobody recognises him.`,
+            `So Lupin has no real face. Right to the end of these stories, what he actually looks like is never shown.`,
+            `Fifth, look again at the story with Mr Sholmès in it. He is the famous detective from England.`,
+            `You can tell from the name. It is Sherlock Holmes with the letters of his name shuffled about. At first the name was used as it was; then Conan Doyle's side objected, and it was changed.`,
+            `And in that contest Lupin wins. The story was appearing in a French magazine, so that was only to be expected.`,
+            `But Leblanc did not make Sholmès look foolish. He drew him as a very able man, and then had him beaten. Only then is the victory worth anything.`,
+            `And once, Sholmès wins. He gets the goods back. Only, Lupin escapes on the spot.`,
+            `The characters are worth noting too.`,
+            `Look again at Inspector Ganimard. He is the man who chases Lupin all his life. And loses him again and again.`,
+            `But the two of them are not simply hunter and hunted. Sometimes it is Lupin who sends for him, and sometimes Lupin who helps him.`,
+            `And Lupin behaves almost as if he liked being caught by Ganimard. Because without a capture, there is no story.`,
+            `It helps to know something of the times. These stories are set in France about a hundred and twenty years ago. It was a time when Paris was very grand.`,
+            `In those days Paris had great fortunes, and the castles and mansions were full of valuable things. And it was also a time when people had begun to wonder where those fortunes came from.`,
+            `So the popularity of a thief who robbed the rich has something to do with that. People took Lupin's side.`,
+            `And it was a time when newspapers and magazines sold in great numbers. They printed a story in each issue to keep their readers. Sherlock Holmes and Lupin both came out that way.`,
+            `These stories hold on to two things.`,
+            `One is the question of why we come to like a thief. Lupin breaks the law. And yet the reader hopes he will not be caught.`,
+            `The reason lies in whom he beats. The boastful rich, fortunes made by wrongdoing, and the slow-witted police. The things people disliked.`,
+            `The other is that what is known and what is seen are two different things. Lupin's gift is not in his hands. It is in knowing what people believe.`,
+            `So, before he steals anything, he usually arranges for people to be looking in the wrong place. That is the method these stories use every time.`,
+            `But there is one thing to keep in mind when reading them. These are stories made up to entertain. Nobody in real life steals so gracefully.`,
+            `And real theft is taking something that belongs to somebody. In the stories that somebody is painted as unpleasant, and so our conscience stays comfortable.`,
+            `Lupin went on to become a much-loved figure in France. He has been made into films and comics and television series without end.`,
+            `In Japan a comic was made about his grandson, and it became very well known. So a character printed in a magazine a hundred and twenty years ago is still alive.`,
+            `If you ever read these stories again, look this time for the moment Lupin first appears. Usually he is already there near the beginning. Under another name.`,
+            `Lastly, here are some things to think about. I shall not write down the answers.`,
+            `Does the fact that Lupin steals only from the rich make him right? Stealing is stealing.`,
+            `Why did Ganimard chase him all his life? Was catching him the point, or was there something else?`,
+            `And why do we enjoy stories about thieves? That question is not easy to answer even when you read these stories again as a grown-up.`
+        ]
+    },
+    quiz: [
+        { q: 'Which of these was NOT in the telegram as a clue for finding Lupin on the ship?', choices: ['A name beginning with R', 'Fair hair and a wound on the right arm', 'Round spectacles with steel rims'], answer: 2 },
+        { q: 'What did Miss Nelly do with the camera that held the jewels?', choices: ['Threw it into the sea without a word', 'Handed it straight to the police', 'Gave it back to Lupin'], answer: 0 },
+        { q: 'Where was Lupin when Malaquis Castle was robbed?', choices: ['In the prison where he was locked up', 'On a night train to Paris', 'At a small inn near the castle'], answer: 0 },
+        { q: 'What did Lupin make use of in the Malaquis affair?', choices: ['A newspaper advertisement placed by the baron', 'The two newly hired servants', 'A forgotten old underground passage'], answer: 2 },
+        { q: 'Why was Lupin able to pass for somebody else at his trial?', choices: ['He had found a double beforehand', 'He had bribed one of the guards', 'He had starved for a month and changed his measurements'], answer: 2 },
+        { q: 'What did Ganimard say in court?', choices: ['I shall look into it again', 'I do not know', 'That is the man'], answer: 1 },
+        { q: 'What did Lupin do in the railway carriage?', choices: ['Gave the police his name and got off', 'Took the purse of the gentleman beside him', 'Tied up the real criminal and put him in the luggage van'], answer: 2 },
+        { q: 'What did the holes in the seven of hearts point to?', choices: ['The name of somebody hidden in the house', 'The place to press in the pattern on the wall', 'The seven numbers that opened a safe'], answer: 1 },
+        { q: 'Why did Lupin not take the submarine plans?', choices: ['Because a boat built from them would kill a great many people', 'Because they had already been sold to another country', 'Because he saw that the plans were fakes'], answer: 0 },
+        { q: 'Who found the black pearl under the bed?', choices: ['The maid who worked in the house', 'Danègre, who went into the room later', 'Ganimard, who was the first to arrive'], answer: 1 },
+        { q: 'Why did Lupin have a letter printed in the newspaper?', choices: ["So that Danègre would not be blamed for what he had not done", 'Because he wanted to boast of what he had done', 'To warn Ganimard of his next move'], answer: 0 },
+        { q: "Who took the queen's necklace?", choices: ['Raoul, who was six years old at the time', 'A count who had come as a guest', 'The mother who worked in the house'], answer: 0 },
+        { q: 'How did the six-year-old get into that room?', choices: ['Along the window ledge from the second floor', 'Down the chimney, too narrow for a grown person', 'Through an unlocked back door'], answer: 1 },
+        { q: 'Why did Lupin not sell the necklace for twenty years?', choices: ['It was too well known to be sold', 'He was waiting for the price to rise', 'If he sold it, his mother would really be the mother of a thief'], answer: 2 },
+        { q: 'Why was the name Sholmès used?', choices: ["Because the creator of Sherlock Holmes objected, so the name was twisted", 'Because the name was hard to read in France', 'To make clear that this was a different person'], answer: 0 },
+        { q: 'What did Sholmès say to Wilson at the end?', choices: ['I shall never set foot in France again', 'The world is a little more complicated than we were taught', 'A man like that will end up in my hands one day'], answer: 1 },
+        { q: 'Which of these is NOT a fair thing to say after reading this book?', wide: true, choices: ['Seeing how one telegram saying Lupin was aboard set everyone suspecting each other, a single name shook a whole ship.', 'Seeing how Lupin told Ganimard in prison that he had been there all along, the castle robbery had nothing to do with him.', 'Seeing how Lupin never touched a poor house, even his stealing had a line it did not cross.', 'Seeing how his mother never sold the necklace in twenty years, selling it really would have made her the mother of a thief.'], answer: 1 }
+    ]
+};
+
+/* ── 말 바꾸기 ─────────────────────────────────────────
+   영어 원고(const EN)가 있는 책은 위쪽 단추로 영어 쪽을 갈아 끼운다.
+   소설틀은 글을 재서 쪽을 나누므로, 말을 바꾸면 쪽을 통째로 다시 잰다.
+   영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
+const UI = {
+    ko: {
+        toc: '차례', quiz: '이야기 문제', after: '읽고 나서', home: '학습 허브로 돌아가기',
+        page: n => `${n}쪽`, done: (n, all) => `${n} / 총 ${all}문항 완료`,
+        label: CHAPTER_LABEL, other: 'EN', otherAria: 'Read in English'
+    },
+    en: {
+        toc: 'Contents', quiz: 'Story Questions', after: 'After Reading', home: 'Back to the learning hub',
+        page: n => `p. ${n}`, done: (n, all) => `${n} of ${all} answered`,
+        // 「n장 ·」 꼴이면 Chapter n · 로, 「n. 」 꼴이면 그대로, 없으면 없는 대로.
+        label: n => { const k = CHAPTER_LABEL(n); return !k ? '' : /장/.test(k) ? `Chapter ${n} · ` : k; },
+        other: '한국어', otherAria: '한국어로 읽기'
+    }
+};
+const LANG_KEY = 'world-novels-lang';
+const HAS_EN = typeof EN !== 'undefined';
+const readLang = () => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } };
+const saveLang = v => { try { localStorage.setItem(LANG_KEY, v); } catch (e) { /* 저장 못 하는 기기도 있다 */ } };
+let LANG = (HAS_EN && readLang() === 'en') ? 'en' : 'ko';
+const T = () => UI[LANG];
+/* 영어 장은 제목과 문단만 다르고, 그림·번호·이모지는 우리말 장의 것을 그대로 쓴다. */
+const CHS = () => LANG === 'en'
+    ? CHAPTERS.map((ch, i) => ({ ...ch, title: EN.chapters[i].title, paras: EN.chapters[i].paras }))
+    : CHAPTERS;
+const QZ = () => (LANG === 'en' ? EN.quiz : QUIZ);
+const AFW = () => (LANG === 'en' ? { ...AFTERWORD, title: EN.afterword.title, paras: EN.afterword.paras } : AFTERWORD);
+const CV = () => (LANG === 'en' ? EN.cover : COVER);
+
 function makeProbe() {
     const book = document.getElementById('book');
     const holder = document.createElement('div');
@@ -281,15 +569,16 @@ function splitSegments(html) {
     return segs.length ? segs : [html];
 }
 
-const CHAPTER_SEGS = CHAPTERS.map(ch => {
+function segsOf(paras) {
     const segs = [];
-    ch.paras.forEach((html, paraIdx) => {
+    paras.forEach((html, paraIdx) => {
         splitSegments(html).forEach((piece, k) => {
             segs.push({ paraIdx, html: piece, start: k === 0 });
         });
     });
     return segs;
-});
+}
+let CHAPTER_SEGS = CHS().map(ch => segsOf(ch.paras));
 
 // 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
 const AFTERWORD = {
@@ -348,15 +637,7 @@ const AFTERWORD = {
     ]
 };
 
-const AFTER_SEGS = (() => {
-    const segs = [];
-    AFTERWORD.paras.forEach((html, paraIdx) => {
-        splitSegments(html).forEach((piece, k) => {
-            segs.push({ paraIdx, html: piece, start: k === 0 });
-        });
-    });
-    return segs;
-})();
+let AFTER_SEGS = segsOf(AFW().paras);
 
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
@@ -441,7 +722,7 @@ function paginateChapter(ch, chIndex) {
     const segs = CHAPTER_SEGS[chIndex];
     const arts = (ch.art && ch.art.length) ? ch.art : [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
+    const headHtml = `<h2>${T().label(ch.num)}${ch.title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     // 그림이 얹힌 쪽에도 그 아래에 글이 들어간다. 그래서 담을 수 있는 높이가 쪽마다 다르다.
@@ -500,16 +781,26 @@ function artFrame(src, emoji) {
  </div>`;
 }
 
+/* 표지 글. 영어판이 있으면 CV()가 그쪽을 준다. */
+const COVER = {
+    title: `괴도 뤼팽`,
+    tag: `모리스 르블랑 원작`,
+    intro: [
+        `귀족의 저택과 은행 금고를 털면서도 사람을 다치게 한 적이 없고 가난한 집은 건드리지 않는 도둑. 프랑스가 그 이름을 재미있어하는 동안 가니마르 형사만 잠을 못 잡니다.`,
+        `여덟 편을 골라 담았습니다. 통쾌한 편도 있고, 마지막에 마음이 무거워지는 편도 있습니다.`
+    ]
+};
+
 function coverPage() {
+    const cv = CV();
     return `<div class="page page-cover">
  <div class="story-page-left story-page-left-full">
  ${artFrame('cover.webp', '🎩')}
  </div>
  <div class="story-page-right">
- <h1>괴도 뤼팽</h1>
- <p class="cover-tag">모리스 르블랑 원작</p>
- <p>귀족의 저택과 은행 금고를 털면서도 사람을 다치게 한 적이 없고 가난한 집은 건드리지 않는 도둑. 프랑스가 그 이름을 재미있어하는 동안 가니마르 형사만 잠을 못 잡니다.</p>
- <p>여덟 편을 골라 담았습니다. 통쾌한 편도 있고, 마지막에 마음이 무거워지는 편도 있습니다.</p>
+ <h1>${cv.title}</h1>
+ <p class="cover-tag">${cv.tag}</p>
+ ${cv.intro.map(p => `<p>${p}</p>`).join('')}
  </div>
  </div>`;
 }
@@ -524,14 +815,14 @@ function tocPage(part) {
     const rowHtml = (attr, mark, title, page) => `<li>
  <button type="button" ${attr}>
  <span class="toc-num">${mark}</span>
- <span><strong>${title}</strong><small>${page}쪽</small></span>
+ <span><strong>${title}</strong><small>${T().page(page)}</small></span>
  </button>
  </li>`;
     const itemHtml = ch => rowHtml(`data-goto="${ch.num}"`, ch.num, ch.title, pageOfChapter(ch.num));
     // 낱낱의 <li>로 두어야 좌우 나누기 셈이 맞는다. 한 덩어리로 이으면 한쪽으로 쏠린다.
     const extraItems = [
-        rowHtml('data-goto-kind="quiz"', '?', '이야기 문제', pageOfKind('quiz')),
-        rowHtml('data-goto-kind="after"', '★', '읽고 나서', pageOfKind('after')),
+        rowHtml('data-goto-kind="quiz"', '?', T().quiz, pageOfKind('quiz')),
+        rowHtml('data-goto-kind="after"', '★', T().after, pageOfKind('after')),
     ];
     const group = TOC_GROUPS[part];
     const last = part === TOC_GROUPS.length - 1;
@@ -539,11 +830,11 @@ function tocPage(part) {
     const half = Math.ceil(items.length / 2);
     return `<div class="page page-toc">
  <div class="story-page-left">
- ${part === 0 ? '<h2>차례</h2>' : ''}
+ ${part === 0 ? `<h2>${T().toc}</h2>` : ''}
  <ul class="toc-list">${items.slice(0, half).join('')}</ul>
  </div>
  <div class="story-page-right">
- ${part === 0 ? '<h2 class="toc-h2-ghost" aria-hidden="true">차례</h2>' : ''}
+ ${part === 0 ? `<h2 class="toc-h2-ghost" aria-hidden="true">${T().toc}</h2>` : ''}
  <ul class="toc-list">${items.slice(half).join('')}</ul>
  </div>
  </div>`;
@@ -551,15 +842,18 @@ function tocPage(part) {
 
 // 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
 const TOC_PER_SPREAD = 16;
-const TOC_GROUPS = [];
-for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
-    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
+let TOC_GROUPS = [];
+function buildTocGroups() {
+    TOC_GROUPS = [];
+    const chs = CHS();
+    for (let i = 0; i < chs.length; i += TOC_PER_SPREAD) TOC_GROUPS.push(chs.slice(i, i + TOC_PER_SPREAD));
 }
+buildTocGroups();
 
 function chapterSpreadPage(spread) {
     const ch = spread.ch;
     const segs = CHAPTER_SEGS[spread.chIndex];
-    const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
+    const head = spread.first ? `<h2>${T().label(ch.num)}${ch.title}</h2>` : '';
 
     if (spread.art) {
         return `<div class="page page-story">
@@ -611,9 +905,15 @@ const QUIZ = [
 const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
-const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+/* 한글 문제와 영어 문제는 따로 낸 것일 수 있어 자취도 말별로 따로 적는다.
+   한 자리에 같이 적으면 말을 바꿨을 때 누른 적 없는 보기에 표시가 앉는다. */
+const QUIZ_PICKED = {};
+const QK = i => LANG + ':' + i;
+const pickedOf = i => (QK(i) in QUIZ_PICKED ? QUIZ_PICKED[QK(i)] : null);
+const quizDone = () => QZ().filter((_, i) => pickedOf(i) !== null).length;
 // 틀리게 고른 보기도 기억해 두어, 돌아와도 빨간 채로 남는다.
-const QUIZ_WRONG = QUIZ.map(() => new Set());
+const QUIZ_WRONG = {};
+const wrongOf = i => (QUIZ_WRONG[QK(i)] = QUIZ_WRONG[QK(i)] || new Set());
 
 // 보기 차례는 책을 열 때마다 섞는다. 몇 번째가 답인지 외우지 못하게 하려는 것이다.
 function shuffledOrder(n) {
@@ -624,46 +924,45 @@ function shuffledOrder(n) {
     }
     return a;
 }
-const QUIZ_ORDER = QUIZ.map(q => shuffledOrder(q.choices.length));
+const QUIZ_ORDER = {};
+const orderOf = (i, n) => (QUIZ_ORDER[QK(i)] = QUIZ_ORDER[QK(i)] || shuffledOrder(n));
 
 function quizPage(part) {
-    const group = QUIZ_GROUPS[part];
-    const done = QUIZ_PICKED.filter(v => v !== null).length;
-    const items = group.items.map((item, k) => {
-        const i = group.from + k;
-        const picked = QUIZ_PICKED[i];
-        const graded = picked !== null;
+    const list = QZ();
+    const items = list.map((item, i) => {
+        const graded = pickedOf(i) !== null;
+        const wrong = wrongOf(i);
         const cls = ci => (graded && ci === item.answer) ? ' correct'
-            : (QUIZ_WRONG[i].has(ci) ? ' incorrect' : '');
+            : (wrong.has(ci) ? ' incorrect' : '');
         return `<div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
  <p class="quiz-question">${i + 1}. ${item.q}</p>
  <div class="quiz-choices${item.wide ? ' quiz-choices-stack' : ''}">
- ${QUIZ_ORDER[i].map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
+ ${orderOf(i, item.choices.length).map(ci => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${item.choices[ci]}</button>`).join('')}
  </div>
  </div>`;
     }).join('');
     return `<div class="page page-quiz">
- ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
- <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
+ ${part === 0 ? `<h2>${T().quiz}</h2>` : ''}
+ <p class="quiz-intro-text" id="quizProgress">${T().done(quizDone(), list.length)}</p>
  <div class="quiz-list">${items}</div>
  </div>`;
 }
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
-const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+const AFTER_FOOT = () => `<p class="after-home"><a class="home-btn" href="../../../../../">${T().home}</a></p>`;
 
 function paginateAfterword() {
     const segs = AFTER_SEGS;
     const arts = AFTERWORD.art || [];
     const { usable, headHeight, artHeight } = PROBE;
-    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const headHtml = `<h2>${AFW().title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     const underArt = Math.max(60, usable - artHeight);
 
     // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
     // 마지막 쪽만 넘친다.
-    const footH = PROBE.measure(AFTER_FOOT);
+    const footH = PROBE.measure(AFTER_FOOT());
 
     const capsOf = slots => {
         const caps = [];
@@ -710,9 +1009,9 @@ function paginateAfterword() {
 
 function afterSpreadPage(spread) {
     const segs = AFTER_SEGS;
-    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    const head = spread.first ? `<h2>${AFW().title}</h2>` : '';
     // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
-    const foot = spread.last ? AFTER_FOOT : '';
+    const foot = spread.last ? AFTER_FOOT() : '';
 
     if (spread.art) {
         return `<div class="page page-story page-after">
@@ -746,11 +1045,14 @@ let PAGES = [];
 let FOLIOS = [];
 
 function buildPages() {
+    CHAPTER_SEGS = CHS().map(ch => segsOf(ch.paras));
+    AFTER_SEGS = segsOf(AFW().paras);
+    buildTocGroups();
     PROBE = makeProbe();
     PAGES = [
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
-        ...CHAPTERS.flatMap(paginateChapter),
+        ...CHS().flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         ...paginateAfterword()
     ];
@@ -825,9 +1127,10 @@ function paint() {
 function initQuiz() {
     const progressEl = document.getElementById('quizProgress');
 
+    const list = QZ();
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
         const qi = Number(item.dataset.qindex);
-        const q = QUIZ[qi];
+        const q = list[qi];
         item.querySelectorAll('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (item.classList.contains('graded')) return;
@@ -835,14 +1138,13 @@ function initQuiz() {
                 // 틀리면 그 보기만 빨갛게 남기고, 맞는 것을 고를 때까지 다시 고르게 한다.
                 if (chosen !== q.answer) {
                     btn.classList.add('incorrect');
-                    QUIZ_WRONG[qi].add(chosen);
+                    wrongOf(qi).add(chosen);
                     return;
                 }
                 btn.classList.add('correct');
                 item.classList.add('graded');
-                QUIZ_PICKED[qi] = chosen;
-                const done = QUIZ_PICKED.filter(v => v !== null).length;
-                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
+                QUIZ_PICKED[QK(qi)] = chosen;
+                progressEl.textContent = T().done(quizDone(), list.length);
             });
         });
     });
@@ -877,6 +1179,39 @@ document.addEventListener('keydown', (e) => {
 });
 
 paint();
+
+/* 위쪽 말 바꾸기 단추 — 영어 원고가 있을 때만 뜬다. */
+const langBtn = document.getElementById('langLink');
+function applyLangUi() {
+    document.documentElement.lang = LANG;
+    document.title = LANG === 'en' && EN.title ? EN.title : BOOK_TITLE;
+    if (langBtn) {
+        langBtn.hidden = !HAS_EN;
+        langBtn.textContent = T().other;
+        langBtn.setAttribute('aria-label', T().otherAria);
+    }
+}
+if (HAS_EN) applyLangUi();
+if (langBtn && HAS_EN) {
+    langBtn.addEventListener('click', () => {
+        if (animating) return;
+        const here = PAGES[current];
+        LANG = LANG === 'en' ? 'ko' : 'en';
+        saveLang(LANG);
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        // 읽던 자리로 돌아간다. 장은 그 장의 첫 쪽으로, 차례·문제·해설은 그 첫 쪽으로.
+        if (here && here.kind === 'chapter') {
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (idx >= 0) current = idx;
+        } else if (here && here.kind !== 'cover') {
+            const idx = PAGES.findIndex(p => p.kind === here.kind);
+            if (idx >= 0) current = idx;
+        }
+        applyLangUi();
+        paint();
+    });
+}
 
 // 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
 // 먼저 나눠 둔 쪽이 넘치게 된다. 그래서 글꼴을 다 받은 뒤에 한 번 다시 나눈다.

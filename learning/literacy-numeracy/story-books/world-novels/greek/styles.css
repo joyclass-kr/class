@@ -628,3 +628,18 @@ body {
     padding-top: 9px;
     padding-bottom: 9px;
 }
+
+/* 영어로 읽을 때만 글꼴을 바꾼다. 한글 명조의 알파벳은 영어 읽기용이 아니다.
+   Roboto Slab 은 슬래브 명조라 지금 결을 크게 흔들지 않는다. 동화틀과 같은 규칙. */
+html[lang="en"] body {
+    font-family: "Roboto Slab", "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif;
+}
+
+/* 한글 명조는 500이 보통으로 보이지만 슬래브 명조는 500이면 확 두꺼워진다.
+   글 요소마다 500이 따로 걸려 있어 body 만 내려서는 안 먹는다. */
+html[lang="en"] .page-story p,
+html[lang="en"] .page-cover .story-page-right p,
+html[lang="en"] .quiz-question,
+html[lang="en"] .quiz-choice {
+    font-weight: 400;
+}
