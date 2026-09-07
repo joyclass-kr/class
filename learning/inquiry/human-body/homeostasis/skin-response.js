@@ -10,6 +10,16 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
+    /** 멈춰 있는 동안 흐르지 않는 공용 시계 */
+    function nowMs() {
+        return (typeof SimEngine !== 'undefined' && SimEngine.now) ? SimEngine.now() : performance.now();
+    }
+
     var MIN_FONT = 13.5;   // 도식 글씨의 최소 크기
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
@@ -201,7 +211,7 @@
             var mine = !!(act && act.dataset.scene === 'skin');
             if (layer.hidden === mine) setVisible(mine);
         }
-        t0 = ts || 0;
+        t0 = nowMs();          // 멈춰 있는 동안은 시계도 멈춘다
         render();
         requestAnimationFrame(loop);
     }

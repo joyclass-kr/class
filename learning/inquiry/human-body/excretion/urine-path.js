@@ -11,6 +11,11 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
     var MIN_FONT = 13.5;   // 도식 글씨의 최소 크기
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
@@ -167,6 +172,7 @@
 
     function state() {
         return {
+            bp: num('bpSlider', 120),
             water: num('hydrationSlider', 50),
             adh: num('adhSlider', 50)
         };
@@ -178,9 +184,14 @@
         return isNaN(v) ? dflt : v;
     }
 
-    /** 물을 많이 마시고 항이뇨호르몬이 적으면 오줌이 많고 묽다 */
+    /**
+     * 물을 많이 마시고 항이뇨호르몬이 적으면 오줌이 많고 묽다.
+     * 혈압이 높으면 사구체에서 더 많이 걸러져 오줌도 늘어난다.
+     */
     function makeRate(st) {
-        return Math.max(0.15, Math.min(1, (st.water / 100) * 1.1 - (st.adh / 100) * 0.55 + 0.25));
+        var fromBp = (st.bp - 120) / 80 * 0.35;   // 80mmHg 는 -0.175, 160mmHg 는 +0.175
+        return Math.max(0.05, Math.min(1,
+            (st.water / 100) * 1.1 - (st.adh / 100) * 0.55 + 0.25 + fromBp));
     }
 
     function loop(ts) {
@@ -192,6 +203,7 @@
 
         var dt = Math.min((ts - lastTs) / 1000, 0.1);
         lastTs = ts;
+        if (isPaused()) dt = 0;
         if (layer && !layer.hidden) step(dt);
         requestAnimationFrame(loop);
     }

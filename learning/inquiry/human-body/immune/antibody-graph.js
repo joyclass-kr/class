@@ -11,6 +11,16 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
+    /** 멈춰 있는 동안 흐르지 않는 공용 시계 */
+    function nowMs() {
+        return (typeof SimEngine !== 'undefined' && SimEngine.now) ? SimEngine.now() : performance.now();
+    }
+
     var MIN_FONT = 13.5;   // 도식 글씨의 최소 크기
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
@@ -94,7 +104,7 @@
         curve = el('path', { fill: 'none', stroke: '#f43f5e', 'stroke-width': 3.5, 'stroke-linejoin': 'round' });
         g.appendChild(curve);
 
-        noteText = text(500, 500, '위쪽 [병원체 침입 (항원 주입)] 을 눌러 1차 반응을 시작해 보세요.', 14, '#cbd5e1', 700);
+        noteText = text(500, 500, '옆의 [1차 침입] 을 눌러 1차 반응을 시작해 보세요.', 14, '#cbd5e1', 700);
         svg.appendChild(noteText);
 
         legendBox = el('g');
@@ -102,7 +112,7 @@
     }
 
     function watchControls() {
-        var first = document.getElementById('triggerInvasionBtn');
+        var first = document.getElementById('firstInfectBtn');
         var second = document.getElementById('secondaryInfectBtn');
         if (first) first.addEventListener('click', function () { addEvent('first'); });
         if (second) second.addEventListener('click', function () { addEvent('second'); });
@@ -110,6 +120,8 @@
 
     function addEvent(kind) {
         if (layer && layer.hidden) return;
+        // 한 판이 끝까지 갔으면 처음부터 다시 그린다
+        if (t >= 0.98) running = false;
         if (!running) { running = true; t = 0.05; events = []; }   // 세로축에 딱 붙지 않게 조금 띄운다
         if (kind === 'second' && !events.length) kind = 'first';
         // 두 번째 침입은 첫 침입에서 충분히 떨어진 뒤에만
@@ -148,6 +160,7 @@
             // 창이 뒤에 있으면 브라우저가 화면 갱신을 초당 한 번으로 줄이는데,
             // 프레임마다 조금씩 더하는 방식은 그때 거의 멎어 버린다.
             var dt = lastTick ? Math.min(0.25, (now - lastTick) / 1000) : 0.016;
+            if (isPaused()) dt = 0;
             t = Math.min(1, t + dt * 0.096);   // 처음부터 끝까지 약 10초
             render();
         }

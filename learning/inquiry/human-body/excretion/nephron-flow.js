@@ -15,6 +15,11 @@
 (function () {
     'use strict';
 
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var SVG_URL = '../assets/images/nephron-diagram.svg';
 
@@ -282,6 +287,7 @@
 
         var dt = Math.min((ts - lastTs) / 1000, 0.1);
         lastTs = ts;
+        if (isPaused()) dt = 0;
         if (svg && layer && !layer.hidden) {
             step(dt);
             renderTable();

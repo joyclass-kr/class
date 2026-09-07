@@ -74,7 +74,7 @@
     };
 
     // DOM Elements
-    var playPauseBtn, triggerInvasionBtn, triggerDefenseBtn;
+    var playPauseBtn;
     var pathogenCountEl, wbcCountEl, antibodyCountEl, clearanceRateEl, defenseProgressFillEl;
     var organTitleEl, organDescEl;
     var hudInstructionEl;
@@ -375,13 +375,16 @@
     // ------------------------------------------------------------------------
     // Canvas Rendering Loop
     // ------------------------------------------------------------------------
+    var drawClock = 0;   // 멈춰 있는 동안은 흐르지 않는다
+
     function renderLoop(timestamp) {
         if (!lastTime) lastTime = timestamp;
         var dt = Math.min((timestamp - lastTime) / 1000, 0.1);
         lastTime = timestamp;
+        if (isRunning) drawClock += dt * 1000;
 
         updatePhysics(dt);
-        drawScene(timestamp);
+        drawScene(drawClock);
 
         requestAnimationFrame(renderLoop);
     }
@@ -804,8 +807,6 @@
     // ------------------------------------------------------------------------
     function bindDOM() {
         playPauseBtn = document.getElementById('playPauseBtn');
-        triggerInvasionBtn = document.getElementById('triggerInvasionBtn');
-        triggerDefenseBtn = document.getElementById('triggerDefenseBtn');
 
         pathogenCountEl = document.getElementById('pathogenCount');
         wbcCountEl = document.getElementById('wbcCount');
@@ -842,47 +843,13 @@
             });
         });
 
-        // Trigger Invasion Button
-        if (triggerInvasionBtn) {
-            triggerInvasionBtn.addEventListener('click', function () {
-                for (var k = 0; k < 8; k++) {
-                    pathogens.push({
-                        x: 0.2 + Math.random() * 0.6,
-                        y: 0.15 + Math.random() * 0.3,
-                        vx: (Math.random() - 0.5) * 0.03,
-                        vy: (Math.random() - 0.5) * 0.03,
-                        radius: 8,
-                        type: 'bacteria',
-                        health: 1.0
-                    });
-                }
+        // 1차 침입 단추 — 그래프 장면으로 보낸다
+        var firstBtn = document.getElementById('firstInfectBtn');
+        if (firstBtn) {
+            firstBtn.addEventListener('click', function () {
+                var g = document.querySelector('.scene-btn[data-scene="graph"]');
+                if (g) g.click();
                 if (typeof SimEngine !== 'undefined') SimEngine.SoundFX.playPulse();
-                updateTelemetry();
-            });
-        }
-
-        // Trigger Defense Button (Launch antibodies / mobilize WBC)
-        if (triggerDefenseBtn) {
-            triggerDefenseBtn.addEventListener('click', function () {
-                if (currentSceneKey === 'adaptive') {
-                    // Spray Y-antibodies from plasma cells
-                    for (var i = 0; i < 15; i++) {
-                        antibodies.push({
-                            x: 0.68,
-                            y: 0.55,
-                            vx: (Math.random() - 0.7) * 0.3,
-                            vy: (Math.random() - 0.8) * 0.3,
-                            angle: Math.random() * Math.PI * 2
-                        });
-                    }
-                } else if (currentSceneKey === 'innate') {
-                    // Spawn reinforcements
-                    whiteBloodCells.push({
-                        x: 0.5, y: 0.65, radius: 24, type: 'macrophage'
-                    });
-                }
-                if (typeof SimEngine !== 'undefined') SimEngine.SoundFX.playClick();
-                updateTelemetry();
             });
         }
 

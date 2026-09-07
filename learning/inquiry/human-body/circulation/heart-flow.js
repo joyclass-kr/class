@@ -343,6 +343,7 @@
         if (!lastTs) lastTs = ts;
         var dt = Math.min((ts - lastTs) / 1000, 0.1);
         lastTs = ts;
+        if (isPaused()) dt = 0;   // 심장이 뛰는 것도, 판막이 여닫는 것도 함께 멈춘다
 
         if (loaded && running && !layer.hidden) {
             step(dt);

@@ -141,15 +141,18 @@
         ctx.scale(dpr, dpr);
     }
 
+    var drawClock = 0;   // 멈춰 있는 동안은 흐르지 않는다
+
     function renderLoop(time) {
         var dt = Math.min(0.05, (time - lastTime) / 1000 || 0.016);
         lastTime = time;
 
         if (isRunning) {
-            updatePhysics(dt, time);
+            drawClock += dt * 1000;
+            updatePhysics(dt, drawClock);
         }
 
-        drawScene(time);
+        drawScene(drawClock);
         requestAnimationFrame(renderLoop);
     }
 
@@ -368,6 +371,9 @@
 
         if (swallowBtn) {
             swallowBtn.addEventListener('click', function () {
+                // 다른 장면에서 눌러도 음식이 내려가는 것이 보이도록 전신 장면으로 보낸다
+                var t = document.querySelector('.scene-btn[data-scene="torso"]');
+                if (t && !t.classList.contains('active')) t.click();
                 isSwallowing = true;
                 foodBolusProgress = 0.0;
                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();

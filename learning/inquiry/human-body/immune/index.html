@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>면역계 · 몸의 방어 작용 | 인체 시뮬레이터</title>
     <link rel="stylesheet" href="../styles.css?v=20260907ay">
-    <link rel="stylesheet" href="styles.css?v=20260907ay">
+    <link rel="stylesheet" href="styles.css?v=20260907az">
 </head>
 <body>
 
@@ -20,12 +20,6 @@
             </div>
         </div>
         <div class="sim-header-right">
-            <button id="triggerInvasionBtn" class="sim-btn" type="button" style="border-color:#f43f5e; color:#fda4af;">
-                <span>🦠</span> 병원체 침입 (항원 주입)
-            </button>
-            <button id="triggerDefenseBtn" class="sim-btn primary" type="button" style="background:linear-gradient(135deg, #8b5cf6, #6366f1); border-color:#a78bfa;">
-                <span>🛡️</span> 면역 방어 가동
-            </button>
             <button id="playPauseBtn" class="tool-toggle-btn" type="button">
                 <span>⏸️</span> 일시정지
             </button>
@@ -117,6 +111,11 @@
                                 <button id="btnVaccine" class="sim-pill-btn" type="button" style="flex:1;">💉 백신 항원</button>
                             </div>
                             <div style="display:flex; gap:8px;">
+                                <button id="firstInfectBtn" class="sim-btn" type="button" style="width:100%; font-size:12px; background:rgba(244, 63, 94, 0.15); border:1px solid #f43f5e; color:#fda4af;">
+                                    <span>🦠 1차 침입 (항원이 처음 들어옴)</span>
+                                </button>
+                            </div>
+                            <div style="display:flex; gap:8px;">
                                 <button id="secondaryInfectBtn" class="sim-btn" type="button" style="width:100%; font-size:12px; background:rgba(236, 72, 153, 0.15); border:1px solid #ec4899; color:#f472b6;">
                                     <span>⚡ 2차 감염 유발 (면역 기억 발동)</span>
                                 </button>
@@ -204,8 +203,8 @@
     <!-- Scripts -->
     <script src="../shared/engine-core.js?v=20260907ay"></script>
     <script src="../shared/exam-data.js?v=20260907ay"></script>
-    <script src="app.js?v=20260907ay"></script>
-    <script src="antibody-graph.js?v=20260907ay"></script>
-    <script src="defense-flow.js?v=20260907ay"></script>
+    <script src="app.js?v=20260907az"></script>
+    <script src="antibody-graph.js?v=20260907az"></script>
+    <script src="defense-flow.js?v=20260907az"></script>
 </body>
 </html>

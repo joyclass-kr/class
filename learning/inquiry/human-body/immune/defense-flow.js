@@ -121,6 +121,27 @@
         infectedCell: ['감염된 세포', '병원체가 들어가 자리 잡은 우리 몸의 세포입니다. 세포독성 T림프구가 이 세포째로 없앱니다.']
     };
 
+    /* ── 항원 종류 ────────────────────────────────────────
+       세균·바이러스·백신은 그 뒤가 갈린다. 시험에 자주 나오는 대목이다. */
+    var ANTIGENS = {
+        btnBacteria: {
+            tag: '병원체 (세균)',
+            key: 6,
+            line: '<b>세균</b>은 세포 <b>바깥</b>에서 늘어납니다. 그래서 항체가 달라붙어 못 쓰게 만드는 <b>체액성 면역</b>이 크게 쓰입니다.'
+        },
+        btnVirus: {
+            tag: '병원체 (바이러스)',
+            key: 7,
+            line: '<b>바이러스</b>는 세포 <b>안</b>으로 들어갑니다. 항체는 세포 안까지 따라 들어가지 못하므로, 감염된 세포를 없애는 <b>세포성 면역</b>이 크게 쓰입니다.'
+        },
+        btnVaccine: {
+            tag: '백신 항원 (죽거나 힘이 약해진 병원체)',
+            key: 5,
+            line: '<b>백신</b>은 병을 일으키지 못하게 만든 항원입니다. 앓지 않고도 <b>기억 세포</b>를 미리 만들어 두는 것이 목적입니다.'
+        }
+    };
+    var antigenId = 'btnBacteria';
+
     var wrap, layer, svg, labelBox, leaderGroup, dotGroup, capBox, stepBar;
     var stepAt = 0, startedAt = 0, playing = false;
 
@@ -129,6 +150,7 @@
         if (!wrap) return;
         buildLayer();
         bindSceneButtons();
+        bindAntigenButtons();
         requestAnimationFrame(loop);
     }
 
@@ -139,6 +161,34 @@
             b.addEventListener('click', function () {
                 setVisible(b.dataset.scene === KEY);
             });
+        });
+    }
+
+    /** 옆 상자의 [세균 · 바이러스 · 백신] 단추를 이 흐름에 잇는다 */
+    function bindAntigenButtons() {
+        Object.keys(ANTIGENS).forEach(function (id) {
+            var b = document.getElementById(id);
+            if (!b) return;
+            b.addEventListener('click', function () {
+                antigenId = id;
+                Object.keys(ANTIGENS).forEach(function (other) {
+                    var o = document.getElementById(other);
+                    if (o) o.classList.toggle('active', other === id);
+                });
+                placeLabels();
+                markKeyStep();
+                drawCaption();
+                if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
+            });
+        });
+    }
+
+    /** 고른 항원에서 가장 크게 쓰이는 단계에 표를 해 둔다 */
+    function markKeyStep() {
+        if (!stepBar) return;
+        var key = ANTIGENS[antigenId].key;
+        stepBar.querySelectorAll('button[data-step]').forEach(function (b) {
+            b.classList.toggle('key', +b.dataset.step === key);
         });
     }
 
@@ -188,6 +238,7 @@
                 setupDiagram();
                 bindSteps();
                 placeLabels();
+                markKeyStep();
                 play(0);
                 window.addEventListener('resize', placeLabels);
             })
@@ -284,7 +335,7 @@
             var tag = document.createElement('span');
             tag.className = 'defense-tag';
             tag.dataset.for = item.id;
-            tag.textContent = item.text;
+            tag.textContent = (item.id === 'pathogen') ? ANTIGENS[antigenId].tag : item.text;
             tag.style.left = (offX + ax * k) + 'px';
             tag.style.top = (offY + ay * k) + 'px';
             tag.addEventListener('click', function () { showDetail(item.id); });
@@ -380,8 +431,12 @@
         var kind = stepAt <= 2
             ? '<span class="defense-kind nonspecific">비특이적 방어</span>'
             : '<span class="defense-kind specific">특이적 방어</span>';
+        var a = ANTIGENS[antigenId];
+        var extra = (stepAt === a.key)
+            ? '<span class="defense-note antigen">' + a.line + '</span>'
+            : '';
         capBox.innerHTML = kind + '<span class="defense-step-name">' + s.name + '</span>' +
-            '<span class="defense-note">' + s.note + '</span>';
+            '<span class="defense-note">' + s.note + '</span>' + extra;
     }
 
     if (document.readyState === 'loading') {

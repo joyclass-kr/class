@@ -253,13 +253,16 @@
         earSoundPhase += dt * 6.0;
     }
 
+    var drawClock = 0;   // 멈춰 있는 동안은 흐르지 않는다
+
     function renderLoop(timestamp) {
         if (!lastTime) lastTime = timestamp;
         var dt = Math.min((timestamp - lastTime) / 1000, 0.1);
         lastTime = timestamp;
+        if (isRunning) drawClock += dt * 1000;
 
         updatePhysics(dt);
-        drawScene(timestamp);
+        drawScene(drawClock);
 
         requestAnimationFrame(renderLoop);
     }

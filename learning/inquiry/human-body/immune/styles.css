@@ -214,6 +214,16 @@
 }
 .defense-steps .defense-all { border-color: rgba(168, 85, 247, 0.6); color: #c084fc; }
 
+/* 고른 항원에서 가장 크게 쓰이는 단계 */
+.defense-steps button.key {
+    border-color: rgba(244, 114, 182, 0.85);
+    box-shadow: inset 0 0 0 1px rgba(244, 114, 182, 0.35);
+}
+.defense-steps button.key::after {
+    content: ' ★';
+    color: #f472b6;
+}
+
 .defense-caption {
     display: flex;
     align-items: center;
@@ -242,6 +252,12 @@
 .defense-step-name { color: #f8fafc; font-weight: 800; }
 .defense-note { flex: 1 1 100%; color: #94a3b8; }
 .defense-note b { color: #fde047; }
+.defense-note.antigen {
+    color: #fbcfe8;
+    border-top: 1px dashed rgba(244, 114, 182, 0.45);
+    padding-top: 6px;
+}
+.defense-note.antigen b { color: #f472b6; }
 
 .defense-error {
     position: absolute; inset: 0;

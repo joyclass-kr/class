@@ -157,16 +157,19 @@
         }
     }
 
+    var drawClock = 0;   // 멈춰 있는 동안은 흐르지 않는다
+
     function renderLoop(time) {
         var dt = Math.min(0.05, (time - lastTime) / 1000 || 0.016);
         lastTime = time;
 
         if (isRunning) {
+            drawClock += dt * 1000;
             updatePhysics(dt);
             updateECG(dt);
         }
 
-        drawScene(time);
+        drawScene(drawClock);
         requestAnimationFrame(renderLoop);
     }
 
