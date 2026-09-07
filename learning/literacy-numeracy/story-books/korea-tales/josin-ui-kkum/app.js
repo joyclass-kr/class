@@ -534,8 +534,8 @@ const EN = {
             { w: "carved in stone (carve)", k: "돌로 만든", s: "What came out of the earth was a Buddha carved in stone." },
             { w: "sat holding ~", k: "안고 앉아 있었다", s: "Josin sat holding it for a long time." },
             { w: "had been lying (lie)", k: "묻혀 있었다", s: "a Buddha had been lying" },
-            { w: "washed (wash)", k: "씻었다", s: "He washed the stone Buddha and carried it back" },
-            { w: "on that spot", k: "그 자리에", s: "And on that spot he built a temple" }
+            { w: "washed (wash)", k: "씻었다", s: "He washed it, carried it back, and built a temple called Jeongtosa on that spot." },
+            { w: "on that spot", k: "그 자리에", s: "He washed it, carried it back, and built a temple called Jeongtosa on that spot." }
         ],
         "08-after.webp": [
             { w: "gave up ~ (give up)", k: "그만두었다", s: "Josin gave up looking after the temple's land." },
@@ -567,9 +567,7 @@ const EN = {
             { w: "as it was", k: "그때 그대로", s: "But the sea is as it was" },
             { w: "make their wishes", k: "소원을 빈다", s: "People go there and make their wishes." },
             { w: "comes true", k: "이루어지다", s: "what happens if the wish comes true" },
-            { w: "Nor did ~", k: "~도 그랬다", s: "Nor did Josin." },
-            { w: "Only, in a dream", k: "다만 꿈으로", s: "The Buddha granted what Josin asked. Only, in a dream." },
-            { w: "two different things", k: "다른 일", s: "Getting a wish and seeing where a wish ends are two different things." }
+            { w: "Nor did ~", k: "~도 그랬다", s: "Nor did Josin." }
         ],
         "after": [
             { w: "is set down (set down)", k: "적혀 있다", s: "It is set down that Josin was a monk of Sedalsa" },

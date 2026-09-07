@@ -762,7 +762,6 @@ const EN = {
             { w: "with a shaking hand", k: "떨리는 손으로", s: "The queen touched Barideggi's face with a shaking hand." },
             { w: "threw ~ away (throw)", k: "버렸다", s: "I am the mother who threw you away." },
             { w: "How can I ~", k: "무슨 낯으로 ~하겠니", s: "How can I look at you?" },
-            { w: "took ~ out of (take)", k: "품에서 꺼냈다", s: "Barideggi took the paper out of her dress." },
             { w: "put ~ in", k: "넣어 주었다", s: "It was you who put this in, then." },
             { w: "cried out loud", k: "소리 내어 울었다", s: "The queen cried out loud." },
             { w: "turned his face away", k: "얼굴을 돌렸다", s: "The king turned his face away and could say nothing." }
@@ -868,7 +867,7 @@ const EN = {
             { w: "left out (leave)", k: "뺐다", s: "This book left that part out" },
             { w: "had nothing from ~", k: "받은 것이 없다", s: "Look again and Barideggi had nothing from her parents." },
             { w: "And still she goes", k: "그런데도 간다", s: "And still she goes." },
-            { w: "side by side", k: "나란히", s: "That is why the story puts the six sisters side by side with her." },
+            { w: "side by side", k: "나란히", s: "That is why the story puts them side by side with her." },
             { w: "pass ~ by", k: "그냥 지나치다", s: "she could not pass by the ones crying in the mist" },
             { w: "the ones cast out", k: "버려지는 쪽", s: "the ones cast out are the ones who save everybody in the end" }
         ]

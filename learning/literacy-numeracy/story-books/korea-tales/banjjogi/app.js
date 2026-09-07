@@ -631,7 +631,7 @@ const EN = {
             { w: "The full moon", k: "보름달", s: "The full moon was bright that night." },
             { w: "flashed (flash)", k: "번쩍였다", s: "Two blue eyes flashed in the grass." },
             { w: "step back", k: "물러서다", s: "Banjjogi did not step back." },
-            { w: "sprang (spring)", k: "덮쳤다", s: "The moment the tiger sprang, he caught it by the scruff." },
+            { w: "sprang (spring)", k: "덮쳤다", s: "The moment the tiger sprang, he caught it by the scruff with one arm." },
             { w: "by the scruff", k: "목덜미를", s: "he caught it by the scruff with one arm" },
             { w: "Struggle as it might", k: "아무리 발버둥 쳐도", s: "Struggle as it might, it was no use." }
         ],
@@ -641,7 +641,7 @@ const EN = {
             { w: "Whoever ~", k: "~하는 이는 누구든", s: "Whoever catches that tiger shall be my son-in-law!" },
             { w: "son-in-law", k: "사위", s: "Whoever catches that tiger shall be my son-in-law!" },
             { w: "fortune", k: "재산", s: "He shall have my daughter and half my fortune!" },
-            { w: "dragged (drag)", k: "끌고 갔다", s: "Banjjogi dragged the tiger to that man's gate." },
+            { w: "dragged (drag)", k: "끌고 갔다", s: "\"Whoever catches that tiger shall be my son-in-law!\" old \"He shall have my daughter and half my fortune!\" old Banjjogi dragged the tiger to that man's gate and stood there." },
             { w: "Onlookers", k: "구경꾼", s: "Onlookers came crowding round." },
             { w: "set hard (set)", k: "굳어졌다", s: "Kim came out, and his face set hard." },
             { w: "trailing off (trail)", k: "말끝을 흐리는", s: "He kept trailing off, and looked Banjjogi up and down." }
@@ -696,9 +696,8 @@ const EN = {
             { w: "not common", k: "흔치 않은", s: "It is not common for somebody whose body is different" },
             { w: "pitiful", k: "불쌍한", s: "The story never once draws Banjjogi as pitiful." },
             { w: "lose heart", k: "주눅 들다", s: "he does not lose heart" },
-            { w: "the one in the wrong", k: "잘못한 사람", s: "the only one in the wrong is Kim" },
-            { w: "changed his tune", k: "말을 바꿨다", s: "and he is the one who changed his tune" },
-            { w: "worth noticing", k: "눈여겨볼 만한", s: "That is worth noticing in itself." },
+            { w: "changed his tune", k: "말을 바꿨다", s: "And he is the one who changed his tune when it was caught." },
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "That old people made and passed on a story of a child born half who lives bravely is worth noticing in itself." },
             { w: "ashamed of", k: "부끄러워한", s: "What was he so ashamed of?" },
             { w: "by the look of ~", k: "생김새로", s: "Deciding by the look of somebody" }
         ]

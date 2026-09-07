@@ -545,7 +545,6 @@ const EN = {
         "04-dokkaebi.webp": [
             { w: "just as ~", k: "막 ~하려던 참에", s: "just as he was falling deep asleep" },
             { w: "Thump!", k: "쿵!", s: "Thump!" },
-            { w: "shook with it (shake)", k: "울렸다", s: "The ground shook with it." },
             { w: "jumped (jump)", k: "들썩였다", s: "The floor jumped and dust came down from the ceiling." },
             { w: "sat straight up", k: "벌떡 일어났다", s: "He sat straight up with his eyes wide open." },
             { w: "Through a crack", k: "문틈으로", s: "Through a crack in the door he saw the yard full of goblins." },
@@ -653,10 +652,10 @@ const EN = {
             { w: "grows wild (grow)", k: "절로 난다", s: "It grows wild on the mountain" },
             { w: "took ~ for ...", k: "~을 …으로 들었다", s: "The goblins took that sound for a house coming down." },
             { w: "no thought of ~ing", k: "~할 마음이 조금도 없는", s: "the younger brother had no thought of tricking them" },
-            { w: "was aiming at nothing", k: "노린 것이 없었다", s: "he gained a great deal and was aiming at nothing" },
+            { w: "was aiming at nothing", k: "노린 것이 없었다", s: "He gained a great deal and was aiming at nothing." },
             { w: "the other way about", k: "반대", s: "The elder was the other way about." },
             { w: "timed ~ (time)", k: "때를 쟀다", s: "he timed his bite" },
-            { w: "worked out ~ in advance", k: "미리 정해 두었다", s: "and worked out in advance how he would take a club" },
+            { w: "worked out ~ in advance", k: "미리 정해 두었다", s: "and he worked out in advance how he would take a club." },
             { w: "the second time", k: "두 번째에는", s: "And the second time the goblins were not fooled." },
             { w: "what they went for", k: "무엇을 바라고 갔는가", s: "not their cleverness but what they went for" }
         ]

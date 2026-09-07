@@ -442,7 +442,7 @@ const EN = {
             { w: "first appeared (appear)", k: "처음 실렸다", s: "It first appeared in Korea in a school reader in 1906." },
             { w: "mountain spirit", k: "산신령", s: "The mountain spirit, in white beard and white robes, came later." },
             { w: "robes", k: "옷, 겉옷", s: "in white beard and white robes" },
-            { w: "came later", k: "그 뒤의 일이다", s: "The mountain spirit ... came later." }
+            { w: "came later", k: "그 뒤의 일이다", s: "The mountain spirit, in white beard and white robes, came later." }
         ],
         "01-woodcutter.webp": [
             { w: "in the hills", k: "산골에", s: "Long ago in the hills there lived a poor woodcutter." },
@@ -488,7 +488,7 @@ const EN = {
             { w: "grew bright (grow)", k: "환해졌다", s: "The middle of the pond grew bright" },
             { w: "slid apart (slide)", k: "스르르 갈라졌다", s: "the water slid apart" },
             { w: "gap", k: "갈라진 틈", s: "A white light rose out of the gap." },
-            { w: "stood up on the water", k: "물 위로 올라섰다", s: "An old man in white robes ... stood up on the water." },
+            { w: "stood up on the water", k: "물 위로 올라섰다", s: "An old man in white robes with a white beard stood up on the water." },
             { w: "covered his face", k: "얼굴을 가렸다", s: "The light was so strong the woodcutter covered his face." },
             { w: "weep (weep)", k: "울다", s: "What makes you weep so bitterly?" },
             { w: "bitterly", k: "서럽게", s: "What makes you weep so bitterly?" },
@@ -566,7 +566,7 @@ const EN = {
             { w: "trudged (trudge)", k: "터덜터덜 걸었다", s: "He trudged home with nothing at all." }
         ],
         "after": [
-            { w: "collected (collect)", k: "모았다", s: "the same story is among the ones Aesop collected in Greece" },
+            { w: "collected (collect)", k: "모았다", s: "The same story is among the ones Aesop collected in Greece more than two thousand years ago." },
             { w: "more than two thousand years ago", k: "이천 년도 더 전에", s: "more than two thousand years ago" },
             { w: "in the place of ~", k: "~ 자리에", s: "There a god called Hermes stands in the place of the mountain spirit." },
             { w: "crossing (cross)", k: "건너오면서", s: "Crossing from country to country over a very long time" },

@@ -595,7 +595,7 @@ const EN = {
        본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
     words: {
         "cover": [
-            { w: "comes down in ~", k: "~에 실려 전해진다", s: "The Dangun story comes down in the Samguk Yusa." },
+            { w: "comes down in ~", k: "~에 실려 전해진다", s: "🐻 cover.webp Dangun The Dangun story comes down in the Samguk Yusa" },
             { w: "monk", k: "승려", s: "written by the monk Iryeon in the Goryeo period" },
             { w: "wishing to ~", k: "~이 되기를 바라는", s: "A bear and a tiger wishing to be human" },
             { w: "the north", k: "북방", s: "is like the old stories of the north" },
@@ -625,7 +625,7 @@ const EN = {
         "03-sinsi.webp": [
             { w: "branches", k: "가지", s: "Its branches spread wide and its shade was very big." },
             { w: "shade", k: "그늘", s: "Its branches spread wide and its shade was very big." },
-            { w: "joined (join)", k: "이었다", s: "It was the tree that joined the sky and the earth." },
+            { w: "joined (join)", k: "이었다", s: "It was the tree that joined the sky and the earth, they said." },
             { w: "reach round ~", k: "팔을 벌려 안다", s: "It took several grown people to reach round it." },
             { w: "made a place", k: "터를 열었다", s: "Hwanung made a place under that tree." },
             { w: "shall be called ~", k: "~라 하겠다", s: "This shall be called Sinsi." },
@@ -635,7 +635,7 @@ const EN = {
         "04-rule.webp": [
             { w: "how to ~", k: "~하는 법", s: "Hwanung taught the people how to grow grain." },
             { w: "sow your seed", k: "씨를 뿌려라", s: "When that star comes there, sow your seed." },
-            { w: "the sick", k: "아픈 사람", s: "For the sick he boiled herbs himself." },
+            { w: "the sick", k: "아픈 사람", s: "For the sick he boiled herbs himself and gave them to drink." },
             { w: "herbs", k: "약초", s: "he boiled herbs himself and gave them to drink" },
             { w: "quarrelling (quarrel)", k: "다투는", s: "When people came quarrelling he told them right from wrong." },
             { w: "right from wrong", k: "옳고 그름", s: "he told them right from wrong" },
@@ -660,7 +660,7 @@ const EN = {
             { w: "sunlight", k: "햇빛", s: "you must not see the sunlight in that time" },
             { w: "gave a snort", k: "코웃음을 쳤다", s: "The tiger gave a snort." },
             { w: "grabbed (grab)", k: "덥석 집었다", s: "The tiger grabbed a garlic and put it in his mouth." },
-            { w: "an armful of ~", k: "한 아름의", s: "The bear gathered an armful of mugwort." }
+            { w: "an armful of ~", k: "한 아름의", s: "The bear said nothing and gathered an armful of mugwort." }
         ],
         "07-cave.webp": [
             { w: "damp", k: "축축한", s: "Inside it was damp and cold." },
@@ -746,13 +746,12 @@ const EN = {
         "after": [
             { w: "was first written down", k: "처음 글로 적혔다", s: "The Dangun story was first written down about eight hundred years ago." },
             { w: "by mouth", k: "입에서 입으로", s: "Before that it came down by mouth alone." },
-            { w: "opinions differ", k: "말이 갈린다", s: "opinions differ over whether garlic was in this land then" },
+            { w: "opinions differ", k: "말이 갈린다", s: "But opinions differ over whether garlic was even in this land then." },
             { w: "wild chives", k: "달래", s: "Some scholars read the word as wild chives" },
             { w: "no trick at all", k: "아무 재주도 부리지 않은", s: "Look again and the bear did no trick at all." },
             { w: "stayed in ~", k: "남아 있었다", s: "She only stayed in the cave." },
-            { w: "rewarded (reward)", k: "상을 주었다", s: "What this story rewarded was not strength or skill." },
-            { w: "showing ~ how to live", k: "살아가는 법을 일러 주기", s: "It was showing people how to live." },
-            { w: "the one who stays", k: "끝까지 남는 쪽", s: "the one who stays to the end is often the quiet one" }
+            { w: "rewarded (reward)", k: "상을 주었다", s: "What this story rewarded was not strength or skill but holding out." },
+            { w: "the one who stays", k: "끝까지 남는 쪽", s: "The one who stays to the end is often not the one who talked big" }
         ]
     },
     afterword: {

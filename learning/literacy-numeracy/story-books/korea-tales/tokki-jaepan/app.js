@@ -569,7 +569,7 @@ const EN = {
             { w: "Do be more careful", k: "조심하세요", s: "Do be more careful next time." }
         ],
         "after": [
-            { w: "is told widely", k: "널리 있다", s: "The story of saving a beast from a pit and nearly being eaten is told widely." },
+            { w: "is told widely", k: "널리 있다", s: "The story of saving a beast from a pit and nearly being eaten is told widely in the world." },
             { w: "nearly being eaten", k: "잡아먹힐 뻔한", s: "saving a beast from a pit and nearly being eaten" },
             { w: "Only the animal changes", k: "짐승만 바뀐다", s: "Only the animal changes; the shape is the same." },
             { w: "end the same way", k: "끝이 같다", s: "Such stories mostly end the same way too." },
@@ -579,8 +579,7 @@ const EN = {
             { w: "right and wrong", k: "옳고 그름", s: "She did not weigh right and wrong either." },
             { w: "All she said was ~", k: "다만 ~라고 했을 뿐", s: "All she said was that she could not follow it." },
             { w: "of his own accord", k: "제 발로", s: "the tiger went down into the pit of his own accord" },
-            { w: "did not push ~ in", k: "밀어 넣지 않았다", s: "The rabbit did not push him in." },
-            { w: "owe you nothing", k: "은혜를 모른 척하다", s: "those who will act as though they owe you nothing" }
+            { w: "owe you nothing", k: "은혜를 모른 척하다", s: "There are those in the world who will act as though they owe you nothing." }
         ]
     },
     afterword: {

@@ -494,11 +494,10 @@ const EN = {
         "cover": [
             { w: "field mouse", k: "들쥐", s: "The Field Mouse and the Nail Clippings" },
             { w: "nail clippings", k: "깎은 손톱", s: "The Field Mouse and the Nail Clippings" },
-            { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
+            { w: "with no known author", k: "지은이가 알려지지 않은", s: "🐀 cover.webp The Field Mouse and the Nail Clippings An old Korean tale with no known author." },
             { w: "saying", k: "오랜 말", s: "It comes from an old saying" },
             { w: "turn into ~", k: "~으로 변하다", s: "a mouse will eat them and turn into you" },
             { w: "believing ~", k: "~라고 여겨", s: "believing something of the person stayed in them" },
-            { w: "the bin", k: "쓰레기통", s: "Today you simply gather them into the bin." },
             { w: "a double", k: "똑같이 생긴 가짜", s: "A double turning up and driving out the real person" },
             { w: "driving out ~ (drive)", k: "몰아내는", s: "driving out the real person" },
             { w: "tell which is which", k: "누가 누구인지 가리다", s: "the family cannot tell which is which" }
@@ -574,7 +573,7 @@ const EN = {
             { w: "one by one", k: "하나씩", s: "His father asked them one by one." },
             { w: "family matters", k: "집안 사정", s: "Things from childhood, family matters" },
             { w: "kept stumbling", k: "자꾸 더듬거렸다", s: "The real Deokgu kept stumbling." },
-            { w: "dim", k: "흐릿한", s: "he had lived by halves, so his memory was dim" },
+            { w: "dim", k: "흐릿한", s: "He had lived by halves, so his memory was dim." },
             { w: "smoothly", k: "술술", s: "And the false one answered smoothly." },
             { w: "the memories left in ~", k: "~에 남아 있던 기억", s: "He had eaten the memories left in the clippings." },
             { w: "the very dates", k: "날짜까지", s: "He named the very dates." },
@@ -639,11 +638,11 @@ const EN = {
             { w: "finished what he began", k: "끝까지 했다", s: "he became somebody who finished what he began" }
         ],
         "after": [
-            { w: "each claiming to be ~", k: "서로 자기가 ~라고 하며", s: "A story where a real one and a false one appear, each claiming to be the true person" },
+            { w: "each claiming to be ~", k: "서로 자기가 ~라고 하며", s: "each claiming to be the true person" },
             { w: "is called ~", k: "~라고 한다", s: "is called a true-and-false tale" },
             { w: "the best known", k: "가장 널리 알려진", s: "this nail story is the best known" },
             { w: "was really kept (keep)", k: "실제로 지켰다", s: "The warning about scattering nail clippings was really kept once." },
-            { w: "part of ~", k: "~의 일부", s: "were still part of the person" },
+            { w: "part of ~", k: "~의 일부", s: "Nails and hair were thought to be still part of the person even after they came off." },
             { w: "of course", k: "물론", s: "Of course, today you gather them into the bin and that is that." },
             { w: "is asking ~", k: "묻고 있다", s: "this story is asking only one thing" },
             { w: "what makes me me", k: "나를 나이게 하는 것", s: "what makes me me" },

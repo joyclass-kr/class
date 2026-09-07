@@ -536,7 +536,7 @@ const EN = {
             { w: "the crack of the door", k: "문틈", s: "put her eye to the crack of the door" },
             { w: "Ugh", k: "으악", s: "Ugh! How horrible!" },
             { w: "screwed up her face", k: "얼굴을 찡그렸다", s: "The second looked through the crack and screwed up her face." },
-            { w: "spat (spit)", k: "침을 뱉었다", s: "The two of them spat in the yard and ran off." },
+            { w: "spat (spit)", k: "침을 뱉었다", s: "The two of them spat in the yard and ran off, holding up their skirts." },
             { w: "holding up their skirts", k: "치맛자락을 움켜쥐고", s: "ran off, holding up their skirts" }
         ],
         "03-third.webp": [
@@ -606,7 +606,7 @@ const EN = {
         ],
         "09-magpie.webp": [
             { w: "a flock of ~", k: "~ 떼", s: "she met a flock of magpies" },
-            { w: "bitter cold", k: "몹시 추운", s: "It was a bitter cold day, with the snow lying deep." },
+            { w: "bitter cold", k: "몹시 추운", s: "It was a bitter cold day, with the snow lying deep and white." },
             { w: "lying deep (lie)", k: "소복이 쌓인", s: "with the snow lying deep and white" },
             { w: "shivering (shiver)", k: "오들오들 떠는", s: "The magpies sat on the branches, shivering." },
             { w: "branches", k: "나뭇가지", s: "She looked up into the branches and asked them carefully." },
@@ -659,8 +659,7 @@ const EN = {
             { w: "carelessly", k: "함부로", s: "old people held that it must not be treated carelessly" },
             { w: "worth noticing", k: "눈여겨볼 만한", s: "It is worth noticing that the sisters were the ones who burned it." },
             { w: "in the end", k: "끝내", s: "The side that called it ugly was the side that tried in the end to be rid of it." },
-            { w: "be rid of ~", k: "없애 버리다", s: "the side that tried in the end to be rid of it" },
-            { w: "what follows", k: "그 뒤", s: "what follows changes with the name you give it" }
+            { w: "be rid of ~", k: "없애 버리다", s: "the side that tried in the end to be rid of it" }
         ]
     },
     afterword: {

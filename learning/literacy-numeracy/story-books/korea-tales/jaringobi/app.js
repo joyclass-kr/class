@@ -583,8 +583,7 @@ const EN = {
             { w: "fiercely", k: "지독하게", s: "a person who saves fiercely is called a Jaringobi" },
             { w: "nobody is sure", k: "아무도 모른다", s: "Where the word itself came from nobody is sure." },
             { w: "settled", k: "정해진", s: "none of them is settled" },
-            { w: "rival", k: "겨루는 상대", s: "The miser here has a rival." },
-            { w: "is told of together with ~", k: "함께 묶여 전해진다", s: "He is often told of together with a miser from Gyeongsang." }
+            { w: "rival", k: "겨루는 상대", s: "The miser here has a rival." }
         ],
         "01-house.webp": [
             { w: "everybody had heard of", k: "소문난", s: "there lived a rich man everybody had heard of" },
@@ -621,7 +620,6 @@ const EN = {
             { w: "in a line", k: "줄줄", s: "Sweat ran in a line down his back." },
             { w: "fan", k: "부채", s: "The Jaringobi opened a fan wide" },
             { w: "the floor edge", k: "마루", s: "sat down on the floor edge" },
-            { w: "held ~ still", k: "꼼짝하지 않게 잡았다", s: "But he held the fan still and did not move it." },
             { w: "from side to side", k: "좌우로", s: "Instead he waved his own head from side to side." },
             { w: "what sort of ~", k: "그게 무슨 ~이오", s: "Husband, what sort of fanning is that?" },
             { w: "wears out (wear)", k: "닳는다", s: "Fan the fan and the fan wears out." },
@@ -631,7 +629,7 @@ const EN = {
             { w: "settled (settle)", k: "앉았다", s: "One day a fly settled on the jar stand." },
             { w: "jar stand", k: "장독대", s: "a fly settled on the jar stand" },
             { w: "bean paste", k: "된장", s: "The lid of the bean paste jar happened to be open." },
-            { w: "happened to be ~", k: "마침 ~였다", s: "The lid happened to be open." },
+            { w: "happened to be ~", k: "마침 ~였다", s: "The lid of the bean paste jar happened to be open." },
             { w: "wiped at ~ (wipe)", k: "쓱 훔쳤다", s: "The fly wiped at the paste with its front legs" },
             { w: "jumped to his feet", k: "벌떡 일어섰다", s: "The Jaringobi's eyes went wide and he jumped to his feet." },
             { w: "took no notice", k: "아랑곳하지 않았다", s: "The fly took no notice and went on flying." },
@@ -648,7 +646,7 @@ const EN = {
             { w: "All that way", k: "거기까지", s: "All that way for one fly!" }
         ],
         "07-hanyang.webp": [
-            { w: "Three whole days", k: "사흘을 꼬박", s: "Three whole days walking brought him to the market." },
+            { w: "Three whole days", k: "사흘을 꼬박", s: "🏙️ Three whole days walking brought him to the market in Hanyang." },
             { w: "was gone", k: "사라졌다", s: "the fly went over the wall of some tiled house and was gone" },
             { w: "a stranger's wall", k: "남의 집 담벼락", s: "The Jaringobi sat down at a stranger's wall." },
             { w: "finished", k: "다 해진", s: "His straw shoes were finished and his soles were swollen." },
@@ -669,7 +667,7 @@ const EN = {
             { w: "a little at a time", k: "아껴 가며", s: "eating that rice ball a little at a time" }
         ],
         "09-contest.webp": [
-            { w: "without a greeting", k: "인사도 없이", s: "The miser knocked and walked straight in without a greeting." },
+            { w: "without a greeting", k: "인사도 없이", s: "🍚 The miser knocked at the gate and walked straight in without a greeting." },
             { w: "set a table", k: "밥상을 내주었다", s: "The Jaringobi welcomed him and set a table." },
             { w: "sure enough", k: "어김없이", s: "And from the ceiling, sure enough, the dried fish hung." },
             { w: "lift his head", k: "고개를 들다", s: "He did not lift his head." },
@@ -733,13 +731,13 @@ const EN = {
         "after": [
             { w: "not one person's name", k: "한 사람의 이름이 아닌", s: "Jaringobi was not one person's name." },
             { w: "the most famous part", k: "가장 이름난 자리", s: "the most famous part of this story" },
-            { w: "a pair", k: "한 짝", s: "the telling off for looking too often makes a pair with it" },
+            { w: "a pair", k: "한 짝", s: "The telling off for looking too often makes a pair with it." },
             { w: "an object of fun", k: "웃음거리", s: "the story does not leave him only an object of fun" },
             { w: "did not fall from ~", k: "~에서 떨어진 것이 아니다", s: "That rice did not fall from the sky." },
-            { w: "piled up (pile)", k: "쌓였다", s: "It was the years of saving piled up." },
+            { w: "piled up (pile)", k: "쌓였다", s: "It was those years of hanging up a fish and saving, piled up." },
             { w: "an end in itself", k: "그 자체가 목적", s: "Saving was not an end in itself for him." },
             { w: "when to spend", k: "언제 써야 하는지", s: "He knew when to spend what he had saved." },
-            { w: "what you save for", k: "무엇을 위해 아끼는가", s: "what you save for tells more than what you save" }
+            { w: "what you save for", k: "무엇을 위해 아끼는가", s: "What you save for tells you more about a person than what they save." }
         ]
     },
     afterword: {

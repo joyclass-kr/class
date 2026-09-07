@@ -547,7 +547,7 @@ const EN = {
         "cover": [
             { w: "picked up (pick up)", k: "주워 온", s: "A bride comes out of a snail picked up in a rice paddy." },
             { w: "rice paddy", k: "논", s: "a snail picked up in a rice paddy" },
-            { w: "pond snail", k: "우렁이", s: "A pond snail is a small shellfish that lives in paddies." },
+            { w: "pond snail", k: "우렁이", s: "A pond snail is a small shellfish that lives in paddies and streams." },
             { w: "shellfish", k: "고둥, 조개류", s: "a small shellfish that lives in paddies and streams" },
             { w: "used to ~", k: "예전에는 ~했다", s: "People used to catch them there and make soup of them." },
             { w: "Districts", k: "고장마다", s: "Districts end it differently." },
@@ -622,7 +622,7 @@ const EN = {
             { w: "straw pile", k: "짚더미", s: "He hid behind the straw pile by the kitchen" },
             { w: "thumping (thump)", k: "두근두근하는", s: "His heart was thumping." },
             { w: "slapping sound", k: "찰랑거리는 소리", s: "The water made a small slapping sound." },
-            { w: "a gap", k: "틈", s: "He watched the kitchen through a gap in the straw." },
+            { w: "a gap", k: "틈", s: "He watched the kitchen through a gap in the straw" },
             { w: "slid open (slide)", k: "스르르 열렸다", s: "Then the lid of the jar slid open." }
         ],
         "08-appear.webp": [
@@ -688,9 +688,9 @@ const EN = {
             { w: "set ~ beside", k: "곁에 놓았다", s: "But he always set her bowl beside his and waited." }
         ],
         "after": [
-            { w: "keeps house", k: "살림을 한다", s: "a person comes out and keeps house for somebody" },
+            { w: "keeps house", k: "살림을 한다", s: "Stories where a person comes out of a snail or a shell and keeps house for somebody are told all over Korea." },
             { w: "a promise to keep", k: "지켜야 할 약속", s: "Such stories always come with a promise to keep." },
-            { w: "look in on ~", k: "들여다보다", s: "Do not look in on me, or wait a few days." },
+            { w: "look in on ~", k: "들여다보다", s: "Do not look in on me, or wait a few more days." },
             { w: "is always broken", k: "늘 깨진다", s: "And the promise is always broken." },
             { w: "is punished", k: "벌을 받는다", s: "It is not a story in which the one who breaks it is punished." },
             { w: "what is lost", k: "무엇을 잃는지", s: "It shows what is lost afterwards." },

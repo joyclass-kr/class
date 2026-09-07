@@ -642,7 +642,7 @@ const EN = {
         ],
         "06-decide.webp": [
             { w: "took to their beds", k: "앓아누웠다", s: "The two took to their beds and could not eat." },
-            { w: "could not bear to ~", k: "보다 못했다", s: "The dog and the cat could not bear to watch." },
+            { w: "could not bear to ~", k: "보다 못했다", s: "The dog and the cat in the yard could not bear to watch." },
             { w: "face to face", k: "마주 앉아", s: "They sat down face to face." },
             { w: "fed full (feed)", k: "배불리 먹었다", s: "Both had been fed full in that house." },
             { w: "get ~ back", k: "되찾아 오다", s: "Let us go and get that bead back." },
@@ -686,7 +686,7 @@ const EN = {
         ],
         "10-threat.webp": [
             { w: "before the day breaks", k: "날이 새기 전에", s: "Bring it out before the day breaks." },
-            { w: "manage", k: "해내다", s: "But how could we ever manage that..." },
+            { w: "manage", k: "해내다", s: "\"Bring it out before the day breaks.\" woman \"B-but how could we ever manage that...\" boy The king of the rats shook." },
             { w: "thick and hard", k: "두껍고 단단한", s: "The chest was thick and hard." },
             { w: "put out the claws", k: "발톱을 세웠다", s: "The cat put out the claws of her front paw and showed them." },
             { w: "leave no ~ alive", k: "한 마리도 안 남기다", s: "I shall leave no rat alive in this house." },
@@ -719,7 +719,7 @@ const EN = {
         "13-fish.webp": [
             { w: "ruined (ruin)", k: "망쳤다", s: "You have ruined everything!" },
             { w: "in a rage", k: "화가 나서", s: "The dog went home in a rage without looking back." },
-            { w: "up and down the bank", k: "강가를 오르내리며", s: "The cat went up and down the bank again and again." },
+            { w: "up and down the bank", k: "강가를 오르내리며", s: "The cat, left alone, went up and down the bank again and again." },
             { w: "empty-handed", k: "빈손으로", s: "She could not go home empty-handed." },
             { w: "three whole days", k: "꼬박 사흘", s: "So she spent three whole days by the river." },
             { w: "washed up (wash)", k: "밀려왔다", s: "A dead fish had washed up on the sand." },
@@ -734,12 +734,12 @@ const EN = {
             { w: "caught ~ up", k: "번쩍 끌어안았다", s: "The old woman caught the cat up in her arms." },
             { w: "as before", k: "그대로", s: "The dog stayed out in the yard as before." },
             { w: "felt that (feel)", k: "서운했다", s: "The dog felt that for a long time afterwards." },
-            { w: "stopped getting on", k: "사이가 나빠졌다", s: "that is when the two of them stopped getting on" }
+            { w: "stopped getting on", k: "사이가 나빠졌다", s: "And that, they say, is when the two of them stopped getting on." }
         ],
         "after": [
             { w: "does two things", k: "두 가지를 한다", s: "This story does two things at once." },
             { w: "gets ~ back", k: "되찾는다", s: "It is a story of getting back what was lost" },
-            { w: "in every telling", k: "어느 판본에나", s: "The part where the cat rides on the dog's back is in every telling." },
+            { w: "in every telling", k: "어느 판본에나", s: "The part where the cat rides across the water on the dog's back is in every telling." },
             { w: "cannot stand ~", k: "싫어한다", s: "Cats cannot stand water, and dogs can swim." },
             { w: "growl at (growl)", k: "으르렁거린다", s: "the two have growled at each other ever since" },
             { w: "worked just as hard", k: "똑같이 애썼다", s: "The dog and the cat worked just as hard as each other." },

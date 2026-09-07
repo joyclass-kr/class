@@ -511,7 +511,7 @@ const EN = {
             { w: "caught hold of ~", k: "붙들었다", s: "the grown-ups caught hold of him" },
             { w: "sum", k: "셈", s: "Boy, work this sum out for me." },
             { w: "grinned (grin)", k: "씩 웃었다", s: "Each time the boy grinned and gave them an answer." },
-            { w: "really something", k: "정말 대단한", s: "That head of his is really something." }
+            { w: "really something", k: "정말 대단한", s: "\"That head of his is really something,\" they said." }
         ],
         "02-envoy.webp": [
             { w: "envoy", k: "사신", s: "One day an envoy came from the king of the next country." },
@@ -528,7 +528,7 @@ const EN = {
             { w: "cleared his throat", k: "목청을 가다듬었다", s: "One officer cleared his throat and read the first problem." },
             { w: "twisted out of ~", k: "~로 꼰", s: "Bring me a rope twisted out of ash." },
             { w: "ash", k: "재", s: "a rope twisted out of ash" },
-            { w: "either", k: "~도 역시 아니다", s: "The officer who read it did not understand either." },
+            { w: "either", k: "~도 역시 아니다", s: "\"Bring me a rope twisted out of ash.\" man The officer who read it did not understand either" },
             { w: "crumbles (crumble)", k: "바스러진다", s: "The stuff that crumbles the moment you hold it." },
             { w: "buzzed (buzz)", k: "술렁였다", s: "The yard buzzed like a poked beehive." },
             { w: "a poked beehive", k: "쑤신 벌집", s: "The yard buzzed like a poked beehive." },
@@ -572,7 +572,7 @@ const EN = {
             { w: "given up (give up)", k: "포기했다", s: "Everyone thought he had given up." },
             { w: "crawling (crawl)", k: "기어가는", s: "he gently picked up an ant that was crawling by" },
             { w: "kicked its legs about", k: "다리를 버둥거렸다", s: "The ant kicked its legs about." },
-            { w: "round the ant's waist", k: "개미 허리에", s: "The boy tied the fine thread round the ant's waist." },
+            { w: "round the ant's waist", k: "개미 허리에", s: "The boy tied the fine thread round the ant's waist, very carefully." },
             { w: "thinner even than ~", k: "~보다도 더 가는", s: "The thread was thinner even than the ant's waist." },
             { w: "Hush", k: "쉿", s: "Hush. Stand still, all of you, and do not even breathe." },
             { w: "craned their necks", k: "목을 길게 뺐다", s: "People craned their necks to look." }
@@ -580,7 +580,7 @@ const EN = {
         "08-honey.webp": [
             { w: "dabbed (dab)", k: "살짝 발랐다", s: "The boy dabbed a little honey at one hole of the bead." },
             { w: "softly", k: "살그머니", s: "he set the ant softly at the hole on the other side" },
-            { w: "In it went", k: "쏙 들어갔다", s: "Then he set the ant softly at the hole. In it went." },
+            { w: "In it went", k: "쏙 들어갔다", s: "In it went." },
             { w: "spread (spread)", k: "퍼졌다", s: "The smell of honey spread through the hole." },
             { w: "counted on his fingers", k: "손가락으로 헤아렸다", s: "the boy counted on his fingers" },
             { w: "dead quiet", k: "쥐 죽은 듯 조용한", s: "The yard went dead quiet." },
@@ -631,12 +631,11 @@ const EN = {
         "after": [
             { w: "all over the world", k: "세계 곳곳에", s: "Tales of a child solving a hard problem are found all over the world." },
             { w: "are stuck (stick)", k: "막혀 있다", s: "Where the grown-ups are all stuck, one child gives the answer." },
-            { w: "learning", k: "학식", s: "What the child uses is not strength and not learning." },
+            { w: "learning", k: "학식", s: "What the child uses in those tales is not strength and not learning." },
             { w: "outside the frame", k: "틀 밖에서", s: "It is looking from outside the frame the asker set up." },
             { w: "cannot be solved", k: "풀 수 없다", s: "the problem of twisting ash into rope cannot be solved" },
-            { w: "turned ~ round", k: "순서를 뒤집었다", s: "The boy turned the order round." },
-            { w: "the order of doing", k: "하는 차례", s: "The problem stayed the same; the order of doing it changed." },
-            { w: "the moment ~", k: "~하는 순간", s: "the moment you decide it cannot be done, the road closes" }
+            { w: "the order of doing", k: "하는 차례", s: "The problem stayed exactly the same; the order of doing it changed." },
+            { w: "the moment ~", k: "~하는 순간", s: "The moment you decide a thing cannot be done, the road closes." }
         ]
     },
     afterword: {

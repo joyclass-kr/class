@@ -733,7 +733,7 @@ const EN = {
             { w: "pressed so hard", k: "어찌나 조르는지", s: "The princes pressed so hard that even the king gave way." },
             { w: "gave way (give)", k: "당해 내지 못했다", s: "even the king gave way" },
             { w: "stable", k: "마구간", s: "Jumong was sent to the stable behind the palace." },
-            { w: "dung", k: "말똥", s: "It was work of clearing dung and carrying feed." },
+            { w: "dung", k: "말똥", s: "It was work of clearing dung and carrying feed, day after day." },
             { w: "feed", k: "먹이", s: "clearing dung and carrying feed" },
             { w: "sneered (sneer)", k: "비웃었다", s: "The princes sneered as they passed the stable." },
             { w: "without complaint", k: "군말 없이", s: "But Jumong worked without one word of complaint." },
@@ -754,7 +754,7 @@ const EN = {
             { w: "glossy", k: "윤이 나는", s: "Every horse was glossy and well filled out." },
             { w: "filled out (fill)", k: "살이 올랐다", s: "Every horse was glossy and well filled out." },
             { w: "shared ~ out", k: "나누어 주었다", s: "The king shared the fat horses out among his sons." },
-            { w: "argued over ~", k: "다투었다", s: "The princes argued over who should choose first." },
+            { w: "argued over ~", k: "다투었다", s: "The princes argued over who should choose the good ones first." },
             { w: "nothing but bones", k: "뼈만 앙상한", s: "It was the horse with nothing but bones on it." },
             { w: "politely", k: "공손히", s: "Jumong bowed his head politely." },
             { w: "showed nothing", k: "내색하지 않았다", s: "and showed nothing on his face" }
@@ -795,7 +795,7 @@ const EN = {
             { w: "boil up", k: "부글부글 끓다", s: "Then the river began to boil up." },
             { w: "parted (part)", k: "쫙 갈라졌다", s: "The water parted and something rose in it." },
             { w: "soft-shelled turtles", k: "자라", s: "Fish and soft-shelled turtles came up in crowds" },
-            { w: "in crowds", k: "떼로", s: "Fish and turtles came up in crowds" },
+            { w: "in crowds", k: "떼로", s: "Fish and soft-shelled turtles came up in crowds and set their backs together." },
             { w: "set ~ together", k: "척척 맞대었다", s: "and set their backs together" },
             { w: "shells", k: "등딱지", s: "Their shells shone smooth." },
             { w: "right behind", k: "바로 등 뒤에", s: "The hoofs were right behind them now." },
@@ -836,14 +836,14 @@ const EN = {
         ],
         "after": [
             { w: "not only in writing", k: "글로만이 아니라", s: "It comes down not only in writing." },
-            { w: "sixteen hundred years old", k: "천육백 년 된", s: "on a stone sixteen hundred years old" },
+            { w: "sixteen hundred years old", k: "천육백 년 된", s: "The story of the man who founded the country was cut into a stone sixteen hundred years old." },
             { w: "from birth", k: "태어날 때부터", s: "Jumong was not called that from birth." },
-            { w: "gave him (give)", k: "붙여 주었다", s: "the word people gave him for his shooting became his name" },
+            { w: "gave him (give)", k: "붙여 주었다", s: "The word people gave him for his shooting became his name and stayed." },
             { w: "on purpose", k: "일부러", s: "He made one good horse thin on purpose" },
-            { w: "what was left", k: "고르고 남은 것", s: "so he was given what was left after the king chose" },
+            { w: "what was left", k: "고르고 남은 것", s: "So he was given what was left after the king had chosen." },
             { w: "a sign", k: "표시", s: "It became the sign by which the grown son found his father." },
-            { w: "the lowest place", k: "가장 낮은 자리", s: "While he was in the lowest place he found the best horse." },
-            { w: "makes your next place", k: "다음 자리를 만든다", s: "what you are looking at there makes your next place" }
+            { w: "the lowest place", k: "가장 낮은 자리", s: "While he was in the lowest place he was the one who found the best horse." },
+            { w: "makes your next place", k: "다음 자리를 만든다", s: "That is what makes your next place." }
         ]
     },
     afterword: {

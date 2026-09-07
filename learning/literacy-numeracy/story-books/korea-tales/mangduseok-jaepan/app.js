@@ -463,7 +463,7 @@ const EN = {
             { w: "a long way over", k: "많이 기울어", s: "The sun had gone a long way over to the west." },
             { w: "should have been ~", k: "있어야 할", s: "the bundle of silk that should have been beside him" },
             { w: "clean gone", k: "감쪽같이 사라진", s: "was clean gone" },
-            { w: "made no difference", k: "마찬가지였다", s: "he rubbed his eyes again and again, and it made no difference" },
+            { w: "made no difference", k: "마찬가지였다", s: "He rubbed his eyes again and again, and it made no difference." },
             { w: "ran wildly about", k: "정신없이 뛰어다녔다", s: "He ran wildly about, looking everywhere." },
             { w: "not the shadow of ~", k: "~의 그림자 하나 없는", s: "There was not the shadow of a person to be seen." },
             { w: "had woven (weave)", k: "짰다", s: "His whole family had woven that silk over the winter." },

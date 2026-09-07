@@ -639,8 +639,7 @@ const EN = {
             { w: "gets fooled", k: "속는다", s: "It gets fooled, it pays back kindness" },
             { w: "gives way", k: "마음이 풀린다", s: "and here it gives way at the sound of one word" },
             { w: "what won it over", k: "넘어가게 한 것", s: "What won the tiger over was not cleverness but the word brother." },
-            { w: "living alone", k: "혼자 살던", s: "Think how that word sounded to something living alone on a mountain." },
-            { w: "made ~ true", k: "진짜로 만들었다", s: "the one who made the borrowed name true was the tiger" }
+            { w: "living alone", k: "혼자 살던", s: "Think how that word sounded to something living alone on a mountain." }
         ]
     },
     afterword: {

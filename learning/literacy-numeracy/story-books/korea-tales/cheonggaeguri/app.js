@@ -541,8 +541,7 @@ const EN = {
             { w: "worked it out", k: "곰곰 헤아렸다", s: "She closed her eyes and worked it out." },
             { w: "bury (bury)", k: "묻다", s: "he'll bury me by the stream" },
             { w: "went over it (go over)", k: "되뇌었다", s: "She went over it again and again." },
-            { w: "made up her mind", k: "마음을 정했다", s: "At last she made up her mind." },
-            { w: "called ~ close", k: "가까이 불렀다", s: "Then she called her son close." },
+            { w: "made up her mind", k: "마음을 정했다", s: "At last she made up her mind, and called her son close." },
             { w: "no strength at all", k: "힘이 하나도 없는", s: "There was no strength at all in her voice." }
         ],
         "07-last-words.webp": [
@@ -594,9 +593,9 @@ const EN = {
             { w: "a mate", k: "짝", s: "a call to find a mate" },
             { w: "heard it clearly", k: "똑똑히 들었다", s: "The old people did not know why, but they heard it clearly." },
             { w: "left ~ alone", k: "그냥 두었다", s: "They did not leave what they did not know alone" },
-            { w: "flatfish", k: "넙치", s: "why a flatfish has both eyes on one side" },
+            { w: "flatfish", k: "넙치", s: "Why a flatfish has both eyes on one side" },
             { w: "thin on top", k: "성긴", s: "why a magpie's head is thin on top" },
-            { w: "one story for each ~", k: "하나에 이야기 하나씩", s: "one story for each thing they could see" },
+            { w: "one story for each ~", k: "하나에 이야기 하나씩", s: "One story for each thing they could see." },
             { w: "never lied (lie)", k: "거짓말한 적이 없다", s: "the green frog never lied" },
             { w: "one habit", k: "버릇 하나", s: "And that one habit turned, at the end, into something he could not undo." },
             { w: "could not undo", k: "되돌릴 수 없는", s: "into something he could not undo" },

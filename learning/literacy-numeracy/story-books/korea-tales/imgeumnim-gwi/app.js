@@ -709,10 +709,9 @@ const EN = {
             { w: "slapped (slap)", k: "탁탁 쳤다", s: "It slapped the tree with a front paw, chuckling." },
             { w: "chuckling (chuckle)", k: "깔깔대며", s: "It slapped the tree with a front paw, chuckling." },
             { w: "Carrying ~ on your head", k: "머리에 이고 다니다", s: "Carrying a thing like that on your head!" },
-            { w: "stamped its feet", k: "발을 굴렀다", s: "The fox leaned on the tree and stamped its feet." },
+            { w: "stamped its feet", k: "발을 굴렀다", s: "Your neck will break!\" beast The fox leaned on the tree and stamped its feet" },
             { w: "threw ~ down (throw)", k: "내던졌다", s: "The king threw his bow down on the ground." },
-            { w: "went scarlet", k: "시뻘게졌다", s: "Under the crown the king's face went scarlet." },
-            { w: "the more ~, the louder ~", k: "그럴수록 더 크게", s: "the more it did, the louder the fox laughed" }
+            { w: "went scarlet", k: "시뻘게졌다", s: "Under the crown the king's face went scarlet." }
         ],
         "07-chase.webp": [
             { w: "shot away (shoot)", k: "쏜살같이 달아났다", s: "The fox shot away and the king went after it." },
@@ -723,7 +722,7 @@ const EN = {
             { w: "Snag", k: "탁", s: "Snag!" },
             { w: "low-hanging", k: "낮게 늘어진", s: "The crown caught on a low-hanging branch." },
             { w: "hung swinging (hang)", k: "대롱대롱 매달렸다", s: "The gold crown came off and hung swinging from the branch." },
-            { w: "took its chance", k: "그 틈을 탔다", s: "The fox took its chance and was gone." }
+            { w: "took its chance", k: "그 틈을 탔다", s: "The fox took its chance and was gone beyond the bushes." }
         ],
         "08-hide.webp": [
             { w: "notice", k: "알아채다", s: "Only then did the king notice his head was bare." },
@@ -733,7 +732,7 @@ const EN = {
             { w: "a disaster", k: "큰일", s: "This is a disaster!" },
             { w: "scrambled into ~", k: "허둥지둥 들어갔다", s: "The king scrambled into the bushes at the side." },
             { w: "crouched down (crouch)", k: "웅크렸다", s: "He crouched down as small as he could." },
-            { w: "stood up above ~", k: "위로 솟았다", s: "the ears stood up above the bushes" },
+            { w: "stood up above ~", k: "위로 솟았다", s: "But the ears were so long that they stood up above the bushes." },
             { w: "swayed (sway)", k: "흔들렸다", s: "The two of them swayed together among the leaves." }
         ],
         "09-spot.webp": [
@@ -803,8 +802,8 @@ const EN = {
         "15-shout.webp": [
             { w: "old and ill", k: "늙고 병든", s: "There came a day when he was old and ill." },
             { w: "leave him no peace", k: "한이 되다", s: "To die like this, he felt, would leave him no peace." },
-            { w: "stick", k: "지팡이", s: "He took his stick and went into the bamboo wood." },
-            { w: "bamboo wood", k: "대나무숲", s: "He went into the bamboo wood behind Dorimsa." },
+            { w: "stick", k: "지팡이", s: "He took his stick and went into the bamboo wood behind Dorimsa." },
+            { w: "bamboo wood", k: "대나무숲", s: "He took his stick and went into the bamboo wood behind Dorimsa." },
             { w: "nobody about", k: "사람이 없는", s: "Look where he might, there was nobody about." },
             { w: "rustled (rustle)", k: "서걱거렸다", s: "The bamboo rustled in the wind." },
             { w: "like a trumpet", k: "나팔처럼", s: "He put both hands to his mouth like a trumpet." },
@@ -826,11 +825,9 @@ const EN = {
             { w: "crosses a border", k: "나라를 건넌다", s: "When a story crosses a border it changes" },
             { w: "what is common there", k: "그 땅에 흔한 것", s: "it changes into what is common in that land" },
             { w: "the forty-eighth", k: "제48대", s: "It is set down as the story of Gyeongmun, the forty-eighth king" },
-            { w: "the talk", k: "소문", s: "What the king feared was not the ears but the talk." },
+            { w: "the talk", k: "소문", s: "Look again and what the king feared was not the ears but the talk." },
             { w: "instead", k: "대신", s: "And the cornel trees made the sound instead." },
-            { w: "grew it (grow)", k: "키웠다", s: "Trying to hide it was what grew the talk." },
-            { w: "nothing at all", k: "아무 일도 아닌", s: "the moment he took it, it became nothing at all" },
-            { w: "nowhere to go", k: "갈 곳을 잃은", s: "At that moment the talk had nowhere to go." }
+            { w: "nothing at all", k: "아무 일도 아닌", s: "the whole thing became nothing at all." }
         ]
     },
     afterword: {

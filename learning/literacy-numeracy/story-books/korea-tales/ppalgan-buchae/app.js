@@ -589,7 +589,7 @@ const EN = {
             { w: "very like it", k: "아주 닮은", s: "Japan and China tell one very like it." },
             { w: "travelled (travel)", k: "오가며 퍼졌다", s: "many scholars think it travelled between the three" },
             { w: "notice most", k: "가장 눈에 띈다", s: "a nose is the part of a face you notice most" },
-            { w: "do least about", k: "가장 마음대로 못 한다", s: "the part you notice most and can do least about" }
+            { w: "do least about", k: "가장 마음대로 못 한다", s: "A nose growing is funny because a nose is the part of a face you notice most and can do least about." }
         ],
         "01-nap.webp": [
             { w: "nap", k: "낮잠", s: "Kim Cheomji liked a nap better than work." },
@@ -623,7 +623,7 @@ const EN = {
             { w: "sleeve", k: "소매", s: "He hid the two fans in his sleeve and went down." }
         ],
         "04-feast.webp": [
-            { w: "As it happened", k: "마침", s: "As it happened, a rich house was holding a great feast." },
+            { w: "As it happened", k: "마침", s: "🎊 As it happened, a rich house in the village was holding a great feast." },
             { w: "right out past ~", k: "~ 밖까지", s: "The smell of meat came right out past the gate." },
             { w: "slipped in (slip)", k: "슬쩍 끼어들었다", s: "Kim Cheomji slipped in among the onlookers." },
             { w: "onlookers", k: "구경꾼", s: "slipped in among the onlookers" },
@@ -734,18 +734,16 @@ const EN = {
             { w: "By good luck", k: "다행히", s: "By good luck no bone was broken." },
             { w: "blown away (blow)", k: "날아가 버렸다", s: "But the two fans had blown away somewhere." },
             { w: "crawled out (crawl)", k: "기어 나왔다", s: "The old man crawled out of the straw" },
-            { w: "the state of him", k: "그 꼴", s: "Seeing the state of him, Kim Cheomji took out the deed." },
+            { w: "the state of him", k: "그 꼴", s: "Seeing the state of him, Kim Cheomji quietly took out the deed." },
             { w: "deed", k: "집 문서", s: "Kim Cheomji quietly took out the deed." },
             { w: "was burning", k: "화끈거렸다", s: "His own face was burning." }
         ],
         "after": [
             { w: "stretch and shrink", k: "늘었다 줄었다 한다", s: "Stories where a body can stretch and shrink" },
-            { w: "a sight", k: "구경거리", s: "there is no better sight than something changing before your eyes" },
             { w: "before your eyes", k: "눈앞에서", s: "something changing before your eyes" },
-            { w: "hold on to ~", k: "가지고 있다", s: "the one who gets that thing never holds on to it long" },
             { w: "tests (test)", k: "시험한다", s: "because the thing tests the person" },
-            { w: "by his own strength", k: "제 힘으로", s: "he had not made it by his own strength either" },
-            { w: "was left with ~", k: "남은 것이 있었다", s: "and neither of them was left with anything" },
+            { w: "by his own strength", k: "제 힘으로", s: "He had not made them by his own strength either." },
+            { w: "was left with ~", k: "남은 것이 있었다", s: "And neither of them was left with anything." },
             { w: "stay in your hand", k: "손에 머문다", s: "What you did not get by your own strength does not stay in your hand long." }
         ]
     },

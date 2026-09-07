@@ -553,7 +553,7 @@ const EN = {
             { w: "on either side", k: "양쪽에", s: "on either side of the river" },
             { w: "and no more", k: "그뿐이다", s: "You may meet one day a year, on Chilseok, and no more." },
             { w: "the last of my kindness", k: "나의 마지막 정", s: "Letting you meet at all is the last of my kindness." },
-            { w: "were parted (part)", k: "갈라졌다", s: "The two were parted, one on this side and one on that." },
+            { w: "were parted (part)", k: "갈라졌다", s: "and no more.\" old \"Letting you meet at all is the last of my kindness.\" old The two were parted" },
             { w: "Reach out as they might", k: "손을 뻗어도", s: "Reach out as they might, they could not touch each other." },
             { w: "swallowed (swallow)", k: "묻어 버렸다", s: "the water swallowed the sound" },
             { w: "no way at all", k: "아무 방법도 없는", s: "There was no way at all across that wide river." }
@@ -610,7 +610,7 @@ const EN = {
             { w: "the last of the way", k: "남은 길을", s: "The two of them ran the last of the way to each other." },
             { w: "have missed you (miss)", k: "보고 싶었다", s: "I have missed you." },
             { w: "one night only", k: "하룻밤뿐인", s: "But the meeting was one night only." },
-            { w: "lightened (lighten)", k: "동이 텄다", s: "As the sky lightened the birds began to settle." },
+            { w: "lightened (lighten)", k: "동이 텄다", s: "As the sky lightened the birds began to settle, one by one." },
             { w: "settle", k: "내려앉다", s: "the birds began to settle, one by one" },
             { w: "running out", k: "다해 가는", s: "Their strength was running out." }
         ],
@@ -618,7 +618,7 @@ const EN = {
             { w: "Turning away", k: "돌아서면서", s: "Turning away, both Gyeonu and Jiknyeo cried aloud." },
             { w: "cried aloud", k: "소리 내어 울었다", s: "both Gyeonu and Jiknyeo cried aloud" },
             { w: "raindrops", k: "빗방울", s: "The raindrops that fell that Chilseok were fat and warm." },
-            { w: "fat", k: "굵은", s: "The raindrops were fat and warm." },
+            { w: "fat", k: "굵은", s: "The raindrops that fell that Chilseok were fat and warm." },
             { w: "That is why ~", k: "그래서 ~인 것이다", s: "That, they say, is why it often rains around Chilseok." },
             { w: "go thin", k: "듬성듬성해진다", s: "the heads of magpies and crows go thin" },
             { w: "Well they might", k: "그럴 만도 하다", s: "Well they might, after standing all night" },

@@ -594,14 +594,13 @@ const EN = {
             { w: "that is why ~", k: "그 때문이다", s: "And that, they say, is why the sea is salty." }
         ],
         "after": [
-            { w: "In the Norse version", k: "북유럽 판본에서는", s: "In the Norse version it is a millstone, not a mortar." },
+            { w: "In the Norse version", k: "북유럽 판본에서는", s: "In the Norse version it is a millstone" },
             { w: "grinding (grind)", k: "갈고 있는", s: "and it is still down there grinding" },
             { w: "which means ~", k: "~라는 뜻이다", s: "which means nobody has learned the stopping word yet" },
             { w: "the stopping word", k: "멈추는 말", s: "nobody has learned the stopping word yet" },
             { w: "on their own", k: "따로따로", s: "The stories did not appear on their own in places far apart." },
             { w: "far apart", k: "서로 멀리 떨어진", s: "in places far apart" },
             { w: "hand to hand", k: "사람에게서 사람에게로", s: "They travelled hand to hand for a very long time." },
-            { w: "the first thing ~ did", k: "처음 한 일", s: "The first thing the woodcutter did was share the rice." },
             { w: "the same object", k: "같은 물건", s: "Two men had the same object and did different things first." },
             { w: "swallows you instead", k: "도리어 나를 삼킨다", s: "the thing swallows you instead" },
             { w: "get hold of ~", k: "손에 넣다", s: "Get hold of a thing before you know how to use it" }

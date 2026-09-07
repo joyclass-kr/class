@@ -568,7 +568,6 @@ const EN = {
             { w: "the first day of the year", k: "새해 첫날", s: "On the first day of the year people gather on that shore." },
             { w: "come up out of ~", k: "~에서 솟다", s: "To watch the sun come up out of the sea." },
             { w: "gave back (give back)", k: "돌려주었다", s: "That is the sun Yeono and Seo gave back." },
-            { w: "has lasted (last)", k: "그렇게 남았다", s: "So the story of the couple ... has lasted." },
             { w: "following people", k: "사람을 따라가는", s: "It is a story about light following people." },
             { w: "those who left", k: "떠난 사람", s: "even when those who left do not return" },
             { w: "what they leave behind", k: "두고 간 것", s: "what they leave behind can bring the light back" },

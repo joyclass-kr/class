@@ -656,8 +656,7 @@ const EN = {
             { w: "went flat on their faces", k: "넙죽 엎드렸다", s: "The chiefs went flat on their faces where they stood." }
         ],
         "06-bath.webp": [
-            { w: "washed (wash)", k: "씻겼다", s: "The chiefs took the child to the stream and washed him." },
-            { w: "The more ~, the brighter ~", k: "~할수록 더 환해지는", s: "The more they washed him, the brighter the light grew." },
+            { w: "washed (wash)", k: "씻겼다", s: "💧 The chiefs took the child to the stream on the east and washed him." },
             { w: "that was not all", k: "그것만이 아니었다", s: "And that was not all." },
             { w: "settled (settle)", k: "내려앉았다", s: "Birds flew down and settled in a row at the water's edge." },
             { w: "in a row", k: "나란히", s: "settled in a row at the water's edge" },
@@ -688,7 +687,6 @@ const EN = {
         "09-beak.webp": [
             { w: "took ~ up in her arms", k: "안아 들었다", s: "Then an old woman took the child up in her arms." },
             { w: "may make it better", k: "나아질지도 모른다", s: "Washing her may make it better." },
-            { w: "so clear that ~", k: "어찌나 맑은지", s: "The water was so clear you could see the pebbles." },
             { w: "pebbles", k: "자갈", s: "you could see the pebbles at the bottom" },
             { w: "came off (come off)", k: "툭 떨어졌다", s: "And the beak came off and floated away on the water." },
             { w: "floated away (float)", k: "떠내려갔다", s: "the beak came off and floated away on the water" },
@@ -710,7 +708,7 @@ const EN = {
             { w: "The time has come", k: "때가 되었다", s: "The time has come." },
             { w: "take ~ as king", k: "임금으로 모시다", s: "Let us take this child as king of our six villages." },
             { w: "with one voice", k: "한목소리로", s: "The six chiefs said yes with one voice." },
-            { w: "without exception", k: "한 사람도 빠짐없이", s: "Every person of the six villages came, without exception." },
+            { w: "without exception", k: "한 사람도 빠짐없이", s: "Every person of the six villages came to the hill, without exception." },
             { w: "a high place", k: "높은 자리", s: "The chiefs set the boy in a high place on the hill." },
             { w: "bowed all together", k: "한꺼번에 절했다", s: "The people bowed all together." }
         ],
@@ -728,12 +726,12 @@ const EN = {
             { w: "was named ~", k: "~라 했다", s: "The country was named Seorabeol." },
             { w: "had to be ~", k: "~여야 했다", s: "Six villages had become one, so the name had to be one too." },
             { w: "pulled down (pull)", k: "헐었다", s: "People pulled down the walls between village and village" },
-            { w: "made roads", k: "길을 냈다", s: "pulled down the walls and made roads" },
+            { w: "made roads", k: "길을 냈다", s: "People pulled down the walls between village and village and made roads." },
             { w: "market", k: "저잣거리", s: "In the middle they opened a market." },
             { w: "traded (trade)", k: "물건을 바꾸었다", s: "There people traded one thing for another." },
             { w: "marrying into ~", k: "사돈을 맺는", s: "Houses began marrying into the next village." },
             { w: "truly one", k: "정말로 하나인", s: "Only then were the six villages truly one." },
-            { w: "lasted (last)", k: "이어졌다", s: "It lasted a thousand years." }
+            { w: "lasted (last)", k: "이어졌다", s: "It lasted a thousand years, and it began as six villages." }
         ],
         "14-people.webp": [
             { w: "turned yellow", k: "누렇게 물들었다", s: "In autumn all Seorabeol turned yellow." },
@@ -752,8 +750,8 @@ const EN = {
             { w: "having no father", k: "아버지가 없다는 것", s: "Coming out of an egg also means having no father." },
             { w: "lean towards ~", k: "~에 치우치다", s: "only such a person could be a king who leaned towards none of the six" },
             { w: "one odd thing", k: "이상한 것 하나", s: "Look again and there is one odd thing." },
-            { w: "It was people who chose", k: "고른 것은 사람이었다", s: "It was people who chose, not heaven." },
-            { w: "is read as ~", k: "~로 풀이한다", s: "The name Silla is read as gathering all sides like a net." },
+            { w: "It was people who chose", k: "고른 것은 사람이었다", s: "The books say heaven sent him down, but it was people who chose." },
+            { w: "is read as ~", k: "~로 풀이한다", s: "The name Silla is read as gathering all sides in like a net." },
             { w: "made up their minds", k: "마음먹었다", s: "because the people made up their minds to be together" }
         ]
     },

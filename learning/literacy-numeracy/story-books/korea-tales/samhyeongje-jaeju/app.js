@@ -564,14 +564,14 @@ const EN = {
             { w: "gone hard (go)", k: "딱딱하게 굳었다", s: "The eldest's face had gone hard." },
             { w: "froze (freeze)", k: "얼어붙었다", s: "Brothers and father froze where they stood." },
             { w: "listened (listen)", k: "귀를 기울였다", s: "The eldest shut his eyes and listened a long while." },
-            { w: "Nobody breathed", k: "아무도 숨을 못 쉬었다", s: "The eldest shut his eyes and listened. Nobody breathed." },
+            { w: "Nobody breathed", k: "아무도 숨을 못 쉬었다", s: "Nobody breathed." },
             { w: "cliff", k: "절벽", s: "High up. On a cliff a hundred li off." },
             { w: "pointed north", k: "북쪽을 가리켰다", s: "The eldest pointed north with his finger." }
         ],
         "06-village.webp": [
             { w: "As it happened", k: "마침", s: "As it happened, there was trouble in the village." },
             { w: "district", k: "고을", s: "The whole district had been turned upside down." },
-            { w: "serpent", k: "커다란 뱀", s: "An imugi, a huge serpent, had carried off the child." },
+            { w: "serpent", k: "커다란 뱀", s: "An imugi, a huge serpent, had carried off the magistrate's child." },
             { w: "carried off (carry)", k: "채어 갔다", s: "had carried off the magistrate's child" },
             { w: "for nothing", k: "헛일로", s: "The people had searched every mountain for nothing." },
             { w: "muttered (mutter)", k: "웅성거렸다", s: "The villagers muttered among themselves." },
@@ -623,14 +623,14 @@ const EN = {
             { w: "the string", k: "시위", s: "The second drew the string again." }
         ],
         "11-catch.webp": [
-            { w: "Twang", k: "피융", s: "Twang — the arrow flew straight up." },
+            { w: "Twang", k: "피융", s: "💫 Twang — The arrow flew straight up to the far top of the cliff." },
             { w: "arrow", k: "화살", s: "The arrow flew straight up to the far top of the cliff." },
             { w: "grazed (graze)", k: "아슬아슬하게 스쳤다", s: "It grazed the very tip of the serpent's tail." },
             { w: "the very tip", k: "끝 부분", s: "It grazed the very tip of the serpent's tail." },
             { w: "threw its body about", k: "몸을 크게 뒤척였다", s: "The serpent started and threw its body about." },
             { w: "slid loose (slide)", k: "스르르 풀렸다", s: "The coils slid loose and the child slipped out." },
             { w: "head first", k: "곤두박질쳐", s: "The child fell head first down the cliff." },
-            { w: "Whump", k: "폭", s: "Whump — the child landed light in his arms." },
+            { w: "Whump", k: "폭", s: "Whump — The child landed light in his arms." },
             { w: "landed light", k: "사뿐히 안겼다", s: "The child landed light in his arms." }
         ],
         "12-reward.webp": [
@@ -645,12 +645,12 @@ const EN = {
             { w: "every bit of it", k: "고스란히", s: "The brothers gave every bit of it to their father." }
         ],
         "after": [
-            { w: "always three", k: "늘 셋", s: "In stories like this the skills are always three." },
+            { w: "always three", k: "늘 셋", s: "In stories like this the skills are always three" },
             { w: "the least of them", k: "가장 시시한 것", s: "and the last one always looks the least of them" },
             { w: "turn it over", k: "뒤집다", s: "That is so the ending can turn it over." },
             { w: "an old craft", k: "오래된 솜씨", s: "It is an old craft of story-making." },
             { w: "the order", k: "순서", s: "The order cannot be changed either." },
-            { w: "compared with ~", k: "~에 견주면", s: "Compared with shooting or lifting, it looks like nothing." },
+            { w: "compared with ~", k: "~에 견주면", s: "Compared with shooting a bow or lifting a weight, it looks like nothing at all." },
             { w: "for nothing", k: "헛일로", s: "the first two work for nothing" },
             { w: "the very skill", k: "바로 그 재주", s: "the very skill they had laughed at" },
             { w: "a use for it", k: "쓰일 자리", s: "A skill that looks useless has only not met a use for it yet." }

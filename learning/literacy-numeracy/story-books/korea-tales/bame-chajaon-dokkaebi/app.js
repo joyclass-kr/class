@@ -434,8 +434,6 @@ const EN = {
             { w: "horn", k: "뿔", s: "It has a horn and it is strong" },
             { w: "foolish", k: "어수룩한", s: "it is more foolish than frightening" },
             { w: "frightening", k: "무서운", s: "more foolish than frightening" },
-            { w: "plays tricks", k: "심술을 부린다", s: "it plays tricks without doing real harm" },
-            { w: "real harm", k: "정말 해치는 것", s: "without doing real harm" },
             { w: "were said to ~", k: "~라고들 했다", s: "Goblins were said to grow out of old worn things" },
             { w: "grow out of ~", k: "~에서 생기다", s: "grow out of old worn things" },
             { w: "pestle", k: "절굿공이", s: "a broom, a pestle, a poker" },
@@ -524,7 +522,7 @@ const EN = {
             { w: "Go on. Try it.", k: "어디 한번 풀어 보시지.", s: "Go on. Try it." },
             { w: "don't you move", k: "꼼짝 말고 있어라", s: "I'm bringing the whole village in the morning, so don't you move!" },
             { w: "rang (ring)", k: "쩌렁쩌렁 울렸다", s: "The goblin's shouting rang along the stream all night." },
-            { w: "without once looking back", k: "뒤도 안 돌아보고", s: "But Kim went home holding his trousers up with both hands, without once looking back, very pleased with himself." }
+            { w: "without once looking back", k: "뒤도 안 돌아보고", s: "without once looking back" }
         ],
         "08-boast.webp": [
             { w: "raised his voice", k: "목청을 높였다", s: "Kim stood in the middle of the village and raised his voice." },
@@ -563,7 +561,7 @@ const EN = {
             { w: "turn into ~", k: "~이 되다", s: "The things that turn into goblins" },
             { w: "every one of them", k: "하나같이", s: "Every one of them was held in a person's hand and used for years." },
             { w: "brand-new", k: "새로 산", s: "There is no story of a brand-new thing becoming a goblin." },
-            { w: "buckwheat jelly", k: "메밀묵", s: "It likes buckwheat jelly" },
+            { w: "buckwheat jelly", k: "메밀묵", s: "it likes buckwheat jelly" },
             { w: "pay back a debt", k: "돈을 갚다", s: "and it even comes to pay back a debt" },
             { w: "close to ~", k: "~에 아주 가까운", s: "It stands very close to people." },
             { w: "the dark", k: "어둠", s: "the frightening thing in this story is not the goblin but the dark" },

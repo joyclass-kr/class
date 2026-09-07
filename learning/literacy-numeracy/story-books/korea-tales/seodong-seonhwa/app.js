@@ -486,20 +486,19 @@ const EN = {
             { w: "night after night", k: "밤마다", s: "goes secretly, night after night, to meet Seodong" },
             { w: "chewed (chew)", k: "씹었다", s: "The children chewed their yams and sang it after him." },
             { w: "sang it after him", k: "따라 불렀다", s: "sang it after him" },
-            { w: "From lane to lane", k: "골목에서 골목으로", s: "From lane to lane, and in one day every child ... was singing it" },
+            { w: "From lane to lane", k: "골목에서 골목으로", s: "From lane to lane, and in one day every child in Seorabeol was singing it." },
             { w: "what it meant", k: "무슨 뜻인지", s: "They sang it without knowing what it meant." }
         ],
         "04-banish.webp": [
             { w: "went over ~ (go over)", k: "넘어갔다", s: "The song went over walls and gates and into the palace." },
-            { w: "struck the table (strike)", k: "상을 내리쳤다", s: "The king struck the table." },
-            { w: "officials", k: "신하", s: "His officials bowed their heads." },
+            { w: "struck the table (strike)", k: "상을 내리쳤다", s: "night after night?\" old The king struck the table and his officials bowed." },
+            { w: "officials", k: "신하", s: "night after night?\" old The king struck the table and his officials bowed." },
             { w: "It is false", k: "거짓입니다", s: "It is false, Father." },
             { w: "did no good", k: "소용없었다", s: "She wept, and it did no good." },
             { w: "its good name", k: "체면", s: "The kingdom has its good name." },
-            { w: "banishment", k: "귀양", s: "Being sent from the palace like that is called banishment." },
-            { w: "pressed ~ into (press)", k: "쥐여 주었다", s: "her mother the queen secretly pressed a sack of gold into her hands" },
+            { w: "banishment", k: "귀양", s: "Being sent away like that is called banishment." },
             { w: "Live on ~", k: "~으로 살아라", s: "Live on this, wherever you go." },
-            { w: "swallowed her tears", k: "눈물을 삼켰다", s: "The princess swallowed her tears and left the palace." }
+            { w: "swallowed her tears", k: "눈물을 삼켰다", s: "wherever you go.\" woman The princess swallowed her tears and went." }
         ],
         "05-meet.webp": [
             { w: "came up behind ~", k: "뒤따라왔다", s: "somebody came up behind her" },
@@ -526,9 +525,7 @@ const EN = {
         ],
         "07-monk.webp": [
             { w: "his heart will soften", k: "마음이 풀리실 것이다", s: "Send this gold to my father and his heart will soften." },
-            { w: "all the way to ~", k: "~까지", s: "How do we carry a mountain of it all the way to Silla?" },
-            { w: "monk", k: "스님", s: "They went to a monk named Jimyeong at a temple nearby." },
-            { w: "had studied long", k: "도를 많이 닦았다", s: "He had studied long and was said to have strange powers." },
+            { w: "monk", k: "스님", s: "🙏 \"Send this gold to my father and his heart will soften.\" girl \"How do we carry a mountain of it to Silla?\" boy They went to a monk named Jimyeong" },
             { w: "strange powers", k: "신기한 힘", s: "was said to have strange powers" },
             { w: "said his words", k: "주문을 외웠다", s: "The monk closed his eyes before the heap of gold and said his words." },
             { w: "lifted into ~ (lift)", k: "떠올랐다", s: "And the gold lifted into the sky" },
@@ -545,7 +542,7 @@ const EN = {
             { w: "acknowledge (acknowledge)", k: "인정하다", s: "I acknowledge Seodong as my son-in-law." },
             { w: "son-in-law", k: "사위", s: "I acknowledge Seodong as my son-in-law." },
             { w: "win the hearts of ~", k: "마음을 얻다", s: "Seodong went on to win the hearts of the people of Baekje" },
-            { w: "became king", k: "임금이 되었다", s: "won the hearts of the people of Baekje and became king" },
+            { w: "became king", k: "임금이 되었다", s: "\"I acknowledge Seodong as my son-in-law.\" Seodong went on to win the hearts of the people of Baekje and became king." },
             { w: "used to ~", k: "예전에 ~했다", s: "I used to dig yams here." }
         ],
         "09-temple.webp": [
@@ -564,7 +561,6 @@ const EN = {
             { w: "the oldest", k: "가장 오래된", s: "It is the oldest song written down in our country." },
             { w: "sent ~ out of", k: "내보냈다", s: "One short song sent a princess out of a palace" },
             { w: "as strong as that", k: "그렇게 힘이 세다", s: "A song is as strong as that." },
-            { w: "Whether ~", k: "~인지 아닌지", s: "Whether it really happened ... nobody knows." },
             { w: "Still", k: "그래도", s: "Still, people come to the Mireuksa site in Iksan today." },
             { w: "look up at ~", k: "올려다보다", s: "They look up at the pagoda and hum the song." },
             { w: "hum (hum)", k: "흥얼거리다", s: "They look up at the pagoda and hum the song." }

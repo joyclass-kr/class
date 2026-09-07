@@ -539,7 +539,7 @@ const EN = {
             { w: "ran out (run out)", k: "다 떨어졌다", s: "Deep in winter the food ran out." },
             { w: "grass seed", k: "풀씨", s: "not one grass seed showed" },
             { w: "with his tail up", k: "꽁지를 세우고", s: "Jangkki said it with his tail up." },
-            { w: "led (lead)", k: "앞장섰다", s: "Katuri led, and twenty-one of them filed out." },
+            { w: "led (lead)", k: "앞장섰다", s: "Katuri led, and twenty-one of them filed out into the snow." },
             { w: "filed out (file)", k: "줄지어 나갔다", s: "twenty-one of them filed out into the snow" }
         ],
         "02-bean.webp": [
@@ -630,7 +630,7 @@ const EN = {
         "10-alone.webp": [
             { w: "grave", k: "무덤", s: "Katuri looked up at the grave on the slope." },
             { w: "went round in her ears", k: "귓가에 맴돌았다", s: "His last words went round in her ears." },
-            { w: "how I want to live", k: "내가 어떻게 살고 싶은지", s: "nobody has asked how I want to live" },
+            { w: "how I want to live", k: "내가 어떻게 살고 싶은지", s: "And nobody, she thought, has asked how I want to live." },
             { w: "on her own", k: "혼자서", s: "Katuri fed the children on her own." },
             { w: "dug through ~ (dig)", k: "헤쳤다", s: "She dug through snow for roots" },
             { w: "roots", k: "풀뿌리", s: "She dug through snow for roots" },
@@ -638,7 +638,7 @@ const EN = {
             { w: "acorn", k: "도토리", s: "The eldest daughter held out an acorn." }
         ],
         "11-spring.webp": [
-            { w: "melted (melt)", k: "녹았다", s: "The snow melted and new shoots came up." },
+            { w: "melted (melt)", k: "녹았다", s: "The snow melted and new shoots came up on the mountain." },
             { w: "shoots", k: "새순", s: "new shoots came up on the mountain" },
             { w: "mate", k: "짝", s: "He had lost his mate and lived alone." },
             { w: "called in", k: "들렀다", s: "I was passing, so I called in." },
@@ -658,13 +658,13 @@ const EN = {
             { w: "put out a shoot", k: "싹이 텄다", s: "the bean laid on it put out a shoot" }
         ],
         "after": [
-            { w: "one of the seven", k: "일곱 마당의 하나", s: "It is one of the seven whose singing was lost" },
+            { w: "one of the seven", k: "일곱 마당의 하나", s: "Of the twelve pansori pieces it is one of the seven whose singing was lost" },
             { w: "in the same case as ~", k: "~과 같은 처지인", s: "in the same case as Onggojipjeon" },
             { w: "a fable", k: "우화", s: "A story like this is called a fable." },
-            { w: "borrowed the mouths of ~", k: "입을 빌렸다", s: "old people borrowed the mouths of animals" },
+            { w: "borrowed the mouths of ~", k: "입을 빌렸다", s: "Old people borrowed the mouths of animals to say what was hard to say to their faces." },
             { w: "to their faces", k: "대놓고", s: "what was hard to say to their faces" },
             { w: "commonly said", k: "흔히 하던 말", s: "was commonly said by men in those days" },
-            { w: "whose side it is on", k: "누구 편인지", s: "It is plain whose side the story is on." },
+            { w: "whose side it is on", k: "누구 편인지", s: "It is plain whose side it is on." },
             { w: "was frowned on", k: "나쁘게 보았다", s: "a widow marrying again was frowned on" },
             { w: "as somebody else decided", k: "남이 정해 준 대로", s: "and one who did not live as somebody else decided" }
         ]

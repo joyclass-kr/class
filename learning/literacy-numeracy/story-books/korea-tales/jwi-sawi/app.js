@@ -500,7 +500,7 @@ const EN = {
         "cover": [
             { w: "one after another", k: "차례로", s: "Asking one after another for the strongest thing in the world" },
             { w: "chain story", k: "연쇄담", s: "makes it a chain story" },
-            { w: "spread to ~ (spread)", k: "~까지 퍼졌다", s: "It came from an old Indian story book and spread to China, Japan and Korea." },
+            { w: "spread to ~ (spread)", k: "~까지 퍼졌다", s: "It came from a very old Indian story book and spread to China, Japan and Korea." },
             { w: "differs (differ)", k: "다르다", s: "Who is asked differs, but the laugh at the end is the same." },
             { w: "names (name)", k: "일러 준다", s: "Each one you visit names something stronger" },
             { w: "unexpected", k: "뜻밖의", s: "until you arrive somewhere unexpected" }
@@ -512,7 +512,7 @@ const EN = {
             { w: "stroked (stroke)", k: "쓰다듬었다", s: "The mother mouse stroked her daughter's head." },
             { w: "shy", k: "부끄러워하는", s: "The daughter looked down, shy." },
             { w: "too good for ~", k: "~에게 아까운", s: "She could marry the king and still be too good for him." },
-            { w: "talked her up", k: "자랑을 했다", s: "Night after night they talked her up till the day broke." },
+            { w: "talked her up", k: "자랑을 했다", s: "and that is certain.\" boy \"She could marry the king and still be too good for him.\" boy Night after night they talked her up till the day broke on them." },
             { w: "the first cock crowed", k: "첫닭이 울었다", s: "Only when the first cock crowed did they go to bed." }
         ],
         "02-decide.webp": [
@@ -530,7 +530,7 @@ const EN = {
             { w: "lights (light)", k: "비춘다", s: "Nothing could be stronger than what lights the whole world." },
             { w: "scrambled (scramble)", k: "낑낑대며 기어올랐다", s: "They scrambled panting to the top of a mountain" },
             { w: "panting (pant)", k: "숨을 헐떡이며", s: "They scrambled panting to the top of a mountain and bowed low." },
-            { w: "bowed low", k: "넙죽 절했다", s: "They scrambled to the top and bowed low." },
+            { w: "bowed low", k: "넙죽 절했다", s: "They scrambled panting to the top of a mountain and bowed low." },
             { w: "ridges", k: "산등성이", s: "the ridges of the hills went warm" },
             { w: "surely ~ cannot be", k: "그럴 리가 있습니까", s: "Oh, surely that cannot be!" },
             { w: "pricked up their ears", k: "귀를 쫑긋 세웠다", s: "The two pricked up their ears and craned their necks." },
@@ -562,7 +562,7 @@ const EN = {
             { w: "hard enough to ~", k: "~할 만큼 세게", s: "It came at once, hard enough to lay the silver grass flat." },
             { w: "silver grass", k: "억새", s: "hard enough to lay the silver grass flat" },
             { w: "held tight to ~", k: "꽉 붙잡았다", s: "The two held tight to the roots of the grass" },
-            { w: "so as not to ~", k: "~하지 않으려고", s: "held tight to the roots so as not to blow away" },
+            { w: "so as not to ~", k: "~하지 않으려고", s: "The two held tight to the roots of the grass so as not to blow away." },
             { w: "with a whoosh", k: "휘잉 하고", s: "The wind laughed with a whoosh" },
             { w: "ran in waves", k: "물결처럼 일렁였다", s: "the grass ran in waves" },
             { w: "beat", k: "이기다", s: "There is one thing I can never beat." },
@@ -574,7 +574,7 @@ const EN = {
             { w: "blink", k: "눈을 깜짝하다", s: "Blow as hard as I like, he does not blink." },
             { w: "in a moment", k: "훌쩍", s: "The wind said so and was gone somewhere in a moment." },
             { w: "in silence", k: "말없이", s: "The two mice looked at each other in silence." },
-            { w: "every way", k: "헝클어진", s: "Both of them had their fur every way." },
+            { w: "every way", k: "헝클어진", s: "Both of them had their fur every way, and a sorry sight they were." },
             { w: "a sorry sight", k: "꼴이 말이 아닌", s: "a sorry sight they were" },
             { w: "It had better be", k: "그래야지요", s: "It had better be. My legs are swollen." },
             { w: "limped (limp)", k: "절뚝였다", s: "The two limped up the road to the pass." }
@@ -622,7 +622,7 @@ const EN = {
             { w: "known for ~", k: "~로 소문난", s: "He was known for hard work and a straight heart." },
             { w: "a straight heart", k: "곧은 마음씨", s: "He was known for hard work and a straight heart." },
             { w: "doorsill", k: "문턱", s: "He had worn the storehouse doorsill out coming and going." },
-            { w: "coming and going", k: "드나들며", s: "He had worn the doorsill out coming and going." },
+            { w: "coming and going", k: "드나들며", s: "He had worn the storehouse doorsill out coming and going." },
             { w: "went pink", k: "볼이 발그레해졌다", s: "The daughter went pink and bowed her head." },
             { w: "might have ~", k: "~할 것을", s: "We might have done this first and saved four mountains." },
             { w: "scratched his head", k: "머리를 긁적였다", s: "The father mouse scratched his head" },
@@ -630,10 +630,10 @@ const EN = {
         ],
         "after": [
             { w: "is thought to ~", k: "~로 본다", s: "This story is thought to have come from India." },
-            { w: "by way of ~", k: "~를 거쳐", s: "It reached our land by way of China." },
+            { w: "by way of ~", k: "~를 거쳐", s: "It reached our land by way of China, and Japan has the same one." },
             { w: "travelled far (travel)", k: "멀리 퍼졌다", s: "It is a story shape that has travelled very far." },
-            { w: "Look again", k: "다시 보면", s: "Look again and everything the two mice met says the same thing." },
-            { w: "is not the strongest", k: "제일이 아니다", s: "each one says it is not the strongest" },
+            { w: "Look again", k: "다시 보면", s: "Look again and everything the two mice met says the same thing" },
+            { w: "is not the strongest", k: "제일이 아니다", s: "it is not the strongest." },
             { w: "gnaws at ~ (gnaw)", k: "갉아 댄다", s: "when something gnaws at the base of it" },
             { w: "the base", k: "밑동", s: "when something gnaws at the base of it" },
             { w: "depends on ~ (depend)", k: "~에 따라 달라진다", s: "what counts as strong always depends on who it is up against" },

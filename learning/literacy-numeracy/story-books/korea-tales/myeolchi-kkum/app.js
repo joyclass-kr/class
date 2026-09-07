@@ -500,7 +500,6 @@ const EN = {
             { w: "the way they do", k: "저러하게", s: "explaining why sea fish look the way they do" },
             { w: "flatfish", k: "넙치", s: "A flatfish has both eyes on one side" },
             { w: "catfish", k: "메기", s: "a catfish has a mouth split wide" },
-            { w: "cuttlefish", k: "꼴뚜기", s: "a cuttlefish has its eyes low down" },
             { w: "pomfret", k: "병어", s: "a pomfret has a tiny mouth" },
             { w: "accounts for ~ (account)", k: "설명한다", s: "one story accounts for the lot" },
             { w: "the lot", k: "그 모두", s: "one story accounts for the lot" },

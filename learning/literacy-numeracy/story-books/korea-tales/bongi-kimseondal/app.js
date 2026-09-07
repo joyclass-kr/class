@@ -492,7 +492,7 @@ const EN = {
             { w: "scholars", k: "학자들", s: "Many scholars think the tricks of many people" },
             { w: "gathered (gather)", k: "모였다", s: "the tricks of many people were gathered under one name" },
             { w: "under one name", k: "한 사람 이름으로", s: "gathered under one name" },
-            { w: "The best known", k: "가장 널리 알려진 것", s: "The best known of them is the one where he sells the river" },
+            { w: "The best known", k: "가장 널리 알려진 것", s: "The best known of them is the one where he sells the Daedong River." },
             { w: "makes no sense", k: "말이 안 되는", s: "a deal that makes no sense" },
             { w: "runs through (run)", k: "가로질러 흐른다", s: "The Daedong River runs through Pyongyang." },
             { w: "a trade of its own", k: "따로 있는 직업", s: "carrying water was a trade of its own" }
@@ -622,8 +622,7 @@ const EN = {
         "after": [
             { w: "jokers", k: "재담꾼", s: "stories about jokers like this went round" },
             { w: "went round", k: "돌아다녔다", s: "stories about jokers like this went round" },
-            { w: "get the better of ~", k: "골탕 먹이다", s: "somebody weak gets the better of somebody strong" },
-            { w: "nickname", k: "별명", s: "The nickname Bongi comes from another story." },
+            { w: "nickname", k: "별명", s: "The nickname Bongi comes from another story" },
             { w: "insisting (insist)", k: "우기면서", s: "he sold a hen, insisting it was a phoenix" },
             { w: "phoenix", k: "봉황", s: "insisting it was a phoenix" },
             { w: "a record of ~", k: "~의 기록", s: "the name itself is a record of a trick" },
@@ -631,7 +630,7 @@ const EN = {
             { w: "an owner", k: "임자", s: "they bought the idea that a river has an owner" },
             { w: "traders", k: "장사꾼", s: "traders going to and from China gathered there" },
             { w: "were after (be after)", k: "노렸다", s: "What he was after was not their money but their words." },
-            { w: "never once", k: "한 번도", s: "somebody who has never once thought about" }
+            { w: "never once", k: "한 번도", s: "Saying there is nothing money cannot buy is what somebody says who has never once thought about what money cannot buy." }
         ]
     },
     afterword: {

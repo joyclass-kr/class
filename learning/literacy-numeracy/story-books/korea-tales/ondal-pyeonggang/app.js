@@ -664,7 +664,6 @@ const EN = {
             { w: "real people", k: "실제로 있었던 사람들", s: "They were real people, in King Pyeongwon's time." },
             { w: "gathers (gather)", k: "모아 놓았다", s: "That section gathers the lives of people who were not kings." },
             { w: "the most read", k: "가장 많이 읽히는", s: "Ondal is the most read of all of them." },
-            { w: "held a hunt (hold)", k: "사냥 대회를 열었다", s: "Goguryeo held a great hunt on the Nangnang hills." },
             { w: "the third moon", k: "삼월", s: "on the third day of the third moon" }
         ],
         "01-ondal.webp": [
@@ -733,7 +732,7 @@ const EN = {
             { w: "palanquin", k: "가마", s: "The silk clothes and the palanquin she left behind her." },
             { w: "left behind (leave)", k: "두고 갔다", s: "The silk clothes and the palanquin she left behind her." },
             { w: "blistered (blister)", k: "부르텄다", s: "The road was so long that her feet blistered." },
-            { w: "Asking her way", k: "물어물어", s: "Asking her way as she went, she found the hut." },
+            { w: "Asking her way", k: "물어물어", s: "Asking her way as she went, she found the hut below the mountain." },
             { w: "hut", k: "오두막", s: "she found the hut below the mountain" },
             { w: "all but falling down", k: "다 쓰러져 가는", s: "It was a house all but falling down." },
             { w: "hesitating (hesitate)", k: "망설이는", s: "Not hesitating, but setting her mind." },
@@ -762,7 +761,7 @@ const EN = {
         ],
         "10-train.webp": [
             { w: "led home (lead)", k: "끌고 왔다", s: "The horse Ondal led home had all its ribs showing." },
-            { w: "ribs showing", k: "갈비뼈가 드러난", s: "The horse had all its ribs showing." },
+            { w: "ribs showing", k: "갈비뼈가 드러난", s: "🌾 The horse Ondal led home had all its ribs showing." },
             { w: "cheapest", k: "제일 값싼", s: "It was the cheapest horse in the market." },
             { w: "unsteadily", k: "비칠비칠", s: "It walked unsteadily too." },
             { w: "with great care", k: "정성껏", s: "the princess fed that horse and washed it with great care" },
@@ -815,9 +814,9 @@ const EN = {
         ],
         "15-general.webp": [
             { w: "went first into ~", k: "앞장섰다", s: "After that Ondal went first into every battle." },
-            { w: "drove off (drive)", k: "물리쳤다", s: "He drove off the soldiers who came from the north." },
+            { w: "drove off (drive)", k: "물리쳤다", s: "He drove off the soldiers who came from the north, again and again." },
             { w: "raised (raise)", k: "키웠다", s: "The horse the princess had raised ran like an arrow." },
-            { w: "like an arrow", k: "화살처럼", s: "The horse ran like an arrow." },
+            { w: "like an arrow", k: "화살처럼", s: "The horse the princess had raised ran like an arrow." },
             { w: "Wherever ~", k: "가는 곳마다", s: "Wherever Ondal went, he won." },
             { w: "any more", k: "더 이상", s: "People did not call him Ondal the fool any more." },
             { w: "looked up to ~", k: "우러러보았다", s: "Even the children looked up to him now." },
@@ -837,13 +836,13 @@ const EN = {
         ],
         "after": [
             { w: "made up", k: "지어낸", s: "Ondal was not a made-up person." },
-            { w: "is set down (set)", k: "이름이 올라 있다", s: "his name is set down in the lives section" },
-            { w: "opinions are divided", k: "말이 갈린다", s: "Opinions are divided about where that place was." },
+            { w: "is set down (set)", k: "이름이 올라 있다", s: "He was a general of Goguryeo whose name is set down in the lives section of the Samguk Sagi." },
+            { w: "opinions are divided", k: "말이 갈린다", s: "Opinions are divided about where the place was." },
             { w: "these days", k: "요즘은", s: "these days more scholars think it was Achasanseong" },
-            { w: "kept (keep)", k: "지켰다", s: "the princess kept the joke her father had made" },
+            { w: "kept (keep)", k: "지켰다", s: "The story begins because the princess kept" },
             { w: "not the grown-up", k: "어른이 아니라", s: "The one who kept the word was not the grown-up but the child." },
             { w: "fed (feed)", k: "먹여 주었다", s: "only nobody had fed either of them" },
-            { w: "shows what it is", k: "제 모습이 나온다", s: "A person or a horse shows what it is when somebody sees it." }
+            { w: "shows what it is", k: "제 모습이 나온다", s: "A person or a horse shows what it is when it meets somebody who sees it." }
         ]
     },
     afterword: {

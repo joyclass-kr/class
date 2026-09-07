@@ -526,9 +526,9 @@ const EN = {
     words: {
         "cover": [
             { w: "all over Korea", k: "우리나라 곳곳에서", s: "It was told all over Korea" },
-            { w: "among the best known", k: "가장 널리 알려진 축에 드는", s: "it is among the best known of our old stories" },
+            { w: "among the best known", k: "가장 널리 알려진 축에 드는", s: "It was told all over Korea and is among the best known of our old stories." },
             { w: "a why-story", k: "유래담", s: "It is a why-story as well." },
-            { w: "came to be", k: "생겨났다", s: "It explains how the sun and the moon came to be." },
+            { w: "came to be", k: "생겨났다", s: "It explains how the sun and the moon came to be, and why sorghum stalks are red." },
             { w: "sorghum stalks", k: "수숫대", s: "why sorghum stalks are red" },
             { w: "get at ~", k: "노리다", s: "A beast dressing as a mother to get at children" },
             { w: "next door", k: "이웃 나라에", s: "is told next door too" },
@@ -546,7 +546,7 @@ const EN = {
             { w: "waved (wave)", k: "손을 흔들었다", s: "They waved till they could not see the gate." }
         ],
         "02-tiger.webp": [
-            { w: "was paid in ~", k: "~로 값을 받았다", s: "Their mother washed dishes all day and was paid in rice cakes." },
+            { w: "was paid in ~", k: "~로 값을 받았다", s: "🐯 Their mother washed dishes at the feast all day and was paid in rice cakes." },
             { w: "basket", k: "광주리", s: "She came home with the basket on her head." },
             { w: "uncommonly", k: "유난히", s: "The wood there was uncommonly dark." },
             { w: "square in the road", k: "길을 떡 막고", s: "A great tiger stood square in the road." },
@@ -650,7 +650,7 @@ const EN = {
             { w: "rotten", k: "썩은", s: "what came down for the tiger was an old rotten rope" },
             { w: "never noticed", k: "그것도 몰랐다", s: "It never noticed, and climbed up delighted." },
             { w: "delighted", k: "신이 나서", s: "It never noticed, and climbed up delighted." },
-            { w: "Snap", k: "뚝", s: "Snap — the rope broke halfway." },
+            { w: "Snap", k: "뚝", s: "Snap — The rope broke halfway and the tiger fell into a sorghum field." },
             { w: "halfway", k: "반쯤 가서", s: "The rope broke halfway and the tiger fell into a sorghum field." },
             { w: "sorghum field", k: "수수밭", s: "the tiger fell into a sorghum field" },
             { w: "Shy of ~", k: "~이 부끄러워", s: "Shy of eyes on her, she made herself dazzling." },
@@ -663,8 +663,8 @@ const EN = {
             { w: "a substance", k: "성분", s: "The stalk holds a substance that turns it red" },
             { w: "of itself", k: "저절로", s: "it reddens of itself as it ripens" },
             { w: "imitating (imitate)", k: "흉내 내는", s: "Stories of a beast imitating a person to get a door opened" },
-            { w: "the lesson", k: "가르침", s: "The lesson in those stories is always the same." },
-            { w: "gave up his own", k: "제 몫을 내주었다", s: "he gave up his own at one word from her" },
+            { w: "the lesson", k: "가르침", s: "The lesson in those stories is always the same" },
+            { w: "gave up his own", k: "제 몫을 내주었다", s: "She said one word about being afraid of the night, and he gave up his own." },
             { w: "did not let it pass", k: "그냥 넘기지 않았다", s: "they did not let it pass" }
         ]
     },

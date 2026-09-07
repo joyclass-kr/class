@@ -654,7 +654,6 @@ const EN = {
             { w: "heaped (heap)", k: "수북해진", s: "The basket was heaped in no time at all." },
             { w: "Instead of answering", k: "대답 대신", s: "Instead of answering, the Willow Boy only grinned." },
             { w: "keep ~ open", k: "열어 두다", s: "Come again when you are cold. I will keep the door open." },
-            { w: "kept ~ in her heart", k: "마음에 새겼다", s: "Yeoni kept those words in her heart." },
             { w: "lightly", k: "가볍게", s: "went down the hill lightly" }
         ],
         "07-again.webp": [
@@ -700,7 +699,7 @@ const EN = {
             { w: "fell flat (fall)", k: "그대로 쓰러졌다", s: "The Willow Boy fell flat on the grass." }
         ],
         "11-flee.webp": [
-            { w: "Rrrumble", k: "쿠르릉", s: "Rrrumble — the rock door began to close." },
+            { w: "Rrrumble", k: "쿠르릉", s: "💨 Rrrumble — The rock door began to close with a terrible sound." },
             { w: "terrible", k: "무서운", s: "The rock door began to close with a terrible sound." },
             { w: "all at once", k: "대번에", s: "Inside it went dark all at once." },
             { w: "Chips of stone", k: "돌 부스러기", s: "Chips of stone showered down from the ceiling." },
@@ -745,14 +744,14 @@ const EN = {
         ],
         "after": [
             { w: "what is not there", k: "없는 것", s: "sent to fetch what is not there in midwinter" },
-            { w: "on the way", k: "그 길에서", s: "and meets a helper on the way" },
+            { w: "on the way", k: "그 길에서", s: "A stepmother usually gives the errand, and the child meets a helper on the way." },
             { w: "laid ~ over it", k: "얹었다", s: "This story lays spring over that." },
             { w: "side by side", k: "나란히", s: "Putting winter and spring side by side" },
-            { w: "the answer", k: "답", s: "That is the answer this story gives." },
+            { w: "the answer", k: "답", s: "The part where the spring in Yeoni's basket spreads over the whole mountain is the answer this story gives." },
             { w: "the whole of ~", k: "통째로", s: "The stepmother tried to take the whole of spring" },
             { w: "not one bit", k: "하나도", s: "and got not one bit of it" },
             { w: "was given", k: "나눠 받았다", s: "What is given and what is taken are that different." },
-            { w: "asking nothing back", k: "아무 대가 없이", s: "given you something asking nothing back" }
+            { w: "asking nothing back", k: "아무 대가 없이", s: "Has anybody ever given you something, asking nothing back for it?" }
         ]
     },
     afterword: {

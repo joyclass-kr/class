@@ -441,9 +441,8 @@ const EN = {
             { w: "getting the better of ~", k: "골려 주는 것", s: "A weak but clever creature getting the better of a strong one" },
             { w: "worldwide", k: "세계 곳곳의", s: "is a worldwide kind of tale" },
             { w: "spider", k: "거미", s: "Africa has Anansi the spider" },
-            { w: "a pattern", k: "되풀이", s: "Three feels like a pattern" },
-            { w: "gets dull", k: "지루해진다", s: "stops just before it gets dull" },
-            { w: "exactly three", k: "꼭 세 번", s: "There are exactly three tricks here." }
+            { w: "a pattern", k: "되풀이", s: "Old tales like a thing to happen three times — enough to feel like a pattern" },
+            { w: "gets dull", k: "지루해진다", s: "and it stops before it gets dull." }
         ],
         "01-caught.webp": [
             { w: "prowling about (prowl)", k: "어슬렁거리는", s: "a tiger who had not eaten for days was prowling about" },

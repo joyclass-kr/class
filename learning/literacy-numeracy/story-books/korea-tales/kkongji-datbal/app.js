@@ -621,15 +621,14 @@ const EN = {
             { w: "backed away", k: "뒷걸음질 쳤다", s: "The old man waved a hand and backed away." },
             { w: "get his words out", k: "말을 잇다", s: "He could not get his words out." },
             { w: "drew back (draw)", k: "물러섰다", s: "The villagers muttered and drew back." },
-            { w: "taken by ~", k: "~에게 끌려간", s: "Nobody taken by that thing has ever come back." },
-            { w: "threw ~ down (throw)", k: "던졌다", s: "The son took the frame off and threw it down in the yard." }
+            { w: "taken by ~", k: "~에게 끌려간", s: "Nobody taken by that thing has ever come back." }
         ],
         "05-set-out.webp": [
             { w: "Are we to ~", k: "~할 참이냐", s: "Are we to lose you as well!" },
             { w: "caught ~ by the arm", k: "팔을 붙잡았다", s: "The old man caught the son by the arm." },
             { w: "took ~ off", k: "떼어 놓았다", s: "The son took that hand off, quietly." },
             { w: "Nothing shook him", k: "조금도 흔들리지 않았다", s: "Nothing shook him at all." },
-            { w: "at his waist", k: "허리에", s: "He tied a few pairs of straw shoes at his waist." },
+            { w: "at his waist", k: "허리에", s: "He tied a few pairs of straw shoes at his waist and set off." },
             { w: "the setting sun", k: "해 지는 쪽", s: "Towards the setting sun, the way the feather had come." },
             { w: "worn through (wear)", k: "다 닳은", s: "He meant to walk till those shoes were worn through." },
             { w: "pass", k: "고갯마루", s: "The villagers came out to the pass and watched." },
@@ -652,8 +651,7 @@ const EN = {
             { w: "as round as plates", k: "접시만 해진", s: "The old woman's eyes went as round as plates." },
             { w: "washing club", k: "빨래 방망이", s: "She dropped her washing club." },
             { w: "the western end", k: "서쪽 끝", s: "That thing lives on the cliff at the western end." },
-            { w: "Never go near ~", k: "절대로 다가가지 마라", s: "Never go near it before the sun goes down." },
-            { w: "set ~ firmly in his mind", k: "마음에 새겼다", s: "The son set those words firmly in his mind." }
+            { w: "Never go near ~", k: "절대로 다가가지 마라", s: "Never go near it before the sun goes down." }
         ],
         "08-field.webp": [
             { w: "weeding (weed)", k: "밭을 매는", s: "Next day he met an old man weeding a field." },
@@ -677,7 +675,7 @@ const EN = {
             { w: "bowed low", k: "깊이 절했다", s: "And then he bowed low to the old man." }
         ],
         "10-cliff.webp": [
-            { w: "Days more", k: "며칠을 더", s: "Days more of walking brought him to the western end." },
+            { w: "Days more", k: "며칠을 더", s: "🪨 Days more of walking brought him to the western end at last." },
             { w: "on their third pair", k: "세 켤레째인", s: "The shoes at his waist were on their third pair already." },
             { w: "as if to stab ~", k: "~를 찌를 듯이", s: "A rock cliff stood up as if to stab the sky." },
             { w: "hummed (hum)", k: "웅웅 울었다", s: "The wind struck the cliff and hummed." },
@@ -735,13 +733,12 @@ const EN = {
         "after": [
             { w: "tells you the size", k: "크기를 말해 준다", s: "The name itself tells you the size." },
             { w: "side by side", k: "나란히", s: "five grown people would have to stand side by side" },
-            { w: "comes with it", k: "따라온다", s: "the size comes with it every time you say the name" },
-            { w: "sets out (set out)", k: "길을 떠난다", s: "a child sets out on a long road to find a mother" },
+            { w: "comes with it", k: "따라온다", s: "The size comes with it every time you say the name." },
+            { w: "sets out (set out)", k: "길을 떠난다", s: "Our old tales hold several stories of a child who sets out on a long road to find a mother." },
             { w: "in return", k: "그 대가로", s: "and gets what is needed in return" },
             { w: "the shape of it", k: "그 짜임", s: "That is the shape of it." },
             { w: "piled up (pile)", k: "쌓인", s: "It was those stopped steps piled up." },
-            { w: "hurrying (hurry)", k: "서두르는", s: "In the places a hurrying person goes past" },
-            { w: "went past", k: "지나쳐 버렸다", s: "the places a hurrying person would have gone past" }
+            { w: "hurrying (hurry)", k: "서두르는", s: "In the places a hurrying person would have gone straight past" }
         ]
     },
     afterword: {

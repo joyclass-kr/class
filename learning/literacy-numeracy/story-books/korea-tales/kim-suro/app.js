@@ -602,7 +602,7 @@ const EN = {
        본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
     words: {
         "cover": [
-            { w: "is kept in ~", k: "~에 실려 있다", s: "The story of Kim Suro is kept in the Record of Garak." },
+            { w: "is kept in ~", k: "~에 실려 있다", s: "🐢 cover.webp Kim Suro The story of Kim Suro is kept in the Record of Garak" },
             { w: "text", k: "글", s: "a text inside the Samguk Yusa" },
             { w: "the first king", k: "첫 임금", s: "It is about the first king of Gaya." },
             { w: "written down", k: "글로 남은", s: "among the oldest songs written down in Korea" },
@@ -627,7 +627,7 @@ const EN = {
             { w: "nobody to see", k: "사람은 보이지 않는", s: "There was nobody to see, only the voice." },
             { w: "started (start)", k: "깜짝 놀랐다", s: "People started and looked all round them." },
             { w: "in a great hurry", k: "헐레벌떡", s: "The Nine Gan went up the peak in a great hurry." },
-            { w: "breath caught", k: "숨이 턱에 찼다", s: "They ran up it till their breath caught." }
+            { w: "breath caught", k: "숨이 턱에 찼다", s: "They ran up it till their breath caught, and two hundred people came behind." }
         ],
         "03-song.webp": [
             { w: "set up a country", k: "나라를 세우다", s: "Heaven has told me to set up a country here." },
@@ -697,7 +697,7 @@ const EN = {
             { w: "by myself", k: "나 혼자", s: "I cannot rule all this wide land by myself." },
             { w: "valley", k: "골짜기", s: "Let each of us take one valley and rule it." },
             { w: "came to be", k: "생겼다", s: "That is how the six Gaya came to be." },
-            { w: "in friendship", k: "사이좋게", s: "The six countries came and went between them in friendship." }
+            { w: "in friendship", k: "사이좋게", s: "The six countries came and went between them in friendship after that." }
         ],
         "10-iron.webp": [
             { w: "iron", k: "쇠", s: "Good iron came out of the land Suro ruled." },
@@ -707,7 +707,7 @@ const EN = {
             { w: "smiths", k: "대장장이", s: "The smiths melted it and made ploughs for the fields, and swords." },
             { w: "melted (melt)", k: "녹였다", s: "The smiths melted it and made ploughs" },
             { w: "ploughs", k: "쟁기", s: "made ploughs for the fields, and swords" },
-            { w: "landing", k: "나루", s: "The landing was full of ships come for iron." },
+            { w: "landing", k: "나루", s: "The landing was full of ships come for iron, and Gaya grew richer." },
             { w: "grew richer", k: "넉넉해졌다", s: "Gaya grew richer" }
         ],
         "11-alone.webp": [
@@ -754,13 +754,11 @@ const EN = {
         ],
         "after": [
             { w: "stands beside ~", k: "나란히 놓인다", s: "This story stands beside Bak Hyeokgeose of Silla" },
-            { w: "one each", k: "저마다 하나씩", s: "The three countries have one each" },
             { w: "not one but six", k: "하나가 아니라 여섯", s: "Only here it is not one egg but six." },
             { w: "has come down (come down)", k: "전해 온다", s: "That song has come down to us under the name Song of Guji." },
             { w: "a trace", k: "흔적", s: "It is also a trace of how far Gaya went by sea." },
-            { w: "held that ~", k: "~라고 여겼다", s: "each of them held that his own village was best" },
-            { w: "only after ~", k: "~한 다음에야", s: "only after they had sung together and stamped together" },
-            { w: "came into being", k: "생겼다", s: "the country came into being" },
+            { w: "held that ~", k: "~라고 여겼다", s: "The Nine Gan were men who each held that his own village was best." },
+            { w: "only after ~", k: "~한 다음에야", s: "And only after they had sung together and stamped their feet together did the country come into being." },
             { w: "doing something together", k: "같이 무언가 해 보기", s: "Coming together always starts with doing something together." }
         ]
     },

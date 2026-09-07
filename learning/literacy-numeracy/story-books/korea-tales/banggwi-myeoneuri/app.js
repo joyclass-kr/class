@@ -504,7 +504,7 @@ const EN = {
         "cover": [
             { w: "oral tale", k: "구전 설화", s: "This is an oral tale with no known author." },
             { w: "pillars", k: "기둥", s: "one fart of hers shakes the pillars of a house" },
-            { w: "a whole kind", k: "따로 있는 갈래", s: "Old tales have a whole kind that blows up the sounds of the body." },
+            { w: "a whole kind", k: "따로 있는 갈래", s: "Old tales have a whole kind that blows up the sounds and smells of the body for a laugh." },
             { w: "blows up (blow up)", k: "크게 부풀린다", s: "a whole kind that blows up the sounds and smells of the body" },
             { w: "for a laugh", k: "웃음을 만들려고", s: "blows up the sounds and smells of the body for a laugh" },
             { w: "lead that list", k: "그 대표다", s: "Fart stories lead that list." },
@@ -565,7 +565,7 @@ const EN = {
             { w: "not half out", k: "반도 나오지 않은", s: "The wind was not half out yet." }
         ],
         "06-fly.webp": [
-            { w: "door and all", k: "문짝과 함께", s: "Her mother-in-law flew into the yard, door and all." },
+            { w: "door and all", k: "문짝과 함께", s: "🌪️ Her mother-in-law flew into the yard, door and all, still holding the handle." },
             { w: "pecking (peck)", k: "모이를 쪼는", s: "The hens pecking in the yard vanished" },
             { w: "vanished (vanish)", k: "사라졌다", s: "The hens pecking in the yard vanished and left only feathers." },
             { w: "feathers", k: "깃털", s: "vanished and left only feathers" },
@@ -637,15 +637,15 @@ const EN = {
             { w: "tell us first", k: "미리 말해 달라", s: "Just tell us first. We need time to hold on." }
         ],
         "after": [
-            { w: "a funny tale", k: "소화", s: "A story like this is called a funny tale." },
-            { w: "for a laugh alone", k: "그저 웃자고", s: "Many were made for a laugh alone." },
+            { w: "a funny tale", k: "소화", s: "A story like this is called a funny tale, meaning one made to make you laugh." },
+            { w: "for a laugh alone", k: "그저 웃자고", s: "Our old stories hold as many made for a laugh alone as made to teach." },
             { w: "shows ~ best", k: "가장 잘 보여 준다", s: "a story made for a laugh shows the times best" },
             { w: "did nothing wrong", k: "아무 잘못도 하지 않았다", s: "Look again and the bride did nothing wrong." },
             { w: "the fault", k: "흠", s: "The fault was not the fart" },
             { w: "found a use", k: "쓸모가 생겼다", s: "And that fart found a use the moment she left the house." },
             { w: "put up with ~", k: "시달리다", s: "In old tales the bride is usually the one who puts up with things." },
             { w: "turns it round", k: "판을 뒤집는다", s: "In this one the bride turns it round." },
-            { w: "is up to ~", k: "~에게 달렸다", s: "whether being different is a fault or a gift is up to the one looking" }
+            { w: "is up to ~", k: "~에게 달렸다", s: "Whether being different is a fault or a gift is up to the one looking." }
         ]
     },
     afterword: {

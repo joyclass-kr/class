@@ -527,7 +527,7 @@ const EN = {
     words: {
         "cover": [
             { w: "all over Korea", k: "우리나라 곳곳에", s: "It is told all over Korea" },
-            { w: "follows (follow)", k: "따라온다", s: "it follows every place named Dragon Horse Pond" },
+            { w: "follows (follow)", k: "따라온다", s: "It is told all over Korea, and follows every place named Dragon Horse Pond." },
             { w: "under his arms", k: "겨드랑이에", s: "A child born with wings under his arms" },
             { w: "sets out to ~", k: "~이 되려 한다", s: "sets out to be a great warrior and does not get there" },
             { w: "end sadly", k: "슬프게 끝나다", s: "Few old tales end sadly like this." },
@@ -558,7 +558,7 @@ const EN = {
         ],
         "03-law.webp": [
             { w: "frightening", k: "무서운", s: "In those days there was a frightening law." },
-            { w: "overturn", k: "뒤엎다", s: "A child born with wings would overturn the country." },
+            { w: "overturn", k: "뒤엎다", s: "A child born with wings would overturn the country, it said." },
             { w: "be punished", k: "벌을 받다", s: "So his family and the whole village would be punished." },
             { w: "the officers", k: "관가", s: "If the officers hear, we are all finished." },
             { w: "kept ~ inside", k: "밖에 내보내지 않았다", s: "From that day they kept the child inside." },
@@ -568,7 +568,7 @@ const EN = {
             { w: "nowhere to hide ~", k: "숨길 곳이 없는", s: "There was nowhere to hide him." }
         ],
         "04-decide.webp": [
-            { w: "sat down in front of ~", k: "앞에 앉았다", s: "Uturi sat down in front of his mother" },
+            { w: "sat down in front of ~", k: "앞에 앉았다", s: "🏔️ One night Uturi, five years old, sat down in front of his mother." },
             { w: "will be hurt", k: "다칠 것이다", s: "If I stay, you and the village will be hurt." },
             { w: "calm", k: "차분한", s: "His voice was calm, like a grown man's." },
             { w: "took him in her arms", k: "끌어안았다", s: "His mother took him in her arms." },
@@ -635,7 +635,7 @@ const EN = {
             { w: "called out", k: "외쳤다", s: "Uturi called out to the soldiers." },
             { w: "Rise", k: "일어나라", s: "Rise!" },
             { w: "the last place", k: "맨 끝자리", s: "But the last place in the line was empty." },
-            { w: "one bean short", k: "콩 한 알이 모자라", s: "One bean short: the bean his mother had eaten." },
+            { w: "one bean short", k: "콩 한 알이 모자라", s: "One bean short: the bean his mother had eaten as she roasted them." },
             { w: "gap", k: "빈자리", s: "That one gap made the whole line waver." },
             { w: "waver", k: "흔들리다", s: "That one gap made the whole line waver." },
             { w: "Arrows", k: "화살", s: "Arrows came flying from the troops." },
@@ -668,12 +668,12 @@ const EN = {
             { w: "is attached to ~", k: "붙어 있다", s: "and this story is attached to it" },
             { w: "differs (differ)", k: "다르다", s: "Even the child's name differs" },
             { w: "end well", k: "좋게 끝나다", s: "Old tales usually end well; this one does not." },
-            { w: "before he can ~", k: "~해 보지도 못하고", s: "The child falls before he can do anything at all." },
+            { w: "before he can ~", k: "~해 보지도 못하고", s: "The child who was to be a warrior falls before he can do anything at all." },
             { w: "stayed longer", k: "더 오래 남았다", s: "That is why it has stayed longer." },
             { w: "get rid of ~", k: "없애다", s: "It was the state that tried to get rid of the winged child." },
             { w: "handed ~ over", k: "넘겼다", s: "the one who handed the child over was the closest person to him" },
             { w: "does not stop there", k: "여기서 끝내지 않는다", s: "But the story does not stop there." },
-            { w: "a lost story", k: "진 이야기", s: "leaving a lost story open like this" },
+            { w: "a lost story", k: "진 이야기", s: "Leaving a lost story open like that was the old way of telling." },
             { w: "set aside (set)", k: "접어 두었다", s: "Is there something you have set aside" }
         ]
     },

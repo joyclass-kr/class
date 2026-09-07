@@ -603,13 +603,13 @@ const EN = {
             { w: "the fourth king", k: "네 번째 임금", s: "He became the fourth king of Silla." },
             { w: "is said to mean ~", k: "~라는 뜻이라 한다", s: "Talhae is said to mean the one who came out of the chest." },
             { w: "chest", k: "궤", s: "the one who came out of the chest" },
-            { w: "magpie", k: "까치", s: "The name Seok comes from the word for magpie." },
+            { w: "magpie", k: "까치", s: "The name Seok comes from the word for magpie, because magpies found it." },
             { w: "took turns", k: "번갈아 했다", s: "the Bak, the Seok and the Kim families took turns giving kings" }
         ],
         "01-sea.webp": [
             { w: "over the sea", k: "바다 건너", s: "this happened in a country over the sea" },
             { w: "Some say ~", k: "~라고도 한다", s: "Some say it was Yongseong, and some say Dapana." },
-            { w: "bore (bear)", k: "낳았다", s: "The queen of that country bore a great egg." },
+            { w: "bore (bear)", k: "낳았다", s: "The queen of that country bore a great egg instead of a child." },
             { w: "instead of ~", k: "~ 대신", s: "bore a great egg instead of a child" },
             { w: "turned upside down", k: "발칵 뒤집혔다", s: "The whole palace was turned upside down." },
             { w: "put their heads together", k: "머리를 맞댔다", s: "The officials put their heads together and muttered." },
@@ -760,15 +760,14 @@ const EN = {
             { w: "I began here", k: "내가 여기서 시작했다", s: "I began here." }
         ],
         "after": [
-            { w: "is set beside ~", k: "나란히 놓인다", s: "Seok Talhae is set beside the first kings of the other countries." },
             { w: "neither ~ nor ~", k: "~도 ~도 아닌", s: "he was neither a Bak nor a Kim" },
             { w: "drifted (drift)", k: "떠왔다", s: "and drifted over the sea in a chest" },
             { w: "from outside", k: "밖에서 온", s: "a story of somebody from outside becoming king" },
             { w: "hardly call it ~", k: "~라 하기 어렵다", s: "You could hardly call it a good way." },
             { w: "insisted (insist)", k: "우겼다", s: "and insisted his family were smiths" },
-            { w: "of his own accord", k: "스스로", s: "That is why he went to the king of his own accord." },
-            { w: "having won", k: "이겨 놓고", s: "Only somebody who gave it back, having won, could do that." },
-            { w: "stays longer", k: "더 오래 남는다", s: "what you do after winning stays longer than the winning" }
+            { w: "of his own accord", k: "스스로", s: "That is why he went to the king of his own accord and told him about the charcoal too." },
+            { w: "having won", k: "이겨 놓고", s: "Only somebody who gave the house back, having won it, could do that." },
+            { w: "stays longer", k: "더 오래 남는다", s: "What you do after winning stays longer than the winning itself." }
         ]
     },
     afterword: {

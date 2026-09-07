@@ -514,7 +514,6 @@ const EN = {
             { w: "pays ~ back (pay)", k: "은혜를 갚는다", s: "an animal a person cared for pays that person back" },
             { w: "forebears", k: "조상", s: "Our forebears thought a toad kept a house safe." },
             { w: "kept ~ safe (keep)", k: "지켜 주었다", s: "Our forebears thought a toad kept a house safe." },
-            { w: "chased ~ out (chase)", k: "쫓아냈다", s: "One in the kitchen meant good luck, so nobody chased it out." },
             { w: "centipede", k: "지네", s: "The centipede here is far bigger than a real one." },
             { w: "grown strange with age", k: "오래 묵어 이상해진", s: "a creature grown strange with age" }
         ],
@@ -645,12 +644,12 @@ const EN = {
             { w: "stayed by her", k: "곁에 있었다", s: "the toad stayed by her for years" }
         ],
         "after": [
-            { w: "a story of repayment", k: "보은 이야기", s: "A story like this is called a story of repayment." },
+            { w: "a story of repayment", k: "보은 이야기", s: "A story like this is called a story of repayment" },
             { w: "is laid over ~", k: "겹쳐 있다", s: "Another story is laid over that one here." },
             { w: "handed over (hand over)", k: "바쳤다", s: "the part where the village handed over one person a year" },
             { w: "to calm ~", k: "달래려고", s: "Giving up a person to calm a frightening thing" },
             { w: "a strong warrior", k: "힘센 장수", s: "usually a strong warrior comes" },
-            { w: "worth noticing", k: "눈여겨볼 만한", s: "It is worth noticing that the story does not end there." },
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "It is worth noticing that the story does not end with the village saved." },
             { w: "what was left over", k: "남은 것", s: "What she gave the toad was not what was left over." },
             { w: "her own share", k: "제 몫", s: "It was her own share." },
             { w: "though she had little", k: "모자란데도", s: "She shared though she had little" }

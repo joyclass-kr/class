@@ -708,11 +708,11 @@ const EN = {
         ],
         "05-cry.webp": [
             { w: "better than ever", k: "그해따라 잘", s: "The beans filled out that year better than ever." },
-            { w: "gathered (gather)", k: "거두었다", s: "The old woman gathered them and made porridge." },
+            { w: "gathered (gather)", k: "거두었다", s: "The old woman gathered them and made porridge in a great pot." },
             { w: "lit the fire (light)", k: "장작을 지폈다", s: "She lit the fire, boiled the beans, rolled the rice balls." },
             { w: "rice balls", k: "새알심", s: "boiled the beans, rolled the rice balls" },
             { w: "kept sinking", k: "자꾸 내려앉았다", s: "Her hands were busy and her heart kept sinking." },
-            { w: "stirred (stir)", k: "저었다", s: "The old woman cried as she stirred with the ladle." },
+            { w: "stirred (stir)", k: "저었다", s: "The old woman cried and cried as she stirred with the ladle." },
             { w: "ladle", k: "국자", s: "as she stirred with the ladle" },
             { w: "went out past ~", k: "밖까지 퍼졌다", s: "The good smell went out past the yard." }
         ],
@@ -784,7 +784,7 @@ const EN = {
             { w: "flew up (fly)", k: "풀풀 날았다", s: "The ash flew up into the tiger's nose." },
             { w: "Pop", k: "팍", s: "Pop!" },
             { w: "shot up (shoot)", k: "튀어 올랐다", s: "Something shot up out of the ash." },
-            { w: "square in the eye", k: "눈을 딱", s: "The chestnut hit the tiger square in the eye." },
+            { w: "square in the eye", k: "눈을 딱", s: "The chestnut that had been hiding hit the tiger square in the eye." },
             { w: "embers", k: "잿불", s: "It was a chestnut heated hot in the embers." },
             { w: "clapped ~ over (clap)", k: "감쌌다", s: "The tiger clapped both paws over its eyes." },
             { w: "went yellow", k: "노래졌다", s: "Everything in front of it went yellow." }
@@ -811,7 +811,7 @@ const EN = {
             { w: "made for ~", k: "~쪽으로 갔다", s: "The tiger scrambled up and made for the door." }
         ],
         "15-roll.webp": [
-            { w: "came down on ~", k: "위로 떨어졌다", s: "The mortar came down on the tiger's head." },
+            { w: "came down on ~", k: "위로 떨어졌다", s: "🧺 The mortar on the doorframe came down on the tiger's head." },
             { w: "thrown itself (throw)", k: "몸을 던졌다", s: "It had thrown itself as if it had been waiting." },
             { w: "seeing stars", k: "별을 보며", s: "The tiger rolled out into the yard, seeing stars." },
             { w: "left sound", k: "성한 데가 남은", s: "There was not one part of it left sound." },
@@ -833,10 +833,9 @@ const EN = {
         ],
         "after": [
             { w: "Count ~ up", k: "세어 보라", s: "Count up the helpers in this story." },
-            { w: "every one of them", k: "하나같이", s: "Every one of them was in the kitchen or the yard." },
+            { w: "every one of them", k: "하나같이", s: "Every one of them was in the kitchen or the yard already." },
             { w: "a warrior", k: "장수", s: "There is no warrior with a sword" },
             { w: "works magic", k: "도술을 부린다", s: "no wise man who works magic" },
-            { w: "the things she used", k: "쓰던 살림살이", s: "The things she used every day became the helpers." },
             { w: "on its own", k: "혼자서", s: "not one of them could have done anything to the tiger on its own" },
             { w: "What could ~ do", k: "무엇을 하겠는가", s: "What could one chestnut do?" },
             { w: "great strength", k: "큰 힘", s: "A big thing is not always done by great strength." },

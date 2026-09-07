@@ -444,17 +444,11 @@ const EN = {
     words: {
         "cover": [
             { w: "with no known author", k: "지은이가 알려지지 않은", s: "another old Korean tale with no known author" },
-            { w: "everywhere", k: "어디에서나", s: "It is told everywhere in the country" },
-            { w: "version", k: "전해지는 이야기, 판본", s: "every village keeps its own slightly different version" },
-            { w: "slightly", k: "조금", s: "its own slightly different version" },
+            { w: "everywhere", k: "어디에서나", s: "It is told everywhere, so every village keeps its own version." },
+            { w: "version", k: "전해지는 이야기, 판본", s: "It is told everywhere, so every village keeps its own version." },
             { w: "monument", k: "비석", s: "there really is a stone monument to two brothers" },
-            { w: "are said to be ~", k: "~으로 전해진다", s: "who are said to be the pair in this story" },
             { w: "the pair", k: "그 두 사람", s: "the pair in this story" },
-            { w: "put it up (put up)", k: "세웠다", s: "The government of the Joseon period put it up" },
-            { w: "side by side", k: "나란히", s: "Korean tales carry both kinds of brothers side by side" },
-            { w: "look after each other", k: "서로 아끼다", s: "brothers who fight and brothers who look after each other" },
-            { w: "admired (admire)", k: "좋게 여겼다", s: "you can see what the old people admired" },
-            { w: "were ashamed of ~", k: "~을 부끄러워했다", s: "what they were ashamed of" }
+            { w: "look after each other", k: "서로 아끼다", s: "and brothers who look after each other" }
         ],
         "01-brothers.webp": [
             { w: "farmed (farm)", k: "농사지었다", s: "They farmed the rice fields their parents had left them" },
@@ -468,21 +462,21 @@ const EN = {
             { w: "the drier one", k: "더 마른 쪽", s: "Your field is the drier one." },
             { w: "ditch", k: "도랑", s: "they stood at the ditch for ages" },
             { w: "for ages", k: "한참 동안", s: "they stood at the ditch for ages" },
-            { w: "giving way to ~", k: "~에게 양보하는", s: "each giving way to the other" },
+            { w: "giving way to ~", k: "~에게 양보하는", s: "giving way to each other." },
             { w: "learn a thing or two", k: "좀 배우다", s: "You could learn a thing or two from those two." }
         ],
         "02-harvest.webp": [
-            { w: "plain", k: "들판", s: "The whole plain turned yellow and bowed its head." },
-            { w: "bowed its head (bow)", k: "고개를 숙였다", s: "The whole plain turned yellow and bowed its head." },
-            { w: "had ripened (ripen)", k: "여물었다", s: "That year the rice had ripened better than in any year before." },
+            { w: "plain", k: "들판", s: "The whole plain turned yellow and bowed its head" },
+            { w: "bowed its head (bow)", k: "고개를 숙였다", s: "The whole plain turned yellow and bowed its head" },
+            { w: "had ripened (ripen)", k: "여물었다", s: "and the rice had ripened better than ever before." },
             { w: "cutting the rice", k: "벼를 베는", s: "The brothers stood side by side cutting the rice" },
             { w: "stacking (stack)", k: "쌓는", s: "stacking the sheaves" },
             { w: "sheaves (sheaf)", k: "볏단", s: "cutting the rice and stacking the sheaves" },
-            { w: "sickles", k: "낫", s: "The sound of sickles rang across the field all day." },
-            { w: "rang (ring)", k: "울렸다", s: "The sound of sickles rang across the field" },
+            { w: "sickles", k: "낫", s: "Sickles rang across the field all day." },
+            { w: "rang (ring)", k: "울렸다", s: "Sickles rang across the field all day." },
             { w: "split it evenly", k: "똑같이 나누다", s: "Right. Let's split it evenly." },
             { w: "one by one", k: "하나하나", s: "counted the sheaves one by one" },
-            { w: "in case ~", k: "~할까 봐", s: "In case even one sheaf was out, they counted everything twice." },
+            { w: "in case ~", k: "~할까 봐", s: "In case even one sheaf was out, they counted twice." },
             { w: "was out", k: "어긋났다", s: "In case even one sheaf was out" },
             { w: "matched exactly", k: "꼭 같았다", s: "Even the heights matched exactly." }
         ],
@@ -542,8 +536,7 @@ const EN = {
         ],
         "07-morning.webp": [
             { w: "blinked (blink)", k: "눈을 끔뻑였다", s: "The elder brother went out to the field and blinked." },
-            { w: "exactly as it had been", k: "어제 그대로", s: "The pile of sheaves was exactly as it had been." },
-            { w: "again and again", k: "몇 번을", s: "He counted again and again" },
+            { w: "exactly as it had been", k: "어제 그대로", s: "The pile was exactly as it had been." },
             { w: "the same as yesterday", k: "어제랑 똑같은", s: "Eh? It's the same as yesterday." },
             { w: "and yet", k: "그런데도", s: "And yet he had certainly carried a whole frameful away." },
             { w: "certainly", k: "분명히", s: "he had certainly carried a whole frameful away" },

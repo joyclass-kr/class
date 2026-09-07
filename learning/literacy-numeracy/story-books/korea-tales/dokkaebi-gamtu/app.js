@@ -657,7 +657,7 @@ const EN = {
        본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
     words: {
         "cover": [
-            { w: "invisible", k: "보이지 않는", s: "a cap that makes you invisible when you put it on" },
+            { w: "invisible", k: "보이지 않는", s: "It has a cap in it that makes you invisible when you put it on." },
             { w: "cap", k: "감투", s: "A gamtu was a small round cap men wore in Joseon days." },
             { w: "holding office", k: "벼슬을 함", s: "Wearing one meant holding office" },
             { w: "a post", k: "자리, 벼슬", s: "even now to wear a cap means to have a post" },
@@ -833,13 +833,13 @@ const EN = {
             { w: "not so bad either", k: "그것도 살 만하다", s: "Being seen is not so bad either." }
         ],
         "after": [
-            { w: "worth noticing", k: "눈여겨볼 만한", s: "It is worth noticing that our story picked a gamtu." },
+            { w: "worth noticing", k: "눈여겨볼 만한", s: "It is worth noticing that our story picked a gamtu of all things." },
             { w: "officials", k: "벼슬아치", s: "A gamtu was what officials wore." },
-            { w: "hold out (hold)", k: "버티다", s: "the one who gets an unseen power does not hold out long" },
+            { w: "hold out (hold)", k: "버티다", s: "The one who gets an unseen power does not hold out long" },
             { w: "tests (test)", k: "시험한다", s: "because that power tests the person" },
             { w: "made ~ visible", k: "눈에 보이게 만들었다", s: "It made visible the thing that could not be seen." },
             { w: "did not grow angry", k: "화를 내지 않았다", s: "the goblin did not grow angry at the end" },
-            { w: "all the while", k: "그동안에도", s: "all the while Dolsoe himself was watching" },
+            { w: "all the while", k: "그동안에도", s: "All the while he believed nobody was watching" },
             { w: "was watching", k: "다 보고 있었다", s: "Dolsoe himself was watching all of it" },
             { w: "when nobody is looking", k: "아무도 안 볼 때", s: "What are you like when nobody is looking?" }
         ]

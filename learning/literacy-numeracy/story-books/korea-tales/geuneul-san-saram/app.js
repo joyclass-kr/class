@@ -590,7 +590,7 @@ const EN = {
             { w: "with his own mouth", k: "제 입으로", s: "He had sold that shade with his own mouth." }
         ],
         "08-friends.webp": [
-            { w: "from early morning", k: "이른 아침부터", s: "The traveller stood at the roadside from early morning" },
+            { w: "from early morning", k: "이른 아침부터", s: "👥 The next day the traveller stood at the roadside from early morning" },
             { w: "brought back ~ (bring)", k: "데려왔다", s: "and brought back the people he met" },
             { w: "Do rest here", k: "편히 쉬시지요", s: "This is my shade. Do rest here." },
             { w: "Before long", k: "어느새", s: "Before long there were more than ten." },
@@ -649,7 +649,7 @@ const EN = {
         "after": [
             { w: "several stories of ~", k: "~한 이야기가 여럿", s: "Korean tales hold several stories of somebody selling what cannot be sold." },
             { w: "the best known", k: "가장 이름난", s: "Bong-i Kim Seondal, who sold the water of the Daedong River, is the best known." },
-            { w: "the other way round", k: "방향이 반대인", s: "This story is the other way round." },
+            { w: "the other way round", k: "방향이 반대인", s: "This story is the other way round" },
             { w: "somebody else's", k: "남의 것", s: "Kim Seondal sold somebody else's water" },
             { w: "of his own accord", k: "스스로", s: "here the rich man sold his own of his own accord" },
             { w: "all day long", k: "하루 종일", s: "Shade moves all day long as the sun goes." },

@@ -511,8 +511,8 @@ const EN = {
        본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
     words: {
         "cover": [
-            { w: "a saying", k: "속담", s: "A saying we still use came out of it." },
-            { w: "came out of ~", k: "~에서 나왔다", s: "A saying we still use came out of it." },
+            { w: "a saying", k: "속담", s: "A saying we still use came out of it, and you will know which one by the end." },
+            { w: "came out of ~", k: "~에서 나왔다", s: "A saying we still use came out of it, and you will know which one by the end." },
             { w: "by the end", k: "다 읽고 나면", s: "you will know which one by the end" },
             { w: "swelling", k: "볼록한 살덩이", s: "A lump is a soft swelling on the neck or the chin." },
             { w: "it showed", k: "눈에 띄었다", s: "It did not hurt, but it showed" },
@@ -606,16 +606,16 @@ const EN = {
             { w: "have a look at ~", k: "좀 봅시다", s: "Let us have a look at you!" },
             { w: "into the bargain", k: "게다가", s: "And got gold for it into the bargain." },
             { w: "hear the like", k: "이런 일을 듣다", s: "Did you ever hear the like!" },
-            { w: "hung open (hang)", k: "다물지 못했다", s: "he showed them, and their mouths hung open" },
+            { w: "hung open (hang)", k: "다물지 못했다", s: "and their mouths hung open." },
             { w: "nothing else", k: "그 이야기만", s: "From that day the village talked of nothing else." }
         ],
         "09-greedy.webp": [
             { w: "greedy", k: "욕심 많은", s: "But this one was very greedy." },
-            { w: "The moment ~", k: "~하자마자", s: "The moment he heard he came running over." },
+            { w: "The moment ~", k: "~하자마자", s: "The moment he heard he came running over and asked and asked." },
             { w: "asked and asked", k: "꼬치꼬치 캐물었다", s: "he came running over and asked and asked" },
             { w: "I doubt ~", k: "~는 아닐 텐데", s: "Well now, I doubt it goes like that." },
             { w: "be sorry for it", k: "후회하다", s: "Do not go and be sorry for it." },
-            { w: "with no use at all", k: "소용이 없었다", s: "The first old man tried to stop him, with no use at all." },
+            { w: "with no use at all", k: "소용이 없었다", s: "with no use at all." },
             { w: "stick", k: "지팡이", s: "The greedy one took his stick and went straight up the mountain." }
         ],
         "10-sing.webp": [
@@ -623,7 +623,7 @@ const EN = {
             { w: "grinning (grin)", k: "입이 벌어진", s: "He was grinning already at the thought of the treasure." },
             { w: "at the thought of ~", k: "~ 생각에", s: "grinning already at the thought of the treasure" },
             { w: "Come along", k: "어서 오너라", s: "Come along, goblins, come along!" },
-            { w: "at the top of his voice", k: "목청껏", s: "He sang at the top of his voice." },
+            { w: "at the top of his voice", k: "목청껏", s: "come along!\" old He sang at the top of his voice" },
             { w: "shift the hills", k: "산이 떠나갈 듯한", s: "loud enough to shift the hills" },
             { w: "nothing much", k: "영 신통치 않은", s: "But the sound was nothing much at all." },
             { w: "wobbled (wobble)", k: "흔들렸다", s: "It cracked, it wobbled, and not one beat fell right." },
@@ -656,12 +656,12 @@ const EN = {
             { w: "in place of ~", k: "~ 자리에", s: "In the Japanese one an oni appears in place of the goblin." },
             { w: "has not been settled", k: "밝혀지지 않았다", s: "Which came first has not been settled." },
             { w: "wrestling", k: "씨름", s: "They like wrestling too, and buckwheat jelly." },
-            { w: "get on with ~", k: "어울리다", s: "They like to get on with people." },
+            { w: "get on with ~", k: "어울리다", s: "They are not only frightening; they like to get on with people." },
             { w: "was caught out (catch)", k: "날이 저물었다", s: "He was caught out by the dark" },
             { w: "went in (go in)", k: "들었다", s: "went in to an empty hut" },
             { w: "were cheated", k: "속았다", s: "It was because they saw they had been cheated." },
-            { w: "for the love of ~", k: "~이 좋아서", s: "The first sang for the love of the song" },
-            { w: "for want of ~", k: "~이 탐나서", s: "the second sang for want of the treasure" },
+            { w: "for the love of ~", k: "~이 좋아서", s: "The first old man sang for the love of the song." },
+            { w: "for want of ~", k: "~이 탐나서", s: "The second sang for want of the treasure." },
             { w: "the same place", k: "같은 자리", s: "The same place, the same thing done" }
         ]
     },

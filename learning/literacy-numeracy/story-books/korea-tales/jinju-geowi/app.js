@@ -437,21 +437,17 @@ const EN = {
             { w: "pearl", k: "진주", s: "The Goose That Swallowed the Pearl" },
             { w: "an old Korean tale", k: "우리나라 옛이야기", s: "is an old Korean tale with no known author" },
             { w: "with no known author", k: "지은이가 알려지지 않은", s: "an old Korean tale with no known author" },
-            { w: "scholars", k: "학자들", s: "Many scholars think it came here with Buddhism" },
             { w: "Buddhism", k: "불교", s: "it came here with Buddhism" },
-            { w: "monk", k: "스님", s: "it is also told as a story about a monk" },
             { w: "very much like it", k: "그것과 아주 닮은", s: "India and China have tales very much like it." },
             { w: "crosses into ~", k: "~으로 건너가다", s: "When a story crosses into a new country" },
-            { w: "turn into ~", k: "~으로 바뀌다", s: "the people and the places turn into that country's own" },
-            { w: "the bones", k: "뼈대", s: "The bones are the same; the clothes are Korean." },
+            { w: "turn into ~", k: "~으로 바뀌다", s: "the people and places turn into that country's own." },
             { w: "were kept (keep)", k: "길렀다", s: "Geese were kept as farm animals long ago." },
             { w: "geese (goose)", k: "거위들", s: "Geese were kept as farm animals long ago." },
             { w: "farmyard", k: "시골집 마당", s: "Geese were kept as farm animals long ago." },
-            { w: "honk", k: "꽥꽥 울다", s: "They honk loudly at strangers" },
-            { w: "strangers", k: "낯선 사람들", s: "They honk loudly at strangers" },
+            { w: "honk", k: "꽥꽥 울다", s: "They honk at strangers, so they guarded the house the way a dog does." },
+            { w: "strangers", k: "낯선 사람들", s: "They honk at strangers, so they guarded the house the way a dog does." },
             { w: "guarded (guard)", k: "지켰다", s: "so they guarded the house the way a dog does" },
-            { w: "the way a dog does", k: "개가 하는 것처럼", s: "guarded the house the way a dog does" },
-            { w: "wandering about", k: "어슬렁거리는", s: "it was always wandering about the yard" }
+            { w: "the way a dog does", k: "개가 하는 것처럼", s: "guarded the house the way a dog does" }
         ],
         "01-guest.webp": [
             { w: "was going down (go down)", k: "지고 있었다", s: "The sun was going down." },
@@ -467,8 +463,6 @@ const EN = {
             { w: "Creeeak—", k: "삐거덕", s: "Creeeak—" },
             { w: "beard", k: "수염", s: "the owner, a man with a white beard" },
             { w: "show something off (show off)", k: "자랑해 보이다", s: "so I could show something off" },
-            { w: "supper", k: "저녁밥", s: "Supper is nearly ready too." },
-            { w: "nearly", k: "거의", s: "Supper is nearly ready too." },
             { w: "led (lead)", k: "이끌었다, 들였다", s: "led the traveller into the room" }
         ],
         "02-pearl.webp": [
@@ -623,7 +617,6 @@ const EN = {
             { w: "unfair", k: "억울한", s: "not because it was unfair to him" },
             { w: "blamed (blame)", k: "원망했다", s: "he never once blamed the goose" },
             { w: "not once", k: "한 번도 ~ 않다", s: "he never once blamed the goose" },
-            { w: "put up with ~", k: "그냥 견디다", s: "Bearing something is not just putting up with it." },
             { w: "what you are bearing it for", k: "무엇을 위해 견디는지", s: "it is knowing what you are bearing it for" }
         ]
     },

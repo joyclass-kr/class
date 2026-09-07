@@ -697,7 +697,7 @@ const EN = {
             { w: "laid out (lay)", k: "널어 둔", s: "One feather robe laid out on a rock blew away." },
             { w: "blew away (blow)", k: "훌렁 날아갔다", s: "One feather robe laid out on a rock blew away." },
             { w: "thorn bush", k: "가시덤불", s: "It caught in a thorn bush a good way off" },
-            { w: "flapped (flap)", k: "파닥거렸다", s: "It caught in a thorn bush and flapped there." },
+            { w: "flapped (flap)", k: "파닥거렸다", s: "It caught in a thorn bush a good way off and flapped there." },
             { w: "tore at ~ (tear)", k: "사정없이 긁었다", s: "The thorns tore at his arms without mercy." },
             { w: "without noticing", k: "~인 줄도 모르고", s: "He got the robe out without noticing his hand was bleeding." },
             { w: "light as a feather", k: "깃털처럼 가벼운", s: "It was light as a feather and slid in his hands." },
@@ -749,7 +749,6 @@ const EN = {
         ],
         "10-stay.webp": [
             { w: "went by (go by)", k: "지났다", s: "A month went by and the round full moon came again." },
-            { w: "held ~ out (hold)", k: "내밀었다", s: "The woodcutter folded the feather robe and held it out." },
             { w: "chest", k: "궤", s: "He had kept it carefully in a chest." },
             { w: "gone a little thick", k: "조금 잠겼다", s: "His voice had gone a little thick" },
             { w: "without his meaning it", k: "저도 모르게", s: "His voice had gone a little thick, without his meaning it." },
@@ -817,17 +816,16 @@ const EN = {
             { w: "tipped over (tip)", k: "기우뚱 기울었다", s: "And at that moment the bowl tipped over." },
             { w: "went over ~", k: "쏟아졌다", s: "The hot porridge went over the horse's back." },
             { w: "started at ~ (start)", k: "놀랐다", s: "The horse started at the hot porridge" },
-            { w: "sprang up (spring)", k: "펄쩍 뛰어올랐다", s: "The horse sprang up into the sky." },
+            { w: "sprang up (spring)", k: "펄쩍 뛰어올랐다", s: "The horse started at the hot porridge and sprang up into the sky." },
             { w: "came sliding down", k: "스르르 내려왔다", s: "But then the bucket came sliding down again." }
         ],
         "after": [
             { w: "clothes come into ~", k: "옷이 나온다", s: "Clothes always come into stories like this." },
             { w: "cannot go back", k: "돌아가지 못한다", s: "Lose the clothes and you cannot go back" },
-            { w: "what divides ~", k: "가르는 것", s: "what divides a sky person from an earth person" },
+            { w: "what divides ~", k: "가르는 것", s: "What divides a sky person from an earth person is not a body but the one thing worn." },
             { w: "the one thing worn", k: "걸친 것 하나", s: "is not a body but the one thing worn" },
             { w: "ends differently", k: "끝이 다르다", s: "Our tellings end differently from one another." },
             { w: "held her (hold)", k: "붙잡아 두었다", s: "That was not helping her; it held her." },
-            { w: "would have thought of ~", k: "궁리했을 것이다", s: "she would always have been thinking of leaving" },
             { w: "chose for herself", k: "스스로 골랐다", s: "his wife chose staying for herself" }
         ]
     },
