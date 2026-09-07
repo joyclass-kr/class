@@ -3,19 +3,23 @@
 
     const SVG_NS = "http://www.w3.org/2000/svg";
 
-    /* 5도권을 시계 방향으로 늘어놓는다. */
+    /*
+     * 5도권을 시계 방향으로 늘어놓는다. same은 같은 소리를 다른 이름으로도 적는
+     * 자리다. 조표가 일곱 개가 되는 C♯ 장조(♯7)와 C♭ 장조(♭7)는 요즘 쓰지 않고
+     * 각각 D♭·B로 적으므로 넣지 않는다. 반반으로 쓰이는 F♯·G♭만 둘 다 적는다.
+     */
     const KEYS = [
         { major: "C", minor: "Am", count: 0, sharp: true, tonic: 0, letter: 0, acc: 0 },
         { major: "G", minor: "Em", count: 1, sharp: true, tonic: 7, letter: 4, acc: 0 },
         { major: "D", minor: "Bm", count: 2, sharp: true, tonic: 2, letter: 1, acc: 0 },
         { major: "A", minor: "F♯m", count: 3, sharp: true, tonic: 9, letter: 5, acc: 0 },
         { major: "E", minor: "C♯m", count: 4, sharp: true, tonic: 4, letter: 2, acc: 0 },
-        { major: "B", minor: "G♯m", count: 5, sharp: true, tonic: 11, letter: 6, acc: 0, same: "C♭" },
+        { major: "B", minor: "G♯m", count: 5, sharp: true, tonic: 11, letter: 6, acc: 0 },
         {
             major: "F♯", minor: "D♯m", count: 6, sharp: true, tonic: 6, letter: 3, acc: 1, same: "G♭",
             alt: "G♭", altMinor: "E♭m", altCount: 6, altSharp: false, altLetter: 4, altAcc: -1, altSame: "F♯"
         },
-        { major: "D♭", minor: "B♭m", count: 5, sharp: false, tonic: 1, letter: 1, acc: -1, same: "C♯" },
+        { major: "D♭", minor: "B♭m", count: 5, sharp: false, tonic: 1, letter: 1, acc: -1 },
         { major: "A♭", minor: "Fm", count: 4, sharp: false, tonic: 8, letter: 5, acc: -1 },
         { major: "E♭", minor: "Cm", count: 3, sharp: false, tonic: 3, letter: 2, acc: -1 },
         { major: "B♭", minor: "Gm", count: 2, sharp: false, tonic: 10, letter: 6, acc: -1 },
