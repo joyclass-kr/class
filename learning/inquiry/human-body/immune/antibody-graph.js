@@ -39,7 +39,7 @@
         var b = document.createElement('button');
         b.className = 'scene-btn';
         b.dataset.scene = 'graph';
-        b.textContent = '📈 5. 1차·2차 반응 그래프';
+        b.textContent = '📈 2. 1차·2차 반응 그래프';
         bar.appendChild(b);
 
         bar.querySelectorAll('.scene-btn').forEach(function (btn) {

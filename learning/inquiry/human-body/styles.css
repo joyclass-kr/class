@@ -804,3 +804,7 @@ canvas.sim-canvas {
     padding: 7px 11px;
     font-size: 13px;
 }
+
+/* 감추라고 한 것은 반드시 감춘다.
+   층에 display: flex 를 주면 그것이 hidden 을 이겨 감춘 층이 그대로 보인다. */
+[hidden] { display: none !important; }
