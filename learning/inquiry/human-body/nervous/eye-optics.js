@@ -28,7 +28,8 @@
         { id: 'retina', text: '망막', ax: 470, ay: 120 },
         { id: 'vitreous', text: '유리체', ax: 470, ay: 350 },
         { id: 'fovea', text: '황반', ax: 210, ay: 300 },
-        { id: 'opticNerve', text: '시각 신경', ax: 150, ay: 610 }
+        { id: 'blindSpot', text: '맹점', ax: 210, ay: 560 },
+        { id: 'opticNerve', text: '시각 신경', ax: 150, ay: 640 }
     ];
 
     var DETAIL = {
@@ -37,6 +38,7 @@
         pupil: ['동공', '빛이 지나가는 구멍입니다. 밝은 곳에서는 작아지고 어두운 곳에서는 커집니다.'],
         lens: ['수정체', '볼록렌즈처럼 빛을 꺾어 망막에 상을 맺습니다. 가까운 곳을 볼 때 <strong>두꺼워지고</strong> 먼 곳을 볼 때 <strong>얇아집니다</strong>.'],
         ciliaryBody: ['섬모체', '수정체를 잡고 있는 근육입니다. 가까운 곳을 볼 때 <strong>수축</strong>합니다.'],
+        blindSpot: ['맹점', '시각 신경이 망막을 뚫고 나가는 자리입니다. 여기에는 <strong>시각 세포가 없어서</strong> 상이 맺혀도 보이지 않습니다. 황반과 헷갈리기 쉬운데, 황반은 시각 세포가 가장 빽빽해 <strong>가장 잘 보이는</strong> 자리입니다.'],
         zonule: ['진대 (걸이인대)', '섬모체와 수정체를 잇는 가는 끈입니다. 섬모체가 수축하면 <strong>느슨해지고</strong>, 그래서 수정체가 두꺼워집니다.'],
         retina: ['망막', '상이 맺히는 눈 속 스크린입니다. 시각 세포가 빛을 신호로 바꿉니다.'],
         fovea: ['황반', '시각 세포가 가장 빽빽하게 모인 곳입니다. 여기에 상이 맺힐 때 가장 뚜렷하게 보입니다.'],
@@ -96,7 +98,9 @@
             .then(function (markup) {
                 layer.innerHTML = '<div class="eye-optics-stage">' + markup +
                     '<div class="eye-optics-labels"></div></div>' +
-                    '<div class="eye-optics-caption"><span id="eyeCapNear"></span><span id="eyeCapLight"></span></div>';
+                    '<div class="eye-optics-caption"><span id="eyeCapNear"></span><span id="eyeCapLight"></span></div>' +
+                    '<div class="eye-optics-detail" id="eyeDetail" hidden>' +
+                    '<b id="eyeDetailTitle"></b><span id="eyeDetailText"></span></div>';
                 svg = layer.querySelector('svg');
                 labelBox = layer.querySelector('.eye-optics-labels');
                 capNear = layer.querySelector('#eyeCapNear');
@@ -127,6 +131,24 @@
         leaderGroup = document.createElementNS(SVG_NS, 'g');
         leaderGroup.setAttribute('id', 'eyeLeaders');
         svg.appendChild(leaderGroup);
+
+        // 맹점: 시각 신경이 망막을 뚫고 나가는 자리. 그림에 조각이 없으므로 여기서 찍는다.
+        if (!svg.querySelector('#blindSpot')) {
+            var onb = svg.querySelector('#opticNerve');
+            if (onb) {
+                var ob = onb.getBBox();
+                var bs = document.createElementNS(SVG_NS, 'ellipse');
+                bs.setAttribute('id', 'blindSpot');
+                bs.setAttribute('cx', (ob.x + ob.width - 8).toFixed(1));
+                bs.setAttribute('cy', (ob.y + ob.height / 2).toFixed(1));
+                bs.setAttribute('rx', 9);
+                bs.setAttribute('ry', 22);
+                bs.setAttribute('fill', '#8a7a5c');
+                bs.setAttribute('stroke', '#c9b48a');
+                bs.setAttribute('stroke-width', 2);
+                svg.appendChild(bs);
+            }
+        }
 
         rayGroup = document.createElementNS(SVG_NS, 'g');
         rayGroup.setAttribute('id', 'eyeRays');
@@ -172,6 +194,15 @@
     function showDetail(id) {
         var d = DETAIL[id];
         if (!d) return;
+
+        // 누른 자리 바로 아래에 보여 준다.
+        // 옆칸 설명 카드는 다른 갈피에 있어서, 눈 장면을 보는 동안에는 감춰져 있다.
+        var box = layer.querySelector('#eyeDetail');
+        if (box) {
+            box.hidden = false;
+            layer.querySelector('#eyeDetailTitle').textContent = d[0];
+            layer.querySelector('#eyeDetailText').innerHTML = d[1];
+        }
         var t = document.getElementById('organTitle');
         var p = document.getElementById('organDesc');
         if (t) t.textContent = d[0];
