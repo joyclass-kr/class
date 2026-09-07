@@ -54,6 +54,12 @@
         if (!canvas) return;
         ctx = canvas.getContext('2d');
 
+        // ?hbdebug=1 을 붙이면 이름표 상자를 밖에서 재 볼 수 있다 (겹침 검사용)
+        if (/[?&]hbdebug=1/.test(location.search)) {
+            window.__hbTags = function () { return smartTagBoxes; };
+            window.__hbStage = stageBox;
+        }
+
         bindDOM();
         renderQuizSkeleton();
         handleResize();
@@ -161,7 +167,7 @@
             ctx.save();
             ctx.translate(sbox.ox, sbox.oy);
             ctx.scale(sbox.k, sbox.k);
-            drawSarcomereRig(0, 0, VW, VH, time);
+            drawSarcomereRig(0, 0, VW, sbox.h, time);
             ctx.restore();
             return;
         }
@@ -199,7 +205,18 @@
     function drawSarcomereRig(dx, dy, dw, dh, time) {
         smartTagBoxes = [];
         var cx = dx + 0.50 * dw;
-        var cy = dy + 0.44 * dh;
+
+        // 세로 자리 나누기 — 위 이름표 / 그림 / 아래 이름표 / 아래 요약 카드.
+        // 그림이 차지하는 세로 폭은 한가운데를 기준으로 위 132, 아래 95 이다.
+        // (위쪽 「근절 길이」 치수선까지, 아래쪽 「A대」 치수선과 Z선 끝까지)
+        var guard = topGuard();                 // 위쪽 장면 단추 줄이 가리는 만큼
+        var avail = dh - guard - 8;
+        var upMin = 162, dnMin = 125;           // 그림에 닿지 않는 가장 가까운 거리
+        var grow = Math.min(Math.max(0, avail - (upMin + dnMin + 118)) / 2, 60);
+        var laneUp = upMin + grow;
+        var laneDn = dnMin + grow;
+        var blockH = laneUp + laneDn + 118;
+        var cy = dy + guard + Math.max(0, (avail - blockH) / 2) + laneUp + 18;
 
         // Sarcomere parameters: A-band is strictly 1.60um constant
         var aBandWidth = 240 * (dw / 800);
@@ -401,7 +418,7 @@
         var hudW = Math.min(460, dw - 40);
         var hudH = 66;
         var hudX = cx - hudW / 2;
-        var hudY = cy + 105;
+        var hudY = cy + laneDn + 34;            // 아래 이름표 줄 다음
 
         ctx.fillStyle = 'rgba(6, 11, 25, 0.92)';
         ctx.strokeStyle = isContracting ? '#f43f5e' : '#38bdf8';
@@ -426,28 +443,29 @@
         );
 
         // ── 7. 스마트 라벨 태그 (Z선, A대, H대, I대 클릭 연동) ────
+        // 위 왼쪽 · 위 오른쪽 · 아래 왼쪽 · 아래 오른쪽 — 네 자리로 갈라 놓는다.
         drawSmartTag(
             leftZ, cy - 75,
-            leftZ - 0.12 * dw, cy - 0.14 * dh,
+            leftZ - 0.14 * dw, cy - laneUp,
             'Z선', '근절 경계 (수축 시 접근)', '#38bdf8', 0
         );
 
         drawSmartTag(
-            myoRight, cy,
-            myoRight + 0.12 * dw, cy + 0.05 * dh,
-            'A대 (암대)', '1.60μm (길이 절대 불변!)', '#f43f5e', 1
-        );
-
-        drawSmartTag(
             cx, cy - 10,
-            cx + 0.12 * dw, cy - 0.12 * dh,
+            cx + 0.20 * dw, cy - laneUp,
             'H대', '수축 시 감소 (마이오신만)', '#facc15', 2
         );
 
         drawSmartTag(
-            (leftZ + myoLeft) / 2, cy - 32,
-            (leftZ + myoLeft) / 2 - 0.08 * dw, cy + 0.06 * dh,
+            (leftZ + myoLeft) / 2, cy + 32,
+            leftZ - 0.14 * dw, cy + laneDn,
             'I대 (명대)', '수축 시 감소 (액틴만)', '#bae6fd', 3
+        );
+
+        drawSmartTag(
+            myoRight, cy,
+            myoRight + 0.14 * dw, cy + laneDn,
+            'A대 (암대)', '1.60μm (길이 절대 불변!)', '#f43f5e', 1
         );
 
         ctx.restore();
@@ -470,16 +488,27 @@
         return (px / (drawK || 1)).toFixed(2) + 'px';
     }
 
+    // 캔버스가 세로로 길면 가상 화면도 그만큼 늘린다.
+    // 늘리지 않으면 위아래가 통째로 남는데도 이름표가 그림 옆에만 몰려 서로 겹친다.
+    var stageH = VH;
+
     function stageBox() {
-        var k = Math.min(width / VW, height / VH);
+        var k = width / VW;
+        var fits = height / k;
+        if (fits < VH) {          // 가로로 넓고 낮은 화면
+            k = height / VH;
+            stageH = VH;
+        } else {
+            stageH = Math.min(fits, VH * 2.2);
+        }
         drawK = k;
-        return { k: k, ox: (width - VW * k) / 2, oy: (height - VH * k) / 2 };
+        return { k: k, h: stageH, ox: (width - VW * k) / 2, oy: (height - stageH * k) / 2 };
     }
 
     /** 위쪽 장면 단추 줄이 가리는 높이를 가상 좌표로 환산한다 */
     function topGuard() {
-        var k = stageBox().k || 1;
-        return Math.min(92 / k, VH * 0.35);
+        var b = stageBox();
+        return Math.min(92 / (b.k || 1), b.h * 0.35);
     }
 
     function toVirtual(x, y) {
@@ -519,7 +548,7 @@
         var boxW = tw + 22;
         var boxH = subtext ? 36 : 24;
         var bx = Math.min(Math.max(tagX - boxW / 2, 8), VW - 8 - boxW);
-        var by = Math.min(Math.max(tagY - boxH / 2, topGuard()), VH - 8 - boxH);
+        var by = Math.min(Math.max(tagY - boxH / 2, topGuard()), stageH - 8 - boxH);
 
         if (typeof hotspotKey !== 'undefined') {
             smartTagBoxes.push({ x: bx, y: by, w: boxW, h: boxH, key: hotspotKey });
