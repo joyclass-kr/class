@@ -226,3 +226,87 @@
     line-height: 1.4;
     letter-spacing: -0.2px;
 }
+
+/* ── 혈액의 구성 (1번 장면) ─────────────────────────────────── */
+
+.blood-lab-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 6;
+}
+
+.blood-lab-stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 50px 10px 0;
+}
+
+.blood-lab-stage svg { width: 100%; height: 100%; display: block; }
+
+.blood-lab-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.blood-lab-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.55);
+    color: #f8fafc;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.blood-lab-tag:hover { border-color: #f43f5e; }
+
+.blood-lab-modes {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 4px 10px 0;
+    flex-wrap: wrap;
+}
+
+.blood-lab-modes button {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: rgba(6, 10, 24, 0.85);
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.blood-lab-modes button:hover { border-color: #f43f5e; color: #f8fafc; }
+
+.blood-lab-caption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 6px 10px 12px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(6, 10, 24, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.blood-lab-caption b { color: #fda4af; }
+.blood-lab-lead { color: #f87171; font-weight: 800; }
+.blood-lab-note { flex: 1 1 100%; color: #94a3b8; }
+
+.blood-lab-error {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fca5a5; font-weight: 700;
+}

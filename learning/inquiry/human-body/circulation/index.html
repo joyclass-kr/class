@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>순환계 · 심장과 혈액 | 인체 시뮬레이터</title>
-    <link rel="stylesheet" href="../styles.css?v=20260907zg">
-    <link rel="stylesheet" href="styles.css?v=20260907zg">
+    <link rel="stylesheet" href="../styles.css?v=20260907zq">
+    <link rel="stylesheet" href="styles.css?v=20260907zq">
 </head>
 <body>
 
@@ -36,7 +36,7 @@
 
                 <!-- Floating Top Scene Switcher -->
                 <div class="scene-switcher">
-                    <button class="scene-btn active" data-scene="immune">🩸 1. 혈액의 구성 (적혈구·백혈구·혈소판)</button>
+                    <button class="scene-btn active" data-scene="blood">🩸 1. 혈액의 구성 (원심분리)</button>
                     <button class="scene-btn" data-scene="heart">🫀 2. 심장과 순환 경로</button>
                 </div>
 
@@ -75,9 +75,9 @@
 
                     <div id="organDetailCard" class="meter-card" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.08);">
                         <div class="meter-card-title">
-                            <span id="organTitle" style="color:#f87171; font-size:15px;">백혈구 - 식균 작용</span>
+                            <span id="organTitle" style="color:#f87171; font-size:15px;">혈액의 구성</span>
                         </div>
-                        <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">상처 부위로 침투한 세균을 세포 안으로 끌어들여 소화 분해(식균 작용)하여 체내를 방어합니다.</p>
+                        <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">그림 위의 이름표를 눌러 자세한 설명을 보세요. 아래 <strong>[원심분리기 돌리기]</strong> 를 누르면 층이 갈라집니다.</p>
                     </div>
 
                     <div class="meter-card">
@@ -151,9 +151,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260907zg"></script>
-    <script src="../shared/exam-data.js?v=20260907zg"></script>
-    <script src="app.js?v=20260907zg"></script>
-    <script src="heart-flow.js?v=20260907zg"></script>
+    <script src="../shared/engine-core.js?v=20260907zq"></script>
+    <script src="../shared/exam-data.js?v=20260907zq"></script>
+    <script src="app.js?v=20260907zq"></script>
+    <script src="heart-flow.js?v=20260907zq"></script>
+    <script src="blood-lab.js?v=20260907zq"></script>
 </body>
 </html>
