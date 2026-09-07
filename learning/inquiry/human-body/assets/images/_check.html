@@ -205,18 +205,38 @@ async function run() {
         var nRad = svg.querySelectorAll('radialGradient').length;
         var nFil = svg.querySelectorAll('filter').length;
         html += row('radialGradient · filter', nRad + ' · ' + nFil, nRad === 0 && nFil === 0, '발광 금지');
-        // 그라데이션 밝기 차
-        var worst = 0;
+        // 그라데이션 — 덩어리져 보이게 하는 그늘은 좋다. 형광등처럼 되는 것만 막는다.
+        // 막을 것 세 가지: 밝기가 너무 벌어짐 / 색조가 딴 데로 튐 / 순백·순흑이 섞임.
+        var worstL = 0, worstH = 0, extreme = [];
         svg.querySelectorAll('linearGradient').forEach(function (g) {
-            var stops = [].map.call(g.querySelectorAll('stop'), function (s) {
+            var cols = [].map.call(g.querySelectorAll('stop'), function (s) {
                 return (s.getAttribute('stop-color') || '').trim(); }).filter(function (c) { return c[0] === '#'; });
-            var ls = stops.map(function (h) {
+            var hs = [], ls = [];
+            cols.forEach(function (h) {
                 h = h.slice(1); if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
                 var r = parseInt(h.slice(0, 2), 16) / 255, g2 = parseInt(h.slice(2, 4), 16) / 255, b = parseInt(h.slice(4, 6), 16) / 255;
-                return (Math.max(r, g2, b) + Math.min(r, g2, b)) / 2 * 100; });
-            if (ls.length > 1) worst = Math.max(worst, Math.max.apply(null, ls) - Math.min.apply(null, ls));
+                var mx = Math.max(r, g2, b), mn = Math.min(r, g2, b), d = mx - mn;
+                var L = (mx + mn) / 2;
+                ls.push(L * 100);
+                if (L > 0.95 || L < 0.06) extreme.push('#' + h);
+                if (d > 0.06) {           // 거의 회색이면 색조를 따지지 않는다
+                    var hue = mx === r ? ((g2 - b) / d + 6) % 6 : mx === g2 ? (b - r) / d + 2 : (r - g2) / d + 4;
+                    hs.push(hue * 60);
+                }
+            });
+            if (ls.length > 1) worstL = Math.max(worstL, Math.max.apply(null, ls) - Math.min.apply(null, ls));
+            if (hs.length > 1) {
+                var dh = Math.max.apply(null, hs) - Math.min.apply(null, hs);
+                if (dh > 180) dh = 360 - dh;   // 빨강은 0도와 360도 양쪽에 있다
+                worstH = Math.max(worstH, dh);
+            }
         });
-        html += row('그라데이션 밝기 차', worst.toFixed(1) + '%', worst <= 15, '15% 안 (전에 73%로 형광등처럼 보였다)');
+        html += row('그늘 밝기 차', worstL.toFixed(1) + '%', worstL <= 28,
+            '28% 안 — 덩어리져 보이게 하는 그늘은 좋다. 60%를 넘으면 형광등처럼 된다');
+        html += row('그늘 색조 차', worstH.toFixed(0) + '도', worstH <= 25,
+            '25도 안 — 같은 색이 어두워지는 것이어야 한다. 딴 색으로 넘어가면 딴 기관처럼 보인다');
+        html += row('순백·순흑 섞임', extreme.length ? extreme.join(' ') : '없음', extreme.length === 0,
+            '밝기 95% 위나 6% 아래는 빛나거나 구멍처럼 보인다');
         // 눈금 밖
         var over = [];
         svg.querySelectorAll('[id]').forEach(function (e) {
