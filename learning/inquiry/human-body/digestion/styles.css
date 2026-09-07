@@ -132,6 +132,7 @@
 }
 
 .enzyme-lab-body {
+    position: relative;
     flex: 1;
     min-height: 0;
     padding: 6px 12px 40px;
@@ -333,3 +334,28 @@
     display: flex; align-items: center; justify-content: center;
     color: #fca5a5; font-weight: 700;
 }
+
+/* ── 가상 실험실 장면의 이름표 (enzyme-lab.js) ───────────────
+   그림 안 <text> 를 쓰지 않는다. 창이 커져도 글씨 크기가 같아야 한다. */
+.enzyme-tags {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.enzyme-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #cbd5e1;
+}
+
+.enzyme-tag[data-anchor="start"] { transform: translate(0, -50%); }
+.enzyme-tag[data-anchor="end"] { transform: translate(-100%, -50%); }
+
+.enzyme-tag.head { font-size: 15px; font-weight: 800; color: #f8fafc; }
+.enzyme-tag.name { color: #f8fafc; font-weight: 800; }
+.enzyme-tag.dim { color: #94a3b8; }
+.enzyme-tag.warm { color: #fbbf24; font-weight: 800; }

@@ -63,7 +63,7 @@
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
 
-    var wrap, layer, svg, liquids = {}, tubeNotes = {}, curvePath, marker, headline, summary;
+    var wrap, layer, svg, tagLayer, liquids = {}, tubeNotes = {}, curvePath, marker, headline, summary;
 
     function init() {
         wrap = document.querySelector('.cinematic-viewport');
@@ -74,6 +74,8 @@
         watchControls();
         firstSceneOnLoad();
         render();
+        window.addEventListener('resize', placeTags);
+        setTimeout(placeTags, 120);
     }
 
     function addSceneButton() {
@@ -110,6 +112,7 @@
     }
 
     function setVisible(on) {
+        if (on) { setTimeout(placeTags, 0); setTimeout(placeTags, 80); }
         layer.hidden = !on;
         var canvas = document.getElementById('simulationCanvas');
         if (canvas) canvas.style.visibility = on ? 'hidden' : 'visible';
@@ -136,7 +139,13 @@
         svg = document.createElementNS(SVG_NS, 'svg');
         svg.setAttribute('viewBox', '0 0 1000 520');
         svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-        layer.querySelector('.enzyme-lab-body').appendChild(svg);
+        var body = layer.querySelector('.enzyme-lab-body');
+        body.appendChild(svg);
+
+        // 글씨는 그림 안에 넣지 않는다. 그림 안 글씨는 창이 커지면 같이 커진다.
+        tagLayer = document.createElement('div');
+        tagLayer.className = 'enzyme-tags';
+        body.appendChild(tagLayer);
 
         drawRack();
         drawCurvePanel();
@@ -164,12 +173,10 @@
             liquids[t.key] = liquid;
 
             // 이름
-            g.appendChild(text(x + 34, 70, t.name, 15, '#f8fafc', 700));
+            tag(x + 34, 70, t.name, 'name');
 
             // 결과 쪽지
-            var note = text(x + 34, 372, '—', 13, '#94a3b8', 700);
-            g.appendChild(note);
-            tubeNotes[t.key] = note;
+            tubeNotes[t.key] = tag(x + 34, 372, '—', 'dim');
         });
 
         // 시험관 꽂이
@@ -183,19 +190,19 @@
         var g = el('g', { transform: 'translate(620, 60)' });
         svg.appendChild(g);
 
-        g.appendChild(text(0, 0, '효소가 잘 일하는 자리', 16, '#f8fafc', 800, 'start'));
+        tag(620, 60, '효소가 잘 일하는 자리', 'head', 'start');
 
         // 축
         g.appendChild(el('line', { x1: 0, y1: 210, x2: 320, y2: 210, stroke: '#64748b', 'stroke-width': 2 }));
         g.appendChild(el('line', { x1: 0, y1: 30, x2: 0, y2: 210, stroke: '#64748b', 'stroke-width': 2 }));
-        g.appendChild(text(160, 244, 'pH (산성 ➔ 염기성)', 13, '#94a3b8', 700));
+        tag(780, 320, 'pH (산성 ➔ 염기성)', 'dim');
         for (var p = 1; p <= 13; p += 3) {
             var x = ((p - 1) / 13) * 320;
             g.appendChild(el('line', { x1: x, y1: 210, x2: x, y2: 216, stroke: '#64748b', 'stroke-width': 2 }));
-            g.appendChild(text(x, 232, String(p), 12, '#94a3b8', 700));
+            tag(620 + x, 292, String(p), 'dim');
         }
-        g.appendChild(text(-8, 34, '활', 12, '#94a3b8', 700, 'end'));
-        g.appendChild(text(-8, 50, '성', 12, '#94a3b8', 700, 'end'));
+        tag(612, 88, '활', 'dim', 'end');
+        tag(612, 112, '성', 'dim', 'end');
 
         curvePath = el('path', { fill: 'none', stroke: '#fbbf24', 'stroke-width': 3 });
         g.appendChild(curvePath);
@@ -203,10 +210,8 @@
         marker = el('circle', { r: 8, fill: '#f43f5e', stroke: '#ffffff', 'stroke-width': 2.5 });
         g.appendChild(marker);
 
-        headline = text(0, 288, '', 14, '#fbbf24', 800, 'start');
-        g.appendChild(headline);
-        summary = text(0, 312, '', 13, '#cbd5e1', 600, 'start');
-        g.appendChild(summary);
+        headline = tag(620, 348, '', 'warm', 'start');
+        summary = tag(620, 372, '', 'dim', 'start');
     }
 
     /* ── 현재 조작 상태 읽기 (app.js 를 건드리지 않으려고 화면에서 직접 읽는다) ── */
@@ -245,6 +250,7 @@
         var c = current();
         paintTubes(c);
         paintCurve(c);
+        placeTags();
     }
 
     function paintTubes(c) {
@@ -257,7 +263,7 @@
             if (!r) {
                 liquid.setAttribute('fill', t.base);
                 note.textContent = '—';
-                note.setAttribute('fill', '#94a3b8');
+                note.style.color = '#94a3b8';
                 return;
             }
 
@@ -265,15 +271,15 @@
             if (hit && r.needHeat && !c.heating) {
                 liquid.setAttribute('fill', r.coldColor);
                 note.textContent = r.coldName;
-                note.setAttribute('fill', '#fbbf24');
+                note.style.color = '#fbbf24';
             } else if (hit) {
                 liquid.setAttribute('fill', r.hitColor);
                 note.textContent = r.hitName + ' ✔';
-                note.setAttribute('fill', '#f8fafc');
+                note.style.color = '#f8fafc';
             } else {
                 liquid.setAttribute('fill', r.missColor);
                 note.textContent = r.missName;
-                note.setAttribute('fill', '#94a3b8');
+                note.style.color = '#94a3b8';
             }
         });
 
@@ -321,7 +327,7 @@
         if (c.temp >= 60) msg = '지금 ' + c.temp + '℃ — 열에 굳어 일하지 못합니다 (활성 0%)';
         else msg = '지금 pH ' + c.ph + ' · ' + c.temp + '℃ — 활성 ' + pct + '% · ' + e.from + ' ➔ ' + e.to;
         summary.textContent = msg;
-        summary.setAttribute('fill', pct > 60 ? '#86efac' : (pct > 25 ? '#fbbf24' : '#fca5a5'));
+        summary.style.color = pct > 60 ? '#86efac' : (pct > 25 ? '#fbbf24' : '#fca5a5');
 
         var stat = document.getElementById('statEnzymeActivity');
         if (stat) stat.textContent = pct + ' %';
@@ -335,17 +341,34 @@
         return n;
     }
 
-    function text(x, y, str, size, fill, weight, anchor) {
-        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
-        var n = el('text', {
-            x: x, y: y, fill: fill, 'font-size': size,
-            'font-weight': weight || 700,
-            'font-family': 'Pretendard, sans-serif',
-            'text-anchor': anchor || 'middle'
-        });
-        n.textContent = str;
-        return n;
+    /* ── 이름표 (HTML) ───────────────────────────────────── */
+    var TAGS = [];
+
+    function tag(x, y, str, cls, anchor) {
+        var e = document.createElement('span');
+        e.className = 'enzyme-tag' + (cls ? ' ' + cls : '');
+        e.textContent = str || '';
+        e.dataset.anchor = anchor || 'middle';
+        tagLayer.appendChild(e);
+        TAGS.push({ el: e, x: x, y: y });
+        return e;
     }
+
+    function placeTags() {
+        if (!svg || !tagLayer || !layer || layer.hidden) return;
+        var box = svg.getBoundingClientRect();
+        if (!box.width) return;
+        var vb = svg.viewBox.baseVal;
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var lb = tagLayer.getBoundingClientRect();
+        var offX = (box.left - lb.left) + (box.width - vb.width * k) / 2;
+        var offY = (box.top - lb.top) + (box.height - vb.height * k) / 2;
+        TAGS.forEach(function (t) {
+            t.el.style.left = (offX + t.x * k) + 'px';
+            t.el.style.top = (offY + t.y * k) + 'px';
+        });
+    }
+
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
