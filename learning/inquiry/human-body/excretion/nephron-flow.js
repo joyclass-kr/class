@@ -28,17 +28,20 @@
         { key: 'blood', name: '혈구', color: '#dc2626', filtered: false }
     ];
 
+    var leaderGroup = null;
     var wrap, layer, svg, labelBox;
     var pathBlood, pathFiltrate, pathReabsorb;
     var lenBlood, lenFiltrate, lenReabsorb;
     var dots = [], tableRows = [], headline;
     var lastTs = 0;
 
+    // ax, ay 를 적으면 그 자리에 이름표를 놓고 조각까지 선을 긋는다.
+    // 왼쪽 위 넷은 상자가 겹쳐 그냥 두면 사구체를 가린다.
     var LABELS = [
-        { id: 'afferentArteriole', text: '들세동맥 (굵다)' },
-        { id: 'glomerulus', text: '사구체' },
-        { id: 'efferentArteriole', text: '날세동맥 (가늘다)' },
-        { id: 'bowmanCapsule', text: '보먼주머니' },
+        { id: 'afferentArteriole', text: '들세동맥 (굵다)', ax: 78, ay: 62 },
+        { id: 'glomerulus', text: '사구체 — 여과가 일어난다', ax: 268, ay: 44 },
+        { id: 'bowmanCapsule', text: '보먼주머니', ax: 470, ay: 44 },
+        { id: 'efferentArteriole', text: '날세동맥 (가늘다)', ax: 128, ay: 452 },
         { id: 'proximalTubule', text: '세뇨관' },
         { id: 'loopOfHenle', text: '헨레고리' },
         { id: 'distalTubule', text: '세뇨관 뒷부분' },
@@ -196,16 +199,37 @@
         var offY = (box.height - vb.height * k) / 2;
 
         labelBox.innerHTML = '';
+        if (!leaderGroup) {
+            leaderGroup = document.createElementNS(SVG_NS, 'g');
+            svg.appendChild(leaderGroup);
+        }
+        while (leaderGroup.firstChild) leaderGroup.removeChild(leaderGroup.firstChild);
+
         LABELS.forEach(function (item) {
             var elm = svg.querySelector('#' + item.id);
             if (!elm) return;
             var b;
             try { b = elm.getBBox(); } catch (e) { return; }
+
+            var cx = b.x + b.width / 2;
+            var cy = b.y + b.height / 2;
+            var ax = (item.ax === undefined) ? cx : item.ax;
+            var ay = (item.ay === undefined) ? cy : item.ay;
+
+            if (ax !== cx || ay !== cy) {
+                var line = document.createElementNS(SVG_NS, 'line');
+                line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+                line.setAttribute('x2', ax); line.setAttribute('y2', ay);
+                line.setAttribute('stroke', 'rgba(148, 163, 184, 0.7)');
+                line.setAttribute('stroke-width', 1.6);
+                leaderGroup.appendChild(line);
+            }
+
             var tag = document.createElement('span');
             tag.className = 'nephron-tag';
             tag.textContent = item.text;
-            tag.style.left = (offX + (b.x + b.width / 2) * k) + 'px';
-            tag.style.top = (offY + (b.y + b.height / 2) * k) + 'px';
+            tag.style.left = (offX + ax * k) + 'px';
+            tag.style.top = (offY + ay * k) + 'px';
             tag.addEventListener('click', function () { showDetail(item.id); });
             labelBox.appendChild(tag);
         });

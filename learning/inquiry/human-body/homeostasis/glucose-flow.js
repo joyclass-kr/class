@@ -58,6 +58,7 @@
 
     var wrap, layer, svg, labelBox, leaderGroup, partGroup, capBox;
     var flows = {}, marker = null, gaugeBox = null, markerBase = 0;
+    var normalBand = null, normalPlaced = false;
     var bits = { insulin: [], insulinCell: [], glucagon: [], store: [], release: [] };
 
     function init() {
@@ -149,6 +150,7 @@
         bits.release = makeBits(4, '#fbbf24', 7);
 
         marker = svg.querySelector('#gaugeMarker');
+        normalBand = svg.querySelector('#gaugeNormal');
         measureGauge();
 
         Object.keys(DETAIL).forEach(function (id) {
@@ -303,16 +305,35 @@
         } catch (e) { /* 아직 화면에 놓이기 전이면 다음 판에 다시 잰다 */ }
     }
 
+    /** 눈금 위에서 어떤 혈당 값이 놓일 y 자리 */
+    function yFor(v) {
+        var f = Math.max(0, Math.min(1, (v - GAUGE_MIN) / (GAUGE_MAX - GAUGE_MIN)));
+        var pad = gaugeBox.height * 0.08;
+        return gaugeBox.y + pad + (1 - f) * (gaugeBox.height - pad * 2);
+    }
+
+    /**
+     * 그림에 그려진 정상 범위 띠를 실제 90~110 자리로 옮긴다.
+     * 그림에 박힌 자리와 코드가 셈한 자리가 달라 눈금이 어긋나 있었다.
+     */
+    function placeNormalBand() {
+        if (!normalBand || normalPlaced || !gaugeBox) return;
+        var b;
+        try { b = normalBand.getBBox(); } catch (e) { return; }
+        if (!b.height) return;
+        var dy = yFor(HIGH) - b.y;
+        normalBand.setAttribute('transform', 'translate(0 ' + dy.toFixed(1) + ')');
+        normalPlaced = true;
+    }
+
     function moveMarker(g) {
         if (!marker) return;
         if (!gaugeBox) measureGauge();
         if (!gaugeBox) return;
+        placeNormalBand();
 
-        var f = (g - GAUGE_MIN) / (GAUGE_MAX - GAUGE_MIN);
-        f = Math.max(0, Math.min(1, f));
         // 눈금자는 위가 높은 값이다
-        var pad = gaugeBox.height * 0.08;
-        var y = gaugeBox.y + pad + (1 - f) * (gaugeBox.height - pad * 2);
+        var y = yFor(g);
         marker.setAttribute('transform', 'translate(0 ' + (y - markerBase).toFixed(1) + ')');
     }
 
