@@ -289,10 +289,21 @@
             return target;
         }
 
-        function select(position, animate) {
+        /*
+         * 이명동음 자리는 돌아온 쪽으로 적는다. 샾 쪽으로 돌아 도착하면 F♯,
+         * 플랫 쪽으로 돌아 도착하면 G♭이다. 오도권을 따라 걸어온 길이 곧 조표이므로
+         * 음악가가 실제로 그렇게 적는다. way가 1이면 샾 쪽, -1이면 플랫 쪽이다.
+         */
+        function spellByArrival(way) {
+            if (!way || !KEYS[index].alt) return;
+            flat = way < 0;
+        }
+
+        function select(position, animate, way) {
             index = ((position % 12) + 12) % 12;
-            relabel();
             const target = nearestAngle(index);
+            spellByArrival(way === undefined ? (target < turn ? 1 : target > turn ? -1 : 0) : way);
+            relabel();
             if (animate === false) { turn = target; applyTurn(turn); }
             else spinTo(target);
         }
@@ -344,11 +355,13 @@
         function endDrag(event) {
             if (!drag) return;
             const spun = drag.moved;
+            const way = turn < drag.turn ? 1 : turn > drag.turn ? -1 : 0;
             drag = null;
             disc.classList.remove("is-dragging");
             if (disc.hasPointerCapture(event.pointerId)) disc.releasePointerCapture(event.pointerId);
             const landed = Math.round(-turn / SECTOR);
             index = ((landed % 12) + 12) % 12;
+            spellByArrival(way);
             relabel();
             spinTo(-landed * SECTOR);
             /* 돌리고 손을 뗄 때 따라 나오는 클릭 하나만 걸러 낸다. */
@@ -381,7 +394,7 @@
 
         return {
             step: function (delta) {
-                select(index + delta);
+                select(index + delta, true, delta > 0 ? 1 : -1);
             },
             toggleFlat: function () {
                 flat = !flat;
