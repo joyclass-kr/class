@@ -14,6 +14,8 @@
     /* 건반에 보이는 범위: 가온도부터 두 옥타브 위 A까지 */
     const KEY_LOW = 60;
     const KEY_HIGH = 81;
+    /* 차시의 건반은 근음을 고르는 데 쓰므로, 그 위 한 옥타브까지 보여 준다. */
+    const LESSON_KEY_HIGH = 84;
 
     /*
      * 기준음은 검은건반도 나와야 한다. 다만 겹임시표(F♯♯, B♭♭)가 생기는 자리는
@@ -148,7 +150,7 @@
         { id: "lydian", en: "Lydian", ko: "리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 7], [5, 9], [6, 11], [7, 12]] },
         { id: "mixolydian", en: "Mixolydian", ko: "믹솔리디아", tones: [[0, 0], [1, 2], [2, 4], [3, 5], [4, 7], [5, 9], [6, 10], [7, 12]] },
         { id: "locrian", en: "Locrian", ko: "로크리아", tones: [[0, 0], [1, 1], [2, 3], [3, 5], [4, 6], [5, 8], [6, 10], [7, 12]] },
-        { id: "whole", en: "Whole Tone", ko: "온음음계", tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 8], [5, 10], [7, 12]] }
+        { id: "whole", en: "Whole Tone", ko: "온음음계", respell: true, tones: [[0, 0], [1, 2], [2, 4], [3, 6], [4, 8], [5, 10], [7, 12]] }
     ];
 
     /* 화음 진행 ---------------------------------------------------------- */
@@ -350,9 +352,52 @@
         };
     }
 
+    /*
+     * 음계 구성음을 적는다. 보통은 음자리와 반음 수를 그대로 따르지만, respell을 켠 음계는
+     * 음자리를 하나 또는 둘 올려 가며 홑임시표로 적히는 자리를 고른다. 온음음계처럼 일곱
+     * 음자리에 여섯 음을 얹는 음계는 그렇게 해야 겹임시표가 생기지 않는다.
+     */
+    function scaleNotes(root, item) {
+        if (!item.respell) return item.tones.map(tone => N.step(root, tone[0], tone[1]));
+        const notes = [root];
+        let letterAbs = root.letterAbs;
+        item.tones.slice(1).forEach(tone => {
+            const midi = root.midi + tone[1];
+            let best = null;
+            for (let up = 1; up <= 2; up += 1) {
+                const plain = N.spell(letterAbs + up, 0);
+                const accidental = midi - plain.midi;
+                if (Math.abs(accidental) > 1) continue;
+                if (!best || Math.abs(accidental) < Math.abs(best.accidental)) {
+                    best = N.spell(letterAbs + up, accidental);
+                }
+            }
+            if (!best) best = N.spell(letterAbs + 1, midi - N.spell(letterAbs + 1, 0).midi);
+            letterAbs = best.letterAbs;
+            notes.push(best);
+        });
+        return notes;
+    }
+
+    /* 겹임시표가 생기면 같은 소리의 다른 이름으로 적어 본다. */
+    function enharmonicRoot(root) {
+        if (root.accidental === 1) return N.spell(root.letterAbs + 1, -1);
+        if (root.accidental === -1) return N.spell(root.letterAbs - 1, 1);
+        return null;
+    }
+
+    function readableScale(root, item) {
+        const first = scaleNotes(root, item);
+        if (!first.some(note => Math.abs(note.accidental) > 1)) return first;
+        const other = enharmonicRoot(root);
+        if (!other) return first;
+        const second = scaleNotes(other, item);
+        return second.some(note => Math.abs(note.accidental) > 1) ? first : second;
+    }
+
     function scaleRoots(item) {
         return collectRoots("s:" + item.id, 28, 34, root => {
-            const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
+            const notes = scaleNotes(root, item);
             return inRange(notes, 55, 81) ? notes : null;
         });
     }
@@ -360,7 +405,7 @@
     function scaleQuestion(item, mode) {
         const shape = mode === "mixed" ? pick(["up", "down"]) : mode;
         const root = pick(scaleRoots(item));
-        const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
+        const notes = scaleNotes(root, item);
         const line = shape === "down" ? notes.slice().reverse() : notes;
         return {
             playback: { groups: line.map(note => [note.midi]), beat: .44 },
@@ -693,7 +738,10 @@
         playTimer: 0
     };
 
+    let lessonKeyPress = null;
+
     function showScreen(name) {
+        if (session.screen === "lesson" && name !== "lesson") stopLit();
         ["menu", "area", "course", "lesson", "wheel", "setup", "drill", "result"].forEach(key => {
             els[key + "Screen"].hidden = key !== name;
         });
@@ -1255,6 +1303,9 @@
             node.textContent = paragraph;
             els.lessonBody.append(node);
         });
+        stopLit();
+        exampleBlocks = [];
+        currentRoot = null;
         els.lessonExamples.innerHTML = "";
         if (lesson.diagram === "quality-chain") {
             const board = document.createElement("div");
@@ -1273,6 +1324,16 @@
                     : entry.scale ? scaleExample(entry)
                         : chordExample(entry)
         ));
+        /* 근음을 옮겨도 오선과 건반 안에 머무는 차시에서만 근음을 고르게 한다. */
+        const pickable = exampleBlocks.length > 0
+            && exampleBlocks.every(block => block.span <= 12);
+        setExampleRoot(N.natural(4 * 7), false);
+        els.lessonKeysLabel.textContent = label("Root", "근음");
+        els.lessonKeysLabel.hidden = !pickable;
+        lessonKeyPress = pickable
+            ? midi => setExampleRoot(pickRoot(((midi % 12) + 12) % 12), true)
+            : null;
+
         els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
         els.lessonQuiz.hidden = !lesson.quiz;
         if (lesson.quiz) {
@@ -1294,71 +1355,209 @@
 
     function intervalExample(intervalId) {
         const item = INTERVALS.concat(DISPLAY_INTERVALS).find(entry => entry.id === intervalId);
-        const root = N.natural(28);
-        const top = N.step(root, item.degree, item.semis);
         const block = document.createElement("div");
         block.className = "example";
 
         const caption = document.createElement("p");
         caption.className = "example-caption";
-        caption.textContent = item.label + " · 반음 " + item.semis + "개";
         block.append(caption);
 
         const row = document.createElement("div");
         row.className = "example-staves";
-        EXAMPLE_SHAPES.forEach(shape => {
-            const columns = shape.id === "harmony"
-                ? [{ notes: [root, top] }]
-                : shape.id === "down" ? [{ notes: [top] }, { notes: [root] }] : [{ notes: [root] }, { notes: [top] }];
-            const groups = shape.id === "harmony"
-                ? [[root.midi, top.midi]]
-                : shape.id === "down" ? [[top.midi], [root.midi]] : [[root.midi], [top.midi]];
+        const buttons = EXAMPLE_SHAPES.map(shape => {
             const button = document.createElement("button");
             button.type = "button";
             button.className = "example-play";
-            button.append(N.render(columns, { label: item.label + " " + shape.label }));
-            const tag = document.createElement("span");
-            tag.textContent = shape.label;
-            button.append(tag);
-            button.addEventListener("click", () => {
-                window.PianoEngine.playSequence(groups, shape.id === "harmony" ? 2 : .7).catch(() => {});
-            });
             row.append(button);
+            return { shape: shape, node: button };
         });
         block.append(row);
 
+        const topOf = root => N.step(root, item.degree, item.semis);
+
+        const draw = chosen => {
+            const root = betterRoot(chosen, place => countDeep([place, topOf(place)]));
+            const top = topOf(root);
+            caption.textContent = N.name(root) + " " + item.label + " · 반음 " + item.semis + "개";
+            buttons.forEach(entry => {
+                const harmony = entry.shape.id === "harmony";
+                const down = entry.shape.id === "down";
+                const columns = harmony
+                    ? [{ notes: [root, top] }]
+                    : down ? [{ notes: [top] }, { notes: [root] }] : [{ notes: [root] }, { notes: [top] }];
+                const order = harmony
+                    ? [{ column: 0, midis: [root.midi, top.midi] }]
+                    : down
+                        ? [{ column: 0, midis: [top.midi] }, { column: 1, midis: [root.midi] }]
+                        : [{ column: 0, midis: [root.midi] }, { column: 1, midis: [top.midi] }];
+                entry.node.innerHTML = "";
+                entry.node.append(N.render(columns, { label: item.label + " " + entry.shape.label, padTop: 14 }));
+                const tag = document.createElement("span");
+                tag.textContent = entry.shape.label;
+                entry.node.append(tag);
+                entry.node.setAttribute("aria-label", N.name(root) + " " + item.label + " " + entry.shape.label);
+                entry.node.onclick = () => playRun(entry.node, order, harmony ? 2 : .7);
+            });
+        };
+
+        exampleBlocks.push({
+            draw: draw,
+            deep: root => countDeep([root, topOf(root)]),
+            span: item.semis,
+            play: () => buttons[0].node.click()
+        });
         return block;
+    }
+
+    /*
+     * 보기 하나는 draw·deep·span 셋으로 이루어진다.
+     *   draw(root) — 그 근음으로 다시 그린다
+     *   deep(root) — 그 근음으로 적었을 때 생기는 겹임시표 수
+     *   span       — 근음에서 가장 높은 음까지의 반음 수
+     * 근음을 건반에서 고를 수 있는 차시는 span이 한 옥타브를 넘지 않는 차시다.
+     * 겹음정처럼 더 넓은 보기는 근음을 옮기면 오선과 건반을 벗어난다.
+     */
+    let exampleBlocks = [];
+
+    function countDeep(notes) {
+        return notes.filter(note => Math.abs(note.accidental) > 1).length;
+    }
+
+    /*
+     * 근음을 고를 때 겹임시표가 생기지 않는 쪽으로 적는다. 예를 들어 검은건반 하나를
+     * D♭로 적으면 Locrian(로크리아)에 겹내림표가 생기므로 C♯으로 적는다.
+     */
+    const FLAT_PREFERRED = { 1: true, 3: true, 8: true, 10: true };
+
+    function rootCandidates(pitchClass) {
+        const list = [];
+        const plain = N.LETTER_SEMIS.indexOf(pitchClass);
+        if (plain >= 0) {
+            list.push(N.spell(4 * 7 + plain, 0));
+            return list;
+        }
+        const below = N.LETTER_SEMIS.indexOf(pitchClass - 1);
+        const above = N.LETTER_SEMIS.indexOf(pitchClass + 1);
+        if (below >= 0) list.push(N.spell(4 * 7 + below, 1));
+        if (above >= 0) list.push(N.spell(4 * 7 + above, -1));
+        return list;
+    }
+
+    function pickRoot(pitchClass) {
+        const list = rootCandidates(pitchClass);
+        if (list.length < 2) return list[0];
+        const deep = root => exampleBlocks.reduce((sum, block) => sum + block.deep(root), 0);
+        const sharp = list.find(root => root.accidental > 0);
+        const flat = list.find(root => root.accidental < 0);
+        const sharpDeep = deep(sharp);
+        const flatDeep = deep(flat);
+        if (sharpDeep !== flatDeep) return sharpDeep < flatDeep ? sharp : flat;
+        return FLAT_PREFERRED[pitchClass] ? flat : sharp;
+    }
+
+    /* 그 보기에 겹임시표가 생기면 같은 소리의 다른 이름으로 적어 본다. */
+    function betterRoot(root, deep) {
+        if (deep(root) === 0) return root;
+        const other = enharmonicRoot(root);
+        if (!other) return root;
+        return deep(other) < deep(root) ? other : root;
+    }
+
+    /* 소리가 나는 동안 악보와 건반에 차례로 불을 켠다. */
+    let litTimers = [];
+
+    function stopLit() {
+        litTimers.forEach(id => window.clearTimeout(id));
+        litTimers = [];
+        if (lessonKeyboard) lessonKeyboard.clearLit();
+        document.querySelectorAll(".sheet-column.is-lit").forEach(node => node.classList.remove("is-lit"));
+    }
+
+    /*
+     * order는 [{ column, midis }] 꼴이다. 소리가 나는 때에 맞춰 그 칸과 건반에 불을 켠다.
+     * delay는 이 줄이 몇 밀리초 뒤에 시작하는지다.
+     */
+    function litRun(host, order, beat, delay) {
+        const columns = host.querySelectorAll(".sheet-column");
+        const dark = () => {
+            columns.forEach(node => node.classList.remove("is-lit"));
+            if (lessonKeyboard) lessonKeyboard.clearLit();
+        };
+        order.forEach((entry, index) => {
+            litTimers.push(window.setTimeout(() => {
+                dark();
+                if (columns[entry.column]) columns[entry.column].classList.add("is-lit");
+                if (lessonKeyboard) entry.midis.forEach(midi => lessonKeyboard.lit(midi, true));
+            }, (delay || 0) + 55 + index * beat * 1000));
+        });
+        litTimers.push(window.setTimeout(dark, (delay || 0) + 55 + order.length * beat * 1000 + 240));
+    }
+
+    function playRun(host, order, beat) {
+        stopLit();
+        window.PianoEngine.playSequence(order.map(entry => entry.midis), beat).catch(() => {});
+        litRun(host, order, beat, 0);
+    }
+
+    const SCALE_BEAT = .4;
+
+    /* 올라갔다 내려온다. 꼭대기 음은 한 번만 친다. */
+    function playScale(notes, host) {
+        const order = notes.map((note, index) => ({ column: index, midis: [note.midi] }));
+        for (let index = notes.length - 2; index >= 0; index -= 1) {
+            order.push({ column: index, midis: [notes[index].midi] });
+        }
+        playRun(host, order, SCALE_BEAT);
     }
 
     function scaleExample(entry) {
         const item = SCALES.find(scale => scale.id === entry.scale);
-        const root = N.natural(4 * 7);
-        const notes = item.tones.map(tone => N.step(root, tone[0], tone[1]));
-        const midis = notes.map(note => note.midi);
 
         const block = document.createElement("div");
         block.className = "example";
 
         const caption = document.createElement("p");
         caption.className = "example-caption";
-        caption.textContent = N.name(root) + " " + item.label;
         block.append(caption);
 
         const button = document.createElement("button");
         button.type = "button";
         button.className = "example-play is-wide";
-        button.append(N.render(notes.map(note => ({ notes: [note] })), { label: item.label }));
-        const tag = document.createElement("span");
-        tag.textContent = label("Ascending", "상행") + " · " + label("Descending", "하행");
-        button.append(tag);
-        button.addEventListener("click", () => {
-            window.PianoEngine.playSequence(midis.map(midi => [midi]), .44).catch(() => {});
-            window.setTimeout(() => {
-                window.PianoEngine.playSequence(midis.slice().reverse().map(midi => [midi]), .44).catch(() => {});
-            }, midis.length * 440 + 260);
-        });
         block.append(button);
+
+        const draw = root => {
+            const notes = readableScale(root, item);
+            caption.textContent = N.name(notes[0]) + " " + item.label;
+            button.setAttribute("aria-label", N.name(notes[0]) + " " + item.label);
+            button.innerHTML = "";
+            button.append(N.render(
+                notes.map(note => ({ notes: [note] })),
+                { label: N.name(notes[0]) + " " + item.label, padTop: 14 }
+            ));
+            const tag = document.createElement("span");
+            tag.textContent = label("Ascending", "상행") + " · " + label("Descending", "하행");
+            button.append(tag);
+            button.onclick = () => playScale(notes, button);
+            return notes;
+        };
+
+        exampleBlocks.push({
+            draw: draw,
+            deep: root => countDeep(scaleNotes(root, item)),
+            span: 12,
+            play: () => playScale(readableScale(currentRoot, item), button)
+        });
         return block;
+    }
+
+    /* 건반에서 근음을 고르면 그 차시의 보기가 모두 그 근음으로 다시 그려진다. */
+    let currentRoot = null;
+
+    function setExampleRoot(root, play) {
+        stopLit();
+        currentRoot = root;
+        exampleBlocks.forEach(block => block.draw(root));
+        if (play && exampleBlocks.length) exampleBlocks[0].play();
     }
 
     /*
@@ -1407,34 +1606,57 @@
     function chordExample(entry) {
         const item = CHORDS.find(chord => chord.id === entry.chord);
         const inversion = entry.inversion || 0;
-        const notes = chordNotes(N.natural(28), item, inversion);
-        const midis = notes.map(note => note.midi);
 
         const block = document.createElement("div");
         block.className = "example";
 
         const caption = document.createElement("p");
         caption.className = "example-caption";
-        caption.textContent = item.label + (entry.inversion === undefined ? "" : " · " + POSITION_LABEL[inversion]);
         block.append(caption);
 
         const button = document.createElement("button");
         button.type = "button";
         button.className = "example-play is-wide";
-        button.append(N.render(
-            [{ notes: notes }].concat(notes.map(note => ({ notes: [note] }))),
-            { label: item.label }
-        ));
-        const tag = document.createElement("span");
-        tag.textContent = label("Harmonic", "화성") + " · " + label("Arpeggio", "분산");
-        button.append(tag);
-        button.addEventListener("click", () => {
-            window.PianoEngine.playSequence([midis], 1.6).catch(() => {});
-            window.setTimeout(() => {
-                window.PianoEngine.playSequence(midis.map(midi => [midi]), .48).catch(() => {});
-            }, 1500);
-        });
         block.append(button);
+
+        const deep = root => countDeep(chordTones(root, item));
+
+        /* 화성으로 한 번 울린 뒤 한 음씩 펼친다. */
+        const playChord = notes => {
+            const midis = notes.map(note => note.midi);
+            stopLit();
+            window.PianoEngine.playSequence([midis], 1.6).catch(() => {});
+            litRun(button, [{ column: 0, midis: midis }], 1.6, 0);
+            litTimers.push(window.setTimeout(() => {
+                window.PianoEngine.playSequence(midis.map(midi => [midi]), .48).catch(() => {});
+            }, 1500));
+            litRun(button, midis.map((midi, index) => ({ column: index + 1, midis: [midi] })), .48, 1500);
+        };
+
+        const draw = chosen => {
+            const root = betterRoot(chosen, deep);
+            const notes = chordNotes(root, item, inversion);
+            const name = N.LETTER_NAMES[root.letter] + (ACC_MARK[String(root.accidental)] || "");
+            caption.textContent = name + " " + item.label
+                + (entry.inversion === undefined ? "" : " · " + POSITION_LABEL[inversion]);
+            button.innerHTML = "";
+            button.append(N.render(
+                [{ notes: notes }].concat(notes.map(note => ({ notes: [note] }))),
+                { label: name + " " + item.label, padTop: 14 }
+            ));
+            const tag = document.createElement("span");
+            tag.textContent = label("Harmonic", "화성") + " · " + label("Arpeggio", "분산");
+            button.append(tag);
+            button.setAttribute("aria-label", name + " " + item.label);
+            button.onclick = () => playChord(notes);
+        };
+
+        exampleBlocks.push({
+            draw: draw,
+            deep: deep,
+            span: 12,
+            play: () => button.click()
+        });
         return block;
     }
 
@@ -1931,7 +2153,7 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "setupScreen", "drillScreen", "resultScreen",
             "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "lessonQuiz", "lessonKeys", "wheelKeys", "areaList", "toolList",
+            "lessonNext", "lessonQuiz", "lessonKeys", "lessonKeysLabel", "wheelKeys", "areaList", "toolList",
             "areaScreen", "areaTitle", "areaCourse", "areaDrills", "wheelScreen", "wheelBoard", "wheelChords",
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence", "setupTitle", "inversionField", "inversionRow",
             "helpRow", "arpButton", "rootButton",
@@ -1950,7 +2172,10 @@
             if (answering) answerByKey(midi);
             else soundOnly(midi);
         });
-        lessonKeyboard = window.Keyboard.build(els.lessonKeys, KEY_LOW, KEY_HIGH, soundOnly);
+        lessonKeyboard = window.Keyboard.build(els.lessonKeys, KEY_LOW, LESSON_KEY_HIGH, midi => {
+            if (lessonKeyPress) lessonKeyPress(midi);
+            else soundOnly(midi);
+        });
         wheelKeyboard = window.Keyboard.build(els.wheelKeys, KEY_LOW, KEY_HIGH, soundOnly);
 
         renderMenu();

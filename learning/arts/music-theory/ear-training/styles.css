@@ -262,6 +262,10 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .sheet-ink.is-right { stroke: #17714f; fill: #17714f; }
 .sheet-ink.is-wrong { stroke: #ab3b3b; fill: #ab3b3b; }
 
+/* 소리가 나는 동안 그 음에 불이 들어온다. */
+.sheet-column { transition: none; }
+.sheet-column.is-lit { stroke: #b8620a; fill: #b8620a; }
+
 /* 듣기 · 넘기기 */
 .play-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; }
 
@@ -318,6 +322,8 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .key:disabled { cursor: default; }
 .key-white:not(:disabled):active { background: linear-gradient(#f6d47c, #c79028); }
 .key-black:not(:disabled):active { background: linear-gradient(#d49a36, #422708); }
+.key-white.is-lit { background: linear-gradient(#f6d47c, #c79028); }
+.key-black.is-lit { background: linear-gradient(#d49a36, #422708); }
 
 .key-mark {
     position: absolute;
@@ -390,6 +396,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 }
 
 .example-caption { margin: 0; font-size: 17px; font-weight: 800; }
+
 .example-staves { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 
 .example-play {
@@ -573,6 +580,7 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
     #lessonScreen .lesson-body { grid-column: 1; }
     #lessonScreen .examples { grid-column: 2; grid-row: 1 / span 3; }
     #lessonScreen .examples.is-wide-row { grid-column: 1 / -1; grid-row: auto; }
+    #lessonScreen #lessonKeysLabel { grid-column: 1; }
     #lessonScreen .free-keys { grid-column: 1; }
     #lessonScreen .lesson-actions { grid-column: 1; }
 }

@@ -63,7 +63,7 @@
             keys: keys,
             clearMarks: function () {
                 keys.forEach(key => {
-                    key.classList.remove("is-given", "is-right", "is-wrong", "is-typed");
+                    key.classList.remove("is-given", "is-right", "is-wrong", "is-typed", "is-lit");
                     key.querySelector(".key-mark").textContent = "";
                 });
             },
@@ -72,6 +72,13 @@
                 if (!key) return;
                 key.classList.add("is-" + kind);
                 key.querySelector(".key-mark").textContent = text || "";
+            },
+            lit: function (midi, on) {
+                const key = keys.get(midi);
+                if (key) key.classList.toggle("is-lit", on !== false);
+            },
+            clearLit: function () {
+                keys.forEach(key => key.classList.remove("is-lit"));
             },
             centerOn: function (midi) {
                 const key = keys.get(midi);

@@ -101,7 +101,7 @@
             class: "sheet",
             /* 칸 수가 달라도 음표 크기가 같아 보이도록 한 눈금을 2px로 맞춘다. */
             style: "width:" + (width * 1.9) + "px",
-            viewBox: "0 0 " + width + " 80",
+            viewBox: "0 " + (-(settings.padTop || 0)) + " " + width + " " + (80 + (settings.padTop || 0)),
             role: "img",
             "aria-label": settings.label || "악보"
         });
@@ -125,7 +125,10 @@
                 svg.append(unknown);
                 return;
             }
-            const group = make("g", { class: "sheet-ink" + (column.mark ? " is-" + column.mark : "") });
+            const group = make("g", {
+                class: "sheet-ink sheet-column" + (column.mark ? " is-" + column.mark : ""),
+                "data-column": index
+            });
             const sorted = column.notes.slice().sort((a, b) => a.letterAbs - b.letterAbs);
             const drawnLedgers = new Set();
             let shift = 0;
