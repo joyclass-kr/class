@@ -3,13 +3,15 @@ import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
 const lessonRoot = path.join(root, 'learning', 'literacy-numeracy', 'hanja-meaning', 'v2');
-const files = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json', 'hanja-v2-lessons-06.json'];
+const files = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json', 'hanja-v2-lessons-06.json', 'hanja-v2-lessons-07.json'];
 const lessons = files.flatMap((name) => JSON.parse(fs.readFileSync(path.join(import.meta.dirname, name), 'utf8')));
 const curriculum = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-curriculum-v2.json'), 'utf8'));
 const standard = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-grade6-300.json'), 'utf8'));
 const strokes = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-strokes.json'), 'utf8'));
 const expansionSelection = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-csat-expansion-selection.json'), 'utf8'));
-const expectedCharacterCount = 310 + [...expansionSelection.characters].length;
+const subjectBatch = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-v2-lessons-07.json'), 'utf8'));
+const subjectCharacters = new Set(subjectBatch.flatMap((lesson) => lesson.characters.map((item) => item.character)));
+const expectedCharacterCount = 310 + [...expansionSelection.characters].length + subjectCharacters.size;
 const errors = [];
 const normalize = (character) => ({ 强: '強' }[character] || character);
 const allCharacters = new Set();
