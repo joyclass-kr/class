@@ -25,7 +25,8 @@
 
     var wrap, layer, svg, labelBox, leaderGroup;
     var foreGroup, handle;
-    var angleArc, anglePlate;
+    var angleArc, anglePlate, handleRing, travelArc, ghost;
+    var everDragged = false;
     var angleAt = { x: 0, y: 0 };
     var dragging = false;
     var loaded = false;
@@ -207,6 +208,20 @@
         buildGoniometer();
 
         // Drag handle on hand
+        // 손잡이가 오갈 수 있는 길을 옅은 점선 호로 깔아 둔다
+        travelArc = el('path', {
+            fill: 'none', stroke: '#38bdf8', 'stroke-width': 2.5,
+            'stroke-dasharray': '8 10', 'stroke-linecap': 'round', opacity: 0.55
+        });
+        svg.appendChild(travelArc);
+        // 그 길 위를 오가는 잔상 — 여기가 움직인다는 것을 눈으로 알린다
+        ghost = el('circle', { r: 15, fill: '#7dd3fc', opacity: 0.5 });
+        svg.appendChild(ghost);
+
+        // 잡는 자리인 줄 알아보게 맥박처럼 퍼지는 고리를 두른다.
+        // 한 번 잡고 나면 멎는다 — 계속 반짝이면 그것도 소음이다.
+        handleRing = el('circle', { fill: 'none', stroke: '#38bdf8', 'stroke-width': 3 });
+        svg.appendChild(handleRing);
         handle = el('circle', { r: 21, fill: '#38bdf8', stroke: '#e0f2fe', 'stroke-width': 3, cursor: 'grab' });
         svg.appendChild(handle);
 
@@ -338,6 +353,36 @@
         var wrist = { x: ELBOW.x + d.x * FORE_LEN, y: ELBOW.y + d.y * FORE_LEN };
         handle.setAttribute('cx', wrist.x.toFixed(1));
         handle.setAttribute('cy', wrist.y.toFixed(1));
+
+        handleRing.setAttribute('cx', wrist.x.toFixed(1));
+        handleRing.setAttribute('cy', wrist.y.toFixed(1));
+        if (everDragged) {
+            handleRing.setAttribute('opacity', 0);
+            travelArc.setAttribute('opacity', 0);
+            ghost.setAttribute('opacity', 0);
+        } else {
+            // 30도에서 180도까지 손목이 지나는 길
+            var arcD = '';
+            for (var ad = 30; ad <= 180; ad += 5) {
+                var dd = foreDir(ad);
+                arcD += (arcD ? ' L' : 'M') + (ELBOW.x + dd.x * FORE_LEN).toFixed(1) + ' ' +
+                        (ELBOW.y + dd.y * FORE_LEN).toFixed(1);
+            }
+            travelArc.setAttribute('d', arcD);
+            travelArc.setAttribute('opacity', 0.55);
+
+            // 잔상이 길 위를 천천히 오간다
+            var sway = (nowMs() % 2600) / 2600;
+            var back = sway < 0.5 ? sway * 2 : (1 - sway) * 2;   // 0 ➔ 1 ➔ 0
+            var gd = foreDir(30 + back * 150);
+            ghost.setAttribute('cx', (ELBOW.x + gd.x * FORE_LEN).toFixed(1));
+            ghost.setAttribute('cy', (ELBOW.y + gd.y * FORE_LEN).toFixed(1));
+            ghost.setAttribute('opacity', 0.5);
+
+            var beat = (nowMs() % 1400) / 1400;          // 0 ~ 1 을 되풀이
+            handleRing.setAttribute('r', (21 + beat * 20).toFixed(1));
+            handleRing.setAttribute('opacity', (0.9 * (1 - beat)).toFixed(2));
+        }
 
         // 5. 이름표 가리킴선 자리
         var bMid = midOf('attachBicepsOrigin', 'attachBicepsInsertion', deg);
@@ -520,6 +565,7 @@
         anglePlate = document.createElement('span');
         anglePlate.className = 'joint-angle-tag';
         labelBox.appendChild(anglePlate);
+
     }
 
     function placeLabels() {
@@ -550,6 +596,7 @@
     function bindDrag() {
         handle.addEventListener('pointerdown', function (e) {
             dragging = true;
+            everDragged = true;
             handle.setAttribute('cursor', 'grabbing');
             if (handle.setPointerCapture) handle.setPointerCapture(e.pointerId);
             e.preventDefault();
