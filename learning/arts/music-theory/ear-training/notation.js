@@ -100,19 +100,22 @@
      * 아래 좌표는 한 칸(줄과 줄 사이)을 10으로 두고, 소용돌이 가운데를 0으로 잡은 것이다.
      */
     const G_LINE_ABS = 4 * 7 + 4;   /* 높은음자리표가 가리키는 G4 */
-    const CLEF_PATH = "M-4,26 C1,29 8,27 9,21 C10,13 10,5 9,-2"
-        + " C8,-12 9,-24 10,-33 C11,-40 5,-44 1,-40"
-        + " C-3,-36 -3,-28 2,-22 C6,-14 15,-10 18,-3"
-        + " C22,5 17,13 8,13 C-1,13 -7,6 -6,-1"
-        + " C-5,-8 4,-11 9,-5 C13,0 11,6 6,5";
+    const CLEF_PATH = "M-5,25 C1,29 7,27 7,20 C7,12 7,4 7,-1"
+        + " C7,-14 8,-27 9,-38 C9,-44 3,-46 0,-42"
+        + " C-4,-37 -3,-29 2,-23 C7,-16 16,-13 17,-6"
+        + " C18,1 12,6 5,4 C-1,2 -2,-4 3,-5 C7,-6 8,-2 6,0";
+
+    /* 큰 굽이는 굵게 덧그어 획에 굵고 가는 맛을 준다. */
+    const CLEF_BOWL = "M1,-24 C6,-17 16,-13 17,-6 C18,1 13,6 6,4";
 
     /* 위아래로 자리표가 먹는 띠 */
-    const CLEF_TOP = 3;
-    const CLEF_BOTTOM = 79;
+    const CLEF_TOP = 0;
+    const CLEF_BOTTOM = 78;
 
     function clefNode(x) {
         const y = yFor(G_LINE_ABS);
         const group = make("g", { class: "sheet-clef", transform: "translate(" + x + "," + y + ")" });
+        group.append(make("path", { class: "is-bowl", d: CLEF_BOWL }));
         group.append(make("path", { d: CLEF_PATH }));
         return group;
     }

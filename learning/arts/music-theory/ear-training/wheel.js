@@ -10,12 +10,12 @@
         { major: "D", minor: "Bm", count: 2, sharp: true, tonic: 2, letter: 1, acc: 0 },
         { major: "A", minor: "F♯m", count: 3, sharp: true, tonic: 9, letter: 5, acc: 0 },
         { major: "E", minor: "C♯m", count: 4, sharp: true, tonic: 4, letter: 2, acc: 0 },
-        { major: "B", minor: "G♯m", count: 5, sharp: true, tonic: 11, letter: 6, acc: 0 },
+        { major: "B", minor: "G♯m", count: 5, sharp: true, tonic: 11, letter: 6, acc: 0, same: "C♭" },
         {
-            major: "F♯", minor: "D♯m", count: 6, sharp: true, tonic: 6, letter: 3, acc: 1,
-            alt: "G♭", altMinor: "E♭m", altCount: 6, altSharp: false, altLetter: 4, altAcc: -1
+            major: "F♯", minor: "D♯m", count: 6, sharp: true, tonic: 6, letter: 3, acc: 1, same: "G♭",
+            alt: "G♭", altMinor: "E♭m", altCount: 6, altSharp: false, altLetter: 4, altAcc: -1, altSame: "F♯"
         },
-        { major: "D♭", minor: "B♭m", count: 5, sharp: false, tonic: 1, letter: 1, acc: -1 },
+        { major: "D♭", minor: "B♭m", count: 5, sharp: false, tonic: 1, letter: 1, acc: -1, same: "C♯" },
         { major: "A♭", minor: "Fm", count: 4, sharp: false, tonic: 8, letter: 5, acc: -1 },
         { major: "E♭", minor: "Cm", count: 3, sharp: false, tonic: 3, letter: 2, acc: -1 },
         { major: "B♭", minor: "Gm", count: 2, sharp: false, tonic: 10, letter: 6, acc: -1 },
@@ -73,34 +73,38 @@
         return [radius * Math.cos(radians), radius * Math.sin(radians)];
     }
 
-    /* 높은음자리표에서 조표가 붙는 자리. E4를 30으로 둔 음자리 번호다. */
-    const SHARP_SEATS = [38, 35, 39, 36, 33, 37, 34];
-    const FLAT_SEATS = [34, 37, 33, 36, 32, 35, 31];
+    /*
+     * 조표는 오선을 그리지 않고 올림표·내림표만 작게 모아 그린다. 몇 개인지가
+     * 한눈에 보이면 되므로 오선과 자리표는 자리만 차지한다. 글꼴 글리프는
+     * 컴퓨터마다 크기가 달라지므로 획을 직접 그린다.
+     */
+    const MARK_GAP = 12;
 
-    /* 가운데에 그리는 작은 조표. */
+    function sharpMark() {
+        const group = make("g", {});
+        group.append(make("line", { x1: -1.7, y1: -5.4, x2: -1.7, y2: 5.6 }));
+        group.append(make("line", { x1: 1.7, y1: -6.4, x2: 1.7, y2: 4.6 }));
+        group.append(make("line", { class: "is-bar", x1: -3.9, y1: -1.4, x2: 3.9, y2: -2.6 }));
+        group.append(make("line", { class: "is-bar", x1: -3.9, y1: 2.6, x2: 3.9, y2: 1.4 }));
+        return group;
+    }
+
+    function flatMark() {
+        const group = make("g", {});
+        group.append(make("line", { x1: -2, y1: -7, x2: -2, y2: 4.6 }));
+        group.append(make("path", { d: "M-2,-1.2 C2.4,-3.8 5.4,-0.6 2.6,2.4 C1.4,3.6 -0.6,4.4 -2,4.6" }));
+        return group;
+    }
+
     function keySignature(count, sharp) {
-        const gap = 5;
-        const height = gap * 4;
-        const seats = sharp ? SHARP_SEATS : FLAT_SEATS;
-        const width = 30 + Math.max(count, 1) * 7;
         const group = make("g", { class: "wheel-key-sig" });
-
-        for (let line = 0; line < 5; line += 1) {
-            const y = line * gap;
-            group.append(make("line", { x1: 0, y1: y, x2: width, y2: y }));
-        }
-        const clef = make("text", { class: "wheel-sig-clef", x: 4, y: height + 4 });
-        clef.textContent = "𝄞";
-        group.append(clef);
-
+        if (!count) return group;
+        const width = (count - 1) * MARK_GAP;
         for (let mark = 0; mark < count; mark += 1) {
-            const seat = seats[mark];
-            const y = height - (seat - 30) * (gap / 2);
-            const glyph = make("text", { class: "wheel-sig-mark", x: 28 + mark * 7, y: y + (sharp ? 3.5 : 2.5) });
-            glyph.textContent = sharp ? "♯" : "♭";
-            group.append(glyph);
+            const one = sharp ? sharpMark() : flatMark();
+            one.setAttribute("transform", "translate(" + (mark * MARK_GAP - width / 2) + ",0)");
+            group.append(one);
         }
-        group.setAttribute("transform", "translate(" + (-width / 2) + ",8)");
         return group;
     }
 
@@ -174,6 +178,7 @@
         svg.append(disc);
         const majorCells = [];
         const majorTexts = [];
+        const sameTexts = [];
         const minorTexts = [];
 
         KEYS.forEach((key, position) => {
@@ -194,18 +199,20 @@
             disc.append(minor);
 
             majorTexts.push(make("text", { class: "wheel-major-name" }));
+            sameTexts.push(make("text", { class: "wheel-same-name" }));
             minorTexts.push(make("text", { class: "wheel-minor-name" }));
         });
-        majorTexts.concat(minorTexts).forEach(node => disc.append(node));
+        majorTexts.concat(sameTexts, minorTexts).forEach(node => disc.append(node));
 
         /* 가운데 */
         const hub = make("g", { class: "wheel-hub" });
         svg.append(hub);
         hub.append(make("circle", { class: "wheel-hub-face", cx: 0, cy: 0, r: R_MIN_IN }));
         const hubMajor = make("text", { class: "wheel-hub-major", x: 0, y: -30 });
-        const hubMinor = make("text", { class: "wheel-hub-minor", x: 0, y: -8 });
-        const hubSign = make("g", { class: "wheel-hub-sig" });
-        hub.append(hubMajor, hubMinor, hubSign);
+        const hubMinor = make("text", { class: "wheel-hub-minor", x: 0, y: -9 });
+        const hubSame = make("text", { class: "wheel-hub-same", x: 0, y: 10 });
+        const hubSign = make("g", { class: "wheel-hub-sig", transform: "translate(0,30)" });
+        hub.append(hubMajor, hubMinor, hubSame, hubSign);
 
         container.innerHTML = "";
         container.append(svg);
@@ -215,12 +222,12 @@
             if (!flat || !key.alt) {
                 return {
                     major: key.major, minor: key.minor, count: key.count, sharp: key.sharp,
-                    tonic: key.tonic, letter: key.letter, acc: key.acc
+                    tonic: key.tonic, letter: key.letter, acc: key.acc, same: key.same
                 };
             }
             return {
                 major: key.alt, minor: key.altMinor, count: key.altCount, sharp: key.altSharp,
-                tonic: key.tonic, letter: key.altLetter, acc: key.altAcc
+                tonic: key.tonic, letter: key.altLetter, acc: key.altAcc, same: key.altSame
             };
         }
 
@@ -231,7 +238,9 @@
             KEYS.forEach((key, position) => {
                 const center = position * SECTOR;
                 const [mx, my] = point((R_MAJ_IN + R_MAJ_OUT) / 2, center);
-                majorTexts[position].setAttribute("transform", "translate(" + mx + "," + my + ")" + upright);
+                const stacked = keyAt(position).same ? " translate(0,-6)" : "";
+                majorTexts[position].setAttribute("transform", "translate(" + mx + "," + my + ")" + upright + stacked);
+                sameTexts[position].setAttribute("transform", "translate(" + mx + "," + my + ")" + upright + " translate(0,12)");
                 const [nx, ny] = point((R_MIN_IN + R_MIN_OUT) / 2, center);
                 minorTexts[position].setAttribute("transform", "translate(" + nx + "," + ny + ")" + upright);
             });
@@ -242,12 +251,14 @@
             KEYS.forEach((key, position) => {
                 const shown = keyAt(position);
                 majorTexts[position].textContent = shown.major;
+                sameTexts[position].textContent = shown.same ? "= " + shown.same : "";
                 minorTexts[position].textContent = shown.minor;
                 majorCells[position].classList.toggle("is-tonic", position === index);
             });
             const home = keyAt(index);
             hubMajor.textContent = home.major + " Major";
             hubMinor.textContent = home.minor.replace("m", "") + " Minor";
+            hubSame.textContent = home.same ? "= " + home.same + " Major" : "";
             hubSign.innerHTML = "";
             hubSign.append(keySignature(home.count, home.sharp));
             if (settings.onChange) settings.onChange(chords(), home);
