@@ -198,7 +198,7 @@
             ctx.fillStyle = '#0a0f1d';
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#38bdf8';
-            ctx.font = 'bold 17px Pretendard, sans-serif';
+            ctx.font = 'bold ' + fpx(15) + ' Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('⚡ 근골격계 시뮬레이터 로딩 중...', width / 2, height / 2);
         }
@@ -269,7 +269,7 @@
         ctx.setLineDash([]);
 
         ctx.fillStyle = '#facc15';
-        ctx.font = 'bold 13px Pretendard, sans-serif';
+        ctx.font = 'bold ' + fpx(13) + ' Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('M선 (중심선)', cx, cy - 82);
 
@@ -382,7 +382,7 @@
         ctx.stroke();
 
         ctx.fillStyle = '#38bdf8';
-        ctx.font = 'bold 13.5px Pretendard, sans-serif';
+        ctx.font = 'bold ' + fpx(13.5) + ' Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('근절 길이 (X): ' + sarcomereLength.toFixed(2) + ' μm', cx, dimY - 8);
 
@@ -397,7 +397,7 @@
         ctx.stroke();
 
         ctx.fillStyle = '#f43f5e';
-        ctx.font = 'bold 13.5px Pretendard, sans-serif';
+        ctx.font = 'bold ' + fpx(13.5) + ' Pretendard, sans-serif';
         ctx.fillText('A대 (암대): 1.60 μm (절대 불변!)', cx, aDimY + 18);
 
         // ── 6. 하단 실시간 길이 재기 HUD 카드 ───────────────────
@@ -406,7 +406,7 @@
         var iBand = Math.max(0, (sarcomereLength - aBand) / 2);
 
         var hudW = Math.min(460, dw - 40);
-        var hudH = 88;
+        var hudH = 66;
         var hudX = cx - hudW / 2;
         var hudY = cy + 105;
 
@@ -418,22 +418,18 @@
         ctx.fill();
         ctx.stroke();
 
-        ctx.font = 'bold 14.5px Pretendard, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText('🔬 근절 길이 재기 (수축할 때 어떻게 변하나)', cx, hudY + 22);
-
-        ctx.font = 'bold 13.5px Pretendard, sans-serif';
+        ctx.font = 'bold ' + fpx(13.5) + ' Pretendard, sans-serif';
         ctx.fillStyle = '#facc15';
-        ctx.fillText('A대 1.60μm (불변)   |   H대 ' + hZone.toFixed(2) + 'μm   |   I대(한쪽) ' + iBand.toFixed(2) + 'μm', cx, hudY + 46);
+        ctx.fillText('A대 1.60μm (불변)   |   H대 ' + hZone.toFixed(2) + 'μm   |   I대(한쪽) ' + iBand.toFixed(2) + 'μm', cx, hudY + 26);
 
-        ctx.font = '13.5px Pretendard, sans-serif';
+        ctx.font = fpx(13.5) + ' Pretendard, sans-serif';
         ctx.fillStyle = isContracting ? '#fca5a5' : '#7dd3fc';
         ctx.fillText(
             isContracting ?
             '🔥 수축: 마이오신 머리가 액틴을 끌어당겨 H대와 I대가 함께 감소' :
             '↔️ 이완: 액틴이 바깥으로 밀려나며 H대와 I대가 함께 증가',
-            cx, hudY + 70
+            cx, hudY + 50
         );
 
         // ── 7. 스마트 라벨 태그 (Z선, A대, H대, I대 클릭 연동) ────
@@ -474,8 +470,16 @@
     // 그래야 화면이 좁아져도 그림과 글자가 같은 비율로 작아진다.
     var VW = 1000, VH = 560;
 
+    var drawK = 1;   // 캔버스에 걸린 배율. 글씨는 이 배율로 나눠야 화면에서 크기가 같다.
+
+    /** 화면에서 px 만큼 보이게 하는 글씨 크기 */
+    function fpx(px) {
+        return (px / (drawK || 1)).toFixed(2) + 'px';
+    }
+
     function stageBox() {
         var k = Math.min(width / VW, height / VH);
+        drawK = k;
         return { k: k, ox: (width - VW * k) / 2, oy: (height - VH * k) / 2 };
     }
 
@@ -513,10 +517,10 @@
     var smartTagBoxes = [];
     function drawSmartTag(anchorX, anchorY, tagX, tagY, title, subtext, color, hotspotKey) {
         ctx.save();
-        ctx.font = 'bold 13.5px Pretendard, sans-serif';
+        ctx.font = 'bold ' + fpx(13.5) + ' Pretendard, sans-serif';
         var tw = ctx.measureText(title).width;
         if (subtext) {
-            ctx.font = '12.5px Pretendard, sans-serif';
+            ctx.font = fpx(13) + ' Pretendard, sans-serif';
             tw = Math.max(tw, ctx.measureText(subtext).width);
         }
         var boxW = tw + 22;
@@ -560,12 +564,12 @@
         // 텍스트
         ctx.textAlign = 'left';
         ctx.fillStyle = '#f8fafc';
-        ctx.font = 'bold 13.5px Pretendard, sans-serif';
+        ctx.font = 'bold ' + fpx(13.5) + ' Pretendard, sans-serif';
         ctx.fillText(title, bx + 10, by + (subtext ? 15 : 16));
 
         if (subtext) {
             ctx.fillStyle = color;
-            ctx.font = '12.5px Pretendard, sans-serif';
+            ctx.font = fpx(13) + ' Pretendard, sans-serif';
             ctx.fillText(subtext, bx + 10, by + 29);
         }
 
