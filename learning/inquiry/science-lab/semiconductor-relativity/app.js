@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const C = 299792458, KB = 8.617e-5, EG = 1.12, I0_300 = 1e-12, R_SERIES = 100, V_BI = 0.7, TAU = 2.197e-6; // m/s, eV/K, eV, A, Ω, V, s
     const VOLTS = { m2: { label: '−2 V', hint: '역방향', v: -2 }, p03: { label: '+0.3 V', hint: '순방향', v: 0.3 }, p05: { label: '+0.5 V', hint: '순방향', v: 0.5 }, p07: { label: '+0.7 V', hint: '순방향', v: 0.7 }, p2: { label: '+2 V', hint: '순방향', v: 2 } };
@@ -212,8 +257,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         // clocks in the middle
         const CX = 215, hand = (cy, frac) => `<line class="clock-hand" x1="${CX}" y1="${cy}" x2="${(CX + 10 * Math.sin(frac * 2 * Math.PI)).toFixed(1)}" y2="${(cy - 10 * Math.cos(frac * 2 * Math.PI)).toFixed(1)}"/>`;
-        out += `<circle class="clock" cx="${CX}" cy="76" r="13"/>${hand(76, p * a.tGround / 10e-6)}<text class="small-label" x="${CX}" y="98" text-anchor="middle">지상 시계</text><text class="small-label" x="${CX}" y="110" text-anchor="middle">${fmtN(a.tGround * 1e6 * p, 1)} μs</text>`;
-        out += `<circle class="clock" cx="${CX}" cy="136" r="13"/>${hand(136, p * a.tMuon / 10e-6)}<text class="small-label" x="${CX}" y="158" text-anchor="middle">뮤온 시계</text><text class="small-label" x="${CX}" y="170" text-anchor="middle">${fmtN(a.tMuon * 1e6 * p, 2)} μs</text>`;
+        out += `<circle class="clock" cx="${CX}" cy="76" r="13"/>${hand(76, p * a.tGround / 10e-6)}<text class="small-label" x="${CX}" y="56" text-anchor="middle">지상 시계</text><text class="small-label" x="${CX}" y="101" text-anchor="middle">${fmtN(a.tGround * 1e6 * p, 1)} μs</text>`;
+        out += `<circle class="clock" cx="${CX}" cy="136" r="13"/>${hand(136, p * a.tMuon / 10e-6)}<text class="small-label" x="${CX}" y="119" text-anchor="middle">뮤온 시계</text><text class="small-label" x="${CX}" y="161" text-anchor="middle">${fmtN(a.tMuon * 1e6 * p, 2)} μs</text>`;
         out += `<text class="small-label" x="${CX}" y="${TOP - 6}" text-anchor="middle">높이 ${HEIGHTS[state.height].label}</text>`;
         const VERD = { few: '거의 다 붕괴', some: '일부 닿음', many: '많이 닿음' };
         out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${p >= 1 ? `${SPEEDS_M[state.mspeed].label} 뮤온, ${HEIGHTS[state.height].label}: 1,000개 중 ${cnt(a.fRel)}개 도착 — ${VERD[a.verdict]}` : `${SPEEDS_M[state.mspeed].label} 뮤온이 ${HEIGHTS[state.height].label}에서 떨어지는 중`}</text>`;
@@ -295,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'diode' ? renderDiode(a) : a.kind === 'muon' ? renderMuon(a) : renderEnergy(a);
         graphGroup.innerHTML = a.kind === 'diode' ? graphDiode(a) : a.kind === 'muon' ? graphMuon(a) : graphEnergy(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'diode' ? `${VOLTS[state.volt].label} · ${TEMPS[state.temp].label}` : a.kind === 'muon' ? `${SPEEDS_M[state.mspeed].label} · ${HEIGHTS[state.height].label}` : `${SPEEDS_E[state.espeed].label} · ${BODIES[state.body].label}`;
         methodHint.textContent = a.kind === 'diode' ? '순방향 전압은 공핍층을 얇게 해 전류를 흘리고, 역방향은 두껍게 해 막습니다'
             : a.kind === 'muon' ? '움직이는 시계는 γ배 느리게 갑니다. 뮤온의 수명이 그만큼 늘어납니다'

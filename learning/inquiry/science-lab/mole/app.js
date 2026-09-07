@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const NA = 6.022e23, VM = 22.4;
     const SUBS = {
@@ -297,6 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'count' ? renderCount(a) : a.kind === 'react' ? renderReact(a) : renderMolar(a);
         graphGroup.innerHTML = a.kind === 'count' ? graphCount(a) : a.kind === 'react' ? graphReact(a) : graphMolar(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'count' ? `${a.sub.label} · ${MASSES[state.mass].label}` : a.kind === 'react' ? `${a.r.label} · ${AMT_A[state.na].label} + ${AMT_B[state.nb].label}` : `${a.so.short} ${NSOL[state.nsol].label} · ${VOLS[state.vol].label} · ${DILS[state.dil].label}`;
         methodHint.textContent = a.kind === 'count' ? '1몰 = 6.02×10²³개, 그 질량이 몰 질량(g)입니다'
             : a.kind === 'react' ? '반응식의 계수가 몰수의 비입니다. 비율보다 많은 쪽이 남습니다'

@@ -8,7 +8,7 @@
     <meta name="description" content="팽대부·나선팔·막대를 골라 은하를 그리고 허블 분류표의 어느 칸인지 판정하고, 처녀자리 은하단부터 먼 퀘이사까지 스펙트럼 선이 밀린 정도로 적색 이동과 후퇴 속도를 구하고, 실제 은하들의 거리와 속도로 허블 상수와 우주의 나이를 재어 보는 고등학교 지구과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="styles.css?v=4">
-    <link rel="stylesheet" href="galaxy-visual.css?v=4">
+    <link rel="stylesheet" href="galaxy-visual.css?v=5">
     <link rel="stylesheet" href="quiz.css?v=3">
 </head>
 <body>
@@ -45,8 +45,10 @@
                     <legend id="predictionLegend">어떻게 될까요?</legend>
                     <div class="prediction-buttons" id="predictionArea"></div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">은하 만들기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">은하 만들기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
@@ -63,6 +65,7 @@
 
             <section class="panel burn-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -73,6 +76,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">왼쪽은 고른 특징으로 그린 은하이고, 아래는 허블의 소리굽쇠 분류표입니다. 노란 별은 늙은 별, 파란 별은 젊은 별, 분홍은 별이 태어나는 가스 구름입니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -145,6 +150,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=9"></script>
 </body>
 </html>

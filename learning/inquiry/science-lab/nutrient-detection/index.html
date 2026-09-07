@@ -8,7 +8,7 @@
     <meta name="description" content="녹말물·포도당물·단백질물·식용유 네 시험관에 아이오딘-아이오딘화 칼륨, 베네딕트, 뷰렛, 수단 Ⅲ 용액을 넣어 어느 시험관만 색이 변하는지 확인하고, 베네딕트 반응은 가열해야 색이 나는 것과 녹말은 베네딕트에 반응하지 않다가 아밀레이스로 엿당이 된 뒤에야 반응하는 것을 확인하는 중학교 생명과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="styles.css?v=3">
-    <link rel="stylesheet" href="nutrient-visual.css?v=4">
+    <link rel="stylesheet" href="nutrient-visual.css?v=5">
     <link rel="stylesheet" href="quiz.css?v=2">
 </head>
 <body>
@@ -45,8 +45,10 @@
                     <legend id="predictionLegend">어떻게 될까요?</legend>
                     <div class="prediction-buttons" id="predictionArea"></div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">시약 넣기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">시약 넣기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
@@ -63,6 +65,7 @@
 
             <section class="panel lab-stage burn-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 520 236" aria-hidden="true">
@@ -73,6 +76,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">네 시험관에 같은 시약을 차례로 떨어뜨립니다. 찾는 영양소가 든 시험관만 색이 변하고, 나머지는 시약 색이 옅게 섞일 뿐입니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -145,6 +150,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=7"></script>
+    <script src="app.js?v=9"></script>
 </body>
 </html>

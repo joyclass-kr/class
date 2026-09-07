@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const H = 6.626e-34, HC = 1239.84, QE = 1.602e-19, ME = 9.109e-31, C_LIGHT = 2.998e8, MC2_EV = 0.511e6, H_EVS = 4.136e-15;
     const METALS = { cs: { label: '세슘', hint: '일함수 2.14 eV', W: 2.14 }, na: { label: '나트륨', hint: '일함수 2.28 eV', W: 2.28 }, zn: { label: '아연', hint: '일함수 4.33 eV', W: 4.33 }, pt: { label: '백금', hint: '일함수 5.65 eV', W: 5.65 } };
@@ -186,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.entries(METALS).forEach(([k, m], i) => {
             const f0 = m.W / H_EVS, fEnd = Math.min(FMAX, (KMAX + m.W) / H_EVS);
             if (f0 < FMAX) out += `<line class="trace${k === state.metal ? '' : ' faint'}" style="stroke:${k === state.metal ? '#d97706' : '#475569'}" x1="${xOf(f0).toFixed(1)}" y1="${Y0}" x2="${xOf(fEnd).toFixed(1)}" y2="${yOf(fEnd * H_EVS - m.W).toFixed(1)}"/>`;
-            out += `<text class="small-label" style="fill:${k === state.metal ? '#d97706' : '#475569'}" x="${(xOf(Math.min(f0, FMAX * 0.93)) + (i % 2 ? 3 : -3)).toFixed(1)}" y="${Y0 + 25}" text-anchor="${i % 2 ? 'start' : 'end'}">${m.label}${f0 > FMAX ? ' (눈금 밖)' : ''}</text>`;
+            out += `<text class="small-label" style="fill:${k === state.metal ? '#d97706' : '#475569'}" x="${(xOf(Math.min(f0, FMAX * 0.93)) + (i % 2 ? 3 : -3)).toFixed(1)}" y="${Y0 - 6}" text-anchor="${i % 2 ? 'start' : 'end'}">${m.label}${f0 > FMAX ? ' (눈금 밖)' : ''}</text>`;
         });
         Object.values(LIGHTS).forEach(l => { const f = C_LIGHT / (l.nm * 1e-9); out += `<line class="ref-line" style="stroke:${l.color}" x1="${xOf(f).toFixed(1)}" y1="${Y1}" x2="${xOf(f).toFixed(1)}" y2="${Y0}"/>`; });
         const xf = xOf(a.f);
@@ -203,8 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let n = 1; n <= 6; n += 1) {
             const y = yLevel(n);
             out += `<line class="level" x1="70" y1="${y.toFixed(1)}" x2="200" y2="${y.toFixed(1)}"/>`;
-            out += `<text class="level-text" x="64" y="${(y + 3.5).toFixed(1)}" text-anchor="end">n = ${n}</text>`;
-            out += `<text class="level-text" style="fill:#8fa8b0" x="206" y="${(y + 3.5).toFixed(1)}">${fmtN(-13.6 / (n * n), 2)} eV</text>`;
+            if (n <= 4) {
+                out += `<text class="level-text" x="64" y="${(y + 3.5).toFixed(1)}" text-anchor="end">n = ${n}</text>`;
+                out += `<text class="level-text" style="fill:#8fa8b0" x="206" y="${(y + 3.5).toFixed(1)}">${fmtN(-13.6 / (n * n), 2)} eV</text>`;
+            }
         }
         out += `<line class="ref-line" x1="70" y1="26" x2="200" y2="26"/><text class="level-text" x="64" y="29.5" text-anchor="end">n = ∞</text><text class="level-text" style="fill:#8fa8b0" x="206" y="29.5">0 eV (이온화)</text>`;
         const yi = yLevel(ni), yf = yLevel(nf);
@@ -319,6 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'photo' ? renderPhoto(a) : a.kind === 'hydrogen' ? renderHydrogen(a) : renderMatter(a);
         graphGroup.innerHTML = a.kind === 'photo' ? graphPhoto(a) : a.kind === 'hydrogen' ? graphHydrogen(a) : graphMatter(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'photo' ? `${a.metal.label} · ${a.light.label} · ${a.br.label}` : a.kind === 'hydrogen' ? `n = ${a.ni} → n = ${a.nf}` : a.o.label;
         methodHint.textContent = a.kind === 'photo' ? '광자 하나의 에너지 hf가 일함수를 넘어야 전자가 나옵니다. 밝기는 개수만 바꿉니다'
             : a.kind === 'hydrogen' ? '전자가 내려올 때 두 준위의 에너지 차이가 광자 하나가 됩니다'

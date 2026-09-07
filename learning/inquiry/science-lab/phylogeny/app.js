@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const LEVELS = ['역', '계', '문', '강', '목', '과', '속', '종'];
     const HUMAN = ['진핵생물역', '동물계', '척삭동물문', '포유강', '영장목', '사람과', '사람속', '사람'];
@@ -256,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.entries(ORGS3).forEach(([k, o], i) => {
             const on = k === state.org3;
             out += `<circle fill="${on ? '#d97706' : '#0284c7'}" stroke="${on ? '#fff' : 'none'}" cx="${xOf(o.fossil).toFixed(1)}" cy="${yOf(o.diff).toFixed(1)}" r="${on ? 5 : 3.5}"/>`;
-            out += `<text class="small-label" style="${on ? 'fill:#d97706' : ''}" x="${(xOf(o.fossil) + (o.fossil > 900 ? -7 : 7)).toFixed(1)}" y="${(yOf(o.diff) - (i % 2 === 0 ? 6 : 17)).toFixed(1)}" text-anchor="${o.fossil > 900 ? 'end' : 'start'}">${o.label}</text>`;
+            out += `<text class="small-label" style="${on ? 'fill:#d97706' : ''}" x="${(xOf(o.fossil) + (o.fossil > 900 ? -7 : 7)).toFixed(1)}" y="${(yOf(o.diff) - [6, 19, 32, 45][i % 4]).toFixed(1)}" text-anchor="${o.fossil > 900 ? 'end' : 'start'}">${o.label}</text>`;
         });
         out += `<text class="axis-title" x="${(X0 + X1) / 2}" y="${Y0 + 30}" text-anchor="middle">갈라진 때(화석) — 오래된 갈래일수록 점이 선 아래로 처집니다 (같은 자리가 되풀이 바뀜)</text>`;
         return out;
@@ -286,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'rank' ? renderRank(a) : a.kind === 'tree' ? renderTree(a) : renderClock(a);
         graphGroup.innerHTML = a.kind === 'rank' ? graphRank(a) : a.kind === 'tree' ? graphTree(a) : graphClock(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'rank' ? `사람 · ${a.o.label}` : a.kind === 'tree' ? `${a.st.label} · ${a.A} vs ${a.B}`.replace(' vs ', ' · ') : `사람 · ${a.o.label} · ${a.cal.label}`;
         methodHint.textContent = a.kind === 'rank' ? '같은 단계를 오래 나눌수록 가까운 친척입니다'
             : a.kind === 'tree' ? '가까움은 겉모습이 아니라 공통 조상이 얼마나 최근인가로 읽습니다'

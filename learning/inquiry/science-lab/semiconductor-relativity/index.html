@@ -8,7 +8,7 @@
     <meta name="description" content="p-n 접합 다이오드에 순방향·역방향 전압을 걸어 쇼클리 식으로 전류를 구하고 공핍층과 전자·양공의 움직임을 보고, 광속에 가까운 뮤온이 시간 지연 덕분에 지표까지 닿는지 확인하고, 길이 수축과 상대론적 운동 에너지를 뉴턴 식과 견주는 고등학교 물리학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="styles.css?v=3">
-    <link rel="stylesheet" href="semi-visual.css?v=3">
+    <link rel="stylesheet" href="semi-visual.css?v=4">
     <link rel="stylesheet" href="quiz.css?v=2">
 </head>
 <body>
@@ -45,8 +45,10 @@
                     <legend id="predictionLegend">어떻게 될까요?</legend>
                     <div class="prediction-buttons" id="predictionArea"></div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">전압 걸기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">전압 걸기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
@@ -63,6 +65,7 @@
 
             <section class="panel burn-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -73,6 +76,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">왼쪽은 전원·저항·다이오드 회로, 오른쪽은 다이오드 속 p-n 접합입니다. 가운데 점선 띠가 전하 운반자가 없는 공핍층입니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -145,6 +150,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=6"></script>
 </body>
 </html>

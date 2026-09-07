@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const R = 8.314, GAMMA = 5 / 3, V1 = 1, V2 = 2; // 1 mol of a monatomic ideal gas, litres; isothermal expansion doubles the volume
     const HOTS = { h150: { label: '150 ℃', hint: '증기 기관', T: 150 }, h300: { label: '300 ℃', hint: '자동차 엔진', T: 300 }, h500: { label: '500 ℃', hint: '화력 발전소', T: 500 }, h800: { label: '800 ℃', hint: '가스 터빈', T: 800 } };
@@ -279,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'carnot' ? renderCarnot(a) : a.kind === 'flow' ? renderFlow(a) : renderPump(a);
         graphGroup.innerHTML = a.kind === 'carnot' ? graphCarnot(a) : a.kind === 'flow' ? graphFlow(a) : graphPump(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'carnot' ? `${HOTS[state.hot].label} / ${COLDS[state.cold].label}` : a.kind === 'flow' ? `효율 ${EFFS[state.eff].label} · ${PAIRS[state.pair].label}` : `바깥 ${OUTS[state.out].label} · 실내 ${INS[state.inn].label}`;
         methodHint.textContent = a.kind === 'carnot' ? '열기관은 뜨거운 곳과 차가운 곳의 온도 차가 클수록 효율이 높습니다'
             : a.kind === 'flow' ? '받은 열은 일과 버리는 열로 나뉘고, 버리는 열이 없는 기관은 없습니다'

@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     // surface temperature and mixed-layer depth by region and season (대략), deep water temperature, e-folding scale of the thermocline
     const REGIONS = {
@@ -135,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let y = Y0; y < Y1; y += 4) out += `<rect fill="${tColor(a.T(zOf(y)))}" x="${CX0}" y="${y}" width="${CW}" height="${Math.min(4.5, Y1 - y).toFixed(1)}"/>`;
         out += `<rect class="column-frame" x="${CX0}" y="${Y0}" width="${CW}" height="${Y1 - Y0}"/>`;
         [0, 200, 400, 600, 800, 1000].forEach(z => { out += `<text class="axis-text" x="${CX0 - 4}" y="${(yOf(z) + 3.5).toFixed(1)}" text-anchor="end">${z}</text>`; });
-        out += `<text class="small-label" x="${CX0 - 4}" y="${Y0 - 9}" text-anchor="end">깊이 m</text>`;
+        out += `<text class="small-label" x="${CX0 - 4}" y="${Y0 - 14}" text-anchor="end">깊이 m</text>`;
         // temperature axis and the profile curve, drawn down to the probe's depth
         const TX0 = 120, TX1 = 260, xOf = T => TX0 + clamp((T + 2) / 32, 0, 1) * (TX1 - TX0);
         [0, 10, 20, 30].forEach(T => { out += `<line class="grid-line" x1="${xOf(T).toFixed(1)}" y1="${Y0}" x2="${xOf(T).toFixed(1)}" y2="${Y1}"/><text class="axis-text" x="${xOf(T).toFixed(1)}" y="${Y0 - 9}" text-anchor="middle">${T} ℃</text>`; });
@@ -228,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             IONS.forEach(([name, pct, col]) => { const w = pct / 100 * SW; out += `<rect class="ion-bar" fill="${col}" opacity=".7" x="${x.toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="22"/>`; if (w > 26) out += `<text class="small-label" style="fill:#08131a" x="${(x + w / 2).toFixed(1)}" y="${y + 15}" text-anchor="middle">${pct} %</text>`; x += w; });
             out += `<text class="axis-text" x="${SX - 5}" y="${y + 15}" text-anchor="end">${lab}</text>`;
         });
-        let lx = SX; IONS.forEach(([name, pct, col], i) => { out += `<rect fill="${col}" opacity=".8" x="${(SX + (i % 3) * 64).toFixed(1)}" y="${Y1 + 96 + Math.floor(i / 3) * 14}" width="8" height="8"/><text class="small-label" x="${(SX + (i % 3) * 64 + 11).toFixed(1)}" y="${Y1 + 103 + Math.floor(i / 3) * 14}">${name.split(' ')[0]}</text>`; });
+        let lx = SX; IONS.forEach(([name, pct, col], i) => { out += `<rect fill="${col}" opacity=".8" x="${(SX + (i % 2) * 100).toFixed(1)}" y="${Y1 + 92 + Math.floor(i / 2) * 18}" width="9" height="9"/><text class="small-label" x="${(SX + (i % 2) * 100 + 13).toFixed(1)}" y="${Y1 + 100 + Math.floor(i / 2) * 18}">${name.split(' ')[0]}</text>`; });
         out += `<text class="small-label" x="20" y="${Y0 + 34}">염분비 일정: 염화 이온 하나만 재면 염분 전체를 알 수 있습니다 (염분 ≈ 1.8 × 염화 이온 농도).</text>`;
         return out;
     }
@@ -242,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const yMid = (TT + TB) / 2, yEnd = a.verdict === 'sink' ? TB - 26 : a.verdict === 'float' ? TT + 30 : yMid;
         const y = yMid + (yEnd - yMid) * move;
         out += `<circle class="parcel" fill="${tColor(T)}" fill-opacity=".85" stroke="#fff" cx="${TX + TW / 2}" cy="${y.toFixed(1)}" r="22"/>`;
-        out += `<text class="small-label" style="fill:#08131a" x="${TX + TW / 2}" y="${(y - 2).toFixed(1)}" text-anchor="middle">${T} ℃</text><text class="small-label" style="fill:#08131a" x="${TX + TW / 2}" y="${(y + 9).toFixed(1)}" text-anchor="middle">${S} ‰</text>`;
+        out += `<text class="small-label" style="fill:#08131a" x="${TX + TW / 2}" y="${(y - 5).toFixed(1)}" text-anchor="middle">${T} ℃</text><text class="small-label" style="fill:#08131a" x="${TX + TW / 2}" y="${(y + 13).toFixed(1)}" text-anchor="middle">${S} ‰</text>`;
         if (a.verdict !== 'same' && p > 0.05) out += arrow(TX + TW / 2 + 34, yMid, TX + TW / 2 + 34, a.verdict === 'sink' ? yMid + 40 : yMid - 40, 'wind', 'wind-head', 3);
         const RX = 302;
         out += `<text class="trait-text" x="${RX}" y="52">물덩이 ${T} ℃ · ${S} ‰</text>`;
@@ -302,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'profile' ? renderProfile(a) : a.kind === 'salinity' ? renderSalinity(a) : renderDensity(a);
         graphGroup.innerHTML = a.kind === 'profile' ? graphProfile(a) : a.kind === 'salinity' ? graphSalinity(a) : graphDensity(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'profile' ? `${REGIONS[state.region].label} · ${SEASONS[state.season].label}` : a.kind === 'salinity' ? EVENTS[state.event].label : `${TEMPS[state.temp].label} · ${SALTS[state.salt].label}`;
         methodHint.textContent = a.kind === 'profile' ? '햇볕은 표층만 데우고, 바람은 그 열을 아래로 섞습니다'
             : a.kind === 'salinity' ? '염류는 그대로, 물만 드나듭니다 — 이온 비율은 늘 같습니다'

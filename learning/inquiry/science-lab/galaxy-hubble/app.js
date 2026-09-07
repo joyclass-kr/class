@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const C = 299792, MPC_LY = 3.262e6, AGE_K = 977.8; // km/s, light-years per Mpc, 1/H₀ in Gyr when H₀ is in km/s/Mpc
     const ARMS = { none: { label: '없음', hint: '매끈함' }, tight: { label: '촘촘히 감김', hint: '팔 사이 각 12°' }, loose: { label: '느슨하게 감김', hint: '팔 사이 각 28°' } };
@@ -259,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const step = maxD > 50 ? 25 : maxD > 12 ? 5 : maxD > 8 ? 2 : maxD > 4 ? 1 : 0.5;
         for (let d = 0; d <= maxD + 1e-9; d += step) out += `<line class="grid-line" x1="${xOf(d).toFixed(1)}" y1="${AY - 4}" x2="${xOf(d).toFixed(1)}" y2="${AY + 4}"/><text class="axis-text" x="${xOf(d).toFixed(1)}" y="${AY + 16}" text-anchor="middle">${d}</text>`;
         out += `<text class="axis-text" x="${AX1 + 5}" y="${AY + 16}">Mpc</text>`;
-        out += `<circle class="home" cx="${AX0}" cy="${AY}" r="5"/><text class="small-label" x="${AX0}" y="${AY + 29}" text-anchor="middle">우리 은하</text>`;
+        out += `<circle class="home" cx="${AX0}" cy="${AY}" r="5"/><text class="small-label" x="${AX0}" y="${AY + 34}" text-anchor="middle">우리 은하</text>`;
         const order = a.pts.map((q, i) => i).sort((i, j) => a.pts[i].d - a.pts[j].d);
         const rows = [[], [], [], []], est = t => [...t].reduce((w, ch) => w + (/[가-힣]/.test(ch) ? 9.5 : 5.6), 0);
         order.forEach(idx => {
@@ -326,6 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'classify' ? renderClassify(a) : a.kind === 'redshift' ? renderRedshift(a) : renderHubble(a);
         graphGroup.innerHTML = a.kind === 'classify' ? graphClassify(a) : a.kind === 'redshift' ? graphRedshift(a) : graphHubble(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'classify' ? `팔 ${ARMS[a.arms].label} · 팽대부 ${BULGES[a.bulge].label}` : a.kind === 'redshift' ? a.o.name : `${a.sm.label} · ${SCALES[state.scale].label}`;
         methodHint.textContent = a.kind === 'classify' ? '팽대부와 나선팔, 막대의 유무로 은하의 자리가 정해집니다'
             : a.kind === 'redshift' ? '멀어지는 천체의 스펙트럼 선은 파장이 길어져 붉은 쪽으로 밀립니다'

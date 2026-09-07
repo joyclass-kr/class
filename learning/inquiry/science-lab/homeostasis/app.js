@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     // Blood sugar (mg/dL, minutes): sugar arrives from the gut, insulin drives it into cells,
     // and the liver pulls the level back toward 90 either way (glucagon when low).
@@ -195,12 +240,12 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let k = 0; k < nDots; k += 1) { const x = 30 + ((k * 37 + Math.floor(t) * 3) % 280), y = 100 + ((k * 13) % 18); out += `<circle class="sugar" cx="${x}" cy="${y}" r="2.6"/>`; }
         out += `<text class="small-label" x="26" y="86">혈관 — 포도당 ${Math.round(G)} mg/dL</text>`;
         // organs: gut above, pancreas/liver/muscle below
-        out += `<rect class="organ" x="30" y="30" width="90" height="34" rx="6"/><text class="organ-text" x="75" y="44" text-anchor="middle">소장</text><text class="small-label" x="75" y="58" text-anchor="middle">${Ra > 0.2 ? `흡수 중 ${Ra.toFixed(1)}/분` : '흡수 끝'}</text>`;
+        out += `<rect class="organ" x="30" y="30" width="90" height="34" rx="6"/><text class="organ-text" x="75" y="52" text-anchor="middle">소장</text><text class="small-label prose" x="0" y="0">소장 — ${Ra > 0.2 ? `흡수 중 ${Ra.toFixed(1)}/분` : '흡수 끝'}</text>`;
         if (Ra > 0.2) out += `<line class="flow-arrow" style="stroke:#d97706" x1="75" y1="66" x2="75" y2="88"/><polygon fill="#d97706" points="75,92 71,85 79,85"/>`;
-        out += `<rect class="organ" x="130" y="30" width="110" height="34" rx="6"/><text class="organ-text" x="185" y="44" text-anchor="middle">이자</text>`;
-        out += `<text class="small-label" style="fill:#059669" x="140" y="58">인슐린 ${b.beta === 0 ? '없음' : I < 1 ? '조금' : I < 50 ? '나옴' : '많이'}</text><text class="small-label" style="fill:#dc2626" x="200" y="58">글루카곤 ${G < 88 ? '나옴' : '조금'}</text>`;
-        out += `<rect class="organ" x="30" y="150" width="120" height="36" rx="6"/><text class="organ-text" x="90" y="165" text-anchor="middle">간</text><text class="small-label" x="90" y="179" text-anchor="middle">${G > 95 && I > 1 ? '포도당 → 글리코젠 저장' : G < 88 ? '글리코젠 → 포도당 꺼냄' : '들고 내기 균형'}</text>`;
-        out += `<rect class="organ" x="170" y="150" width="130" height="36" rx="6"/><text class="organ-text" x="235" y="165" text-anchor="middle">근육·지방 세포</text><text class="small-label" x="235" y="179" text-anchor="middle">${b.ex ? '운동으로 포도당 씀' : b.SI * I > 0.3 ? '인슐린 신호로 포도당 들임' : b.beta === 0 ? '인슐린 없어 못 들임' : b.SI < 0.01 && I > 1 ? '인슐린이 잘 안 들림' : '평소대로'}</text>`;
+        out += `<rect class="organ" x="130" y="30" width="110" height="34" rx="6"/><text class="organ-text" x="185" y="52" text-anchor="middle">이자</text>`;
+        out += `<text class="small-label prose" style="fill:#059669" x="0" y="0">이자 — 인슐린 ${b.beta === 0 ? '없음' : I < 1 ? '조금' : I < 50 ? '나옴' : '많이'} · 글루카곤 ${G < 88 ? '나옴' : '조금'}</text>`;
+        out += `<rect class="organ" x="30" y="150" width="120" height="36" rx="6"/><text class="organ-text" x="90" y="173" text-anchor="middle">간</text><text class="small-label prose" x="0" y="0">간 — ${G > 95 && I > 1 ? '포도당을 글리코젠으로 저장' : G < 88 ? '글리코젠에서 포도당을 꺼냄' : '들고 내기 균형'}</text>`;
+        out += `<rect class="organ" x="170" y="150" width="130" height="36" rx="6"/><text class="organ-text" x="235" y="173" text-anchor="middle">근육·지방 세포</text><text class="small-label prose" x="0" y="0">근육·지방 세포 — ${b.ex ? '운동으로 포도당 씀' : b.SI * I > 0.3 ? '인슐린 신호로 포도당 들임' : b.beta === 0 ? '인슐린이 없어 못 들임' : b.SI < 0.01 && I > 1 ? '인슐린이 잘 안 들림' : '평소대로'}</text>`;
         const upt = b.SI * I * G / 100 + b.ex * G / 100;
         if (upt > 0.3) out += `<line class="flow-arrow" style="stroke:#059669" x1="235" y1="128" x2="235" y2="146"/><polygon fill="#059669" points="235,150 231,143 239,143"/>`;
         if (G < 88) out += `<line class="flow-arrow" style="stroke:#dc2626" x1="90" y1="148" x2="90" y2="130"/><polygon fill="#dc2626" points="90,126 86,133 94,133"/>`;
@@ -211,10 +256,9 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="band" x="${MX + 1}" y="${yOf(140).toFixed(1)}" width="18" height="${(yOf(70) - yOf(140)).toFixed(1)}"/>`;
         out += `<rect fill="#d97706" x="${MX + 4}" y="${yOf(G).toFixed(1)}" width="12" height="${(MB - yOf(G)).toFixed(1)}"/>`;
         [[70, '70'], [140, '140'], [200, '200'], [300, '300']].forEach(([g, lab]) => { out += `<line class="ref-line" x1="${MX - 3}" y1="${yOf(g).toFixed(1)}" x2="${MX + 23}" y2="${yOf(g).toFixed(1)}"/><text class="small-label" x="${MX + 27}" y="${(yOf(g) + 3).toFixed(1)}">${lab}</text>`; });
-        out += `<text class="gen-text" x="${MX + 60}" y="60">${Math.round(G)}</text><text class="small-label" x="${MX + 60}" y="74">mg/dL</text>`;
-        out += `<text class="trait-text" x="${MX + 60}" y="100">${Math.round(t)}분</text>`;
-        out += `<text class="trait-text" style="fill:#059669" x="${MX + 60}" y="120">인슐린 ${Math.round(I)}</text>`;
-        out += `<text class="small-label" x="${MX + 60}" y="134">(평소 = 0)</text>`;
+        out += `<text class="gen-text prose" x="0" y="0">혈당 ${Math.round(G)} mg/dL</text>`;
+        out += `<text class="trait-text prose" x="0" y="0">먹은 뒤 ${Math.round(t)}분</text>`;
+        out += `<text class="trait-text prose" style="fill:#059669" x="0" y="0">인슐린 ${Math.round(I)} (평소 0)</text>`;
         const VERD = { normal: '정상', elevated: '당뇨 전 단계 범위', high: '당뇨 범위' };
         out += `<text class="verdict-text" fill="#d97706" x="20" y="16">${state.progress >= 1 ? `${MEALS[state.meal].label} · ${b.label}: 최고 ${Math.round(run.peak)} → 2시간 뒤 ${a.g120} — ${VERD[a.verdict]}` : `${MEALS[state.meal].label} · ${b.label} (${b.hint})`}</text>`;
         out += `<text class="note-text" x="20" y="208">포도당 75 g 부하 검사 기준: 2시간 뒤 140 미만 정상 · 140~199 당뇨 전 단계 · 200 이상 당뇨</text>`;
@@ -239,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="trace" style="stroke:#d97706" d="${d}"/>`;
         let dI = ''; run.t.forEach((tt, i) => { if (tt <= t) dI += `${dI ? 'L' : 'M'}${xOf(tt).toFixed(1)},${yOf(run.I[i] * 0.5).toFixed(1)} `; });
         out += `<path class="trace" style="stroke:#059669;stroke-width:1.4" d="${dI}"/>`;
-        out += `<text class="small-label" style="fill:#059669" x="${X1}" y="${Y1 - 4}" text-anchor="end">초록 선: 인슐린 (상대값)</text>`;
+        out += `<text class="small-label prose" style="fill:#059669" x="0" y="0">초록 선은 인슐린 (상대값)</text>`;
         out += `<text class="axis-title" x="${((X0 + X1) / 2).toFixed(1)}" y="${Y0 + 30}" text-anchor="middle">먹은 뒤 시간 (분) — 혈당 (mg/dL)</text>`;
         return out;
     }
@@ -266,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="thermo" x="${MX}" y="${MT}" width="20" height="${MB - MT}" rx="3"/>`;
         out += `<rect class="band" x="${MX + 1}" y="${yOf(37.5).toFixed(1)}" width="18" height="${(yOf(36) - yOf(37.5)).toFixed(1)}"/>`;
         out += `<rect class="thermo-fill" x="${MX + 4}" y="${yOf(clamp(T, 32, 42)).toFixed(1)}" width="12" height="${(MB - yOf(clamp(T, 32, 42))).toFixed(1)}"/>`;
-        [[42, '42'], [38, '38'], [37, '37'], [35.5, '35.5'], [32, '32']].forEach(([tc, lab]) => { out += `<line class="ref-line" x1="${MX - 3}" y1="${yOf(tc).toFixed(1)}" x2="${MX + 23}" y2="${yOf(tc).toFixed(1)}"/><text class="small-label" x="${MX + 27}" y="${(yOf(tc) + 3).toFixed(1)}">${lab}</text>`; });
+        [[42, '42'], [38, '38'], [36, '36'], [32, '32']].forEach(([tc, lab]) => { out += `<line class="ref-line" x1="${MX - 3}" y1="${yOf(tc).toFixed(1)}" x2="${MX + 23}" y2="${yOf(tc).toFixed(1)}"/><text class="small-label" x="${MX + 27}" y="${(yOf(tc) + 3).toFixed(1)}">${lab}</text>`; });
         out += `<text class="gen-text" x="${MX + 60}" y="56">${T.toFixed(1)} ℃</text>`;
         out += `<text class="trait-text" x="${MX + 60}" y="76">${Math.round(t)}분</text>`;
         out += `<text class="trait-text" style="fill:#dc2626" x="${MX + 60}" y="100">만드는 열 ${Math.round(make)} W</text>`;
@@ -314,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<rect class="urine" style="opacity:${(0.35 + 0.65 * adh).toFixed(2)}" x="${BX + 2}" y="${(BY + 2 + (BH - 4) * (1 - fill)).toFixed(1)}" width="${BW - 4}" height="${((BH - 4) * fill).toFixed(1)}" rx="12"/>`;
         out += `<text class="small-label" x="${BX + BW / 2}" y="${BY - 6}" text-anchor="middle">모인 오줌 ${fmtN(bladder)} mL</text>`;
         out += `<text class="trait-text" x="${BX + BW + 12}" y="104">1분에 ${flow.toFixed(1)} mL</text>`;
-        out += `<text class="trait-text" x="${BX + BW + 12}" y="120">진하기 ${fmtN(uosm)}</text><text class="small-label" x="${BX + BW + 12}" y="132">mOsm/kg</text>`;
+        out += `<text class="trait-text prose" x="0" y="0">오줌 진하기 ${fmtN(uosm)} mOsm/kg</text>`;
         out += `<text class="trait-text" x="${BX + BW + 12}" y="156">${Math.round(t)}분</text>`;
         if (drank > 0) out += `<text class="trait-text" style="fill:#0284c7" x="${BX + BW + 12}" y="172">목말라 ${fmtN(drank * 1000)} mL 마심</text>`;
         out += `<text class="small-label" x="230" y="60" text-anchor="middle">${it.label} ${state.intake === 'salt' ? '먹음' : state.intake === 'water' ? '마심' : ''}</text>`;
@@ -368,6 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'glucose' ? renderGlucose(a) : a.kind === 'temp' ? renderTemp(a) : renderWater(a);
         graphGroup.innerHTML = a.kind === 'glucose' ? graphGlucose(a) : a.kind === 'temp' ? graphTemp(a) : graphWater(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'glucose' ? `${MEALS[state.meal].label} · ${BODIES[state.body].label}` : a.kind === 'temp' ? `${WEATHERS[state.weather].label} · ${STATES[state.bstate].label}` : INTAKES[state.intake].label;
         methodHint.textContent = a.kind === 'glucose' ? '혈당이 오르면 인슐린, 내리면 글루카곤이 되돌립니다'
             : a.kind === 'temp' ? '만드는 열과 내보내는 열이 같아야 체온이 머뭅니다'

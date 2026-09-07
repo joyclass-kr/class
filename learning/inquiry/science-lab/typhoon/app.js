@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const SSTS = { c25: { label: '25 ℃', hint: '서늘한 바다', sst: 25 }, c27: { label: '27 ℃', hint: '여름 북서태평양', sst: 27 }, c30: { label: '30 ℃', hint: '매우 따뜻함', sst: 30 } };
     const LATS = { l0: { label: '적도 (0°)', hint: '전향력 없음', lat: 0 }, l15: { label: '북위 15°', hint: '필리핀 동쪽', lat: 15 }, l30: { label: '북위 30°', hint: '제주 남쪽', lat: 30 } };
@@ -170,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const X0 = 60, X1 = 420, Y0 = 150, Y1 = 40;
         const xOf = t => X0 + (t - 24) / 8 * (X1 - X0), yOf = v => Y0 - clamp(v / 80, 0, 1) * (Y0 - Y1);
         let out = `<text class="axis-title" x="${X0}" y="18">해수면 온도와 태풍의 잠재 최대 풍속 — 26.5 ℃ 문턱 너머에서 가파르게 늘어남</text>`;
-        GRADES.slice(0, 4).forEach(([v, name]) => { out += `<line class="ref-line" x1="${X0}" y1="${yOf(v).toFixed(1)}" x2="${X1}" y2="${yOf(v).toFixed(1)}"/><text class="small-label" x="${X1 - 4}" y="${(yOf(v) - 3).toFixed(1)}" text-anchor="end">${name} ${v}</text>`; });
+        GRADES.slice(0, 4).forEach(([v, name], gi) => { const rt = gi % 2 === 0; out += `<line class="ref-line" x1="${X0}" y1="${yOf(v).toFixed(1)}" x2="${X1}" y2="${yOf(v).toFixed(1)}"/><text class="small-label" x="${rt ? X1 - 4 : X0 + 6}" y="${(yOf(v) - 4).toFixed(1)}" text-anchor="${rt ? 'end' : 'start'}">${name} ${v}</text>`; });
         for (let t = 24; t <= 32; t += 2) out += `<text class="axis-text" x="${xOf(t).toFixed(1)}" y="${Y0 + 14}" text-anchor="middle">${t} ℃</text>`;
         [20, 40, 60, 80].forEach(v => { out += `<text class="axis-text" x="${X0 - 5}" y="${(yOf(v) + 3.5).toFixed(1)}" text-anchor="end">${v}</text>`; });
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
@@ -325,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'genesis' ? renderGenesis(a) : a.kind === 'track' ? renderTrack(a) : renderEnso(a);
         graphGroup.innerHTML = a.kind === 'genesis' ? graphGenesis(a) : a.kind === 'track' ? graphTrack(a) : graphEnso(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'genesis' ? `${SSTS[state.sst].label} · ${LATS[state.lat].label}` : a.kind === 'track' ? `고기압 ${HIGHS[state.high].label} · ${SPEEDS[state.speed].label}` : `무역풍 ${TRADES[state.trade].label}`;
         methodHint.textContent = a.kind === 'genesis' ? '따뜻한 바다의 수증기(잠열)와 전향력, 둘 다 있어야 태풍이 됩니다'
             : a.kind === 'track' ? '태풍은 북태평양 고기압의 가장자리를 따라 갑니다'

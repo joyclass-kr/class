@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     // Days. A germ doubles every 8 h; the innate system removes about 40 % a day;
     // antibody 1 = the level that stops the germ; lymphocytes need 5 days the first time, 1.5 days with memory.
@@ -211,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cells.forEach(c => {
             out += `<circle class="cell ${c.cls}" cx="${c.x}" cy="184" r="${c.r}"${!lymph && c.cls !== 'cell-mac' ? ' opacity=".3"' : ''}/>`;
             if (c.cls === 'cell-plasma' && plasma >= 0.5) out += yShape(c.x + 11, 180, 'ab', 3);
-            out += `<text class="cell-text" x="${c.x}" y="200" text-anchor="middle">${c.name}</text><text class="small-label" x="${c.x}" y="210" text-anchor="middle">${c.sub}</text>`;
+            out += `<text class="cell-text" x="${c.x}" y="204" text-anchor="middle">${c.name}</text><text class="small-label prose" x="0" y="0">${c.name} — ${c.sub}</text>`;
         });
         // right column: day, counts, fever
         const sick = P > SICK;
@@ -368,6 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'blood' ? renderBlood(a) : renderImmune(a);
         graphGroup.innerHTML = a.kind === 'blood' ? graphBlood(a) : graphImmune(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'infect' ? `${INFECTS[state.infect].label} · ${DOSES[state.dose].label}` : a.kind === 'vaccine' ? `${SHOTS[state.shot].label} · ${WHENS[state.when].label}` : `${a.d}형 → ${a.r}형 · ${RHS[state.rh].label}`;
         methodHint.textContent = a.kind === 'infect' ? '처음 만난 병원체에는 항체가 나오기까지 닷새쯤 걸립니다'
             : a.kind === 'vaccine' ? '백신은 앓지 않고 기억 세포를 만들어 둡니다'

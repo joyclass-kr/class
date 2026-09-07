@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     // Stimulus: current density on a patch of squid axon membrane, from t = 5 ms.
     const STIMS = { weak: { label: '약하게', hint: '1.5 μA/cm²', I: 1.5 }, mid: { label: '문턱 넘게', hint: '10 μA/cm²', I: 10 }, strong: { label: '아주 세게', hint: '40 μA/cm²', I: 40 } };
@@ -177,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const yOf = V => MBOT - (V + 90) / 140 * (MBOT - MTOP);
         out += `<rect class="meter" x="${MX}" y="${MTOP}" width="22" height="${MBOT - MTOP}" rx="3"/>`;
         out += `<rect class="meter-fill" x="${MX + 3}" y="${Math.min(yOf(s.V), yOf(REST)).toFixed(1)}" width="16" height="${Math.abs(yOf(s.V) - yOf(REST)).toFixed(1)}"/>`;
-        [[50, '+50', 3], [0, '0', 3], [-55, '문턱', 3], [-65, '휴지', 11], [-90, '−90', 3]].forEach(([v, lab, dy]) => { out += `<line class="ref-line ${v === -55 ? 'threshold' : ''}" x1="${MX - 4}" y1="${yOf(v).toFixed(1)}" x2="${MX + 26}" y2="${yOf(v).toFixed(1)}"/><text class="small-label" x="${MX - 6}" y="${(yOf(v) + dy).toFixed(1)}" text-anchor="end">${lab}</text>`; });
+        [[50, '+50', 3], [0, '0', 3], [-55, '문턱', -6], [-65, '휴지', 6], [-90, '−90', 4]].forEach(([v, lab, dy]) => { out += `<line class="ref-line ${v === -55 ? 'threshold' : ''}" x1="${MX - 4}" y1="${yOf(v).toFixed(1)}" x2="${MX + 26}" y2="${yOf(v).toFixed(1)}"/><text class="small-label" x="${MX - 6}" y="${(yOf(v) + dy).toFixed(1)}" text-anchor="end">${lab}</text>`; });
         out += `<text class="gen-text" x="${MX + 34}" y="60">${s.V >= 0 ? '+' : ''}${s.V.toFixed(0)} mV</text>`;
         out += `<text class="trait-text" style="fill:#0284c7" x="${MX + 34}" y="80">Na⁺ 통로 ${Math.round(s.na / 0.35 * 100)} %</text>`;
         out += `<text class="trait-text" style="fill:#ffb347" x="${MX + 34}" y="96">K⁺ 통로 ${Math.round(s.k / 0.6 * 100)} %</text>`;
@@ -333,6 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'spike' ? renderSpike(a) : a.kind === 'conduct' ? renderConduct(a) : renderSynapse(a);
         graphGroup.innerHTML = a.kind === 'spike' ? graphSpike(a) : a.kind === 'conduct' ? graphConduct(a) : graphSynapse(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'spike' ? `${a.st.hint} · ${a.du.label}` : a.kind === 'conduct' ? `${a.ax.label} · 초속 ${a.ax.v} m` : a.d.label;
         methodHint.textContent = a.kind === 'spike' ? '막전위가 문턱(−55 mV)을 넘으면 Na⁺ 통로가 한꺼번에 열립니다'
             : a.kind === 'conduct' ? '굵을수록, 말이집이 있을수록 흥분은 빨리 옮겨 갑니다'

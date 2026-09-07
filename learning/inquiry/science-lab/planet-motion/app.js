@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const AU = 149.6e6, PE = 365.25, D2R = Math.PI / 180, R2D = 180 / Math.PI;
     // real orbital radii (AU), periods (days), diameters (km), inclinations (°); circular orbits are an approximation
@@ -194,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [a.t1, a.t2].forEach(tt => { if (tt !== null && t >= tt) { const r = rows[tt + W]; out += `<circle class="stop-dot" cx="${xOf(r.lon).toFixed(1)}" cy="${yOf(r.beta).toFixed(1)}" r="4"/>`; } });
         out += `<circle fill="${pl.col}" stroke="#fff" stroke-width=".8" cx="${xOf(row.lon).toFixed(1)}" cy="${yOf(row.beta).toFixed(1)}" r="4"/>`;
         out += `<text class="small-label" x="${SX0}" y="${SY0 - 6}">동쪽 ←</text><text class="small-label" x="${(SX0 + SX1) / 2}" y="${SY0 - 6}" text-anchor="middle">남쪽 하늘에 찍힌 ${pl.label}의 자리</text><text class="small-label" x="${SX1}" y="${SY0 - 6}" text-anchor="end">→ 서쪽</text>`;
-        out += `<text class="small-label" x="${SX0 + 6}" y="${SY1 - 5}">가로 ${fmtN(span, 1)}° · 세로 남북 ${fmtN(betaMax * 2, 1)}° (같은 눈금)</text>`;
+        out += `<text class="small-label" style="fill:#e2e8f0" x="${SX0 + 6}" y="${SY1 - 6}">가로 ${fmtN(span, 1)}° · 세로 남북 ${fmtN(betaMax * 2, 1)}° (같은 눈금)</text>`;
         const ref = pl.inner ? '내합' : '충';
         const inRet = a.t1 !== null && t >= a.t1 && t <= a.t2;
         out += `<text class="trait-text" x="${SX0}" y="170">${t === 0 ? ref : t < 0 ? `${ref} ${-t}일 전` : `${ref} ${t}일 후`} · 지구에서 ${fmtN(row.delta, 2)} AU · 황경 ${row.lon >= 0 ? '+' : ''}${fmtN(row.lon, 1)}°</text>`;
@@ -255,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const xOf = deg => X0 + deg / 360 * (X1 - X0), ySize = v => Y0 - v / top * (Y0 - Y1), yPct = v => Y0 - v / 100 * (Y0 - Y1);
         let out = `<text class="axis-title" x="${X0}" y="18">${pl.label}이 태양을 한 바퀴 도는 동안 — 겉보기 지름(노랑, ″)과 밝은 부분(하늘색, %)</text>`;
         const marks = pl.inner ? [[0, '내합'], [Math.acos(pl.a) * R2D, '최대 이각'], [180, '외합'], [360 - Math.acos(pl.a) * R2D, '최대 이각'], [360, '내합']] : [[0, '충'], [90, '구'], [180, '합'], [270, '구'], [360, '충']];
-        marks.forEach(([deg, lab]) => { out += `<line class="grid-line" x1="${xOf(deg).toFixed(1)}" y1="${Y1}" x2="${xOf(deg).toFixed(1)}" y2="${Y0}"/><text class="axis-text" x="${xOf(deg).toFixed(1)}" y="${Y0 + 14}" text-anchor="${deg === 0 ? 'start' : deg === 360 ? 'end' : 'middle'}">${lab}</text>`; });
+        marks.forEach(([deg, lab], mi) => { out += `<line class="grid-line" x1="${xOf(deg).toFixed(1)}" y1="${Y1}" x2="${xOf(deg).toFixed(1)}" y2="${Y0}"/><text class="axis-text" x="${xOf(deg).toFixed(1)}" y="${Y0 + (mi % 2 ? 30 : 14)}" text-anchor="${deg === 0 ? 'start' : deg === 360 ? 'end' : 'middle'}">${lab}</text>`; });
         [0, 50, 100].forEach(v => { out += `<text class="axis-text" x="${X1 + 5}" y="${(yPct(v) + 3.5).toFixed(1)}">${v} %</text>`; });
         [0, top / 2, top].forEach(v => { out += `<line class="grid-line" x1="${X0}" y1="${ySize(v).toFixed(1)}" x2="${X1}" y2="${ySize(v).toFixed(1)}"/><text class="axis-text" x="${X0 - 5}" y="${(ySize(v) + 3.5).toFixed(1)}" text-anchor="end">${v}″</text>`; });
         out += `<line class="axis" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y1}" x2="${X0}" y2="${Y0}"/>`;
@@ -358,6 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'retro' ? renderRetro(a) : a.kind === 'phase' ? renderPhase(a) : renderEclipse(a);
         graphGroup.innerHTML = a.kind === 'retro' ? graphRetro(a) : a.kind === 'phase' ? graphPhase(a) : graphEclipse(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'retro' ? `${a.pl.label} · ${a.pl.inner ? '내합' : '충'} 앞뒤` : a.kind === 'phase' ? `${a.pl.label} · ${posTable()[a.posKey].label}` : `${KINDS[a.kindKey].label} · ${NODES[state.node].label} · ${DISTS[state.dist].label}`;
         methodHint.textContent = a.kind === 'retro' ? '안쪽 행성이 바깥 행성을 앞지를 때 하늘에서 행성이 뒤로 가는 것처럼 보입니다'
             : a.kind === 'phase' ? '가까울수록 크게, 태양 반대편에 있을수록 둥글게 보입니다'

@@ -20,6 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const graphGroup = document.getElementById('graphGroup');
     const dataNote = document.getElementById('dataNote');
 
+    /* --- 긴 설명은 그림 밖으로: 액자를 벗어나는 글자와 판정·주석은 HTML로 옮긴다 --- */
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    const mainSvg = document.querySelector('.main-svg');
+    const graphSvg = document.querySelector('.graph-svg');
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        [[mainGroup, mainSvg], [graphGroup, graphSvg]].forEach(([g, svg]) => {
+            if (!g || !svg) return;
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text/.test(cls) || /prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                const out = b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+                if (must || out) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => { let b; try { b = t.getBBox(); } catch (e) { b = null; } return { t, b, len: t.textContent.trim().length }; }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        if (stageReadout) stageReadout.innerHTML = rows.map(r => `<span${r.fill ? ` style="color:${r.fill}"` : ''}>${r.txt}</span>`).join('');
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
     /* -------------------------------------------------------------- data */
     const EN = { H: 2.20, C: 2.55, N: 3.04, O: 3.44, F: 3.98, Cl: 3.16, B: 2.04 };
     const ATOM = { H: { col: '#e5e7eb', r: 7 }, C: { col: '#9ca3af', r: 10 }, N: { col: '#60a5fa', r: 10 }, O: { col: '#ff7a59', r: 10 }, F: { col: '#4ade80', r: 9 }, Cl: { col: '#4ade80', r: 11 }, B: { col: '#f9a8d4', r: 10 } };
@@ -156,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (m.order === 2) out += `<line class="bond-gap" x1="${CX}" y1="${CY}" x2="${ap.x.toFixed(1)}" y2="${ap.y.toFixed(1)}"/>`;
         });
         const drawables = [{ kind: 'atom', a: m.center, x: CX, y: CY, z: 0 }, ...atomPos.map(ap => ({ kind: 'atom', ...ap })), ...lonePos.map(lp => ({ kind: 'lone', ...lp }))].sort((p, q) => p.z - q.z);
-        const covered = d => drawables.some(o => o.kind === 'atom' && o !== d && o.z > d.z && Math.hypot(o.x - d.x, o.y - d.y) < 11);
+        const covered = d => drawables.some(o => o.kind === 'atom' && o !== d && o.z > d.z && Math.hypot(o.x - d.x, o.y - d.y) < 24);
         drawables.forEach(d => {
             const sc = 1 + 0.22 * d.z;
             if (d.kind === 'lone') { out += `<ellipse class="lone-pair" cx="${d.x.toFixed(1)}" cy="${d.y.toFixed(1)}" rx="${(13 * sc).toFixed(1)}" ry="${(8 * sc).toFixed(1)}"/><circle fill="#a78bfa" cx="${(d.x - 3).toFixed(1)}" cy="${d.y.toFixed(1)}" r="1.6"/><circle fill="#a78bfa" cx="${(d.x + 3).toFixed(1)}" cy="${d.y.toFixed(1)}" r="1.6"/>`; return; }
@@ -180,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderShape(a) {
-        const p = state.progress, { m } = a, th = p * Math.PI * 2, CX = 130, CY = 112, S = 58;
+        const p = state.progress, { m } = a, th = p * Math.PI * 2, CX = 132, CY = 112, S = 74;
         const { out: mol, atomPos } = drawMolecule(m, th, CX, CY, S, true, null);
         let out = mol;
         if (m.angle !== null && atomPos.length >= 2) {
@@ -348,6 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = analyse();
         mainGroup.innerHTML = a.kind === 'shape' ? renderShape(a) : a.kind === 'polar' ? renderPolar(a) : renderMix(a);
         graphGroup.innerHTML = a.kind === 'shape' ? graphShape(a) : a.kind === 'polar' ? graphPolar(a) : graphMix(a);
+        liftProse();
         stageBadge.textContent = a.kind === 'mix' ? `${a.sv.label} + ${a.su.label}` : `${a.m.name} ${a.m.formula}`;
         methodHint.textContent = a.kind === 'shape' ? '중심 원자의 전자쌍들은 서로 밀어내며 가장 멀리 떨어진 자리를 잡습니다'
             : a.kind === 'polar' ? '결합의 쌍극자를 화살표로 더해 남으면 극성, 상쇄되면 무극성입니다'
