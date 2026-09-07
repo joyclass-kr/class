@@ -21,6 +21,8 @@
   let trickNode = null;
   let activeSecret = "gem1";
   let setupSelection = { gem1: null, gem2: null, undercover: null };
+  let movementAnimating = false;
+  let movementAnimationToken = 0;
 
   function myId() { return lobby?.snapshot().myId || ""; }
   function me() { return state?.players.find(player => player.id === myId()) || null; }
@@ -90,7 +92,7 @@
     if (effect) window.requestAnimationFrame(() => showBoardEffect(effect));
   }
   function sendAction(action, data = {}) {
-    if (actionPending) return false;
+    if (actionPending || movementAnimating) return false;
     actionPending = true;
     const sent = lobby.sendServer({ type: MESSAGE.ACTION, action, ...data });
     if (!sent) {
@@ -364,9 +366,10 @@
       if (node.dense) button.dataset.dense = "true";
       if (node.start) button.dataset.start = node.start;
       if (node.station) button.dataset.station = String(node.station);
-      button.disabled = !targetClass || actionPending;
-      button.title = node.label;
-      button.setAttribute("aria-label", node.label);
+      button.disabled = !targetClass || actionPending || movementAnimating;
+      const targetLabel = targetClass === "valid" ? `${node.label} · 최종 목적지` : node.label;
+      button.title = targetLabel;
+      button.setAttribute("aria-label", targetLabel);
       button.textContent = node.start === "thief"
         ? "도둑팀 비밀기지"
         : node.start === "police"
@@ -419,12 +422,13 @@
         const choice = state.pending && ["transfer", "rescue"].includes(state.pending.type) && state.pending.options.includes(pawn.id);
         const offset = pawnClusterOffset(node, index, pawns.length);
         button.className = `pawn ${pawn.team}${pawn.carryingGem ? " carrying" : ""}${pawn.status === "jailed" ? " jailed" : ""}${pawn.id === state.turnPawnId ? " current" : ""}${choice ? " choice" : ""}`;
+        button.dataset.pawnId = pawn.id;
         button.style.cssText = positionStyle(node.x + offset.x, node.y + offset.y);
         const controllers = pawnControllers(pawn.id);
         const names = controllers.map(player => player.name).join("·") || `${teamName(pawn.team)}팀`;
         button.innerHTML = `<span class="pawnName">${escapeHtml(names)}</span>${pawnFaceMarkup(controllers)}<span class="pawnNumber">${pawn.number}</span>`;
         button.setAttribute("aria-label", `${names}, ${pawn.team === "police" ? "경찰" : "도둑"} ${pawn.number}번${pawn.carryingGem ? ", 보석 소지" : ""}`);
-        button.disabled = !choice || actionPending;
+        button.disabled = !choice || actionPending || movementAnimating;
         if (choice) button.addEventListener("click", () => sendAction("CHOOSE", { choiceId: pawn.id }));
         fragment.appendChild(button);
       });
@@ -550,13 +554,15 @@
     $("pawnTitle").textContent = `${teamName(pawn.team)} ${pawn.number}번 차례${state.canAct ? " · 나" : ""}`;
     $("turnMessage").textContent = state.lastAction;
     $("dieFace").textContent = state.die || "·";
-    $("remainingText").textContent = state.turnMode === "moving"
-      ? `${state.remaining}칸 남음`
+    $("remainingText").textContent = movementAnimating
+      ? "이동 중"
+      : state.turnMode === "moving" ? `${state.remaining}칸 남음`
       : state.turnMode === "pending" ? "선택 대기"
         : pawn.status === "jailed" ? (state.canAct ? "탈출 주사위" : `${actorLabel} 탈출 차례`)
           : state.canAct ? "내 행동 선택" : `${actorLabel} 행동 중`;
-    $("movementHint").textContent = state.turnMode === "moving"
-      ? "말판의 빛나는 칸을 누르세요."
+    $("movementHint").textContent = movementAnimating
+      ? "말이 목적지까지 이동하는 중입니다."
+      : state.turnMode === "moving" ? "빛나는 최종 목적지를 한 번 누르세요."
       : state.canAct ? "아래에서 행동을 선택하세요." : `${actorLabel}님의 행동을 기다립니다.`;
   }
 
@@ -565,7 +571,7 @@
     button.type = "button";
     button.className = `teamAction ${className}`;
     button.textContent = label;
-    button.disabled = disabled || actionPending;
+    button.disabled = disabled || actionPending || movementAnimating;
     button.addEventListener("click", handler);
     return button;
   }
@@ -595,7 +601,7 @@
         if (state.actions.check) fragment.appendChild(makeAction(`차단 표지 · ${state.resources.police.checkCards}개`, "police", () => { placementMode = "check"; renderActions(); renderBoardState(); }));
         hint = pawn.status === "jailed" ? "1이 나오면 즉시 탈출해 다시 이동합니다." : "주사위를 쓰는 대신 카드나 숨기를 선택할 수 있습니다.";
       } else if (state.turnMode === "moving") {
-        hint = "말판에서 노란빛으로 강조된 다음 칸을 누르세요.";
+        hint = `주사위 ${state.die}칸 뒤의 노란빛 최종 목적지를 선택하세요.`;
       } else if (state.turnMode === "pending") {
         hint = state.pending?.type === "teleport" ? "초록빛 위치 이동 칸을 선택하세요." : "말판에서 빛나는 도둑말을 선택하세요.";
       }
@@ -685,13 +691,63 @@
     renderResult();
   }
 
+  function shouldAnimateMove(previousState, nextState) {
+    const move = nextState?.lastMove;
+    return !!move && move.id !== previousState?.lastMove?.id && Array.isArray(move.path) && move.path.length > 1;
+  }
+
+  function animateMovement(move) {
+    const token = ++movementAnimationToken;
+    const pawn = document.querySelector(`.pawn[data-pawn-id="${CSS.escape(move.pawnId)}"]`);
+    const route = move.path.map(nodeMeta).filter(Boolean);
+    if (!pawn || route.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      movementAnimating = false;
+      renderActions();
+      renderBoardState();
+      return;
+    }
+
+    const placeAt = node => {
+      pawn.style.left = `${(node.x / Board.WIDTH) * 100}%`;
+      pawn.style.top = `${(node.y / Board.HEIGHT) * 100}%`;
+    };
+    pawn.classList.add("moving");
+    pawn.style.transition = "none";
+    placeAt(route[0]);
+    void pawn.offsetWidth;
+    pawn.style.removeProperty("transition");
+
+    let index = 1;
+    const advance = () => {
+      if (token !== movementAnimationToken) return;
+      placeAt(route[index]);
+      index += 1;
+      if (index < route.length) {
+        window.setTimeout(advance, 300);
+        return;
+      }
+      window.setTimeout(() => {
+        if (token !== movementAnimationToken) return;
+        movementAnimating = false;
+        renderActions();
+        renderBoardState();
+      }, 300);
+    };
+    window.requestAnimationFrame(advance);
+  }
+
   function installState(nextState) {
-    const previousPhase = state?.phase;
+    const previousState = state;
+    const previousPhase = previousState?.phase;
+    const animateMove = shouldAnimateMove(previousState, nextState);
+    movementAnimationToken += 1;
+    movementAnimating = animateMove;
     state = nextState;
     actionPending = false;
     placementMode = null;
     trickNode = null;
     if (state.phase === "lobby") {
+      movementAnimating = false;
       if (lobby.snapshot().started) {
         $("gameScreen").classList.add("hidden");
         $("lobbyScreen").classList.remove("hidden");
@@ -700,12 +756,13 @@
       renderTeamSeats();
       return;
     }
-    const previousState = state;
     if (previousPhase !== "setup" && state.phase === "setup") {
       setupSelection = { gem1: null, gem2: null, undercover: null };
       activeSecret = "gem1";
     }
     renderGame();
+    scheduleStateEffect(previousState, state);
+    if (animateMove) window.requestAnimationFrame(() => animateMovement(state.lastMove));
   }
 
   function handleServerMessage(message) {
@@ -719,7 +776,6 @@
       if (state?.phase === "lobby") renderTeamSeats();
       else if (state) renderGame();
     }
-    scheduleStateEffect(previousState, state);
   }
 
   function syncLobby(snapshot) {

@@ -3818,7 +3818,7 @@ wss.on("connection", (socket, request) => {
       } else if (action === "ROLL") {
         result = CityChase.roll(game, playerId);
       } else if (action === "MOVE") {
-        result = CityChase.moveStep(game, playerId, cleanToken(message.nodeId, 30));
+        result = CityChase.moveToDestination(game, playerId, cleanToken(message.nodeId, 30));
       } else if (action === "HIDE") {
         result = CityChase.hide(game, playerId);
       } else if (action === "PLACE_TRICK") {

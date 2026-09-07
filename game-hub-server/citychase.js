@@ -40,6 +40,8 @@ function createGame(hostId, hostName) {
     die: null,
     remaining: 0,
     path: [],
+    lastMove: null,
+    moveSequence: 0,
     pending: null,
     winnerTeam: null,
     lastAction: "2~6명이 모이면 시작할 수 있습니다.",
@@ -204,6 +206,8 @@ function resetRound(game) {
   game.die = null;
   game.remaining = 0;
   game.path = [];
+  game.lastMove = null;
+  game.moveSequence = 0;
   game.pending = null;
   game.winnerTeam = null;
 }
@@ -305,7 +309,7 @@ function policeAtJail(game) {
 function availableNeighbors(game, pawn) {
   if (!pawn || game.turnMode !== "moving") return [];
   let options = Board.neighbors(pawn.position, pawn.team).map(item => item.id);
-  if (pawn.forcedNext && game.path.length === 1) options = options.filter(id => id === pawn.forcedNext);
+  if (pawn.forcedNext) options = options.filter(id => id === pawn.forcedNext);
   options = options.filter(id => {
     const node = Board.NODES[id];
     if (!node) return false;
@@ -314,6 +318,58 @@ function availableNeighbors(game, pawn) {
     return !game.path.includes(id);
   });
   return [...new Set(options)];
+}
+
+function movementPlans(game, pawn) {
+  const plans = new Map();
+  if (!pawn || game.turnMode !== "moving" || game.remaining <= 0) return plans;
+  const startingPath = [...game.path];
+  const activeThieves = new Set(game.pawns
+    .filter(candidate => candidate.team === "thief" && candidate.status === "active")
+    .map(candidate => candidate.position));
+  const checkNodes = new Set(game.checks.map(check => check.nodeId));
+  const tricks = new Map(game.tricks.map(trick => [trick.nodeId, trick.nextNodeId]));
+
+  function optionsFrom(position, visited, forcedNext) {
+    let options = Board.neighbors(position, pawn.team).map(item => item.id);
+    if (forcedNext) options = options.filter(id => id === forcedNext);
+    return [...new Set(options)].filter(id => {
+      const node = Board.NODES[id];
+      if (!node || visited.includes(id)) return false;
+      if (pawn.team === "police" && node.kind === "building") return false;
+      if (pawn.team === "thief" && id === "jail" && policeAtJail(game)) return false;
+      return true;
+    });
+  }
+
+  function walk(position, stepsLeft, visited, route, forcedNext) {
+    const options = optionsFrom(position, visited, forcedNext);
+    if (!options.length) {
+      const existing = plans.get(position);
+      if (route.length && (!existing || route.length > existing.length)) plans.set(position, [...route]);
+      return;
+    }
+    for (const next of options) {
+      const nextRoute = [...route, next];
+      const nextVisited = [...visited, next];
+      const caughtThief = pawn.team === "police" && activeThieves.has(next) && !Board.NODES[next]?.safe;
+      const stoppedByCheck = pawn.team === "thief" && pawn.carryingGem && checkNodes.has(next);
+      if (stepsLeft === 1 || caughtThief || stoppedByCheck) {
+        const existing = plans.get(next);
+        if (!existing || nextRoute.length > existing.length) plans.set(next, nextRoute);
+        continue;
+      }
+      const nextForced = pawn.team === "police" ? tricks.get(next) || null : null;
+      walk(next, stepsLeft - 1, nextVisited, nextRoute, nextForced);
+    }
+  }
+
+  walk(pawn.position, game.remaining, startingPath, [], pawn.forcedNext || null);
+  return plans;
+}
+
+function reachableDestinations(game, pawn) {
+  return [...movementPlans(game, pawn).keys()];
 }
 
 function finishWinner(game, team, message) {
@@ -507,9 +563,30 @@ function roll(game, playerId, suppliedRoll) {
   game.path = [pawn.position];
   game.turnMode = "moving";
   game.lastAction = `${pawn.team === "thief" ? "도둑" : "경찰"} ${pawn.number}번이 ${die}을 굴렸습니다.`;
-  if (!availableNeighbors(game, pawn).length) advanceTurn(game, "갈 수 있는 길이 없어 차례를 넘겼습니다.");
+  if (!reachableDestinations(game, pawn).length) advanceTurn(game, "갈 수 있는 길이 없어 차례를 넘겼습니다.");
   game.revision += 1;
   return { ok: true, die };
+}
+
+function moveToDestination(game, playerId, targetNodeId) {
+  const { pawn, error } = validateActor(game, playerId, ["moving"]);
+  if (error) return { ok: false, error };
+  const target = String(targetNodeId || "");
+  const route = movementPlans(game, pawn).get(target);
+  if (!route) return { ok: false, error: "선택한 칸을 최종 목적지로 이동할 수 없습니다." };
+
+  const movingPawnId = pawn.id;
+  const trace = [pawn.position];
+  for (const nodeId of route) {
+    const result = moveStep(game, playerId, nodeId);
+    if (!result.ok) return result;
+    trace.push(nodeId);
+    if (pawn.position !== nodeId) trace.push(pawn.position);
+    if (game.phase !== "playing" || game.turnMode !== "moving" || currentPawn(game)?.id !== movingPawnId) break;
+  }
+  game.moveSequence = (game.moveSequence || 0) + 1;
+  game.lastMove = { id: game.moveSequence, pawnId: movingPawnId, path: trace.filter((nodeId, index) => nodeId && nodeId !== trace[index - 1]) };
+  return { ok: true, path: [...game.lastMove.path] };
 }
 
 function moveStep(game, playerId, targetNodeId) {
@@ -517,7 +594,7 @@ function moveStep(game, playerId, targetNodeId) {
   if (error) return { ok: false, error };
   const target = String(targetNodeId || "");
   if (!availableNeighbors(game, pawn).includes(target)) return { ok: false, error: "선택한 칸으로 이동할 수 없습니다." };
-  const usedForced = pawn.forcedNext && game.path.length === 1;
+  const usedForced = !!pawn.forcedNext;
   pawn.position = target;
   pawn.hidingTurns = 0;
   game.path.push(target);
@@ -704,13 +781,14 @@ function stateFor(game, playerId) {
     die: game.die,
     remaining: game.remaining,
     path: [...game.path],
+    lastMove: game.lastMove ? { id: game.lastMove.id, pawnId: game.lastMove.pawnId, path: [...game.lastMove.path] } : null,
     pending: game.pending ? { type: game.pending.type, pawnId: game.pending.pawnId, options: canAct ? [...game.pending.options] : [] } : null,
     winnerTeam: game.winnerTeam,
     lastAction: game.lastAction,
     revision: game.revision,
     canAct,
     canSetup: game.phase === "setup" && id === game.policeCaptainId,
-    validMoves: canAct ? availableNeighbors(game, pawn) : [],
+    validMoves: canAct ? reachableDestinations(game, pawn) : [],
     actions: {
       roll: canAct && game.turnMode === "awaiting_roll",
       hide: canHide,
@@ -739,6 +817,7 @@ module.exports = {
   createGame,
   currentPawn,
   hide,
+  moveToDestination,
   moveStep,
   placeCheck,
   placeSecrets,
@@ -746,6 +825,7 @@ module.exports = {
   removePlayer,
   resetToLobby,
   roll,
+  reachableDestinations,
   startGame,
   stateFor
 };

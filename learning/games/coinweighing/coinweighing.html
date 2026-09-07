@@ -1462,6 +1462,22 @@ body{align-items:center;padding:18px}
     }
 
     // 영역 클릭 시 동전 배치 기능 (Select & Move 핵심 로직)
+    function moveCoinFast(coin, target, afterMove) {
+        if (!coin || !target) return;
+        const before = coin.getBoundingClientRect();
+        target.appendChild(coin);
+        if (afterMove) afterMove();
+        const after = coin.getBoundingClientRect();
+        if (!coin.animate) return;
+        const dx = before.left - after.left;
+        const dy = before.top - after.top;
+        coin.animate([
+            { transform: `translate(${dx}px, ${dy}px)`, offset: 0 },
+            { transform: `translate(${dx * .48}px, ${dy * .48 - 12}px)`, offset: .52 },
+            { transform: 'translate(0, 0)', offset: 1 }
+        ], { duration: 95, easing: 'linear' });
+    }
+
     function handleZoneClick(zoneType, event) {
         if (!selectedCoin) return;
         event.stopPropagation();
@@ -1471,15 +1487,13 @@ body{align-items:center;padding:18px}
 
         if (zoneType === 'left') {
             const plate = document.getElementById('left-plate');
-            plate.appendChild(selectedCoin);
-            sortCoinsInPlate(plate);
+            moveCoinFast(selectedCoin, plate, () => sortCoinsInPlate(plate));
         } else if (zoneType === 'right') {
             const plate = document.getElementById('right-plate');
-            plate.appendChild(selectedCoin);
-            sortCoinsInPlate(plate);
+            moveCoinFast(selectedCoin, plate, () => sortCoinsInPlate(plate));
         } else if (zoneType === 'pool') {
             if (poolSlot) {
-                poolSlot.appendChild(selectedCoin);
+                moveCoinFast(selectedCoin, poolSlot);
             }
         }
 
@@ -1608,7 +1622,7 @@ body{align-items:center;padding:18px}
             const coin = document.getElementById(`coin-${i}`);
             if (coin && coin.parentElement.id !== `pool-slot-${i}`) {
                 const targetSlot = document.getElementById(`pool-slot-${i}`);
-                targetSlot.appendChild(coin);
+                moveCoinFast(coin, targetSlot);
                 moved = true;
             }
         }

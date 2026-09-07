@@ -403,6 +403,17 @@ button.building { cursor: pointer; }
 .pawn.current { z-index: 12; box-shadow: 0 0 0 5px #fff, 0 0 0 9px #f6bd3c, 0 4px 0 #172536; animation: currentPawnGlow .8s ease-in-out infinite alternate; }
 .pawn.current .pawnName { border-color: #7b5610; background: #ffe36b; box-shadow: 0 2px 0 #7b561088, 0 0 8px #ffd84f; }
 @keyframes currentPawnGlow { to { box-shadow: 0 0 0 5px #fff, 0 0 0 11px #ffd43b, 0 0 18px #ffcf33, 0 4px 0 #172536; } }
+.pawn.moving {
+  z-index: 20;
+  transition: left .26s cubic-bezier(.22, .8, .3, 1), top .26s cubic-bezier(.22, .8, .3, 1);
+  animation: pawnTravelHop .3s ease-in-out infinite alternate;
+  pointer-events: none;
+  will-change: left, top, transform;
+}
+@keyframes pawnTravelHop {
+  to { transform: translate(-50%, -62%) scale(1.06); box-shadow: 0 8px 0 #172536, 0 12px 18px #17253666; }
+}
+@media (prefers-reduced-motion: reduce) { .pawn.moving { transition: none; animation: none; } }
 
 .boardCard {
   position: absolute;
