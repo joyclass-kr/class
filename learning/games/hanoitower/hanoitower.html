@@ -1090,6 +1090,7 @@ body{justify-content:flex-start;padding:8px}
 
             poles[i].forEach((size, diskIndex) => {
                 const disk = document.createElement('div');
+                disk.dataset.size = String(size);
                 const isTopDisk = diskIndex === poles[i].length - 1;
                 disk.className = 'disk' +
                     (isTopDisk ? ' tap-selectable' : '') +
@@ -1194,6 +1195,8 @@ body{justify-content:flex-start;padding:8px}
             return false;
         }
 
+        const movingDisk = document.querySelector(`#pole${fromPoleIdx} .disk[data-size="${diskSize}"]`);
+        const beforeRect = movingDisk?.getBoundingClientRect();
         poles[toPoleIdx].push(poles[fromPoleIdx].pop());
         selectedPoleIndex = null;
         moveCount++;
@@ -1201,6 +1204,19 @@ body{justify-content:flex-start;padding:8px}
 
         playSound(diskSize);
         render();
+        const arrivedDisk = document.querySelector(`#pole${toPoleIdx} .disk[data-size="${diskSize}"]`);
+        const afterRect = arrivedDisk?.getBoundingClientRect();
+        if (beforeRect && afterRect && arrivedDisk?.animate) {
+            const dx = beforeRect.left - afterRect.left;
+            const dy = beforeRect.top - afterRect.top;
+            const lift = Math.min(dy - 18, -18);
+            arrivedDisk.animate([
+                { transform: `translate(${dx}px, ${dy}px)`, offset: 0 },
+                { transform: `translate(${dx}px, ${lift}px)`, offset: .28 },
+                { transform: `translate(0, ${lift}px)`, offset: .72 },
+                { transform: 'translate(0, 0)', offset: 1 }
+            ], { duration: 120, easing: 'linear' });
+        }
         checkWin();
         return true;
     }

@@ -373,7 +373,7 @@ function renderControls(){
   $("draftSummary").textContent=count?`이번 배치 · 내 타일 ${count}개${mine?.opened?"":` · ${score}점`}`:"보드의 타일을 선택해 이동할 수 있습니다.";
 }
 
-function renderDraft(){if(!gameState||gameState.phase!=="playing")return;renderBoard();renderRack();renderControls()}
+function renderDraft(){if(!gameState||gameState.phase!=="playing")return;const before=new Map([...document.querySelectorAll("[data-tile-id]")].map(tile=>[tile.dataset.tileId,tile.getBoundingClientRect()]));renderBoard();renderRack();renderControls();document.querySelectorAll("[data-tile-id]").forEach(tile=>{const first=before.get(tile.dataset.tileId),last=tile.getBoundingClientRect();if(!first||!tile.animate||(first.left===last.left&&first.top===last.top))return;tile.animate([{transform:`translate(${first.left-last.left}px,${first.top-last.top}px)`,zIndex:5},{transform:"translate(0,0)",zIndex:5}],{duration:180,easing:"cubic-bezier(.2,.8,.2,1)"})})}
 
 function renderResult(){
   const ended=gameState.phase==="ended";

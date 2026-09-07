@@ -256,7 +256,7 @@ h1,h2,h3,p{margin-top:0}
         <section class="panel">
           <div class="boardWrap">
             <svg id="board" viewBox="0 0 380 380" role="img" aria-label="가로·세로 복도가 교차하고 비밀통로 8곳이 있는 저택 평면도"></svg>
-            <div class="boardLegend"><span>▦ #형 복도를 한 칸씩 이동</span><span>▱ 비밀통로 8곳 · 정반대 출구로 연결</span></div>
+            <div class="boardLegend"><span>▦ 초록색 최종 목적지를 한 번 선택</span><span>▱ 비밀통로 8곳 · 정반대 출구로 연결</span></div>
           </div>
           <div id="pendingBanner" class="pendingBanner hidden"></div>
         </section>
@@ -317,7 +317,7 @@ h1,h2,h3,p{margin-top:0}
     <h2>저택 추리 규칙</h2>
     <ol>
       <li>저택의 가보를 훔친 도둑(용의자 1명) · 사용한 도구(1개) · 범행 장소(방 1곳) 카드가 각 1장씩 몰래 빠져 뒤집혀 놓입니다. 나머지 18장은 참가자에게 고르게 나눠집니다.</li>
-      <li>자기 차례에는 주사위 두 개를 굴려 나온 합계만큼 복도 타일을 한 칸씩 이동합니다. 지정된 금색 문 타일에서만 연결된 방으로 들어갈 수 있고, 방에 들어가면 이동이 끝납니다. 이동 가능한 칸과 방은 초록색으로 표시됩니다. 복도에는 총 8개의 비밀계단이 있으며, 그 위에 서면 저택 정반대편 계단으로 즉시 이동할 수 있습니다.</li>
+      <li>자기 차례에는 주사위 두 개를 굴린 뒤 초록색 최종 목적지를 한 번 선택합니다. 말은 계산된 복도 경로를 따라 움직입니다. 지정된 금색 문 타일에서만 연결된 방으로 들어갈 수 있고, 방에 들어가면 이동이 끝납니다. 도착 가능한 칸과 방은 초록색으로 표시됩니다. 복도에는 총 8개의 비밀계단이 있으며, 그 위에 서면 저택 정반대편 계단으로 즉시 이동할 수 있습니다.</li>
       <li>방 안에 있을 때만 "용의자 + 도구"를 추리로 발표할 수 있습니다. 장소는 자신이 있는 방으로 자동 지정됩니다. 복도에 멈춰 있으면 추리를 발표할 수 없습니다.</li>
       <li>다음 차례부터 순서대로 다른 참가자들에게 그 용의자·도구·장소 카드 중 한 장이라도 있는지 묻습니다. 가진 사람이 나오면 그 카드 한 장을 추리한 사람에게만 몰래 보여줍니다. 아무도 없으면 공개적으로 "반박 없음"이 됩니다.</li>
       <li>확신이 서면 거실로 돌아와 "고발"로 도둑·도구·장소를 모두 지목할 수 있습니다(고발은 거실에 있을 때만 가능). 정답이면 즉시 승리! 틀리면 그 사람은 더 이상 이동·추리·고발을 할 수 없지만, 다른 사람의 추리를 반박하는 데는 계속 참여합니다.</li>
@@ -533,6 +533,7 @@ let accuseSuspect=null,accuseWeapon=null,accuseRoom=null;
 let myAvatarUrl=null;
 let dieAnimating=false;
 let localDeadline=0;
+let lastAnimatedClueMove=0;
 const savedName=String(localStorage.getItem(NAME_KEY)||"").trim();
 
 const GUEST_AVATAR_KEYS=[
@@ -708,6 +709,9 @@ function playerName(id){
   return player?player.name:"참가자";
 }
 
+function clueLayerFor(key){return document.querySelector(`.tokenLayer[data-tokens="${key.startsWith("r")?key:"c"+key}"]`)}
+function animateClueMove(){const move=gameState?.lastMove;if(!move||move.seq===lastAnimatedClueMove||!Array.isArray(move.path)||move.path.length<2)return;const destination=clueLayerFor(move.path[move.path.length-1])?.getBoundingClientRect();if(!destination)return;lastAnimatedClueMove=move.seq;const centers=move.path.map(key=>clueLayerFor(key)?.getBoundingClientRect()).filter(Boolean).map(rect=>({x:rect.left+rect.width/2,y:rect.top+rect.height/2}));if(centers.length<2)return;const end=centers[centers.length-1],frames=centers.map((point,index)=>({transform:`translate(${point.x-end.x}px,${point.y-end.y}px)`,offset:index/(centers.length-1)}));document.querySelectorAll(`[data-player-token="${move.playerId}"]`).forEach(token=>token.animate?.(frames,{duration:Math.min(800,Math.max(180,(centers.length-1)*115)),easing:"linear"}))}
+
 function renderTokens(){
   document.querySelectorAll(".tokenLayer").forEach(layer=>layer.replaceChildren());
   document.querySelectorAll(".roomRect").forEach(rect=>rect.classList.remove("reachable","current"));
@@ -735,6 +739,7 @@ function renderTokens(){
       if(!player.avatarUrl){
         const ring=document.createElementNS(svgNS,"circle");
         ring.setAttribute("class","token");
+        ring.setAttribute("data-player-token",player.id);
         ring.setAttribute("cx",cx);
         ring.setAttribute("cy",cy);
         ring.setAttribute("r",isRoom?6.5:5);
@@ -745,6 +750,7 @@ function renderTokens(){
       if(player.avatarUrl){
         const img=document.createElementNS(svgNS,"image");
         img.setAttribute("class","tokenAvatar");
+        img.setAttribute("data-player-token",player.id);
         img.setAttribute("href",player.avatarUrl);
         img.setAttribute("x",cx-size/2);
         img.setAttribute("y",cy-size/2);
@@ -756,6 +762,7 @@ function renderTokens(){
       const nameChars=Array.from(String(player.name||""));
       const displayName=nameChars.length<=4?nameChars.join(""):nameChars.slice(0,3).join("")+"…";
       nameTag.setAttribute("class","tokenName");
+      nameTag.setAttribute("data-player-token",player.id);
       nameTag.setAttribute("x",cx);
       nameTag.setAttribute("y",cy-(isRoom?9.5:8));
       nameTag.setAttribute("aria-label",player.name);
@@ -803,6 +810,7 @@ function renderTokens(){
       if(hit)hit.classList.add("current");
     }
   }
+  animateClueMove();
 }
 
 function renderPlayerList(){

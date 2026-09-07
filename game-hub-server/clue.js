@@ -332,6 +332,37 @@ function reachablePositions(game, player, dice) {
   return { rooms: [...rooms], cells: [...cells] };
 }
 
+function movementPlans(game, player, dice) {
+  const startKey = player.roomIndex >= 0 ? `r${player.roomIndex}` : player.cellId;
+  if (!startKey) return new Map();
+  const plans = new Map();
+  const seen = new Set([startKey]);
+  const queue = [{ key: startKey, room: player.roomIndex, cell: player.cellId, path: [startKey] }];
+  while (queue.length) {
+    const node = queue.shift();
+    const steps = node.path.length - 1;
+    if (steps >= dice) continue;
+    if (node.room >= 0 && steps > 0) continue;
+    const neighbors = [];
+    if (node.cell) {
+      for (const cellId of CELL_NEIGHBORS[node.cell]) neighbors.push({ type: "cell", value: cellId });
+      for (const roomIdx of CELL_ROOMS[node.cell] || []) neighbors.push({ type: "room", value: roomIdx });
+    } else if (node.room >= 0) {
+      for (const cellId of ROOM_CELLS[node.room] || []) neighbors.push({ type: "cell", value: cellId });
+    }
+    for (const neighbor of neighbors) {
+      const key = neighbor.type === "room" ? `r${neighbor.value}` : neighbor.value;
+      if (seen.has(key)) continue;
+      if (neighbor.type === "cell" && cellOccupant(game, neighbor.value, player.id)) continue;
+      seen.add(key);
+      const path = [...node.path, key];
+      plans.set(key, path);
+      queue.push({ key, room: neighbor.type === "room" ? neighbor.value : -1, cell: neighbor.type === "cell" ? neighbor.value : null, path });
+    }
+  }
+  return plans;
+}
+
 function nextStepPositions(game, player) {
   const { rooms, cells } = reachablePositions(game, player, 1);
   const visited = new Set(game.movePath || []);
@@ -351,7 +382,8 @@ function roll(game, playerId, pick = randomInt) {
   game.stepsRemaining = game.dice;
   const startKey = actor.roomIndex >= 0 ? `r${actor.roomIndex}` : actor.cellId;
   game.movePath = startKey ? [startKey] : [];
-  game.log = `${actor.name}님이 주사위 ${firstDie}와 ${secondDie}, 합계 ${game.dice}을(를) 굴렸습니다. 말을 한 칸씩 옮기세요.`;
+  game.lastMove = null;
+  game.log = `${actor.name}님이 주사위 ${firstDie}와 ${secondDie}, 합계 ${game.dice}을(를) 굴렸습니다. 초록색 최종 목적지를 선택하세요.`;
   game.actionNumber += 1;
   return { ok: true, reveals: [] };
 }
@@ -363,34 +395,25 @@ function move(game, playerId, target) {
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   if (game.turnPhase !== "move" || game.dice === null || game.moved || game.stepsRemaining <= 0) return { ok: false, error: "지금은 이동할 수 없습니다." };
   if (typeof target !== "string" || !target) return { ok: false, error: "이동할 곳을 선택하세요." };
-  const { rooms, cells } = nextStepPositions(game, actor);
-  let enteredRoom = false;
-  let destinationKey = target;
+  const plan = movementPlans(game, actor, game.stepsRemaining).get(target);
+  if (!plan) return { ok: false, error: "주사위 범위 안의 도착지를 선택하세요." };
   if (target.startsWith("r")) {
-    const roomIdx = Number(target.slice(1));
-    if (!rooms.includes(roomIdx)) return { ok: false, error: "현재 칸과 이어진 방이 아닙니다." };
-    actor.roomIndex = roomIdx;
+    actor.roomIndex = Number(target.slice(1));
     actor.cellId = null;
-    enteredRoom = true;
-    destinationKey = `r${roomIdx}`;
   } else {
-    if (!cells.includes(target)) return { ok: false, error: "현재 위치에서 한 칸 떨어진 타일을 선택하세요." };
     actor.roomIndex = -1;
     actor.cellId = target;
   }
-  game.movePath.push(destinationKey);
-  game.stepsRemaining = Math.max(0, game.stepsRemaining - 1);
-  if (enteredRoom) game.stepsRemaining = 0;
-  if (enteredRoom || game.stepsRemaining === 0) {
-    game.moved = true;
-    game.turnPhase = "act";
-    const label = enteredRoom ? ROOMS[actor.roomIndex] : "복도";
-    game.log = `${actor.name}님이 ${label}(으)로 이동을 마쳤습니다.`;
-  } else {
-    game.log = `${actor.name}님이 한 칸 이동했습니다. ${game.stepsRemaining}칸 남았습니다.`;
-  }
+  game.movePath = [...plan];
+  game.stepsRemaining = 0;
+  game.moved = true;
+  game.turnPhase = "act";
   game.actionNumber += 1;
+  game.lastMove = { playerId: actor.id, path: [...plan], seq: game.actionNumber };
+  const destinationLabel = actor.roomIndex >= 0 ? ROOMS[actor.roomIndex] : "복도";
+  game.log = `${actor.name}님이 ${destinationLabel}(으)로 이동을 마쳤습니다.`;
   return { ok: true, reveals: [] };
+
 }
 
 function stay(game, playerId) {
@@ -572,7 +595,7 @@ function stateFor(game, viewerId) {
   const suggestion = game.pendingSuggestion;
   const turnPlayer = game.phase === "playing" ? activePlayer(game) : null;
   const canShowReachable = turnPlayer && turnPlayer.id === safeViewer && game.turnPhase === "move" && game.dice !== null && !game.moved && !suggestion;
-  const reachable = canShowReachable ? nextStepPositions(game, turnPlayer) : { rooms: [], cells: [] };
+  const reachable = canShowReachable ? reachablePositions(game, turnPlayer, game.stepsRemaining) : { rooms: [], cells: [] };
   return {
     phase: game.phase,
     hand: game.phase === "playing" || game.phase === "gameEnd" ? [...(game.hands[safeViewer] || [])] : [],
@@ -591,6 +614,7 @@ function stateFor(game, viewerId) {
     diceValues: game.diceValues ? [...game.diceValues] : null,
     stepsRemaining: game.stepsRemaining,
     moved: game.moved,
+    lastMove: game.lastMove ? { playerId: game.lastMove.playerId, path: [...game.lastMove.path], seq: game.lastMove.seq } : null,
     reachable,
     suggestionUsed: game.suggestionUsed,
     deadline: game.phase === "playing" ? game.deadline : null,
