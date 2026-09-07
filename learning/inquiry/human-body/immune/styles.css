@@ -264,3 +264,28 @@
     display: flex; align-items: center; justify-content: center;
     color: #fca5a5; font-weight: 700;
 }
+
+/* ── 1차·2차 반응 그래프의 이름표 (antibody-graph.js) ─────── */
+.antibody-tags { position: absolute; inset: 0; pointer-events: none; }
+
+.antibody-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #f8fafc;
+}
+
+.antibody-tag[data-anchor="start"] { transform: translate(0, -50%); }
+.antibody-tag[data-anchor="end"] { transform: translate(-100%, -50%); }
+
+.antibody-tag.head { font-size: 15px; }
+.antibody-tag.dim { color: #94a3b8; font-weight: 700; }
+.antibody-tag.note {
+    color: #cbd5e1;
+    font-weight: 700;
+    max-width: 620px;
+    white-space: normal;
+    text-align: center;
+}

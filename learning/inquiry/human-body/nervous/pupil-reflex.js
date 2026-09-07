@@ -18,7 +18,7 @@
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var CX = 260, CY = 290, IRIS_R = 150;
 
-    var wrap, layer, svg;
+    var wrap, layer, svg, tagLayer;
     var pupil, irisRing, circularMuscle, radialMuscles = [], glare;
     var pupilLabel, muscleNote;
     var steps = [], stepBoxes = [];
@@ -41,6 +41,8 @@
         addSceneButton();
         buildLayer();
         watchControls();
+        window.addEventListener('resize', placeTags);
+        setTimeout(placeTags, 120);
         loop();
     }
 
@@ -64,6 +66,7 @@
     }
 
     function setVisible(on) {
+        if (on) { setTimeout(placeTags, 0); setTimeout(placeTags, 80); }
         layer.hidden = !on;
         var canvas = document.getElementById('nervousCanvas');
         // 덧그림이 하나라도 켜져 있으면 캔버스는 감춘 채로 둔다
@@ -95,8 +98,12 @@
         layer.hidden = true;
         wrap.appendChild(layer);
 
+        tagLayer = document.createElement('div');
+        tagLayer.className = 'pupil-tags';
+
         svg = el('svg', { viewBox: '0 0 1000 560', preserveAspectRatio: 'xMidYMid meet' });
         layer.appendChild(svg);
+        layer.appendChild(tagLayer);   // 글씨는 그림 밖에 얹는다
 
         drawEye();
         drawPath();
@@ -106,7 +113,7 @@
         var g = el('g');
         svg.appendChild(g);
 
-        g.appendChild(text(CX, 66, '눈을 앞에서 본 모습', 17, '#f8fafc', 800));
+        htmlTag(CX, 66, '눈을 앞에서 본 모습', 'head');
 
         // 흰자 (공막)
         g.appendChild(el('ellipse', {
@@ -148,15 +155,14 @@
         g.appendChild(tag(CX + 128, CY + 122, '홍채', '#22d3ee'));
         pupilLabel = tag(CX, CY + 178, '', '#f8fafc');
         g.appendChild(pupilLabel);
-        muscleNote = text(CX, 522, '', 14, '#cbd5e1', 700);
-        g.appendChild(muscleNote);
+        muscleNote = htmlTag(CX, 522, '', 'note');
     }
 
     function drawPath() {
         var g = el('g', { transform: 'translate(590, 0)' });
         svg.appendChild(g);
 
-        g.appendChild(text(0, 66, '자극이 지나가는 길', 17, '#f8fafc', 800, 'start'));
+        htmlTag(590, 66, '자극이 지나가는 길', 'head', 'start');
 
         for (var i = 0; i < PATH.length; i++) {
             var y = 100 + i * 56;
@@ -164,9 +170,8 @@
                 x: 0, y: y, width: 370, height: 42, rx: 10,
                 fill: 'rgba(15,23,42,0.85)', stroke: '#334155', 'stroke-width': 1.6
             });
-            var t = text(18, y + 27, '', 14, '#94a3b8', 800, 'start');
+            var t = htmlTag(608, y + 21, '', 'step', 'start');
             g.appendChild(box);
-            g.appendChild(t);
             stepBoxes.push(box);
             steps.push(t);
 
@@ -178,8 +183,8 @@
             }
         }
 
-        g.appendChild(text(0, 506, '중추는 중간뇌입니다.', 13, '#fbbf24', 800, 'start'));
-        g.appendChild(text(0, 528, '대뇌를 거치지 않아 나도 모르게 일어납니다 (무조건 반사).', 13, '#fbbf24', 700, 'start'));
+        htmlTag(590, 506, '중추는 중간뇌입니다.', 'warm', 'start');
+        htmlTag(590, 528, '대뇌를 거치지 않아 나도 모르게 일어납니다 (무조건 반사).', 'warm', 'start');
     }
 
     function watchControls() {
@@ -189,6 +194,7 @@
 
     function loop() {
         render();
+        placeTags();
         raf = requestAnimationFrame(loop);
     }
 
@@ -226,7 +232,7 @@
         muscleNote.textContent = bright
             ? '원형근 수축 (두꺼워짐) · 방사근 이완 ➔ 동공이 작아집니다'
             : '방사근 수축 (두꺼워짐) · 원형근 이완 ➔ 동공이 커집니다';
-        muscleNote.setAttribute('fill', bright ? '#38bdf8' : '#fbbf24');
+        muscleNote.style.color = bright ? '#38bdf8' : '#fbbf24';
 
         // 지나가는 길
         var color = bright ? '#38bdf8' : '#fbbf24';
@@ -241,7 +247,7 @@
         ];
         for (var i = 0; i < steps.length; i++) {
             steps[i].textContent = words[i];
-            steps[i].setAttribute('fill', '#f8fafc');
+            steps[i].style.color = '#f8fafc';
             stepBoxes[i].setAttribute('stroke', color);
             stepBoxes[i].setAttribute('fill', i >= 4 ? hexToRgba(color, 0.18) : 'rgba(15,23,42,0.85)');
         }
@@ -249,12 +255,11 @@
 
     /* ── 도우미 ───────────────────────────────────────────── */
 
+    /** 그림 위 딱지: 테두리 상자는 그림에, 글씨는 이름표로 */
     function tag(x, y, str, color) {
         var g = el('g');
-        var t = text(x, y + 5, str, 13.5, '#f8fafc', 800);
         g.appendChild(el('rect', { x: x - 70, y: y - 14, width: 140, height: 26, rx: 8, fill: 'rgba(6,10,24,0.86)', stroke: color, 'stroke-width': 1.4 }));
-        g.appendChild(t);
-        g._text = t;
+        g._text = htmlTag(x, y, str, 'pin');
         return g;
     }
 
@@ -262,6 +267,34 @@
         if (!g || !g._text) return;
         g._text.textContent = str;
         g.firstChild.setAttribute('stroke', color);
+    }
+
+    /* ── 이름표 (HTML) ───────────────────────────────────── */
+    var TAGS = [];
+
+    function htmlTag(x, y, str, cls, anchor) {
+        var e = document.createElement('span');
+        e.className = 'pupil-tag' + (cls ? ' ' + cls : '');
+        e.textContent = str || '';
+        e.dataset.anchor = anchor || 'middle';
+        tagLayer.appendChild(e);
+        TAGS.push({ el: e, x: x, y: y });
+        return e;
+    }
+
+    function placeTags() {
+        if (!svg || !tagLayer || !layer || layer.hidden) return;
+        var box = svg.getBoundingClientRect();
+        if (!box.width) return;
+        var vb = svg.viewBox.baseVal;
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var lb = tagLayer.getBoundingClientRect();
+        var offX = (box.left - lb.left) + (box.width - vb.width * k) / 2;
+        var offY = (box.top - lb.top) + (box.height - vb.height * k) / 2;
+        TAGS.forEach(function (t) {
+            t.el.style.left = (offX + t.x * k) + 'px';
+            t.el.style.top = (offY + t.y * k) + 'px';
+        });
     }
 
     function hexToRgba(hex, a) {
@@ -275,15 +308,6 @@
         return n;
     }
 
-    function text(x, y, str, size, fill, weight, anchor) {
-        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
-        var n = el('text', {
-            x: x, y: y, fill: fill, 'font-size': size, 'font-weight': weight || 700,
-            'font-family': 'Pretendard, sans-serif', 'text-anchor': anchor || 'middle'
-        });
-        n.textContent = str;
-        return n;
-    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);

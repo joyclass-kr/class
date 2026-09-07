@@ -20,7 +20,7 @@
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
 
-    var wrap, layer, svg;
+    var wrap, layer, svg, tagLayer;
     var drops = [], bladderFill, bladderOutline, urethraFlow, rateText, colorText;
     var bladderLevel = 0.35;   // 0 ~ 1
     var voiding = 0;           // 배뇨 중 남은 시간
@@ -37,6 +37,8 @@
         addSceneButton();
         buildLayer();
         watchControls();
+        window.addEventListener('resize', placeTags);
+        setTimeout(placeTags, 120);
         requestAnimationFrame(loop);
     }
 
@@ -62,6 +64,7 @@
     }
 
     function setVisible(on) {
+        if (on) { setTimeout(placeTags, 0); setTimeout(placeTags, 80); }
         if (!layer) return;
         layer.hidden = !on;
         var canvas = document.getElementById('excretionCanvas');
@@ -78,6 +81,11 @@
         svg = el('svg', { viewBox: '0 0 1000 560', preserveAspectRatio: 'xMidYMid meet' });
         layer.appendChild(svg);
 
+        // 글씨는 그림 안에 넣지 않는다. 그림 안 글씨는 창이 커지면 같이 커진다.
+        tagLayer = document.createElement('div');
+        tagLayer.className = 'urine-tags';
+        layer.appendChild(tagLayer);
+
         draw();
     }
 
@@ -85,8 +93,8 @@
         var g = el('g');
         svg.appendChild(g);
 
-        g.appendChild(text(500, 112, '오줌은 콩팥에서 만들어져 오줌관을 지나 방광에 모였다가 요도로 나갑니다', 14, '#cbd5e1', 700));
-        g.appendChild(text(500, 548, '몸을 앞에서 본 그림입니다. 그래서 화면 왼쪽이 몸의 오른쪽 콩팥입니다.', 12.5, '#94a3b8', 700));
+        htmlTag(500, 112, '오줌은 콩팥에서 만들어져 오줌관을 지나 방광에 모였다가 요도로 나갑니다', 'lead');
+        htmlTag(500, 542, '몸을 앞에서 본 그림입니다. 그래서 화면 왼쪽이 몸의 오른쪽 콩팥입니다.', 'dim');
 
         // 콩팥 둘
         [LEFT_KIDNEY, RIGHT_KIDNEY].forEach(function (k, i) {
@@ -104,12 +112,12 @@
                    ' C' + (k.x + 74 * flip) + ' ' + (k.y - 20) + ' ' + (k.x + 74 * flip) + ' ' + (k.y + 20) + ' ' + (k.x + 40 * flip) + ' ' + (k.y + 34),
                 fill: 'none', stroke: '#fecaca', 'stroke-width': 2.5, 'stroke-dasharray': '5,5'
             }));
-            g.appendChild(tag(k.x + 78 * flip, k.y - 74, i === 0 ? '오른쪽 콩팥' : '왼쪽 콩팥', '#fca5a5'));
+            g.appendChild(pinBox(k.x + 78 * flip, k.y - 74, i === 0 ? '오른쪽 콩팥' : '왼쪽 콩팥', '#fca5a5'));
         });
 
         // 겉질과 속질은 콩팥 한 개 안에 겹으로 있다 (오른쪽 콩팥에만 표시)
-        g.appendChild(text(RIGHT_KIDNEY.x - 44, RIGHT_KIDNEY.y - 6, '겉질', 12, '#fee2e2', 800));
-        g.appendChild(text(RIGHT_KIDNEY.x + 4, RIGHT_KIDNEY.y - 6, '속질', 12, '#fecaca', 800));
+        htmlTag(RIGHT_KIDNEY.x - 44, RIGHT_KIDNEY.y - 6, '겉질', 'cortex');
+        htmlTag(RIGHT_KIDNEY.x + 4, RIGHT_KIDNEY.y - 6, '속질', 'medulla');
 
         // 오줌관 둘
         [LEFT_KIDNEY, RIGHT_KIDNEY].forEach(function (k) {
@@ -118,7 +126,7 @@
                 fill: 'none', stroke: '#fbbf24', 'stroke-width': 13, 'stroke-linecap': 'round', opacity: 0.35
             }));
         });
-        g.appendChild(tag(392, 322, '오줌관', '#fbbf24'));
+        g.appendChild(pinBox(392, 322, '오줌관', '#fbbf24'));
 
         // 방광
         bladderOutline = el('path', {
@@ -138,14 +146,14 @@
             x: BLADDER.x - 96, width: 192, fill: '#facc15', 'clip-path': 'url(#bladderClip)', opacity: 0.85
         });
         g.appendChild(bladderFill);
-        g.appendChild(tag(BLADDER.x + 122, BLADDER.y + 30, '방광', '#cbd5e1'));
+        g.appendChild(pinBox(BLADDER.x + 122, BLADDER.y + 30, '방광', '#cbd5e1'));
 
         // 요도
         g.appendChild(el('path', {
             d: 'M' + BLADDER.x + ' ' + (BLADDER.y + 86) + ' L' + BLADDER.x + ' ' + (BLADDER.y + 128),
             fill: 'none', stroke: '#cbd5e1', 'stroke-width': 10, 'stroke-linecap': 'round'
         }));
-        g.appendChild(tag(BLADDER.x + 104, BLADDER.y + 62, '요도', '#cbd5e1'));
+        g.appendChild(pinBox(BLADDER.x + 104, BLADDER.y + 62, '요도', '#cbd5e1'));
 
         urethraFlow = el('path', { fill: 'none', stroke: '#facc15', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: 0 });
         g.appendChild(urethraFlow);
@@ -159,10 +167,8 @@
             drops.push(d);
         }
 
-        rateText = text(500, 504, '', 13.5, '#fde68a', 800);
-        svg.appendChild(rateText);
-        colorText = text(BLADDER.x, BLADDER.y + 40, '', 13, '#78350f', 800);
-        svg.appendChild(colorText);
+        rateText = htmlTag(500, 504, '', 'warm');
+        colorText = htmlTag(BLADDER.x, BLADDER.y + 40, '', 'urine');
     }
 
     function watchControls() {
@@ -204,7 +210,7 @@
         var dt = Math.min((ts - lastTs) / 1000, 0.1);
         lastTs = ts;
         if (isPaused()) dt = 0;
-        if (layer && !layer.hidden) step(dt);
+        if (layer && !layer.hidden) { step(dt); placeTags(); }
         requestAnimationFrame(loop);
     }
 
@@ -253,10 +259,10 @@
         rateText.textContent = '만들어지는 양 ' + Math.round(rate * 100) + '% · 방광에 ' +
             Math.round(bladderLevel * 100) + '% (' + Math.round(bladderLevel * 400) + ' mL)' +
             (bladderLevel > 0.85 ? ' — 가득 찼습니다. [배뇨하기]를 눌러 보세요' : '');
-        rateText.setAttribute('fill', bladderLevel > 0.85 ? '#fca5a5' : '#fde68a');
+        rateText.style.color = bladderLevel > 0.85 ? '#fca5a5' : '#fde68a';
 
         colorText.textContent = dark > 0.6 ? '진한 오줌' : (dark > 0.35 ? '보통' : '묽은 오줌');
-        colorText.setAttribute('opacity', bladderLevel > 0.12 ? 1 : 0);
+        colorText.style.opacity = bladderLevel > 0.12 ? 1 : 0;
     }
 
     function bez(p0, p1, p2, p3, t) {
@@ -266,11 +272,40 @@
 
     /* ── 도우미 ───────────────────────────────────────────── */
 
-    function tag(x, y, str, color) {
+    /** 그림 위 딱지: 테두리 상자는 그림에, 글씨는 이름표로 */
+    function pinBox(x, y, str, color) {
         var g = el('g');
         g.appendChild(el('rect', { x: x - 48, y: y - 14, width: 96, height: 26, rx: 8, fill: 'rgba(6,10,24,0.86)', stroke: color, 'stroke-width': 1.4 }));
-        g.appendChild(text(x, y + 5, str, 13, '#f8fafc', 800));
+        htmlTag(x, y, str, 'pin');
         return g;
+    }
+
+    /* ── 이름표 (HTML) ───────────────────────────────────── */
+    var TAGS = [];
+
+    function htmlTag(x, y, str, cls, anchor) {
+        var e = document.createElement('span');
+        e.className = 'urine-tag' + (cls ? ' ' + cls : '');
+        e.textContent = str || '';
+        e.dataset.anchor = anchor || 'middle';
+        tagLayer.appendChild(e);
+        TAGS.push({ el: e, x: x, y: y });
+        return e;
+    }
+
+    function placeTags() {
+        if (!svg || !tagLayer || !layer || layer.hidden) return;
+        var box = svg.getBoundingClientRect();
+        if (!box.width) return;
+        var vb = svg.viewBox.baseVal;
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var lb = tagLayer.getBoundingClientRect();
+        var offX = (box.left - lb.left) + (box.width - vb.width * k) / 2;
+        var offY = (box.top - lb.top) + (box.height - vb.height * k) / 2;
+        TAGS.forEach(function (t) {
+            t.el.style.left = (offX + t.x * k) + 'px';
+            t.el.style.top = (offY + t.y * k) + 'px';
+        });
     }
 
     function el(tagName, attrs) {
@@ -279,15 +314,6 @@
         return n;
     }
 
-    function text(x, y, str, size, fill, weight, anchor) {
-        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
-        var n = el('text', {
-            x: x, y: y, fill: fill, 'font-size': size, 'font-weight': weight || 700,
-            'font-family': 'Pretendard, sans-serif', 'text-anchor': anchor || 'middle'
-        });
-        n.textContent = str;
-        return n;
-    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);

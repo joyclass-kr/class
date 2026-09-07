@@ -29,7 +29,7 @@
     var X0 = 110, Y0 = 442, X1 = 930, Y1 = 196;
 
     var wrap, layer, svg;
-    var curve, memoryBand, marks = [], noteText, legendBox;
+    var curve, memoryBand, marks = [], noteText, legendBox, tagLayer;
     var t = 0;                 // 흐른 시간 (그래프 가로축, 0~1)
     var events = [];           // { at: 0~1, kind: 'first' | 'second' }
     var running = false;
@@ -40,6 +40,8 @@
         addSceneButton();
         buildLayer();
         watchControls();
+        window.addEventListener('resize', placeTags);
+        setTimeout(placeTags, 120);
         requestAnimationFrame(loop);
     }
 
@@ -63,6 +65,7 @@
     }
 
     function setVisible(on) {
+        if (on) { setTimeout(placeTags, 0); setTimeout(placeTags, 80); }
         if (!layer) return;
         layer.hidden = !on;
         var canvas = document.getElementById('immuneCanvas');
@@ -80,6 +83,11 @@
         svg = el('svg', { viewBox: '0 0 1000 560', preserveAspectRatio: 'xMidYMid meet' });
         layer.appendChild(svg);
 
+        // 글씨는 그림 안에 넣지 않는다. 그림 안 글씨는 창이 커지면 같이 커진다.
+        tagLayer = document.createElement('div');
+        tagLayer.className = 'antibody-tags';
+        layer.appendChild(tagLayer);
+
         drawFrame();
     }
 
@@ -87,15 +95,15 @@
         var g = el('g');
         svg.appendChild(g);
 
-        g.appendChild(text(500, 172, '같은 병원체가 두 번 들어왔을 때 항체가 얼마나 나오는가', 16, '#f8fafc', 800));
+        htmlTag(500, 172, '같은 병원체가 두 번 들어왔을 때 항체가 얼마나 나오는가', 'head');
 
         // 축
         g.appendChild(el('line', { x1: X0, y1: Y0, x2: X1, y2: Y0, stroke: '#64748b', 'stroke-width': 2.5 }));
         g.appendChild(el('line', { x1: X0, y1: Y0, x2: X0, y2: Y1, stroke: '#64748b', 'stroke-width': 2.5 }));
-        g.appendChild(text((X0 + X1) / 2, Y0 + 44, '시간', 13.5, '#94a3b8', 700));
-        g.appendChild(text(X0 - 46, (Y0 + Y1) / 2 - 10, '항', 13.5, '#94a3b8', 700));
-        g.appendChild(text(X0 - 46, (Y0 + Y1) / 2 + 8, '체', 13.5, '#94a3b8', 700));
-        g.appendChild(text(X0 - 46, (Y0 + Y1) / 2 + 26, '양', 13.5, '#94a3b8', 700));
+        htmlTag((X0 + X1) / 2, Y0 + 44, '시간', 'dim');
+        htmlTag(X0 - 46, (Y0 + Y1) / 2 - 14, '항', 'dim');
+        htmlTag(X0 - 46, (Y0 + Y1) / 2 + 8, '체', 'dim');
+        htmlTag(X0 - 46, (Y0 + Y1) / 2 + 30, '양', 'dim');
 
         // 기억 세포가 남아 있는 구간
         memoryBand = el('rect', { y: Y1, height: Y0 - Y1, fill: 'rgba(139, 92, 246, 0.10)', x: X0, width: 0 });
@@ -104,8 +112,7 @@
         curve = el('path', { fill: 'none', stroke: '#f43f5e', 'stroke-width': 3.5, 'stroke-linejoin': 'round' });
         g.appendChild(curve);
 
-        noteText = text(500, 500, '옆의 [1차 침입] 을 눌러 1차 반응을 시작해 보세요.', 14, '#cbd5e1', 700);
-        svg.appendChild(noteText);
+        noteText = htmlTag(500, 524, '옆의 [1차 침입] 을 눌러 1차 반응을 시작해 보세요.', 'note');
 
         legendBox = el('g');
         svg.appendChild(legendBox);
@@ -163,6 +170,7 @@
             if (isPaused()) dt = 0;
             t = Math.min(1, t + dt * 0.096);   // 처음부터 끝까지 약 10초
             render();
+            placeTags();
         }
         lastTick = now || 0;
         requestAnimationFrame(loop);
@@ -187,19 +195,22 @@
 
         var hasSecond = events.some(function (e) { return e.kind === 'second'; });
         if (!first) {
-            noteText.textContent = '위쪽 [병원체 침입 (항원 주입)] 을 눌러 1차 반응을 시작해 보세요.';
-            noteText.setAttribute('fill', '#cbd5e1');
+            noteText.textContent = '옆의 [1차 침입] 을 눌러 1차 반응을 시작해 보세요.';
+            noteText.style.color = '#cbd5e1';
         } else if (!hasSecond) {
-            noteText.textContent = '1차 반응 — 항체가 나오기까지 시간이 걸리고(잠복기), 양도 적습니다. 이제 오른쪽 [2차 감염 유발] 을 눌러 보세요.';
-            noteText.setAttribute('fill', '#fca5a5');
+            noteText.textContent = '1차 반응 — 항체가 나오기까지 시간이 걸리고(잠복기), 양도 적습니다. 이제 옆의 [2차 감염 유발] 을 눌러 보세요.';
+            noteText.style.color = '#fca5a5';
         } else {
             noteText.textContent = '2차 반응 — 기억 세포 덕분에 잠복기 없이 곧바로, 훨씬 많이, 더 오래 나옵니다. 백신은 이것을 미리 만들어 두는 것입니다.';
-            noteText.setAttribute('fill', '#a5b4fc');
+            noteText.style.color = '#a5b4fc';
         }
     }
 
     function drawMarks() {
-        marks.forEach(function (m) { if (m.parentNode) m.parentNode.removeChild(m); });
+        marks.forEach(function (m) {
+            if (m._tagEl) dropTag(m._tagEl);
+            if (m.parentNode) m.parentNode.removeChild(m);
+        });
         marks = [];
         events.forEach(function (e, i) {
             var px = X0 + e.at * (X1 - X0);
@@ -220,12 +231,50 @@
 
     /* ── 도우미 ───────────────────────────────────────────── */
 
+    /** 그림 위 딱지: 테두리 상자는 그림에, 글씨는 이름표로 */
     function tag(x, y, str, color) {
         var g = el('g');
         var w = str.length * 13 + 20;
         g.appendChild(el('rect', { x: x - w / 2, y: y - 14, width: w, height: 26, rx: 8, fill: 'rgba(6,10,24,0.9)', stroke: color, 'stroke-width': 1.4 }));
-        g.appendChild(text(x, y + 5, str, 13, '#f8fafc', 800));
+        g._tagEl = htmlTag(x, y, str, 'pin');
         return g;
+    }
+
+    /* ── 이름표 (HTML) ───────────────────────────────────── */
+    var TAGS = [];
+
+    function htmlTag(x, y, str, cls, anchor) {
+        var e = document.createElement('span');
+        e.className = 'antibody-tag' + (cls ? ' ' + cls : '');
+        e.textContent = str || '';
+        e.dataset.anchor = anchor || 'middle';
+        tagLayer.appendChild(e);
+        var rec = { el: e, x: x, y: y };
+        TAGS.push(rec);
+        e._rec = rec;
+        return e;
+    }
+
+    function dropTag(e) {
+        if (!e) return;
+        var i = TAGS.indexOf(e._rec);
+        if (i >= 0) TAGS.splice(i, 1);
+        if (e.parentNode) e.parentNode.removeChild(e);
+    }
+
+    function placeTags() {
+        if (!svg || !tagLayer || !layer || layer.hidden) return;
+        var box = svg.getBoundingClientRect();
+        if (!box.width) return;
+        var vb = svg.viewBox.baseVal;
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var lb = tagLayer.getBoundingClientRect();
+        var offX = (box.left - lb.left) + (box.width - vb.width * k) / 2;
+        var offY = (box.top - lb.top) + (box.height - vb.height * k) / 2;
+        TAGS.forEach(function (t) {
+            t.el.style.left = (offX + t.x * k) + 'px';
+            t.el.style.top = (offY + t.y * k) + 'px';
+        });
     }
 
     function el(tagName, attrs) {
@@ -234,15 +283,6 @@
         return n;
     }
 
-    function text(x, y, str, size, fill, weight, anchor) {
-        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
-        var n = el('text', {
-            x: x, y: y, fill: fill, 'font-size': size, 'font-weight': weight || 700,
-            'font-family': 'Pretendard, sans-serif', 'text-anchor': anchor || 'middle'
-        });
-        n.textContent = str;
-        return n;
-    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);

@@ -255,3 +255,25 @@
 
 .urine-layer[hidden] { display: none !important; }
 .urine-layer svg { width: 100%; height: 100%; display: block; }
+
+/* ── 오줌 길 장면의 이름표 (urine-path.js) ────────────────── */
+.urine-tags { position: absolute; inset: 0; pointer-events: none; }
+
+.urine-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #f8fafc;
+}
+
+.urine-tag[data-anchor="start"] { transform: translate(0, -50%); }
+.urine-tag[data-anchor="end"] { transform: translate(-100%, -50%); }
+
+.urine-tag.lead { color: #cbd5e1; font-weight: 700; }
+.urine-tag.dim { color: #94a3b8; font-weight: 700; }
+.urine-tag.cortex { color: #fee2e2; }
+.urine-tag.medulla { color: #fecaca; }
+.urine-tag.warm { color: #fde68a; }
+.urine-tag.urine { color: #78350f; }
