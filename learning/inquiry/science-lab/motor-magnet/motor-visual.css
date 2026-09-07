@@ -76,10 +76,6 @@
 .iso-text { fill: #334155; font-size: 13.5px; font-weight: 800; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
-.data-row { display: grid; grid-template-columns: 122px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
-.data-name { color: #475569; font-weight: 750; }
-.data-val { color: #0f172a; font-weight: 850; }
-.data-row.match .data-val { color: var(--mint); }
 
 .pick-buttons.cols4 { grid-template-columns: repeat(4, 1fr); }
 .pick-buttons.cols4 button { font-size: 13px; padding: 8px 2px; }
@@ -128,9 +124,9 @@
 /* 그림에서 빼낸 설명 (HTML이라 화면 크기를 따라갑니다) */
 .stage-verdict { margin: 4px 0 0; font-size: 15px; font-weight: 900; color: #b45309; line-height: 1.4; }
 .stage-verdict:empty { display: none; }
-.stage-readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 2px 20px; margin: 8px 0 0; font-size: 13.5px; font-weight: 800; color: #334155; line-height: 1.5; }
+.stage-readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 3px 20px; margin: 8px 0 0; font-size: 14px; font-weight: 800; color: #334155; line-height: 1.5; }
 .stage-readout:empty { display: none; }
-.stage-note { margin: 8px 0 0; font-size: 12.5px; font-weight: 700; color: #64748b; line-height: 1.5; }
+.stage-note { margin: 8px 0 0; font-size: 13px; font-weight: 700; color: #64748b; line-height: 1.5; }
 .stage-note:empty { display: none; }
 .run-row { display: grid; grid-template-columns: 1.8fr 1fr; gap: 8px; align-items: stretch; margin-top: 10px; }
 .run-row .run-button, .run-row .reset-button { width: 100%; margin: 0; }

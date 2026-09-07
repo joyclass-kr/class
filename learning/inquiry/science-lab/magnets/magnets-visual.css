@@ -78,10 +78,6 @@
 .trace-dot { stroke: #fff; stroke-width: 1.3; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
-.data-row { display: grid; grid-template-columns: 122px 1fr; gap: 10px; font-size: 13px; font-weight: 850; align-items: baseline; }
-.data-name { color: #64748b; }
-.data-val { color: #1e293b; font-weight: 900; }
-.data-row.match .data-val { color: var(--mint); }
 /* magnets on the track */
 .table { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 1.2; }
 .pole-n { fill: #dc2626; }
