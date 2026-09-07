@@ -385,3 +385,94 @@
     display: flex; align-items: center; justify-content: center;
     color: #fca5a5; font-weight: 700;
 }
+
+/* ── 귀의 구조와 기능 (6번 장면) ────────────────────────────── */
+
+.ear-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 6;
+}
+
+.ear-stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 50px 10px 0;
+}
+
+.ear-stage svg { width: 100%; height: 100%; display: block; }
+
+.ear-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.ear-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.ear-tag.on { color: #f8fafc; border-color: #a78bfa; }
+.ear-tag:hover { border-color: #facc15; }
+
+.ear-modes {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 4px 10px 0;
+}
+
+.ear-modes button {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: rgba(6, 10, 24, 0.85);
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.ear-modes button.on {
+    border-color: #a78bfa;
+    color: #f8fafc;
+    background: rgba(167, 139, 250, 0.22);
+}
+
+.ear-caption {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin: 6px 10px 12px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(6, 10, 24, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.ear-lead { font-weight: 800; }
+.ear-note { flex: 1; color: #e2e8f0; }
+.ear-note b { color: #fde047; }
+.ear-trap { flex: 1 1 100%; color: #94a3b8; }
+.ear-trap b { color: #cbd5e1; }
+
+.ear-error {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fca5a5; font-weight: 700;
+}

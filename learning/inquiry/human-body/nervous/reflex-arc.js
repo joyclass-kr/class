@@ -121,7 +121,7 @@
 
     /** 같은 방의 다른 덧그림이 켜져 있는지 (캔버스를 도로 켜도 되는지 판단) */
     function otherLayerShowing() {
-        return !!document.querySelector('.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden])');
+        return !!document.querySelector('.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden]), .ear-layer:not([hidden])');
     }
 
     function buildLayer() {

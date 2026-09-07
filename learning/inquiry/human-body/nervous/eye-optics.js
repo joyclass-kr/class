@@ -73,7 +73,7 @@
         var canvas = document.getElementById('nervousCanvas');
         // 다른 장면들이 캔버스를 쓰므로, 우리 장면일 때만 감춘다
         if (canvas && on) canvas.style.visibility = 'hidden';
-        else if (canvas && !document.querySelector('.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden])')) canvas.style.visibility = 'visible';
+        else if (canvas && !document.querySelector('.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden]), .ear-layer:not([hidden])')) canvas.style.visibility = 'visible';
         if (on) placeLabels();
         toggleHud(on);
     }

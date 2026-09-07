@@ -68,7 +68,7 @@
         var canvas = document.getElementById('nervousCanvas');
         // 덧그림이 하나라도 켜져 있으면 캔버스는 감춘 채로 둔다
         if (canvas && on) canvas.style.visibility = 'hidden';
-        else if (canvas && !document.querySelector('.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden])')) canvas.style.visibility = 'visible';
+        else if (canvas && !document.querySelector('.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden]), .ear-layer:not([hidden])')) canvas.style.visibility = 'visible';
         if (on) {
             var tab = document.querySelector('.sidebar-tab-btn[data-tab="sensory"]');
             if (tab && !tab.classList.contains('active')) tab.click();
