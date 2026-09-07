@@ -24,8 +24,9 @@
     var TENDON_CORE = '#cbd5e1';
 
     var wrap, layer, svg, labelBox, leaderGroup;
-    var foreGroup, handle, stateText;
-    var angleArc, anglePlate, angleText;
+    var foreGroup, handle;
+    var angleArc, anglePlate;
+    var angleAt = { x: 0, y: 0 };
     var dragging = false;
     var loaded = false;
 
@@ -209,12 +210,6 @@
         handle = el('circle', { r: 21, fill: '#38bdf8', stroke: '#e0f2fe', 'stroke-width': 3, cursor: 'grab' });
         svg.appendChild(handle);
 
-        stateText = el('text', {
-            x: 500, y: 44, 'font-size': 17, 'font-weight': 800,
-            fill: '#f8fafc', 'text-anchor': 'middle'
-        });
-        svg.appendChild(stateText);
-
         buildLabels();
         bindDrag();
 
@@ -286,13 +281,6 @@
     function buildGoniometer() {
         angleArc = el('path', { fill: 'none', stroke: '#fbbf24', 'stroke-width': 3, opacity: 0.8 });
         svg.appendChild(angleArc);
-        anglePlate = el('rect', { rx: 7, fill: 'rgba(6, 10, 24, 0.9)', stroke: '#fbbf24', 'stroke-width': 1.5 });
-        svg.appendChild(anglePlate);
-        angleText = el('text', {
-            'font-size': 20, 'font-weight': 800, fill: '#fde68a',
-            'text-anchor': 'middle', 'dominant-baseline': 'middle'
-        });
-        svg.appendChild(angleText);
     }
 
     function jointAngle() {
@@ -350,10 +338,6 @@
         var wrist = { x: ELBOW.x + d.x * FORE_LEN, y: ELBOW.y + d.y * FORE_LEN };
         handle.setAttribute('cx', wrist.x.toFixed(1));
         handle.setAttribute('cy', wrist.y.toFixed(1));
-
-        stateText.textContent = isFlexed
-            ? '팔을 굽힘 — 이두근 수축 (두꺼워짐 🔥) · 삼두근 이완 (얇아짐)'
-            : '팔을 폄 — 이두근 이완 (얇아짐) · 삼두근 수축 (두꺼워짐 ⚡)';
 
         // 5. 이름표 가리킴선 자리
         var bMid = midOf('attachBicepsOrigin', 'attachBicepsInsertion', deg);
@@ -505,13 +489,9 @@
         var ux = bx / blen, uy = by / blen;
         var tx = ELBOW.x + ux * (r + 38);
         var ty = ELBOW.y + uy * (r + 38);
-        angleText.setAttribute('x', tx.toFixed(1));
-        angleText.setAttribute('y', ty.toFixed(1));
-        angleText.textContent = Math.round(deg) + '°';
-        anglePlate.setAttribute('x', (tx - 33).toFixed(1));
-        anglePlate.setAttribute('y', (ty - 17).toFixed(1));
-        anglePlate.setAttribute('width', 66);
-        anglePlate.setAttribute('height', 34);
+        angleAt.x = ELBOW.x + ux * (r + 38);
+        angleAt.y = ELBOW.y + uy * (r + 38);
+        anglePlate.textContent = Math.round(deg) + '°';
     }
 
     function moveLabel(id, sx, sy) {
@@ -536,6 +516,10 @@
             labelBox.appendChild(tag);
             item._tag = tag;
         });
+    
+        anglePlate = document.createElement('span');
+        anglePlate.className = 'joint-angle-tag';
+        labelBox.appendChild(anglePlate);
     }
 
     function placeLabels() {
@@ -546,6 +530,11 @@
         var k = Math.min(box.width / vb.width, box.height / vb.height);
         var offX = (box.width - vb.width * k) / 2;
         var offY = (box.height - vb.height * k) / 2;
+
+        if (anglePlate) {
+            anglePlate.style.left = (offX + angleAt.x * k) + 'px';
+            anglePlate.style.top = (offY + angleAt.y * k) + 'px';
+        }
 
         LABELS.forEach(function (item) {
             if (!item._tag) return;

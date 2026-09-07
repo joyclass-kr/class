@@ -131,3 +131,18 @@
 
 .joint-tag[data-for="biceps"] { border-color: #e11d48; color: #fda4af; }
 .joint-tag[data-for="triceps"] { border-color: #0284c7; color: #7dd3fc; }
+
+/* 관절 각도 딱지 — 그림 안 글씨가 아니라 이름표와 같은 HTML 이라
+   화면이 커져도 글씨 크기가 같다 */
+.joint-angle-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 10px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.92);
+    border: 1.5px solid #fbbf24;
+    color: #fde68a;
+    font-size: 14.5px;
+    font-weight: 800;
+    white-space: nowrap;
+}

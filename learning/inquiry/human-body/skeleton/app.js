@@ -139,7 +139,7 @@
         // Map joint angle to sarcomere length (170° = 2.80um relaxed, 40° = 1.60um contracted)
         sarcomereLength = 2.00 + ((jointAngle - 30) / 150) * 0.80;
 
-        if (angleValEl) angleValEl.textContent = Math.round(jointAngle) + '° (' + (jointAngle < 90 ? '굽힘 🔥' : '폄 ↔️') + ')';
+        if (angleValEl) angleValEl.textContent = Math.round(jointAngle) + '°';
         if (romGaugeEl) romGaugeEl.textContent = Math.round(jointAngle) + '°';
 
         if (bicepsStatusEl) {
