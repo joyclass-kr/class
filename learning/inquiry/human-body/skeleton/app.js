@@ -222,22 +222,22 @@
 
         ctx.save();
 
-        // ── 0. 배경 미세 그리드 ──────────────────────────────────
-        ctx.strokeStyle = 'rgba(56, 189, 248, 0.05)';
-        ctx.lineWidth = 1;
-        for (var gy = -120; gy <= 120; gy += 40) {
-            ctx.beginPath();
-            ctx.moveTo(cx - 360, cy + gy);
-            ctx.lineTo(cx + 360, cy + gy);
-            ctx.stroke();
+        // ── 0. 줄어드는 두 구간을 바탕에 깔아 둔다 ────────────────
+        // 시험에서 제일 많이 틀리는 대목: A대는 그대로고 H대와 I대만 줄어든다.
+        var actinReach = 145 * (dw / 800);
+        var hLeft = leftZ + actinReach, hRight = rightZ - actinReach;
+        if (hRight > hLeft) {
+            ctx.fillStyle = 'rgba(250, 204, 21, 0.16)';
+            ctx.fillRect(hLeft, cy - 52, hRight - hLeft, 104);
         }
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.14)';
+        ctx.fillRect(leftZ, cy - 52, (cx - aBandWidth / 2) - leftZ, 104);
+        ctx.fillRect(cx + aBandWidth / 2, cy - 52, rightZ - (cx + aBandWidth / 2), 104);
 
         // ── 1. Z선 (Z-disc: α-액티닌 지그재그 골격 격자) ─────────
         [leftZ, rightZ].forEach(function (zx) {
-            ctx.strokeStyle = '#38bdf8';
+            ctx.strokeStyle = '#0ea5e9';
             ctx.lineWidth = 5;
-            ctx.shadowBlur = 16;
-            ctx.shadowColor = '#38bdf8';
             ctx.beginPath();
             var zTop = cy - 90, zBottom = cy + 90;
             var zSteps = 12;
@@ -248,7 +248,6 @@
                 ctx.lineTo(zigX, zTop + zi * stepH);
             }
             ctx.stroke();
-            ctx.shadowBlur = 0;
 
             // Z선 상/하단 앵커 닷
             ctx.fillStyle = '#ffffff';
@@ -277,57 +276,65 @@
         var myoLeft = cx - aBandWidth / 2;
         var myoRight = cx + aBandWidth / 2;
 
-        // 마이오신 줄기 본체
-        var myoGrad = ctx.createLinearGradient(0, cy - 10, 0, cy + 10);
-        myoGrad.addColorStop(0, '#9f1239');
-        myoGrad.addColorStop(0.5, '#f43f5e');
-        myoGrad.addColorStop(1, '#881337');
-
-        ctx.fillStyle = myoGrad;
-        ctx.strokeStyle = '#fda4af';
-        ctx.lineWidth = 1.5;
-        ctx.shadowBlur = 18;
-        ctx.shadowColor = 'rgba(244, 63, 94, 0.65)';
+        // 마이오신 줄기 본체 — 단색 한 겹
+        ctx.fillStyle = '#c81e4a';
+        ctx.strokeStyle = '#f0748c';
+        ctx.lineWidth = 1.8;
         ctx.beginPath();
         ctx.roundRect(myoLeft, cy - 10, aBandWidth, 20, 5);
         ctx.fill();
         ctx.stroke();
-        ctx.shadowBlur = 0;
 
         // 마이오신 머리: 액틴을 향해 돋아난 머리들
         var headPairs = 8;
         var headSpacing = aBandWidth / (headPairs + 1);
         for (var hi = 1; hi <= headPairs; hi++) {
-            // M선 중앙 근처(베어 존)는 머리가 없음
+            // M선 중앙 근처(베어 존)는 머리가 없다
             if (hi === 4 || hi === 5) continue;
 
             var hx = myoLeft + hi * headSpacing;
-            // 활주 운동 시 마이오신 머리가 액틴을 중앙으로 끌어당기는 파워 스트로크 틸트 각도
-            var strokeTilt = isContracting ? Math.sin(time * 0.007 + hi) * 5 : 0;
-            var tiltDir = (hx < cx) ? 1 : -1; // 양쪽에서 중앙(M선) 쪽으로 당김
+            var toM = (hx < cx) ? 1 : -1;      // 양쪽에서 가운데(M선) 쪽으로 당긴다
 
-            // 위쪽 머리들
-            ctx.fillStyle = '#fb7185';
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 1.2;
-            ctx.beginPath();
-            ctx.arc(hx + tiltDir * strokeTilt, cy - 16, 4.5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(hx, cy - 8);
-            ctx.lineTo(hx + tiltDir * strokeTilt, cy - 13);
-            ctx.stroke();
+            // 십자다리 순환: 붙는다 ➔ 당긴다 ➔ 떨어진다 ➔ 되돌아온다.
+            // 머리마다 조금씩 늦게 시작해서 물결처럼 지나간다.
+            var speed = isContracting ? 0.00085 : 0.00030;
+            var cyc = (time * speed + hi * 0.13) % 1;
 
-            // 아래쪽 머리들
-            ctx.beginPath();
-            ctx.arc(hx + tiltDir * strokeTilt, cy + 16, 4.5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(hx, cy + 8);
-            ctx.lineTo(hx + tiltDir * strokeTilt, cy + 13);
-            ctx.stroke();
+            var reach, tilt, lit;
+            if (cyc < 0.22) {                   // 붙는다
+                var u = cyc / 0.22;
+                reach = 8 + u * 12; tilt = 0; lit = u;
+            } else if (cyc < 0.55) {            // 당긴다 (파워 스트로크)
+                var u2 = (cyc - 0.22) / 0.33;
+                reach = 20; tilt = u2 * 10; lit = 1;
+            } else if (cyc < 0.70) {            // 떨어진다
+                var u3 = (cyc - 0.55) / 0.15;
+                reach = 20 - u3 * 10; tilt = 10 * (1 - u3); lit = 1 - u3;
+            } else {                            // 되돌아온다
+                var u4 = (cyc - 0.70) / 0.30;
+                reach = 10 - u4 * 2; tilt = 0; lit = 0;
+            }
+
+            [-1, 1].forEach(function (sideY) {
+                var baseY = cy + sideY * 8;
+                var tipX = hx + toM * tilt;
+                var tipY = cy + sideY * reach;
+
+                ctx.strokeStyle = lit > 0.5 ? '#ffd7de' : '#8f2440';
+                ctx.lineWidth = 2.4;
+                ctx.beginPath();
+                ctx.moveTo(hx, baseY);
+                ctx.lineTo(tipX, tipY);
+                ctx.stroke();
+
+                ctx.fillStyle = lit > 0.5 ? '#fb7185' : '#8f2440';
+                ctx.strokeStyle = lit > 0.5 ? '#ffe4e6' : '#a63a55';
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.arc(tipX, tipY, 4.6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            });
         }
 
         // ── 4. 가는 액틴 필라멘트 (Z선에 고정되어 중앙으로 미끄러져 들어감) ─
@@ -339,10 +346,8 @@
 
             // 좌측 액틴 가닥 (Z선 ➔ 오른쪽으로 연장)
             var leftActinEnd = leftZ + actinLen;
-            ctx.strokeStyle = '#38bdf8';
+            ctx.strokeStyle = '#0ea5e9';
             ctx.lineWidth = 6;
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = '#38bdf8';
             ctx.beginPath();
             ctx.moveTo(leftZ, yPos);
             ctx.lineTo(leftActinEnd, yPos);
@@ -354,7 +359,6 @@
             ctx.moveTo(rightZ, yPos);
             ctx.lineTo(rightActinEnd, yPos);
             ctx.stroke();
-            ctx.shadowBlur = 0;
 
             // 이중 나선형 액틴 비드 질감 묘사
             ctx.fillStyle = '#bae6fd';
