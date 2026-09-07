@@ -621,12 +621,12 @@ const EN = {
             { w: "froze (freeze)", k: "얼어붙었다", s: "her tears froze on her cheeks" },
             { w: "freeze to death", k: "얼어 죽다", s: "I shall freeze to death here, she thought." },
             { w: "came long over her", k: "길게 내려앉았다", s: "the shadow of the hill came long over her" },
-            { w: "sat down heavily", k: "털썩 주저앉았다", s: "Yeoni sat down heavily under a great willow tree." },
+            { w: "sat down heavily (sit)", k: "털썩 주저앉았다", s: "Yeoni sat down heavily under a great willow tree." },
             { w: "willow", k: "버드나무", s: "under a great willow tree" },
             { w: "gathering (gather)", k: "소복이 담기는", s: "with only snow gathering in it" }
         ],
         "04-door.webp": [
-            { w: "heard wrong", k: "잘못 들었다", s: "At first she thought she had heard wrong." },
+            { w: "heard wrong (hear)", k: "잘못 들었다", s: "At first she thought she had heard wrong." },
             { w: "slid aside (slide)", k: "옆으로 밀려났다", s: "The rock behind the willow slid slowly aside." },
             { w: "in surprise", k: "놀라서", s: "Yeoni opened her eyes wide in surprise." },
             { w: "came breathing out", k: "훅 끼쳐 나왔다", s: "Warm air came breathing out through the gap." },
@@ -683,7 +683,7 @@ const EN = {
             { w: "hid herself (hide)", k: "몸을 숨겼다", s: "The stepmother hid herself behind a tree." },
             { w: "without making a sound", k: "숨소리도 내지 않고", s: "She watched without making a sound." },
             { w: "slide open", k: "스르르 열리다", s: "She saw the rock slide open under the willow tree." },
-            { w: "stood frozen", k: "얼어붙었다", s: "The stepmother stood frozen where she was." },
+            { w: "stood frozen (stand)", k: "얼어붙었다", s: "The stepmother stood frozen where she was." },
             { w: "for myself", k: "내 것으로", s: "I shall have all of that for myself, she thought." },
             { w: "greed", k: "욕심", s: "Her eyes glittered with greed." }
         ],
@@ -694,7 +694,7 @@ const EN = {
             { w: "~ and ~ alike", k: "~이며 ~이며", s: "greens and flowers alike" },
             { w: "swelled (swell)", k: "부풀었다", s: "Her bundle swelled until it was fit to burst." },
             { w: "fit to burst", k: "터질 듯한", s: "Her bundle swelled until it was fit to burst." },
-            { w: "stood in her way", k: "앞을 막아섰다", s: "The Willow Boy spread both arms and stood in her way." },
+            { w: "stood in her way (stand)", k: "앞을 막아섰다", s: "The Willow Boy spread both arms and stood in her way." },
             { w: "shoved (shove)", k: "확 밀쳤다", s: "The stepmother shoved him hard aside." },
             { w: "fell flat (fall)", k: "그대로 쓰러졌다", s: "The Willow Boy fell flat on the grass." }
         ],
@@ -705,7 +705,7 @@ const EN = {
             { w: "Chips of stone", k: "돌 부스러기", s: "Chips of stone showered down from the ceiling." },
             { w: "narrowed (narrow)", k: "좁아졌다", s: "The gap narrowed." },
             { w: "scrambled out", k: "허둥지둥 빠져나갔다", s: "She threw the bundle down and scrambled out." },
-            { w: "caught on ~", k: "끼었다", s: "Her skirt caught on the rock and tore right across." },
+            { w: "caught on ~ (catch)", k: "끼었다", s: "Her skirt caught on the rock and tore right across." },
             { w: "tore (tear)", k: "찢어졌다", s: "Her skirt caught on the rock and tore right across." },
             { w: "would not even say", k: "입에 올리지도 않았다", s: "She would not even say its name." }
         ],
@@ -714,7 +714,7 @@ const EN = {
             { w: "did not stir", k: "꼼짝하지 않았다", s: "His eyes were shut and he did not stir at all." },
             { w: "in big drops", k: "뚝뚝", s: "Yeoni's tears fell on the grass in big drops." },
             { w: "Shake ~ as she might", k: "아무리 흔들어도", s: "Shake him and call him as she might, it was no use." },
-            { w: "she had never seen", k: "못 보던", s: "three flowers she had never seen stood by the stream" },
+            { w: "she had never seen (see)", k: "못 보던", s: "three flowers she had never seen stood by the stream" },
             { w: "a moment before", k: "조금 전까지", s: "They had not been there a moment before." },
             { w: "snow white", k: "새하얀", s: "One snow white, one pink, one bright red." },
             { w: "bring him back", k: "살려 내다", s: "Could these bring him back, I wonder?" }
@@ -726,9 +726,9 @@ const EN = {
             { w: "the colour came back", k: "살이 돌았다", s: "At the pink flower the colour came back into his cheeks." },
             { w: "faint", k: "가느다란", s: "A breath came back, very thin, very faint." },
             { w: "Atchoo", k: "에취", s: "Atchoo!" },
-            { w: "sat straight up", k: "벌떡 일어나 앉았다", s: "The Willow Boy sat straight up." },
+            { w: "sat straight up (sit)", k: "벌떡 일어나 앉았다", s: "The Willow Boy sat straight up." },
             { w: "gone out of ~ (go)", k: "쭉 빠졌다", s: "All the strength had gone out of her legs." },
-            { w: "she had held in", k: "참았던", s: "she cried out loud the tears she had held in" },
+            { w: "she had held in (hold)", k: "참았던", s: "she cried out loud the tears she had held in" },
             { w: "gladness", k: "기쁨", s: "This time they were tears of gladness." }
         ],
         "14-spring.webp": [

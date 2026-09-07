@@ -453,7 +453,7 @@ const EN = {
             { w: "lose their light", k: "빛을 잃다", s: "the sun and the moon lose their light" },
             { w: "brings ~ back", k: "되찾아 준다", s: "What brings the light back is not an army" },
             { w: "a roll of silk", k: "비단 한 필", s: "not an army but one roll of silk" },
-            { w: "took its name from ~", k: "~에서 이름이 나왔다", s: "took its name from this story" }
+            { w: "took its name from ~ (take)", k: "~에서 이름이 나왔다", s: "took its name from this story" }
         ],
         "01-couple.webp": [
             { w: "the east coast", k: "동쪽 바닷가", s: "a husband and wife lived on the east coast of Silla" },
@@ -485,7 +485,7 @@ const EN = {
             { w: "no ordinary man", k: "보통 사람이 아닌", s: "This is no ordinary man." },
             { w: "Heaven has sent ~", k: "하늘이 보냈다", s: "Heaven has sent him." },
             { w: "bowed low (bow)", k: "엎드려 절했다", s: "The people bowed low before Yeono." },
-            { w: "made him their king", k: "임금으로 모셨다", s: "The islanders made him their king." },
+            { w: "made him their king (make)", k: "임금으로 모셨다", s: "The islanders made him their king." },
             { w: "could not sleep", k: "잠이 오지 않았다", s: "And every night he could not sleep." },
             { w: "the western sea", k: "서쪽 바다", s: "He looked only at the western sea." }
         ],
@@ -498,8 +498,8 @@ const EN = {
             { w: "lay (lie)", k: "놓여 있었다", s: "Something lay on the rock at the water's edge." },
             { w: "straw sandals", k: "짚신", s: "One of Yeono's straw sandals." },
             { w: "pick it up", k: "집다", s: "Seo climbed the rock to pick it up." },
-            { w: "took him away", k: "데려갔다", s: "So this rock took him away." },
-            { w: "held ~ against her", k: "품에 안았다", s: "She held the sandal against her" }
+            { w: "took him away (take)", k: "데려갔다", s: "So this rock took him away." },
+            { w: "held ~ against her (hold)", k: "품에 안았다", s: "She held the sandal against her" }
         ],
         "05-follow.webp": [
             { w: "rose on ~ (rise)", k: "떠올랐다", s: "The rock rose on the water and went east." },
@@ -508,10 +508,10 @@ const EN = {
             { w: "came into view", k: "보였다", s: "a strange island came into view" },
             { w: "came crowding", k: "몰려나왔다", s: "The islanders came crowding down again." },
             { w: "ran barefoot (run)", k: "맨발로 뛰었다", s: "Yeono heard and ran barefoot out of the palace." },
-            { w: "held each other", k: "부둥켜안았다", s: "They held each other on the shore." },
+            { w: "held each other (hold)", k: "부둥켜안았다", s: "They held each other on the shore." },
             { w: "fell from ~ (fall)", k: "떨어졌다", s: "The straw sandal fell from her arms." },
-            { w: "made ~ their queen", k: "왕비로 모셨다", s: "The islanders made Seo their queen." },
-            { w: "went on ~ing", k: "계속 ~했다", s: "in the palace she went on weaving" }
+            { w: "made ~ their queen (make)", k: "왕비로 모셨다", s: "The islanders made Seo their queen." },
+            { w: "went on ~ing (go)", k: "계속 ~했다", s: "in the palace she went on weaving" }
         ],
         "06-dark.webp": [
             { w: "gave no light", k: "빛이 없었다", s: "The sun rose and gave no light." },
@@ -528,27 +528,27 @@ const EN = {
         ],
         "07-envoy.webp": [
             { w: "envoy", k: "사신", s: "The king sent an envoy east by boat to the island." },
-            { w: "bowed to the ground", k: "엎드렸다", s: "The envoy bowed to the ground before Yeono." },
+            { w: "bowed to the ground (bow)", k: "엎드렸다", s: "The envoy bowed to the ground before Yeono." },
             { w: "Please come back", k: "돌아와 주십시오", s: "Please come back to us." },
             { w: "said nothing", k: "말이 없었다", s: "Yeono said nothing for a long time." },
             { w: "the will of heaven", k: "하늘의 뜻", s: "My coming here was the will of heaven." },
             { w: "cannot go back", k: "돌아갈 수 없다", s: "I cannot go back." },
-            { w: "went pale", k: "얼굴이 하얘졌다", s: "The envoy went pale." },
+            { w: "went pale (go)", k: "얼굴이 하얘졌다", s: "The envoy went pale." },
             { w: "I wove it (weave)", k: "제가 짰습니다", s: "Take this. I wove it here." },
             { w: "make an offering", k: "제사를 지내다", s: "Make an offering to heaven with it" },
             { w: "will return", k: "돌아올 것이다", s: "the light will return" }
         ],
         "08-silk.webp": [
-            { w: "carried ~ back", k: "안고 돌아갔다", s: "The envoy carried the silk back across the sea." },
+            { w: "carried ~ back (carry)", k: "안고 돌아갔다", s: "The envoy carried the silk back across the sea." },
             { w: "altar", k: "제단", s: "The king of Silla built an altar on a hill above the shore." },
             { w: "was spread (spread)", k: "펼쳐졌다", s: "The silk was spread on the altar" },
-            { w: "bowed down", k: "절을 올렸다", s: "the king bowed down" },
+            { w: "bowed down (bow)", k: "절을 올렸다", s: "the king bowed down" },
             { w: "give us back ~", k: "돌려주십시오", s: "Heaven, give us back the light." },
-            { w: "held its breath", k: "숨을 죽였다", s: "The whole country held its breath." },
+            { w: "held its breath (hold)", k: "숨을 죽였다", s: "The whole country held its breath." },
             { w: "grew bright (grow)", k: "환해졌다", s: "And the sky grew bright." },
             { w: "as before", k: "예전처럼", s: "The sun shone as before" },
             { w: "came up clear", k: "환하게 떴다", s: "that night the moon came up clear" },
-            { w: "called the dawn", k: "새벽을 알렸다", s: "The cocks called the dawn again." },
+            { w: "called the dawn (call)", k: "새벽을 알렸다", s: "The cocks called the dawn again." },
             { w: "a treasure of ~", k: "~의 보물", s: "The king made that silk a treasure of the kingdom." }
         ],
         "09-names.webp": [
@@ -578,7 +578,7 @@ const EN = {
             { w: "among the oldest", k: "아주 오래된 축", s: "which puts it among the oldest of our tales" },
             { w: "became a king", k: "왕이 되었다", s: "Japan also has a story of someone who crossed the sea and became a king." },
             { w: "how much ~", k: "얼마나 ~하는지", s: "This story shows how much the two peoples went back and forth" },
-            { w: "went back and forth", k: "오갔다", s: "how much the two peoples went back and forth by sea" },
+            { w: "went back and forth (go)", k: "오갔다", s: "how much the two peoples went back and forth by sea" },
             { w: "in their place", k: "대신", s: "The silk Seo wove came across in their place." },
             { w: "care put into ~", k: "정성이 담긴", s: "The old people believed something with care put into it" },
             { w: "carries ~ across", k: "옮겨 간다", s: "carries a person's power across with it" },

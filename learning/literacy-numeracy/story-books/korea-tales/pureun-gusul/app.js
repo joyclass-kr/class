@@ -600,12 +600,12 @@ const EN = {
         "02-release.webp": [
             { w: "steadily", k: "물끄러미", s: "But the carp looked steadily up at the old man." },
             { w: "just like ~", k: "꼭 ~ 같은", s: "Its eyes were just like a person's eyes." },
-            { w: "A tear fell", k: "눈물이 떨어졌다", s: "A tear fell out of those big eyes." },
+            { w: "A tear fell (fall)", k: "눈물이 떨어졌다", s: "A tear fell out of those big eyes." },
             { w: "stopped on ~", k: "손을 멈췄다", s: "The old man's hands stopped on the net." },
             { w: "loosened (loosen)", k: "스르르 풀었다", s: "After a long time he loosened the net." },
             { w: "go hungry", k: "굶다", s: "Well then, we go hungry today too." },
             { w: "a flick of its tail", k: "꼬리 한 번 치기", s: "The carp gave one flick of its tail" },
-            { w: "was gone", k: "사라졌다", s: "and was gone under the water" }
+            { w: "was gone (go)", k: "사라졌다", s: "and was gone under the water" }
         ],
         "03-prince.webp": [
             { w: "put ~ out", k: "껐다", s: "They had just put the lamp out." },
@@ -615,13 +615,13 @@ const EN = {
             { w: "silk", k: "비단", s: "They were silk." },
             { w: "the Dragon King", k: "용왕", s: "I am the Dragon King's son." },
             { w: "sparing me (spare)", k: "살려 주기", s: "Thank you for sparing me today." },
-            { w: "bowed low", k: "넙죽 절했다", s: "The young man bowed low." },
+            { w: "bowed low (bow)", k: "넙죽 절했다", s: "The young man bowed low." },
             { w: "a soft light", k: "은은한 빛", s: "It was the size of a palm and shone with a soft light." }
         ],
         "04-rich.webp": [
             { w: "a sack of rice", k: "쌀 한 가마니", s: "Let one sack of rice come out." },
             { w: "hardly believing", k: "설마 하면서", s: "The old man tried it, hardly believing." },
-            { w: "mouth fell open", k: "입이 딱 벌어졌다", s: "His wife's mouth fell open." },
+            { w: "mouth fell open (fall)", k: "입이 딱 벌어졌다", s: "His wife's mouth fell open." },
             { w: "Before long", k: "얼마 지나지 않아", s: "Before long the old house was a tiled house." },
             { w: "tiled house", k: "기와집", s: "the old house was a tiled house" },
             { w: "grain", k: "곡식", s: "Every room was full of grain." },
@@ -629,25 +629,25 @@ const EN = {
             { w: "shared freely", k: "아낌없이 나누었다", s: "And the two shared freely with the neighbours." }
         ],
         "05-steal.webp": [
-            { w: "went as far as ~", k: "~까지 퍼졌다", s: "The story went as far as the village across the river." },
+            { w: "went as far as ~ (go)", k: "~까지 퍼졌다", s: "The story went as far as the village across the river." },
             { w: "in one morning", k: "하루아침에", s: "That house had grown rich in one morning" },
             { w: "got about (get about)", k: "퍼졌다", s: "The whole tale of the bead got about with it." },
             { w: "greedy", k: "욕심 많은", s: "A greedy old woman heard it and came to call." },
             { w: "came to call", k: "찾아왔다", s: "A greedy old woman heard it and came to call." },
             { w: "all warmth", k: "살갑게 구는", s: "She was all warmth, and begged for one look at the bead." },
-            { w: "back was turned", k: "한눈판 사이", s: "while the wife's back was turned" },
+            { w: "back was turned (turn)", k: "한눈판 사이", s: "while the wife's back was turned" },
             { w: "slipped ~ inside (slip)", k: "슬쩍 품에 넣었다", s: "she slipped it inside her coat" },
             { w: "ferry", k: "나룻배", s: "And she took the ferry across the river." },
             { w: "been tricked", k: "속았다", s: "Only then did the wife know she had been tricked." }
         ],
         "06-decide.webp": [
-            { w: "took to their beds", k: "앓아누웠다", s: "The two took to their beds and could not eat." },
+            { w: "took to their beds (take)", k: "앓아누웠다", s: "The two took to their beds and could not eat." },
             { w: "could not bear to ~", k: "보다 못했다", s: "The dog and the cat in the yard could not bear to watch." },
             { w: "face to face", k: "마주 앉아", s: "They sat down face to face." },
             { w: "fed full (feed)", k: "배불리 먹었다", s: "Both had been fed full in that house." },
             { w: "get ~ back", k: "되찾아 오다", s: "Let us go and get that bead back." },
             { w: "If nobody else will", k: "우리라도", s: "Yes. If nobody else will, we will." },
-            { w: "went in front", k: "앞장섰다", s: "The dog put his tail up straight and went in front." },
+            { w: "went in front (go)", k: "앞장섰다", s: "The dog put his tail up straight and went in front." },
             { w: "field paths", k: "들길", s: "They walked the field paths all night by moonlight." },
             { w: "sore", k: "아린", s: "The cat's paws were sore already." }
         ],
@@ -691,8 +691,8 @@ const EN = {
             { w: "put out the claws", k: "발톱을 세웠다", s: "The cat put out the claws of her front paw and showed them." },
             { w: "leave no ~ alive", k: "한 마리도 안 남기다", s: "I shall leave no rat alive in this house." },
             { w: "this minute", k: "당장", s: "We will! We will do it this minute!" },
-            { w: "where he stood", k: "그 자리에서", s: "The rat shouted it where he stood." },
-            { w: "went suddenly noisy", k: "갑자기 시끄러워졌다", s: "The rat hole went suddenly noisy." }
+            { w: "where he stood (stand)", k: "그 자리에서", s: "The rat shouted it where he stood." },
+            { w: "went suddenly noisy (go)", k: "갑자기 시끄러워졌다", s: "The rat hole went suddenly noisy." }
         ],
         "11-gnaw.webp": [
             { w: "came pouring out", k: "우르르 몰려나왔다", s: "Rats came pouring out of the hole." },
@@ -708,10 +708,10 @@ const EN = {
         ],
         "12-drop.webp": [
             { w: "On the way home", k: "돌아오는 길에", s: "On the way home they came to that river again." },
-            { w: "kept worrying", k: "자꾸 걱정되었다", s: "But he kept worrying about the bead behind him." },
+            { w: "kept worrying (keep)", k: "자꾸 걱정되었다", s: "But he kept worrying about the bead behind him." },
             { w: "all right", k: "잘 있는", s: "Is the bead all right?" },
-            { w: "kept her mouth shut", k: "입을 꼭 다물었다", s: "The cat kept her mouth shut and only nodded." },
-            { w: "kept on at her", k: "자꾸 채근했다", s: "He kept on at her, turning his head as he swam." },
+            { w: "kept her mouth shut (keep)", k: "입을 꼭 다물었다", s: "The cat kept her mouth shut and only nodded." },
+            { w: "kept on at her (keep)", k: "자꾸 채근했다", s: "He kept on at her, turning his head as he swam." },
             { w: "bear it no longer", k: "참다못했다", s: "The cat could bear it no longer and opened her mouth." },
             { w: "Plop", k: "퐁당", s: "Plop." },
             { w: "sank (sink)", k: "가라앉았다", s: "The bead sank into the black river water." }
@@ -720,18 +720,18 @@ const EN = {
             { w: "ruined (ruin)", k: "망쳤다", s: "You have ruined everything!" },
             { w: "in a rage", k: "화가 나서", s: "The dog went home in a rage without looking back." },
             { w: "up and down the bank", k: "강가를 오르내리며", s: "The cat, left alone, went up and down the bank again and again." },
-            { w: "empty-handed", k: "빈손으로", s: "She could not go home empty-handed." },
+            { w: "empty-handed (hand)", k: "빈손으로", s: "She could not go home empty-handed." },
             { w: "three whole days", k: "꼬박 사흘", s: "So she spent three whole days by the river." },
             { w: "washed up (wash)", k: "밀려왔다", s: "A dead fish had washed up on the sand." },
             { w: "tore at ~ (tear)", k: "허겁지겁 뜯었다", s: "She tore at it hungrily" },
-            { w: "caught in her teeth", k: "이에 걸렸다", s: "something hard caught in her teeth" }
+            { w: "caught in her teeth (catch)", k: "이에 걸렸다", s: "something hard caught in her teeth" }
         ],
         "14-home.webp": [
             { w: "that very ~", k: "바로 그", s: "It was that very blue bead!" },
             { w: "swallowed (swallow)", k: "삼켰다", s: "The fish had swallowed it, and the cat had found it." },
-            { w: "ran for home", k: "집으로 달렸다", s: "She took the bead in her mouth and ran for home." },
-            { w: "till her breath caught", k: "숨이 턱에 차도록", s: "She ran across the field paths till her breath caught." },
-            { w: "caught ~ up", k: "번쩍 끌어안았다", s: "The old woman caught the cat up in her arms." },
+            { w: "ran for home (run)", k: "집으로 달렸다", s: "She took the bead in her mouth and ran for home." },
+            { w: "till her breath caught (catch)", k: "숨이 턱에 차도록", s: "She ran across the field paths till her breath caught." },
+            { w: "caught ~ up (catch)", k: "번쩍 끌어안았다", s: "The old woman caught the cat up in her arms." },
             { w: "as before", k: "그대로", s: "The dog stayed out in the yard as before." },
             { w: "felt that (feel)", k: "서운했다", s: "The dog felt that for a long time afterwards." },
             { w: "stopped getting on", k: "사이가 나빠졌다", s: "And that, they say, is when the two of them stopped getting on." }

@@ -599,7 +599,7 @@ const EN = {
             { w: "broad day", k: "대낮", s: "It was broad day, without a cloud in the sky." },
             { w: "tilted her head", k: "고개를 갸웃했다", s: "His mother tilted her head and looked up." },
             { w: "was covered with ~", k: "~으로 덮였다", s: "The whole sky was covered with black wings." },
-            { w: "than she had ever seen", k: "여태 본 적 없는", s: "It was a bigger bird than she had ever seen." },
+            { w: "than she had ever seen (see)", k: "여태 본 적 없는", s: "It was a bigger bird than she had ever seen." },
             { w: "cry out", k: "소리를 내다", s: "She could not cry out, and froze where she stood." },
             { w: "froze (freeze)", k: "얼어붙었다", s: "She could not cry out, and froze where she stood." },
             { w: "came down towards ~", k: "~를 향해 내려왔다", s: "The beak came down towards her." }
@@ -617,7 +617,7 @@ const EN = {
         "04-name.webp": [
             { w: "as long as he was tall", k: "제 키만큼 긴", s: "It was as long as he was tall, and stiff." },
             { w: "stiff", k: "뻣뻣한", s: "It was as long as he was tall, and stiff." },
-            { w: "went pale", k: "낯빛이 하얘졌다", s: "The oldest man in the village saw it and went pale." },
+            { w: "went pale (go)", k: "낯빛이 하얘졌다", s: "The oldest man in the village saw it and went pale." },
             { w: "backed away", k: "뒷걸음질 쳤다", s: "The old man waved a hand and backed away." },
             { w: "get his words out", k: "말을 잇다", s: "He could not get his words out." },
             { w: "drew back (draw)", k: "물러섰다", s: "The villagers muttered and drew back." },
@@ -625,9 +625,9 @@ const EN = {
         ],
         "05-set-out.webp": [
             { w: "Are we to ~", k: "~할 참이냐", s: "Are we to lose you as well!" },
-            { w: "caught ~ by the arm", k: "팔을 붙잡았다", s: "The old man caught the son by the arm." },
-            { w: "took ~ off", k: "떼어 놓았다", s: "The son took that hand off, quietly." },
-            { w: "Nothing shook him", k: "조금도 흔들리지 않았다", s: "Nothing shook him at all." },
+            { w: "caught ~ by the arm (catch)", k: "팔을 붙잡았다", s: "The old man caught the son by the arm." },
+            { w: "took ~ off (take)", k: "떼어 놓았다", s: "The son took that hand off, quietly." },
+            { w: "Nothing shook him (shake)", k: "조금도 흔들리지 않았다", s: "Nothing shook him at all." },
             { w: "at his waist", k: "허리에", s: "He tied a few pairs of straw shoes at his waist and set off." },
             { w: "the setting sun", k: "해 지는 쪽", s: "Towards the setting sun, the way the feather had come." },
             { w: "worn through (wear)", k: "다 닳은", s: "He meant to walk till those shoes were worn through." },
@@ -672,7 +672,7 @@ const EN = {
             { w: "Heat it red", k: "벌겋게 달구어라", s: "Heat it red and put it down that thing's throat." },
             { w: "throat", k: "목구멍", s: "put it down that thing's throat" },
             { w: "only one", k: "하나뿐인", s: "The beak is five fathoms, but there is only one throat." },
-            { w: "bowed low", k: "깊이 절했다", s: "And then he bowed low to the old man." }
+            { w: "bowed low (bow)", k: "깊이 절했다", s: "And then he bowed low to the old man." }
         ],
         "10-cliff.webp": [
             { w: "Days more", k: "며칠을 더", s: "🪨 Days more of walking brought him to the western end at last." },
@@ -683,7 +683,7 @@ const EN = {
             { w: "nest", k: "둥지", s: "At the top of the cliff was a nest heaped with branches." },
             { w: "heaped with ~", k: "산더미처럼 쌓은", s: "a nest heaped with branches" },
             { w: "scattered (scatter)", k: "어지럽게 흩어진", s: "Broken branches lay scattered all round it." },
-            { w: "kept low", k: "몸을 낮췄다", s: "The son kept low and watched what was above." },
+            { w: "kept low (keep)", k: "몸을 낮췄다", s: "The son kept low and watched what was above." },
             { w: "not the least thought", k: "조금도 생각이 없는", s: "he had not the least thought of turning back" }
         ],
         "11-nest.webp": [
@@ -698,15 +698,15 @@ const EN = {
             { w: "without a sound", k: "소리 없이", s: "the tears came without a sound" }
         ],
         "12-fire.webp": [
-            { w: "caught his sleeve", k: "소매를 붙잡았다", s: "His mother caught his sleeve, shaking all over." },
+            { w: "caught his sleeve (catch)", k: "소매를 붙잡았다", s: "His mother caught his sleeve, shaking all over." },
             { w: "shaking all over", k: "덜덜 떨며", s: "His mother caught his sleeve, shaking all over." },
             { w: "Hush", k: "쉿", s: "Hush. That thing will be back soon." },
             { w: "steady", k: "차분한", s: "The son's voice was very low and very steady." },
             { w: "crack", k: "바위 틈", s: "He hid his mother deep in a crack in the cliff rock." },
             { w: "lit a fire (light)", k: "불을 지폈다", s: "Then he gathered dry branches and lit a fire." },
-            { w: "went red", k: "벌겋게 달았다", s: "The iron went red, little by little." },
+            { w: "went red (go)", k: "벌겋게 달았다", s: "The iron went red, little by little." },
             { w: "Sparks", k: "불티", s: "Sparks flew and he did not feel his hands burn." },
-            { w: "held on to ~", k: "꼭 붙들었다", s: "The son held on to it and waited." }
+            { w: "held on to ~ (hold)", k: "꼭 붙들었다", s: "The son held on to it and waited." }
         ],
         "13-fight.webp": [
             { w: "beating of wings", k: "날갯짓 소리", s: "The beating of wings rang like thunder." },
@@ -716,7 +716,7 @@ const EN = {
             { w: "lay flat (lie)", k: "바짝 엎드렸다", s: "The son lay flat." },
             { w: "I smell ~", k: "~ 냄새가 난다", s: "Hoooo, I smell a person here!" },
             { w: "flared (flare)", k: "번뜩였다", s: "The bird's eyes flared red like torches." },
-            { w: "took a new hold", k: "고쳐 잡았다", s: "The son took a new hold on the club with both hands." },
+            { w: "took a new hold (take)", k: "고쳐 잡았다", s: "The son took a new hold on the club with both hands." },
             { w: "step back", k: "물러서다", s: "He did not step back one step." }
         ],
         "14-home.webp": [

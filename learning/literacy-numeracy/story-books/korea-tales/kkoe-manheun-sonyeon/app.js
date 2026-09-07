@@ -508,7 +508,7 @@ const EN = {
             { w: "early", k: "일찍", s: "He had lost his parents early and lived with his uncle." },
             { w: "had never been taught", k: "배운 적이 없었다", s: "He had never been taught to read." },
             { w: "Even so", k: "그런데도", s: "Even so he solved what ten grown-ups could not." },
-            { w: "caught hold of ~", k: "붙들었다", s: "the grown-ups caught hold of him" },
+            { w: "caught hold of ~ (catch)", k: "붙들었다", s: "the grown-ups caught hold of him" },
             { w: "sum", k: "셈", s: "Boy, work this sum out for me." },
             { w: "grinned (grin)", k: "씩 웃었다", s: "Each time the boy grinned and gave them an answer." },
             { w: "really something", k: "정말 대단한", s: "\"That head of his is really something,\" they said." }
@@ -546,7 +546,7 @@ const EN = {
             { w: "came crowding in", k: "우르르 모여들었다", s: "People came crowding in from every side." }
         ],
         "05-second.webp": [
-            { w: "went round", k: "휘둥그레졌다", s: "The envoy's eyes went round." },
+            { w: "went round (go)", k: "휘둥그레졌다", s: "The envoy's eyes went round." },
             { w: "once or twice", k: "두어 번", s: "He cleared his throat once or twice." },
             { w: "Very well", k: "좋소", s: "Very well. The second problem, then." },
             { w: "palm", k: "손바닥", s: "He laid a small smooth bead on his palm." },
@@ -564,14 +564,14 @@ const EN = {
             { w: "wet (wet)", k: "적셨다", s: "One man wet the thread and tried that." },
             { w: "got past ~", k: "넘어갔다", s: "But the thread never got past the first bend." },
             { w: "went low (go)", k: "기울었다", s: "They did nothing else till the sun went low." },
-            { w: "Sweat stood", k: "땀이 맺혔다", s: "Sweat stood on the magistrate's forehead." },
+            { w: "Sweat stood (stand)", k: "땀이 맺혔다", s: "Sweat stood on the magistrate's forehead." },
             { w: "folded his arms", k: "팔짱을 꼈다", s: "The envoy folded his arms and watched them at it." }
         ],
         "07-ant.webp": [
             { w: "squatted down (squat)", k: "쪼그리고 앉았다", s: "The boy squatted down in a corner of the yard." },
             { w: "given up (give up)", k: "포기했다", s: "Everyone thought he had given up." },
             { w: "crawling (crawl)", k: "기어가는", s: "he gently picked up an ant that was crawling by" },
-            { w: "kicked its legs about", k: "다리를 버둥거렸다", s: "The ant kicked its legs about." },
+            { w: "kicked its legs about (kick)", k: "다리를 버둥거렸다", s: "The ant kicked its legs about." },
             { w: "round the ant's waist", k: "개미 허리에", s: "The boy tied the fine thread round the ant's waist, very carefully." },
             { w: "thinner even than ~", k: "~보다도 더 가는", s: "The thread was thinner even than the ant's waist." },
             { w: "Hush", k: "쉿", s: "Hush. Stand still, all of you, and do not even breathe." },
@@ -580,7 +580,7 @@ const EN = {
         "08-honey.webp": [
             { w: "dabbed (dab)", k: "살짝 발랐다", s: "The boy dabbed a little honey at one hole of the bead." },
             { w: "softly", k: "살그머니", s: "he set the ant softly at the hole on the other side" },
-            { w: "In it went", k: "쏙 들어갔다", s: "In it went." },
+            { w: "In it went (go)", k: "쏙 들어갔다", s: "In it went." },
             { w: "spread (spread)", k: "퍼졌다", s: "The smell of honey spread through the hole." },
             { w: "counted on his fingers", k: "손가락으로 헤아렸다", s: "the boy counted on his fingers" },
             { w: "dead quiet", k: "쥐 죽은 듯 조용한", s: "The yard went dead quiet." },
@@ -603,21 +603,21 @@ const EN = {
             { w: "filled to the top", k: "가득 채운", s: "a tub filled to the top with water" },
             { w: "groaning (groan)", k: "낑낑거리며", s: "Four strong men brought it in, groaning." },
             { w: "slopped over (slop)", k: "찰랑찰랑 넘쳤다", s: "The water slopped over." },
-            { w: "held their breath", k: "숨을 죽였다", s: "Everybody held their breath and watched it." },
+            { w: "held their breath (hold)", k: "숨을 죽였다", s: "Everybody held their breath and watched it." },
             { w: "tip", k: "기울다", s: "After a long while one end of it began to tip." },
             { w: "closer grained", k: "더 촘촘한", s: "The root end is closer grained and heavier." },
             { w: "sinks (sink)", k: "가라앉는다", s: "The end that sinks is the bottom." },
-            { w: "mouth fell open", k: "입이 딱 벌어졌다", s: "The envoy's mouth fell open." }
+            { w: "mouth fell open (fall)", k: "입이 딱 벌어졌다", s: "The envoy's mouth fell open." }
         ],
         "11-bow.webp": [
             { w: "For a long time", k: "한참 동안", s: "For a long time the envoy could not say anything at all." },
             { w: "fingertips", k: "손끝", s: "His fingertips shook." },
-            { w: "bowed low", k: "정중히 고개를 숙였다", s: "Then he bowed low before the twelve-year-old." },
+            { w: "bowed low (bow)", k: "정중히 고개를 숙였다", s: "Then he bowed low before the twelve-year-old." },
             { w: "as if ~ had been poured", k: "~을 끼얹은 듯", s: "The yard went as quiet as if water had been poured over it." },
             { w: "respectful", k: "공손한", s: "The envoy's voice was very respectful now." },
             { w: "say so", k: "그대로 아뢰다", s: "I shall go back and say so." },
-            { w: "A cheer went up", k: "함성이 터졌다", s: "A cheer went up all across the yard." },
-            { w: "caught ~ by both hands", k: "두 손을 덥석 잡았다", s: "The magistrate ran over and caught the boy by both hands." }
+            { w: "A cheer went up (go)", k: "함성이 터졌다", s: "A cheer went up all across the yard." },
+            { w: "caught ~ by both hands (catch)", k: "두 손을 덥석 잡았다", s: "The magistrate ran over and caught the boy by both hands." }
         ],
         "12-school.webp": [
             { w: "ready to ~", k: "~할 참으로", s: "The magistrate called the boy over, ready to give him gold or silk." },

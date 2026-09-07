@@ -604,14 +604,14 @@ const EN = {
             { w: "is said to mean ~", k: "~라는 뜻이라 한다", s: "Talhae is said to mean the one who came out of the chest." },
             { w: "chest", k: "궤", s: "the one who came out of the chest" },
             { w: "magpie", k: "까치", s: "The name Seok comes from the word for magpie, because magpies found it." },
-            { w: "took turns", k: "번갈아 했다", s: "the Bak, the Seok and the Kim families took turns giving kings" }
+            { w: "took turns (take)", k: "번갈아 했다", s: "the Bak, the Seok and the Kim families took turns giving kings" }
         ],
         "01-sea.webp": [
             { w: "over the sea", k: "바다 건너", s: "this happened in a country over the sea" },
             { w: "Some say ~", k: "~라고도 한다", s: "Some say it was Yongseong, and some say Dapana." },
             { w: "bore (bear)", k: "낳았다", s: "The queen of that country bore a great egg instead of a child." },
             { w: "instead of ~", k: "~ 대신", s: "bore a great egg instead of a child" },
-            { w: "turned upside down", k: "발칵 뒤집혔다", s: "The whole palace was turned upside down." },
+            { w: "turned upside down (turn)", k: "발칵 뒤집혔다", s: "The whole palace was turned upside down." },
             { w: "put their heads together", k: "머리를 맞댔다", s: "The officials put their heads together and muttered." },
             { w: "bring harm on ~", k: "화가 미치다", s: "A person laying an egg will bring harm on the country." },
             { w: "be put out", k: "내다 버려지다", s: "It must be put out at once." },
@@ -644,14 +644,14 @@ const EN = {
             { w: "too heavy to ~", k: "너무 무거워 ~할 수 없는", s: "It was too heavy for her to do alone." },
             { w: "with a groan", k: "끙 하고", s: "The lid came up with a groan" },
             { w: "poured into ~ (pour)", k: "쏟아져 들어갔다", s: "sunlight poured into the chest" },
-            { w: "held their breath", k: "숨을 죽였다", s: "Everybody held their breath." },
-            { w: "sat up", k: "일어나 앉았다", s: "Inside, a boy sat up, rubbing his eyes." },
+            { w: "held their breath (hold)", k: "숨을 죽였다", s: "Everybody held their breath." },
+            { w: "sat up (sit)", k: "일어나 앉았다", s: "Inside, a boy sat up, rubbing his eyes." },
             { w: "rubbing his eyes", k: "눈을 비비며", s: "a boy sat up, rubbing his eyes" },
             { w: "shining", k: "번쩍이는", s: "Beside him were shining treasures and servants." },
-            { w: "sat down heavily", k: "털썩 주저앉았다", s: "The old woman sat down heavily where she stood." }
+            { w: "sat down heavily (sit)", k: "털썩 주저앉았다", s: "The old woman sat down heavily where she stood." }
         ],
         "05-name.webp": [
-            { w: "took ~ home", k: "집으로 데려갔다", s: "The old woman took the boy home with her." },
+            { w: "took ~ home (take)", k: "집으로 데려갔다", s: "The old woman took the boy home with her." },
             { w: "must have been ~", k: "~였던 모양이다", s: "He must have been very hungry" },
             { w: "With no name", k: "이름이 없으면", s: "With no name I cannot call you." },
             { w: "lay awake (lie)", k: "잠 못 이루었다", s: "She lay awake all night wondering what to name him." },
@@ -687,10 +687,10 @@ const EN = {
             { w: "tiles", k: "기와", s: "The tiles were fine and the wall was high." },
             { w: "outside the wall", k: "담 밖에", s: "Talhae stood outside the wall a long while." },
             { w: "It has to be ~", k: "~가 아니면 안 된다", s: "It has to be that spot, he thought." },
-            { w: "walked up and down", k: "서성였다", s: "For days Talhae walked up and down in front of that house." },
+            { w: "walked up and down (walk)", k: "서성였다", s: "For days Talhae walked up and down in front of that house." },
             { w: "came into his head", k: "떠올랐다", s: "And then a trick came into his head." },
             { w: "give it up", k: "그만두다", s: "He knew it was not right, and still he did not give it up." },
-            { w: "turned over", k: "뒤척였다", s: "That night he turned over and could not sleep." }
+            { w: "turned over (turn)", k: "뒤척였다", s: "That night he turned over and could not sleep." }
         ],
         "09-trick.webp": [
             { w: "digging (dig)", k: "파는", s: "Talhae began digging under that wall" },
@@ -712,7 +712,7 @@ const EN = {
             { w: "tilted his head", k: "고개를 갸웃했다", s: "The officer tilted his head." },
             { w: "constables", k: "포졸", s: "The constables took spades and dug under the wall." },
             { w: "spades", k: "삽", s: "The constables took spades and dug under the wall." },
-            { w: "went white", k: "하얗게 질렸다", s: "Hogong's face went white." },
+            { w: "went white (go)", k: "하얗게 질렸다", s: "Hogong's face went white." },
             { w: "gave his word", k: "판을 내렸다", s: "The officer nodded and gave his word." },
             { w: "unjust as it was", k: "억울해도", s: "Hogong could do nothing, unjust as it was." }
         ],
@@ -735,12 +735,12 @@ const EN = {
             { w: "the best of them", k: "제일인 곳", s: "Looking down from up there, this was the best of them." },
             { w: "whether ~", k: "~인지 아닌지", s: "I wanted to see whether anybody else had seen it too." },
             { w: "before I did", k: "저보다 먼저", s: "And you saw this spot before I did, sir." },
-            { w: "held his sides", k: "배를 잡았다", s: "Hogong held his sides and laughed a long while." },
+            { w: "held his sides (hold)", k: "배를 잡았다", s: "Hogong held his sides and laughed a long while." },
             { w: "the closest of friends", k: "둘도 없는 벗", s: "From that day the two were the closest of friends." }
         ],
         "13-king.webp": [
-            { w: "reached the ears of ~", k: "귀에 들어갔다", s: "In the end that story reached the ears of the king." },
-            { w: "sat him down", k: "앉혔다", s: "The king called Talhae to the palace and sat him down." },
+            { w: "reached the ears of ~ (reach)", k: "귀에 들어갔다", s: "In the end that story reached the ears of the king." },
+            { w: "sat him down (sit)", k: "앉혔다", s: "The king called Talhae to the palace and sat him down." },
             { w: "all of it", k: "하나도 숨기지 않고", s: "Talhae told him all of it, the buried charcoal too." },
             { w: "folded his arms", k: "팔짱을 꼈다", s: "The king folded his arms and thought a long while." },
             { w: "step back", k: "물러서다", s: "A good head, and he knows how to step back." },
@@ -749,15 +749,15 @@ const EN = {
             { w: "In time", k: "훗날", s: "In time Talhae became king of Silla." }
         ],
         "14-shore.webp": [
-            { w: "went back to ~", k: "다시 찾았다", s: "When he was king Talhae went back to Ajinpo." },
+            { w: "went back to ~ (go)", k: "다시 찾았다", s: "When he was king Talhae went back to Ajinpo." },
             { w: "Even as king", k: "임금이 되어서도", s: "Even as king he had never forgotten that shore." },
             { w: "shabby", k: "낡은", s: "The old woman's shabby house was still standing." },
             { w: "had died", k: "세상을 떠났다", s: "Only, the old woman herself had died." },
             { w: "took off (take)", k: "벗었다", s: "Talhae took off his shoes and went down to the water." },
-            { w: "had gone out to", k: "날마다 나가던", s: "It was the sea she had gone out to every day." },
+            { w: "had gone out to (go)", k: "날마다 나가던", s: "It was the sea she had gone out to every day." },
             { w: "not a shade different", k: "조금도 다르지 않은", s: "The colour of the water was not a shade different." },
             { w: "circled (circle)", k: "빙빙 맴돌았다", s: "A few magpies circled over it, calling." },
-            { w: "I began here", k: "내가 여기서 시작했다", s: "I began here." }
+            { w: "I began here (begin)", k: "내가 여기서 시작했다", s: "I began here." }
         ],
         "after": [
             { w: "neither ~ nor ~", k: "~도 ~도 아닌", s: "he was neither a Bak nor a Kim" },

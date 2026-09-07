@@ -693,10 +693,10 @@ const EN = {
             { w: "picked ~ up", k: "집어 들었다", s: "Somebody he could not see had picked that crab up." },
             { w: "Crunch", k: "아그작", s: "Crunch." },
             { w: "satisfied", k: "만족스러운", s: "A very satisfied voice came from somewhere." },
-            { w: "hairs went up", k: "소름이 돋았다", s: "The hairs went up on Dolsoe's back." }
+            { w: "hairs went up (go)", k: "소름이 돋았다", s: "The hairs went up on Dolsoe's back." }
         ],
         "04-appear.webp": [
-            { w: "went flat", k: "납작 엎드렸다", s: "Dolsoe went flat behind a rock." },
+            { w: "went flat (go)", k: "납작 엎드렸다", s: "Dolsoe went flat behind a rock." },
             { w: "no sound at all", k: "숨소리도 안 나게", s: "He put both hands over his mouth to make no sound at all." },
             { w: "fanning (fan)", k: "부채질하는", s: "There was a sound of somebody fanning." },
             { w: "curved horns", k: "굽은 뿔", s: "two curved horns came out of the empty air" },
@@ -710,7 +710,7 @@ const EN = {
             { w: "full of noise", k: "시끌벅적한", s: "The empty stream side was suddenly full of noise." },
             { w: "not one note was right", k: "음이 하나도 안 맞았다", s: "The biggest goblin sang, and not one note was right." },
             { w: "delighted", k: "신이 난", s: "But they were all delighted and shook their shoulders." },
-            { w: "kept dropping", k: "자꾸 떨어뜨렸다", s: "The smallest goblin kept dropping its crab legs." },
+            { w: "kept dropping (keep)", k: "자꾸 떨어뜨렸다", s: "The smallest goblin kept dropping its crab legs." },
             { w: "let ~ go", k: "놓쳤다", s: "It had let three of them go already." },
             { w: "Hic", k: "딸꾹", s: "Hic! Do — hic — be quiet — hic —" },
             { w: "filled (fill)", k: "가득 찼다", s: "The laughing of the goblins filled the night stream." }
@@ -732,12 +732,12 @@ const EN = {
             { w: "crept up (creep)", k: "슬금슬금 올라갔다", s: "His hand crept up." },
             { w: "stiffened (stiffen)", k: "굳었다", s: "his whole body stiffened" },
             { w: "swallowed hard", k: "침을 꿀꺽 삼켰다", s: "Dolsoe swallowed hard." },
-            { w: "pulled ~ over", k: "끌어당겼다", s: "Dolsoe pulled one cap over, put it inside his coat and ran." },
+            { w: "pulled ~ over (pull)", k: "끌어당겼다", s: "Dolsoe pulled one cap over, put it inside his coat and ran." },
             { w: "muttering (mutter)", k: "웅성거리는", s: "Behind him he could hear the goblins muttering." },
             { w: "dropped ~ somewhere", k: "어디다 흘렸다", s: "You have dropped it somewhere again!" }
         ],
         "08-mirror.webp": [
-            { w: "caught his breath", k: "숨을 몰아쉬었다", s: "At home Dolsoe caught his breath and tried the cap on." },
+            { w: "caught his breath (catch)", k: "숨을 몰아쉬었다", s: "At home Dolsoe caught his breath and tried the cap on." },
             { w: "than he had expected", k: "생각보다", s: "It was lighter and softer than he had expected." },
             { w: "shaking hands", k: "떨리는 손", s: "Then he stood in front of the mirror with shaking hands." },
             { w: "fell open (fall)", k: "딱 벌어졌다", s: "Dolsoe's mouth fell open" },
@@ -748,13 +748,13 @@ const EN = {
         ],
         "09-prank.webp": [
             { w: "only fun", k: "그저 재미난", s: "At first it was only fun." },
-            { w: "went round ~", k: "한 바퀴 돌았다", s: "Dolsoe put the cap on and went round the village." },
+            { w: "went round ~ (go)", k: "한 바퀴 돌았다", s: "Dolsoe put the cap on and went round the village." },
             { w: "washing line", k: "빨랫줄", s: "He gave the washing line a flick" },
             { w: "a flick", k: "툭 건드리기", s: "He gave the washing line a flick" },
-            { w: "held his sides", k: "배를 잡았다", s: "Dolsoe held his sides laughing under the wall." },
+            { w: "held his sides (hold)", k: "배를 잡았다", s: "Dolsoe held his sides laughing under the wall." },
             { w: "schoolmaster", k: "훈장님", s: "He gave the schoolmaster's hat a little push too." },
             { w: "came down over ~", k: "푹 내려앉았다", s: "The hat came down over his eyes" },
-            { w: "were made to stand", k: "벌을 섰다", s: "It was the wrong children who were made to stand for it." },
+            { w: "were made to stand (make)", k: "벌을 섰다", s: "It was the wrong children who were made to stand for it." },
             { w: "slipped away (slip)", k: "슬그머니 자리를 떴다", s: "Every time, Dolsoe slipped quietly away." }
         ],
         "10-cow.webp": [
@@ -764,7 +764,7 @@ const EN = {
             { w: "started (start)", k: "깜짝 놀랐다", s: "Dolsoe swung himself up onto its back and the cow started." },
             { w: "threw up ~ (throw)", k: "번쩍 들었다", s: "It threw up its back legs and bolted out of the yard." },
             { w: "bolted (bolt)", k: "뛰쳐나갔다", s: "It threw up its back legs and bolted out of the yard." },
-            { w: "lost the rope", k: "고삐를 놓쳤다", s: "Old Kim lost the rope and sat down hard." },
+            { w: "lost the rope (lose)", k: "고삐를 놓쳤다", s: "Old Kim lost the rope and sat down hard." },
             { w: "clung to ~ (cling)", k: "붙어 있었다", s: "Dolsoe clung to its back, delighted." },
             { w: "floated about", k: "둥둥 떠다녔다", s: "Only the laughing floated about in the air." }
         ],
@@ -781,11 +781,11 @@ const EN = {
         ],
         "12-rumor.webp": [
             { w: "Once became twice", k: "한 번이 두 번이 되었다", s: "Once became twice, and twice became ten times." },
-            { w: "his hand simply went out", k: "그냥 손이 갔다", s: "At first it was hunger; later his hand simply went out." },
+            { w: "his hand simply went out (go)", k: "그냥 손이 갔다", s: "At first it was hunger; later his hand simply went out." },
             { w: "cloth", k: "옷감", s: "From cakes to fruit, from fruit to cloth." },
             { w: "filled up (fill)", k: "차올랐다", s: "The storehouse filled up day by day." },
             { w: "ghost", k: "귀신", s: "A ghost is taking things!" },
-            { w: "held on to ~", k: "끌어안았다", s: "The traders held on to their goods and slept badly." },
+            { w: "held on to ~ (hold)", k: "끌어안았다", s: "The traders held on to their goods and slept badly." },
             { w: "goods", k: "물건", s: "The traders held on to their goods and slept badly." },
             { w: "getting heavier", k: "무거워지는", s: "But Dolsoe's own heart was getting heavier." },
             { w: "The fuller ~, the less ~", k: "찰수록 덜", s: "The fuller the storehouse got, the less he slept." }
@@ -795,11 +795,11 @@ const EN = {
             { w: "spark", k: "불티", s: "A spark jumped onto the cap" },
             { w: "stove", k: "아궁이", s: "the cap he had left beside the stove" },
             { w: "put it out (put)", k: "껐다", s: "He put it out quickly, but there was a hole in the side." },
-            { w: "turned ~ over and over", k: "이리저리 뒤집어 보았다", s: "Dolsoe turned the cap over and over." },
-            { w: "went through ~", k: "뒤졌다", s: "Dolsoe went through a chest and found a piece of cloth." },
+            { w: "turned ~ over and over (turn)", k: "이리저리 뒤집어 보았다", s: "Dolsoe turned the cap over and over." },
+            { w: "went through ~ (go)", k: "뒤졌다", s: "Dolsoe went through a chest and found a piece of cloth." },
             { w: "of all things", k: "하필이면", s: "It was, of all things, bright red." },
             { w: "crooked and uneven", k: "삐뚤빼뚤", s: "He sewed it over the hole, crooked and uneven." },
-            { w: "kept tangling", k: "자꾸 엉켰다", s: "He sewed so badly that the thread kept tangling." }
+            { w: "kept tangling (keep)", k: "자꾸 엉켰다", s: "He sewed so badly that the thread kept tangling." }
         ],
         "14-spot.webp": [
             { w: "muttering (mutter)", k: "웅성거리는", s: "Next day the market people were all muttering." },
@@ -814,7 +814,7 @@ const EN = {
         ],
         "15-caught.webp": [
             { w: "feeling at ~ (feel)", k: "더듬는", s: "Hands came out from every side, feeling at the empty air." },
-            { w: "caught hold of ~", k: "덥석 낚아챘다", s: "Then somebody caught hold of the cap." },
+            { w: "caught hold of ~ (catch)", k: "덥석 낚아챘다", s: "Then somebody caught hold of the cap." },
             { w: "came off (come off)", k: "벗겨졌다", s: "The cap came off and Dolsoe was suddenly there." },
             { w: "as if water had been poured", k: "물을 끼얹은 듯", s: "The market went as quiet as if water had been poured over it." },
             { w: "did not even think of ~", k: "~할 생각도 못 했다", s: "Dolsoe did not even think of running." },
@@ -825,10 +825,10 @@ const EN = {
         "16-burn.webp": [
             { w: "the last part to burn", k: "제일 마지막까지 탔다", s: "The red cloth was the last part to burn." },
             { w: "watching the fire", k: "불을 들여다보며", s: "He sat in front of the stove a long while, watching the fire." },
-            { w: "Not being seen", k: "보이지 않는다고", s: "Not being seen never made it not have happened." },
+            { w: "Not being seen (see)", k: "보이지 않는다고", s: "Not being seen never made it not have happened." },
             { w: "to himself", k: "혼잣말로", s: "Dolsoe said it to himself." },
-            { w: "sat there alone", k: "혼자 앉아 있었다", s: "one goblin sat there alone" },
-            { w: "that had lost ~", k: "잃은", s: "It was the goblin that had lost its cap." },
+            { w: "sat there alone (sit)", k: "혼자 앉아 있었다", s: "one goblin sat there alone" },
+            { w: "that had lost ~ (lose)", k: "잃은", s: "It was the goblin that had lost its cap." },
             { w: "Never mind", k: "됐다", s: "Never mind. Being seen is not so bad either." },
             { w: "not so bad either", k: "그것도 살 만하다", s: "Being seen is not so bad either." }
         ],
@@ -837,7 +837,7 @@ const EN = {
             { w: "officials", k: "벼슬아치", s: "A gamtu was what officials wore." },
             { w: "hold out (hold)", k: "버티다", s: "The one who gets an unseen power does not hold out long" },
             { w: "tests (test)", k: "시험한다", s: "because that power tests the person" },
-            { w: "made ~ visible", k: "눈에 보이게 만들었다", s: "It made visible the thing that could not be seen." },
+            { w: "made ~ visible (make)", k: "눈에 보이게 만들었다", s: "It made visible the thing that could not be seen." },
             { w: "did not grow angry", k: "화를 내지 않았다", s: "the goblin did not grow angry at the end" },
             { w: "all the while", k: "그동안에도", s: "All the while he believed nobody was watching" },
             { w: "was watching", k: "다 보고 있었다", s: "Dolsoe himself was watching all of it" },

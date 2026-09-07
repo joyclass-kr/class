@@ -674,13 +674,13 @@ const EN = {
             { w: "More days than not", k: "더 많은 날은", s: "More days than not he ate what he was given." },
             { w: "calling names", k: "놀리며", s: "The market children followed him about, calling names." },
             { w: "the fool", k: "바보", s: "There goes Ondal the fool!" },
-            { w: "walked on", k: "그저 걸어갔다", s: "Ondal only walked on, and did not look back at a stone." }
+            { w: "walked on (walk)", k: "그저 걸어갔다", s: "Ondal only walked on, and did not look back at a stone." }
         ],
         "02-kind.webp": [
             { w: "grew angry (grow)", k: "화를 냈다", s: "But Ondal never grew angry." },
             { w: "teased (tease)", k: "놀렸다", s: "He grinned even at the children who teased him." },
             { w: "fallen over", k: "넘어진", s: "He would pick up a child who had fallen over." },
-            { w: "felt foolish", k: "머쓱해졌다", s: "In the end the children felt foolish themselves." },
+            { w: "felt foolish (feel)", k: "머쓱해졌다", s: "In the end the children felt foolish themselves." },
             { w: "stripped bark (strip)", k: "껍질을 벗겼다", s: "Ondal stripped bark from the zelkova tree" },
             { w: "zelkova", k: "느티나무", s: "Ondal stripped bark from the zelkova tree to cook" },
             { w: "share", k: "몫", s: "his mother's share came off first" },
@@ -692,7 +692,7 @@ const EN = {
             { w: "famous for ~", k: "~로 이름난", s: "She was famous through the country for how often she cried." },
             { w: "start up wailing", k: "앙 하고 울었다", s: "Several times a day she would start up wailing." },
             { w: "soothed (soothe)", k: "달랬다", s: "The palace women soothed her, and it was no use." },
-            { w: "went about with ~", k: "~한 채 다녔다", s: "The king went about with his ears covered." },
+            { w: "went about with ~ (go)", k: "~한 채 다녔다", s: "The king went about with his ears covered." },
             { w: "worn out (wear)", k: "시달렸다", s: "The whole palace was worn out by that crying." },
             { w: "quiet", k: "달래다", s: "Nobody could quiet the princess." }
         ],
@@ -703,26 +703,26 @@ const EN = {
             { w: "oddly enough", k: "신기하게도", s: "And oddly enough the princess would stop crying at once." },
             { w: "every time", k: "그때마다", s: "The name Ondal did it every time." },
             { w: "You cannot think", k: "얼마나 ~인지 모른다", s: "You cannot think how often that was said." },
-            { w: "made a fuss", k: "떼썼다", s: "Every time she cried, every time she made a fuss." },
-            { w: "kept ~ in her mind", k: "기억해 두었다", s: "The princess kept that name clearly in her mind." }
+            { w: "made a fuss (make)", k: "떼썼다", s: "Every time she cried, every time she made a fuss." },
+            { w: "kept ~ in her mind (keep)", k: "기억해 두었다", s: "The princess kept that name clearly in her mind." }
         ],
         "05-sixteen.webp": [
-            { w: "turned sixteen", k: "열여섯이 되었다", s: "It was the year the princess turned sixteen." },
+            { w: "turned sixteen (turn)", k: "열여섯이 되었다", s: "It was the year the princess turned sixteen." },
             { w: "come of an age to ~", k: "~할 나이가 되다", s: "She had come of an age to marry." },
             { w: "son-in-law", k: "사윗감", s: "The king had already chosen a son-in-law for her." },
             { w: "a famous house", k: "이름난 집안", s: "He was the son of a famous house." },
             { w: "busy with ~", k: "~ 준비로 부산한", s: "The whole palace was busy with the wedding." },
             { w: "not a shake", k: "조금도 떨림이 없는", s: "There was not a shake in the princess's voice." },
-            { w: "heard wrong", k: "잘못 들었다", s: "He thought he had heard wrong." },
+            { w: "heard wrong (hear)", k: "잘못 들었다", s: "He thought he had heard wrong." },
             { w: "once more", k: "한 번 더", s: "But the princess said the same words once more." }
         ],
         "06-argue.webp": [
             { w: "only something I said", k: "그냥 해 본 말", s: "That was only something I said!" },
             { w: "struck (strike)", k: "내리쳤다", s: "The king struck the table." },
             { w: "even in joke", k: "농담이어도", s: "A king's word is a word, even in joke." },
-            { w: "looked straight at ~", k: "똑바로 바라보았다", s: "The princess looked straight at her father." },
+            { w: "looked straight at ~ (look)", k: "똑바로 바라보았다", s: "The princess looked straight at her father." },
             { w: "giving way", k: "물러서기", s: "There was no sign of her giving way." },
-            { w: "held their breath", k: "숨을 죽였다", s: "The officials held their breath." },
+            { w: "held their breath (hold)", k: "숨을 죽였다", s: "The officials held their breath." },
             { w: "so much", k: "그리", s: "If you want to go so much, then go!" },
             { w: "without once looking back", k: "뒤도 돌아보지 않고", s: "Then she went out without once looking back." },
             { w: "put out a hand", k: "손을 뻗었다", s: "The king put out a hand then, and it was too late." }
@@ -757,7 +757,7 @@ const EN = {
             { w: "like a promise to keep", k: "다짐하듯", s: "The princess said it like a promise to keep." },
             { w: "sold off (sell)", k: "내다 팔았다", s: "Buy a horse the country sold off for being thin." },
             { w: "puzzled", k: "어리둥절한", s: "Ondal went to the market with a puzzled face." },
-            { w: "as he was told", k: "시키는 대로", s: "But he did as he was told." }
+            { w: "as he was told (tell)", k: "시키는 대로", s: "But he did as he was told." }
         ],
         "10-train.webp": [
             { w: "led home (lead)", k: "끌고 왔다", s: "The horse Ondal led home had all its ribs showing." },
@@ -767,7 +767,7 @@ const EN = {
             { w: "with great care", k: "정성껏", s: "the princess fed that horse and washed it with great care" },
             { w: "brushed (brush)", k: "빗질했다", s: "She brushed it every day." },
             { w: "to begin with", k: "원래", s: "This was a good horse to begin with." },
-            { w: "gone hungry", k: "굶었다", s: "It has only gone hungry." },
+            { w: "gone hungry (go)", k: "굶었다", s: "It has only gone hungry." },
             { w: "not to be known", k: "몰라볼 만큼 달라진", s: "In a few months the horse was not to be known again." }
         ],
         "11-study.webp": [
@@ -777,7 +777,7 @@ const EN = {
             { w: "till the night was through", k: "밤이 새도록", s: "Ondal drew that bow till the night was through." },
             { w: "split and healed", k: "터지고 아물었다", s: "His palms split and healed and split again." },
             { w: "bowstring", k: "활시위", s: "The bowstring took the skin off and drew blood." },
-            { w: "took the skin off", k: "살갗을 벗겼다", s: "The bowstring took the skin off and drew blood." },
+            { w: "took the skin off (take)", k: "살갗을 벗겼다", s: "The bowstring took the skin off and drew blood." },
             { w: "get tired of ~", k: "지겨워하다", s: "Being a fool, I suppose I never get tired of it." }
         ],
         "12-hunt.webp": [
@@ -787,7 +787,7 @@ const EN = {
             { w: "rode out (ride)", k: "말을 달렸다", s: "every fighting man in the land rode out" },
             { w: "rang over ~ (ring)", k: "울렸다", s: "The sound of hoofs rang over the hills." },
             { w: "Not a soul", k: "아무도", s: "Not a soul took any notice of him." },
-            { w: "took notice of ~", k: "눈여겨보았다", s: "Not a soul took any notice of him." },
+            { w: "took notice of ~ (take)", k: "눈여겨보았다", s: "Not a soul took any notice of him." },
             { w: "poor enough", k: "초라해 보이는", s: "His clothes and his horse looked poor enough." },
             { w: "the leaders", k: "앞선 무리", s: "that horse passed the leaders one by one" }
         ],
@@ -803,29 +803,29 @@ const EN = {
             { w: "set (set)", k: "굳어졌다", s: "The king's face set at once." }
         ],
         "14-king.webp": [
-            { w: "looked ~ up and down", k: "위아래로 훑어보았다", s: "The king looked Ondal up and down." },
+            { w: "looked ~ up and down (look)", k: "위아래로 훑어보았다", s: "The king looked Ondal up and down." },
             { w: "in rags", k: "해진 옷을 입고", s: "Was this the fool who had gone about in rags?" },
             { w: "burst out laughing", k: "웃음을 터뜨렸다", s: "And then he burst out laughing." },
             { w: "rang out (ring)", k: "쩌렁쩌렁 울렸다", s: "The laugh rang out over the hills." },
             { w: "indeed", k: "과연", s: "My son-in-law indeed!" },
-            { w: "took ~ by the shoulder", k: "어깨를 덥석 잡았다", s: "The king took Ondal by the shoulder." },
+            { w: "took ~ by the shoulder (take)", k: "어깨를 덥석 잡았다", s: "The king took Ondal by the shoulder." },
             { w: "was given office", k: "벼슬을 받았다", s: "Ondal was given office that same day." },
             { w: "ten years of them", k: "십 년을 기다린", s: "There were tears in the princess's eyes, ten years of them." }
         ],
         "15-general.webp": [
-            { w: "went first into ~", k: "앞장섰다", s: "After that Ondal went first into every battle." },
+            { w: "went first into ~ (go)", k: "앞장섰다", s: "After that Ondal went first into every battle." },
             { w: "drove off (drive)", k: "물리쳤다", s: "He drove off the soldiers who came from the north, again and again." },
             { w: "raised (raise)", k: "키웠다", s: "The horse the princess had raised ran like an arrow." },
             { w: "like an arrow", k: "화살처럼", s: "The horse the princess had raised ran like an arrow." },
             { w: "Wherever ~", k: "가는 곳마다", s: "Wherever Ondal went, he won." },
             { w: "any more", k: "더 이상", s: "People did not call him Ondal the fool any more." },
-            { w: "looked up to ~", k: "우러러보았다", s: "Even the children looked up to him now." },
+            { w: "looked up to ~ (look)", k: "우러러보았다", s: "Even the children looked up to him now." },
             { w: "The very children", k: "바로 그 아이들", s: "The very children who had thrown stones." },
             { w: "just the same", k: "그대로인", s: "I am just the same as I was." }
         ],
         "16-together.webp": [
             { w: "came home from ~", k: "돌아왔다", s: "On the nights he came home from a battle" },
-            { w: "stood tied", k: "매여 있었다", s: "In the yard that thin horse stood tied, filled out now." },
+            { w: "stood tied (stand)", k: "매여 있었다", s: "In the yard that thin horse stood tied, filled out now." },
             { w: "filled out", k: "살이 오른", s: "that thin horse stood tied, filled out now" },
             { w: "Home safe", k: "잘 다녀왔다", s: "Home safe again today." },
             { w: "armour", k: "갑옷", s: "The princess took his armour off for him." },
@@ -835,7 +835,7 @@ const EN = {
             { w: "pricked its ears", k: "귀를 쫑긋 세웠다", s: "the tied horse pricked its ears" }
         ],
         "after": [
-            { w: "made up", k: "지어낸", s: "Ondal was not a made-up person." },
+            { w: "made up (make)", k: "지어낸", s: "Ondal was not a made-up person." },
             { w: "is set down (set)", k: "이름이 올라 있다", s: "He was a general of Goguryeo whose name is set down in the lives section of the Samguk Sagi." },
             { w: "opinions are divided", k: "말이 갈린다", s: "Opinions are divided about where the place was." },
             { w: "these days", k: "요즘은", s: "these days more scholars think it was Achasanseong" },

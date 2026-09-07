@@ -664,7 +664,7 @@ const EN = {
             { w: "dew", k: "이슬", s: "The path was still dim and the dew was wet." }
         ],
         "02-deer.webp": [
-            { w: "knocked at ~", k: "툭 부딪혔다", s: "something knocked at his leg" },
+            { w: "knocked at ~ (knock)", k: "툭 부딪혔다", s: "something knocked at his leg" },
             { w: "shaking all over", k: "부들부들 떠는", s: "In the bushes a deer stood shaking all over." },
             { w: "started (start)", k: "깜짝 놀랐다", s: "The woodcutter started and stepped back." },
             { w: "wet through", k: "흠뻑 젖은", s: "The deer was wet through with sweat" },
@@ -681,7 +681,7 @@ const EN = {
             { w: "the full moon", k: "보름달", s: "On the night of the full moon, go to the pond" },
             { w: "bathe", k: "목욕하다", s: "Fairies come down from the sky to bathe there." },
             { w: "ask of ~", k: "부탁하다", s: "But I have one thing to ask of you." },
-            { w: "went serious", k: "진지해졌다", s: "The deer's voice went suddenly very serious." }
+            { w: "went serious (go)", k: "진지해졌다", s: "The deer's voice went suddenly very serious." }
         ],
         "04-pond.webp": [
             { w: "Whatever happens", k: "무엇이든", s: "Whatever happens, hide nothing." },
@@ -716,12 +716,12 @@ const EN = {
         ],
         "07-give.webp": [
             { w: "Er", k: "저", s: "Er — is this the thing you are looking for?" },
-            { w: "held ~ out on both hands", k: "두 손으로 받쳐 내밀었다", s: "He held the feather robe out on both hands." },
+            { w: "held ~ out on both hands (hold)", k: "두 손으로 받쳐 내밀었다", s: "He held the feather robe out on both hands." },
             { w: "all tears", k: "눈물 범벅인", s: "The fairy lifted her head slowly, her face all tears." },
             { w: "hem", k: "옷자락", s: "The hem of it shone in the morning sun." },
             { w: "hide (hide)", k: "감추다", s: "...You did not hide it?" },
             { w: "somebody else's", k: "남의 것", s: "Why should I hide what is somebody else's?" },
-            { w: "scratched his head", k: "머리를 긁적였다", s: "The woodcutter only scratched his head, awkward." },
+            { w: "scratched his head (scratch)", k: "머리를 긁적였다", s: "The woodcutter only scratched his head, awkward." },
             { w: "awkward", k: "멋쩍은", s: "The woodcutter only scratched his head, awkward." },
             { w: "anybody like that", k: "그런 사람", s: "She had never met anybody like that." }
         ],
@@ -750,17 +750,17 @@ const EN = {
         "10-stay.webp": [
             { w: "went by (go by)", k: "지났다", s: "A month went by and the round full moon came again." },
             { w: "chest", k: "궤", s: "He had kept it carefully in a chest." },
-            { w: "gone a little thick", k: "조금 잠겼다", s: "His voice had gone a little thick" },
+            { w: "gone a little thick (go)", k: "조금 잠겼다", s: "His voice had gone a little thick" },
             { w: "without his meaning it", k: "저도 모르게", s: "His voice had gone a little thick, without his meaning it." },
             { w: "shut the lid", k: "뚜껑을 덮었다", s: "Then she put it back in the chest and shut the lid." },
             { w: "steadily", k: "물끄러미", s: "The fairy looked steadily at the woodcutter." },
             { w: "a little longer", k: "조금만 더", s: "...I shall stay a little longer." },
-            { w: "turned into ~", k: "~이 되었다", s: "That little longer turned into several years." }
+            { w: "turned into ~ (turn)", k: "~이 되었다", s: "That little longer turned into several years." }
         ],
         "11-children.webp": [
             { w: "running about", k: "뛰어다니는", s: "There were two children running about the yard now." },
             { w: "playing chase", k: "술래잡기를 하며", s: "The two of them ran round the yard playing chase all day." },
-            { w: "went over the wall", k: "담을 넘었다", s: "The laughing went over the wall next door." },
+            { w: "went over the wall (go)", k: "담을 넘었다", s: "The laughing went over the wall next door." },
             { w: "dug (dig)", k: "캤다", s: "his wife dug medicine plants" },
             { w: "on her knee", k: "무릎에 앉히고", s: "The grandmother sat the children on her knee" },
             { w: "old stories", k: "옛이야기", s: "told them old stories" },
@@ -782,7 +782,7 @@ const EN = {
             { w: "lifted off ~", k: "떠올랐다", s: "And her body lifted slowly off the ground." },
             { w: "hung on ~ (hang)", k: "매달렸다", s: "The children hung on her neck, delighted." },
             { w: "came off ~", k: "~에서 났다", s: "A white light came off the hem of the robe." },
-            { w: "went round and round", k: "빙그르르 돌았다", s: "The leaves in the yard went round and round." },
+            { w: "went round and round (go)", k: "빙그르르 돌았다", s: "The leaves in the yard went round and round." },
             { w: "come for ~", k: "부르러 오다", s: "I shall come for you soon. I promise!" },
             { w: "waving (wave)", k: "손을 흔들며", s: "His wife called it out, waving through the clouds." },
             { w: "slid away (slide)", k: "스르르 사라졌다", s: "The three of them slid away into the cloud." }
@@ -790,10 +790,10 @@ const EN = {
         "14-bucket.webp": [
             { w: "well bucket", k: "두레박", s: "a well bucket came sliding down into the yard" },
             { w: "drawing water", k: "물을 긷는", s: "It was a great bucket for drawing water, on a thick rope." },
-            { w: "ran right up to ~", k: "~까지 이어졌다", s: "The rope ran right up to the end of the sky." },
+            { w: "ran right up to ~ (run)", k: "~까지 이어졌다", s: "The rope ran right up to the end of the sky." },
             { w: "gave ~ a pull", k: "잡아당겨 보았다", s: "The woodcutter gave the rope a pull." },
             { w: "got in (get)", k: "올라탔다", s: "He got in, and the bucket went straight up." },
-            { w: "went past below ~", k: "발밑으로 스쳤다", s: "The clouds went past below his feet." },
+            { w: "went past below ~ (go)", k: "발밑으로 스쳤다", s: "The clouds went past below his feet." },
             { w: "the country of the sky", k: "하늘나라", s: "Through the cloud, and that was the country of the sky." },
             { w: "met him smiling", k: "웃으며 맞았다", s: "his wife met him smiling" }
         ],
@@ -801,7 +801,7 @@ const EN = {
             { w: "nothing but good", k: "좋기만 한", s: "The country of the sky was nothing but good." },
             { w: "no want of ~", k: "모자람이 없는", s: "There was no want of food or of clothes." },
             { w: "delighted with ~", k: "신이 난", s: "The children were delighted with it too." },
-            { w: "kept thinking of ~", k: "자꾸 그리웠다", s: "But the woodcutter kept thinking of the earth." },
+            { w: "kept thinking of ~ (keep)", k: "자꾸 그리웠다", s: "But the woodcutter kept thinking of the earth." },
             { w: "on her own", k: "혼자", s: "My mother is down there on her own..." },
             { w: "did not leave him", k: "떠나지 않았다", s: "That thought did not leave him for one day." },
             { w: "worried", k: "걱정스러운", s: "And she asked him something, with a worried face." },
@@ -814,7 +814,7 @@ const EN = {
             { w: "steaming hot", k: "김이 펄펄 나는", s: "She made a bowl of bean porridge, steaming hot." },
             { w: "on the horse's back", k: "말 위에서", s: "He took the bowl on the horse's back." },
             { w: "tipped over (tip)", k: "기우뚱 기울었다", s: "And at that moment the bowl tipped over." },
-            { w: "went over ~", k: "쏟아졌다", s: "The hot porridge went over the horse's back." },
+            { w: "went over ~ (go)", k: "쏟아졌다", s: "The hot porridge went over the horse's back." },
             { w: "started at ~ (start)", k: "놀랐다", s: "The horse started at the hot porridge" },
             { w: "sprang up (spring)", k: "펄쩍 뛰어올랐다", s: "The horse started at the hot porridge and sprang up into the sky." },
             { w: "came sliding down", k: "스르르 내려왔다", s: "But then the bucket came sliding down again." }
@@ -826,7 +826,7 @@ const EN = {
             { w: "the one thing worn", k: "걸친 것 하나", s: "is not a body but the one thing worn" },
             { w: "ends differently", k: "끝이 다르다", s: "Our tellings end differently from one another." },
             { w: "held her (hold)", k: "붙잡아 두었다", s: "That was not helping her; it held her." },
-            { w: "chose for herself", k: "스스로 골랐다", s: "his wife chose staying for herself" }
+            { w: "chose for herself (choose)", k: "스스로 골랐다", s: "his wife chose staying for herself" }
         ]
     },
     afterword: {

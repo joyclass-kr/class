@@ -554,17 +554,17 @@ const EN = {
             { w: "The more ~, the more ~", k: "~할수록 더", s: "The more it ate, the more the toad grew." },
             { w: "fitted her palm (fit)", k: "손바닥만 했다", s: "At first it fitted her palm" },
             { w: "would not hold it", k: "다 안기지 않았다", s: "before long two hands would not hold it" },
-            { w: "began to look small", k: "좁아 보였다", s: "The kitchen ledge began to look small." },
+            { w: "began to look small (begin)", k: "좁아 보였다", s: "The kitchen ledge began to look small." },
             { w: "stroked (stroke)", k: "쓰다듬었다", s: "The girl stroked its back and laughed." },
             { w: "as though it understood", k: "알아듣는다는 듯", s: "It blinked as though it understood." },
-            { w: "told it everything", k: "속엣말을 다 했다", s: "That toad was the only friend she had, and she told it everything." }
+            { w: "told it everything (tell)", k: "속엣말을 다 했다", s: "That toad was the only friend she had, and she told it everything." }
         ],
         "05-shrine.webp": [
             { w: "worry", k: "근심", s: "That village had one old worry." },
             { w: "was said to ~", k: "~한다고 했다", s: "A huge centipede was said to live in the shrine" },
             { w: "shrine", k: "사당", s: "A shrine is a small house kept for the ancestors." },
             { w: "ancestors", k: "조상", s: "a small house kept for the ancestors" },
-            { w: "gone near ~", k: "발길을 했다", s: "Nobody had gone near this one for a long time." },
+            { w: "gone near ~ (go)", k: "발길을 했다", s: "Nobody had gone near this one for a long time." },
             { w: "sickened (sicken)", k: "병들었다", s: "the fields dried and the animals sickened" },
             { w: "keep ~ quiet", k: "달래다", s: "It was meant to keep the centipede quiet." },
             { w: "drawing lots", k: "제비뽑기", s: "They decided it by drawing lots." },
@@ -576,7 +576,7 @@ const EN = {
             { w: "as good as settled", k: "정해진 것이나 마찬가지", s: "It was as good as settled before the lots were drawn." },
             { w: "nodded once", k: "고개를 한 번 끄덕였다", s: "She only nodded once." },
             { w: "There is nothing we can do", k: "어쩔 수 없다", s: "I am sorry. There is nothing we can do either." },
-            { w: "turned her face away", k: "고개를 돌렸다", s: "The mistress of the house turned her face away." },
+            { w: "turned her face away (turn)", k: "고개를 돌렸다", s: "The mistress of the house turned her face away." },
             { w: "meet ~ eyes", k: "눈을 마주치다", s: "The villagers could not meet the girl's eyes." },
             { w: "look back", k: "뒤를 돌아보다", s: "Nobody came with her, and she did not look back." }
         ],
@@ -611,14 +611,14 @@ const EN = {
             { w: "blew up (blow up)", k: "불어올랐다", s: "Its back blew up big as a balloon." },
             { w: "as bright as noon", k: "대낮처럼 환한", s: "The shrine went as bright as noon." },
             { w: "with a ringing crack", k: "쩌엉 하고", s: "The blue light and the yellow light met with a ringing crack." },
-            { w: "kept close behind ~", k: "뒤에 몸을 붙였다", s: "The girl kept close behind the toad and watched." }
+            { w: "kept close behind ~ (keep)", k: "뒤에 몸을 붙였다", s: "The girl kept close behind the toad and watched." }
         ],
         "10-retreat.webp": [
-            { w: "How long it went on", k: "얼마나 지났을까", s: "How long it went on nobody knows." },
+            { w: "How long it went on (go)", k: "얼마나 지났을까", s: "How long it went on nobody knows." },
             { w: "pushed and gave", k: "밀고 밀렸다", s: "The two lights pushed and gave and pushed again." },
             { w: "a hand's breadth", k: "한 뼘", s: "The yellow light pressed up a hand's breadth, and another." },
             { w: "thin", k: "흐려지다", s: "The blue light began to thin" },
-            { w: "went slack", k: "축 늘어졌다", s: "the centipede's body went slack" },
+            { w: "went slack (go)", k: "축 늘어졌다", s: "the centipede's body went slack" },
             { w: "threw itself about", k: "몸부림쳤다", s: "The centipede threw itself about one last time." },
             { w: "drifted apart", k: "스르르 흩어졌다", s: "Then it turned to black smoke and drifted apart." },
             { w: "faded (fade)", k: "스러졌다", s: "The yellow light faded too, like a candle going out." },

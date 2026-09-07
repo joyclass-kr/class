@@ -465,7 +465,7 @@ const EN = {
             { w: "Thock!", k: "팍!", s: "Thock! Thock!" },
             { w: "ran off ~ (run off)", k: "~에서 흘러내렸다", s: "Sweat ran off his forehead with every swing" },
             { w: "swing", k: "도끼질", s: "Sweat ran off his forehead with every swing" },
-            { w: "kept slipping", k: "자꾸 미끄러졌다", s: "the handle kept slipping" },
+            { w: "kept slipping (keep)", k: "자꾸 미끄러졌다", s: "the handle kept slipping" },
             { w: "handle", k: "손잡이", s: "the handle kept slipping" },
             { w: "right out of his hands", k: "손에서 쭉", s: "the wet handle slipped right out of his hands" },
             { w: "Splash!", k: "풍덩!", s: "Splash!" },
@@ -480,7 +480,7 @@ const EN = {
             { w: "stared into ~ (stare)", k: "들여다보았다", s: "He stared into the water for a long time." },
             { w: "sobbed (sob)", k: "엉엉 울었다", s: "He put his face on his knees and sobbed." },
             { w: "floated up (float)", k: "아른거렸다", s: "His children's faces floated up in front of him." },
-            { w: "empty-handed", k: "빈손으로", s: "He could not go home empty-handed." },
+            { w: "empty-handed (hand)", k: "빈손으로", s: "He could not go home empty-handed." },
             { w: "meanwhile", k: "그러는 사이", s: "Meanwhile the sun sank lower and lower." },
             { w: "get to his feet", k: "일어서다", s: "Still he could not get to his feet." }
         ],
@@ -488,7 +488,7 @@ const EN = {
             { w: "grew bright (grow)", k: "환해졌다", s: "The middle of the pond grew bright" },
             { w: "slid apart (slide)", k: "스르르 갈라졌다", s: "the water slid apart" },
             { w: "gap", k: "갈라진 틈", s: "A white light rose out of the gap." },
-            { w: "stood up on the water", k: "물 위로 올라섰다", s: "An old man in white robes with a white beard stood up on the water." },
+            { w: "stood up on the water (stand)", k: "물 위로 올라섰다", s: "An old man in white robes with a white beard stood up on the water." },
             { w: "covered his face", k: "얼굴을 가렸다", s: "The light was so strong the woodcutter covered his face." },
             { w: "weep (weep)", k: "울다", s: "What makes you weep so bitterly?" },
             { w: "bitterly", k: "서럽게", s: "What makes you weep so bitterly?" },
@@ -504,7 +504,7 @@ const EN = {
             { w: "dripping off ~ (drip)", k: "뚝뚝 떨어지는", s: "Gold seemed to be dripping off the blade." },
             { w: "such a thing", k: "그런 것", s: "The woodcutter had never seen such a thing." },
             { w: "held ~ out (hold out)", k: "내밀었다", s: "The spirit held the gold axe out in front of him." },
-            { w: "looked straight at ~", k: "빤히 들여다보았다", s: "The woodcutter looked straight at it." },
+            { w: "looked straight at ~ (look)", k: "빤히 들여다보았다", s: "The woodcutter looked straight at it." },
             { w: "shook his head (shake)", k: "고개를 저었다", s: "He shook his head at once." },
             { w: "hesitate", k: "망설이다", s: "He did not hesitate for a moment." }
         ],
@@ -517,7 +517,7 @@ const EN = {
             { w: "not mine either", k: "그것도 제 것이 아니다", s: "That is not mine either." },
             { w: "a second time", k: "또 한 번", s: "He shook his head a second time." },
             { w: "waver", k: "흔들리다", s: "His voice did not waver at all." },
-            { w: "looked closely at ~", k: "가만히 살폈다", s: "The spirit looked closely at his face." },
+            { w: "looked closely at ~ (look)", k: "가만히 살폈다", s: "The spirit looked closely at his face." },
             { w: "look away", k: "눈을 피하다", s: "The woodcutter did not look away." }
         ],
         "07-iron.webp": [
@@ -560,9 +560,9 @@ const EN = {
             { w: "That's the one!", k: "바로 그겁니다!", s: "Yes! That's the one!" },
             { w: "far too fast", k: "너무 빨리", s: "The answer came far too fast." },
             { w: "and still you say so", k: "그런데도 그렇게 말한다", s: "You know it is not yours, and still you say so." },
-            { w: "looked down at ~", k: "내려다보았다", s: "The spirit looked down at him for a long moment." },
+            { w: "looked down at ~ (look)", k: "내려다보았다", s: "The spirit looked down at him for a long moment." },
             { w: "faded away (fade)", k: "스르르 사라졌다", s: "Then he put the gold axe back in the water and faded away." },
-            { w: "never found even ~", k: "~마저 찾지 못했다", s: "The greedy man never found even the axe he had thrown in." },
+            { w: "never found even ~ (find)", k: "~마저 찾지 못했다", s: "The greedy man never found even the axe he had thrown in." },
             { w: "trudged (trudge)", k: "터덜터덜 걸었다", s: "He trudged home with nothing at all." }
         ],
         "after": [
@@ -570,9 +570,9 @@ const EN = {
             { w: "more than two thousand years ago", k: "이천 년도 더 전에", s: "more than two thousand years ago" },
             { w: "in the place of ~", k: "~ 자리에", s: "There a god called Hermes stands in the place of the mountain spirit." },
             { w: "crossing (cross)", k: "건너오면서", s: "Crossing from country to country over a very long time" },
-            { w: "turned into ~", k: "~으로 바뀌었다", s: "the god turned into a mountain spirit and the river into a pond" },
+            { w: "turned into ~ (turn)", k: "~으로 바뀌었다", s: "the god turned into a mountain spirit and the river into a pond" },
             { w: "change into the clothes of ~", k: "~의 옷으로 갈아입다", s: "Stories travel like this and change into the clothes of the land." },
-            { w: "what he lost", k: "그가 잃은 것", s: "Look again at what the greedy man lost." },
+            { w: "what he lost (lose)", k: "그가 잃은 것", s: "Look again at what the greedy man lost." },
             { w: "not only ~ but also", k: "~뿐 아니라", s: "He not only failed to get a gold axe but also lost his own." },
             { w: "set out to ~", k: "~하러 나섰다", s: "He set out to gain and let go of what he had." },
             { w: "turned down ~ (turn down)", k: "마다했다", s: "The woodcutter turned down the gold axe" },

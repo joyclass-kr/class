@@ -645,7 +645,7 @@ const EN = {
        본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
     words: {
         "cover": [
-            { w: "really is told", k: "실제로 전해진다", s: "This story really is told in Korea." },
+            { w: "really is told (tell)", k: "실제로 전해진다", s: "This story really is told in Korea." },
             { w: "put together by ~", k: "~이 엮은", s: "the Samguk Yusa, put together by the monk Iryeon" },
             { w: "cornel trees", k: "산수유 나무", s: "The bamboo cut down and the cornel trees planted" },
             { w: "a thousand years ago", k: "천 년 전", s: "People a thousand years ago laughed at this story." },
@@ -696,7 +696,7 @@ const EN = {
         ],
         "05-aim.webp": [
             { w: "get a little air", k: "바람을 쐬다", s: "It was to get a little air, for once." },
-            { w: "caught sight of ~", k: "발견했다", s: "In the wood he caught sight of a fox." },
+            { w: "caught sight of ~ (catch)", k: "발견했다", s: "In the wood he caught sight of a fox." },
             { w: "reined in", k: "말을 세웠다", s: "The king reined in." },
             { w: "full", k: "탐스러운", s: "It was a fox with red fur and a fine full tail." },
             { w: "bowstring", k: "활시위", s: "The king drew his bowstring tight." },
@@ -711,18 +711,18 @@ const EN = {
             { w: "Carrying ~ on your head", k: "머리에 이고 다니다", s: "Carrying a thing like that on your head!" },
             { w: "stamped its feet", k: "발을 굴렀다", s: "Your neck will break!\" beast The fox leaned on the tree and stamped its feet" },
             { w: "threw ~ down (throw)", k: "내던졌다", s: "The king threw his bow down on the ground." },
-            { w: "went scarlet", k: "시뻘게졌다", s: "Under the crown the king's face went scarlet." }
+            { w: "went scarlet (go)", k: "시뻘게졌다", s: "Under the crown the king's face went scarlet." }
         ],
         "07-chase.webp": [
             { w: "shot away (shoot)", k: "쏜살같이 달아났다", s: "The fox shot away and the king went after it." },
-            { w: "went after ~", k: "뒤를 쫓았다", s: "The fox shot away and the king went after it." },
+            { w: "went after ~ (go)", k: "뒤를 쫓았다", s: "The fox shot away and the king went after it." },
             { w: "slipped (slip)", k: "요리조리 빠져나갔다", s: "The fox slipped this way and that" },
             { w: "got clean away", k: "잘도 달아났다", s: "The fox slipped this way and that and got clean away." },
             { w: "reins", k: "고삐", s: "The king had hold of nothing but the reins." },
             { w: "Snag", k: "탁", s: "Snag!" },
             { w: "low-hanging", k: "낮게 늘어진", s: "The crown caught on a low-hanging branch." },
             { w: "hung swinging (hang)", k: "대롱대롱 매달렸다", s: "The gold crown came off and hung swinging from the branch." },
-            { w: "took its chance", k: "그 틈을 탔다", s: "The fox took its chance and was gone beyond the bushes." }
+            { w: "took its chance (take)", k: "그 틈을 탔다", s: "The fox took its chance and was gone beyond the bushes." }
         ],
         "08-hide.webp": [
             { w: "notice", k: "알아채다", s: "Only then did the king notice his head was bare." },
@@ -732,7 +732,7 @@ const EN = {
             { w: "a disaster", k: "큰일", s: "This is a disaster!" },
             { w: "scrambled into ~", k: "허둥지둥 들어갔다", s: "The king scrambled into the bushes at the side." },
             { w: "crouched down (crouch)", k: "웅크렸다", s: "He crouched down as small as he could." },
-            { w: "stood up above ~", k: "위로 솟았다", s: "But the ears were so long that they stood up above the bushes." },
+            { w: "stood up above ~ (stand)", k: "위로 솟았다", s: "But the ears were so long that they stood up above the bushes." },
             { w: "swayed (sway)", k: "흔들렸다", s: "The two of them swayed together among the leaves." }
         ],
         "09-spot.webp": [
@@ -759,18 +759,18 @@ const EN = {
         ],
         "11-dive.webp": [
             { w: "burst out of ~", k: "뛰쳐나왔다", s: "The king burst out of the bush and ran for his life." },
-            { w: "ran for his life", k: "죽어라 달렸다", s: "The king burst out of the bush and ran for his life." },
+            { w: "ran for his life (run)", k: "죽어라 달렸다", s: "The king burst out of the bush and ran for his life." },
             { w: "without knowing why", k: "영문도 모르고", s: "The official and the hunters chased him without knowing why." },
             { w: "get away", k: "놓치다", s: "Stop there! Do not let it get away!" },
             { w: "blocked (block)", k: "가로막았다", s: "But what blocked the way in front was a great pond." },
             { w: "Splash", k: "첨벙", s: "Splash!" },
             { w: "spray", k: "물보라", s: "The spray went up high and then the water was still." },
-            { w: "looked about them", k: "두리번거렸다", s: "The people above it looked about them a long while." },
+            { w: "looked about them (look)", k: "두리번거렸다", s: "The people above it looked about them a long while." },
             { w: "no telling", k: "알 수 없는", s: "There was no telling where the king had gone." }
         ],
         "12-turtle.webp": [
             { w: "waterweed", k: "물풀", s: "The waterweed swayed slowly." },
-            { w: "held his breath", k: "숨을 참았다", s: "The king held his breath till his cheeks bulged." },
+            { w: "held his breath (hold)", k: "숨을 참았다", s: "The king held his breath till his cheeks bulged." },
             { w: "bulged (bulge)", k: "빵빵해졌다", s: "till his cheeks bulged" },
             { w: "came sliding up", k: "스르륵 다가왔다", s: "Then something came sliding up in front of his eyes." },
             { w: "Right in front of ~", k: "코앞에", s: "Right in front of him was a great turtle." },
@@ -792,12 +792,12 @@ const EN = {
         "14-crownmaker.webp": [
             { w: "the one person", k: "한 사람뿐", s: "The one person in the world who knew that secret" },
             { w: "uneasy", k: "불안한", s: "The king was always uneasy about that one man." },
-            { w: "kept his word", k: "약속을 지켰다", s: "But he kept his word and held his tongue all his life." },
-            { w: "held his tongue", k: "입을 다물었다", s: "he kept his word and held his tongue all his life" },
+            { w: "kept his word (keep)", k: "약속을 지켰다", s: "But he kept his word and held his tongue all his life." },
+            { w: "held his tongue (hold)", k: "입을 다물었다", s: "he kept his word and held his tongue all his life" },
             { w: "not even ~", k: "~에게조차", s: "He told nobody, not even his own wife." },
             { w: "could not bear ~", k: "견딜 수 없었다", s: "But he could not bear how much he wanted to say it." },
             { w: "came up into his throat", k: "목구멍까지 차올랐다", s: "the words came up into his throat" },
-            { w: "turned over", k: "뒤척였다", s: "His chest was tight and he turned over all night." }
+            { w: "turned over (turn)", k: "뒤척였다", s: "His chest was tight and he turned over all night." }
         ],
         "15-shout.webp": [
             { w: "old and ill", k: "늙고 병든", s: "There came a day when he was old and ill." },
@@ -813,10 +813,10 @@ const EN = {
         "16-laugh.webp": [
             { w: "whenever ~", k: "~할 때마다", s: "whenever the wind blew, the bamboo made a sound" },
             { w: "stems", k: "대나무 줄기", s: "Every time the wind went through the stems." },
-            { w: "went all round ~", k: "온 ~에 퍼졌다", s: "That talk went all round Seorabeol." },
+            { w: "went all round ~ (go)", k: "온 ~에 퍼졌다", s: "That talk went all round Seorabeol." },
             { w: "had ~ cut down", k: "베게 했다", s: "The angry king had the bamboo cut down" },
             { w: "planted (plant)", k: "심었다", s: "and cornel trees planted there" },
-            { w: "looked down at ~", k: "내려다보았다", s: "The king looked down at the new cornel trees." },
+            { w: "looked down at ~ (look)", k: "내려다보았다", s: "The king looked down at the new cornel trees." },
             { w: "burst out laughing", k: "웃음을 터뜨렸다", s: "And the king burst out laughing." },
             { w: "long they are", k: "길긴 길다", s: "Well, long they are." }
         ],

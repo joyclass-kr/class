@@ -493,7 +493,7 @@ const EN = {
             { w: "folk tale", k: "옛이야기", s: "is not an old folk tale" },
             { w: "the New Year number", k: "신년호", s: "for the New Year number of the magazine Eorini in 1926" },
             { w: "magazine", k: "잡지", s: "the magazine Eorini" },
-            { w: "made Children's Day", k: "어린이날을 만들었다", s: "the man who made Children's Day in Korea" },
+            { w: "made Children's Day (make)", k: "어린이날을 만들었다", s: "the man who made Children's Day in Korea" },
             { w: "a word of respect", k: "높여 부르는 말", s: "call children by a word of respect" },
             { w: "soft-hearted", k: "정이 많은", s: "Tigers in our stories are frightening and also soft-hearted" },
             { w: "easily fooled", k: "어수룩한", s: "soft-hearted and easily fooled" },
@@ -511,7 +511,7 @@ const EN = {
         ],
         "02-tiger.webp": [
             { w: "Rustle", k: "부스럭", s: "Rustle, rustle." },
-            { w: "turned only his head", k: "목만 돌렸다", s: "The woodcutter turned only his head." },
+            { w: "turned only his head (turn)", k: "목만 돌렸다", s: "The woodcutter turned only his head." },
             { w: "parted (part)", k: "쫙 갈라졌다", s: "The bushes parted and out came a tiger" },
             { w: "as big as a house", k: "집채만 한", s: "a tiger as big as a house" },
             { w: "supper", k: "저녁거리", s: "So you're my supper tonight." },
@@ -565,7 +565,7 @@ const EN = {
             { w: "was still hammering", k: "두근두근했다", s: "His heart was still hammering when he got home." }
         ],
         "07-gift.webp": [
-            { w: "stopped where he stood", k: "우뚝 멈춰 섰다", s: "opening the door, he stopped where he stood" },
+            { w: "stopped where he stood (stand)", k: "우뚝 멈춰 섰다", s: "opening the door, he stopped where he stood" },
             { w: "wild boar", k: "멧돼지", s: "A great wild boar lay in the yard." },
             { w: "that was clear", k: "분명했다", s: "Somebody had brought it in the night, that was clear." },
             { w: "footprints", k: "발자국", s: "Large footprints led away towards the mountain." },
@@ -581,7 +581,7 @@ const EN = {
             { w: "Who on earth ~", k: "대체 누가", s: "Who on earth is doing this, night after night?" },
             { w: "hesitated (hesitate)", k: "우물쭈물했다", s: "The woodcutter hesitated and could not answer." },
             { w: "tell her the truth", k: "사실대로 말하다", s: "He could not bring himself to tell her the truth." },
-            { w: "told her all of it", k: "죄다 털어놓았다", s: "And then he told her all of it." },
+            { w: "told her all of it (tell)", k: "죄다 털어놓았다", s: "And then he told her all of it." },
             { w: "did not scold ~", k: "나무라지 않았다", s: "She did not scold him at all." },
             { w: "her own child", k: "제 자식", s: "Do you think a mother cannot know her own child?" },
             { w: "facing (face)", k: "향하여", s: "she stood a long time facing the dark mountain" }
@@ -594,7 +594,7 @@ const EN = {
             { w: "Rain or snow", k: "비가 오나 눈이 오나", s: "Rain or snow, it made no difference." },
             { w: "clean and empty", k: "깨끗이 빈", s: "In the morning the bowl was always clean and empty." },
             { w: "has been", k: "다녀갔다", s: "My elder boy has been." },
-            { w: "held ~ against her", k: "가슴에 안았다", s: "she would hold the bowl against her" },
+            { w: "held ~ against her (hold)", k: "가슴에 안았다", s: "she would hold the bowl against her" },
             { w: "something twisted", k: "가슴이 저릿했다", s: "something twisted in the woodcutter's chest" }
         ],
         "10-guilt.webp": [
@@ -606,7 +606,7 @@ const EN = {
             { w: "lay ill (lie)", k: "앓아누웠다", s: "He lay ill for days." },
             { w: "would not go down", k: "목에 넘어가지 않았다", s: "More and more often food would not go down." },
             { w: "with nothing", k: "맨몸으로", s: "He left his axe and his frame and went with nothing." },
-            { w: "went over ~", k: "되뇌었다", s: "He went over what he would say again and again." }
+            { w: "went over ~ (go)", k: "되뇌었다", s: "He went over what he would say again and again." }
         ],
         "11-confess.webp": [
             { w: "came padding out (pad)", k: "어슬렁어슬렁 나왔다", s: "The tiger came padding out of the valley." },
@@ -616,7 +616,7 @@ const EN = {
             { w: "the truth is ~", k: "사실은", s: "Brother, the truth is... what I said that day was a lie." },
             { w: "wanted to live", k: "살고 싶었다", s: "I made it up because I wanted to live." },
             { w: "Forgive me", k: "용서하십시오", s: "I have no brother. Forgive me." },
-            { w: "shook and broke", k: "떨리고 갈라졌다", s: "His voice shook and broke." },
+            { w: "shook and broke (shake)", k: "떨리고 갈라졌다", s: "His voice shook and broke." },
             { w: "Not even a leaf", k: "나뭇잎조차", s: "Not even a leaf moved." }
         ],
         "12-know.webp": [
@@ -625,11 +625,11 @@ const EN = {
             { w: "head came up", k: "고개를 번쩍 들었다", s: "The woodcutter's head came up." },
             { w: "was born ~ (bear)", k: "~으로 났다", s: "Do you think I don't know I was born a tiger?" },
             { w: "could not believe his ears", k: "제 귀를 의심했다", s: "He could not believe his ears." },
-            { w: "looked down at ~", k: "물끄러미 내려다보았다", s: "The tiger looked down at him." },
+            { w: "looked down at ~ (look)", k: "물끄러미 내려다보았다", s: "The tiger looked down at him." },
             { w: "Only, ~", k: "다만", s: "Only, you were the first who ever called me brother." },
             { w: "the first who ever ~", k: "~한 첫 사람", s: "you were the first who ever called me brother" },
-            { w: "turned away", k: "돌아섰다", s: "It said that and turned away." },
-            { w: "bowed to ~", k: "절을 했다", s: "The woodcutter bowed to that back for a long time." }
+            { w: "turned away (turn)", k: "돌아섰다", s: "It said that and turned away." },
+            { w: "bowed to ~ (bow)", k: "절을 했다", s: "The woodcutter bowed to that back for a long time." }
         ],
         "after": [
             { w: "talking with people", k: "사람과 말을 주고받는", s: "Stories of tigers talking with people are unusually common here." },

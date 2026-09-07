@@ -591,7 +591,7 @@ const EN = {
             { w: "leave ~ with (leave)", k: "맡기다", s: "People came from far districts to leave stone with him." },
             { w: "queue", k: "줄", s: "There was a queue at his door." },
             { w: "breathes (breathe)", k: "숨을 쉰다", s: "Put stone in that man's hands and it breathes." },
-            { w: "shoulders went up", k: "어깨가 으쓱했다", s: "her shoulders went up a little" },
+            { w: "shoulders went up (go)", k: "어깨가 으쓱했다", s: "her shoulders went up a little" },
             { w: "wanted for (want for)", k: "아쉬워했다", s: "There was nothing they wanted for." }
         ],
         "02-farewell.webp": [
@@ -608,8 +608,8 @@ const EN = {
         "03-bulguksa.webp": [
             { w: "building site", k: "공사판", s: "The building site at Bulguksa was loud from morning till night." },
             { w: "so big that ~", k: "어찌나 큰지", s: "The temple was so big you could not see the end of it." },
-            { w: "made one noise", k: "뒤섞였다", s: "Breaking stone and carrying earth made one noise." },
-            { w: "took his place", k: "자리를 잡았다", s: "Asadal took his place in front of his own stone." },
+            { w: "made one noise (make)", k: "뒤섞였다", s: "Breaking stone and carrying earth made one noise." },
+            { w: "took his place (take)", k: "자리를 잡았다", s: "Asadal took his place in front of his own stone." },
             { w: "without a word", k: "말을 섞지 않고", s: "he cut stone without a word to anybody" },
             { w: "Clang", k: "땅땅", s: "Clang, clang. Clang, clang." },
             { w: "the cock crowed", k: "새벽닭이 울었다", s: "That sound went on till the cock crowed at dawn." },
@@ -634,14 +634,14 @@ const EN = {
             { w: "blistered (blister)", k: "부르텄다", s: "The soles of her feet blistered." },
             { w: "far ahead", k: "저 멀리", s: "At last she saw the roofs of Bulguksa far ahead." },
             { w: "tiled roofs", k: "기와지붕", s: "The tiled roofs shone in the morning sun." },
-            { w: "caught up her skirt", k: "치마를 걷어붙였다", s: "Asanyeo caught up her skirt and ran." },
+            { w: "caught up her skirt (catch)", k: "치마를 걷어붙였다", s: "Asanyeo caught up her skirt and ran." },
             { w: "at the thought of ~", k: "~할 생각에", s: "\"He is in there!\" woman Her heart thumped at the thought of seeing him after years." }
         ],
         "06-refused.webp": [
             { w: "gatekeeper", k: "문지기", s: "The gatekeeper lifted a long spear across her way." },
             { w: "spear", k: "창", s: "The gatekeeper lifted a long spear across her way." },
             { w: "across her way", k: "앞을 가로막고", s: "lifted a long spear across her way" },
-            { w: "went black", k: "눈앞이 캄캄해졌다", s: "Everything went black in front of Asanyeo." },
+            { w: "went black (go)", k: "눈앞이 캄캄해졌다", s: "Everything went black in front of Asanyeo." },
             { w: "doorsill", k: "문지방", s: "Asanyeo caught hold of the doorsill and hung on." },
             { w: "hung on (hang)", k: "매달렸다", s: "Asanyeo caught hold of the doorsill and hung on." },
             { w: "hard on you", k: "딱한", s: "I know it is hard on you... but it cannot be done." },
@@ -680,7 +680,7 @@ const EN = {
         ],
         "10-nothing.webp": [
             { w: "Meanwhile", k: "그사이", s: "Meanwhile the pagoda took shape little by little." },
-            { w: "took shape", k: "모습을 갖추었다", s: "the pagoda took shape little by little" },
+            { w: "took shape (take)", k: "모습을 갖추었다", s: "the pagoda took shape little by little" },
             { w: "base", k: "받침돌", s: "The base was laid, the body stones went up, the roof stones were set." },
             { w: "roof stones", k: "지붕돌", s: "the roof stones were set" },
             { w: "craned their necks", k: "목을 뺐다", s: "People craned their necks to look up at it." },
@@ -700,10 +700,10 @@ const EN = {
         "12-run.webp": [
             { w: "workman", k: "일꾼", s: "But a workman beside him said something in passing." },
             { w: "in passing", k: "지나가는 말로", s: "said something in passing" },
-            { w: "went white", k: "하얗게 질렸다", s: "Asadal's face went white." },
+            { w: "went white (go)", k: "하얗게 질렸다", s: "Asadal's face went white." },
             { w: "threw down ~ (throw)", k: "팽개쳤다", s: "He threw down his tools and ran down the mountain." },
             { w: "a little longer", k: "조금만 더", s: "Wait a little longer, just a little longer!" },
-            { w: "caught his foot", k: "돌부리에 채였다", s: "just a little longer!\" man He caught his foot on a stone and fell" },
+            { w: "caught his foot (catch)", k: "돌부리에 채였다", s: "just a little longer!\" man He caught his foot on a stone and fell" },
             { w: "mist", k: "물안개", s: "Morning mist lay thick on the mountain path." },
             { w: "lay thick (lie)", k: "자욱했다", s: "Morning mist lay thick on the mountain path." },
             { w: "pushed through ~", k: "헤쳤다", s: "Asadal pushed through the mist with both arms and ran for the pond." }
@@ -723,7 +723,7 @@ const EN = {
             { w: "in the end", k: "끝내", s: "The shadow never came in the end." },
             { w: "still", k: "잔잔한", s: "Asanyeo said it, pointing at the still pond." },
             { w: "bring himself to ~", k: "차마 ~하다", s: "Asadal could not bring himself to look at her face." },
-            { w: "laughed a little at ~", k: "픽 웃었다", s: "Asanyeo laughed a little at him, and took his hand." },
+            { w: "laughed a little at ~ (laugh)", k: "픽 웃었다", s: "Asanyeo laughed a little at him, and took his hand." },
             { w: "instead", k: "대신", s: "This shows in it instead." },
             { w: "side by side", k: "나란히", s: "In the pond the two faces showed side by side." },
             { w: "lifted (lift)", k: "걷혔다", s: "The mist lifted and the morning sun broke over the water." },
@@ -735,7 +735,7 @@ const EN = {
             { w: "never saw it", k: "끝내 보지 못했다", s: "the one who waited for it in the pond never saw it" },
             { w: "has come down", k: "전해 온다", s: "The story has come down that the man who raised it was Asadal" },
             { w: "as it stands", k: "그대로", s: "the story is not in the old records as it stands" },
-            { w: "tied ~ to the ground", k: "땅에 붙여 두었다", s: "Old people tied their stories to the ground like this." },
+            { w: "tied ~ to the ground (tie)", k: "땅에 붙여 두었다", s: "Old people tied their stories to the ground like this." },
             { w: "so long as ~", k: "~이 있는 한", s: "So long as one pond or one stone Buddha is left" },
             { w: "is aimed at (aim)", k: "향한다", s: "What waiting is aimed at is always a person and not a thing." }
         ]

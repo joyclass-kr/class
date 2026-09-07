@@ -430,7 +430,7 @@ const EN = {
         ],
         "01-hungry.webp": [
             { w: "deep in the mountains", k: "깊은 산속에", s: "Deep in the mountains lived a tiger." },
-            { w: "had not eaten for three days", k: "사흘째 굶었다", s: "He had not eaten for three days" },
+            { w: "had not eaten for three days (eat)", k: "사흘째 굶었다", s: "He had not eaten for three days" },
             { w: "belly", k: "배", s: "his belly was sticking to his back" },
             { w: "sticking to ~ (stick)", k: "~에 붙어 있는", s: "his belly was sticking to his back" },
             { w: "turned over (turn over)", k: "뒤졌다", s: "He turned over every bush" },
@@ -444,7 +444,7 @@ const EN = {
             { w: "calf", k: "송아지", s: "A pig, a calf, something." },
             { w: "before he knew it", k: "어느새", s: "Before he knew it the night had gone pitch black." },
             { w: "pitch black", k: "캄캄한", s: "the night had gone pitch black" },
-            { w: "tucked in their tails", k: "꼬리를 감췄다", s: "The village dogs started barking, then tucked in their tails." }
+            { w: "tucked in their tails (tuck)", k: "꼬리를 감췄다", s: "The village dogs started barking, then tucked in their tails." }
         ],
         "02-crying.webp": [
             { w: "on the edge of ~", k: "~ 어귀에", s: "At a house on the edge of the village" },
@@ -481,7 +481,7 @@ const EN = {
             { w: "Let's eat ~", k: "~ 먹자", s: "Let's eat the persimmon." },
             { w: "just like that", k: "거짓말처럼", s: "And just like that the crying stopped." },
             { w: "munching (munch)", k: "냠냠 먹는", s: "All that came from the room now was a soft munching sound." },
-            { w: "froze where he stood", k: "그 자리에 얼어붙었다", s: "the tiger froze where he stood" },
+            { w: "froze where he stood (stand)", k: "그 자리에 얼어붙었다", s: "the tiger froze where he stood" },
             { w: "did not even come back down", k: "내려오지도 못했다", s: "His ears did not even come back down." },
             { w: "What in the world ~?", k: "대체 무엇이~?", s: "What in the world is a dried persimmon?" },
             { w: "in his life", k: "난생처음", s: "He had never heard the name in his life." }
@@ -505,7 +505,7 @@ const EN = {
             { w: "cattle thief", k: "소도둑", s: "It was a cattle thief with his face wrapped in black cloth." },
             { w: "wrapped in ~ (wrap)", k: "~으로 감싼", s: "with his face wrapped in black cloth" },
             { w: "walking off with ~", k: "끌고 가는", s: "Tonight I'm walking off with this house's cow." },
-            { w: "made no sound with his feet", k: "발소리를 죽였다", s: "The thief made no sound with his feet." },
+            { w: "made no sound with his feet (make)", k: "발소리를 죽였다", s: "The thief made no sound with his feet." },
             { w: "crept into ~ (creep)", k: "살금살금 들어갔다", s: "He crept into the dark cowshed." },
             { w: "put out his hand", k: "손을 뻗었다", s: "He put out his hand and felt a back" },
             { w: "shaggy", k: "북슬북슬한", s: "a back covered in thick shaggy fur" },
@@ -534,7 +534,7 @@ const EN = {
             { w: "bean field", k: "콩밭", s: "straight across the bean field" },
             { w: "rose in clouds (rise)", k: "뿌옇게 일었다", s: "Dust rose in clouds wherever he passed." },
             { w: "wherever ~", k: "~하는 곳마다", s: "Dust rose in clouds wherever he passed." },
-            { w: "went round as coins", k: "휘둥그레졌다", s: "the thief's eyes went round as coins" },
+            { w: "went round as coins (go)", k: "휘둥그레졌다", s: "the thief's eyes went round as coins" },
             { w: "Whoa!", k: "워워!", s: "Whoa! Whoa there! Stop, I said!" },
             { w: "groped about (grope)", k: "더듬었다", s: "He groped about for the reins" },
             { w: "reins", k: "고삐", s: "He groped about for the reins" }
@@ -574,7 +574,7 @@ const EN = {
             { w: "found it strange (find)", k: "이상하게 여겼다", s: "The only one who found it strange was the tiger" },
             { w: "checked (check)", k: "확인했다", s: "the tiger checked nothing at all" },
             { w: "never asked", k: "물어본 적이 없다", s: "He never asked what a persimmon was" },
-            { w: "never looked", k: "들여다본 적이 없다", s: "and never looked" },
+            { w: "never looked (look)", k: "들여다본 적이 없다", s: "and never looked" },
             { w: "decided by himself", k: "혼자 정해 버렸다", s: "He decided by himself that it was worse than he was." },
             { w: "the same goes for ~", k: "~도 마찬가지다", s: "The same goes for the cattle thief." },
             { w: "without looking", k: "보지도 않고", s: "Both of them were frightened without looking." },

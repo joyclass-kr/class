@@ -472,7 +472,7 @@ const EN = {
         "03-fire.webp": [
             { w: "shut ~ tight", k: "꼭 감다", s: "Now shut your eyes tight" },
             { w: "signal", k: "신호", s: "When I give the signal the sparrows will fly straight in." },
-            { w: "as told", k: "시키는 대로", s: "The tiger shut his eyes and opened his mouth as told." },
+            { w: "as told (tell)", k: "시키는 대로", s: "The tiger shut his eyes and opened his mouth as told." },
             { w: "as good as gold", k: "아주 얌전한", s: "He was as good as gold." },
             { w: "frighten (frighten)", k: "놀라게 하다", s: "you'll frighten them" },
             { w: "Meanwhile", k: "그 틈에", s: "Meanwhile the rabbit crept backwards." },
@@ -487,7 +487,7 @@ const EN = {
             { w: "leapt up (leap)", k: "확 타올랐다", s: "Flames leapt up on every side." },
             { w: "ringed round", k: "빙 둘러싸인", s: "In a blink they had the tiger ringed round." },
             { w: "too late", k: "이미 늦은", s: "He opened his eyes wide, and it was too late." },
-            { w: "had caught his fur", k: "털에 옮아붙었다", s: "The fire had caught his fur." },
+            { w: "had caught his fur (catch)", k: "털에 옮아붙었다", s: "The fire had caught his fur." },
             { w: "burnt black", k: "까맣게 그을린", s: "With his whiskers burnt black" },
             { w: "threw himself in (throw)", k: "뛰어들었다", s: "he ran for the stream and threw himself in" },
             { w: "hissed (hiss)", k: "치익 소리를 냈다", s: "The water hissed." },
@@ -500,7 +500,7 @@ const EN = {
             { w: "Well met!", k: "잘 만났다!", s: "Aha! Well met!" },
             { w: "without turning a hair", k: "천연덕스럽게", s: "The rabbit said it without turning a hair." },
             { w: "all your doing", k: "다 너 때문", s: "It's all your doing, is it not!" },
-            { w: "went off after ~", k: "~을 잡으러 갔다", s: "I went off after the sparrows that day." },
+            { w: "went off after ~ (go)", k: "~을 잡으러 갔다", s: "I went off after the sparrows that day." },
             { w: "played innocent", k: "시치미를 뗐다", s: "She played innocent so coolly" },
             { w: "doubt himself", k: "헷갈리다", s: "the tiger began to doubt himself" },
             { w: "worse luck", k: "아쉽게도", s: "Those sparrows were so quick I lost them, worse luck." },
@@ -562,7 +562,7 @@ const EN = {
             { w: "split (split)", k: "갈라졌다", s: "the ice split" },
             { w: "a handful of ~", k: "한 움큼의", s: "A handful of tail fur stayed behind in the ice." },
             { w: "no getting the better of ~", k: "당해 낼 수 없는", s: "There's no getting the better of that one!" },
-            { w: "kept out of ~'s way", k: "슬슬 피해 다녔다", s: "the tiger kept out of the rabbit's way" }
+            { w: "kept out of ~'s way (keep)", k: "슬슬 피해 다녔다", s: "the tiger kept out of the rabbit's way" }
         ],
         "after": [
             { w: "the small and weak", k: "작고 약한 것", s: "Stories where the small and weak beat the big and strong by wits" },
@@ -575,7 +575,7 @@ const EN = {
             { w: "aims at ~ (aim)", k: "겨눈다", s: "So the story aims at the tiger's mind, not the rabbit's tricks." },
             { w: "skip (skip)", k: "건너뛴다", s: "When we are in a hurry and wanting something, we skip the checking." },
             { w: "worth thinking about", k: "웃어넘길 것이 아닌", s: "The ending is worth thinking about too." },
-            { w: "kept away", k: "피해 다녔다", s: "He could have won by strength, and he kept away." },
+            { w: "kept away (keep)", k: "피해 다녔다", s: "He could have won by strength, and he kept away." },
             { w: "strength for strength", k: "힘으로 맞서서", s: "The rabbit never once met him strength for strength." }
         ]
     },

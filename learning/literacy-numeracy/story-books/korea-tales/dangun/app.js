@@ -606,7 +606,7 @@ const EN = {
         "01-heaven.webp": [
             { w: "above the clouds", k: "구름 위에", s: "It was a great bright country above the clouds." },
             { w: "mind was on ~", k: "마음이 ~에 가 있었다", s: "But Hwanung's mind was on the earth, not on the sky." },
-            { w: "looked down through ~", k: "사이로 내려다보았다", s: "Every day Hwanung looked down through the clouds." },
+            { w: "looked down through ~ (look)", k: "사이로 내려다보았다", s: "Every day Hwanung looked down through the clouds." },
             { w: "ploughing (plough)", k: "밭을 가는", s: "He could see people ploughing fields" },
             { w: "on their backs", k: "등에 업고", s: "carrying children on their backs" },
             { w: "please you", k: "네 마음에 들다", s: "Does the place where people live please you so much?" },
@@ -627,8 +627,8 @@ const EN = {
             { w: "shade", k: "그늘", s: "Its branches spread wide and its shade was very big." },
             { w: "joined (join)", k: "이었다", s: "It was the tree that joined the sky and the earth, they said." },
             { w: "reach round ~", k: "팔을 벌려 안다", s: "It took several grown people to reach round it." },
-            { w: "made a place", k: "터를 열었다", s: "Hwanung made a place under that tree." },
-            { w: "shall be called ~", k: "~라 하겠다", s: "This shall be called Sinsi." },
+            { w: "made a place (make)", k: "터를 열었다", s: "Hwanung made a place under that tree." },
+            { w: "shall be called ~ (call)", k: "~라 하겠다", s: "This shall be called Sinsi." },
             { w: "in no time", k: "금세", s: "The news went down the valleys and far off in no time." },
             { w: "gather", k: "모이다", s: "From that day people began to gather there." }
         ],
@@ -640,7 +640,7 @@ const EN = {
             { w: "quarrelling (quarrel)", k: "다투는", s: "When people came quarrelling he told them right from wrong." },
             { w: "right from wrong", k: "옳고 그름", s: "he told them right from wrong" },
             { w: "Do good to ~", k: "이롭게 하라", s: "Do good to people, as widely as you can." },
-            { w: "went hungry", k: "굶었다", s: "In Sinsi nobody went hungry and nobody quarrelled." }
+            { w: "went hungry (go)", k: "굶었다", s: "In Sinsi nobody went hungry and nobody quarrelled." }
         ],
         "05-two.webp": [
             { w: "side by side", k: "나란히", s: "The two of them had lived side by side in one cave." },
@@ -669,7 +669,7 @@ const EN = {
             { w: "fierce and hot", k: "몹시 매운", s: "garlic is fierce and hot" },
             { w: "One bite", k: "한 입 씹으면", s: "One bite and the tears came into their eyes." },
             { w: "Bear it", k: "참자", s: "Bear it and we become people, they say." },
-            { w: "kept glancing", k: "자꾸 흘끔거렸다", s: "The tiger kept glancing at the mouth of the cave." },
+            { w: "kept glancing (keep)", k: "자꾸 흘끔거렸다", s: "The tiger kept glancing at the mouth of the cave." },
             { w: "deer", k: "노루", s: "A deer was calling outside it." }
         ],
         "08-tiger.webp": [
@@ -680,13 +680,13 @@ const EN = {
             { w: "no thing for ~ to do", k: "사람이 할 짓이 아닌", s: "This is no thing for anybody to do!" },
             { w: "One bite of ~", k: "한 점만", s: "One bite of meat and I should be well again!" },
             { w: "in a moment", k: "순식간에", s: "It was over in a moment, with no time to stop him." },
-            { w: "looked after ~", k: "뒷모습을 바라보았다", s: "The bear only looked steadily after him." }
+            { w: "looked after ~ (look)", k: "뒷모습을 바라보았다", s: "The bear only looked steadily after him." }
         ],
         "09-bear.webp": [
             { w: "was left alone", k: "혼자 남았다", s: "The bear was left alone in the cave." },
             { w: "far quieter", k: "훨씬 조용한", s: "With nobody there it was far quieter." },
             { w: "chewed (chew)", k: "씹었다", s: "The bear chewed mugwort, and garlic, and chewed again." },
-            { w: "went blunt", k: "무디어졌다", s: "Her claws went blunt and her fur went dry." },
+            { w: "went blunt (go)", k: "무디어졌다", s: "Her claws went blunt and her fur went dry." },
             { w: "bitterness", k: "쓴맛", s: "By now the bitterness did not bring tears any more." },
             { w: "inside herself", k: "속으로", s: "That was all the bear said inside herself." },
             { w: "the line of light", k: "빛줄기", s: "The line of light at the mouth moved a little every day." },
@@ -710,7 +710,7 @@ const EN = {
             { w: "just one child", k: "아이 하나만", s: "Let me have just one child." },
             { w: "full of asking", k: "간절한", s: "The sound of it was so full of asking." },
             { w: "till every leaf had fallen", k: "나뭇잎이 다 지도록", s: "She prayed and prayed till every leaf had fallen." },
-            { w: "reached the sky", k: "하늘에 닿았다", s: "And at last that sound reached the sky." }
+            { w: "reached the sky (reach)", k: "하늘에 닿았다", s: "And at last that sound reached the sky." }
         ],
         "12-birth.webp": [
             { w: "came lightly down", k: "사뿐 내려섰다", s: "Then one day Hwanung came lightly down in front of her." },
@@ -726,7 +726,7 @@ const EN = {
             { w: "was grown", k: "자라났다", s: "When Dangun was grown he set out to find a new place." },
             { w: "could hold", k: "다 살 수 있었다", s: "There were now more people than Sinsi alone could hold." },
             { w: "plain", k: "들", s: "The river was wide and the plain beside it was rich." },
-            { w: "stood tall", k: "우뚝 섰다", s: "Dangun stood tall in that place." },
+            { w: "stood tall (stand)", k: "우뚝 섰다", s: "Dangun stood tall in that place." },
             { w: "spreading (spread)", k: "활짝 벌리며", s: "Dangun said it, spreading both arms towards the river." },
             { w: "morning land", k: "아침 땅", s: "Asadal meant morning land." },
             { w: "touched ~ first", k: "제일 먼저 닿았다", s: "It was where the morning sun touched this land first." },
@@ -734,7 +734,7 @@ const EN = {
         ],
         "14-joseon.webp": [
             { w: "walls", k: "성", s: "Dangun built walls there and opened a country." },
-            { w: "opened a country", k: "나라를 열었다", s: "Dangun built walls there and opened a country." },
+            { w: "opened a country (open)", k: "나라를 열었다", s: "Dangun built walls there and opened a country." },
             { w: "packed ~ down (pack)", k: "꾹꾹 다졌다", s: "People carried stones and packed the earth down hard." },
             { w: "Many hands together", k: "여럿이 달라붙어", s: "Many hands together raised the wall up." },
             { w: "cheered (cheer)", k: "함성을 질렀다", s: "Joseon meant morning too, and the people cheered." },

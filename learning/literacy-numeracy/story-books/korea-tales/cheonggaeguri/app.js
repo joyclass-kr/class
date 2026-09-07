@@ -469,7 +469,7 @@ const EN = {
             { w: "an origin tale", k: "유래담", s: "It is an origin tale" },
             { w: "explains (explain)", k: "풀어낸다", s: "it explains why frogs cry so loudly when it rains" },
             { w: "the opposite of ~", k: "~의 반대", s: "a child who does the opposite of what grown-ups say" },
-            { w: "is called ~", k: "~라고 불린다", s: "is called a green frog" },
+            { w: "is called ~ (call)", k: "~라고 불린다", s: "is called a green frog" },
             { w: "dictionary", k: "사전", s: "One story put a word into the dictionary." }
         ],
         "01-opposite.webp": [
@@ -480,12 +480,12 @@ const EN = {
             { w: "let out a sigh", k: "한숨을 쉬었다", s: "His mother let out a sigh." },
             { w: "nothing left to say", k: "할 말을 잃은", s: "She had nothing left to say." },
             { w: "Whatever she said", k: "무슨 말을 해도", s: "Whatever she said, he turned it over." },
-            { w: "turned it over", k: "뒤집어 놓았다", s: "he turned it over" },
+            { w: "turned it over (turn)", k: "뒤집어 놓았다", s: "he turned it over" },
             { w: "hopped about (hop)", k: "폴짝폴짝 뛰어다녔다", s: "He hopped about, taking no notice." },
             { w: "taking no notice", k: "아랑곳도 않고", s: "He hopped about, taking no notice." }
         ],
         "02-backwards.webp": [
-            { w: "Told to ~", k: "~하라고 하면", s: "Told to go forward he went backwards." },
+            { w: "Told to ~ (tell)", k: "~하라고 하면", s: "Told to go forward he went backwards." },
             { w: "backwards", k: "뒤로", s: "Told to go forward he went backwards." },
             { w: "meant nothing to ~", k: "아랑곳없었다", s: "His mother's worry meant nothing to him." },
             { w: "What a life I have", k: "내 팔자야", s: "Oh, what a life I have." },
@@ -493,17 +493,17 @@ const EN = {
             { w: "after long thought", k: "곰곰 생각한 끝에", s: "One day, after long thought, she tried this" },
             { w: "just once", k: "한 번만", s: "Child, just once today, please do as I say." },
             { w: "do as I say", k: "내 말대로 하다", s: "please do as I say" },
-            { w: "turned round", k: "돌아보았다", s: "She turned round in surprise." },
+            { w: "turned round (turn)", k: "돌아보았다", s: "She turned round in surprise." },
             { w: "the other way", k: "반대쪽으로", s: "he was already hopping off the other way" }
         ],
         "03-gulgae.webp": [
             { w: "start with ~", k: "~부터 하다", s: "She decided to start with how to cry." },
             { w: "again and again", k: "몇 번이나", s: "She told him again and again and it was no use." },
             { w: "it was no use", k: "소용없었다", s: "She told him again and again and it was no use." },
-            { w: "went hoarse", k: "목이 쉬었다", s: "Her voice went hoarse." },
+            { w: "went hoarse (go)", k: "목이 쉬었다", s: "Her voice went hoarse." },
             { w: "held their sides (hold)", k: "배를 잡았다", s: "The neighbourhood frogs held their sides laughing." },
             { w: "even ~ backwards", k: "~도 거꾸로", s: "That house's son even cries backwards." },
-            { w: "went red", k: "얼굴이 빨개졌다", s: "The mother frog went red and hid behind a lotus leaf." },
+            { w: "went red (go)", k: "얼굴이 빨개졌다", s: "The mother frog went red and hid behind a lotus leaf." },
             { w: "lotus leaf", k: "연잎", s: "hid behind a lotus leaf" },
             { w: "Not knowing ~", k: "그런 줄도 모르고", s: "Not knowing they laughed at him, her son cried louder still." },
             { w: "think badly of ~", k: "미워하다", s: "But she did not think badly of him." },
@@ -519,15 +519,15 @@ const EN = {
             { w: "bank", k: "물가", s: "He climbed up onto the bank." },
             { w: "keep sighing", k: "자꾸 한숨을 쉬다", s: "Mother, why do you keep sighing?" },
             { w: "stroked (stroke)", k: "쓸어 주었다", s: "She stroked his back gently." },
-            { w: "pulled away", k: "몸을 뺐다", s: "The touch felt strange to him and he pulled away." }
+            { w: "pulled away (pull)", k: "몸을 뺐다", s: "The touch felt strange to him and he pulled away." }
         ],
         "05-sick.webp": [
-            { w: "took to her bed", k: "자리에 누웠다", s: "Then one day his mother took to her bed." },
+            { w: "took to her bed (take)", k: "자리에 누웠다", s: "Then one day his mother took to her bed." },
             { w: "near the end of ~", k: "~이 다 갈 무렵", s: "It was near the end of summer." },
-            { w: "kept going", k: "자꾸 빠졌다", s: "Her strength kept going" },
+            { w: "kept going (keep)", k: "자꾸 빠졌다", s: "Her strength kept going" },
             { w: "like stone", k: "돌덩이처럼", s: "her body felt like stone" },
             { w: "too much", k: "힘에 부치는", s: "Even lifting an arm was too much." },
-            { w: "The colour went out of ~", k: "얼굴빛이 하얘졌다", s: "The colour went out of her face." },
+            { w: "The colour went out of ~ (go)", k: "얼굴빛이 하얘졌다", s: "The colour went out of her face." },
             { w: "crouched (crouch)", k: "쪼그리고 앉았다", s: "Her son crouched at her head." },
             { w: "I'll be well", k: "괜찮아질 게다", s: "A little rest and I'll be well." },
             { w: "fetched (fetch)", k: "떠다 주었다", s: "He fetched water and held it to her mouth." },
@@ -541,17 +541,17 @@ const EN = {
             { w: "worked it out", k: "곰곰 헤아렸다", s: "She closed her eyes and worked it out." },
             { w: "bury (bury)", k: "묻다", s: "he'll bury me by the stream" },
             { w: "went over it (go over)", k: "되뇌었다", s: "She went over it again and again." },
-            { w: "made up her mind", k: "마음을 정했다", s: "At last she made up her mind, and called her son close." },
+            { w: "made up her mind (make)", k: "마음을 정했다", s: "At last she made up her mind, and called her son close." },
             { w: "no strength at all", k: "힘이 하나도 없는", s: "There was no strength at all in her voice." }
         ],
         "07-last-words.webp": [
             { w: "Listen carefully", k: "잘 들으렴", s: "Listen carefully, child." },
             { w: "put his ear close", k: "귀를 바짝 댔다", s: "He put his ear close." },
             { w: "held ~ tight (hold)", k: "꼭 잡았다", s: "She held his front foot tight." },
-            { w: "When I am gone", k: "내가 세상을 떠나거든", s: "When I am gone, bury me by the stream" },
+            { w: "When I am gone (go)", k: "내가 세상을 떠나거든", s: "When I am gone, bury me by the stream" },
             { w: "not on the mountain", k: "산이 아니라", s: "bury me by the stream, not on the mountain" },
             { w: "It must be ~", k: "꼭 ~여야 한다", s: "It must be the stream." },
-            { w: "started to ~", k: "~하려 했다", s: "He started to ask something" },
+            { w: "started to ~ (start)", k: "~하려 했다", s: "He started to ask something" },
             { w: "shook her (shake)", k: "흔들었다", s: "He shook her." },
             { w: "running", k: "졸졸 흐르는", s: "There was only the sound of the stream running." }
         ],
@@ -559,7 +559,7 @@ const EN = {
             { w: "cry aloud", k: "목놓아 울다", s: "sit down by the stream and cry aloud" },
             { w: "never once", k: "한 번도 ~ 않다", s: "I never once did what you said..." },
             { w: "carried across ~ (carry)", k: "건너까지 퍼졌다", s: "The crying carried across the stream." },
-            { w: "However he called", k: "아무리 불러도", s: "However he called, no answer came." },
+            { w: "However he called (call)", k: "아무리 불러도", s: "However he called, no answer came." },
             { w: "worn out with ~", k: "~에 지친", s: "Worn out with crying, he lifted his head" },
             { w: "swollen (swell)", k: "퉁퉁 부은", s: "They were swollen from weeping." },
             { w: "This once", k: "이번 한 번만", s: "This once. Just this once I'll do as she said." },
@@ -579,7 +579,7 @@ const EN = {
         "10-rain.webp": [
             { w: "came down (come down)", k: "쏟아졌다", s: "But a few days later the rain came down." },
             { w: "the summer rains", k: "장맛비", s: "The summer rains went on for days." },
-            { w: "went on for days", k: "며칠이나 이어졌다", s: "The summer rains went on for days." },
+            { w: "went on for days (go)", k: "며칠이나 이어졌다", s: "The summer rains went on for days." },
             { w: "rose and rose (rise)", k: "점점 불어 올랐다", s: "The stream rose and rose." },
             { w: "right up to ~", k: "~까지 찰랑찰랑", s: "The water came right up to the stones of the grave." },
             { w: "washes away", k: "떠내려가다", s: "What if Mother's grave washes away!" },
@@ -591,7 +591,7 @@ const EN = {
         "after": [
             { w: "in fact", k: "사실은", s: "Frogs crying loudly in the rain is in fact a call to find a mate." },
             { w: "a mate", k: "짝", s: "a call to find a mate" },
-            { w: "heard it clearly", k: "똑똑히 들었다", s: "The old people did not know why, but they heard it clearly." },
+            { w: "heard it clearly (hear)", k: "똑똑히 들었다", s: "The old people did not know why, but they heard it clearly." },
             { w: "left ~ alone", k: "그냥 두었다", s: "They did not leave what they did not know alone" },
             { w: "flatfish", k: "넙치", s: "Why a flatfish has both eyes on one side" },
             { w: "thin on top", k: "성긴", s: "why a magpie's head is thin on top" },
@@ -599,7 +599,7 @@ const EN = {
             { w: "never lied (lie)", k: "거짓말한 적이 없다", s: "the green frog never lied" },
             { w: "one habit", k: "버릇 하나", s: "And that one habit turned, at the end, into something he could not undo." },
             { w: "could not undo", k: "되돌릴 수 없는", s: "into something he could not undo" },
-            { w: "was kept for the first time", k: "처음으로 지켜졌다", s: "his mother's last words were kept for the first time" }
+            { w: "was kept for the first time (keep)", k: "처음으로 지켜졌다", s: "his mother's last words were kept for the first time" }
         ]
     },
     afterword: {

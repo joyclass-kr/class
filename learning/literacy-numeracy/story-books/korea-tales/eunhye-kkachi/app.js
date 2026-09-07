@@ -455,7 +455,7 @@ const EN = {
             { w: "I ought to ~", k: "~해야 할 텐데", s: "I ought to be over that pass before dark." },
             { w: "pass", k: "고개", s: "over that pass before dark" },
             { w: "rustled (rustle)", k: "바스락거렸다", s: "Every time the leaves rustled" },
-            { w: "found himself ~ing", k: "저도 모르게 ~하게 되었다", s: "he found himself looking back" }
+            { w: "found himself ~ing (find)", k: "저도 모르게 ~하게 되었다", s: "he found himself looking back" }
         ],
         "02-nest.webp": [
             { w: "racket", k: "요란한 소리", s: "Then came a great racket over his head." },
@@ -499,7 +499,7 @@ const EN = {
             { w: "set out (set)", k: "차려 주었다", s: "He ate the supper the woman set out" },
             { w: "fell asleep (fall)", k: "잠이 들었다", s: "He ate the supper the woman set out and soon fell asleep." },
             { w: "the middle of the night", k: "한밤중", s: "It was the middle of the night." },
-            { w: "felt tight", k: "답답했다", s: "His chest felt tight" },
+            { w: "felt tight (feel)", k: "답답했다", s: "His chest felt tight" },
             { w: "could not breathe", k: "숨을 쉴 수 없었다", s: "he could not breathe at all" },
             { w: "enormous", k: "커다란", s: "An enormous snake was wound round and round his body!" },
             { w: "wound round ~ (wind)", k: "~을 칭칭 감았다", s: "was wound round and round his body" },
@@ -532,12 +532,12 @@ const EN = {
             { w: "daybreak", k: "날이 밝을 때", s: "rings three times before daybreak" },
             { w: "let you go", k: "놓아주다", s: "I will let you go." },
             { w: "monks", k: "스님들", s: "The monks had left that temple long ago" },
-            { w: "stood empty", k: "빈 채로 있었다", s: "it stood empty" }
+            { w: "stood empty (stand)", k: "빈 채로 있었다", s: "it stood empty" }
         ],
         "08-ring.webp": [
             { w: "Run where you like", k: "어디로 달아나든", s: "Run where you like, I will be there first." },
             { w: "slid ~ loose (slide)", k: "스르르 풀었다", s: "The snake slid its coils loose" },
-            { w: "sat where he was", k: "그 자리에 주저앉았다", s: "The scholar sat where he was on the floor all night." },
+            { w: "sat where he was (sit)", k: "그 자리에 주저앉았다", s: "The scholar sat where he was on the floor all night." },
             { w: "turning grey", k: "희끄무레해지는", s: "The window was just turning grey." },
             { w: "the end of me", k: "이제 끝이다", s: "This is the end of me, he thought." },
             { w: "curled (curl)", k: "몸을 둥글게 감은", s: "the snake lay curled beneath the bell" },

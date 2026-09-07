@@ -525,9 +525,9 @@ const EN = {
             { w: "silk bag", k: "비단 주머니", s: "It was a small old silk bag." },
             { w: "to nobody", k: "아무한테도", s: "This is mine. I'm giving it to nobody." },
             { w: "patted (pat)", k: "톡톡 두드렸다", s: "He patted the bag and pulled its string tight." },
-            { w: "pulled ~ tight", k: "꽉 조여 맸다", s: "pulled its string tight" },
+            { w: "pulled ~ tight (pull)", k: "꽉 조여 맸다", s: "pulled its string tight" },
             { w: "However ~ begged", k: "아무리 졸라도", s: "However his friends begged, he kept his mouth shut." },
-            { w: "kept his mouth shut", k: "입을 다물었다", s: "he kept his mouth shut" }
+            { w: "kept his mouth shut (keep)", k: "입을 다물었다", s: "he kept his mouth shut" }
         ],
         "03-years.webp": [
             { w: "went by (go by)", k: "지났다", s: "Ten years went by like that." },
@@ -543,7 +543,7 @@ const EN = {
         "04-angry.webp": [
             { w: "stifling", k: "답답한", s: "Inside the bag it was dark and stifling" },
             { w: "packed too tight to ~", k: "숨 쉴 틈 없이 빽빽한", s: "packed too tight to breathe" },
-            { w: "knocked shoulders", k: "어깨를 부딪혔다", s: "The stories knocked shoulders and grumbled." },
+            { w: "knocked shoulders (knock)", k: "어깨를 부딪혔다", s: "The stories knocked shoulders and grumbled." },
             { w: "grumbled (grumble)", k: "투덜거렸다", s: "The stories knocked shoulders and grumbled." },
             { w: "no room to ~", k: "~할 자리가 없는", s: "There was no room to stretch a leg or turn over." },
             { w: "furious", k: "성이 잔뜩 난", s: "Every one of them was furious." },
@@ -568,13 +568,13 @@ const EN = {
         "06-listen.webp": [
             { w: "happened to hear ~", k: "마침 들었다", s: "An old servant passing the door happened to hear it" },
             { w: "working late", k: "늦게까지 일하기", s: "on his way back from working late" },
-            { w: "held his breath", k: "숨을 죽였다", s: "He held his breath and put his ear to the wall." },
+            { w: "held his breath (hold)", k: "숨을 죽였다", s: "He held his breath and put his ear to the wall." },
             { w: "could not believe his ears", k: "제 귀를 의심했다", s: "At first he could not believe his ears." },
             { w: "poison", k: "독", s: "I'll put poison in the well on his road." },
             { w: "took a part (take)", k: "제 몫을 정했다", s: "The stories each took a part." },
             { w: "strawberry patch", k: "딸기밭", s: "I'll be a strawberry patch and wait for him." },
             { w: "the wedding room", k: "신방", s: "I'll hide in the corner of the wedding room." },
-            { w: "took in every word", k: "빠짐없이 새겨들었다", s: "The servant took in every word." },
+            { w: "took in every word (take)", k: "빠짐없이 새겨들었다", s: "The servant took in every word." },
             { w: "did not sleep a wink", k: "한숨도 자지 못했다", s: "And he did not sleep a wink all night." }
         ],
         "07-well.webp": [
@@ -599,20 +599,20 @@ const EN = {
             { w: "either", k: "그것도", s: "You cannot have those either!" },
             { w: "did not even look back", k: "뒤도 돌아보지 않았다", s: "The servant did not even look back." },
             { w: "pretended not to hear", k: "못 들은 척했다", s: "He pretended not to hear and drove the horse faster." },
-            { w: "went red, then purple", k: "붉으락푸르락해졌다", s: "The young master went red, then purple." },
+            { w: "went red, then purple (go)", k: "붉으락푸르락해졌다", s: "The young master went red, then purple." },
             { w: "properly mad", k: "아주 단단히 미친", s: "The man has gone properly mad today!" },
-            { w: "kept hold of ~", k: "놓지 않았다", s: "And still the servant kept hold of the reins." }
+            { w: "kept hold of ~ (keep)", k: "놓지 않았다", s: "And still the servant kept hold of the reins." }
         ],
         "09-scold.webp": [
-            { w: "called ~ to him", k: "불러 세웠다", s: "the young master called the servant to him" },
+            { w: "called ~ to him (call)", k: "불러 세웠다", s: "the young master called the servant to him" },
             { w: "was laid (lay)", k: "차려졌다", s: "The feast was laid and people were everywhere." },
             { w: "How dare you ~", k: "어찌 이리 ~하냐", s: "How dare you behave like this today!" },
             { w: "rough", k: "사나운", s: "His voice was very rough." },
-            { w: "turned to look", k: "돌아보았다", s: "Everyone at the feast turned to look." },
-            { w: "bowed his head", k: "고개를 조아렸다", s: "The servant only bowed his head and said nothing." },
+            { w: "turned to look (turn)", k: "돌아보았다", s: "Everyone at the feast turned to look." },
+            { w: "bowed his head (bow)", k: "고개를 조아렸다", s: "The servant only bowed his head and said nothing." },
             { w: "could hardly say ~", k: "말할 수는 없었다", s: "He could hardly say the stories in the bag had planned it." },
             { w: "anyway", k: "어차피", s: "Nobody would have believed him anyway." },
-            { w: "kept glancing", k: "흘끔흘끔 살폈다", s: "He only kept glancing towards the wedding room." }
+            { w: "kept glancing (keep)", k: "흘끔흘끔 살폈다", s: "He only kept glancing towards the wedding room." }
         ],
         "10-room.webp": [
             { w: "was lit (light)", k: "켜졌다", s: "a red lamp was lit in the wedding room" },
@@ -657,7 +657,7 @@ const EN = {
             { w: "in the next village", k: "다음 마을에서", s: "and whoever heard it unpacked it again in the next village" },
             { w: "That is how ~", k: "그렇게 ~", s: "That is how they stayed alive and moving." },
             { w: "did not treasure ~", k: "아낀 것이 아니다", s: "the young master did not treasure the stories" },
-            { w: "kept them prisoner", k: "가두었다", s: "He kept them prisoner." },
+            { w: "kept them prisoner (keep)", k: "가두었다", s: "He kept them prisoner." },
             { w: "gave back none of ~", k: "하나도 내놓지 않았다", s: "He gave back none of what he heard" },
             { w: "because that is what ~ is", k: "원래 그런 것이라서", s: "the stories were furious because that is what a story is" },
             { w: "somebody passed ~ on", k: "누군가 옮겨 주었다", s: "reached you because somebody passed them on by mouth" }

@@ -527,7 +527,7 @@ const EN = {
             { w: "Let us see", k: "어디 두고 봅시다", s: "Let us see whether money can buy a river too." }
         ],
         "04-plan.webp": [
-            { w: "called ~ together", k: "불러 모았다", s: "Kim Seondal called every water carrier together" },
+            { w: "called ~ together (call)", k: "불러 모았다", s: "Kim Seondal called every water carrier together" },
             { w: "one by one", k: "하나둘씩", s: "They came one by one, wondering what it was about." },
             { w: "copper coin", k: "엽전", s: "He handed each of them a single copper coin." },
             { w: "in puzzlement", k: "어리둥절해서", s: "Every hand that took a coin closed on it in puzzlement." },
@@ -536,7 +536,7 @@ const EN = {
             { w: "had no idea", k: "영문을 몰랐다", s: "The water carriers had no idea why, but they nodded." }
         ],
         "05-collect.webp": [
-            { w: "in the spot best seen", k: "제일 잘 보이는 자리에", s: "on a rock by the river, in the spot best seen from the bank" },
+            { w: "in the spot best seen (see)", k: "제일 잘 보이는 자리에", s: "on a rock by the river, in the spot best seen from the bank" },
             { w: "strolling (stroll)", k: "어슬렁어슬렁 걷는", s: "The three merchants came strolling past just then." },
             { w: "bent at the waist (bend)", k: "허리를 굽혔다", s: "a water carrier came up to him and bent at the waist" },
             { w: "Clink", k: "짤랑", s: "Clink — a coin was laid before him." },
@@ -592,9 +592,9 @@ const EN = {
             { w: "stamped his feet", k: "발을 쿵쿵 굴렀다", s: "The merchant stamped his feet and shouted" },
             { w: "at the top of his voice", k: "목청껏", s: "shouted at the top of his voice" },
             { w: "the funniest thing yet", k: "가장 우스운 소리", s: "I have lived long, but that is the funniest thing yet." },
-            { w: "held their sides laughing", k: "배를 잡고 웃었다", s: "The water carriers held their sides laughing" },
+            { w: "held their sides laughing (hold)", k: "배를 잡고 웃었다", s: "The water carriers held their sides laughing" },
             { w: "shouldered (shoulder)", k: "어깨에 졌다", s: "Still laughing, they shouldered their frames and went off." },
-            { w: "turned pale", k: "파랗게 질렸다", s: "The merchants' faces turned pale." },
+            { w: "turned pale (turn)", k: "파랗게 질렸다", s: "The merchants' faces turned pale." },
             { w: "how neatly", k: "얼마나 감쪽같이", s: "Only then did they see how neatly they had been fooled." },
             { w: "fooled (fool)", k: "속았다", s: "how neatly they had been fooled" }
         ],
@@ -612,16 +612,16 @@ const EN = {
             { w: "why in the world", k: "대체 왜", s: "Then why in the world did you do this?" },
             { w: "more than he could bear", k: "답답해 못 견딜 만큼", s: "raised his voice, as if it were more than he could bear" },
             { w: "pointed out of ~", k: "~ 밖을 가리켰다", s: "Kim Seondal pointed out of the window at the river." },
-            { w: "had gone very quiet", k: "아주 조용해졌다", s: "His voice had gone very quiet." },
+            { w: "had gone very quiet (go)", k: "아주 조용해졌다", s: "His voice had gone very quiet." },
             { w: "Not me, and not you", k: "나도 당신들도 아니다", s: "But nobody can buy that water. Not me, and not you." },
             { w: "a person's heart", k: "사람 마음", s: "Not the river, not the wind, and not a person's heart." },
             { w: "without a word", k: "아무 말도 못 하고", s: "The three merchants went away without a word." },
             { w: "boasted (boast)", k: "큰소리쳤다", s: "After that they never boasted so anywhere again" },
-            { w: "made them blush", k: "얼굴을 붉히게 했다", s: "a river made them blush" }
+            { w: "made them blush (make)", k: "얼굴을 붉히게 했다", s: "a river made them blush" }
         ],
         "after": [
             { w: "jokers", k: "재담꾼", s: "stories about jokers like this went round" },
-            { w: "went round", k: "돌아다녔다", s: "stories about jokers like this went round" },
+            { w: "went round (go)", k: "돌아다녔다", s: "stories about jokers like this went round" },
             { w: "nickname", k: "별명", s: "The nickname Bongi comes from another story" },
             { w: "insisting (insist)", k: "우기면서", s: "he sold a hen, insisting it was a phoenix" },
             { w: "phoenix", k: "봉황", s: "insisting it was a phoenix" },

@@ -511,7 +511,7 @@ const EN = {
             { w: "greedy", k: "욕심 많은", s: "The elder was greedy" },
             { w: "hard-working", k: "부지런한", s: "the younger was kind and hard-working" },
             { w: "his own share first", k: "저부터", s: "the elder took his own share first" },
-            { w: "looked after ~", k: "모셨다", s: "It was the younger who looked after their parents." },
+            { w: "looked after ~ (look)", k: "모셨다", s: "It was the younger who looked after their parents." },
             { w: "never once complained", k: "싫은 소리 한 번 안 했다", s: "And he never once complained about it." },
             { w: "firewood", k: "나무, 땔감", s: "went up the mountain for firewood" },
             { w: "ankle deep", k: "발목까지 쌓인", s: "It was autumn and the leaves were ankle deep." },
@@ -534,7 +534,7 @@ const EN = {
         "03-house.webp": [
             { w: "By the time ~", k: "~할 무렵", s: "By the time his bundle of wood was heavy" },
             { w: "not a star out", k: "별빛 하나 없는", s: "There was not a star out." },
-            { w: "where the path went", k: "길이 어디로 났는지", s: "He could not see where the path went." },
+            { w: "where the path went (go)", k: "길이 어디로 났는지", s: "He could not see where the path went." },
             { w: "Luckily", k: "다행히", s: "Luckily there was an empty old house in the valley." },
             { w: "valley", k: "골짜기", s: "an empty old house in the valley" },
             { w: "set ~ down (set)", k: "내려놓았다", s: "He set his frame down on its wooden floor." },
@@ -546,7 +546,7 @@ const EN = {
             { w: "just as ~", k: "막 ~하려던 참에", s: "just as he was falling deep asleep" },
             { w: "Thump!", k: "쿵!", s: "Thump!" },
             { w: "jumped (jump)", k: "들썩였다", s: "The floor jumped and dust came down from the ceiling." },
-            { w: "sat straight up", k: "벌떡 일어났다", s: "He sat straight up with his eyes wide open." },
+            { w: "sat straight up (sit)", k: "벌떡 일어났다", s: "He sat straight up with his eyes wide open." },
             { w: "Through a crack", k: "문틈으로", s: "Through a crack in the door he saw the yard full of goblins." },
             { w: "Horned", k: "뿔 난", s: "Horned goblins, every one with a club in his hand." },
             { w: "ladder", k: "사다리", s: "In the corner of the floor was a ladder up to the loft." },
@@ -602,7 +602,7 @@ const EN = {
         "09-brother.webp": [
             { w: "tiled house", k: "기와집", s: "the younger brother's house became a tiled house overnight" },
             { w: "overnight", k: "하루아침에", s: "became a tiled house overnight" },
-            { w: "had gone round ~", k: "쫙 퍼졌다", s: "The news had gone round the whole village in a day." },
+            { w: "had gone round ~ (go)", k: "쫙 퍼졌다", s: "The news had gone round the whole village in a day." },
             { w: "What on earth ~", k: "대체 어찌", s: "What on earth happened?" },
             { w: "every word", k: "하나도 빠짐없이", s: "Tell me all of it, every word." },
             { w: "would not let go", k: "늘어졌다", s: "He took hold of his brother's sleeve and would not let go." },
@@ -628,8 +628,8 @@ const EN = {
             { w: "one after another", k: "연달아", s: "One noise after another" },
             { w: "loud enough to shake ~", k: "들썩일 만큼 요란한", s: "loud enough to shake the house" },
             { w: "did not run", k: "달아나지 않았다", s: "But the goblins did not run." },
-            { w: "looked up at ~", k: "올려다보았다", s: "Every one of them looked up at the loft instead." },
-            { w: "took ~ last time", k: "지난번에 가져갔다", s: "The one who took our club last time!" },
+            { w: "looked up at ~ (look)", k: "올려다보았다", s: "Every one of them looked up at the loft instead." },
+            { w: "took ~ last time (take)", k: "지난번에 가져갔다", s: "The one who took our club last time!" },
             { w: "all together", k: "우르르", s: "Up the ladder they came, all together." },
             { w: "only then did he see ~", k: "그제야 알았다", s: "And only then did the elder see what he had done." }
         ],
@@ -644,20 +644,20 @@ const EN = {
             { w: "said nothing", k: "잠자코", s: "His brother said nothing and picked up the club." },
             { w: "shrink (shrink)", k: "줄어들다", s: "Nose, shrink! Knock-knock!" },
             { w: "slid back (slide)", k: "스르르 줄어들었다", s: "The nose slid back to its size." },
-            { w: "bowed his head", k: "고개를 숙였다", s: "And then he bowed his head before his brother." }
+            { w: "bowed his head (bow)", k: "고개를 숙였다", s: "And then he bowed his head before his brother." }
         ],
         "after": [
             { w: "one of the great shapes", k: "큰 틀 가운데 하나", s: "is one of the great shapes of our old tales" },
             { w: "the key", k: "열쇠", s: "The key here is the hazelnut." },
             { w: "grows wild (grow)", k: "절로 난다", s: "It grows wild on the mountain" },
-            { w: "took ~ for ...", k: "~을 …으로 들었다", s: "The goblins took that sound for a house coming down." },
+            { w: "took ~ for ... (take)", k: "~을 …으로 들었다", s: "The goblins took that sound for a house coming down." },
             { w: "no thought of ~ing", k: "~할 마음이 조금도 없는", s: "the younger brother had no thought of tricking them" },
             { w: "was aiming at nothing", k: "노린 것이 없었다", s: "He gained a great deal and was aiming at nothing." },
             { w: "the other way about", k: "반대", s: "The elder was the other way about." },
             { w: "timed ~ (time)", k: "때를 쟀다", s: "he timed his bite" },
             { w: "worked out ~ in advance", k: "미리 정해 두었다", s: "and he worked out in advance how he would take a club." },
             { w: "the second time", k: "두 번째에는", s: "And the second time the goblins were not fooled." },
-            { w: "what they went for", k: "무엇을 바라고 갔는가", s: "not their cleverness but what they went for" }
+            { w: "what they went for (go)", k: "무엇을 바라고 갔는가", s: "not their cleverness but what they went for" }
         ]
     },
     afterword: {

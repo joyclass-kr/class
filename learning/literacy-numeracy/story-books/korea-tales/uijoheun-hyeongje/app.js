@@ -482,9 +482,9 @@ const EN = {
         ],
         "03-elder-thinks.webp": [
             { w: "could not sleep at all", k: "도무지 잠이 오지 않았다", s: "the elder brother could not sleep at all" },
-            { w: "turned this way and that", k: "이리 뒤척이고 저리 뒤척였다", s: "He turned this way and that" },
-            { w: "made no difference", k: "마찬가지였다", s: "and it made no difference" },
-            { w: "kept thinking about ~", k: "자꾸 생각났다", s: "He kept thinking about his younger brother." },
+            { w: "turned this way and that (turn)", k: "이리 뒤척이고 저리 뒤척였다", s: "He turned this way and that" },
+            { w: "made no difference (make)", k: "마찬가지였다", s: "and it made no difference" },
+            { w: "kept thinking about ~ (keep)", k: "자꾸 생각났다", s: "He kept thinking about his younger brother." },
             { w: "set up his own household", k: "살림을 새로 차렸다", s: "He only set up his own household this spring." },
             { w: "bedding", k: "이불", s: "He'll need a pot. He'll need bedding." },
             { w: "kicked off (kick off)", k: "걷어찼다", s: "The elder brother kicked off his quilt and sat up." },
@@ -502,7 +502,7 @@ const EN = {
             { w: "the path between the paddies", k: "논둑길", s: "on the path between the paddies" },
             { w: "shifted one foot at a time", k: "한 발 한 발 옮겼다", s: "He shifted one foot at a time" },
             { w: "breathing hard", k: "숨을 몰아쉬며", s: "breathing hard" },
-            { w: "looked all around him", k: "사방을 두리번거렸다", s: "He looked all around him." },
+            { w: "looked all around him (look)", k: "사방을 두리번거렸다", s: "He looked all around him." },
             { w: "he mustn't know", k: "모르게 해야 한다", s: "If he knows, he won't take them. He mustn't know." },
             { w: "slipped ~ onto (slip)", k: "슬쩍 올려놓았다", s: "He slipped the sheaves onto his brother's pile" },
             { w: "put his mind at rest", k: "마음이 놓였다", s: "Nobody had seen him, and that put his mind at rest." },
@@ -511,7 +511,7 @@ const EN = {
         "05-younger-thinks.webp": [
             { w: "that very same night", k: "바로 그 밤", s: "But that very same night the younger brother could not sleep either." },
             { w: "either", k: "~도 또한", s: "the younger brother could not sleep either" },
-            { w: "kept coming into his mind", k: "자꾸 떠올랐다", s: "His brother's children kept coming into his mind." },
+            { w: "kept coming into his mind (keep)", k: "자꾸 떠올랐다", s: "His brother's children kept coming into his mind." },
             { w: "so many mouths", k: "식구가 많은", s: "There are so many mouths in my brother's house." },
             { w: "nephews and nieces", k: "조카들", s: "Five nephews and nieces." },
             { w: "What if ~?", k: "~하면 어쩌지?", s: "What if they run short in the winter?" },
@@ -523,7 +523,7 @@ const EN = {
             { w: "so as not to ~", k: "~하지 않으려고", s: "on tiptoe so as not to wake his wife" }
         ],
         "06-younger-carries.webp": [
-            { w: "Sweat stood on ~", k: "땀이 맺혔다", s: "Sweat stood on his forehead too." },
+            { w: "Sweat stood on ~ (stand)", k: "땀이 맺혔다", s: "Sweat stood on his forehead too." },
             { w: "forehead", k: "이마", s: "Sweat stood on his forehead too." },
             { w: "the very path", k: "바로 그 길", s: "He walked the very path his brother had walked" },
             { w: "the other way", k: "반대로", s: "only the other way" },
@@ -545,7 +545,7 @@ const EN = {
             { w: "rubbed (rub)", k: "비볐다", s: "He rubbed his eyes and rubbed them again." },
             { w: "definitely", k: "분명히", s: "I definitely took a frameful off." },
             { w: "had the least idea", k: "영문을 알았다", s: "Neither of them had the least idea" },
-            { w: "scratched the back of their heads", k: "뒤통수를 긁적였다", s: "both scratched the back of their heads" }
+            { w: "scratched the back of their heads (scratch)", k: "뒤통수를 긁적였다", s: "both scratched the back of their heads" }
         ],
         "08-again.webp": [
             { w: "So did the younger.", k: "동생도 그랬다.", s: "That night the elder brother moved sheaves again. So did the younger." },
@@ -571,7 +571,7 @@ const EN = {
             { w: "sprang into ~ (spring)", k: "핑 돌았다", s: "Tears sprang into the elder brother's eyes." }
         ],
         "10-laugh.webp": [
-            { w: "laughed first", k: "먼저 웃음을 터뜨렸다", s: "The elder brother laughed first." },
+            { w: "laughed first (laugh)", k: "먼저 웃음을 터뜨렸다", s: "The elder brother laughed first." },
             { w: "so hard that ~", k: "~할 만큼 크게", s: "He laughed so hard his shoulders shook." },
             { w: "rascal", k: "이 녀석", s: "You rascal — so it was you!" },
             { w: "And you, brother!", k: "형님이야말로요!", s: "And you, brother!" },
@@ -585,7 +585,7 @@ const EN = {
         "after": [
             { w: "school readers", k: "국어 교과서", s: "This story has been in Korean school readers for a long time." },
             { w: "not a word wasted", k: "군더더기 없는", s: "It is short with not a word wasted" },
-            { w: "one of the best-built ~", k: "손꼽히는 짜임의 ~", s: "one of the best-built old tales we have" },
+            { w: "one of the best-built ~ (build)", k: "손꼽히는 짜임의 ~", s: "one of the best-built old tales we have" },
             { w: "famous for ~", k: "~으로 이름난", s: "brothers famous for how close they were" },
             { w: "how close they were", k: "우애가 얼마나 깊었는지", s: "brothers famous for how close they were" },
             { w: "you can tell ~", k: "~을 알 수 있다", s: "You can tell how much people then valued brothers like these." },

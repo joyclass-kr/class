@@ -607,7 +607,7 @@ const EN = {
             { w: "tickle", k: "간질간질하다", s: "the end of his nose began to tickle" },
             { w: "My word", k: "어허", s: "My word, that is cool." },
             { w: "a finger's length", k: "손가락 하나만큼", s: "His nose grew a finger's length longer!" },
-            { w: "took hold of ~", k: "붙잡았다", s: "Kim Cheomji took hold of his nose with both hands" },
+            { w: "took hold of ~ (take)", k: "붙잡았다", s: "Kim Cheomji took hold of his nose with both hands" },
             { w: "blinked (blink)", k: "눈을 껌뻑였다", s: "took hold of his nose with both hands and blinked" },
             { w: "pinched (pinch)", k: "꼬집었다", s: "He even pinched his cheek hard, thinking it was a dream." }
         ],
@@ -636,7 +636,7 @@ const EN = {
         "05-nose.webp": [
             { w: "hand's width", k: "뼘", s: "One hand's width, two, three." },
             { w: "noticed (notice)", k: "알아챘다", s: "At first nobody noticed it at all." },
-            { w: "went plop", k: "풍덩 빠졌다", s: "Then the nose went plop into his soup bowl." },
+            { w: "went plop (go)", k: "풍덩 빠졌다", s: "Then the nose went plop into his soup bowl." },
             { w: "chopsticks", k: "젓가락", s: "The man beside him dropped his chopsticks." },
             { w: "went over (go over)", k: "뒤집혔다", s: "The feast table went over" },
             { w: "in an uproar", k: "발칵 뒤집힌", s: "the whole house was in an uproar" },
@@ -644,7 +644,7 @@ const EN = {
             { w: "mend", k: "고치다", s: "not one could mend that nose" }
         ],
         "06-cure.webp": [
-            { w: "reached to ~", k: "~까지 뻗었다", s: "The old man's nose still reached to the yard." },
+            { w: "reached to ~ (reach)", k: "~까지 뻗었다", s: "The old man's nose still reached to the yard." },
             { w: "reward", k: "상", s: "A great reward to whoever mends this nose!" },
             { w: "whoever ~", k: "~하는 이에게", s: "A great reward to whoever mends this nose!" },
             { w: "come strolling up", k: "어슬렁어슬렁 나타났다", s: "Only then did Kim Cheomji come strolling up." },
@@ -678,17 +678,17 @@ const EN = {
             { w: "delighted", k: "신이 난", s: "sat down, delighted" },
             { w: "anything at all", k: "무엇이든", s: "With this fan, he felt, he could do anything at all." },
             { w: "gently", k: "살랑살랑", s: "The old man waved the red fan gently." },
-            { w: "went stretching up", k: "쭉쭉 뻗어 올라갔다", s: "And his own nose went stretching up." },
+            { w: "went stretching up (go)", k: "쭉쭉 뻗어 올라갔다", s: "And his own nose went stretching up." },
             { w: "get over ~", k: "신기해 어쩔 줄 모르다", s: "He could not get over how strange it was." },
             { w: "good sport", k: "재미있는 일", s: "Ha ha! This is good sport!" },
             { w: "how to stop", k: "멈출 줄", s: "The old man did not know how to stop." },
-            { w: "held his sides", k: "배를 잡았다", s: "he held his sides and laughed" }
+            { w: "held his sides (hold)", k: "배를 잡았다", s: "he held his sides and laughed" }
         ],
         "10-sky.webp": [
             { w: "passed (pass)", k: "넘었다", s: "The nose passed the roof, passed the trees" },
             { w: "swerved aside (swerve)", k: "옆으로 비켜 날았다", s: "A bird going by swerved aside in fright." },
             { w: "in fright", k: "깜짝 놀라", s: "A bird going by swerved aside in fright." },
-            { w: "went on climbing", k: "계속 올라갔다", s: "Through the cloud the nose went on climbing." },
+            { w: "went on climbing (go)", k: "계속 올라갔다", s: "Through the cloud the nose went on climbing." },
             { w: "what I bought ~ for", k: "이 맛에 샀다", s: "This is what I bought the fan for!" },
             { w: "had no idea", k: "까맣게 몰랐다", s: "The old man had no idea how far his nose had got." },
             { w: "the country of heaven", k: "하늘나라", s: "But above that cloud was the country of heaven." },
@@ -699,7 +699,7 @@ const EN = {
             { w: "in the middle of ~", k: "한창 ~하는 중인", s: "was in the middle of his dinner" },
             { w: "favourite", k: "좋아하는", s: "There were plenty of his favourite greens on the table." },
             { w: "Rattle", k: "덜컹", s: "Rattle, rattle." },
-            { w: "drew his brows together", k: "눈살을 찌푸렸다", s: "The Jade Emperor drew his brows together." },
+            { w: "drew his brows together (draw)", k: "눈살을 찌푸렸다", s: "The Jade Emperor drew his brows together." },
             { w: "slopped over (slop)", k: "찰랑찰랑 넘쳤다", s: "Soup slopped over the edge of the bowl." },
             { w: "rolled off (roll)", k: "데굴데굴 굴러떨어졌다", s: "The chopsticks rolled off and fell." },
             { w: "earthquake", k: "지진", s: "What earthquake is this!" },
@@ -721,11 +721,11 @@ const EN = {
             { w: "squeezing (squeeze)", k: "조여 오기", s: "The squeezing of his nose brought tears to his eyes." },
             { w: "in a panic", k: "허겁지겁", s: "The old man fanned with the blue fan in a panic." },
             { w: "coming off", k: "떨어지려는", s: "Oh, my nose is coming off!" },
-            { w: "was pulled up", k: "딸려 올라갔다", s: "his body was pulled up into the sky" },
+            { w: "was pulled up (pull)", k: "딸려 올라갔다", s: "his body was pulled up into the sky" },
             { w: "came off the ground", k: "땅에서 떨어졌다", s: "His feet came off the ground." },
-            { w: "kicked his legs", k: "발을 버둥거렸다", s: "The old man kicked his legs and went up." },
+            { w: "kicked his legs (kick)", k: "발을 버둥거렸다", s: "The old man kicked his legs and went up." },
             { w: "hanging on ~", k: "달린", s: "There is a man hanging on the pillar." },
-            { w: "lost for words", k: "어이없어했다", s: "The officials of heaven were lost for words." }
+            { w: "lost for words (lose)", k: "어이없어했다", s: "The officials of heaven were lost for words." }
         ],
         "14-fall.webp": [
             { w: "untied (untie)", k: "풀었다", s: "The officials of heaven untied the rope" },

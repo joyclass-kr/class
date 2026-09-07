@@ -455,7 +455,7 @@ const EN = {
             { w: "coming back from ~", k: "다녀오는 길인", s: "That day they were coming back from the market." },
             { w: "inn", k: "주막", s: "Passing an inn, Kim met somebody he knew." },
             { w: "It's been a long time!", k: "오랜만일세!", s: "It's been a long time! Come and have a drink!" },
-            { w: "kept coming", k: "자꾸 늘었다", s: "One cup became two, and the drinks kept coming." },
+            { w: "kept coming (keep)", k: "자꾸 늘었다", s: "One cup became two, and the drinks kept coming." },
             { w: "lay under ~ (lie)", k: "밑에 엎드렸다", s: "Nureongi lay under the inn floor and waited." },
             { w: "Only after ~ did he ...", k: "~하고서야 비로소", s: "Only as the sun was going down did Kim get up." },
             { w: "wove (weave)", k: "비틀거렸다", s: "He wove one way and then the other." },
@@ -498,7 +498,7 @@ const EN = {
             { w: "in gusts", k: "훅훅", s: "Hot air came at them in gusts." }
         ],
         "06-stream.webp": [
-            { w: "turned and started to run", k: "몸을 돌려 달리기 시작했다", s: "He turned and started to run" },
+            { w: "turned and started to run (turn)", k: "몸을 돌려 달리기 시작했다", s: "He turned and started to run" },
             { w: "across the field", k: "들판 저쪽의", s: "to the stream across the field" },
             { w: "had thought of ~", k: "생각해 냈다", s: "He had thought of something." },
             { w: "with everything he had", k: "있는 힘껏", s: "He ran with everything he had" },
@@ -516,11 +516,11 @@ const EN = {
             { w: "wetted (wet)", k: "적셨다", s: "Water off his wet coat wetted the grass a little." },
             { w: "nowhere near enough", k: "어림도 없는", s: "But a little was nowhere near enough." },
             { w: "covered in mud", k: "흙투성이가 된", s: "He was covered in mud." },
-            { w: "turned back towards ~", k: "다시 고개를 돌렸다", s: "And he turned back towards the stream." },
+            { w: "turned back towards ~ (turn)", k: "다시 고개를 돌렸다", s: "And he turned back towards the stream." },
             { w: "Soak, roll", k: "적시고, 굴리고", s: "Soak, roll, soak again, roll again." },
             { w: "all the while", k: "그러는 사이", s: "And all the while the fire came closer." },
             { w: "no time to dry", k: "마를 새가 없는", s: "His coat had no time to dry." },
-            { w: "kept falling", k: "자꾸 넘어졌다", s: "His legs shook and he kept falling." }
+            { w: "kept falling (keep)", k: "자꾸 넘어졌다", s: "His legs shook and he kept falling." }
         ],
         "08-stop.webp": [
             { w: "reached (reach)", k: "닿았다", s: "At last the fire reached the place." },
@@ -540,36 +540,36 @@ const EN = {
             { w: "burnt black", k: "까맣게 탄", s: "The whole field was burnt black." },
             { w: "ash", k: "재", s: "The smell of ash was sharp." },
             { w: "unburnt", k: "타지 않은", s: "The only unburnt place was where he had been lying" },
-            { w: "A chill went down his back", k: "등골이 서늘해졌다", s: "A chill went down his back." },
+            { w: "A chill went down his back (go)", k: "등골이 서늘해졌다", s: "A chill went down his back." },
             { w: "soaking wet", k: "흠뻑 젖은", s: "there beside him lay Nureongi, soaking wet" },
-            { w: "burnt black", k: "새까맣게 탄", s: "his coat burnt black, his eyes shut" },
-            { w: "However ~ shook him", k: "아무리 흔들어도", s: "However Kim shook him, the dog could not wag his tail once." },
+            { w: "his eyes shut", k: "눈을 감은 채", s: "his coat burnt black, his eyes shut" },
+            { w: "However ~ shook him (shake)", k: "아무리 흔들어도", s: "However Kim shook him, the dog could not wag his tail once." },
             { w: "understood what had happened", k: "무슨 일이 있었는지 알았다", s: "And then Kim understood what had happened." }
         ],
         "10-tree.webp": [
-            { w: "took ~ on his back", k: "들쳐 업었다", s: "Kim took the dog on his back and ran for home." },
+            { w: "took ~ on his back (take)", k: "들쳐 업었다", s: "Kim took the dog on his back and ran for home." },
             { w: "blinded him (blind)", k: "앞을 가렸다", s: "Tears blinded him and he fell more than once." },
             { w: "hung limp (hang)", k: "축 늘어졌다", s: "The dog's body hung limp." },
             { w: "Only live.", k: "제발 살아만 다오.", s: "Only live. Just live." },
             { w: "never came back to himself", k: "끝내 살아나지 못했다", s: "But Nureongi never came back to himself again." },
             { w: "buried (bury)", k: "묻었다", s: "Kim buried the dog where the fire had stopped" },
             { w: "planted (plant)", k: "심었다", s: "Kim buried the dog where the fire had stopped and planted a tree beside him." },
-            { w: "took root", k: "뿌리가 내렸다", s: "he pushed his stick into the ground and it took root" },
+            { w: "took root (take)", k: "뿌리가 내렸다", s: "he pushed his stick into the ground and it took root" },
             { w: "threw a wide shade (throw)", k: "큰 그늘을 드리웠다", s: "The tree grew straight and threw a wide shade." },
-            { w: "came to be called ~", k: "~라 불리게 되었다", s: "that is how the district came to be called Osu" },
+            { w: "came to be called ~ (call)", k: "~라 불리게 되었다", s: "that is how the district came to be called Osu" },
             { w: "is written with ~", k: "~ 자로 쓴다", s: "It is written with the character for dog and the character for tree." }
         ],
         "after": [
             { w: "the same story", k: "같은 이야기", s: "The same story is in a book put together in the Goryeo period." },
-            { w: "has been told for ~", k: "~ 동안 전해 왔다", s: "So it has been told for at least eight hundred years." },
+            { w: "has been told for ~ (tell)", k: "~ 동안 전해 왔다", s: "So it has been told for at least eight hundred years." },
             { w: "held that place (hold)", k: "그 자리를 지켰다", s: "What held that place all that time was one monument and one place name." },
             { w: "at first", k: "처음에", s: "And look again: Nureongi barked at first." },
             { w: "would not wake", k: "깨지 않았다", s: "When his master would not wake" },
             { w: "chose ~ (choose)", k: "골랐다", s: "he chose the way that used his body" },
             { w: "get through", k: "통하다", s: "Once he knew words would not get through, he chose the way that used his body." },
-            { w: "went back and forth", k: "오갔다", s: "How many times he went back and forth between stream and grass, nobody knows." },
+            { w: "went back and forth (go)", k: "오갔다", s: "How many times he went back and forth between stream and grass, nobody knows." },
             { w: "the answer of the story", k: "이야기의 답", s: "That the fire lost its strength at the wet grass is the answer of the story." },
-            { w: "carried it on ~", k: "몸에 묻혀 왔다", s: "He did not pour water; he carried it on himself." },
+            { w: "carried it on ~ (carry)", k: "몸에 묻혀 왔다", s: "He did not pour water; he carried it on himself." },
             { w: "there is still a way", k: "방법은 남아 있다", s: "Even when words do not get through, there is still a way to show what you mean." }
         ]
     },

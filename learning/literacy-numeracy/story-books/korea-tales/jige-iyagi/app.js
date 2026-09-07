@@ -500,7 +500,7 @@ const EN = {
             { w: "record", k: "기록", s: "there is no record anywhere of a custom" },
             { w: "custom", k: "풍습", s: "a custom of leaving old parents on a mountain" },
             { w: "is taken as ~", k: "~으로 본다", s: "It is taken as a made-up story" },
-            { w: "made-up", k: "지어낸", s: "a made-up story meant to teach" },
+            { w: "made-up (make)", k: "지어낸", s: "a made-up story meant to teach" },
             { w: "worn on the back (wear)", k: "등에 지는", s: "a Korean wooden carrying frame worn on the back" },
             { w: "loads", k: "짐", s: "not a tool for loads but a mirror" },
             { w: "mirror", k: "거울", s: "a mirror that shows a son what he has done" }
@@ -508,7 +508,7 @@ const EN = {
         "01-old.webp": [
             { w: "worked the fields", k: "밭일을 했다", s: "The son worked the fields" },
             { w: "mended (mend)", k: "기웠다", s: "his wife mended other people's clothes" },
-            { w: "strength was gone", k: "기운이 다했다", s: "The father's strength was gone" },
+            { w: "strength was gone (go)", k: "기운이 다했다", s: "The father's strength was gone" },
             { w: "the warm corner", k: "아랫목", s: "He lay in the warm corner all day" },
             { w: "ceiling", k: "천장", s: "looking at the ceiling" },
             { w: "sourly", k: "볼멘소리로", s: "his wife said sourly" },
@@ -520,13 +520,13 @@ const EN = {
         "02-decide.webp": [
             { w: "About then", k: "그 무렵", s: "About then a saying was going round that district." },
             { w: "was going round", k: "떠돌고 있었다", s: "a saying was going round that district" },
-            { w: "who had started it", k: "누가 시작했는지", s: "Nobody knew who had started it." },
+            { w: "who had started it (start)", k: "누가 시작했는지", s: "Nobody knew who had started it." },
             { w: "take ~ up the mountain", k: "산에 모셔다 두다", s: "they take the old one up the mountain" },
             { w: "in peace", k: "편히", s: "That is where they go in peace, they say." },
             { w: "Everybody does", k: "다들 그런다", s: "We all did it. Everybody does." },
-            { w: "turned over and over", k: "밤새 뒤척였다", s: "For nights the son turned over and over." },
-            { w: "made up his mind", k: "마음을 정했다", s: "And at last he made up his mind." },
-            { w: "shook badly", k: "몹시 떨렸다", s: "His voice shook badly." }
+            { w: "turned over and over (turn)", k: "밤새 뒤척였다", s: "For nights the son turned over and over." },
+            { w: "made up his mind (make)", k: "마음을 정했다", s: "And at last he made up his mind." },
+            { w: "shook badly (shake)", k: "몹시 떨렸다", s: "His voice shook badly." }
         ],
         "03-carry.webp": [
             { w: "Before dawn", k: "새벽에", s: "Before dawn the son put the frame on" },
@@ -544,10 +544,10 @@ const EN = {
             { w: "push ~ back", k: "밀어 넣다", s: "The son tried to push the boy back into the room." },
             { w: "gatepost", k: "대문 기둥", s: "The boy held the gatepost with both arms." },
             { w: "wanted to see ~", k: "궁금했다", s: "He wanted to see grandfather carried on the frame." },
-            { w: "Pulled off", k: "떼어 놓아도", s: "Pulled off, he took hold again." },
+            { w: "Pulled off (pull)", k: "떼어 놓아도", s: "Pulled off, he took hold again." },
             { w: "Coax ~ as they might", k: "아무리 달래도", s: "Coax him as they might, the boy would not give way." },
             { w: "give way", k: "물러서다", s: "the boy would not give way" },
-            { w: "Nobody spoke", k: "아무도 입을 열지 않았다", s: "Nobody spoke." },
+            { w: "Nobody spoke (speak)", k: "아무도 입을 열지 않았다", s: "Nobody spoke." },
             { w: "now and then", k: "이따금", s: "Only a mountain bird called now and then." },
             { w: "creaked (creak)", k: "삐걱거렸다", s: "The frame creaked as they walked." },
             { w: "seemed very loud", k: "유난히 크게 들렸다", s: "The sound seemed very loud." }
@@ -557,10 +557,10 @@ const EN = {
             { w: "so thick that ~", k: "빽빽해서", s: "The trees were so thick you could hardly see the sky." },
             { w: "out of the wind", k: "바람이 덜 드는", s: "The son set the frame down under a rock out of the wind." },
             { w: "lifted ~ down", k: "내렸다", s: "He lifted his father down carefully" },
-            { w: "sat him against ~", k: "기대 앉혔다", s: "and sat him against the rock" },
+            { w: "sat him against ~ (sit)", k: "기대 앉혔다", s: "and sat him against the rock" },
             { w: "did not even look at ~", k: "보지도 않았다", s: "His father did not even look at it." },
             { w: "That will do", k: "됐다", s: "That will do. Go on down." },
-            { w: "with his back turned", k: "등을 돌린 채", s: "His father said it with his back turned." },
+            { w: "with his back turned (turn)", k: "등을 돌린 채", s: "His father said it with his back turned." },
             { w: "quite level", k: "아주 담담한", s: "His voice was quite level." }
         ],
         "06-leave.webp": [
@@ -571,9 +571,9 @@ const EN = {
             { w: "meant to ~ (mean)", k: "~하기로 했다", s: "He meant to leave the frame there." },
             { w: "remind him of ~", k: "생각나게 하다", s: "Seeing it would remind him of the father he had left." },
             { w: "Come along", k: "가자", s: "Come along." },
-            { w: "pulled it away", k: "손을 뺐다", s: "the boy pulled it away and ran back" },
+            { w: "pulled it away (pull)", k: "손을 뺐다", s: "the boy pulled it away and ran back" },
             { w: "shouted after ~", k: "뒤에서 소리쳤다", s: "The son shouted after him" },
-            { w: "ran straight for ~", k: "곧장 달려갔다", s: "He ran straight for the rock." }
+            { w: "ran straight for ~ (run)", k: "곧장 달려갔다", s: "He ran straight for the rock." }
         ],
         "07-pickup.webp": [
             { w: "lifted (lift)", k: "들어 올렸다", s: "The boy went under the rock and lifted the empty frame." },
@@ -583,13 +583,13 @@ const EN = {
             { w: "strap", k: "어깨끈", s: "The shoulder strap kept slipping." },
             { w: "let go of ~", k: "놓다", s: "And still he would not let go of it." },
             { w: "Leave that here", k: "여기 두고 오너라", s: "Leave that here." },
-            { w: "went rough", k: "사나워졌다", s: "The son's voice went rough" },
+            { w: "went rough (go)", k: "사나워졌다", s: "The son's voice went rough" },
             { w: "before he could stop it", k: "저도 모르게", s: "before he could stop it" },
             { w: "It's only ~", k: "그깟 ~이 뭐라고", s: "Why not? It's only a carrying frame." },
-            { w: "held ~ tighter", k: "더 꼭 끌어안았다", s: "And held the frame tighter." }
+            { w: "held ~ tighter (hold)", k: "더 꼭 끌어안았다", s: "And held the frame tighter." }
         ],
         "08-words.webp": [
-            { w: "looked up at ~", k: "올려다보았다", s: "the boy looked up at his father" },
+            { w: "looked up at ~ (look)", k: "올려다보았다", s: "the boy looked up at his father" },
             { w: "very clear", k: "아주 맑은", s: "His eyes were very clear." },
             { w: "no shadow", k: "아무 그늘도 없는", s: "There was no shadow at all on his face." },
             { w: "fingered (finger)", k: "만지작거렸다", s: "He fingered the strap on his shoulder." },
@@ -597,13 +597,13 @@ const EN = {
             { w: "When you get old", k: "늙으시면", s: "When you get old too, Father" },
             { w: "I'll have to ~", k: "~해야 하잖아요", s: "I'll have to carry you up here on this." },
             { w: "what people did", k: "당연한 일", s: "He thought it was simply what people did." },
-            { w: "went dead quiet", k: "쥐 죽은 듯 조용해졌다", s: "The mountain went dead quiet." },
+            { w: "went dead quiet (go)", k: "쥐 죽은 듯 조용해졌다", s: "The mountain went dead quiet." },
             { w: "seemed to stop", k: "멎은 것 같았다", s: "Even the leaves seemed to stop." }
         ],
         "09-frozen.webp": [
             { w: "stood frozen (freeze)", k: "얼어붙었다", s: "The son stood frozen where he was." },
-            { w: "went weak", k: "힘이 풀렸다", s: "His breath stopped and his legs went weak." },
-            { w: "went round and round", k: "자꾸 되풀이되었다", s: "The boy's words went round and round in his ears." },
+            { w: "went weak (go)", k: "힘이 풀렸다", s: "His breath stopped and his legs went weak." },
+            { w: "went round and round (go)", k: "자꾸 되풀이되었다", s: "The boy's words went round and round in his ears." },
             { w: "had meant nothing bad", k: "나쁜 마음으로 한 것이 아니다", s: "The boy had meant nothing bad by it." },
             { w: "that was all", k: "그뿐이었다", s: "He had watched his father and learned it, that was all." },
             { w: "doing what he saw", k: "본 대로 하며", s: "He would grow up doing what he saw today." },
@@ -624,26 +624,26 @@ const EN = {
             { w: "stroked (stroke)", k: "쓸어 주었다", s: "His father said nothing and stroked his son's back." }
         ],
         "11-down.webp": [
-            { w: "carried ~ down", k: "지고 내려왔다", s: "The son carried his father down on the frame." },
+            { w: "carried ~ down (carry)", k: "지고 내려왔다", s: "The son carried his father down on the frame." },
             { w: "pushed from behind", k: "뒤에서 밀었다", s: "The boy pushed from behind." },
             { w: "far lighter", k: "훨씬 가벼운", s: "His feet were far lighter than they had been going up." },
-            { w: "sat close against ~", k: "착 붙었다", s: "The frame sat close against his shoulders." },
+            { w: "sat close against ~ (sit)", k: "착 붙었다", s: "The frame sat close against his shoulders." },
             { w: "Oddly", k: "이상하게", s: "Oddly, it did not feel heavy at all." },
             { w: "trotted along (trot)", k: "총총 따라 걸었다", s: "The boy trotted along behind." },
             { w: "Now and then", k: "가끔", s: "Now and then he ran up to hold his grandfather's hand." },
             { w: "stretched out long", k: "길게 늘어졌다", s: "Three shadows stretched out long, side by side." },
-            { w: "went on and on", k: "오래오래 이어졌다", s: "The way down the mountain went on and on." }
+            { w: "went on and on (go)", k: "오래오래 이어졌다", s: "The way down the mountain went on and on." }
         ],
         "12-village.webp": [
             { w: "better than ever", k: "더 정성껏", s: "the son and his wife cared for the old man better than ever" },
             { w: "boiled gruel", k: "미음을 끓였다", s: "They boiled gruel morning and night" },
             { w: "changed his bedding", k: "자리를 갈아 드렸다", s: "and changed his bedding" },
             { w: "did not speak sourly", k: "볼멘소리를 하지 않았다", s: "His wife did not speak sourly again." },
-            { w: "went round ~", k: "퍼졌다", s: "The story soon went round the village." },
-            { w: "began going up ~", k: "올라가기 시작했다", s: "people who heard it began going up the mountain" },
+            { w: "went round ~ (go)", k: "퍼졌다", s: "The story soon went round the village." },
+            { w: "began going up ~ (begin)", k: "올라가기 시작했다", s: "people who heard it began going up the mountain" },
             { w: "every one of them", k: "저마다", s: "And every one of them brought a parent back down." },
             { w: "never happened again", k: "아주 없어졌다", s: "such a thing never happened in that district again" },
-            { w: "it all began with ~", k: "다 ~에서 시작되었다", s: "And it all began with one sentence from a seven-year-old." }
+            { w: "it all began with ~ (begin)", k: "다 ~에서 시작되었다", s: "And it all began with one sentence from a seven-year-old." }
         ],
         "after": [
             { w: "leaving ~ on a mountain", k: "산에 버리기", s: "Stories of leaving an old parent on a mountain" },
@@ -653,9 +653,9 @@ const EN = {
             { w: "not ~ but ...", k: "~이 아니라 …", s: "It is not a story about leaving but a story about coming back." },
             { w: "the most frightening part", k: "가장 무서운 대목", s: "the most frightening part of this story" },
             { w: "nothing wicked", k: "나쁜 말", s: "The boy said nothing wicked" },
-            { w: "what he had seen", k: "본 대로", s: "he only said what he had seen" },
+            { w: "what he had seen (see)", k: "본 대로", s: "he only said what he had seen" },
             { w: "passes straight to ~", k: "그대로 옮겨 간다", s: "What grown-ups do passes straight to children." },
-            { w: "turned ~ round", k: "되돌려 세웠다", s: "What turned the son round that day" },
+            { w: "turned ~ round (turn)", k: "되돌려 세웠다", s: "What turned the son round that day" },
             { w: "scolding", k: "꾸중", s: "was not a scolding but one sentence from his own child" }
         ]
     },

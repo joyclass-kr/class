@@ -556,7 +556,7 @@ const EN = {
         ],
         "03-pass.webp": [
             { w: "got over ~", k: "넘었다", s: "She threw it a cake quickly and got over the hill." },
-            { w: "held ~ close", k: "끌어안았다", s: "She held the basket close and ran without thinking." },
+            { w: "held ~ close (hold)", k: "끌어안았다", s: "She held the basket close and ran without thinking." },
             { w: "without thinking", k: "정신없이", s: "She held the basket close and ran without thinking." },
             { w: "the very same ~", k: "바로 그 ~", s: "But on the second hill the very same tiger sat waiting." },
             { w: "the one from before", k: "아까 그것", s: "How can that be the one from before?" },
@@ -565,7 +565,7 @@ const EN = {
             { w: "over her shoulder", k: "뒤를 돌아", s: "She kept looking back over her shoulder." }
         ],
         "04-empty.webp": [
-            { w: "turned it over", k: "뒤집어 보였다", s: "She turned it over to show and begged." },
+            { w: "turned it over (turn)", k: "뒤집어 보였다", s: "She turned it over to show and begged." },
             { w: "begged (beg)", k: "사정했다", s: "She turned it over to show and begged." },
             { w: "let me pass", k: "보내 주세요", s: "I have given you all the cakes. Please let me pass." },
             { w: "nothing left", k: "아무것도 없다", s: "There is truly nothing left." },
@@ -578,10 +578,10 @@ const EN = {
             { w: "knocking (knock)", k: "문 두드리는 소리", s: "Then came a knocking at the door outside." },
             { w: "had been waiting for", k: "기다리던", s: "It was the voice they had been waiting for." },
             { w: "jumped up", k: "벌떡 일어섰다", s: "They jumped up, glad to hear it." },
-            { w: "caught ~ sleeve", k: "소매를 붙잡았다", s: "But the brother suddenly caught his sister's sleeve." },
+            { w: "caught ~ sleeve (catch)", k: "소매를 붙잡았다", s: "But the brother suddenly caught his sister's sleeve." },
             { w: "not right", k: "이상한", s: "Something was not right." },
             { w: "deeper and rougher", k: "굵고 걸걸한", s: "It was far deeper and rougher than usual." },
-            { w: "held their breath", k: "숨을 죽였다", s: "the two held their breath" }
+            { w: "held their breath (hold)", k: "숨을 죽였다", s: "the two held their breath" }
         ],
         "06-hand.webp": [
             { w: "hoarse", k: "쉰", s: "My throat is hoarse from the hills." },
@@ -625,7 +625,7 @@ const EN = {
             { w: "the foot of the tree", k: "나무 밑동", s: "It knocked at the foot of the tree with a paw." }
         ],
         "10-climb.webp": [
-            { w: "made something up", k: "둘러댔다", s: "The brother thought fast and made something up." },
+            { w: "made something up (make)", k: "둘러댔다", s: "The brother thought fast and made something up." },
             { w: "sesame oil", k: "참기름", s: "We put sesame oil on and climbed!" },
             { w: "slippery", k: "미끄러운", s: "It is slippery. Not anybody can get up!" },
             { w: "fetch", k: "가져오다", s: "The tiger really did fetch the oil and rub it on its paws." },
@@ -643,7 +643,7 @@ const EN = {
             { w: "prayed (pray)", k: "빌었다", s: "The two put their hands together and prayed to the sky." },
             { w: "If you would ~", k: "~하시려거든", s: "If you would save us, send down a strong rope!" },
             { w: "came sliding down", k: "스르르 내려왔다", s: "a thick new rope came sliding down out of the sky" },
-            { w: "took hold of ~", k: "붙잡았다", s: "They took hold of it and went up into the sky." }
+            { w: "took hold of ~ (take)", k: "붙잡았다", s: "They took hold of it and went up into the sky." }
         ],
         "12-sky.webp": [
             { w: "shall not ~", k: "~하게 둘 수 없다", s: "Those children shall not go alone!" },

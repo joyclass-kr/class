@@ -530,7 +530,7 @@ const EN = {
             { w: "lights (light)", k: "비춘다", s: "Nothing could be stronger than what lights the whole world." },
             { w: "scrambled (scramble)", k: "낑낑대며 기어올랐다", s: "They scrambled panting to the top of a mountain" },
             { w: "panting (pant)", k: "숨을 헐떡이며", s: "They scrambled panting to the top of a mountain and bowed low." },
-            { w: "bowed low", k: "넙죽 절했다", s: "They scrambled panting to the top of a mountain and bowed low." },
+            { w: "bowed low (bow)", k: "넙죽 절했다", s: "They scrambled panting to the top of a mountain and bowed low." },
             { w: "ridges", k: "산등성이", s: "the ridges of the hills went warm" },
             { w: "surely ~ cannot be", k: "그럴 리가 있습니까", s: "Oh, surely that cannot be!" },
             { w: "pricked up their ears", k: "귀를 쫑긋 세웠다", s: "The two pricked up their ears and craned their necks." },
@@ -544,7 +544,7 @@ const EN = {
             { w: "ashamed", k: "겸연쩍은", s: "The sun sounded a little ashamed." },
             { w: "stared (stare)", k: "눈이 휘둥그레졌다", s: "The two mice stared." },
             { w: "was news to ~", k: "처음 듣는 이야기였다", s: "That there was anything stronger than the sun was news to them." },
-            { w: "to be found", k: "찾을 수 있는", s: "Where is the cloud to be found?" }
+            { w: "to be found (find)", k: "찾을 수 있는", s: "Where is the cloud to be found?" }
         ],
         "05-cloud.webp": [
             { w: "higher ~ still", k: "더 높은", s: "They climbed a higher mountain still and met the cloud." },
@@ -561,10 +561,10 @@ const EN = {
             { w: "wide field", k: "너른 들판", s: "They went down to a wide field and called the wind." },
             { w: "hard enough to ~", k: "~할 만큼 세게", s: "It came at once, hard enough to lay the silver grass flat." },
             { w: "silver grass", k: "억새", s: "hard enough to lay the silver grass flat" },
-            { w: "held tight to ~", k: "꽉 붙잡았다", s: "The two held tight to the roots of the grass" },
+            { w: "held tight to ~ (hold)", k: "꽉 붙잡았다", s: "The two held tight to the roots of the grass" },
             { w: "so as not to ~", k: "~하지 않으려고", s: "The two held tight to the roots of the grass so as not to blow away." },
             { w: "with a whoosh", k: "휘잉 하고", s: "The wind laughed with a whoosh" },
-            { w: "ran in waves", k: "물결처럼 일렁였다", s: "the grass ran in waves" },
+            { w: "ran in waves (run)", k: "물결처럼 일렁였다", s: "the grass ran in waves" },
             { w: "beat", k: "이기다", s: "There is one thing I can never beat." },
             { w: "at this rate", k: "이러다가는", s: "My legs will break at this rate." }
         ],
@@ -580,7 +580,7 @@ const EN = {
             { w: "limped (limp)", k: "절뚝였다", s: "The two limped up the road to the pass." }
         ],
         "08-buddha.webp": [
-            { w: "stood tall", k: "우뚝 서 있었다", s: "On the pass a great stone Buddha stood tall." },
+            { w: "stood tall (stand)", k: "우뚝 서 있었다", s: "On the pass a great stone Buddha stood tall." },
             { w: "make your neck ache", k: "목이 아프게 하다", s: "It was high enough to make your neck ache." },
             { w: "straightened their clothes", k: "옷매무새를 고쳤다", s: "The two straightened their clothes and asked very politely." },
             { w: "politely", k: "공손히", s: "The two straightened their clothes and asked very politely." },
@@ -623,9 +623,9 @@ const EN = {
             { w: "a straight heart", k: "곧은 마음씨", s: "He was known for hard work and a straight heart." },
             { w: "doorsill", k: "문턱", s: "He had worn the storehouse doorsill out coming and going." },
             { w: "coming and going", k: "드나들며", s: "He had worn the storehouse doorsill out coming and going." },
-            { w: "went pink", k: "볼이 발그레해졌다", s: "The daughter went pink and bowed her head." },
+            { w: "went pink (go)", k: "볼이 발그레해졌다", s: "The daughter went pink and bowed her head." },
             { w: "might have ~", k: "~할 것을", s: "We might have done this first and saved four mountains." },
-            { w: "scratched his head", k: "머리를 긁적였다", s: "The father mouse scratched his head" },
+            { w: "scratched his head (scratch)", k: "머리를 긁적였다", s: "The father mouse scratched his head" },
             { w: "my mind is easy", k: "마음이 놓인다", s: "Now at last my mind is easy." }
         ],
         "after": [

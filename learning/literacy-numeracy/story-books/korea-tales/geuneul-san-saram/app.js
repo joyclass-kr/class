@@ -516,7 +516,7 @@ const EN = {
             { w: "gathered (gather)", k: "모였다", s: "In summer the whole village gathered there." },
             { w: "beside the wall of ~", k: "~의 담 옆에", s: "the tree stood beside the wall of the richest man" },
             { w: "Whether ~", k: "~인지 아닌지", s: "Whether it belonged to the village or to him, nobody knew." },
-            { w: "took it for his own", k: "제 것이라 여겼다", s: "the rich man always took it for his own" },
+            { w: "took it for his own (take)", k: "제 것이라 여겼다", s: "the rich man always took it for his own" },
             { w: "a hard look", k: "눈을 흘김", s: "he gave them a hard look" }
         ],
         "02-rest.webp": [
@@ -569,11 +569,11 @@ const EN = {
         ],
         "06-move.webp": [
             { w: "stretched long", k: "길게 늘어졌다", s: "The tree's shadow stretched long." },
-            { w: "began to move", k: "자리를 옮기기 시작했다", s: "And the shade began to move." },
+            { w: "began to move (begin)", k: "자리를 옮기기 시작했다", s: "And the shade began to move." },
             { w: "At first nobody noticed", k: "처음에는 아무도 몰랐다", s: "At first nobody noticed." },
             { w: "over the wall", k: "담을 넘어", s: "From the road to the wall, over the wall" },
             { w: "at last", k: "마침내", s: "and at last into the middle of the rich man's yard" },
-            { w: "turned cool", k: "시원해졌다", s: "The whole yard turned cool." },
+            { w: "turned cool (turn)", k: "시원해졌다", s: "The whole yard turned cool." },
             { w: "jar stand", k: "장독대", s: "Shade lay over the jar stand and over the well." },
             { w: "well", k: "우물", s: "over the jar stand and over the well" },
             { w: "knew nothing of it", k: "그것도 몰랐다", s: "The rich man knew nothing of it." },
@@ -603,12 +603,12 @@ const EN = {
             { w: "Day by day", k: "날이 갈수록", s: "Day by day the shade came further in." },
             { w: "The deeper ~ the lower ~", k: "깊어질수록 낮아지는", s: "The deeper into summer, the lower the sun." },
             { w: "the wooden hall", k: "대청마루", s: "One day it reached the wooden hall itself." },
-            { w: "went cool", k: "서늘해졌다", s: "The floor there went cool." },
+            { w: "went cool (go)", k: "서늘해졌다", s: "The floor there went cool." },
             { w: "bowls of noodles", k: "국수 한 그릇", s: "People sat on it to nap and to eat bowls of noodles." },
             { w: "ended up ~ing", k: "~하게 되었다", s: "The rich man ended up watching from a corner" },
             { w: "With nowhere to sit", k: "앉을 자리가 없어", s: "With nowhere to sit, he perched on the end of the side floor." },
             { w: "perched (perch)", k: "겨우 걸터앉았다", s: "he perched on the end of the side floor" },
-            { w: "felt like a guest", k: "손님 같았다", s: "In his own house he felt like a guest." }
+            { w: "felt like a guest (feel)", k: "손님 같았다", s: "In his own house he felt like a guest." }
         ],
         "10-beg.webp": [
             { w: "At last", k: "마침내", s: "At last the rich man came to the traveller." },
@@ -620,7 +620,7 @@ const EN = {
             { w: "let out a long sigh", k: "한숨을 푹 쉬었다", s: "He let out a long sigh." },
             { w: "shoulders were down", k: "어깨가 축 처졌다", s: "His shoulders were down." },
             { w: "not the man who ~", k: "~하던 그 사람이 아닌", s: "He was not the man who had struck the ground with a stick." },
-            { w: "spoke slowly", k: "천천히 입을 열었다", s: "Then he spoke, slowly." }
+            { w: "spoke slowly (speak)", k: "천천히 입을 열었다", s: "Then he spoke, slowly." }
         ],
         "11-return.webp": [
             { w: "Take ~ back", k: "도로 가져가십시오", s: "Take your money back." },
@@ -628,9 +628,9 @@ const EN = {
             { w: "You mean ~?", k: "~라는 말이오?", s: "You mean you'll undo it?" },
             { w: "lit up (light up)", k: "밝아졌다", s: "The rich man's face lit up at once." },
             { w: "shook his head (shake)", k: "고개를 저었다", s: "The traveller shook his head" },
-            { w: "went hard", k: "굳었다", s: "and the face went hard again" },
+            { w: "went hard (go)", k: "굳었다", s: "and the face went hard again" },
             { w: "as I like", k: "제 뜻대로", s: "so I shall do as I like with it" },
-            { w: "looked round at ~", k: "둘러보았다", s: "He looked round at the people gathered in the yard." },
+            { w: "looked round at ~ (look)", k: "둘러보았다", s: "He looked round at the people gathered in the yard." },
             { w: "belongs to everyone", k: "모두의 것이다", s: "this shade belongs to everyone in the village" },
             { w: "That is what ~ is", k: "본디 그런 것이다", s: "That is what shade is." }
         ],
@@ -639,7 +639,7 @@ const EN = {
             { w: "left ~ behind", k: "도로 놓고 갔다", s: "He left the money behind as well." },
             { w: "without looking back", k: "뒤도 돌아보지 않고", s: "He went over the hill without looking back." },
             { w: "a long time", k: "한참 동안", s: "The rich man stood looking up at the tree a long time." },
-            { w: "until the sun went down", k: "해가 질 때까지", s: "He stood there until the sun went down." },
+            { w: "until the sun went down (go)", k: "해가 질 때까지", s: "He stood there until the sun went down." },
             { w: "The next summer", k: "이듬해 여름", s: "The next summer there was a mat spread under the zelkova" },
             { w: "on one side of it", k: "그 한쪽에", s: "the rich man sat on one side of it" },
             { w: "rolled about (roll)", k: "뒹굴었다", s: "Children rolled about on it." },

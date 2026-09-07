@@ -543,7 +543,7 @@ const EN = {
             { w: "fur", k: "털", s: "its fur went" },
             { w: "vanished (vanish)", k: "쑥 사라졌다", s: "The long tail vanished." },
             { w: "cleared (clear)", k: "걷혔다", s: "The steam cleared and the moonlight came down on it." },
-            { w: "turned ~ over", k: "이리저리 뒤집었다", s: "The false Deokgu turned his own two hands over" },
+            { w: "turned ~ over (turn)", k: "이리저리 뒤집었다", s: "The false Deokgu turned his own two hands over" },
             { w: "grinned (grin)", k: "씩 웃었다", s: "Then he grinned and went into the house." }
         ],
         "05-return.webp": [
@@ -555,14 +555,14 @@ const EN = {
             { w: "doorsill", k: "문지방", s: "Deokgu froze on the doorsill." },
             { w: "That is my line!", k: "그건 내가 할 말이다!", s: "That is my line!" },
             { w: "put down his spoon", k: "숟가락을 놓았다", s: "The false one put down his spoon and stood up." },
-            { w: "A chill went down ~", k: "등골이 오싹했다", s: "A chill went down Deokgu's back." }
+            { w: "A chill went down ~ (go)", k: "등골이 오싹했다", s: "A chill went down Deokgu's back." }
         ],
         "06-family.webp": [
             { w: "side by side", k: "나란히", s: "They stood the two side by side" },
             { w: "tell ~ apart", k: "구별하다", s: "could not tell them apart" },
             { w: "mole", k: "점", s: "Every mole, every scar was the same." },
             { w: "scar", k: "흉터", s: "Every mole, every scar was the same." },
-            { w: "took hold of ~", k: "멱살을 잡았다", s: "The two of them took hold of each other and shouted." },
+            { w: "took hold of ~ (take)", k: "멱살을 잡았다", s: "The two of them took hold of each other and shouted." },
             { w: "overlapped (overlap)", k: "겹쳤다", s: "Even their voices overlapped." },
             { w: "did not know what to do", k: "어쩔 줄 몰랐다", s: "His father and sister did not know what to do." },
             { w: "covered her face", k: "얼굴을 감쌌다", s: "His mother covered her face with both hands." },
@@ -572,20 +572,20 @@ const EN = {
             { w: "sort ~ out", k: "가려내다", s: "The family decided to sort it out by questions." },
             { w: "one by one", k: "하나씩", s: "His father asked them one by one." },
             { w: "family matters", k: "집안 사정", s: "Things from childhood, family matters" },
-            { w: "kept stumbling", k: "자꾸 더듬거렸다", s: "The real Deokgu kept stumbling." },
+            { w: "kept stumbling (keep)", k: "자꾸 더듬거렸다", s: "The real Deokgu kept stumbling." },
             { w: "dim", k: "흐릿한", s: "He had lived by halves, so his memory was dim." },
             { w: "smoothly", k: "술술", s: "And the false one answered smoothly." },
             { w: "the memories left in ~", k: "~에 남아 있던 기억", s: "He had eaten the memories left in the clippings." },
             { w: "the very dates", k: "날짜까지", s: "He named the very dates." },
             { w: "had nothing to say", k: "말문이 막혔다", s: "The real Deokgu had nothing to say." },
-            { w: "almost felt like ~", k: "~인 것만 같았다", s: "He almost felt like the false one himself." }
+            { w: "almost felt like ~ (feel)", k: "~인 것만 같았다", s: "He almost felt like the false one himself." }
         ],
         "08-out.webp": [
             { w: "Throw him out!", k: "내쫓아라!", s: "That one is false! Throw him out!" },
             { w: "full of force", k: "힘이 잔뜩 들어간", s: "The false one's voice was full of force." },
             { w: "pointed (point)", k: "손가락질했다", s: "He pointed, and the family took the real one by the arms." },
             { w: "pushed ~ out", k: "밀어냈다", s: "And pushed him out of the gate." },
-            { w: "turned away", k: "돌아섰다", s: "His mother could not watch and turned away." },
+            { w: "turned away (turn)", k: "돌아섰다", s: "His mother could not watch and turned away." },
             { w: "Please believe me", k: "제 말을 믿어 주세요", s: "Please believe me! I am Deokgu!" },
             { w: "the closing gate", k: "닫히는 문", s: "He put a hand through the closing gate." },
             { w: "shut in his face", k: "제 앞에서 닫혔다", s: "Deokgu heard his own gate shut in his face." },
@@ -598,9 +598,9 @@ const EN = {
             { w: "begged (beg)", k: "얻어먹었다", s: "He begged his meals under the eaves." },
             { w: "eaves", k: "처마", s: "He begged his meals under the eaves." },
             { w: "rags", k: "거지꼴", s: "In a few days his clothes were rags." },
-            { w: "ran down inside ~", k: "안으로 흘러들었다", s: "The water ran down inside his collar." },
+            { w: "ran down inside ~ (run)", k: "안으로 흘러들었다", s: "The water ran down inside his collar." },
             { w: "biting his nails", k: "손톱을 물어뜯으며", s: "Deokgu sat under the eaves biting his nails." },
-            { w: "had brought him to this", k: "이 꼴이 되게 했다", s: "Nails were what had brought him to this." },
+            { w: "had brought him to this (bring)", k: "이 꼴이 되게 했다", s: "Nails were what had brought him to this." },
             { w: "Think as he might", k: "아무리 생각해도", s: "Think as he might, nothing came to him." }
         ],
         "10-cat.webp": [
@@ -620,7 +620,7 @@ const EN = {
             { w: "all at once", k: "갑자기", s: "Then all at once its back went up" },
             { w: "stood on end (stand)", k: "곤두섰다", s: "its fur stood on end" },
             { w: "swelled to twice the size", k: "두 배로 부풀었다", s: "Its tail swelled to twice the size." },
-            { w: "went straight for ~", k: "곧장 달려들었다", s: "The cat went straight for the false one." },
+            { w: "went straight for ~ (go)", k: "곧장 달려들었다", s: "The cat went straight for the false one." },
             { w: "backed away", k: "뒷걸음질 쳤다", s: "He backed away and fell off the veranda." },
             { w: "Get off!", k: "저리 가!", s: "Aargh! Get off! Get away from me!" },
             { w: "would not let go", k: "놓아주지 않았다", s: "The cat would not let go." },
@@ -631,15 +631,15 @@ const EN = {
             { w: "shrank (shrink)", k: "쪼그라들었다", s: "His body shrank and fur came out on it." },
             { w: "shot into ~ (shoot)", k: "쏙 사라졌다", s: "A field mouse shot into the hole under the wall." },
             { w: "in the blink of an eye", k: "눈 깜짝할 사이에", s: "It was over in the blink of an eye." },
-            { w: "took ~ in their arms", k: "끌어안았다", s: "the family take the real Deokgu in their arms" },
+            { w: "took ~ in their arms (take)", k: "끌어안았다", s: "the family take the real Deokgu in their arms" },
             { w: "wept (weep)", k: "울었다", s: "His mother held him and wept." },
             { w: "never ~ again", k: "다시는 ~ 않다", s: "I'll never do things by halves again." },
             { w: "always gathered ~ up", k: "꼭 모았다", s: "From that day he always gathered his nail clippings up." },
-            { w: "finished what he began", k: "끝까지 했다", s: "he became somebody who finished what he began" }
+            { w: "finished what he began (begin)", k: "끝까지 했다", s: "he became somebody who finished what he began" }
         ],
         "after": [
             { w: "each claiming to be ~", k: "서로 자기가 ~라고 하며", s: "each claiming to be the true person" },
-            { w: "is called ~", k: "~라고 한다", s: "is called a true-and-false tale" },
+            { w: "is called ~ (call)", k: "~라고 한다", s: "is called a true-and-false tale" },
             { w: "the best known", k: "가장 널리 알려진", s: "this nail story is the best known" },
             { w: "was really kept (keep)", k: "실제로 지켰다", s: "The warning about scattering nail clippings was really kept once." },
             { w: "part of ~", k: "~의 일부", s: "Nails and hair were thought to be still part of the person even after they came off." },

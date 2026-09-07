@@ -15,10 +15,12 @@ import io, os, re, sys
 BOOKS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # _tools/ 위가 책 폴더
 
 # 본문에 흔히 나오는 변화형. 이 꼴로 적혀 있는데 괄호가 없으면 기본형이 빠진 것이다.
+# put 은 뺐다. 기본형이 put 이라 「put a hand to ~ (put)」이 되어 아무것도 안 알려 준다.
+# 「a lost story」처럼 관사 뒤에 오는 것은 움직씨가 아니라 그림씨라 걸지 않는다.
 FORMS = set(('held took drew shook made went ran sat stood swung drove snapped kicked tied '
              'untied scratched chased laughed turned reached called looked opened pulled '
              'carried handed sighed searched buried walked led wrapped tucked creased '
-             'knocked bowed unfolded caught put began started gone eaten seen heard felt '
+             'knocked bowed unfolded caught began started gone eaten seen heard felt '
              'kept lost told brought found built spoke broke chose rose fell hid').split())
 
 
@@ -94,7 +96,16 @@ def check(book):
         for w, k, s in items:
             # 1. 기본형 빠짐
             if '(' not in w:
-                hits = [t for t in re.findall(r"[A-Za-z']+", w) if t.lower() in FORMS]
+                토막 = re.findall(r"[A-Za-z']+", w)
+                hits = []
+                for n, t in enumerate(토막):
+                    if t.lower() not in FORMS:
+                        continue
+                    앞 = 토막[n - 1].lower() if n else ''
+                    뒤 = 토막[n + 1].lower() if n + 1 < len(토막) else ''
+                    if 앞 in ('a', 'an', 'the') and 뒤:   # a lost story — 여기서는 그림씨다
+                        continue
+                    hits.append(t)
                 if hits:
                     bad.append((key, '기본형 없음: %s  (%s)' % (w, ', '.join(hits))))
             # 2. 예문이 본문에 없음

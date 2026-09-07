@@ -472,11 +472,11 @@ const EN = {
             { w: "so much that ~", k: "너무 ~해서", s: "Her hand shook so much she could hardly knock." },
             { w: "hardly", k: "잘 ~ 못하다", s: "she could hardly knock" },
             { w: "rustle", k: "부스럭거리는 소리", s: "Inside there was a rustle of somebody moving." },
-            { w: "went quiet", k: "조용해졌다", s: "Then it went quiet." },
+            { w: "went quiet (go)", k: "조용해졌다", s: "Then it went quiet." },
             { w: "footsteps", k: "발소리", s: "The footsteps went away inside." },
-            { w: "went away inside", k: "안쪽으로 멀어졌다", s: "The footsteps went away inside." },
-            { w: "never opened", k: "끝내 열리지 않았다", s: "The gate never opened." },
-            { w: "turned round", k: "돌아섰다", s: "then quietly turned round" }
+            { w: "went away inside (go)", k: "안쪽으로 멀어졌다", s: "The footsteps went away inside." },
+            { w: "never opened (open)", k: "끝내 열리지 않았다", s: "The gate never opened." },
+            { w: "turned round (turn)", k: "돌아섰다", s: "then quietly turned round" }
         ],
         "05-second.webp": [
             { w: "got a ride (get)", k: "얻어 탔다", s: "She got a ride on a ferry across the river" },
@@ -488,12 +488,12 @@ const EN = {
             { w: "just now", k: "지금은", s: "Mother, the house is busy just now." },
             { w: "another time", k: "다음에", s: "Come another time." },
             { w: "slid shut (slide)", k: "스르르 닫혔다", s: "The gate slid shut." },
-            { w: "took a firmer hold of ~", k: "고쳐 잡았다", s: "then took a firmer hold of her stick" }
+            { w: "took a firmer hold of ~ (take)", k: "고쳐 잡았다", s: "then took a firmer hold of her stick" }
         ],
         "06-hill.webp": [
             { w: "came softly down", k: "살며시 내려앉았다", s: "The mountain shadow came softly down." },
             { w: "wiped her eyes", k: "눈물을 닦았다", s: "She wiped her eyes and looked up the hill. The youngest's house lay over the far side." },
-            { w: "walked on", k: "다시 걸음을 옮겼다", s: "Then she walked on." },
+            { w: "walked on (walk)", k: "다시 걸음을 옮겼다", s: "Then she walked on." },
             { w: "weighed a thousand pounds", k: "천근만근이었다", s: "Her legs weighed a thousand pounds." },
             { w: "Leaning on ~ (lean)", k: "~에 기대어", s: "Leaning on her stick, she started up the hill." },
             { w: "A little further", k: "조금만 더", s: "A little further and I'm there." },
@@ -507,11 +507,11 @@ const EN = {
             { w: "short of breath", k: "숨이 가쁜", s: "She was too short of breath to take another step." },
             { w: "would not obey her", k: "말을 듣지 않았다", s: "Her legs would not obey her." },
             { w: "fell out of ~ (fall)", k: "툭 떨어졌다", s: "The stick fell out of her hand." },
-            { w: "turned her face towards ~", k: "고개를 돌렸다", s: "She turned her face towards the youngest's roof" },
+            { w: "turned her face towards ~ (turn)", k: "고개를 돌렸다", s: "She turned her face towards the youngest's roof" },
             { w: "rising straight up", k: "곧게 피어오르는", s: "Smoke was rising straight up from it" },
             { w: "being cooked", k: "짓고 있는", s: "supper being cooked" },
             { w: "grew smaller (grow)", k: "점점 작아졌다", s: "Her voice grew smaller and smaller." },
-            { w: "went softly over ~", k: "가만가만 쓸고 지나갔다", s: "The spring wind went softly over her white hair." }
+            { w: "went softly over ~ (go)", k: "가만가만 쓸고 지나갔다", s: "The spring wind went softly over her white hair." }
         ],
         "08-search.webp": [
             { w: "About then", k: "그 무렵", s: "About then the youngest was pacing in front of her house." },
@@ -519,7 +519,7 @@ const EN = {
             { w: "unsettled", k: "어지러운", s: "Her mind had been strangely unsettled since morning." },
             { w: "keep thinking of ~", k: "자꾸 생각나다", s: "Why do I keep thinking of Mother today?" },
             { w: "put her hand to ~", k: "일이 손에 잡히다", s: "She could not put her hand to anything." },
-            { w: "kept forgetting", k: "자꾸 잊어버렸다", s: "She kept forgetting the rice on the fire and burned it twice." },
+            { w: "kept forgetting (keep)", k: "자꾸 잊어버렸다", s: "She kept forgetting the rice on the fire and burned it twice." },
             { w: "threw off (throw)", k: "벗어 던졌다", s: "she threw off her apron and ran for the hill" },
             { w: "apron", k: "앞치마", s: "she threw off her apron" },
             { w: "steep", k: "가파른", s: "The path was so steep she slipped several times." },
@@ -530,11 +530,11 @@ const EN = {
             { w: "at last", k: "마침내", s: "Halfway up the hill she found her at last." },
             { w: "lay fallen (lie)", k: "툭 떨어져 있었다", s: "The stick lay fallen beside her." },
             { w: "open your eyes", k: "눈 좀 떠 보세요", s: "Mother, open your eyes!" },
-            { w: "shook her shoulder", k: "어깨를 흔들었다", s: "She shook her shoulder" },
+            { w: "shook her shoulder (shake)", k: "어깨를 흔들었다", s: "She shook her shoulder" },
             { w: "very slowly", k: "아주 천천히", s: "very slowly her mother opened her eyes" },
             { w: "So it's ~", k: "우리 ~구나", s: "...So it's my youngest." },
             { w: "Hold on", k: "조금만 참으세요", s: "Hold on, Mother. Just hold on." },
-            { w: "took ~ on her back", k: "등에 업었다", s: "She took her mother on her back" },
+            { w: "took ~ on her back (take)", k: "등에 업었다", s: "She took her mother on her back" },
             { w: "in one run", k: "한달음에", s: "went down the hill in one run" },
             { w: "so light that ~", k: "너무 가벼워서", s: "Her mother was so light on her back that she wept." }
         ],
@@ -546,7 +546,7 @@ const EN = {
             { w: "for the last time", k: "마지막으로", s: "the old woman closed her eyes for the last time" },
             { w: "buried (bury)", k: "묻어 드렸다", s: "the youngest buried her on a sunny bank" },
             { w: "grave", k: "무덤", s: "in front of her mother's grave" },
-            { w: "nobody had seen before", k: "처음 보는", s: "a flower nobody had seen before came up" },
+            { w: "nobody had seen before (see)", k: "처음 보는", s: "a flower nobody had seen before came up" },
             { w: "hung its head (hang)", k: "고개를 숙였다", s: "so that it hung its head" },
             { w: "covered all over in ~", k: "온몸에 ~이 난", s: "it was covered all over in white down" },
             { w: "shook it (shake)", k: "흔들었다", s: "The spring wind shook it." }
@@ -560,7 +560,7 @@ const EN = {
             { w: "at the same time", k: "함께", s: "This story explains the name and the shape at the same time." },
             { w: "does not scold ~ (scold)", k: "나무라지 않는다", s: "The story does not scold the two daughters." },
             { w: "simply sets down ~", k: "조용히 적어 둔다", s: "It simply sets down whose gate she reached and turned back from." },
-            { w: "turned back from", k: "돌아섰다", s: "whose gate she reached and turned back from" },
+            { w: "turned back from (turn)", k: "돌아섰다", s: "whose gate she reached and turned back from" },
             { w: "comes with it", k: "따라온다", s: "So the story comes with it whenever you see the flower." },
             { w: "does not grow by itself", k: "저절로 생기지 않는다", s: "A heart that remembers what it was given does not grow by itself." }
         ]

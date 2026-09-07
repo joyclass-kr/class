@@ -434,7 +434,7 @@ const EN = {
             { w: "shivering (shiver)", k: "떨고 있는", s: "picked it up shivering at the roadside" },
             { w: "were never apart", k: "떨어진 적이 없었다", s: "the two of them were never apart" },
             { w: "at ~'s heels", k: "~ 뒤를 졸졸", s: "Baduk followed at the pedlar's heels wherever he went." },
-            { w: "wherever he went", k: "가는 곳마다", s: "followed at the pedlar's heels wherever he went" }
+            { w: "wherever he went (go)", k: "가는 곳마다", s: "followed at the pedlar's heels wherever he went" }
         ],
         "02-market.webp": [
             { w: "went very well (go)", k: "아주 잘됐다", s: "That day the market went very well." },
@@ -446,8 +446,8 @@ const EN = {
             { w: "waist", k: "허리", s: "tied his fat money pouch tightly at his waist" },
             { w: "a year's earnings", k: "한 해 번 돈", s: "A whole year's earnings were in it." },
             { w: "get through the winter", k: "겨울을 나다", s: "he could get through the winter without worrying" },
-            { w: "went in front", k: "앞장섰다", s: "Baduk went in front with his tail going." },
-            { w: "had never felt so light", k: "그렇게 가벼울 수가 없었다", s: "The pedlar's feet had never felt so light." }
+            { w: "went in front (go)", k: "앞장섰다", s: "Baduk went in front with his tail going." },
+            { w: "had never felt so light (feel)", k: "그렇게 가벼울 수가 없었다", s: "The pedlar's feet had never felt so light." }
         ],
         "03-inn.webp": [
             { w: "at dusk", k: "해가 저물어", s: "At dusk the pedlar stopped at a roadside inn." },
@@ -456,7 +456,7 @@ const EN = {
             { w: "soup and rice", k: "국밥", s: "Two bowls of soup and rice here, please." },
             { w: "set ~ down (set)", k: "놓아 주었다", s: "He set one bowl down in front of Baduk." },
             { w: "slurping", k: "후룩후룩 소리 내며 먹는", s: "Baduk ate it up with a great slurping sound." },
-            { w: "kept glancing over", k: "자꾸 흘끔거렸다", s: "the man at the next place kept glancing over" },
+            { w: "kept glancing over (keep)", k: "자꾸 흘끔거렸다", s: "the man at the next place kept glancing over" },
             { w: "to be exact", k: "정확히는", s: "At the pedlar's waist — at the money pouch, to be exact." },
             { w: "something in his eyes", k: "예사롭지 않은 눈빛", s: "There was something in his eyes." },
             { w: "raised his head", k: "고개를 들었다", s: "Baduk stopped eating and quietly raised his head." },
@@ -468,7 +468,7 @@ const EN = {
             { w: "fog", k: "안개", s: "Thick fog lay over the mountain pass." },
             { w: "lay over ~ (lie)", k: "자욱하게 깔렸다", s: "Thick fog lay over the mountain pass." },
             { w: "hardly see a step ahead", k: "한 치 앞도 잘 안 보이다", s: "He could hardly see a step ahead." },
-            { w: "kept looking behind him", k: "자꾸 뒤를 돌아보았다", s: "But Baduk kept looking behind him and slowing down." },
+            { w: "kept looking behind him (keep)", k: "자꾸 뒤를 돌아보았다", s: "But Baduk kept looking behind him and slowing down." },
             { w: "slowing down", k: "걸음을 늦추는", s: "kept looking behind him and slowing down" },
             { w: "his nose worked", k: "코를 킁킁거렸다", s: "His ears stood up and his nose worked." },
             { w: "was bothering him (bother)", k: "마음에 걸렸다", s: "Something was bothering him." },
@@ -483,28 +483,28 @@ const EN = {
             { w: "club", k: "몽둥이", s: "There was a club in his hand." },
             { w: "shoved (shove)", k: "밀쳤다", s: "The man shoved the pedlar hard" },
             { w: "snatched (snatch)", k: "낚아챘다", s: "and snatched the money pouch" },
-            { w: "went sprawling", k: "나동그라졌다", s: "The pedlar went sprawling." },
+            { w: "went sprawling (go)", k: "나동그라졌다", s: "The pedlar went sprawling." },
             { w: "in a blink", k: "눈 깜짝할 사이에", s: "It was over in a blink" },
             { w: "spring at ~", k: "~에게 달려들다", s: "Baduk had no time to spring at him" },
             { w: "shot away (shoot)", k: "쏜살같이 사라졌다", s: "The man threw the club down and shot away into the trees." }
         ],
         "06-lost.webp": [
             { w: "jumped up", k: "벌떡 일어났다", s: "The pedlar jumped up and ran into the wood." },
-            { w: "lost all sense of direction", k: "방향을 잃었다", s: "he soon lost all sense of direction" },
+            { w: "lost all sense of direction (lose)", k: "방향을 잃었다", s: "he soon lost all sense of direction" },
             { w: "wandered (wander)", k: "헤맸다", s: "He wandered this way and that" },
             { w: "so much as ~", k: "~조차", s: "never saw so much as the man's shadow" },
             { w: "scratches", k: "긁힌 자국", s: "All he got was a face full of scratches" },
             { w: "How am I to ~?", k: "어떻게 ~한담?", s: "How am I to go home and tell them?" },
             { w: "dropped down (drop)", k: "털썩 주저앉았다", s: "The pedlar dropped down on the road where he was." },
-            { w: "everything looked black", k: "눈앞이 캄캄했다", s: "Everything looked black." },
+            { w: "everything looked black (look)", k: "눈앞이 캄캄했다", s: "Everything looked black." },
             { w: "sniffed (sniff)", k: "킁킁거렸다", s: "Baduk put his nose to the ground and sniffed." }
         ],
         "07-scent.webp": [
-            { w: "went up all at once", k: "갑자기 쫑긋 섰다", s: "Then Baduk's ears went up all at once." },
-            { w: "seemed to have found ~", k: "찾아낸 모양이었다", s: "He seemed to have found something." },
+            { w: "went up all at once (go)", k: "갑자기 쫑긋 섰다", s: "Then Baduk's ears went up all at once." },
+            { w: "seemed to have found ~ (find)", k: "찾아낸 모양이었다", s: "He seemed to have found something." },
             { w: "barked (bark)", k: "짖었다", s: "He barked once, loudly, towards one direction." },
             { w: "direction", k: "방향", s: "He barked once, loudly, towards one direction." },
-            { w: "looked back at ~", k: "~을 돌아보았다", s: "Then he looked back at the pedlar." },
+            { w: "looked back at ~ (look)", k: "~을 돌아보았다", s: "Then he looked back at the pedlar." },
             { w: "this way", k: "여기예요", s: "It was just as if he were saying, this way." },
             { w: "instead of ~ing", k: "~하는 대신에", s: "Instead of answering, Baduk leapt into the fog." },
             { w: "leapt (leap)", k: "뛰어들었다", s: "Baduk leapt into the fog" },
@@ -555,10 +555,10 @@ const EN = {
             { w: "honouring (honour)", k: "기리는", s: "from honouring a dog" },
             { w: "to this day", k: "지금도", s: "A monument to the dog still stands there to this day." },
             { w: "expecting nothing", k: "아무것도 바라지 않고", s: "The pedlar took the puppy in expecting nothing." },
-            { w: "how far ~ went", k: "~이 어디까지 갔는지", s: "it is a story about how far one day's kindness went" },
+            { w: "how far ~ went (go)", k: "~이 어디까지 갔는지", s: "it is a story about how far one day's kindness went" },
             { w: "that cannot speak", k: "말을 못 하는", s: "So many stories of an animal that cannot speak saving a person" },
             { w: "watched ~ closely", k: "곁을 오래 지켜보았다", s: "means people watched those animals closely for a long time" },
-            { w: "had walked past ~", k: "그냥 지나쳤다면", s: "If the pedlar had walked past him then" },
+            { w: "had walked past ~ (walk)", k: "그냥 지나쳤다면", s: "If the pedlar had walked past him then" },
             { w: "even when ~", k: "~해도", s: "A kindness stays somewhere even when you have forgotten it." }
         ]
     },

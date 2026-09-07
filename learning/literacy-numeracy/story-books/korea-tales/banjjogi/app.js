@@ -559,7 +559,7 @@ const EN = {
             { w: "monk", k: "스님", s: "a passing monk gave them three carp" },
             { w: "carp", k: "잉어", s: "a passing monk gave them three carp" },
             { w: "do not leave ~", k: "남기지 마라", s: "Eat these, and do not leave one of them." },
-            { w: "bowed low", k: "허리를 깊이 숙였다", s: "The couple bowed low." }
+            { w: "bowed low (bow)", k: "허리를 깊이 숙였다", s: "The couple bowed low." }
         ],
         "02-half.webp": [
             { w: "a drop", k: "한 방울", s: "She ate two, and did not leave a drop of the broth." },
@@ -567,7 +567,7 @@ const EN = {
             { w: "halfway through ~", k: "반쯤 먹었을 때", s: "But she was halfway through the third when it happened." },
             { w: "at this hour", k: "이 시간에", s: "Goodness, who is that at this hour?" },
             { w: "pushed ~ away", k: "물렸다", s: "She pushed the table away and got up." },
-            { w: "gone cold", k: "싸늘히 식은", s: "when she came back the half fish had gone cold" },
+            { w: "gone cold (go)", k: "싸늘히 식은", s: "when she came back the half fish had gone cold" },
             { w: "What of it", k: "그쯤이야", s: "Well, half a fish. What of it?" },
             { w: "sound", k: "멀쩡한", s: "The two eldest were sound, but the youngest was a half." }
         ],
@@ -580,7 +580,7 @@ const EN = {
             { w: "hopping (hop)", k: "껑충껑충 뛰는", s: "He went hopping on one leg" },
             { w: "carrying frame", k: "지게", s: "The carrying frame the two of them groaned at" },
             { w: "groaned at (groan)", k: "낑낑댔다", s: "The carrying frame the two of them groaned at, he lifted with one arm." },
-            { w: "went round", k: "휘둥그레졌다", s: "The villagers' eyes went round." }
+            { w: "went round (go)", k: "휘둥그레졌다", s: "The villagers' eyes went round." }
         ],
         "04-jealous.webp": [
             { w: "did not like it at all", k: "영 못마땅했다", s: "But the two older brothers did not like it at all." },
@@ -596,11 +596,11 @@ const EN = {
             { w: "cut wood", k: "나무하다", s: "Come and cut wood. Somewhere deep today." },
             { w: "came along", k: "따라나섰다", s: "Banjjogi knew nothing of it and came along, pleased." },
             { w: "The deeper ~, the thicker ~", k: "깊어질수록 빽빽해지는", s: "The deeper the path, the thicker the trees." },
-            { w: "kept looking behind", k: "자꾸 뒤를 돌아보았다", s: "The brothers kept looking behind them." },
+            { w: "kept looking behind (keep)", k: "자꾸 뒤를 돌아보았다", s: "The brothers kept looking behind them." },
             { w: "went low (go)", k: "기울었다", s: "As the sun went low the brothers tied Banjjogi to a pine tree." },
             { w: "pine tree", k: "소나무", s: "the brothers tied Banjjogi to a pine tree" },
             { w: "round and round", k: "몇 겹이나", s: "With rope, round and round, very tight indeed." },
-            { w: "kept still", k: "가만히 있었다", s: "Banjjogi trusted them and kept still." },
+            { w: "kept still (keep)", k: "가만히 있었다", s: "Banjjogi trusted them and kept still." },
             { w: "without once looking back", k: "뒤도 안 돌아보고", s: "They went down the mountain without once looking back." }
         ],
         "06-uproot.webp": [
@@ -611,7 +611,7 @@ const EN = {
             { w: "heaved (heave)", k: "들썩였다", s: "The yard heaved." },
             { w: "roots and all", k: "뿌리째", s: "with the pine tree on his back, roots and all" },
             { w: "come undone", k: "풀리다", s: "Brothers, the rope would not come undone." },
-            { w: "opened and shut their mouths", k: "입만 벙긋거렸다", s: "The two of them opened and shut their mouths and said nothing." }
+            { w: "opened and shut their mouths (open)", k: "입만 벙긋거렸다", s: "The two of them opened and shut their mouths and said nothing." }
         ],
         "07-tiger.webp": [
             { w: "About then", k: "그 무렵", s: "About then the village had a great worry." },
@@ -651,7 +651,7 @@ const EN = {
             { w: "just anybody", k: "아무나", s: "I cannot take just anybody in" },
             { w: "contests", k: "내기", s: "Win three contests and I shall think about it." },
             { w: "without another word", k: "두말 말고", s: "Lose, and you go home without another word." },
-            { w: "went very still", k: "조용해졌다", s: "The crowd went very still." },
+            { w: "went very still (go)", k: "조용해졌다", s: "The crowd went very still." },
             { w: "murmur", k: "웅성거리다", s: "The people watching began to murmur." },
             { w: "going back on ~", k: "딴소리하는", s: "That is going back on it, surely." },
             { w: "with hard eyes", k: "못마땅한 눈으로", s: "They all looked at Kim with hard eyes." },
@@ -687,7 +687,7 @@ const EN = {
             { w: "seats of honour", k: "윗자리", s: "Banjjogi put his two brothers in the seats of honour." },
             { w: "poured (pour)", k: "따랐다", s: "Banjjogi poured wine for his brothers with his own hand." },
             { w: "If you had not ~", k: "~하지 않으셨으면", s: "If you had not taken me up the hill, I could not have pulled that pine." },
-            { w: "went red", k: "얼굴이 붉어졌다", s: "The brothers went red and could not say anything." },
+            { w: "went red (go)", k: "얼굴이 붉어졌다", s: "The brothers went red and could not say anything." },
             { w: "a tap", k: "툭 치기", s: "The eldest gave Banjjogi's shoulder a tap." },
             { w: "got on well", k: "사이가 좋아졌다", s: "From that day the three brothers got on well." }
         ],

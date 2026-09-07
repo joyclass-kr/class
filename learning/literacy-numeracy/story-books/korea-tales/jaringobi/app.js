@@ -586,7 +586,7 @@ const EN = {
             { w: "rival", k: "겨루는 상대", s: "The miser here has a rival." }
         ],
         "01-house.webp": [
-            { w: "everybody had heard of", k: "소문난", s: "there lived a rich man everybody had heard of" },
+            { w: "everybody had heard of (hear)", k: "소문난", s: "there lived a rich man everybody had heard of" },
             { w: "storehouses", k: "곳간", s: "His fields were wide and he had three storehouses." },
             { w: "sagged (sag)", k: "내려앉았다", s: "The roof sagged and the wall leaned to one side." },
             { w: "leaned (lean)", k: "기울었다", s: "the wall leaned to one side" },
@@ -606,8 +606,8 @@ const EN = {
             { w: "side dish", k: "반찬", s: "That was the side dish in that house." }
         ],
         "03-twice.webp": [
-            { w: "looked twice", k: "두 번 쳐다보았다", s: "But that day the youngest looked twice." },
-            { w: "kept going up", k: "자꾸 올라갔다", s: "his eyes kept going up" },
+            { w: "looked twice (look)", k: "두 번 쳐다보았다", s: "But that day the youngest looked twice." },
+            { w: "kept going up (keep)", k: "자꾸 올라갔다", s: "his eyes kept going up" },
             { w: "stopped dead", k: "딱 멈췄다", s: "The Jaringobi's spoon stopped dead." },
             { w: "flew open (fly)", k: "번쩍 뜨였다", s: "His eyes flew open." },
             { w: "terribly", k: "무섭게", s: "The Jaringobi got up and looked down at the youngest, terribly." },
@@ -632,7 +632,7 @@ const EN = {
             { w: "happened to be ~", k: "마침 ~였다", s: "The lid of the bean paste jar happened to be open." },
             { w: "wiped at ~ (wipe)", k: "쓱 훔쳤다", s: "The fly wiped at the paste with its front legs" },
             { w: "jumped to his feet", k: "벌떡 일어섰다", s: "The Jaringobi's eyes went wide and he jumped to his feet." },
-            { w: "took no notice", k: "아랑곳하지 않았다", s: "The fly took no notice and went on flying." },
+            { w: "took no notice (take)", k: "아랑곳하지 않았다", s: "The fly took no notice and went on flying." },
             { w: "lane", k: "골목길", s: "over the wall, out into the lane" }
         ],
         "06-chase.webp": [
@@ -642,12 +642,12 @@ const EN = {
             { w: "up in his throat", k: "턱까지 찬", s: "His breath was up in his throat." },
             { w: "the state of him", k: "그 꼴", s: "Somebody on the road saw the state of him and asked." },
             { w: "pointing up", k: "하늘을 가리키며", s: "The Jaringobi shouted it, pointing up at the sky." },
-            { w: "held their sides", k: "배를 잡고 웃었다", s: "The people watching held their sides." },
+            { w: "held their sides (hold)", k: "배를 잡고 웃었다", s: "The people watching held their sides." },
             { w: "All that way", k: "거기까지", s: "All that way for one fly!" }
         ],
         "07-hanyang.webp": [
             { w: "Three whole days", k: "사흘을 꼬박", s: "🏙️ Three whole days walking brought him to the market in Hanyang." },
-            { w: "was gone", k: "사라졌다", s: "the fly went over the wall of some tiled house and was gone" },
+            { w: "was gone (go)", k: "사라졌다", s: "the fly went over the wall of some tiled house and was gone" },
             { w: "a stranger's wall", k: "남의 집 담벼락", s: "The Jaringobi sat down at a stranger's wall." },
             { w: "finished", k: "다 해진", s: "His straw shoes were finished and his soles were swollen." },
             { w: "swollen (swell)", k: "부은", s: "his soles were swollen" },
@@ -706,7 +706,7 @@ const EN = {
             { w: "in the middle of ~", k: "한가운데", s: "The Jaringobi stood in the middle of the yard and shouted." },
             { w: "to every house", k: "한 집에 하나씩", s: "One sack to every house! Take it!" },
             { w: "froze (freeze)", k: "얼어붙었다", s: "The villagers froze where they stood." },
-            { w: "heard wrong", k: "잘못 들었다", s: "They all thought they had heard wrong." }
+            { w: "heard wrong (hear)", k: "잘못 들었다", s: "They all thought they had heard wrong." }
         ],
         "13-share.webp": [
             { w: "got a question out", k: "더듬더듬 물었다", s: "Then one of them got a question out." },

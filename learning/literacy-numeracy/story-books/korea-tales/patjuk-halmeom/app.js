@@ -674,16 +674,16 @@ const EN = {
             { w: "hoe", k: "호미", s: "she was weeding the beans with her hoe" },
             { w: "fill out", k: "여물다", s: "The beans must fill out well this year." },
             { w: "pods", k: "꼬투리", s: "The pods were swelling out quite plump." },
-            { w: "ran a hand over ~", k: "손으로 쓸어 보았다", s: "The old woman ran a hand over them." }
+            { w: "ran a hand over ~ (run)", k: "손으로 쓸어 보았다", s: "The old woman ran a hand over them." }
         ],
         "02-tiger.webp": [
             { w: "came at her back", k: "등 뒤에서 불었다", s: "Then a cold wind came at her back." },
             { w: "stopped dead", k: "뚝 그쳤다", s: "The sound of leaves and of birds stopped dead." },
-            { w: "stood planted", k: "떡 버티고 섰다", s: "A great tiger stood planted there." },
+            { w: "stood planted (stand)", k: "떡 버티고 섰다", s: "A great tiger stood planted there." },
             { w: "came hot at ~", k: "훅 끼쳤다", s: "Its breath came hot at her." },
             { w: "nothing for days", k: "며칠째 아무것도", s: "I have eaten nothing for days" },
             { w: "see nothing else", k: "눈에 뵈는 게 없다", s: "I can see nothing else" },
-            { w: "shook under her", k: "후들후들 떨렸다", s: "Her legs shook under her." },
+            { w: "shook under her (shake)", k: "후들후들 떨렸다", s: "Her legs shook under her." },
             { w: "something, anything", k: "무슨 말이라도", s: "she must say something, anything" }
         ],
         "03-deal.webp": [
@@ -703,7 +703,7 @@ const EN = {
             { w: "swung ~ round (swing)", k: "휙 돌렸다", s: "The tiger swung its tail round and turned away." },
             { w: "footfalls", k: "발자국 소리", s: "Its footfalls rang as it went." },
             { w: "at its own pace", k: "어슬렁어슬렁", s: "The tiger went off up the mountain at its own pace." },
-            { w: "quite gone", k: "완전히 사라진", s: "She could not move till it was quite gone." },
+            { w: "quite gone (go)", k: "완전히 사라진", s: "She could not move till it was quite gone." },
             { w: "in the blink of an eye", k: "눈 깜짝할 사이에", s: "Autumn felt as if it would come in the blink of an eye." }
         ],
         "05-cry.webp": [
@@ -711,10 +711,10 @@ const EN = {
             { w: "gathered (gather)", k: "거두었다", s: "The old woman gathered them and made porridge in a great pot." },
             { w: "lit the fire (light)", k: "장작을 지폈다", s: "She lit the fire, boiled the beans, rolled the rice balls." },
             { w: "rice balls", k: "새알심", s: "boiled the beans, rolled the rice balls" },
-            { w: "kept sinking", k: "자꾸 내려앉았다", s: "Her hands were busy and her heart kept sinking." },
+            { w: "kept sinking (keep)", k: "자꾸 내려앉았다", s: "Her hands were busy and her heart kept sinking." },
             { w: "stirred (stir)", k: "저었다", s: "The old woman cried and cried as she stirred with the ladle." },
             { w: "ladle", k: "국자", s: "as she stirred with the ladle" },
-            { w: "went out past ~", k: "밖까지 퍼졌다", s: "The good smell went out past the yard." }
+            { w: "went out past ~ (go)", k: "밖까지 퍼졌다", s: "The good smell went out past the yard." }
         ],
         "06-chestnut.webp": [
             { w: "came rolling", k: "데구루루 굴러왔다", s: "Then a chestnut came rolling into the kitchen." },
@@ -769,7 +769,7 @@ const EN = {
         ],
         "11-arrive.webp": [
             { w: "hid (hide)", k: "숨었다", s: "The old woman hid in a corner of the kitchen" },
-            { w: "held her breath", k: "숨을 죽였다", s: "hid in a corner of the kitchen and held her breath" },
+            { w: "held her breath (hold)", k: "숨을 죽였다", s: "hid in a corner of the kitchen and held her breath" },
             { w: "pushed ~ open", k: "밀고 들어왔다", s: "The tiger pushed the gate open and came in." },
             { w: "rang across ~ (ring)", k: "쿵쿵 울렸다", s: "Heavy footfalls rang across the yard." },
             { w: "too dark to ~", k: "~할 수 없을 만큼 캄캄한", s: "it was too dark to see your own hand" },
@@ -787,7 +787,7 @@ const EN = {
             { w: "square in the eye", k: "눈을 딱", s: "The chestnut that had been hiding hit the tiger square in the eye." },
             { w: "embers", k: "잿불", s: "It was a chestnut heated hot in the embers." },
             { w: "clapped ~ over (clap)", k: "감쌌다", s: "The tiger clapped both paws over its eyes." },
-            { w: "went yellow", k: "노래졌다", s: "Everything in front of it went yellow." }
+            { w: "went yellow (go)", k: "노래졌다", s: "Everything in front of it went yellow." }
         ],
         "13-bite.webp": [
             { w: "burning", k: "화끈거리는", s: "The tiger ran for the water jar to cool its burning eyes." },
@@ -803,12 +803,12 @@ const EN = {
             { w: "came down (come)", k: "내려앉았다", s: "Where it came down from that leap was on the dog dirt." },
             { w: "lay flat (lie)", k: "납작 퍼져 있었다", s: "The middle of the floor, where the dirt lay flat." },
             { w: "Skiiid", k: "찌이익", s: "Skiiid —" },
-            { w: "went out in front and behind", k: "앞뒤로 미끄러졌다", s: "The tiger's feet went out in front and behind." },
+            { w: "went out in front and behind (go)", k: "앞뒤로 미끄러졌다", s: "The tiger's feet went out in front and behind." },
             { w: "catch its balance", k: "균형을 잡다", s: "There was no time at all to catch its balance." },
-            { w: "went over on its back", k: "벌러덩 나자빠졌다", s: "The tiger went straight over on its back." },
+            { w: "went over on its back (go)", k: "벌러덩 나자빠졌다", s: "The tiger went straight over on its back." },
             { w: "covered in ~", k: "범벅이 된", s: "From its back to its tail it was covered in dog dirt." },
             { w: "scrambled up", k: "허둥지둥 일어났다", s: "The tiger scrambled up and made for the door." },
-            { w: "made for ~", k: "~쪽으로 갔다", s: "The tiger scrambled up and made for the door." }
+            { w: "made for ~ (make)", k: "~쪽으로 갔다", s: "The tiger scrambled up and made for the door." }
         ],
         "15-roll.webp": [
             { w: "came down on ~", k: "위로 떨어졌다", s: "🧺 The mortar on the doorframe came down on the tiger's head." },

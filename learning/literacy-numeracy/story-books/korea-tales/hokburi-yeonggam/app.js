@@ -535,7 +535,7 @@ const EN = {
             { w: "hummed (hum)", k: "흥얼거렸다", s: "He hummed as he went, cutting the dry branches away." },
             { w: "watch the time", k: "시간을 살피다", s: "It was such fun he did not watch the time." },
             { w: "load", k: "한 짐", s: "One more load. Just one more load." },
-            { w: "went down on him", k: "그새 넘어갔다", s: "And then the sun went down on him." },
+            { w: "went down on him (go)", k: "그새 넘어갔다", s: "And then the sun went down on him." },
             { w: "in the blink of an eye", k: "눈 깜짝할 사이에", s: "The mountain went black in the blink of an eye." },
             { w: "no telling ~ from ~", k: "~인지 ~인지 모르는", s: "There was no telling road from cliff edge." },
             { w: "kept catching (keep)", k: "자꾸 걸렸다", s: "His clothes kept catching on the branches." },
@@ -550,7 +550,7 @@ const EN = {
             { w: "plainly", k: "분명히", s: "The place had plainly stood empty a long time." },
             { w: "put up here", k: "신세를 지다", s: "Tonight I shall put up here." },
             { w: "door crack", k: "문틈", s: "Every time the wind came through the door crack his back went cold." },
-            { w: "his back went cold", k: "등골이 서늘해졌다", s: "his back went cold" },
+            { w: "his back went cold (go)", k: "등골이 서늘해졌다", s: "his back went cold" },
             { w: "owl", k: "부엉이", s: "Somewhere an owl was calling too." },
             { w: "Nothing beats ~", k: "~이 제일이다", s: "Nothing beats a song when you are afraid." }
         ],
@@ -571,10 +571,10 @@ const EN = {
             { w: "just now", k: "방금", s: "That sound just now. Did you make it?" },
             { w: "breath", k: "콧김", s: "The goblin's breath was hot." },
             { w: "as good as that", k: "그렇게 좋은", s: "And where does a sound as good as that come from?" },
-            { w: "looked him up and down", k: "위아래로 훑어보았다", s: "The goblins stared and looked him up and down." },
+            { w: "looked him up and down (look)", k: "위아래로 훑어보았다", s: "The goblins stared and looked him up and down." },
             { w: "hem", k: "옷자락", s: "The baby goblin lifted the hem of his coat to see." },
             { w: "Speak up", k: "어서 말해라", s: "Speak up, will you!" },
-            { w: "went blank", k: "머리가 하얘졌다", s: "The old man's head went blank." }
+            { w: "went blank (go)", k: "머리가 하얘졌다", s: "The old man's head went blank." }
         ],
         "06-lie.webp": [
             { w: "without meaning to", k: "저도 모르게", s: "His hand went up to his chin without his meaning it to." },
@@ -602,7 +602,7 @@ const EN = {
         "08-home.webp": [
             { w: "grew light (grow)", k: "날이 밝았다", s: "When it grew light the old man came down the mountain." },
             { w: "smooth", k: "매끈한", s: "His chin was smooth and his frame was full of treasure." },
-            { w: "went round", k: "휘둥그레졌다", s: "The villagers' eyes went round to see him." },
+            { w: "went round (go)", k: "휘둥그레졌다", s: "The villagers' eyes went round to see him." },
             { w: "have a look at ~", k: "좀 봅시다", s: "Let us have a look at you!" },
             { w: "into the bargain", k: "게다가", s: "And got gold for it into the bargain." },
             { w: "hear the like", k: "이런 일을 듣다", s: "Did you ever hear the like!" },
@@ -634,23 +634,23 @@ const EN = {
             { w: "stuck his chin out (stick)", k: "턱을 쑥 내밀었다", s: "The greedy old man stuck his chin out at them." },
             { w: "palm", k: "손바닥", s: "He put his palm out too, pressing for the price." },
             { w: "pressing for ~", k: "재촉하며", s: "He put his palm out too, pressing for the price." },
-            { w: "went hard", k: "굳어졌다", s: "But the goblins' faces went hard and blue." },
-            { w: "made no sound at all", k: "아무 소리도 안 났다", s: "That last lump made no sound at all!" },
+            { w: "went hard (go)", k: "굳어졌다", s: "But the goblins' faces went hard and blue." },
+            { w: "made no sound at all (make)", k: "아무 소리도 안 났다", s: "That last lump made no sound at all!" },
             { w: "shook (shake)", k: "흔들었다", s: "We shook it all night and we banged it!" },
             { w: "cheat", k: "속이다", s: "You are trying to cheat us again!" },
             { w: "let ~ go", k: "그냥 두다", s: "We cannot let this one go!" },
-            { w: "made the hut ring", k: "쩌렁쩌렁 울렸다", s: "The goblins' shouting made the hut ring." }
+            { w: "made the hut ring (make)", k: "쩌렁쩌렁 울렸다", s: "The goblins' shouting made the hut ring." }
         ],
         "12-two.webp": [
             { w: "Take back ~", k: "도로 가져가라", s: "Take back that useless lump!" },
             { w: "useless", k: "가짜인, 쓸모없는", s: "Take back that useless lump!" },
             { w: "drew out (draw)", k: "꺼냈다", s: "The chief goblin drew out the lump it had taken before." },
             { w: "clapped ~ onto (clap)", k: "척 붙였다", s: "It clapped the lump onto the other side of his chin." },
-            { w: "were gone", k: "사라졌다", s: "And then the goblins were gone." },
+            { w: "were gone (go)", k: "사라졌다", s: "And then the goblins were gone." },
             { w: "swung (swing)", k: "덜렁덜렁했다", s: "His chin swung on both sides as he went." },
             { w: "indeed", k: "~은커녕", s: "Treasure, indeed. He had got one lump more." },
             { w: "the state of me", k: "내 신세야", s: "Oh, the state of me." },
-            { w: "went to lose ~", k: "떼러 갔다", s: "went to lose a lump, came back with one" }
+            { w: "went to lose ~ (go)", k: "떼러 갔다", s: "went to lose a lump, came back with one" }
         ],
         "after": [
             { w: "in place of ~", k: "~ 자리에", s: "In the Japanese one an oni appears in place of the goblin." },

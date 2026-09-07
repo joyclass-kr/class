@@ -525,7 +525,7 @@ const EN = {
     words: {
         "cover": [
             { w: "pansori", k: "판소리", s: "It was once a pansori song" },
-            { w: "the singing was lost", k: "소리가 끊겼다", s: "the singing was lost and only the words remain" },
+            { w: "the singing was lost (lose)", k: "소리가 끊겼다", s: "the singing was lost and only the words remain" },
             { w: "remain", k: "남다", s: "only the words remain" },
             { w: "argue", k: "다투다", s: "A pheasant husband and wife talk and argue like people." },
             { w: "It looks like ~", k: "~ 같아 보인다", s: "It looks like an animal story, but it is really about people." },
@@ -565,12 +565,12 @@ const EN = {
         ],
         "04-scold.webp": [
             { w: "do listen", k: "제발 들어 보세요", s: "Husband, do listen to me." },
-            { w: "took hold of ~", k: "붙들었다", s: "Katuri took hold of his wing." },
+            { w: "took hold of ~ (take)", k: "붙들었다", s: "Katuri took hold of his wing." },
             { w: "shook ~ off (shake)", k: "홱 뿌리쳤다", s: "Jangkki shook it off hard." },
             { w: "Keep to ~", k: "~이나 하시오", s: "What would a woman know? Keep to the house!" },
             { w: "shrank back (shrink)", k: "움츠러들었다", s: "The children shrank back in fright." },
             { w: "put her below him", k: "낮추어 불렀다", s: "Calling her that put her below him." },
-            { w: "heart went down", k: "가슴이 내려앉았다", s: "Katuri's heart went down." },
+            { w: "heart went down (go)", k: "가슴이 내려앉았다", s: "Katuri's heart went down." },
             { w: "spoke up (speak up)", k: "나섰다", s: "The eldest son spoke up" }
         ],
         "05-trap.webp": [
@@ -589,7 +589,7 @@ const EN = {
             { w: "iron", k: "쇠", s: "But the trap was made of iron and it did not stir." },
             { w: "grew thinner (grow)", k: "가늘어졌다", s: "Jangkki's breath grew thinner." },
             { w: "I should have ~", k: "~할 것을", s: "I should have... listened to you..." },
-            { w: "When I am gone", k: "내가 죽거든", s: "When I am gone, raise the children well." },
+            { w: "When I am gone (go)", k: "내가 죽거든", s: "When I am gone, raise the children well." },
             { w: "raise", k: "키우다", s: "raise the children well" },
             { w: "think only of ~", k: "~만 생각하다", s: "Live alone and think only of me." },
             { w: "his breath stopped", k: "숨을 거두었다", s: "He said that, and his breath stopped." },
@@ -613,7 +613,7 @@ const EN = {
             { w: "The first to come", k: "제일 먼저 온 것", s: "The first to come was the crow." },
             { w: "dreadful", k: "끔찍한", s: "Oh dear, what a dreadful thing." },
             { w: "wept (weep)", k: "울었다", s: "But even while it wept the crow kept glancing at Katuri." },
-            { w: "kept glancing", k: "흘끔흘끔 살폈다", s: "the crow kept glancing at Katuri" },
+            { w: "kept glancing (keep)", k: "흘끔흘끔 살폈다", s: "the crow kept glancing at Katuri" },
             { w: "a great deal", k: "너무 많은", s: "Twenty-one children is a great deal for one bird." }
         ],
         "09-suitors.webp": [
@@ -625,11 +625,11 @@ const EN = {
             { w: "funeral", k: "초상", s: "Mourning dress is what people wear at a funeral." },
             { w: "night eyes", k: "밤눈", s: "My night eyes are sharp." },
             { w: "to spare", k: "넘치도록", s: "Cool in summer, and fish to spare." },
-            { w: "looked foolish", k: "머쓱해졌다", s: "The birds looked foolish and flew away." }
+            { w: "looked foolish (look)", k: "머쓱해졌다", s: "The birds looked foolish and flew away." }
         ],
         "10-alone.webp": [
             { w: "grave", k: "무덤", s: "Katuri looked up at the grave on the slope." },
-            { w: "went round in her ears", k: "귓가에 맴돌았다", s: "His last words went round in her ears." },
+            { w: "went round in her ears (go)", k: "귓가에 맴돌았다", s: "His last words went round in her ears." },
             { w: "how I want to live", k: "내가 어떻게 살고 싶은지", s: "And nobody, she thought, has asked how I want to live." },
             { w: "on her own", k: "혼자서", s: "Katuri fed the children on her own." },
             { w: "dug through ~ (dig)", k: "헤쳤다", s: "She dug through snow for roots" },
@@ -641,14 +641,14 @@ const EN = {
             { w: "melted (melt)", k: "녹았다", s: "The snow melted and new shoots came up on the mountain." },
             { w: "shoots", k: "새순", s: "new shoots came up on the mountain" },
             { w: "mate", k: "짝", s: "He had lost his mate and lived alone." },
-            { w: "called in", k: "들렀다", s: "I was passing, so I called in." },
+            { w: "called in (call)", k: "들렀다", s: "I was passing, so I called in." },
             { w: "one by one", k: "하나하나", s: "He asked the children's names, one by one." },
-            { w: "turned over", k: "철렁했다", s: "Katuri's heart turned over." },
+            { w: "turned over (turn)", k: "철렁했다", s: "Katuri's heart turned over." },
             { w: "How does it look to you", k: "부인 보기에는 어떻습니까", s: "May I eat this bean? How does it look to you?" },
             { w: "burst out laughing", k: "웃음이 터졌다", s: "And Katuri burst out laughing." }
         ],
         "12-choice.webp": [
-            { w: "called ~ together", k: "불러 모았다", s: "That night Katuri called the children together." },
+            { w: "called ~ together (call)", k: "불러 모았다", s: "That night Katuri called the children together." },
             { w: "What do you say", k: "너희 생각은 어떠니", s: "I think I shall live with that pheasant now. What do you say?" },
             { w: "This time", k: "이번에는", s: "This time your mother will choose." },
             { w: "will choose", k: "정하겠다", s: "This time your mother will choose." },

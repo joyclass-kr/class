@@ -518,7 +518,7 @@ const EN = {
             { w: "head was spinning", k: "어질어질했다", s: "In the dream his head was spinning." }
         ],
         "02-wake.webp": [
-            { w: "sat straight up", k: "벌떡 일어났다", s: "The anchovy sat straight up." },
+            { w: "sat straight up (sit)", k: "벌떡 일어났다", s: "The anchovy sat straight up." },
             { w: "fins", k: "지느러미", s: "All his fins were trembling." },
             { w: "wide awake", k: "잠이 확 달아난", s: "He was wide awake." },
             { w: "no ordinary dream", k: "보통 꿈이 아닌", s: "That was no ordinary dream, surely?" },
@@ -549,7 +549,7 @@ const EN = {
             { w: "hid in ~ (hide)", k: "숨었다", s: "When the waves were high he hid in the rocks all night." },
             { w: "at last", k: "겨우, 마침내", s: "After days and days he found the flatfish at last." },
             { w: "came along", k: "따라왔다", s: "a catfish, a pomfret and a cuttlefish heard about it and came along" },
-            { w: "Word had gone round", k: "소문이 났다", s: "Word had gone round that the anchovy was laying on a feast." },
+            { w: "Word had gone round (go)", k: "소문이 났다", s: "Word had gone round that the anchovy was laying on a feast." },
             { w: "laying on a feast", k: "잔치를 차리는", s: "the anchovy was laying on a feast" },
             { w: "get a meal out of ~", k: "한 상 얻어먹다", s: "Let's go and get a meal out of it." },
             { w: "delighted", k: "신이 난", s: "They were all delighted at the thought of the table." }
@@ -559,7 +559,7 @@ const EN = {
             { w: "seaweed", k: "미역", s: "Seaweed, shellfish, everything." },
             { w: "shellfish", k: "조개", s: "Seaweed, shellfish, everything." },
             { w: "read me my dream", k: "제 꿈을 풀어 주십시오", s: "Now eat, and then read me my dream." },
-            { w: "bowed low", k: "넙죽 엎드렸다", s: "He bowed low before the flatfish." },
+            { w: "bowed low (bow)", k: "넙죽 엎드렸다", s: "He bowed low before the flatfish." },
             { w: "waiting for one thing", k: "그 말만 기다렸다", s: "He was waiting for one thing" },
             { w: "took his seat (take)", k: "자리에 앉았다", s: "The flatfish coughed and took his seat" },
             { w: "gravely", k: "점잖게", s: "stroking his whiskers very gravely" },
@@ -578,7 +578,7 @@ const EN = {
             { w: "bubble", k: "물방울", s: "quiet enough to hear a bubble" }
         ],
         "07-bad.webp": [
-            { w: "spoke slowly", k: "천천히 입을 열었다", s: "The flatfish opened his eyes and spoke slowly." },
+            { w: "spoke slowly (speak)", k: "천천히 입을 열었다", s: "The flatfish opened his eyes and spoke slowly." },
             { w: "quite level", k: "아주 담담한", s: "His voice was quite level." },
             { w: "being hauled up (haul)", k: "끌려 올라가는 것", s: "That is a dream of being hauled up in a net." },
             { w: "net", k: "그물", s: "a dream of being hauled up in a net" },
@@ -587,7 +587,7 @@ const EN = {
             { w: "what he saw", k: "본 대로", s: "He had only said what he saw." },
             { w: "froze like ice (freeze)", k: "얼음처럼 굳었다", s: "And the feast froze like ice." },
             { w: "shot to his feet (shoot)", k: "벌떡 일어섰다", s: "The anchovy shot to his feet." },
-            { w: "went blue", k: "시퍼렇게 질렸다", s: "His face went blue." }
+            { w: "went blue (go)", k: "시퍼렇게 질렸다", s: "His face went blue." }
         ],
         "08-slap.webp": [
             { w: "lost his head (lose)", k: "눈이 뒤집혔다", s: "The anchovy lost his head completely." },
@@ -596,7 +596,7 @@ const EN = {
             { w: "what you make of ~", k: "~을 그렇게 보다", s: "Is that what you make of my dream!" },
             { w: "Smack!", k: "짝!", s: "Smack!" },
             { w: "duck (duck)", k: "피하다", s: "The flatfish had no time to duck." },
-            { w: "caught him across ~", k: "후려쳤다", s: "The anchovy's tail caught him across the cheek." },
+            { w: "caught him across ~ (catch)", k: "후려쳤다", s: "The anchovy's tail caught him across the cheek." },
             { w: "rolled about (roll)", k: "데굴데굴 굴렀다", s: "The flatfish rolled about on the sea floor." },
             { w: "were swept round (sweep)", k: "쓸려 몰렸다", s: "both his eyes were swept round to one side" },
             { w: "Push as he might", k: "아무리 밀어도", s: "Push as he might, they would not go back." }
@@ -608,7 +608,7 @@ const EN = {
             { w: "as wide as it would go", k: "있는 대로 벌리고", s: "He laughed with his mouth as wide as it would go." },
             { w: "was a mistake", k: "탈이었다", s: "But laughing that hard was a mistake." },
             { w: "tore right across (tear)", k: "쭉 찢어졌다", s: "His mouth tore right across, side to side." },
-            { w: "felt it with a fin", k: "지느러미로 만져 보았다", s: "The catfish felt it with a fin." },
+            { w: "felt it with a fin (feel)", k: "지느러미로 만져 보았다", s: "The catfish felt it with a fin." },
             { w: "Try as he might", k: "아무리 애를 써도", s: "Try as he might, it would not close." },
             { w: "ever since", k: "그때부터 지금까지", s: "A catfish has had a long wide mouth ever since." }
         ],
@@ -620,7 +620,7 @@ const EN = {
             { w: "would not open", k: "끝내 열지 않았다", s: "And still he would not open his mouth." },
             { w: "so hard that ~", k: "너무 힘껏 해서", s: "he had squeezed so hard that it would not open out again" },
             { w: "in the water", k: "물빛에", s: "He looked at himself in the water." },
-            { w: "gone so small", k: "이리 작아진", s: "why has my mouth gone so small?" },
+            { w: "gone so small (go)", k: "이리 작아진", s: "why has my mouth gone so small?" },
             { w: "From ~ing", k: "~하다가", s: "From holding in a laugh." }
         ],
         "11-squid.webp": [
@@ -629,7 +629,7 @@ const EN = {
             { w: "backed off (back)", k: "뒷걸음질 쳤다", s: "He backed off little by little." },
             { w: "caught on ~ (catch)", k: "걸렸다", s: "And his fin caught on a stone." },
             { w: "in such a hurry", k: "너무 허둥대어", s: "He was in such a hurry that over he went." },
-            { w: "over he went", k: "그만 넘어졌다", s: "He was in such a hurry that over he went." },
+            { w: "over he went (go)", k: "그만 넘어졌다", s: "He was in such a hurry that over he went." },
             { w: "struck (strike)", k: "부딪쳤다", s: "He struck his head hard on the bottom." },
             { w: "slid right down (slide)", k: "쭉 미끄러졌다", s: "both his eyes slid right down" },
             { w: "did not move at all", k: "꿈쩍도 하지 않았다", s: "They did not move at all." },

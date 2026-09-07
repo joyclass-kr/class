@@ -466,7 +466,7 @@ const EN = {
             { w: "loved that grin", k: "그 웃음을 좋아했다", s: "His mother loved that grin." }
         ],
         "02-rumor.webp": [
-            { w: "heard talk of ~", k: "~ 이야기를 들었다", s: "One day at the market Seodong heard talk of Silla." },
+            { w: "heard talk of ~ (hear)", k: "~ 이야기를 들었다", s: "One day at the market Seodong heard talk of Silla." },
             { w: "the loveliest", k: "제일 고운", s: "Princess Seonhwa, is the loveliest in the world" },
             { w: "forgets himself", k: "넋을 잃는다", s: "anyone who sees her forgets himself" },
             { w: "stood still (stand)", k: "한참 서 있었다", s: "Seodong put down his basket and stood still a long time." },
@@ -478,7 +478,7 @@ const EN = {
             { w: "capital", k: "서울", s: "Seorabeol, the capital of Silla" }
         ],
         "03-song.webp": [
-            { w: "called ~ together", k: "불러 모았다", s: "he called the children together in every lane" },
+            { w: "called ~ together (call)", k: "불러 모았다", s: "he called the children together in every lane" },
             { w: "lane", k: "골목", s: "in every lane" },
             { w: "learn one song for it", k: "대신 노래 하나를 배우다", s: "You learn one song for it." },
             { w: "pricked up their ears", k: "귀를 세웠다", s: "The children took the yams and pricked up their ears." },
@@ -504,13 +504,13 @@ const EN = {
             { w: "came up behind ~", k: "뒤따라왔다", s: "somebody came up behind her" },
             { w: "let me go with you", k: "제가 모시겠습니다", s: "Princess, let me go with you." },
             { w: "They call me ~", k: "~라 합니다", s: "They call me Seodong." },
-            { w: "went wide", k: "커졌다", s: "Her eyes went wide." },
+            { w: "went wide (go)", k: "커졌다", s: "Her eyes went wide." },
             { w: "knelt (kneel)", k: "무릎을 꿇었다", s: "Seodong knelt and told her everything" },
-            { w: "told ~ everything", k: "다 털어놓았다", s: "Seodong knelt and told her everything" },
+            { w: "told ~ everything (tell)", k: "다 털어놓았다", s: "Seodong knelt and told her everything" },
             { w: "taught (teach)", k: "가르쳤다", s: "he had made the song and taught it to the children" },
             { w: "meant to be angry", k: "화를 내려 했다", s: "The princess meant to be angry and found herself laughing." },
-            { w: "found herself ~ing", k: "그만 ~하고 말았다", s: "found herself laughing" },
-            { w: "went off together", k: "함께 갔다", s: "the two of them went off together to Baekje" }
+            { w: "found herself ~ing (find)", k: "그만 ~하고 말았다", s: "found herself laughing" },
+            { w: "went off together (go)", k: "함께 갔다", s: "the two of them went off together to Baekje" }
         ],
         "06-gold.webp": [
             { w: "opened (open)", k: "풀었다", s: "the princess opened her sack of gold" },
@@ -520,7 +520,7 @@ const EN = {
             { w: "hardly knew what to say", k: "어이없었다", s: "She hardly knew what to say." },
             { w: "a heap of ~", k: "잔뜩 쌓인", s: "there's a heap of it like earth on the mountain" },
             { w: "lay glittering (lie)", k: "반짝반짝 박혀 있었다", s: "Among the yam roots, yellow stones lay glittering." },
-            { w: "sat straight down", k: "그만 주저앉았다", s: "The princess sat straight down." },
+            { w: "sat straight down (sit)", k: "그만 주저앉았다", s: "The princess sat straight down." },
             { w: "enough to buy ~", k: "~을 살 만한", s: "there is enough gold here to buy a kingdom" }
         ],
         "07-monk.webp": [
@@ -557,7 +557,7 @@ const EN = {
             { w: "you think of ~", k: "~이 생각난다", s: "Standing in front of it, you think of the boy digging yams." }
         ],
         "10-song.webp": [
-            { w: "is called ~", k: "~라고 한다", s: "The song Seodong made is called the Seodongyo." },
+            { w: "is called ~ (call)", k: "~라고 한다", s: "The song Seodong made is called the Seodongyo." },
             { w: "the oldest", k: "가장 오래된", s: "It is the oldest song written down in our country." },
             { w: "sent ~ out of", k: "내보냈다", s: "One short song sent a princess out of a palace" },
             { w: "as strong as that", k: "그렇게 힘이 세다", s: "A song is as strong as that." },
@@ -575,7 +575,7 @@ const EN = {
             { w: "neither ~ nor ~", k: "~도 ~도 아닌", s: "what Seodong used was neither strength nor money but a song" },
             { w: "spread (spread)", k: "퍼뜨렸다", s: "He gave the children yams and spread the song." },
             { w: "how a rumour moves people", k: "소문이 어떻게 사람을 움직이는지", s: "People very long ago already knew how a rumour moves people." },
-            { w: "took years to ~", k: "오랜 세월 걸려", s: "It fell and took years to raise again." },
+            { w: "took years to ~ (take)", k: "오랜 세월 걸려", s: "It fell and took years to raise again." },
             { w: "does not blame ~ (blame)", k: "나무라지 않는다", s: "The story does not blame Seodong." },
             { w: "quietly looks at ~", k: "조용히 들여다본다", s: "Instead it quietly looks at the king" }
         ]

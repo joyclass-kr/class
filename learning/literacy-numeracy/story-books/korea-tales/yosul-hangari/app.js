@@ -460,7 +460,7 @@ const EN = {
         "02-hoe.webp": [
             { w: "decent", k: "쓸 만한", s: "A decent jar, this." },
             { w: "brushed off (brush)", k: "털어 냈다", s: "He brushed off the earth and turned it about." },
-            { w: "turned it about", k: "이리저리 살폈다", s: "He brushed off the earth and turned it about." },
+            { w: "turned it about (turn)", k: "이리저리 살폈다", s: "He brushed off the earth and turned it about." },
             { w: "loaded (load)", k: "얹었다", s: "Then he loaded it on his frame and carried it home." },
             { w: "set ~ down (set)", k: "내려놓았다", s: "As he set it down in the yard" },
             { w: "dropped ~ into (drop)", k: "빠뜨렸다", s: "he dropped his mattock into the jar" },
@@ -472,7 +472,7 @@ const EN = {
         "03-coin.webp": [
             { w: "Come and look at this!", k: "이것 좀 봐요!", s: "Wife! Come and look at this!" },
             { w: "came running", k: "한달음에 뛰어나왔다", s: "His wife came running out of the kitchen" },
-            { w: "her mouth fell open", k: "입을 딱 벌렸다", s: "her mouth fell open at the mattocks" },
+            { w: "her mouth fell open (fall)", k: "입을 딱 벌렸다", s: "her mouth fell open at the mattocks" },
             { w: "copper coin", k: "엽전", s: "They moved it inside and dropped in one copper coin." },
             { w: "Whatever is happening!", k: "이게 무슨 일이래!", s: "Whatever is happening!" },
             { w: "over her mouth", k: "입을 막고", s: "She put both hands over her mouth." },
@@ -494,16 +494,16 @@ const EN = {
             { w: "hide the sky with your palm", k: "손바닥으로 하늘을 가리다", s: "You cannot hide the sky with your palm." }
         ],
         "05-seize.webp": [
-            { w: "reached the ear of ~", k: "~ 귀에 들어갔다", s: "The story reached the ear of the greediest rich man" },
+            { w: "reached the ear of ~ (reach)", k: "~ 귀에 들어갔다", s: "The story reached the ear of the greediest rich man" },
             { w: "storehouses", k: "곳간", s: "He already had three storehouses." },
             { w: "what belonged to somebody else", k: "남의 것", s: "And still he wanted what belonged to somebody else." },
             { w: "in the middle of his meal", k: "밥을 먹다 말고", s: "He put his spoon down in the middle of his meal" },
-            { w: "went straight to ~", k: "곧장 갔다", s: "Then he went straight to the farmer's house." },
+            { w: "went straight to ~ (go)", k: "곧장 갔다", s: "Then he went straight to the farmer's house." },
             { w: "to begin with", k: "본래", s: "That field was my family's land to begin with!" },
             { w: "whatever came out of it", k: "거기서 나온 것", s: "So whatever came out of it is mine!" },
             { w: "had no chance to ~", k: "~할 틈도 없었다", s: "The farmer had no chance to say a word." },
-            { w: "took ~ up in his arms", k: "번쩍 안았다", s: "The rich man threw the door open, walked in, took the jar up in his arms and went." },
-            { w: "where they stood", k: "그 자리에", s: "The couple sat down where they stood." }
+            { w: "took ~ up in his arms (take)", k: "번쩍 안았다", s: "The rich man threw the door open, walked in, took the jar up in his arms and went." },
+            { w: "where they stood (stand)", k: "그 자리에", s: "The couple sat down where they stood." }
         ],
         "06-gold.webp": [
             { w: "bolted (bolt)", k: "걸어 잠갔다", s: "The rich man bolted his door" },
@@ -558,7 +558,7 @@ const EN = {
             { w: "day by day", k: "하루가 다르게", s: "The sacks of rice went down day by day" },
             { w: "one after another", k: "하나둘씩", s: "the gold went, and then the fields, one after another" },
             { w: "thought better of it", k: "마음을 고쳐먹었다", s: "In the end he thought better of it." },
-            { w: "went down on his knees", k: "무릎을 꿇었다", s: "set it down in the yard and went down on his knees" },
+            { w: "went down on his knees (go)", k: "무릎을 꿇었다", s: "set it down in the yard and went down on his knees" },
             { w: "look after ~", k: "모시다, 돌보다", s: "I did you wrong. Please forgive me." },
             { w: "for a long while", k: "한참을", s: "The farmer was still angry, but he forgave him." },
             { w: "Only then did he ~", k: "그제야 ~했다", s: "every one of the fathers had vanished too" }

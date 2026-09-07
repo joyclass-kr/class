@@ -699,14 +699,14 @@ const EN = {
         "01-palace.webp": [
             { w: "wanted ~ very much", k: "몹시 바랐다", s: "The two of them wanted a son very much." },
             { w: "every child", k: "아이마다", s: "But every child that was born was a girl." },
-            { w: "held its breath", k: "숨을 죽였다", s: "the whole palace held its breath" },
+            { w: "held its breath (hold)", k: "숨을 죽였다", s: "the whole palace held its breath" },
             { w: "Another girl", k: "또 딸", s: "Another girl." },
             { w: "set hard (set)", k: "굳었다", s: "The king's face set hard." },
             { w: "wept (weep)", k: "눈물을 흘렸다", s: "The queen held the baby and wept." },
             { w: "Throw ~ away", k: "내다 버려라", s: "Throw this child away." }
         ],
         "02-box.webp": [
-            { w: "went down on her knees", k: "무릎을 꿇었다", s: "The queen went down on her knees before the king." },
+            { w: "went down on her knees (go)", k: "무릎을 꿇었다", s: "The queen went down on her knees before the king." },
             { w: "newborn", k: "갓 태어난", s: "Sire, the child is newborn. What has she done?" },
             { w: "become of ~", k: "꼴이 되다", s: "Seven daughters. What is to become of the country?" },
             { w: "jade", k: "옥", s: "The queen laid the baby in a box made of jade." },
@@ -742,7 +742,7 @@ const EN = {
             { w: "read fortunes", k: "점을 쳤다", s: "An old man who read fortunes said it." },
             { w: "the far west", k: "서쪽 끝", s: "Only the water at Seocheon in the far west will cure it." },
             { w: "the living", k: "산 사람", s: "It is not a place the living can easily go." },
-            { w: "called ~ together", k: "불러 모았다", s: "The king called his six daughters together." },
+            { w: "called ~ together (call)", k: "불러 모았다", s: "The king called his six daughters together." },
             { w: "small yet", k: "아직 어린", s: "My child is small yet." },
             { w: "a reason", k: "까닭", s: "The third, fourth, fifth and sixth all had a reason too." }
         ],
@@ -752,7 +752,7 @@ const EN = {
             { w: "said ~ aloud", k: "입에 올렸다", s: "Neither had ever said that name aloud." },
             { w: "Could she be ~", k: "~일까요", s: "Could she be alive?" },
             { w: "Go down ~", k: "따라 내려가라", s: "Go down the river and find a house" },
-            { w: "went round ~", k: "돌았다", s: "The officer went round the river villages for days." },
+            { w: "went round ~ (go)", k: "돌았다", s: "The officer went round the river villages for days." },
             { w: "came to ~", k: "이르렀다", s: "And he came to an old couple who worked a ferry." },
             { w: "mending (mend)", k: "손질하는", s: "In the yard a young woman was mending an oar." },
             { w: "oar", k: "노", s: "a young woman was mending an oar" }
@@ -764,7 +764,7 @@ const EN = {
             { w: "How can I ~", k: "무슨 낯으로 ~하겠니", s: "How can I look at you?" },
             { w: "put ~ in", k: "넣어 주었다", s: "It was you who put this in, then." },
             { w: "cried out loud", k: "소리 내어 울었다", s: "The queen cried out loud." },
-            { w: "turned his face away", k: "얼굴을 돌렸다", s: "The king turned his face away and could say nothing." }
+            { w: "turned his face away (turn)", k: "얼굴을 돌렸다", s: "The king turned his face away and could say nothing." }
         ],
         "08-depart.webp": [
             { w: "had nothing from ~", k: "받은 것이 없다", s: "You have had nothing from us. Why should you go?" },
@@ -777,7 +777,7 @@ const EN = {
             { w: "came after ~", k: "따라나섰다", s: "Not one of them came after her." }
         ],
         "09-helpers.webp": [
-            { w: "went on walking", k: "걷고 또 걸었다", s: "Barideggi walked west and went on walking." },
+            { w: "went on walking (go)", k: "걷고 또 걸었다", s: "Barideggi walked west and went on walking." },
             { w: "weeding (weed)", k: "김을 매는", s: "an old man weeding a field alone" },
             { w: "Finish ~ with me", k: "함께 다 하고 나서", s: "Finish this field with me and I shall tell you." },
             { w: "worked the hoe", k: "호미질을 했다", s: "Barideggi worked the hoe till the sun went down." },
@@ -789,12 +789,12 @@ const EN = {
         "10-river.webp": [
             { w: "mist", k: "안개", s: "Beyond the hill was a black river with mist on it." },
             { w: "in a line", k: "줄지어", s: "People stood in a line along the bank." },
-            { w: "none of them spoke", k: "아무도 말이 없었다", s: "Their faces were all white and none of them spoke." },
+            { w: "none of them spoke (speak)", k: "아무도 말이 없었다", s: "Their faces were all white and none of them spoke." },
             { w: "the dead", k: "죽은 이들", s: "Where the dead go. You are living." },
             { w: "for my parents", k: "부모님을 위해", s: "I am going for medicine for my parents." },
             { w: "takes no ~", k: "태우지 않는다", s: "That boat takes no living person." },
             { w: "a heart like yours", k: "네 마음이면", s: "But with a heart like yours, perhaps." },
-            { w: "began to move", k: "스르르 움직였다", s: "Barideggi got into the boat and it began to move." }
+            { w: "began to move (begin)", k: "스르르 움직였다", s: "Barideggi got into the boat and it began to move." }
         ],
         "11-keeper.webp": [
             { w: "Days more", k: "여러 날을 더", s: "Days more beyond the river brought her to a great well." },
@@ -813,20 +813,20 @@ const EN = {
             { w: "held out (hold)", k: "내밀었다", s: "The keeper held out three flowers." },
             { w: "raises (raise)", k: "살린다", s: "One raises bone, one raises flesh, one raises breath." },
             { w: "flesh", k: "살", s: "One raises bone, one raises flesh" },
-            { w: "are gone", k: "떠났다", s: "If your parents are gone already, use them." },
+            { w: "are gone (go)", k: "떠났다", s: "If your parents are gone already, use them." },
             { w: "Make haste", k: "서두르거라", s: "Nine years. Make haste." },
             { w: "bottle", k: "병", s: "Barideggi took the bottle and the flowers and ran." }
         ],
         "13-funeral.webp": [
             { w: "reached (reach)", k: "닿았다", s: "When Barideggi reached the palace" },
             { w: "biers", k: "상여", s: "two biers were coming out of the gate" },
-            { w: "are carried on", k: "모시고 간다", s: "A bier is what the dead are carried on." },
+            { w: "are carried on (carry)", k: "모시고 간다", s: "A bier is what the dead are carried on." },
             { w: "died together", k: "함께 눈을 감았다", s: "The king's and the queen's. They died together yesterday." },
-            { w: "stood in the way of ~", k: "앞을 막아섰다", s: "Barideggi stood in the way of the biers." },
+            { w: "stood in the way of ~ (stand)", k: "앞을 막아섰다", s: "Barideggi stood in the way of the biers." },
             { w: "in mourning", k: "상복을 입고", s: "The six sisters, following in mourning, opened their eyes wide." },
             { w: "come back alive", k: "살아서 왔다", s: "She has come back alive." },
             { w: "bearers", k: "상여꾼", s: "The bearers stopped where they stood." },
-            { w: "had ~ opened", k: "열게 했다", s: "Barideggi had the biers opened" }
+            { w: "had ~ opened (open)", k: "열게 했다", s: "Barideggi had the biers opened" }
         ],
         "14-revive.webp": [
             { w: "stiff", k: "굳은", s: "At the bone flower the stiff bodies loosened." },
@@ -835,7 +835,7 @@ const EN = {
             { w: "drew a breath (draw)", k: "숨을 들이켰다", s: "The king drew a great breath." },
             { w: "a mouthful", k: "한 모금", s: "Barideggi let a mouthful of the water into each of them." },
             { w: "as if washed away", k: "씻은 듯이", s: "The sickness was gone as if washed away." },
-            { w: "really went", k: "정말 다녀왔다", s: "So you... you really went." },
+            { w: "really went (go)", k: "정말 다녀왔다", s: "So you... you really went." },
             { w: "to be late", k: "늦어서", s: "It took nine years. I am sorry to be late." },
             { w: "knelt (kneel)", k: "무릎을 꿇었다", s: "It was the first time the king had ever knelt." }
         ],
@@ -851,10 +851,10 @@ const EN = {
         ],
         "16-guide.webp": [
             { w: "guide", k: "길잡이", s: "From that day Barideggi was the guide of the dead." },
-            { w: "took the hand of ~", k: "손을 잡아 주었다", s: "She took the hand of anybody crying at the black river" },
+            { w: "took the hand of ~ (take)", k: "손을 잡아 주었다", s: "She took the hand of anybody crying at the black river" },
             { w: "led back (lead)", k: "데려다주었다", s: "She led back anybody lost in the mist." },
             { w: "honoured ~ as (honour)", k: "~으로 모셨다", s: "People honoured Barideggi as a god." },
-            { w: "called her name", k: "이름을 불렀다", s: "When somebody died they called her name." },
+            { w: "called her name (call)", k: "이름을 불렀다", s: "When somebody died they called her name." },
             { w: "light the road", k: "길을 밝히다", s: "Barideggi, light the road for our mother." },
             { w: "all night through", k: "밤새", s: "It is a long song, sung all night through." },
             { w: "takes everybody home", k: "모두를 데려다준다", s: "became the one who takes everybody home" },

@@ -457,7 +457,7 @@ const EN = {
             { w: "twice his height", k: "키가 두 배인", s: "The stranger was twice his height." },
             { w: "stuck up (stick up)", k: "삐죽 솟았다", s: "One horn stuck up out of its head" },
             { w: "glowed (glow)", k: "벌겋게 빛났다", s: "its eyes glowed red like lamps" },
-            { w: "found himself ~ing", k: "저도 모르게 ~했다", s: "He found himself stepping backwards." },
+            { w: "found himself ~ing (find)", k: "저도 모르게 ~했다", s: "He found himself stepping backwards." },
             { w: "Only then did he ~", k: "그제야 ~했다", s: "Only then did he understand." },
             { w: "bored out of my mind", k: "심심해 죽겠다", s: "Wrestle me. I'm bored out of my mind." },
             { w: "spread its arms (spread)", k: "팔을 벌렸다", s: "The goblin spread its arms and grinned." },
@@ -485,7 +485,7 @@ const EN = {
             { w: "veins", k: "핏줄", s: "The veins stood out on his forehead." },
             { w: "stood out (stand out)", k: "불끈 섰다", s: "The veins stood out on his forehead." },
             { w: "pebbles", k: "자갈", s: "The pebbles kept slipping under his feet" },
-            { w: "ran off him", k: "비 오듯 흘렀다", s: "the sweat ran off him" },
+            { w: "ran off him (run)", k: "비 오듯 흘렀다", s: "the sweat ran off him" },
             { w: "off the ground", k: "땅에서 들린", s: "Before he knew it his feet were off the ground." },
             { w: "head first", k: "머리부터, 처박혀", s: "I'll end up head first in the stream." },
             { w: "Tired already?", k: "벌써 지쳤느냐?", s: "Tired already? Humans are weak things." }
@@ -493,10 +493,10 @@ const EN = {
         "05-remember.webp": [
             { w: "came back to him", k: "번쩍 떠올랐다", s: "something his grandfather told him as a boy came back to him" },
             { w: "as a boy", k: "어릴 적", s: "something his grandfather told him as a boy" },
-            { w: "opened wide", k: "번쩍 뜨였다", s: "Kim's eyes opened wide." },
+            { w: "opened wide (open)", k: "번쩍 뜨였다", s: "Kim's eyes opened wide." },
             { w: "That's the way.", k: "바로 그거다.", s: "That's it. That's the way." },
             { w: "let himself sag", k: "슬쩍 몸을 낮췄다", s: "Kim let himself sag as if all his strength had gone." },
-            { w: "as if ~ had gone", k: "~이 다 빠진 것처럼", s: "as if all his strength had gone" },
+            { w: "as if ~ had gone (go)", k: "~이 다 빠진 것처럼", s: "as if all his strength had gone" },
             { w: "slid ~ in behind (slide)", k: "뒤로 밀어 넣었다", s: "he slid his foot in behind the goblin's left leg" },
             { w: "noticed nothing", k: "그것도 몰랐다", s: "The goblin noticed nothing." },
             { w: "sure it had won", k: "다 이겼다고 여겨", s: "Sure it had won already, it was pushing with everything it had" },
@@ -528,7 +528,7 @@ const EN = {
             { w: "raised his voice", k: "목청을 높였다", s: "Kim stood in the middle of the village and raised his voice." },
             { w: "with these hands", k: "이 손으로", s: "I caught a goblin last night! With these hands!" },
             { w: "one by one", k: "하나둘", s: "One by one the doors opened and people looked out." },
-            { w: "looked out", k: "내다보았다", s: "the doors opened and people looked out" },
+            { w: "looked out (look)", k: "내다보았다", s: "the doors opened and people looked out" },
             { w: "Don't tell tales.", k: "거짓말도 정도껏 하게.", s: "That great thing, and you? Don't tell tales." },
             { w: "Let's have a look", k: "어디 한번 봅시다", s: "Let's have a look then!" },
             { w: "It's no tale!", k: "거짓말이 아니오!", s: "It's no tale! It's tied to the willow" },
@@ -553,7 +553,7 @@ const EN = {
             { w: "red as a ripe persimmon", k: "홍시처럼 빨간", s: "Kim went red as a ripe persimmon" },
             { w: "quietly", k: "슬그머니", s: "He quietly untied his belt and put it back on." },
             { w: "so much as ~", k: "~조차, ~만 보아도", s: "if Kim saw so much as a broom on a night road" },
-            { w: "took a wide way round ~", k: "슬금슬금 피해 갔다", s: "he took a wide way round it" },
+            { w: "took a wide way round ~ (take)", k: "슬금슬금 피해 갔다", s: "he took a wide way round it" },
             { w: "never ~ again", k: "다시는 ~ 않다", s: "I'm never wrestling at night again." }
         ],
         "after": [

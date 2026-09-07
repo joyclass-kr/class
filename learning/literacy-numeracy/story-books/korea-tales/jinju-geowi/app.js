@@ -489,16 +489,16 @@ const EN = {
             { w: "went rolling (go rolling)", k: "굴러갔다", s: "It went rolling across the floor." },
             { w: "across the floor", k: "방바닥을 가로질러", s: "It went rolling across the floor." },
             { w: "Of all moments", k: "하필 그때", s: "Of all moments, the owner had turned his back" },
-            { w: "had turned his back", k: "등을 돌리고 있었다", s: "the owner had turned his back and was digging in a bundle" },
+            { w: "had turned his back (turn)", k: "등을 돌리고 있었다", s: "the owner had turned his back and was digging in a bundle" },
             { w: "digging in ~ (dig)", k: "~을 뒤지는", s: "was digging in a bundle" },
             { w: "stretched out (stretch)", k: "쭉 뻗었다", s: "The goose stretched out its long neck." },
             { w: "Gulp.", k: "꿀꺽", s: "Gulp." },
             { w: "in a blink", k: "눈 깜짝할 사이에", s: "It was over in a blink." },
-            { w: "felt his breath stop", k: "숨이 멎는 것 같았다", s: "The traveller felt his breath stop." },
+            { w: "felt his breath stop (feel)", k: "숨이 멎는 것 같았다", s: "The traveller felt his breath stop." },
             { w: "the only one who saw it", k: "그것을 본 단 한 사람", s: "the traveller was the only one who saw it" }
         ],
         "04-accuse.webp": [
-            { w: "Where has ~ gone?", k: "~이 어디 갔지?", s: "What? Where has the pearl gone?" },
+            { w: "Where has ~ gone? (go)", k: "~이 어디 갔지?", s: "What? Where has the pearl gone?" },
             { w: "fell off (fall off)", k: "사라졌다, 떨어졌다", s: "The smile fell off the owner's face." },
             { w: "sweeping (sweep)", k: "쓸어 보는", s: "He began sweeping his palm over the floor." },
             { w: "bedding", k: "이불", s: "He lifted the bedding, pulled out the drawers" },
@@ -524,7 +524,7 @@ const EN = {
             { w: "untied (untie)", k: "풀었다", s: "untied his pack as well" },
             { w: "the one thing", k: "그 한마디", s: "And still he never said the one thing." },
             { w: "would have set him free", k: "그를 풀려나게 했을 것이다", s: "One sentence would have cleared it all up." },
-            { w: "went red, then purple", k: "붉으락푸르락해졌다", s: "The owner's face went red, then purple." }
+            { w: "went red, then purple (go)", k: "붉으락푸르락해졌다", s: "The owner's face went red, then purple." }
         ],
         "06-tied.webp": [
             { w: "at first light", k: "날이 밝는 대로", s: "At first light I'm dragging you to the magistrate!" },
@@ -547,7 +547,7 @@ const EN = {
             { w: "again and again", k: "몇 번이나", s: "turned up his lamp again and again" },
             { w: "sleep would not come", k: "좀처럼 잠들지 못했다", s: "but sleep would not come" },
             { w: "isn't right", k: "이상하다", s: "Something about this isn't right." },
-            { w: "never made a sound", k: "아무 소리도 내지 않았다", s: "the traveller never made a sound" },
+            { w: "never made a sound (make)", k: "아무 소리도 내지 않았다", s: "the traveller never made a sound" },
             { w: "went numb (go numb)", k: "저려 왔다", s: "His tied arms went numb." },
             { w: "stung (sting)", k: "얼얼했다", s: "His fingertips stung" },
             { w: "set his teeth", k: "이를 악물었다", s: "he set his teeth and bore it" },
@@ -565,14 +565,14 @@ const EN = {
             { w: "flashed (flash)", k: "반짝했다", s: "something flashed" },
             { w: "bent down (bend)", k: "몸을 숙였다", s: "The owner went over and bent down." },
             { w: "froze (freeze)", k: "얼어붙었다", s: "Then he froze where he stood." },
-            { w: "where he stood", k: "그 자리에", s: "Then he froze where he stood." },
+            { w: "where he stood (stand)", k: "그 자리에", s: "Then he froze where he stood." },
             { w: "shake", k: "떨리다", s: "His hands began to shake." },
             { w: "droppings", k: "똥", s: "Out of the goose droppings a white pearl came rolling." },
             { w: "came rolling", k: "굴러 나왔다", s: "a white pearl came rolling" }
         ],
         "09-untie.webp": [
             { w: "in a rush", k: "허겁지겁", s: "The owner pulled at the ropes in a rush." },
-            { w: "pulled at ~", k: "~을 잡아당겼다", s: "pulled at the ropes" },
+            { w: "pulled at ~ (pull)", k: "~을 잡아당겼다", s: "pulled at the ropes" },
             { w: "ropes", k: "밧줄", s: "pulled at the ropes" },
             { w: "so much that ~", k: "너무 ~해서", s: "His hands shook so much that the knots kept slipping." },
             { w: "knots", k: "매듭", s: "the knots kept slipping" },
@@ -596,7 +596,7 @@ const EN = {
             { w: "drew in his breath (draw in)", k: "숨을 들이켰다", s: "The owner drew in his breath." },
             { w: "I only had to ~", k: "저는 ~하기만 하면 되었다", s: "I only had to stay tied up for one night." },
             { w: "take a life", k: "목숨을 빼앗다", s: "You can't take a goose's life for one pearl, can you?" },
-            { w: "bowed his head", k: "고개를 숙였다", s: "The owner bowed his head where he stood. Then he set out a good breakfast for the traveller and saw him off." }
+            { w: "bowed his head (bow)", k: "고개를 숙였다", s: "The owner bowed his head where he stood. Then he set out a good breakfast for the traveller and saw him off." }
         ],
         "after": [
             { w: "at the same time", k: "동시에", s: "This is an old Korean tale and at the same time a Buddhist one." },

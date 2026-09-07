@@ -484,11 +484,11 @@ const EN = {
             { w: "his home country", k: "고향", s: "They built a small house in his home country" },
             { w: "was born (bear)", k: "태어났다", s: "One child was born, then two" },
             { w: "ploughed (plough)", k: "논을 갈았다", s: "Josin ploughed other people's fields" },
-            { w: "took in sewing", k: "삯바느질을 했다", s: "his wife took in sewing for money" },
+            { w: "took in sewing (take)", k: "삯바느질을 했다", s: "his wife took in sewing for money" },
             { w: "the harvests failed", k: "흉년이 들었다", s: "Then the harvests failed, year after year." },
             { w: "year after year", k: "여러 해 잇달아", s: "the harvests failed, year after year" },
             { w: "had lent (lend)", k: "빌려주었다", s: "The man who had lent them the field took it back." },
-            { w: "took it back", k: "거두어 갔다", s: "The man who had lent them the field took it back." },
+            { w: "took it back (take)", k: "거두어 갔다", s: "The man who had lent them the field took it back." },
             { w: "set off (set)", k: "길을 나섰다", s: "Seven people set off with bundles on their heads." },
             { w: "begged (beg)", k: "얻어먹었다", s: "They begged from village to village." }
         ],
@@ -514,7 +514,7 @@ const EN = {
             { w: "Every word of hers", k: "아내 말이 다", s: "Every word of hers was right." },
             { w: "where the roads divided", k: "갈림길에", s: "they stood where the roads divided" },
             { w: "Live well", k: "부디 잘 사시오", s: "Live well, I hope." },
-            { w: "turned and walked away", k: "돌아서서 걸어갔다", s: "She turned and walked away." }
+            { w: "turned and walked away (turn)", k: "돌아서서 걸어갔다", s: "She turned and walked away." }
         ],
         "06-wake.webp": [
             { w: "just as before", k: "그대로", s: "The Buddha was looking down at him just as before." },
@@ -522,17 +522,17 @@ const EN = {
             { w: "Not even one night", k: "하룻밤도 안 되어", s: "Not even one night had passed." },
             { w: "had been a dream", k: "꿈이었다", s: "Forty years had been a dream." },
             { w: "wrinkles", k: "주름", s: "There were no wrinkles on them." },
-            { w: "had gone white", k: "하얗게 세었다", s: "when he touched his hair, it had gone white" },
+            { w: "had gone white (go)", k: "하얗게 세었다", s: "when he touched his hair, it had gone white" },
             { w: "In one night", k: "하룻밤 사이에", s: "In one night it had turned white." },
             { w: "So that is ~", k: "그런 것이었군요", s: "So that is what I was asking for." }
         ],
         "07-dig.webp": [
-            { w: "went straight to ~", k: "그길로 갔다", s: "He went straight to the Haehyeon pass" },
+            { w: "went straight to ~ (go)", k: "그길로 갔다", s: "He went straight to the Haehyeon pass" },
             { w: "mound of earth", k: "흙더미", s: "Beside the road was a mound of earth he knew." },
             { w: "with his bare hands", k: "맨손으로", s: "Josin dug with his bare hands." },
             { w: "met his fingers", k: "손끝에 닿았다", s: "Something hard met his fingers." },
             { w: "carved in stone (carve)", k: "돌로 만든", s: "What came out of the earth was a Buddha carved in stone." },
-            { w: "sat holding ~", k: "안고 앉아 있었다", s: "Josin sat holding it for a long time." },
+            { w: "sat holding ~ (sit)", k: "안고 앉아 있었다", s: "Josin sat holding it for a long time." },
             { w: "had been lying (lie)", k: "묻혀 있었다", s: "a Buddha had been lying" },
             { w: "washed (wash)", k: "씻었다", s: "He washed it, carried it back, and built a temple called Jeongtosa on that spot." },
             { w: "on that spot", k: "그 자리에", s: "He washed it, carried it back, and built a temple called Jeongtosa on that spot." }
@@ -541,18 +541,18 @@ const EN = {
             { w: "gave up ~ (give up)", k: "그만두었다", s: "Josin gave up looking after the temple's land." },
             { w: "gave away ~ (give away)", k: "다 내놓았다", s: "He gave away everything he had" },
             { w: "served (serve)", k: "모셨다", s: "and served the Buddha only" },
-            { w: "never spoke of ~", k: "두 번 다시 꺼내지 않았다", s: "He never spoke of the governor's daughter again." },
+            { w: "never spoke of ~ (speak)", k: "두 번 다시 꺼내지 않았다", s: "He never spoke of the governor's daughter again." },
             { w: "in one night", k: "하룻밤에", s: "I lived forty years in one night." },
             { w: "That was all he said", k: "그 말만 했다", s: "That was all he said, and he smiled." },
             { w: "what he meant", k: "무슨 뜻인지", s: "Nobody knew what he meant." },
             { w: "stopped wanting things", k: "바라는 일이 없어졌다", s: "the monk had stopped wanting things" },
-            { w: "bowed his thanks", k: "고맙다고 절했다", s: "He bowed his thanks for a bowl of rice." }
+            { w: "bowed his thanks (bow)", k: "고맙다고 절했다", s: "He bowed his thanks for a bowl of rice." }
         ],
         "09-dream.webp": [
             { w: "stayed (stay)", k: "남았다", s: "So the dream story stayed." },
             { w: "where it ended", k: "그 끝이 어떤지", s: "got everything he wanted and saw where it ended" },
             { w: "all in one night", k: "하룻밤에", s: "saw where it ended, all in one night" },
-            { w: "went on telling it", k: "계속 이야기했다", s: "People went on telling it afterwards." },
+            { w: "went on telling it (go)", k: "계속 이야기했다", s: "People went on telling it afterwards." },
             { w: "It's like ~", k: "~ 같은 일이다", s: "It's like Josin's dream." },
             { w: "do not last", k: "덧없는", s: "how they came to speak of things that do not last" },
             { w: "is not wrong", k: "잘못이 아니다", s: "Wanting something is not wrong." },
@@ -563,7 +563,7 @@ const EN = {
         "10-naksan.webp": [
             { w: "still stands", k: "지금도 있다", s: "Naksansa still stands on the cliffs above the East Sea." },
             { w: "burned down (burn)", k: "불에 탔다", s: "The hall where Josin lay praying burned down" },
-            { w: "was built again", k: "다시 지어졌다", s: "burned down and was built again" },
+            { w: "was built again (build)", k: "다시 지어졌다", s: "burned down and was built again" },
             { w: "as it was", k: "그때 그대로", s: "But the sea is as it was" },
             { w: "make their wishes", k: "소원을 빈다", s: "People go there and make their wishes." },
             { w: "comes true", k: "이루어지다", s: "what happens if the wish comes true" },

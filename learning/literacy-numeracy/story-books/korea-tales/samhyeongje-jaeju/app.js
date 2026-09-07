@@ -509,7 +509,7 @@ const EN = {
         "cover": [
             { w: "oral tale", k: "구전 설화", s: "This is an oral tale with no known author." },
             { w: "skill", k: "재주", s: "Each brother learns a different skill" },
-            { w: "built this way", k: "이런 짜임의", s: "Stories built this way are found everywhere." },
+            { w: "built this way (build)", k: "이런 짜임의", s: "Stories built this way are found everywhere." },
             { w: "collected (collect)", k: "모았다", s: "The Grimm brothers collected one" },
             { w: "a contest", k: "겨루기", s: "Two skills make a contest and four get tangled." },
             { w: "get tangled", k: "복잡해지다", s: "Two skills make a contest and four get tangled." },
@@ -522,9 +522,9 @@ const EN = {
             { w: "hand down", k: "물려주다", s: "The house was poor, with nothing to hand down." },
             { w: "Plough as they might", k: "밭을 갈아도", s: "Plough as they might, the sons were always hungry." },
             { w: "stripped bark (strip)", k: "나무껍질을 벗겼다", s: "In winter they stripped bark off trees to eat." },
-            { w: "sat them down", k: "불러 앉혔다", s: "the father called his three sons and sat them down" },
+            { w: "sat them down (sit)", k: "불러 앉혔다", s: "the father called his three sons and sat them down" },
             { w: "heavy", k: "무거운", s: "His voice was heavy." },
-            { w: "bowed their heads", k: "고개를 숙였다", s: "The three sons bowed their heads and said nothing." }
+            { w: "bowed their heads (bow)", k: "고개를 숙였다", s: "The three sons bowed their heads and said nothing." }
         ],
         "02-depart.webp": [
             { w: "fork", k: "갈림길", s: "the brothers stood at the fork at the edge of the village" },
@@ -541,7 +541,7 @@ const EN = {
             { w: "burnt black", k: "새까맣게 탄", s: "All three were burnt black by the sun." },
             { w: "knots", k: "굵은 마디", s: "Their hands had knots at every joint." },
             { w: "joint", k: "마디", s: "Their hands had knots at every joint." },
-            { w: "looked round at ~", k: "둘러보았다", s: "Their father looked round at his three sons." },
+            { w: "looked round at ~ (look)", k: "둘러보았다", s: "Their father looked round at his three sons." },
             { w: "a hundred li", k: "백 리", s: "I hear sounds a hundred li away." },
             { w: "put his ear to ~", k: "귀를 댔다", s: "The eldest put his ear to the ground" },
             { w: "calving (calve)", k: "새끼를 낳는", s: "Kim's cow in the next village is calving right now." },
@@ -555,7 +555,7 @@ const EN = {
             { w: "slapped his knee", k: "무릎을 탁 쳤다", s: "Their father slapped his knee and laughed out loud." },
             { w: "hesitantly", k: "머뭇거리며", s: "The youngest said it hesitantly" },
             { w: "burst out laughing", k: "웃음을 터뜨렸다", s: "his brothers burst out laughing" },
-            { w: "went red in the face", k: "얼굴을 붉혔다", s: "The youngest only went red in the face." }
+            { w: "went red in the face (go)", k: "얼굴을 붉혔다", s: "The youngest only went red in the face." }
         ],
         "05-hear.webp": [
             { w: "threw up a hand", k: "손을 번쩍 들었다", s: "Just then the eldest threw up a hand." },
@@ -587,7 +587,7 @@ const EN = {
             { w: "Straight on", k: "곧장", s: "A little more left. Straight on now." },
             { w: "kept stopping (keep)", k: "자꾸 멈췄다", s: "He kept stopping to listen" },
             { w: "valleys", k: "골짜기", s: "Over hills and across valleys they ran for half a day." },
-            { w: "breath caught", k: "숨이 턱에 찼다", s: "Their breath caught and their legs shook." },
+            { w: "breath caught (catch)", k: "숨이 턱에 찼다", s: "Their breath caught and their legs shook." },
             { w: "stabbed the sky", k: "하늘을 찌를 듯한", s: "At last they reached a cliff that stabbed the sky." }
         ],
         "08-cliff.webp": [
@@ -617,7 +617,7 @@ const EN = {
             { w: "Shoot", k: "쏘십시오", s: "Shoot, brother." },
             { w: "not a shake", k: "조금도 떨림이 없는", s: "There was not a shake in his voice." },
             { w: "nothing but ~", k: "~만", s: "Three years he had done nothing but catch." },
-            { w: "took his place", k: "자리를 잡았다", s: "The youngest took his place right under the middle of the cliff." },
+            { w: "took his place (take)", k: "자리를 잡았다", s: "The youngest took his place right under the middle of the cliff." },
             { w: "set his legs firm", k: "다리를 단단히 벌렸다", s: "He set his legs firm and opened both arms wide." },
             { w: "Half a hand", k: "반 뼘만", s: "The wind is from the right. Half a hand to the left." },
             { w: "the string", k: "시위", s: "The second drew the string again." }

@@ -520,7 +520,7 @@ const EN = {
         ],
         "01-birth.webp": [
             { w: "with no children", k: "아이 없는", s: "there lived an old woman with no children" },
-            { w: "turned upside down", k: "발칵 뒤집혔다", s: "The whole village was turned upside down by the news." },
+            { w: "turned upside down (turn)", k: "발칵 뒤집혔다", s: "The whole village was turned upside down by the news." },
             { w: "borne (bear)", k: "낳았다", s: "What she had borne was a great snake." },
             { w: "crowded (crowd)", k: "몰려들었다", s: "People crowded outside the wall and whispered." },
             { w: "quilt", k: "이불", s: "the old woman wrapped the child neatly in a quilt" },
@@ -548,7 +548,7 @@ const EN = {
             { w: "After a long while", k: "한참 만에", s: "After a long while the third daughter spoke." },
             { w: "warmth", k: "다정함", s: "There was warmth in the third daughter's voice." },
             { w: "lifted its head", k: "고개를 들었다", s: "Hearing it, the snake quietly lifted its head." },
-            { w: "was all anyone had called ~", k: "~라는 말만 들었다", s: "Ugly was all anyone had called this child." }
+            { w: "was all anyone had called ~ (call)", k: "~라는 말만 들었다", s: "Ugly was all anyone had called this child." }
         ],
         "04-marry.webp": [
             { w: "human voice", k: "사람의 목소리", s: "the snake spoke to the old woman, in a clear human voice" },
@@ -557,7 +557,7 @@ const EN = {
             { w: "That was the first she knew", k: "그날 처음 알았다", s: "That was the first she knew he could speak." },
             { w: "asked for the marriage", k: "혼인을 청했다", s: "The old woman went next door and asked for the marriage." },
             { w: "jumped up", k: "펄쩍 뛰었다", s: "The eldest and the second both jumped up at that." },
-            { w: "held on to ~", k: "붙들었다", s: "Her sisters held on to her and tried to stop her." }
+            { w: "held on to ~ (hold)", k: "붙들었다", s: "Her sisters held on to her and tried to stop her." }
         ],
         "05-shed.webp": [
             { w: "lay turning over (lie)", k: "뒤척였다", s: "The bride could not sleep and lay turning over." },
@@ -568,7 +568,7 @@ const EN = {
             { w: "tall, fine", k: "훤칠한", s: "Beside it sat a tall, fine young man." },
             { w: "hardly dared to ~", k: "감히 ~하지 못했다", s: "The bride hardly dared to breathe." },
             { w: "startled", k: "놀란", s: "Do not be startled. It is me." },
-            { w: "laughed low", k: "나직이 웃었다", s: "The young man laughed low." }
+            { w: "laughed low (laugh)", k: "나직이 웃었다", s: "The young man laughed low." }
         ],
         "06-promise.webp": [
             { w: "in human shape", k: "사람의 모습으로", s: "From that day he was in human shape by day as well." },
@@ -576,7 +576,7 @@ const EN = {
             { w: "state examination", k: "과거", s: "Then he had to go to Hanyang for the state examination." },
             { w: "officers", k: "벼슬아치", s: "It chose the country's officers, a journey of months." },
             { w: "a journey of months", k: "여러 달 걸리는 길", s: "It chose the country's officers, a journey of months." },
-            { w: "handed it over", k: "건넸다", s: "Shinseonbi folded the skin neatly and handed it over." },
+            { w: "handed it over (hand)", k: "건넸다", s: "Shinseonbi folded the skin neatly and handed it over." },
             { w: "serious", k: "진지한", s: "His face was very serious." },
             { w: "touches fire", k: "불에 닿다", s: "If it touches fire, I cannot come back." },
             { w: "chest", k: "궤", s: "His wife put it deep in a chest and locked it." }
@@ -584,7 +584,7 @@ const EN = {
         "07-burn.webp": [
             { w: "overheard (overhear)", k: "엿들었다", s: "But the two sisters overheard that from outside the door." },
             { w: "galled them (gall)", k: "배가 아팠다", s: "It had always galled them that the third one lived so well." },
-            { w: "With ~ gone", k: "~만 없으면", s: "With the skin gone, might that handsome man be ours?" },
+            { w: "With ~ gone (go)", k: "~만 없으면", s: "With the skin gone, might that handsome man be ours?" },
             { w: "schemed (scheme)", k: "궁리했다", s: "All night the two schemed together." },
             { w: "drawing water", k: "물을 긷는", s: "while their sister was away drawing water" },
             { w: "at the bottom", k: "밑바닥에", s: "The skin lay folded neatly at the bottom." },
@@ -613,7 +613,7 @@ const EN = {
             { w: "Without hesitating", k: "망설이지 않고", s: "Without hesitating she took off her outer coat." },
             { w: "outer coat", k: "겉옷", s: "she took off her outer coat" },
             { w: "spread ~ over (spread)", k: "덮어 주었다", s: "She spread it over the branches to cover the magpies." },
-            { w: "turned her steps", k: "걸음을 옮겼다", s: "His wife turned her steps that way." }
+            { w: "turned her steps (turn)", k: "걸음을 옮겼다", s: "His wife turned her steps that way." }
         ],
         "10-boar.webp": [
             { w: "wild boar", k: "멧돼지", s: "Next she met a wild boar rooting up a field." },
@@ -622,7 +622,7 @@ const EN = {
             { w: "torn about (tear)", k: "들쑤셔진", s: "the field was all torn about" },
             { w: "far too wide", k: "너무 넓은", s: "I do. But this field is far too wide." },
             { w: "rolled up her sleeves", k: "소매를 걷어붙였다", s: "She rolled up her sleeves and turned the field with it." },
-            { w: "turned the field", k: "밭을 뒤집었다", s: "She rolled up her sleeves and turned the field with it." },
+            { w: "turned the field (turn)", k: "밭을 뒤집었다", s: "She rolled up her sleeves and turned the field with it." },
             { w: "nails", k: "손톱", s: "Her nails all broke, and still she did not stop all night." },
             { w: "daybreak", k: "동이 틀 무렵", s: "Only at daybreak did they reach the far end." },
             { w: "a pass", k: "고갯길", s: "The boar told her of a pass over the hills." }

@@ -445,7 +445,7 @@ const EN = {
         "01-pit.webp": [
             { w: "traveller", k: "나그네", s: "A traveller was walking a mountain road" },
             { w: "pack", k: "봇짐", s: "with his pack on his back" },
-            { w: "pulled down", k: "눌러쓴", s: "his hat pulled down" },
+            { w: "pulled down (pull)", k: "눌러쓴", s: "his hat pulled down" },
             { w: "was hurrying", k: "걸음이 급했다", s: "The sun was low and he was hurrying." },
             { w: "mournful", k: "구슬픈", s: "Then a mournful sound came from somewhere." },
             { w: "listened (listen)", k: "귀를 기울였다", s: "The traveller stopped and listened." },
@@ -503,7 +503,7 @@ const EN = {
             { w: "which of us is right", k: "어느 쪽이 옳은가", s: "Pine tree, which of us is right?" },
             { w: "as they please", k: "마구, 제멋대로", s: "People cut us down as they please." },
             { w: "I am for ~", k: "나는 ~ 편이다", s: "I am for the tiger." },
-            { w: "went pale", k: "얼굴이 하얘졌다", s: "The traveller went pale." }
+            { w: "went pale (go)", k: "얼굴이 하얘졌다", s: "The traveller went pale." }
         ],
         "06-cow.webp": [
             { w: "pulling a plough", k: "쟁기를 끄는", s: "Next they asked an ox pulling a plough in a field." },
@@ -541,7 +541,7 @@ const EN = {
             { w: "I tell you", k: "~라니까", s: "No! I was inside, I tell you!" },
             { w: "stamped (stamp)", k: "발을 동동 굴렀다", s: "The tiger stamped with impatience." },
             { w: "seeing at last ~", k: "그제야 알아채고", s: "seeing at last what the rabbit was doing" },
-            { w: "kept his mouth shut", k: "입을 다물었다", s: "kept his mouth shut" }
+            { w: "kept his mouth shut (keep)", k: "입을 다물었다", s: "kept his mouth shut" }
         ],
         "09-back-in.webp": [
             { w: "cannot picture ~", k: "그림이 안 그려진다", s: "I simply cannot picture it." },
@@ -556,21 +556,21 @@ const EN = {
             { w: "trying not to laugh", k: "웃음을 참으며", s: "trying not to laugh" }
         ],
         "10-verdict.webp": [
-            { w: "turned to ~", k: "돌아보았다", s: "Now the rabbit turned to the traveller." },
+            { w: "turned to ~ (turn)", k: "돌아보았다", s: "Now the rabbit turned to the traveller." },
             { w: "How did ~ get here?", k: "어떻게 된 것입니까?", s: "And how did this log get here?" },
             { w: "laid ~ in (lay)", k: "걸쳐 놓았다", s: "I laid it in to get the tiger out." },
             { w: "put ~ back where it was", k: "처음 자리에 도로 놓다", s: "Then put that back where it was too." },
-            { w: "took ~ away", k: "걷어 냈다", s: "The traveller took the log away" },
+            { w: "took ~ away (take)", k: "걷어 냈다", s: "The traveller took the log away" },
             { w: "folded her arms", k: "팔짱을 꼈다", s: "the rabbit folded her arms and looked down" },
             { w: "as it was at the start", k: "처음대로", s: "Everything is as it was at the start." },
             { w: "wicked", k: "못된", s: "Wh— what! You wicked rabbit!" },
             { w: "it was no use", k: "소용없었다", s: "However high the tiger jumped, it was no use." },
-            { w: "bowed low", k: "넙죽 절했다", s: "The traveller bowed low to the rabbit." },
+            { w: "bowed low (bow)", k: "넙죽 절했다", s: "The traveller bowed low to the rabbit." },
             { w: "Do be more careful", k: "조심하세요", s: "Do be more careful next time." }
         ],
         "after": [
-            { w: "is told widely", k: "널리 있다", s: "The story of saving a beast from a pit and nearly being eaten is told widely in the world." },
-            { w: "nearly being eaten", k: "잡아먹힐 뻔한", s: "saving a beast from a pit and nearly being eaten" },
+            { w: "is told widely (tell)", k: "널리 있다", s: "The story of saving a beast from a pit and nearly being eaten is told widely in the world." },
+            { w: "nearly being eaten (eat)", k: "잡아먹힐 뻔한", s: "saving a beast from a pit and nearly being eaten" },
             { w: "Only the animal changes", k: "짐승만 바뀐다", s: "Only the animal changes; the shape is the same." },
             { w: "end the same way", k: "끝이 같다", s: "Such stories mostly end the same way too." },
             { w: "let us start again", k: "처음부터 다시 해 보자", s: "and says let us start again from the beginning" },

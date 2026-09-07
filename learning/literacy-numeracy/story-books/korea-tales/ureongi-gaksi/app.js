@@ -572,13 +572,13 @@ const EN = {
             { w: "bank", k: "논둑", s: "in the paddy or on the bank" },
             { w: "Look as far as he might", k: "멀리까지 둘러보아도", s: "Look as far as he might, he was the only one out there." },
             { w: "hearing things", k: "헛것을 듣는", s: "Am I hearing things?" },
-            { w: "kept wondering", k: "자꾸 궁금했다", s: "But he kept wondering what was behind him." }
+            { w: "kept wondering (keep)", k: "자꾸 궁금했다", s: "But he kept wondering what was behind him." }
         ],
         "03-again.webp": [
             { w: "on purpose", k: "일부러", s: "He said it again, exactly as before, on purpose." },
-            { w: "held his breath", k: "숨을 죽였다", s: "He held his breath and listened." },
+            { w: "held his breath (hold)", k: "숨을 죽였다", s: "He held his breath and listened." },
             { w: "quite plainly", k: "아주 똑똑히", s: "This time he heard it quite plainly" },
-            { w: "his back went cold", k: "소름이 돋았다", s: "he heard it quite plainly, and his back went cold" },
+            { w: "his back went cold (go)", k: "소름이 돋았다", s: "he heard it quite plainly, and his back went cold" },
             { w: "waded (wade)", k: "첨벙첨벙 걸었다", s: "He waded towards where the voice came from" },
             { w: "splashing (splash)", k: "물을 튀기며", s: "splashing to his knees" },
             { w: "parted (part)", k: "헤쳤다", s: "He parted the rice plants and saw something smooth." },
@@ -588,7 +588,7 @@ const EN = {
             { w: "the size of his fist", k: "주먹만 한", s: "one great pond snail the size of his fist" },
             { w: "beautifully coloured", k: "빛깔이 고운", s: "It was far bigger than any other, and beautifully coloured." },
             { w: "lifted ~ out", k: "건져 올렸다", s: "He lifted it out gently with both hands." },
-            { w: "Held up to the sun", k: "햇빛에 비추어 보니", s: "Held up to the sun it turned many colours" },
+            { w: "Held up to the sun (hold)", k: "햇빛에 비추어 보니", s: "Held up to the sun it turned many colours" },
             { w: "what a thing", k: "별일이로구나", s: "Well, what a thing. Was it you?" },
             { w: "had better ~", k: "~하는 편이 좋다", s: "You had better be somewhere with clean water." },
             { w: "slipped ~ into (slip)", k: "살며시 넣었다", s: "He slipped it into the water jar in the kitchen." },
@@ -615,7 +615,7 @@ const EN = {
             { w: "mountain spirit", k: "산신령", s: "Could the mountain spirit be helping me?" }
         ],
         "07-hide.webp": [
-            { w: "made as if to ~", k: "~하는 척했다", s: "he made as if to go out to the paddy and came back in secret" },
+            { w: "made as if to ~ (make)", k: "~하는 척했다", s: "he made as if to go out to the paddy and came back in secret" },
             { w: "in secret", k: "몰래", s: "came back in secret" },
             { w: "shouldered (shoulder)", k: "지게를 졌다", s: "He shouldered his frame early and went off." },
             { w: "over the wall", k: "담을 넘어", s: "Then he came back over the wall behind the house." },
@@ -644,7 +644,7 @@ const EN = {
             { w: "uproar", k: "발칵 뒤집힌 상태", s: "the kitchen was all uproar" },
             { w: "started back (start)", k: "화들짝 물러섰다", s: "The bride started back towards the water jar." },
             { w: "scarlet", k: "새빨간", s: "Her face went scarlet." },
-            { w: "caught her sleeve", k: "소매를 붙잡았다", s: "He caught her sleeve quickly." },
+            { w: "caught her sleeve (catch)", k: "소매를 붙잡았다", s: "He caught her sleeve quickly." },
             { w: "I beg you", k: "부탁이오", s: "Please do not go. I beg you." }
         ],
         "10-wait.webp": [
@@ -660,7 +660,7 @@ const EN = {
         "11-impatient.webp": [
             { w: "said he would", k: "그러겠다고 했다", s: "He said he would." },
             { w: "fret", k: "조급해하다", s: "But when a day had passed he began to fret." },
-            { w: "went back into ~", k: "도로 들어갔다", s: "she laid the table and went back into the jar" },
+            { w: "went back into ~ (go)", k: "도로 들어갔다", s: "she laid the table and went back into the jar" },
             { w: "in the meantime", k: "그사이에", s: "What if she disappears in the meantime, he thought." },
             { w: "after all", k: "끝내", s: "Next morning he took the bride's hand after all." },
             { w: "bring ~ forward", k: "앞당기다", s: "Let us bring it forward by just one day." },
@@ -677,7 +677,7 @@ const EN = {
             { w: "grew smaller (grow)", k: "작아졌다", s: "Her body grew smaller and smaller." }
         ],
         "13-jar.webp": [
-            { w: "held on to ~", k: "붙들었다", s: "He held on to the water jar and called for her." },
+            { w: "held on to ~ (hold)", k: "붙들었다", s: "He held on to the water jar and called for her." },
             { w: "just once", k: "한 번만", s: "Wife! Wife! Come out just once!" },
             { w: "now and then", k: "이따금", s: "Only the water slapped a little, now and then." },
             { w: "the whole night through", k: "밤을 꼬박 새워", s: "He sat in front of the jar the whole night through." },
@@ -693,7 +693,7 @@ const EN = {
             { w: "look in on ~", k: "들여다보다", s: "Do not look in on me, or wait a few more days." },
             { w: "is always broken", k: "늘 깨진다", s: "And the promise is always broken." },
             { w: "is punished", k: "벌을 받는다", s: "It is not a story in which the one who breaks it is punished." },
-            { w: "what is lost", k: "무엇을 잃는지", s: "It shows what is lost afterwards." },
+            { w: "what is lost (lose)", k: "무엇을 잃는지", s: "It shows what is lost afterwards." },
             { w: "the number of days", k: "날수", s: "What he missed was not the number of days." },
             { w: "what she asked of him", k: "상대가 한 부탁", s: "It was what she asked of him." },
             { w: "grow impatient", k: "조급해진다", s: "The more you care, the easier it is to grow impatient." }

@@ -490,15 +490,15 @@ const EN = {
     words: {
         "cover": [
             { w: "with no known author", k: "지은이가 알려지지 않은", s: "a tale with no known author" },
-            { w: "was made out of ~", k: "~을 보고 만들어졌다", s: "It was made out of the stars" },
+            { w: "was made out of ~ (make)", k: "~을 보고 만들어졌다", s: "It was made out of the stars" },
             { w: "face each other", k: "마주 보다", s: "Two bright stars really do face each other" },
             { w: "the Milky Way", k: "은하수", s: "face each other across the Milky Way" },
             { w: "the seventh moon", k: "음력 칠월", s: "The seventh day of the seventh moon is called Chilseok." },
-            { w: "made a wish", k: "소원을 빌었다", s: "people watched the stars and made a wish" }
+            { w: "made a wish (make)", k: "소원을 빌었다", s: "people watched the stars and made a wish" }
         ],
         "01-gyeonu.webp": [
             { w: "Long, long ago", k: "아주 먼 옛날", s: "Long, long ago a young man called Gyeonu lived in the sky." },
-            { w: "looked after ~", k: "돌보았다", s: "He looked after cattle in the fields" },
+            { w: "looked after ~ (look)", k: "돌보았다", s: "He looked after cattle in the fields" },
             { w: "cattle", k: "소 떼", s: "He looked after cattle in the fields across the Milky Way." },
             { w: "Come on, now", k: "이랴, 이랴", s: "Come on, now. Just as far as that hill." },
             { w: "gentle", k: "다정한", s: "Gyeonu's voice was always gentle." },
@@ -539,14 +539,14 @@ const EN = {
         ],
         "05-anger.webp": [
             { w: "At last", k: "마침내", s: "At last the Jade Emperor was angry." },
-            { w: "called ~ before him", k: "불러 세웠다", s: "He called the two of them before him." },
+            { w: "called ~ before him (call)", k: "불러 세웠다", s: "He called the two of them before him." },
             { w: "idle", k: "게으름 피우다", s: "I matched you two so you would work well, not so you would idle!" },
             { w: "grey", k: "잿빛인", s: "Look at the sky. It has been grey for days!" },
             { w: "trembled (tremble)", k: "부르르 떨렸다", s: "The Jade Emperor's beard trembled." },
             { w: "Forgive us", k: "용서해 주십시오", s: "Forgive us! We were wrong!" },
             { w: "knelt down (kneel)", k: "무릎을 꿇었다", s: "Gyeonu and Jiknyeo knelt down where they stood." },
             { w: "one more chance", k: "한 번만 더", s: "We will not do it again. Give us one more chance." },
-            { w: "made up his mind", k: "마음을 정했다", s: "He had already made up his mind." }
+            { w: "made up his mind (make)", k: "마음을 정했다", s: "He had already made up his mind." }
         ],
         "06-parted.webp": [
             { w: "live apart", k: "따로 살다", s: "From today you live apart, on either side of the river." },
@@ -571,7 +571,7 @@ const EN = {
         "08-river.webp": [
             { w: "at one go", k: "한달음에", s: "The two ran for the bank of the Milky Way at one go." },
             { w: "bank", k: "강가", s: "ran for the bank of the Milky Way" },
-            { w: "their breath caught", k: "숨이 턱에 찼다", s: "They ran till their breath caught." },
+            { w: "their breath caught (catch)", k: "숨이 턱에 찼다", s: "They ran till their breath caught." },
             { w: "My dear", k: "여보", s: "My dear, I am here!" },
             { w: "far too wide", k: "너무나 넓은", s: "But the Milky Way was far too wide." },
             { w: "taken away (take)", k: "치워졌다", s: "The bridge had already been taken away." },
@@ -632,10 +632,10 @@ const EN = {
             { w: "look their closest", k: "가장 가까워 보인다", s: "those stars look their closest" },
             { w: "was hung on ~ (hang)", k: "~에 붙여 두었다", s: "this story was hung on it" },
             { w: "punishment", k: "벌", s: "That is why the punishment is tied to work." },
-            { w: "is tied to ~", k: "~과 이어져 있다", s: "the punishment is tied to work" },
+            { w: "is tied to ~ (tie)", k: "~과 이어져 있다", s: "the punishment is tied to work" },
             { w: "rainy season", k: "장마", s: "That time of year really is the end of our rainy season." },
             { w: "theirs to do", k: "제 몫의", s: "the work that was theirs to do" },
-            { w: "lost in ~", k: "~에 빠져서", s: "because you were lost in something you loved" }
+            { w: "lost in ~ (lose)", k: "~에 빠져서", s: "because you were lost in something you loved" }
         ]
     },
     afterword: {

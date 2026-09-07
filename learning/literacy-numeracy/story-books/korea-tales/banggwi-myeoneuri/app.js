@@ -544,7 +544,7 @@ const EN = {
         ],
         "04-brace.webp": [
             { w: "Doubting it", k: "설마 하면서", s: "Doubting it, the family each took hold of something." },
-            { w: "took hold of ~", k: "붙들었다", s: "the family each took hold of something" },
+            { w: "took hold of ~ (take)", k: "붙들었다", s: "the family each took hold of something" },
             { w: "so seriously", k: "하도 진지하게", s: "She said it so seriously they could not refuse." },
             { w: "hall", k: "대청", s: "Her father-in-law put both arms round the pillar of the hall." },
             { w: "Privately", k: "속으로는", s: "Privately he thought the whole thing funny." },
@@ -558,7 +558,7 @@ const EN = {
             { w: "heaved (heave)", k: "들썩였다", s: "The whole house heaved." },
             { w: "came off (come off)", k: "떨어져 나갔다", s: "Doors came off and roof tiles poured down." },
             { w: "roof tiles", k: "기왓장", s: "Doors came off and roof tiles poured down." },
-            { w: "must have heard", k: "들었을 것이다", s: "It was a sound the whole village must have heard." },
+            { w: "must have heard (hear)", k: "들었을 것이다", s: "It was a sound the whole village must have heard." },
             { w: "neighbourhood", k: "온 동네", s: "Every dog in the neighbourhood barked at once." },
             { w: "clear off the ground", k: "땅에서 완전히 떠서", s: "Both his feet were clear off the ground." },
             { w: "cracking noise", k: "우지끈 소리", s: "The pillar made a cracking noise." },
@@ -595,11 +595,11 @@ const EN = {
             { w: "stamped (stamp)", k: "발을 동동 굴렀다", s: "The merchants stamped and stared up at the tree." }
         ],
         "09-offer.webp": [
-            { w: "went over", k: "다가갔다", s: "The bride watched them for a while, then went carefully over." },
-            { w: "caught her sleeve", k: "소매를 붙잡았다", s: "Her husband caught her sleeve, but she walked on out." },
+            { w: "went over (go)", k: "다가갔다", s: "The bride watched them for a while, then went carefully over." },
+            { w: "caught her sleeve (catch)", k: "소매를 붙잡았다", s: "Her husband caught her sleeve, but she walked on out." },
             { w: "the face of somebody who ~", k: "~한 얼굴", s: "She had the face of somebody who has thought of something." },
             { w: "get ~ down", k: "따 주다", s: "Shall I get them down for you?" },
-            { w: "looked her up and down", k: "위아래로 훑어보았다", s: "The merchants looked her up and down." },
+            { w: "looked her up and down (look)", k: "위아래로 훑어보았다", s: "The merchants looked her up and down." },
             { w: "snickered (snicker)", k: "킥킥 웃었다", s: "Then they snickered among themselves." },
             { w: "ladder", k: "사다리", s: "You? With no ladder?" },
             { w: "half of them", k: "절반", s: "Get them down and half of them are yours!" }
@@ -627,7 +627,7 @@ const EN = {
             { w: "of all the tricks", k: "이런 재주가 다 있나", s: "Well, of all the tricks!" }
         ],
         "12-home.webp": [
-            { w: "kept their word", k: "약속대로 했다", s: "The merchants kept their word and loaded her with pears and coins." },
+            { w: "kept their word (keep)", k: "약속대로 했다", s: "The merchants kept their word and loaded her with pears and coins." },
             { w: "loaded (load)", k: "한 아름 안겨 주었다", s: "loaded her with pears and coins" },
             { w: "by herself", k: "혼자서", s: "It was more than she could carry by herself." },
             { w: "What visit", k: "친정은 무슨 친정", s: "Let us just go home. What visit, and to whom?" },
@@ -642,7 +642,7 @@ const EN = {
             { w: "shows ~ best", k: "가장 잘 보여 준다", s: "a story made for a laugh shows the times best" },
             { w: "did nothing wrong", k: "아무 잘못도 하지 않았다", s: "Look again and the bride did nothing wrong." },
             { w: "the fault", k: "흠", s: "The fault was not the fart" },
-            { w: "found a use", k: "쓸모가 생겼다", s: "And that fart found a use the moment she left the house." },
+            { w: "found a use (find)", k: "쓸모가 생겼다", s: "And that fart found a use the moment she left the house." },
             { w: "put up with ~", k: "시달리다", s: "In old tales the bride is usually the one who puts up with things." },
             { w: "turns it round", k: "판을 뒤집는다", s: "In this one the bride turns it round." },
             { w: "is up to ~", k: "~에게 달렸다", s: "Whether being different is a fault or a gift is up to the one looking." }

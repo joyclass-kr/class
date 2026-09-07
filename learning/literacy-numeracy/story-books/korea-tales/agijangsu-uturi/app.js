@@ -547,7 +547,7 @@ const EN = {
         ],
         "02-fly.webp": [
             { w: "the seventh day", k: "이레째 되는 날", s: "It was the seventh day after he was born." },
-            { w: "was gone", k: "없어졌다", s: "The mother came out of the kitchen and the baby was gone." },
+            { w: "was gone (go)", k: "없어졌다", s: "The mother came out of the kitchen and the baby was gone." },
             { w: "bubbling laugh", k: "까르르 웃음소리", s: "Then a bubbling laugh came from above." },
             { w: "roof beam", k: "대들보", s: "The baby was sitting on the roof beam." },
             { w: "by the day", k: "하루가 다르게", s: "Uturi grew by the day." },
@@ -561,17 +561,17 @@ const EN = {
             { w: "overturn", k: "뒤엎다", s: "A child born with wings would overturn the country, it said." },
             { w: "be punished", k: "벌을 받다", s: "So his family and the whole village would be punished." },
             { w: "the officers", k: "관가", s: "If the officers hear, we are all finished." },
-            { w: "kept ~ inside", k: "밖에 내보내지 않았다", s: "From that day they kept the child inside." },
+            { w: "kept ~ inside (keep)", k: "밖에 내보내지 않았다", s: "From that day they kept the child inside." },
             { w: "got over the wall", k: "담을 넘었다", s: "But talk got over the wall." },
             { w: "muttered (mutter)", k: "수군거렸다", s: "People muttered it in the market." },
             { w: "lay awake (lie)", k: "잠을 설쳤다", s: "His mother lay awake nightly holding the door ring." },
             { w: "nowhere to hide ~", k: "숨길 곳이 없는", s: "There was nowhere to hide him." }
         ],
         "04-decide.webp": [
-            { w: "sat down in front of ~", k: "앞에 앉았다", s: "🏔️ One night Uturi, five years old, sat down in front of his mother." },
+            { w: "sat down in front of ~ (sit)", k: "앞에 앉았다", s: "🏔️ One night Uturi, five years old, sat down in front of his mother." },
             { w: "will be hurt", k: "다칠 것이다", s: "If I stay, you and the village will be hurt." },
             { w: "calm", k: "차분한", s: "His voice was calm, like a grown man's." },
-            { w: "took him in her arms", k: "끌어안았다", s: "His mother took him in her arms." },
+            { w: "took him in her arms (take)", k: "끌어안았다", s: "His mother took him in her arms." },
             { w: "Roast (roast)", k: "볶다", s: "Roast me three mal of beans and three of red beans." },
             { w: "mal", k: "말(되의 단위)", s: "One mal fills a big measure" },
             { w: "measure", k: "되", s: "One mal fills a big measure, so three were heavy" },
@@ -600,7 +600,7 @@ const EN = {
         ],
         "07-soldiers.webp": [
             { w: "the foot of the mountain", k: "산 밑", s: "his mother walked to the foot of the mountain and back" },
-            { w: "went near ~", k: "가까이 갔다", s: "She never went near the rock." },
+            { w: "went near ~ (go)", k: "가까이 갔다", s: "She never went near the rock." },
             { w: "counted ~ on her fingers", k: "손가락으로 꼽았다", s: "She counted the days on her fingers." },
             { w: "grew louder (grow)", k: "점점 커졌다", s: "The sound in the rock grew louder." },
             { w: "reached (reach)", k: "들어갔다", s: "In the end that sound reached the government office." },
@@ -618,7 +618,7 @@ const EN = {
             { w: "still to go", k: "아직 남은", s: "A whole year still to go before the three were up." },
             { w: "screamed (scream)", k: "자지러지게 울었다", s: "Then the baby next door screamed in its mother's arms." },
             { w: "thatched roof", k: "초가지붕", s: "The torch came close to a thatched roof." },
-            { w: "went down on her knees", k: "무릎을 꿇었다", s: "His mother went down on her knees." }
+            { w: "went down on her knees (go)", k: "무릎을 꿇었다", s: "His mother went down on her knees." }
         ],
         "09-open.webp": [
             { w: "Push as they might", k: "아무리 밀어도", s: "Push as they might, it did not stir." },
@@ -632,7 +632,7 @@ const EN = {
             { w: "were not up", k: "다 차지 않았다", s: "The three years were not up." }
         ],
         "10-onebean.webp": [
-            { w: "called out", k: "외쳤다", s: "Uturi called out to the soldiers." },
+            { w: "called out (call)", k: "외쳤다", s: "Uturi called out to the soldiers." },
             { w: "Rise", k: "일어나라", s: "Rise!" },
             { w: "the last place", k: "맨 끝자리", s: "But the last place in the line was empty." },
             { w: "one bean short", k: "콩 한 알이 모자라", s: "One bean short: the bean his mother had eaten as she roasted them." },
@@ -657,9 +657,9 @@ const EN = {
         "12-pond.webp": [
             { w: "hoofmarks", k: "말발굽 자국", s: "They say the hoofmarks are on the rock to this day." },
             { w: "to this day", k: "지금도", s: "the hoofmarks are on the rock to this day" },
-            { w: "carried ~ away", k: "물어 갔다", s: "The birds carried the beans away." },
+            { w: "carried ~ away (carry)", k: "물어 갔다", s: "The birds carried the beans away." },
             { w: "If only ~", k: "~만 있었으면", s: "If only I had had this one bean." },
-            { w: "handed down", k: "전해 온", s: "There was a saying handed down in that village." },
+            { w: "handed down (hand)", k: "전해 온", s: "There was a saying handed down in that village." },
             { w: "His time did not come", k: "때를 못 만났다", s: "The baby warrior did not die. His time did not come." },
             { w: "waits for ~ still", k: "지금도 기다린다", s: "The dragon horse waits in the pond for his master still." },
             { w: "hard times", k: "살기 어려운 때", s: "So when hard times came, people looked at that pond." }
@@ -671,7 +671,7 @@ const EN = {
             { w: "before he can ~", k: "~해 보지도 못하고", s: "The child who was to be a warrior falls before he can do anything at all." },
             { w: "stayed longer", k: "더 오래 남았다", s: "That is why it has stayed longer." },
             { w: "get rid of ~", k: "없애다", s: "It was the state that tried to get rid of the winged child." },
-            { w: "handed ~ over", k: "넘겼다", s: "the one who handed the child over was the closest person to him" },
+            { w: "handed ~ over (hand)", k: "넘겼다", s: "the one who handed the child over was the closest person to him" },
             { w: "does not stop there", k: "여기서 끝내지 않는다", s: "But the story does not stop there." },
             { w: "a lost story", k: "진 이야기", s: "Leaving a lost story open like that was the old way of telling." },
             { w: "set aside (set)", k: "접어 두었다", s: "Is there something you have set aside" }

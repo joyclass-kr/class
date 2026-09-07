@@ -621,7 +621,7 @@ const EN = {
             { w: "waver", k: "흔들리다", s: "It stood straight and did not waver at all." },
             { w: "lightning", k: "번개", s: "It was not lightning, and it was not a sunset." },
             { w: "all together", k: "한꺼번에", s: "Then all together they ran down the hill." },
-            { w: "breath caught", k: "숨이 턱에 찼다", s: "They ran till their breath caught" },
+            { w: "breath caught (catch)", k: "숨이 턱에 찼다", s: "They ran till their breath caught" },
             { w: "All that while", k: "그동안에도", s: "All that while the light went on standing there." }
         ],
         "03-horse.webp": [
@@ -629,7 +629,7 @@ const EN = {
             { w: "coat", k: "털", s: "Its coat was white as snow and its mane hung long." },
             { w: "mane", k: "갈기", s: "Its coat was white as snow and its mane hung long." },
             { w: "front knees", k: "앞무릎", s: "The horse was down on its front knees" },
-            { w: "held their breath", k: "숨을 죽였다", s: "The people stopped and held their breath." },
+            { w: "held their breath (hold)", k: "숨을 죽였다", s: "The people stopped and held their breath." },
             { w: "dared (dare)", k: "감히 ~했다", s: "Nobody dared make any sound." },
             { w: "one step nearer", k: "한 발짝 가까이", s: "They came one step nearer, and the horse lifted its head." },
             { w: "gentle", k: "순한", s: "Its eyes were very clear and gentle." },
@@ -652,8 +652,8 @@ const EN = {
             { w: "shell", k: "껍데기", s: "The cracks ran out every way across the shell." },
             { w: "without meaning to", k: "저도 모르게", s: "The six of them stepped back without meaning to." },
             { w: "wide open", k: "말똥말똥 뜬", s: "His eyes were wide open and clear." },
-            { w: "went round ~", k: "돌았다", s: "A soft light went round his body." },
-            { w: "went flat on their faces", k: "넙죽 엎드렸다", s: "The chiefs went flat on their faces where they stood." }
+            { w: "went round ~ (go)", k: "돌았다", s: "A soft light went round his body." },
+            { w: "went flat on their faces (go)", k: "넙죽 엎드렸다", s: "The chiefs went flat on their faces where they stood." }
         ],
         "06-bath.webp": [
             { w: "washed (wash)", k: "씻겼다", s: "💧 The chiefs took the child to the stream on the east and washed him." },
@@ -679,13 +679,13 @@ const EN = {
             { w: "split apart", k: "쫙 갈라졌다", s: "The water split apart and something rose out of it." },
             { w: "rose out of ~ (rise)", k: "솟아올랐다", s: "The water split apart and something rose out of it." },
             { w: "the head of a hen", k: "닭 머리", s: "It was a dragon with the head of a hen." },
-            { w: "stood stiff", k: "그대로 굳었다", s: "The people drawing water stood stiff with fright." },
+            { w: "stood stiff (stand)", k: "그대로 굳었다", s: "The people drawing water stood stiff with fright." },
             { w: "left ~ (leave)", k: "남기고 갔다", s: "The dragon left a baby girl at the well and was gone." },
             { w: "backed away", k: "뒷걸음질 쳤다", s: "The people started and backed away." },
             { w: "stamped about", k: "발을 굴렀다", s: "They did not know what to do, and stamped about." }
         ],
         "09-beak.webp": [
-            { w: "took ~ up in her arms", k: "안아 들었다", s: "Then an old woman took the child up in her arms." },
+            { w: "took ~ up in her arms (take)", k: "안아 들었다", s: "Then an old woman took the child up in her arms." },
             { w: "may make it better", k: "나아질지도 모른다", s: "Washing her may make it better." },
             { w: "pebbles", k: "자갈", s: "you could see the pebbles at the bottom" },
             { w: "came off (come off)", k: "툭 떨어졌다", s: "And the beak came off and floated away on the water." },
@@ -696,24 +696,24 @@ const EN = {
             { w: "raised (raise)", k: "길렀다", s: "The six villages raised the two children between them." },
             { w: "between them", k: "함께", s: "The six villages raised the two children between them." },
             { w: "their own", k: "제 아이", s: "Not one person said they were not their own." },
-            { w: "were made welcome", k: "반겨 주었다", s: "Wherever they went they were made welcome." },
+            { w: "were made welcome (make)", k: "반겨 주었다", s: "Wherever they went they were made welcome." },
             { w: "shot well (shoot)", k: "활을 잘 쏘았다", s: "Hyeokgeose shot well and rode well." },
             { w: "mark", k: "과녁", s: "He hit a far mark at the first try." },
             { w: "silkworms", k: "누에", s: "Aryeong knew all about growing grain and keeping silkworms." },
             { w: "silk thread", k: "비단실", s: "A silkworm is the creature that gives silk thread." }
         ],
         "11-thirteen.webp": [
-            { w: "turned thirteen", k: "열세 살이 되었다", s: "It was the year Hyeokgeose turned thirteen." },
+            { w: "turned thirteen (turn)", k: "열세 살이 되었다", s: "It was the year Hyeokgeose turned thirteen." },
             { w: "a head taller", k: "머리 하나가 더 큰", s: "He already stood a head taller than the grown men." },
             { w: "The time has come", k: "때가 되었다", s: "The time has come." },
             { w: "take ~ as king", k: "임금으로 모시다", s: "Let us take this child as king of our six villages." },
             { w: "with one voice", k: "한목소리로", s: "The six chiefs said yes with one voice." },
             { w: "without exception", k: "한 사람도 빠짐없이", s: "Every person of the six villages came to the hill, without exception." },
             { w: "a high place", k: "높은 자리", s: "The chiefs set the boy in a high place on the hill." },
-            { w: "bowed all together", k: "한꺼번에 절했다", s: "The people bowed all together." }
+            { w: "bowed all together (bow)", k: "한꺼번에 절했다", s: "The people bowed all together." }
         ],
         "12-queen.webp": [
-            { w: "took ~ for his queen", k: "왕비로 맞았다", s: "Hyeokgeose took Aryeong for his queen." },
+            { w: "took ~ for his queen (take)", k: "왕비로 맞았다", s: "Hyeokgeose took Aryeong for his queen." },
             { w: "since childhood", k: "어릴 적부터", s: "the friend who had been beside him since childhood" },
             { w: "By myself", k: "나 혼자서는", s: "By myself I can do nothing at all." },
             { w: "palanquin", k: "가마", s: "The two went round the villages together, and never in a palanquin." },
@@ -726,7 +726,7 @@ const EN = {
             { w: "was named ~", k: "~라 했다", s: "The country was named Seorabeol." },
             { w: "had to be ~", k: "~여야 했다", s: "Six villages had become one, so the name had to be one too." },
             { w: "pulled down (pull)", k: "헐었다", s: "People pulled down the walls between village and village" },
-            { w: "made roads", k: "길을 냈다", s: "People pulled down the walls between village and village and made roads." },
+            { w: "made roads (make)", k: "길을 냈다", s: "People pulled down the walls between village and village and made roads." },
             { w: "market", k: "저잣거리", s: "In the middle they opened a market." },
             { w: "traded (trade)", k: "물건을 바꾸었다", s: "There people traded one thing for another." },
             { w: "marrying into ~", k: "사돈을 맺는", s: "Houses began marrying into the next village." },
@@ -734,15 +734,15 @@ const EN = {
             { w: "lasted (last)", k: "이어졌다", s: "It lasted a thousand years, and it began as six villages." }
         ],
         "14-people.webp": [
-            { w: "turned yellow", k: "누렇게 물들었다", s: "In autumn all Seorabeol turned yellow." },
+            { w: "turned yellow (turn)", k: "누렇게 물들었다", s: "In autumn all Seorabeol turned yellow." },
             { w: "ripened (ripen)", k: "익었다", s: "Rice ripened in the paddies and beans in the fields." },
             { w: "the harvest was in", k: "가을걷이가 끝났다", s: "When the harvest was in, the storehouses were full." },
             { w: "thanks to ~", k: "~ 덕분에", s: "This is all thanks to our king." },
             { w: "shook his head (shake)", k: "고개를 저었다", s: "But Hyeokgeose shook his head." },
             { w: "among ~", k: "~ 가운데", s: "The king stood among the people" },
-            { w: "looked round at ~", k: "죽 둘러보았다", s: "and looked round at the six villages" },
+            { w: "looked round at ~ (look)", k: "죽 둘러보았다", s: "and looked round at the six villages" },
             { w: "came together", k: "모였다", s: "It is because the six villages came together." },
-            { w: "went quiet", k: "조용해졌다", s: "The people heard it and went quiet." }
+            { w: "went quiet (go)", k: "조용해졌다", s: "The people heard it and went quiet." }
         ],
         "after": [
             { w: "differ a little", k: "조금 다르다", s: "The two books differ a little in what they tell." },
@@ -750,9 +750,9 @@ const EN = {
             { w: "having no father", k: "아버지가 없다는 것", s: "Coming out of an egg also means having no father." },
             { w: "lean towards ~", k: "~에 치우치다", s: "only such a person could be a king who leaned towards none of the six" },
             { w: "one odd thing", k: "이상한 것 하나", s: "Look again and there is one odd thing." },
-            { w: "It was people who chose", k: "고른 것은 사람이었다", s: "The books say heaven sent him down, but it was people who chose." },
+            { w: "It was people who chose (choose)", k: "고른 것은 사람이었다", s: "The books say heaven sent him down, but it was people who chose." },
             { w: "is read as ~", k: "~로 풀이한다", s: "The name Silla is read as gathering all sides in like a net." },
-            { w: "made up their minds", k: "마음먹었다", s: "because the people made up their minds to be together" }
+            { w: "made up their minds (make)", k: "마음먹었다", s: "because the people made up their minds to be together" }
         ]
     },
     afterword: {

@@ -602,7 +602,7 @@ const EN = {
        본문에 나온 꼴을 앞에 적고 기본형을 괄호에 넣는다. */
     words: {
         "cover": [
-            { w: "is kept in ~", k: "~에 실려 있다", s: "🐢 cover.webp Kim Suro The story of Kim Suro is kept in the Record of Garak" },
+            { w: "is kept in ~ (keep)", k: "~에 실려 있다", s: "🐢 cover.webp Kim Suro The story of Kim Suro is kept in the Record of Garak" },
             { w: "text", k: "글", s: "a text inside the Samguk Yusa" },
             { w: "the first king", k: "첫 임금", s: "It is about the first king of Gaya." },
             { w: "written down", k: "글로 남은", s: "among the oldest songs written down in Korea" },
@@ -627,13 +627,13 @@ const EN = {
             { w: "nobody to see", k: "사람은 보이지 않는", s: "There was nobody to see, only the voice." },
             { w: "started (start)", k: "깜짝 놀랐다", s: "People started and looked all round them." },
             { w: "in a great hurry", k: "헐레벌떡", s: "The Nine Gan went up the peak in a great hurry." },
-            { w: "breath caught", k: "숨이 턱에 찼다", s: "They ran up it till their breath caught, and two hundred people came behind." }
+            { w: "breath caught (catch)", k: "숨이 턱에 찼다", s: "They ran up it till their breath caught, and two hundred people came behind." }
         ],
         "03-song.webp": [
             { w: "set up a country", k: "나라를 세우다", s: "Heaven has told me to set up a country here." },
             { w: "rang out (ring)", k: "울렸다", s: "The voice rang out on the peak again." },
             { w: "Dig at ~", k: "파헤치다", s: "Dig at the earth, and sing, and dance." },
-            { w: "went flat on their faces", k: "넙죽 엎드렸다", s: "The Nine Gan went flat on their faces where they stood." },
+            { w: "went flat on their faces (go)", k: "넙죽 엎드렸다", s: "The Nine Gan went flat on their faces where they stood." },
             { w: "dared (dare)", k: "감히 ~했다", s: "Nobody dared lift a head." },
             { w: "in a shaking voice", k: "떨리는 목소리로", s: "One of them asked it in a shaking voice." },
             { w: "put out ~", k: "내어라", s: "Turtle, turtle, put out your head" },
@@ -644,7 +644,7 @@ const EN = {
             { w: "all over the place", k: "제각각인", s: "At first the voices were all over the place." },
             { w: "clapped (clap)", k: "손뼉을 쳤다", s: "They stamped their feet and clapped their hands." },
             { w: "of themselves", k: "저절로", s: "as they sang they came together of themselves" },
-            { w: "made one voice", k: "한목소리를 냈다", s: "For the first time the nine villages made one voice." },
+            { w: "made one voice (make)", k: "한목소리를 냈다", s: "For the first time the nine villages made one voice." },
             { w: "dug at ~ (dig)", k: "파헤쳤다", s: "They dug at the earth and stamped hard." },
             { w: "heaved (heave)", k: "들썩였다", s: "The peak heaved. Dust went up to the sky." },
             { w: "of one mind", k: "한마음인", s: "It was the first moment the nine villages were of one mind." }
@@ -653,7 +653,7 @@ const EN = {
             { w: "purple", k: "자줏빛", s: "Then a purple cord came sliding down out of the sky." },
             { w: "cord", k: "줄", s: "a purple cord came sliding down" },
             { w: "reach right up to ~", k: "~까지 이어지다", s: "The cord seemed to reach right up to the end of the sky." },
-            { w: "was tied to ~", k: "묶여 있었다", s: "A red cloth was tied to the end of it." },
+            { w: "was tied to ~ (tie)", k: "묶여 있었다", s: "A red cloth was tied to the end of it." },
             { w: "untied (untie)", k: "풀었다", s: "They untied the cloth and a golden box came out." },
             { w: "dazzling", k: "눈부신", s: "A dazzling light poured out of the box." },
             { w: "lid", k: "뚜껑", s: "The people held their breath and opened the lid." },
@@ -664,7 +664,7 @@ const EN = {
             { w: "to the touch", k: "만져 보니", s: "They felt warm to the touch." },
             { w: "set (set)", k: "모셔 두었다", s: "The Nine Gan set the box in the house of a man called Ajin." },
             { w: "the eldest", k: "가장 나이 많은 이", s: "Ajin was the eldest of the Nine Gan." },
-            { w: "took turns", k: "번갈아 했다", s: "The Nine Gan took turns guarding the box." },
+            { w: "took turns (take)", k: "번갈아 했다", s: "The Nine Gan took turns guarding the box." },
             { w: "torches", k: "횃불", s: "At night they lit torches and sat round it in a ring." },
             { w: "in a ring", k: "둘러앉아", s: "sat round it in a ring" },
             { w: "That was all ~", k: "그 생각뿐이었다", s: "That was all any of them could think about." }
@@ -676,7 +676,7 @@ const EN = {
             { w: "broken open", k: "깨졌다", s: "All six eggs had broken open and six boys sat there." },
             { w: "came off ~ (come off)", k: "돌았다", s: "A soft light came off their bodies." },
             { w: "Good heavens", k: "아이고", s: "Good heavens! What is this!" },
-            { w: "sat down heavily", k: "털썩 주저앉았다", s: "The Nine Gan sat down heavily where they were." },
+            { w: "sat down heavily (sit)", k: "털썩 주저앉았다", s: "The Nine Gan sat down heavily where they were." },
             { w: "put a hand on ~", k: "손을 대다", s: "Not one of them dared put a hand on those children." }
         ],
         "08-suro.webp": [
@@ -724,7 +724,7 @@ const EN = {
             { w: "sail", k: "돛", s: "One day a ship with a red sail appeared out at sea." },
             { w: "out at sea", k: "바다 저편에", s: "a ship with a red sail appeared out at sea" },
             { w: "in a crowd", k: "우르르", s: "The villagers ran down to the landing in a crowd." },
-            { w: "nobody had seen before", k: "처음 보는", s: "It was a shape of ship nobody had seen before." },
+            { w: "nobody had seen before (see)", k: "처음 보는", s: "It was a shape of ship nobody had seen before." },
             { w: "carved (carve)", k: "새겨진", s: "There were strange marks carved on the bow." },
             { w: "bow", k: "뱃머리", s: "There were strange marks carved on the bow." },
             { w: "came off ~", k: "내렸다", s: "The one who came off it was a young woman in strange clothes." },
@@ -743,7 +743,7 @@ const EN = {
             { w: "uncommonly", k: "유난히", s: "The harvest that year was uncommonly good." }
         ],
         "14-gaya.webp": [
-            { w: "opened wide to ~", k: "활짝 열린", s: "Gaya became a country opened wide to the sea." },
+            { w: "opened wide to ~ (open)", k: "활짝 열린", s: "Gaya became a country opened wide to the sea." },
             { w: "goods", k: "물건", s: "Ships went out with iron and strange goods came in." },
             { w: "stopped fearing ~", k: "무서워하지 않게 되었다", s: "The people of Gaya stopped fearing what was strange." },
             { w: "the days of ~", k: "~하던 시절", s: "He thought of the days of the nine villages." },
@@ -757,7 +757,7 @@ const EN = {
             { w: "not one but six", k: "하나가 아니라 여섯", s: "Only here it is not one egg but six." },
             { w: "has come down (come down)", k: "전해 온다", s: "That song has come down to us under the name Song of Guji." },
             { w: "a trace", k: "흔적", s: "It is also a trace of how far Gaya went by sea." },
-            { w: "held that ~", k: "~라고 여겼다", s: "The Nine Gan were men who each held that his own village was best." },
+            { w: "held that ~ (hold)", k: "~라고 여겼다", s: "The Nine Gan were men who each held that his own village was best." },
             { w: "only after ~", k: "~한 다음에야", s: "And only after they had sung together and stamped their feet together did the country come into being." },
             { w: "doing something together", k: "같이 무언가 해 보기", s: "Coming together always starts with doing something together." }
         ]

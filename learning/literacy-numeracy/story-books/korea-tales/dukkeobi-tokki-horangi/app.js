@@ -458,7 +458,7 @@ const EN = {
             { w: "was heaped with ~ (heap)", k: "수북이 담겼다", s: "It was heaped with white rice cake" },
             { w: "fresh from the steam", k: "갓 쪄 낸", s: "white rice cake in neat squares, fresh from the steam" },
             { w: "feast", k: "잔치", s: "They had been given it at a village feast." },
-            { w: "sat round ~", k: "빙 둘러앉았다", s: "The three of them sat round the pot up on a hill." },
+            { w: "sat round ~ (sit)", k: "빙 둘러앉았다", s: "The three of them sat round the pot up on a hill." },
             { w: "twitched (twitch)", k: "벌름거렸다", s: "The rabbit's nose twitched." },
             { w: "smacking his lips", k: "입맛을 다시는", s: "The tiger was already smacking his lips." },
             { w: "drifted (drift)", k: "퍼져 나갔다", s: "The warm smell drifted right down the hill." },
@@ -484,8 +484,8 @@ const EN = {
             { w: "gave him a poke", k: "툭 건드렸다", s: "The rabbit gave him a poke." },
             { w: "Nothing showed on his face.", k: "아무 기색도 없었다.", s: "Nothing showed on his face." },
             { w: "snorted (snort)", k: "코웃음을 쳤다", s: "The tiger and the rabbit snorted." },
-            { w: "started arguing", k: "다투기 시작했다", s: "Then they started arguing again." },
-            { w: "looked down the hill", k: "언덕 아래를 내려다보았다", s: "The toad only looked down the hill." }
+            { w: "started arguing (start)", k: "다투기 시작했다", s: "Then they started arguing again." },
+            { w: "looked down the hill (look)", k: "언덕 아래를 내려다보았다", s: "The toad only looked down the hill." }
         ],
         "04-idea.webp": [
             { w: "spoke up (speak up)", k: "입을 열었다", s: "Then the toad spoke up quietly." },
@@ -493,14 +493,14 @@ const EN = {
             { w: "will never finish", k: "끝이 안 난다", s: "Arguing like this will never finish." },
             { w: "How about ~ ?", k: "~하는 게 어떨까요?", s: "How about a fair bet instead?" },
             { w: "fair", k: "공평한", s: "How about a fair bet instead?" },
-            { w: "turned round", k: "돌아보았다", s: "The two of them stopped and turned round." },
+            { w: "turned round (turn)", k: "돌아보았다", s: "The two of them stopped and turned round." },
             { w: "roll ~ down the hill", k: "언덕 아래로 굴리다", s: "We roll this pot down the hill." },
             { w: "Whoever ~", k: "~하는 이가 누구든", s: "Whoever catches it first eats the lot." },
             { w: "nodded down ~", k: "턱으로 가리켰다", s: "The toad nodded down the slope." },
             { w: "steep", k: "가파른", s: "It was a long hill and quite steep." }
         ],
         "05-agree.webp": [
-            { w: "laughed out loud", k: "껄껄껄 웃었다", s: "The tiger laughed out loud" },
+            { w: "laughed out loud (laugh)", k: "껄껄껄 웃었다", s: "The tiger laughed out loud" },
             { w: "thumped (thump)", k: "쿵쿵 두드렸다", s: "thumped his own chest with a paw" },
             { w: "Not a chance.", k: "어림없어요.", s: "Not a chance. Running is what I do best!" },
             { w: "what I do best", k: "내가 제일 잘하는 것", s: "Running is what I do best!" },
@@ -523,10 +523,10 @@ const EN = {
         ],
         "07-scatter.webp": [
             { w: "not a sign of ~", k: "~한 기색이 조금도 없는", s: "There was not a sign of hurry about him." },
-            { w: "went busily over ~", k: "부지런히 살폈다", s: "But his two eyes went busily over the ground." },
+            { w: "went busily over ~ (go)", k: "부지런히 살폈다", s: "But his two eyes went busily over the ground." },
             { w: "out of breath", k: "숨이 찬", s: "He was not out of breath." },
             { w: "ache", k: "아프다", s: "His legs did not ache either." },
-            { w: "turned over", k: "구를 때마다", s: "Every time the pot turned over, a piece of cake dropped out." },
+            { w: "turned over (turn)", k: "구를 때마다", s: "Every time the pot turned over, a piece of cake dropped out." },
             { w: "dropped out (drop)", k: "툭 떨어졌다", s: "a piece of cake dropped out" },
             { w: "lay scattered (lie)", k: "흩어져 있었다", s: "White cake lay scattered all over the hill." },
             { w: "neatly", k: "얌전히", s: "The pieces sat neatly on the grass." },
@@ -553,8 +553,8 @@ const EN = {
             { w: "glared (glare)", k: "노려보았다", s: "They glared at each other, panting." },
             { w: "panting (pant)", k: "숨을 헐떡이며", s: "They glared at each other, panting." },
             { w: "thought to ~", k: "~할 생각이 들었다", s: "Then they thought to look inside." },
-            { w: "went silent", k: "입을 다물었다", s: "One look into the pot and both of them went silent." },
-            { w: "turned it over", k: "뒤집어 보았다", s: "The tiger lifted it up and turned it over." },
+            { w: "went silent (go)", k: "입을 다물었다", s: "One look into the pot and both of them went silent." },
+            { w: "turned it over (turn)", k: "뒤집어 보았다", s: "The tiger lifted it up and turned it over." },
             { w: "Not one ~ was left", k: "한 ~도 남지 않았다", s: "Not one piece of cake was left." },
             { w: "spilled out (spill)", k: "흘렀다", s: "It had all spilled out on the way down." },
             { w: "on the way down", k: "굴러오는 동안", s: "It had all spilled out on the way down." }

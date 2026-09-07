@@ -491,7 +491,7 @@ const EN = {
         ],
         "05-sold.webp": [
             { w: "As if he had been waiting", k: "기다렸다는 듯", s: "As if he had been waiting, the old man put a rope round the ox's neck." },
-            { w: "pulled tight", k: "바짝 죄었다", s: "It pulled tight." },
+            { w: "pulled tight (pull)", k: "바짝 죄었다", s: "It pulled tight." },
             { w: "led (lead)", k: "끌고 갔다", s: "Then he led him straight to the market." },
             { w: "Strong as they come", k: "힘이 아주 좋은", s: "A fine ox here! Strong as they come!" },
             { w: "struggled (struggle)", k: "발버둥 쳤다", s: "The ox struggled and it was no use at all." },
@@ -546,26 +546,26 @@ const EN = {
             { w: "Bang!", k: "펑!", s: "Bang!" },
             { w: "hot as fire", k: "불덩이처럼 뜨거운", s: "With the sound his body went hot as fire." },
             { w: "came showering off", k: "우수수 떨어졌다", s: "The yellow hair came showering off." },
-            { w: "turned back into ~", k: "도로 ~이 되었다", s: "His hooves split and turned back into hands." },
+            { w: "turned back into ~ (turn)", k: "도로 ~이 되었다", s: "His hooves split and turned back into hands." },
             { w: "horns", k: "뿔", s: "The tail was gone and the horns were gone." },
             { w: "nobody could say", k: "알 수 없었다", s: "Where his clothes came from, nobody could say." },
-            { w: "stood upright", k: "벌떡 섰다", s: "The farmer stood upright in the middle of the radish field" },
+            { w: "stood upright (stand)", k: "벌떡 섰다", s: "The farmer stood upright in the middle of the radish field" },
             { w: "turning ~ over", k: "뒤집어 가며", s: "turning his own hands over and looking at them" },
-            { w: "sat down flat", k: "털썩 주저앉았다", s: "The owner sat down flat on the spot." },
+            { w: "sat down flat (sit)", k: "털썩 주저앉았다", s: "The owner sat down flat on the spot." },
             { w: "came running", k: "몰려들었다", s: "People came running from all over the field." }
         ],
         "10-work-hard.webp": [
-            { w: "ran for home", k: "집을 향해 달렸다", s: "The farmer ran for home, barefoot as he was." },
+            { w: "ran for home (run)", k: "집을 향해 달렸다", s: "The farmer ran for home, barefoot as he was." },
             { w: "barefoot", k: "맨발로", s: "barefoot as he was" },
             { w: "the first time in years", k: "몇 해 만에", s: "It was his own yard, the first time in years." },
             { w: "came back alive", k: "살아서 돌아왔다", s: "I'm home! I came back alive!" },
-            { w: "took hold of ~", k: "붙들었다", s: "She ran out of the kitchen, took hold of him and wept." },
+            { w: "took hold of ~ (take)", k: "붙들었다", s: "She ran out of the kitchen, took hold of him and wept." },
             { w: "wept (weep)", k: "울었다", s: "took hold of him and wept" },
             { w: "the hardest worker", k: "제일 부지런한 사람", s: "the farmer was the hardest worker in the village" },
             { w: "before sunrise", k: "해 뜨기 전에", s: "He was in the field before sunrise and home after dark." },
             { w: "idling (idle)", k: "게으름 피우는", s: "whenever somebody was idling" },
             { w: "Keep that up", k: "그러다가는", s: "Keep that up and you'll turn into an ox!" },
-            { w: "laughed themselves silly", k: "깔깔 웃었다", s: "The children laughed themselves silly at that." }
+            { w: "laughed themselves silly (laugh)", k: "깔깔 웃었다", s: "The children laughed themselves silly at that." }
         ],
         "after": [
             { w: "turns into ~ and back", k: "바뀌었다가 되돌아온다", s: "A person who turns into an animal and back is a very old shape for a story." },

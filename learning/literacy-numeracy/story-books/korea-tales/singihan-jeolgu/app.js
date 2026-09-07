@@ -492,18 +492,18 @@ const EN = {
             { w: "out it comes", k: "그대로 나온다", s: "Name a thing and say come out, and out it comes." },
             { w: "To stop it", k: "멈출 때는", s: "To stop it you say enough." },
             { w: "pressed ~ into (press)", k: "쥐여 주었다", s: "The old man pressed the mortar into the woodcutter's hand." },
-            { w: "was already gone", k: "이미 사라지고 없었다", s: "The old man was already gone." },
+            { w: "was already gone (go)", k: "이미 사라지고 없었다", s: "The old man was already gone." },
             { w: "a long while", k: "한참 동안", s: "He stood there a long while." }
         ],
         "03-rice.webp": [
             { w: "set ~ in the middle of (set)", k: "한가운데 놓았다", s: "the woodcutter set the mortar in the middle of the floor" },
-            { w: "sat round it", k: "둘러앉았다", s: "His wife and children sat round it." },
+            { w: "sat round it (sit)", k: "둘러앉았다", s: "His wife and children sat round it." },
             { w: "hardly dared believe (dare)", k: "정말일까 싶었다", s: "He hardly dared believe it, and spoke carefully." },
             { w: "Surely nothing will happen.", k: "설마 정말 나올까.", s: "Surely nothing will happen." },
             { w: "came pouring out (pour)", k: "콸콸 쏟아져 나왔다", s: "And white rice came pouring out of the mortar!" },
             { w: "was covered with ~", k: "~으로 덮였다", s: "The whole floor was covered with rice." },
             { w: "at once", k: "딱, 곧바로", s: "The rice stopped at once." },
-            { w: "went straight out", k: "그 길로 나갔다", s: "The woodcutter went straight out, called his neighbours in" },
+            { w: "went straight out (go)", k: "그 길로 나갔다", s: "The woodcutter went straight out, called his neighbours in" },
             { w: "shared (share)", k: "나누어 주었다", s: "called his neighbours in and shared the rice" },
             { w: "cooking smoke", k: "밥 짓는 연기", s: "cooking smoke rose all over the village" },
             { w: "for the first time in months", k: "오랜만에", s: "For the first time in months, cooking smoke rose" }
@@ -524,7 +524,7 @@ const EN = {
         "05-steal.webp": [
             { w: "pitch-dark", k: "캄캄한", s: "It was a pitch-dark night with no moon." },
             { w: "fast asleep", k: "깊이 잠든", s: "The whole family was fast asleep." },
-            { w: "went over the wall", k: "담을 넘었다", s: "The thief went over the wall." },
+            { w: "went over the wall (go)", k: "담을 넘었다", s: "The thief went over the wall." },
             { w: "Softly, softly.", k: "살금살금.", s: "Softly, softly." },
             { w: "creaked (creak)", k: "삐걱 소리를 냈다", s: "The wooden floor creaked once." },
             { w: "slid ~ open (slide)", k: "슬며시 열었다", s: "He slid the door open and there was the mortar." },
