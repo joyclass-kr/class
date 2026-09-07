@@ -1,50 +1,54 @@
 /**
- * 관절과 길항근 — 단색 평면 2D 교과서 도식
+ * 관절과 길항근 — 2D 바이오메카닉스 시뮬레이터
  *
- * 팔꿈치를 굽히고 펼 때 이두근과 삼두근이 언제나 반대로 움직인다.
- *   굽힘 - 이두근 수축(두꺼워지고 짧아짐) · 삼두근 이완(얇아지고 길어짐)
- *   폄   - 이두근 이완 · 삼두근 수축
- * 힘줄은 근육과 뼈를, 인대는 뼈와 뼈를 잇는다. 시험에 자주 나오는 대목이다.
+ * [arm-skeleton.svg] 정밀 뼈대 도식을 기반으로 팔꿈치 경첩관절의 회전(30° ~ 180°)과
+ * 이두근(주동근)·삼두근(길항근)의 실시간 수축/이완 메커니즘을 시각화한다.
  *
- * 각도는 옆 상자의 슬라이더(angleSlider)가 쥐고 있다. 이 그림은 그 값을 읽어
- * 다시 그리기만 하고, 손잡이를 끌면 슬라이더에 되돌려 준다.
+ * - 수축 시: 근섬유 다발 결(Fibers)이 두껍게 뭉치며, 액틴-마이오신 활주 텐션 시머 파동 발생
+ * - 이완 시: 근섬유 다발이 길고 얇게 늘어남
+ * - 힘줄(Tendon): 은백색 콜라겐 다발로 근육과 뼈 부착점(노뼈거친면 / 팔꿈치머리)을 직결
  */
 
 (function () {
     'use strict';
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
+    var SVG_URL = '../assets/images/arm-skeleton.svg';
     var KEY = 'joint';
 
-    /* 가상 화면 1000 x 700 */
     var SHOULDER = { x: 470, y: 120 };
-    var UPPER_LEN = 250;                 // 위팔뼈 길이
-    var FORE_LEN = 250;                  // 아래팔 길이
-    var ELBOW = { x: SHOULDER.x, y: SHOULDER.y + UPPER_LEN };
+    var ELBOW = { x: 470, y: 370 };
+    var FORE_LEN = 250;
 
-    var BONE_FILL = '#e2e8f0';       // 뼈 밑색
-    var BONE_SHADE = '#b8c2cf';      // 뼈 그늘 — 그라데이션이 아니라 납작한 두 번째 색
-    var BONE_LINE = '#94a3b8';
     var TENDON = '#f1f5f9';
-
-    var BICEPS_ON = '#e11d48', BICEPS_OFF = '#7f1d3a';
-    var TRICEPS_ON = '#0284c7', TRICEPS_OFF = '#0b4a6f';
+    var TENDON_CORE = '#cbd5e1';
 
     var wrap, layer, svg, labelBox, leaderGroup;
-    var foreGroup, biceps, triceps, bicepsTendonTop, bicepsTendonEnd, anglePlate;
-    var tricepsTendonTop, tricepsTendonEnd, angleArc, angleText, handle;
-    var stateText;
+    var foreGroup, handle, stateText;
+    var angleArc, anglePlate, angleText;
     var dragging = false;
+    var loaded = false;
 
-    /* 이름표: ax·ay 는 이름표 자리, sx·sy 는 이음선이 나오는 자리 */
+    var bicepsObj = {}, tricepsObj = {};
+
     var LABELS = [
-        { id: 'humerus', text: '위팔뼈', ax: 292, ay: 128, sx: 452, sy: 152 },
+        { id: 'humerus', text: '위팔뼈 (상완골)', ax: 292, ay: 128, sx: 452, sy: 152 },
         { id: 'triceps', text: '삼두근 (길항근)', ax: 232, ay: 300, sx: 440, sy: 260 },
         { id: 'joint', text: '팔꿈치 관절 (연골 · 윤활액)', ax: 238, ay: 452, sx: 470, sy: 370 },
         { id: 'forearm', text: '노뼈 (앞) · 자뼈 (뒤)', ax: 248, ay: 604, sx: 450, sy: 520 },
         { id: 'biceps', text: '이두근 (주동근)', ax: 768, ay: 210, sx: 505, sy: 260 },
         { id: 'tendon', text: '힘줄 — 근육과 뼈를 잇는다', ax: 784, ay: 350, sx: 520, sy: 420 }
     ];
+
+    /** 머리글의 [일시정지] 를 따른다 */
+    function isPaused() {
+        return typeof SimEngine !== 'undefined' && SimEngine.isPaused ? SimEngine.isPaused() : false;
+    }
+
+    /** 멈춰 있는 동안 흐르지 않는 공용 시계 */
+    function nowMs() {
+        return (typeof SimEngine !== 'undefined' && SimEngine.now) ? SimEngine.now() : performance.now();
+    }
 
     function init() {
         wrap = document.querySelector('.skeleton-viewport');
@@ -72,16 +76,17 @@
         layer.hidden = !on;
         var canvas = document.getElementById('skeletonCanvas');
         if (canvas) canvas.style.visibility = on ? 'hidden' : 'visible';
-        if (on) { render(); placeLabels(); }
+        if (on && loaded) { render(); placeLabels(); }
     }
-
-    /* ── 그림 짓기 ─────────────────────────────────────────── */
 
     function el(name, attrs) {
         var e = document.createElementNS(SVG_NS, name);
         for (var k in attrs) if (attrs.hasOwnProperty(k)) e.setAttribute(k, attrs[k]);
         return e;
     }
+
+    // 내장 백업 SVG
+    var EMBEDDED_SVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1000 700\" width=\"1000\" height=\"700\">\n  <defs>\n    <!-- Subtle linear gradients: exactly 2 stops, same hue, brightness difference <= 12%, strictly NO #ffffff -->\n    <linearGradient id=\"boneGradHumerus\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\">\n      <stop offset=\"0%\" stop-color=\"#cbd5e1\" />\n      <stop offset=\"100%\" stop-color=\"#e2e8f0\" />\n    </linearGradient>\n    <linearGradient id=\"boneGradUlna\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\">\n      <stop offset=\"0%\" stop-color=\"#cbd5e1\" />\n      <stop offset=\"100%\" stop-color=\"#e2e8f0\" />\n    </linearGradient>\n    <linearGradient id=\"boneGradRadius\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\">\n      <stop offset=\"0%\" stop-color=\"#cbd5e1\" />\n      <stop offset=\"100%\" stop-color=\"#e2e8f0\" />\n    </linearGradient>\n    <linearGradient id=\"boneGradScapula\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#b8c2cf\" />\n      <stop offset=\"100%\" stop-color=\"#cbd5e1\" />\n    </linearGradient>\n    <linearGradient id=\"boneGradHand\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#b8c2cf\" />\n      <stop offset=\"100%\" stop-color=\"#cbd5e1\" />\n    </linearGradient>\n  </defs>\n\n  <!-- ==================================================== -->\n  <!-- 1. SCAPULA (어깨뼈) - 크지 않게 위팔뼈 걸리는 자리 중심 -->\n  <!-- ==================================================== -->\n  <g id=\"scapula\">\n    <!-- 어깨뼈 외측연 및 관절와 본체 -->\n    <path d=\"M 400 86\n             C 420 80, 442 82, 458 90\n             C 470 96, 482 106, 488 116\n             C 490 124, 484 130, 474 134\n             C 460 138, 448 132, 440 126\n             C 434 122, 428 126, 424 136\n             C 418 152, 416 170, 424 182\n             C 428 188, 426 194, 420 192\n             C 412 188, 404 176, 400 160\n             C 394 140, 392 118, 396 98\n             C 398 90, 400 86, 400 86 Z\"\n          fill=\"url(#boneGradScapula)\" stroke=\"#94a3b8\" stroke-width=\"2.5\" stroke-linejoin=\"round\" />\n\n    <!-- 어깨봉우리 (Acromion) - 위팔뼈 머리 위를 아치형으로 덮음 -->\n    <path d=\"M 436 78\n             C 454 70, 476 72, 492 82\n             C 500 88, 502 96, 494 102\n             C 484 108, 472 102, 458 92\n             C 448 85, 440 82, 436 78 Z\"\n          fill=\"#cbd5e1\" stroke=\"#94a3b8\" stroke-width=\"2.5\" stroke-linejoin=\"round\" />\n\n    <!-- 부리돌기 (Coracoid Process) - 앞쪽으로 굽은 돌기 -->\n    <path d=\"M 466 98\n             C 478 94, 496 98, 508 108\n             C 514 114, 514 122, 506 128\n             C 496 132, 488 126, 480 118\n             C 474 112, 468 106, 466 98 Z\"\n          fill=\"#cbd5e1\" stroke=\"#94a3b8\" stroke-width=\"2.5\" stroke-linejoin=\"round\" />\n\n    <!-- 관절와 (Glenoid Cavity) 림 음영 및 연골면 - 절구관절 오목 -->\n    <path d=\"M 444 98\n             C 448 112, 448 126, 442 140\n             C 438 148, 432 156, 428 162\"\n          fill=\"none\" stroke=\"#94a3b8\" stroke-width=\"2.5\" stroke-linecap=\"round\" />\n    <path d=\"M 442 102\n             C 434 114, 434 130, 440 142\n             C 434 138, 430 126, 432 116\n             C 434 108, 438 104, 442 102 Z\"\n          fill=\"#b8c2cf\" stroke=\"none\" />\n  </g>\n\n  <!-- ==================================================== -->\n  <!-- 2. HUMERUS (위팔뼈) - 한 덩어리 path 하나로 구성     -->\n  <!-- ==================================================== -->\n  <path id=\"humerus\"\n        d=\"M 468 94\n           C 448 94, 436 106, 438 124\n           C 440 138, 448 148, 456 154\n           L 456 195\n           C 453 210, 452 230, 454 255\n           L 456 312\n           C 450 318, 440 328, 436 338\n           C 432 346, 434 356, 442 360\n           C 450 364, 456 358, 460 350\n           C 462 358, 466 368, 472 370\n           C 478 372, 486 368, 490 358\n           C 494 366, 502 366, 506 358\n           C 510 350, 506 340, 498 332\n           C 492 324, 486 314, 484 300\n           L 484 240\n           C 486 215, 488 190, 486 166\n           C 488 152, 496 142, 498 128\n           C 500 114, 492 102, 482 98\n           C 478 95, 473 94, 468 94 Z\"\n        fill=\"url(#boneGradHumerus)\" stroke=\"#94a3b8\" stroke-width=\"2.5\" stroke-linejoin=\"round\" />\n\n  <!-- 위팔뼈 세부 묘사 (그늘 및 돌기/오목 윤곽선) -->\n  <!-- 위팔뼈 뒤쪽(왼쪽) 그늘 -->\n  <path d=\"M 456 154\n           L 456 312\n           C 450 318, 440 328, 436 338\n           C 432 346, 434 356, 442 360\n           C 448 363, 452 359, 456 352\n           L 462 310\n           L 462 160\n           C 459 157, 457 155, 456 154 Z\"\n        fill=\"#b8c2cf\" stroke=\"none\" opacity=\"0.6\" />\n\n  <!-- 결절사이고랑 (Intertubercular sulcus) - 이두근 힘줄 경로 -->\n  <path d=\"M 482 110 C 480 124, 478 140, 477 156\"\n        fill=\"none\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-linecap=\"round\" />\n\n  <!-- 팔꿈치 오목 (Olecranon fossa) - 팔을 펼 때 팔꿈치머리가 들어가는 오목 -->\n  <path d=\"M 462 334\n           C 466 328, 476 328, 480 334\n           C 482 342, 478 348, 471 350\n           C 464 348, 460 342, 462 334 Z\"\n        fill=\"#cbd5e1\" stroke=\"#94a3b8\" stroke-width=\"1.8\" />\n\n  <!-- 활차(도르래) 중앙 고랑 -->\n  <path d=\"M 470 344 C 470 354, 471 364, 472 370\"\n        fill=\"none\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\"0.8\" />\n\n  <!-- ==================================================== -->\n  <!-- 보이지 않는 회전축 및 기시점 표시                      -->\n  <!-- ==================================================== -->\n  <circle id=\"pivotElbow\" cx=\"470\" cy=\"370\" r=\"1\" fill=\"none\" stroke=\"none\" />\n  <circle id=\"attachBicepsOrigin\" cx=\"504\" cy=\"160\" r=\"1\" fill=\"none\" stroke=\"none\" />\n  <circle id=\"attachTricepsOrigin\" cx=\"432\" cy=\"166\" r=\"1\" fill=\"none\" stroke=\"none\" />\n\n  <!-- ==================================================== -->\n  <!-- 3. FOREARM GROUP (아래팔 묶음 - 엔진이 통째로 회전)   -->\n  <!-- ==================================================== -->\n  <g id=\"forearm\">\n    <!-- 뼈사이막 (Interosseous membrane) - 노뼈와 자뼈를 잇는 질긴 결합조직 막 -->\n    <line x1=\"454\" y1=\"416\" x2=\"488\" y2=\"424\" stroke=\"#94a3b8\" stroke-width=\"1.5\" opacity=\"0.35\" stroke-linecap=\"round\" />\n    <line x1=\"453\" y1=\"438\" x2=\"492\" y2=\"446\" stroke=\"#94a3b8\" stroke-width=\"1.5\" opacity=\"0.35\" stroke-linecap=\"round\" />\n    <line x1=\"452\" y1=\"460\" x2=\"496\" y2=\"468\" stroke=\"#94a3b8\" stroke-width=\"1.5\" opacity=\"0.35\" stroke-linecap=\"round\" />\n    <line x1=\"451\" y1=\"482\" x2=\"500\" y2=\"490\" stroke=\"#94a3b8\" stroke-width=\"1.5\" opacity=\"0.35\" stroke-linecap=\"round\" />\n    <line x1=\"450\" y1=\"504\" x2=\"502\" y2=\"512\" stroke=\"#94a3b8\" stroke-width=\"1.5\" opacity=\"0.35\" stroke-linecap=\"round\" />\n    <line x1=\"449\" y1=\"526\" x2=\"501\" y2=\"534\" stroke=\"#94a3b8\" stroke-width=\"1.5\" opacity=\"0.35\" stroke-linecap=\"round\" />\n    <line x1=\"448\" y1=\"548\" x2=\"498\" y2=\"556\" stroke=\"#94a3b8\" stroke-width=\"1.5\" opacity=\"0.35\" stroke-linecap=\"round\" />\n    <line x1=\"447\" y1=\"570\" x2=\"490\" y2=\"578\" stroke=\"#94a3b8\" stroke-width=\"1.5\" opacity=\"0.35\" stroke-linecap=\"round\" />\n\n    <!-- ──────────────────────────────────────── -->\n    <!-- ULNA (자뼈 - 뒤쪽/왼쪽)                  -->\n    <!-- ──────────────────────────────────────── -->\n    <!-- 팔꿈치머리가 위/뒤로 돌출, 도르래패임이 도르래를 감싸며 경첩 작동 -->\n    <path id=\"ulna\"\n          d=\"M 436 322\n             C 424 326, 418 338, 420 352\n             C 422 364, 430 374, 442 380\n             C 440 400, 442 450, 442 500\n             C 442 540, 440 564, 440 576\n             C 438 584, 438 596, 444 602\n             C 446 605, 448 612, 447 618\n             C 446 622, 450 624, 452 622\n             C 456 618, 456 606, 458 598\n             C 462 590, 462 580, 460 568\n             C 458 540, 458 480, 460 424\n             C 462 400, 466 392, 470 384\n             C 472 380, 470 376, 464 374\n             C 454 370, 446 360, 448 346\n             C 449 336, 456 330, 460 326\n             C 462 322, 458 318, 452 318\n             C 446 318, 440 320, 436 322 Z\"\n          fill=\"url(#boneGradUlna)\" stroke=\"#94a3b8\" stroke-width=\"2.5\" stroke-linejoin=\"round\" />\n\n    <!-- 자뼈 뒤쪽 그늘 및 윤곽 입체화 -->\n    <path d=\"M 436 322\n             C 424 326, 418 338, 420 352\n             C 422 364, 430 374, 442 380\n             C 440 400, 442 450, 442 500\n             C 442 540, 440 564, 440 576\n             C 438 584, 438 596, 444 602\n             L 448 600\n             C 446 580, 448 530, 448 480\n             C 448 430, 446 385, 444 376\n             C 434 370, 428 358, 430 346\n             C 432 334, 438 326, 436 322 Z\"\n          fill=\"#b8c2cf\" stroke=\"none\" opacity=\"0.6\" />\n\n    <!-- 팔꿈치머리(Olecranon) 후방 능선선 -->\n    <path d=\"M 438 324 C 444 336, 446 352, 444 366\"\n          fill=\"none\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-linecap=\"round\" />\n\n    <!-- ──────────────────────────────────────── -->\n    <!-- RADIUS (노뼈 - 앞쪽/오른쪽)               -->\n    <!-- ──────────────────────────────────────── -->\n    <!-- 원판형 노뼈머리 + 목 + 노뼈거친면(이두근 부착) + 원위 붓돌기 -->\n    <path id=\"radius\"\n          d=\"M 482 366\n             C 480 366, 480 374, 482 376\n             L 486 377\n             C 485 384, 484 392, 483 400\n             C 480 408, 478 418, 480 430\n             C 482 442, 488 450, 492 452\n             C 495 454, 498 466, 499 486\n             C 502 516, 504 544, 502 568\n             C 500 580, 492 592, 484 598\n             C 480 600, 482 606, 488 606\n             L 512 606\n             C 518 606, 524 612, 526 620\n             C 528 622, 532 620, 530 614\n             C 528 602, 526 590, 522 576\n             C 516 544, 514 510, 510 476\n             C 508 440, 506 408, 504 394\n             C 504 386, 506 380, 508 376\n             L 510 376\n             C 512 374, 512 366, 510 366\n             L 482 366 Z\"\n          fill=\"url(#boneGradRadius)\" stroke=\"#94a3b8\" stroke-width=\"2.5\" stroke-linejoin=\"round\" />\n\n    <!-- 노뼈머리 원판 관절면 테두리 -->\n    <path d=\"M 482 372 L 510 372\" fill=\"none\" stroke=\"#94a3b8\" stroke-width=\"1.8\" />\n\n    <!-- 노뼈거친면 (Radial tuberosity) - 이두근 힘줄 부착 돌기 -->\n    <path d=\"M 482 432\n             C 486 428, 494 430, 496 438\n             C 498 446, 492 452, 486 452\n             C 480 450, 478 440, 482 432 Z\"\n          fill=\"#cbd5e1\" stroke=\"#94a3b8\" stroke-width=\"2\" />\n\n    <!-- 노뼈 내측 음영 -->\n    <path d=\"M 486 377\n             L 483 400\n             C 480 408, 478 418, 480 430\n             L 486 452\n             C 490 470, 494 510, 496 550\n             L 490 594\n             L 484 598\n             C 488 590, 494 550, 492 510\n             C 490 470, 486 450, 484 430\n             C 482 410, 484 390, 486 377 Z\"\n          fill=\"#b8c2cf\" stroke=\"none\" opacity=\"0.5\" />\n\n    <!-- ──────────────────────────────────────── -->\n    <!-- HAND (손뼈 - 간략화된 손목/손허리/손가락뼈) -->\n    <!-- ──────────────────────────────────────── -->\n    <g id=\"hand\" fill=\"url(#boneGradHand)\" stroke=\"#94a3b8\" stroke-width=\"2\" stroke-linejoin=\"round\">\n      <!-- 손목뼈 (Carpals) 8개 정돈된 2열 클러스터 -->\n      <path d=\"M 482 608 C 478 610, 478 618, 482 622 C 488 624, 492 618, 490 610 C 488 606, 484 606, 482 608 Z\" />\n      <path d=\"M 494 608 C 492 614, 494 622, 498 624 C 504 624, 508 616, 504 610 C 500 606, 496 606, 494 608 Z\" />\n      <path d=\"M 508 612 C 506 618, 508 624, 514 624 C 520 622, 520 614, 516 610 C 512 608, 510 610, 508 612 Z\" />\n      <path d=\"M 456 612 C 452 616, 454 624, 460 626 C 466 626, 470 618, 466 612 C 462 608, 458 608, 456 612 Z\" />\n      <path d=\"M 468 614 C 466 620, 468 626, 474 628 C 480 628, 482 620, 478 614 C 476 610, 472 610, 468 614 Z\" />\n\n      <!-- 손허리뼈 (Metacarpals 1~5) -->\n      <!-- 엄지 (제1중수골 - 앞쪽으로 벌어짐) -->\n      <path d=\"M 518 624 C 522 622, 532 630, 538 642 C 542 650, 540 656, 534 654 C 528 650, 520 638, 516 628 Z\" />\n      <!-- 검지 (제2중수골) -->\n      <path d=\"M 506 628 L 512 668 C 512 672, 506 672, 504 668 L 500 628 Z\" />\n      <!-- 중지 (제3중수골) -->\n      <path d=\"M 492 628 L 494 674 C 494 678, 488 678, 486 674 L 486 628 Z\" />\n      <!-- 약지 (제4중수골) -->\n      <path d=\"M 478 628 L 476 670 C 476 674, 470 674, 470 670 L 472 628 Z\" />\n      <!-- 소지 (제5중수골) -->\n      <path d=\"M 464 628 L 458 664 C 458 668, 452 666, 454 662 L 460 628 Z\" />\n\n      <!-- 손가락뼈 (Phalanges) -->\n      <!-- 엄지 지골 (2마디) -->\n      <path d=\"M 536 654 C 542 662, 548 672, 552 678 C 554 682, 548 684, 544 680 C 540 674, 534 664, 532 658 Z\" />\n      <!-- 검지 지골 -->\n      <path d=\"M 510 670 L 514 694 C 514 698, 508 698, 506 694 L 504 670 Z\" />\n      <!-- 중지 지골 -->\n      <path d=\"M 492 676 L 492 702 C 492 706, 486 706, 486 702 L 486 676 Z\" />\n      <!-- 약지 지골 -->\n      <path d=\"M 474 672 L 472 696 C 472 700, 466 700, 466 696 L 468 672 Z\" />\n      <!-- 소지 지골 -->\n      <path d=\"M 456 664 L 450 686 C 450 690, 444 688, 446 684 L 452 664 Z\" />\n    </g>\n\n    <!-- ──────────────────────────────────────── -->\n    <!-- 동적 힘줄 부착점 (아래팔 묶음 내부)       -->\n    <!-- ──────────────────────────────────────── -->\n    <circle id=\"attachBicepsInsertion\" cx=\"490\" cy=\"444\" r=\"1\" fill=\"none\" stroke=\"none\" />\n    <circle id=\"attachTricepsInsertion\" cx=\"436\" cy=\"330\" r=\"1\" fill=\"none\" stroke=\"none\" />\n  </g>\n</svg>";
 
     function buildLayer() {
         layer = document.createElement('div');
@@ -92,188 +97,45 @@
         stage.className = 'joint-stage';
         layer.appendChild(stage);
 
-        svg = el('svg', { viewBox: '0 0 1000 700', preserveAspectRatio: 'xMidYMid meet' });
-        stage.appendChild(svg);
-
         labelBox = document.createElement('div');
         labelBox.className = 'joint-labels';
         stage.appendChild(labelBox);
 
         wrap.appendChild(layer);
 
-        leaderGroup = el('g');
+        // Fetch SVG or use embedded fallback
+        if (window.location.protocol === 'file:') {
+            setupSvg(EMBEDDED_SVG, stage);
+        } else {
+            fetch(SVG_URL)
+                .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+                .then(function (markup) { setupSvg(markup, stage); })
+                .catch(function () { setupSvg(EMBEDDED_SVG, stage); });
+        }
+    }
+
+    function setupSvg(markup, stage) {
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = markup;
+        svg = tempDiv.querySelector('svg');
+        if (!svg) return;
+
+        svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        stage.insertBefore(svg, stage.firstChild);
+
+        foreGroup = svg.querySelector('#forearm');
+
+        // Leader lines group
+        leaderGroup = el('g', { id: 'leaderGroup' });
         svg.appendChild(leaderGroup);
 
-        drawStatic();
-        drawMoving();
-        buildLabels();
-        bindDrag();
-    }
+        // Muscle elements layer
+        buildMuscleLayer();
 
-    /**
-     * 뼈는 겹치는 조각 여럿으로 짓는다. 조각마다 테두리를 두르면 속에 없는 금이
-     * 생기므로, 테두리 없이 같은 색으로 겹쳐 한 덩어리로 보이게 하고
-     * 뒤쪽에만 그늘색을 한 겹 깐다. 시험에 이름이 나오는 돌기는 살린다.
-     */
-    function bone(parent, tag, attrs) {
-        attrs.fill = attrs.fill || BONE_FILL;
-        attrs.stroke = 'none';
-        parent.appendChild(el(tag, attrs));
-    }
+        // Goniometer arc & display
+        buildGoniometer();
 
-    /** 어깨뼈와 위팔뼈처럼 움직이지 않는 것 */
-    function drawStatic() {
-        var g = el('g', { id: 'upperArm' });
-        svg.appendChild(g);
-
-        // ── 어깨뼈 (견갑골) 와 어깨봉우리 ──────────────────────
-        bone(g, 'path', {
-            d: 'M446 92 C420 74 386 68 358 78 L344 132 C376 142 412 140 440 128 Z',
-            fill: '#cbd5e1'
-        });
-        bone(g, 'path', {   // 어깨봉우리 — 위팔뼈 머리 위를 덮는다
-            d: 'M440 84 C458 78 476 82 486 94 L474 108 C462 98 450 96 438 100 Z',
-            fill: '#cbd5e1'
-        });
-
-        // ── 위팔뼈 (상완골) ────────────────────────────────────
-        // 몸통
-        bone(g, 'path', { d: 'M456 132 L486 132 L482 300 L460 300 Z' });
-        // 위 끝: 둥근 관절머리 + 앞쪽 큰결절
-        bone(g, 'ellipse', { cx: 466, cy: 118, rx: 27, ry: 24 });
-        bone(g, 'ellipse', { cx: 492, cy: 130, rx: 14, ry: 15 });
-        // 아래 끝: 양옆으로 벌어진 관절융기
-        bone(g, 'path', { d: 'M460 292 L482 292 L496 344 L444 344 Z' });
-        bone(g, 'ellipse', { cx: 470, cy: 356, rx: 26, ry: 20 });   // 도르래
-        bone(g, 'ellipse', { cx: 494, cy: 352, rx: 14, ry: 13 });   // 작은머리 (앞)
-        bone(g, 'ellipse', { cx: 446, cy: 344, rx: 13, ry: 12 });   // 안쪽위관절융기 (뒤)
-
-        // 그늘: 뒤쪽(왼쪽) 모서리에만 납작한 두 번째 색
-        bone(g, 'path', { d: 'M456 132 L466 132 L462 300 L460 300 Z', fill: BONE_SHADE });
-        bone(g, 'path', { d: 'M460 292 L468 292 L452 344 L444 344 Z', fill: BONE_SHADE });
-        bone(g, 'path', {
-            d: 'M446 100 C436 108 440 128 452 138 C440 132 436 112 446 100 Z',
-            fill: BONE_SHADE
-        });
-
-        // 결절사이고랑 — 이두근 긴갈래 힘줄이 지나는 골
-        g.appendChild(el('path', {
-            d: 'M480 116 L478 148', fill: 'none', stroke: BONE_LINE, 'stroke-width': 2
-        }));
-        // 도르래 한가운데 고랑
-        g.appendChild(el('path', {
-            d: 'M470 340 L470 374', fill: 'none', stroke: BONE_LINE, 'stroke-width': 2, opacity: 0.8
-        }));
-    }
-
-    /** 각도에 따라 다시 그려지는 것 */
-    function drawMoving() {
-        // 아래팔은 통째로 팔꿈치를 축으로 돈다
-        foreGroup = el('g', { id: 'forearm' });
-        svg.appendChild(foreGroup);
-
-        // ── 자뼈 (뒤쪽) ───────────────────────────────────────
-        // 팔꿈치머리 — 도르래 뒤를 갈고리처럼 감싼다. 삼두근이 여기 붙는다.
-        bone(foreGroup, 'path', {
-            d: 'M452 318 C430 318 418 332 420 350'
-                + ' C422 366 434 376 450 380'
-                + ' L462 358 C450 352 444 340 448 330 Z'
-        });
-        // 갈고리돌기 — 앞쪽으로 뾰족하게
-        bone(foreGroup, 'path', { d: 'M454 372 L478 384 L466 396 L450 388 Z' });
-        // 몸통: 위는 굵고 아래로 갈수록 가늘어진다
-        bone(foreGroup, 'path', { d: 'M438 366 L466 382 L458 556 L444 556 Z' });
-        // 아래 끝 머리와 붓돌기
-        bone(foreGroup, 'ellipse', { cx: 450, cy: 566, rx: 11, ry: 12 });
-        bone(foreGroup, 'path', { d: 'M442 570 L452 570 L446 590 Z' });
-
-        // ── 노뼈 (앞쪽) ───────────────────────────────────────
-        bone(foreGroup, 'ellipse', { cx: 494, cy: 368, rx: 16, ry: 11 });   // 원판 모양 노뼈머리
-        bone(foreGroup, 'path', { d: 'M486 374 L502 374 L500 392 L484 392 Z' });  // 목
-        bone(foreGroup, 'ellipse', { cx: 484, cy: 400, rx: 11, ry: 13 });   // 노뼈거친면 (이두근이 붙는다)
-        // 몸통: 위는 가늘고 아래로 갈수록 굵어진다
-        bone(foreGroup, 'path', { d: 'M482 392 L500 392 L512 552 L490 552 Z' });
-        // 아래 끝 — 손목에서 가장 넓다
-        bone(foreGroup, 'path', { d: 'M488 544 L514 544 L518 584 L486 584 Z' });
-        bone(foreGroup, 'path', { d: 'M510 580 L520 580 L516 602 Z' });     // 붓돌기
-
-        // 두 뼈의 뒤쪽 그늘
-        bone(foreGroup, 'path', { d: 'M438 366 L448 371 L446 556 L444 556 Z', fill: BONE_SHADE });
-        bone(foreGroup, 'path', { d: 'M482 392 L490 392 L496 552 L490 552 Z', fill: BONE_SHADE });
-
-        // 뼈사이막 — 두 뼈를 잇는 질긴 막
-        for (var mi = 0; mi < 7; mi++) {
-            var my = 412 + mi * 22;
-            foreGroup.appendChild(el('line', {
-                x1: 452 + mi * 0.6, y1: my, x2: 490 + mi * 1.6, y2: my + 8,
-                stroke: BONE_LINE, 'stroke-width': 1.4, opacity: 0.35
-            }));
-        }
-
-        // ── 손 ───────────────────────────────────────────────
-        // 손목뼈 두 줄
-        [[456, 600], [474, 598], [492, 600], [508, 604]].forEach(function (c) {
-            bone(foreGroup, 'ellipse', { cx: c[0], cy: c[1], rx: 9, ry: 8, fill: '#cbd5e1' });
-        });
-        [[462, 616], [480, 615], [498, 617]].forEach(function (c) {
-            bone(foreGroup, 'ellipse', { cx: c[0], cy: c[1], rx: 9, ry: 8, fill: '#cbd5e1' });
-        });
-        // 손허리뼈 네 개와 엄지
-        [[458, 626, 452, 664], [474, 626, 472, 668], [490, 627, 492, 666], [504, 628, 510, 660]]
-            .forEach(function (m) {
-                foreGroup.appendChild(el('line', {
-                    x1: m[0], y1: m[1], x2: m[2], y2: m[3],
-                    stroke: '#cbd5e1', 'stroke-width': 7, 'stroke-linecap': 'round'
-                }));
-            });
-        foreGroup.appendChild(el('line', {
-            x1: 512, y1: 612, x2: 534, y2: 634,
-            stroke: '#cbd5e1', 'stroke-width': 7, 'stroke-linecap': 'round'
-        }));
-        // 손가락뼈 (마디 하나로 줄임)
-        [[452, 664, 448, 690], [472, 668, 471, 694], [492, 666, 495, 692], [510, 660, 516, 682], [534, 634, 550, 646]]
-            .forEach(function (m) {
-                foreGroup.appendChild(el('line', {
-                    x1: m[0], y1: m[1], x2: m[2], y2: m[3],
-                    stroke: '#cbd5e1', 'stroke-width': 5.5, 'stroke-linecap': 'round'
-                }));
-            });
-
-        // 근육은 뼈 옆에 나란히 놓아 둘 다 언제나 보이게 한다
-        tricepsTendonTop = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 6, 'stroke-linecap': 'round' });
-        tricepsTendonEnd = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 6, 'stroke-linecap': 'round' });
-        triceps = el('path', { stroke: '#7dd3fc', 'stroke-width': 2.5, 'stroke-linejoin': 'round' });
-        svg.appendChild(tricepsTendonTop);
-        svg.appendChild(tricepsTendonEnd);
-        svg.appendChild(triceps);
-        triceps._grain = el('path', { fill: 'none', 'stroke-width': 2 });
-        svg.appendChild(triceps._grain);
-
-        bicepsTendonTop = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 6, 'stroke-linecap': 'round' });
-        bicepsTendonEnd = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 6, 'stroke-linecap': 'round' });
-        biceps = el('path', { stroke: '#fda4af', 'stroke-width': 2.5, 'stroke-linejoin': 'round' });
-        svg.appendChild(bicepsTendonTop);
-        svg.appendChild(bicepsTendonEnd);
-        svg.appendChild(biceps);
-        biceps._grain = el('path', { fill: 'none', 'stroke-width': 2 });
-        svg.appendChild(biceps._grain);
-
-        // 팔꿈치 관절
-        svg.appendChild(el('circle', { cx: ELBOW.x, cy: ELBOW.y, r: 17, fill: '#fbbf24', opacity: 0.22 }));
-        svg.appendChild(el('circle', { cx: ELBOW.x, cy: ELBOW.y, r: 8, fill: '#fbbf24' }));
-
-        // 각도 호와 숫자
-        angleArc = el('path', { fill: 'none', stroke: '#fbbf24', 'stroke-width': 3, opacity: 0.75 });
-        svg.appendChild(angleArc);
-        anglePlate = el('rect', { rx: 7, fill: 'rgba(6, 10, 24, 0.9)', stroke: '#fbbf24', 'stroke-width': 1.5 });
-        svg.appendChild(anglePlate);
-        angleText = el('text', {
-            'font-size': 20, 'font-weight': 800, fill: '#fde68a',
-            'text-anchor': 'middle', 'dominant-baseline': 'middle'
-        });
-        svg.appendChild(angleText);
-
-        // 잡고 당기는 손잡이
+        // Drag handle on hand
         handle = el('circle', { r: 21, fill: '#38bdf8', stroke: '#e0f2fe', 'stroke-width': 3, cursor: 'grab' });
         svg.appendChild(handle);
 
@@ -282,9 +144,83 @@
             fill: '#f8fafc', 'text-anchor': 'middle'
         });
         svg.appendChild(stateText);
+
+        buildLabels();
+        bindDrag();
+
+        loaded = true;
+        render();
+        placeLabels();
     }
 
-    /* ── 각도 읽고 되돌려 주기 ──────────────────────────────── */
+    /** 근육 배, 다발성 근섬유, 힘줄 콜라겐 결 객체 생성 */
+    function createMuscleObject(parent) {
+        var g = el('g');
+        parent.appendChild(g);
+
+        // 상부/하부 힘줄
+        var tTop = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 7, 'stroke-linecap': 'round' });
+        var tTopCore = el('path', { fill: 'none', stroke: TENDON_CORE, 'stroke-width': 2.5, 'stroke-linecap': 'round' });
+        var tEnd = el('path', { fill: 'none', stroke: TENDON, 'stroke-width': 7, 'stroke-linecap': 'round' });
+        var tEndCore = el('path', { fill: 'none', stroke: TENDON_CORE, 'stroke-width': 2.5, 'stroke-linecap': 'round' });
+        g.appendChild(tTop);
+        g.appendChild(tTopCore);
+        g.appendChild(tEnd);
+        g.appendChild(tEndCore);
+
+        // 근육 본체
+        var body = el('path', { 'stroke-linejoin': 'round' });
+        g.appendChild(body);
+
+        // 다발성 근섬유 결 (6가닥)
+        var fibers = [];
+        for (var i = 0; i < 6; i++) {
+            var f = el('path', { fill: 'none', 'stroke-linecap': 'round' });
+            g.appendChild(f);
+            fibers.push(f);
+        }
+
+        // 중앙 텐션 능선 하이라이트 (Crest line)
+        var crest = el('path', { fill: 'none', 'stroke-linecap': 'round' });
+        g.appendChild(crest);
+
+        return {
+            group: g,
+            body: body,
+            fibers: fibers,
+            crest: crest,
+            tendonTop: tTop,
+            tendonTopCore: tTopCore,
+            tendonEnd: tEnd,
+            tendonEndCore: tEndCore
+        };
+    }
+
+    function buildMuscleLayer() {
+        var muscleGroup = el('g', { id: 'muscleLayer' });
+        svg.appendChild(muscleGroup);
+
+        tricepsObj = createMuscleObject(muscleGroup);
+        bicepsObj = createMuscleObject(muscleGroup);
+
+        // 팔꿈치 관절 윤활액 및 연골 인디케이터
+        var jointG = el('g', { id: 'elbowJointVisual' });
+        svg.appendChild(jointG);
+        jointG.appendChild(el('circle', { cx: ELBOW.x, cy: ELBOW.y, r: 18, fill: '#fbbf24', opacity: 0.24 }));
+        jointG.appendChild(el('circle', { cx: ELBOW.x, cy: ELBOW.y, r: 8, fill: '#fbbf24', stroke: '#ffffff', 'stroke-width': 1.5 }));
+    }
+
+    function buildGoniometer() {
+        angleArc = el('path', { fill: 'none', stroke: '#fbbf24', 'stroke-width': 3, opacity: 0.8 });
+        svg.appendChild(angleArc);
+        anglePlate = el('rect', { rx: 7, fill: 'rgba(6, 10, 24, 0.9)', stroke: '#fbbf24', 'stroke-width': 1.5 });
+        svg.appendChild(anglePlate);
+        angleText = el('text', {
+            'font-size': 20, 'font-weight': 800, fill: '#fde68a',
+            'text-anchor': 'middle', 'dominant-baseline': 'middle'
+        });
+        svg.appendChild(angleText);
+    }
 
     function jointAngle() {
         var s = document.getElementById('angleSlider');
@@ -300,115 +236,165 @@
         s.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
-    /** 팔꿈치에서 손목으로 가는 방향 (180° 면 위팔과 일직선) */
     function foreDir(deg) {
         var phi = (180 - deg) * Math.PI / 180;
         return { x: Math.sin(phi), y: Math.cos(phi) };
     }
 
-    /* ── 다시 그리기 ───────────────────────────────────────── */
+    /* ── 실시간 렌더링 루프 ─────────────────────────────────── */
 
     function render() {
-        if (!svg || layer.hidden) return;
+        if (!svg || !loaded || layer.hidden) return;
 
         var deg = jointAngle();
-        var flex = (180 - deg) / 150;            // 0 = 완전히 폄, 1 = 최대로 굽힘
+        var flex = (180 - deg) / 150;            // 0 = 완전 폄, 1 = 최대 굽힘
         var d = foreDir(deg);
-        var n = { x: d.y, y: -d.x };             // 아래팔의 앞쪽(노뼈 쪽) 법선
+        var n = { x: d.y, y: -d.x };             // 아래팔 앞쪽(노뼈 쪽) 법선
+        var t = nowMs();
 
-        // SVG 의 rotate 는 시계 방향이 양수다. 앞으로 굽히려면 반대로 돌려야 한다.
-        foreGroup.setAttribute('transform',
-            'rotate(' + (deg - 180).toFixed(2) + ' ' + ELBOW.x + ' ' + ELBOW.y + ')');
+        // 1. 아래팔 묶음 회전
+        if (foreGroup) {
+            foreGroup.setAttribute('transform',
+                'rotate(' + (deg - 180).toFixed(2) + ' ' + ELBOW.x + ' ' + ELBOW.y + ')');
+        }
 
-        // 부피는 그대로이므로 하나가 두꺼워지면 하나는 얇아진다
-        var bicepsW = 18 + flex * 34;
-        var tricepsW = 52 - flex * 34;
+        // 2. 부피 보존: 하나가 수축(두꺼워짐)하면 하나는 이완(얇아짐)
+        var bicepsW = 18 + flex * 36;
+        var tricepsW = 54 - flex * 36;
 
-        // 이두근: 어깨 앞 ➔ 노뼈 거친면 (위팔뼈 바깥쪽에 나란히 둔다)
+        var isFlexed = flex > 0.5;
+
+        // 이두근 기시/정지 좌표 (어깨뼈 앞 ➔ 노뼈거친면)
         var bTop = { x: SHOULDER.x + 34, y: SHOULDER.y + 40 };
         var bEnd = {
             x: ELBOW.x + d.x * 74 + n.x * 20,
             y: ELBOW.y + d.y * 74 + n.y * 20
         };
-        drawMuscle(biceps, bicepsTendonTop, bicepsTendonEnd, bTop, bEnd, bicepsW, -1,
-            flex > 0.5 ? BICEPS_ON : BICEPS_OFF,
-            flex > 0.5 ? '#fecdd3' : '#7f1d3a');
+        drawMuscleDynamic(bicepsObj, bTop, bEnd, bicepsW, -1, isFlexed, true, t);
 
-        // 삼두근: 어깨 뒤 ➔ 자뼈의 팔꿈치머리
+        // 삼두근 기시/정지 좌표 (어깨뼈 뒤 ➔ 자뼈 팔꿈치머리)
         var tTop = { x: SHOULDER.x - 38, y: SHOULDER.y + 46 };
         var tEnd = {
             x: ELBOW.x - d.x * 40 - n.x * 34,
             y: ELBOW.y - d.y * 40 - n.y * 34
         };
-        drawMuscle(triceps, tricepsTendonTop, tricepsTendonEnd, tTop, tEnd, tricepsW, +1,
-            flex > 0.5 ? TRICEPS_OFF : TRICEPS_ON,
-            flex > 0.5 ? '#0b4a6f' : '#bae6fd');
+        drawMuscleDynamic(tricepsObj, tTop, tEnd, tricepsW, +1, !isFlexed, false, t);
 
+        // 3. 각도계 호 갱신
         drawAngle(deg, d);
 
+        // 4. 손잡이 자리
         var wrist = { x: ELBOW.x + d.x * FORE_LEN, y: ELBOW.y + d.y * FORE_LEN };
         handle.setAttribute('cx', wrist.x.toFixed(1));
         handle.setAttribute('cy', wrist.y.toFixed(1));
 
-        stateText.textContent = flex > 0.5
-            ? '팔을 굽힘 — 이두근 수축 (두꺼워짐) · 삼두근 이완 (얇아짐)'
-            : '팔을 폄 — 이두근 이완 (얇아짐) · 삼두근 수축 (두꺼워짐)';
+        stateText.textContent = isFlexed
+            ? '팔을 굽힘 — 이두근 수축 (두꺼워짐 🔥) · 삼두근 이완 (얇아짐)'
+            : '팔을 폄 — 이두근 이완 (얇아짐) · 삼두근 수축 (두꺼워짐 ⚡)';
 
-        // 이음선이 나오는 자리는 그림을 따라 움직인다
+        // 5. 이름표 가리킴선 자리
         moveLabel('biceps', (bTop.x + bEnd.x) / 2 - 26, (bTop.y + bEnd.y) / 2);
         moveLabel('triceps', (tTop.x + tEnd.x) / 2 + 26, (tTop.y + tEnd.y) / 2);
         moveLabel('forearm', ELBOW.x + d.x * 150 - n.x * 26, ELBOW.y + d.y * 150 - n.y * 26);
         moveLabel('tendon', bEnd.x, bEnd.y);
     }
 
-    /** 방추형 근육 배 하나. side 는 뼈의 어느 쪽으로 부풀 것인가. */
-    function drawMuscle(bodyEl, topEl, endEl, a, b, w, side, color, edge) {
+    /**
+     * 방추형 근육 배와 근섬유 다발(Fibers), 콜라겐 힘줄 렌더링
+     */
+    function drawMuscleDynamic(mObj, a, b, w, side, isContracted, isBiceps, time) {
         var vx = b.x - a.x, vy = b.y - a.y;
         var len = Math.hypot(vx, vy) || 1;
         var ux = vx / len, uy = vy / len;
         var px = -uy * side, py = ux * side;
 
-        var tLen = Math.min(len * 0.22, 60);   // 배는 관절을 넘지 않고 힘줄만 넘어간다
+        var tLen = Math.min(len * 0.20, 56);
         var t1 = { x: a.x + ux * tLen, y: a.y + uy * tLen };
         var t2 = { x: b.x - ux * tLen, y: b.y - uy * tLen };
         var mid = { x: (t1.x + t2.x) / 2, y: (t1.y + t2.y) / 2 };
 
-        topEl.setAttribute('d', 'M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) + ' L' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1));
-        endEl.setAttribute('d', 'M' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1) + ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1));
+        var peakRatio = isContracted ? 0.46 : 0.50;
+        var mOut = {
+            x: a.x + ux * (len * peakRatio) + px * w,
+            y: a.y + uy * (len * peakRatio) + py * w
+        };
+        var mInn = {
+            x: mid.x - px * w * 0.28,
+            y: mid.y - py * w * 0.28
+        };
 
-        var out = { x: mid.x + px * w, y: mid.y + py * w };
-        var inn = { x: mid.x - px * w * 0.30, y: mid.y - py * w * 0.30 };
+        // 색상 지정
+        var fillCol = isBiceps
+            ? (isContracted ? '#e11d48' : '#7f1d3a')
+            : (isContracted ? '#0284c7' : '#0b4a6f');
+        var edgeCol = isBiceps
+            ? (isContracted ? '#fecdd3' : '#9f1239')
+            : (isContracted ? '#bae6fd' : '#0369a1');
 
-        bodyEl.setAttribute('fill', color);
-        bodyEl.setAttribute('stroke', edge);
-        // 근육 한가운데를 지나는 밝은 결 한 줄. 그라데이션이 아니라 선 하나다.
-        if (bodyEl._grain) {
-            bodyEl._grain.setAttribute('d',
-                'M' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1) +
-                ' Q' + (mid.x + px * w * 0.45).toFixed(1) + ' ' + (mid.y + py * w * 0.45).toFixed(1) +
-                ' ' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1));
-            bodyEl._grain.setAttribute('stroke', edge);
-            bodyEl._grain.setAttribute('opacity', 0.45);
-        }
-        bodyEl.setAttribute('d',
+        mObj.body.setAttribute('d',
             'M' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1) +
-            ' Q' + out.x.toFixed(1) + ' ' + out.y.toFixed(1) + ' ' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1) +
-            ' Q' + inn.x.toFixed(1) + ' ' + inn.y.toFixed(1) + ' ' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1) + ' Z');
+            ' Q' + mOut.x.toFixed(1) + ' ' + mOut.y.toFixed(1) + ' ' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1) +
+            ' Q' + mInn.x.toFixed(1) + ' ' + mInn.y.toFixed(1) + ' ' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1) + ' Z');
+        mObj.body.setAttribute('fill', fillCol);
+        mObj.body.setAttribute('stroke', edgeCol);
+        mObj.body.setAttribute('stroke-width', isContracted ? '2.8' : '1.8');
+
+        // 은백색 힘줄 다발
+        mObj.tendonTop.setAttribute('d', 'M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) + ' L' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1));
+        mObj.tendonTopCore.setAttribute('d', 'M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) + ' L' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1));
+        mObj.tendonEnd.setAttribute('d', 'M' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1) + ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1));
+        mObj.tendonEndCore.setAttribute('d', 'M' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1) + ' L' + b.x.toFixed(1) + ' ' + b.y.toFixed(1));
+
+        // 6가닥 근섬유 다발 결 (수축 텐션 애니메이션 포함)
+        var fiberCount = mObj.fibers.length;
+        for (var f = 0; f < fiberCount; f++) {
+            var frac = (f + 1) / (fiberCount + 1);
+            var fiberW = (frac - 0.28) / 0.72;
+            var fPeak = {
+                x: mid.x + px * w * fiberW,
+                y: mid.y + py * w * fiberW
+            };
+
+            // 수축 시 파동치는 텐션 글리머
+            var shimmer = isContracted
+                ? (0.42 + Math.sin(time * 0.006 + f * 1.15) * 0.32)
+                : 0.22;
+
+            var fColor = isContracted
+                ? (isBiceps ? 'rgba(254, 205, 211, ' : 'rgba(224, 242, 254, ') + shimmer.toFixed(2) + ')'
+                : (isBiceps ? 'rgba(244, 63, 94, 0.22)' : 'rgba(56, 189, 248, 0.22)');
+
+            mObj.fibers[f].setAttribute('d',
+                'M' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1) +
+                ' Q' + fPeak.x.toFixed(1) + ' ' + fPeak.y.toFixed(1) + ' ' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1));
+            mObj.fibers[f].setAttribute('stroke', fColor);
+            mObj.fibers[f].setAttribute('stroke-width', (f === 2 || f === 3) ? '2' : '1.4');
+        }
+
+        // 중앙 텐션 능선 (Crest)
+        var crestPeak = {
+            x: mid.x + px * w * 0.46,
+            y: mid.y + py * w * 0.46
+        };
+        mObj.crest.setAttribute('d',
+            'M' + t1.x.toFixed(1) + ' ' + t1.y.toFixed(1) +
+            ' Q' + crestPeak.x.toFixed(1) + ' ' + crestPeak.y.toFixed(1) + ' ' + t2.x.toFixed(1) + ' ' + t2.y.toFixed(1));
+        mObj.crest.setAttribute('stroke', isContracted ? (isBiceps ? '#fff1f2' : '#f0f9ff') : 'transparent');
+        mObj.crest.setAttribute('stroke-width', isContracted ? '2.4' : '0');
+        mObj.crest.setAttribute('opacity', isContracted ? (0.65 + Math.sin(time * 0.008) * 0.25).toFixed(2) : '0');
     }
 
-    /** 위팔과 아래팔이 이루는 각을 호 하나와 숫자 하나로만 보여 준다 */
     function drawAngle(deg, d) {
         var r = 62;
-        var a0 = { x: ELBOW.x, y: ELBOW.y - r };            // 위팔 쪽 (위로)
+        var a0 = { x: ELBOW.x, y: ELBOW.y - r };
         var a1 = { x: ELBOW.x + d.x * r, y: ELBOW.y + d.y * r };
         angleArc.setAttribute('d',
             'M' + a0.x.toFixed(1) + ' ' + a0.y.toFixed(1) +
             ' A' + r + ' ' + r + ' 0 ' + (deg > 180 ? 1 : 0) + ' 1 ' + a1.x.toFixed(1) + ' ' + a1.y.toFixed(1));
 
-        // 숫자는 두 방향의 한가운데 바깥에 둔다
-        var bx = d.x + 0, by = d.y - 1;                     // 위(0,-1) 와 아래팔 방향의 합
+        var bx = d.x + 0, by = d.y - 1;
         var blen = Math.hypot(bx, by);
-        if (blen < 0.02) { bx = 1; by = 0; blen = 1; }      // 완전히 펴면 앞쪽으로
+        if (blen < 0.02) { bx = 1; by = 0; blen = 1; }
         var ux = bx / blen, uy = by / blen;
         var tx = ELBOW.x + ux * (r + 38);
         var ty = ELBOW.y + uy * (r + 38);
@@ -421,15 +407,12 @@
         anglePlate.setAttribute('height', 34);
     }
 
-    /* ── 이름표 ────────────────────────────────────────────── */
-
     function moveLabel(id, sx, sy) {
         for (var i = 0; i < LABELS.length; i++) {
             if (LABELS[i].id === id) { LABELS[i].sx = sx; LABELS[i].sy = sy; return; }
         }
     }
 
-    /** 이름표와 이음선은 한 번만 만들고, 그 뒤로는 자리만 옮긴다 */
     function buildLabels() {
         labelBox.innerHTML = '';
         while (leaderGroup.firstChild) leaderGroup.removeChild(leaderGroup.firstChild);
@@ -453,7 +436,6 @@
         var box = svg.getBoundingClientRect();
         if (!box.width) return;
         var vb = svg.viewBox.baseVal;
-        // 그림은 가운데 맞춤으로 들어가므로 남는 여백을 더해 줘야 제자리에 붙는다
         var k = Math.min(box.width / vb.width, box.height / vb.height);
         var offX = (box.width - vb.width * k) / 2;
         var offY = (box.height - vb.height * k) / 2;
@@ -468,8 +450,6 @@
             item._tag.style.top = (offY + item.ay * k) + 'px';
         });
     }
-
-    /* ── 손잡이 끌기 ───────────────────────────────────────── */
 
     function bindDrag() {
         handle.addEventListener('pointerdown', function (e) {
@@ -488,8 +468,7 @@
             var offY = (box.height - vb.height * k) / 2;
             var vx = (e.clientX - box.left - offX) / k - ELBOW.x;
             var vy = (e.clientY - box.top - offY) / k - ELBOW.y;
-            // 아래(0,1)에서 잰 각이 (180 - 관절각도) 이다
-            var phi = Math.atan2(vx, vy) * 180 / Math.PI;   // 아래(0,1) 에서 잰 각
+            var phi = Math.atan2(vx, vy) * 180 / Math.PI;
             setJointAngle(180 - phi);
         });
         window.addEventListener('pointerup', function () {
@@ -499,15 +478,13 @@
         });
     }
 
-    /* ── 돌리기 ────────────────────────────────────────────── */
-
     function loop() {
         if (wrap && layer) {
             var act = wrap.querySelector('.scene-btn.active');
             var mine = !!(act && act.dataset.scene === KEY);
             if (layer.hidden === mine) setVisible(mine);
         }
-        if (layer && !layer.hidden) {
+        if (layer && !layer.hidden && loaded) {
             render();
             placeLabels();
         }
