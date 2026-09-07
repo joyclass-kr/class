@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">시간 (초)</text>`;
         g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 4}">기체 부피 (mL)</text>`;
         g += `<line class="limit-line" x1="${GRAPH.x0}" y1="${gy(g0.vMax, vScale).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(g0.vMax, vScale).toFixed(1)}"/>`;
-        g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${(gy(g0.vMax, vScale) - 5).toFixed(1)}" text-anchor="end" fill="#d97706">최대 ${g0.vMax.toFixed(0)} mL</text>`;
+        g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${(gy(g0.vMax, vScale) - 5).toFixed(1)}" text-anchor="end" style="fill:#d97706">최대 ${g0.vMax.toFixed(0)} mL</text>`;
         // all three surface areas share the same ceiling and differ only in rate
         Object.entries(SURFACE).forEach(([key, factor]) => {
             const kk = RATE_K * conc() * factor;

@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<path class="scratch" d="M${vx - 22},${CY + 6} L${vx + 22},${CY - 6}" stroke-dasharray="52" stroke-dashoffset="52">` +
                    `<animate attributeName="stroke-dashoffset" values="52;0;0;52" dur="2.6s" repeatCount="indefinite"/></path>`;
             const hx = a.verdict === 'a' ? AX : BX;
-            out += `<text class="small-label" x="${vx}" y="${CY + 28}" text-anchor="middle" fill="#d97706">흠집</text>`;
+            out += `<text class="small-label" x="${vx}" y="${CY + 28}" text-anchor="middle" style="fill:#d97706">흠집</text>`;
             out += `<text class="small-label" x="${hx}" y="${CY + 28}" text-anchor="middle">더 단단함</text>`;
         } else {
             out += `<text class="small-label" x="${(AX + BX) / 2}" y="${CY + 30}" text-anchor="middle">굳기가 같아 서로 긁지 못합니다</text>`;

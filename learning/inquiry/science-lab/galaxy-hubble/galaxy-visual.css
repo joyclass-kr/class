@@ -58,7 +58,7 @@
 .stage-views { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 6px 0 2px; }
 .main-svg, .graph-svg { width: 100%; max-width: 560px; margin: 0 auto; height: auto; display: block; }
 
-.small-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.small-label { fill: #475569; font-size: 13.5px; font-weight: 800; paint-order: stroke; stroke: #ffffff; stroke-width: 2.8; stroke-linejoin: round; }
 .note-text { fill: #475569; font-size: 14px; font-weight: 800; }
 .verdict-text { font-size: 14px; font-weight: 900; }
 .gen-text { fill: #0f172a; font-size: 13px; font-weight: 900; }

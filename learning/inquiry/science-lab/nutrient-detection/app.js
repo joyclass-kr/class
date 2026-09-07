@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ? `${r.label}${r.needsHeat ? (a.heated ? ' (가열)' : ' (가열 안 함)') : ''}: ${VERD[a.verdict]}`
             : `${r.full}${eul(r.full)} 시험관에 떨어뜨리는 중...`;
         out += `<rect x="24" y="8" width="272" height="28" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>`;
-        out += `<text class="verdict-text" fill="${p >= 1 ? '#0369a1' : '#0f172a'}" x="160" y="27" text-anchor="middle">${titleText}</text>`;
+        out += `<text class="verdict-text" style="fill:${p >= 1 ? '#0369a1' : '#0f172a'}" x="160" y="27" text-anchor="middle">${titleText}</text>`;
 
         // Right-Side Structured Information Card
         const RX = 316, RW = 192;
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     out += `<text class="card-chip" x="${RX + 141}" y="${ry + 1}" fill="#334155" font-weight="800" text-anchor="middle">변화 없음</text>`;
                 }
             } else {
-                out += `<text class="card-val" x="${RX + 112}" y="${ry}" fill="#64748b" font-weight="750">대기 중…</text>`;
+                out += `<text class="card-val" x="${RX + 112}" y="${ry}" style="fill:#64748b" font-weight="750">대기 중…</text>`;
             }
         });
 
@@ -474,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (on) {
                 out += `<rect x="${X0 + 8}" y="${y - 2}" width="${W - 16}" height="${rh}" rx="6" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>`;
             }
-            out += `<text class="grid-text" fill="${on ? '#0369a1' : '#1e293b'}" font-weight="${on ? '900' : '750'}" x="${TX0 - 12}" y="${y + 17}" text-anchor="end">${r.icon} ${r.label}${r.needsHeat ? ' (가열)' : ''}</text>`;
+            out += `<text class="grid-text" style="fill:${on ? '#0369a1' : '#1e293b'}" font-weight="${on ? '900' : '750'}" x="${TX0 - 12}" y="${y + 17}" text-anchor="end">${r.icon} ${r.label}${r.needsHeat ? ' (가열)' : ''}</text>`;
 
             TUBES.forEach((t, j) => {
                 const x = TX0 + cw * j;
@@ -737,7 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Threshold line at 15%
         out += `<line class="thresh" x1="${GX0}" y1="${yOf(0.15).toFixed(1)}" x2="${GX1}" y2="${yOf(0.15).toFixed(1)}"/>`;
-        out += `<text class="axis-text" fill="#64748b" font-size="12.5" x="${GX0 + 8}" y="${(yOf(0.15) - 5).toFixed(1)}">15% 검출 한계선</text>`;
+        out += `<text class="axis-text" style="fill:#64748b" font-size="12.5" x="${GX0 + 8}" y="${(yOf(0.15) - 5).toFixed(1)}">15% 검출 한계선</text>`;
 
         // Live cursor
         const tNow = REACT_MIN * clamp(state.progress / 0.5, 0, 1);
@@ -746,9 +746,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Legend
         out += `<rect x="${GX1 - 192}" y="14" width="192" height="22" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>`;
         out += `<circle cx="${GX1 - 180}" cy="25" r="4.5" fill="#64748b"/>`;
-        out += `<text class="grid-text" font-size="13" fill="#475569" x="${GX1 - 170}" y="29.5">녹말 (아이오딘)</text>`;
+        out += `<text class="grid-text" font-size="13" style="fill:#475569" x="${GX1 - 170}" y="29.5">녹말 (아이오딘)</text>`;
         out += `<circle cx="${GX1 - 84}" cy="25" r="4.5" fill="#ea580c"/>`;
-        out += `<text class="grid-text" font-size="13" fill="#ea580c" x="${GX1 - 74}" y="29.5">엿당 (베네딕트)</text>`;
+        out += `<text class="grid-text" font-size="13" style="fill:#ea580c" x="${GX1 - 74}" y="29.5">엿당 (베네딕트)</text>`;
 
         out += `<text class="note-text" x="${X0 + 16}" y="186">💡 아밀레이스는 체온(37 ℃)에서 가장 빠르게 녹말을 엿당으로 자르며, 끓이면 열 변성으로 파괴됩니다.</text>`;
         return out;

@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="added-line" x1="${GRAPH.x0}" y1="${gy(added()).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(added()).toFixed(1)}"/>`;
         // held below the axis title, which sits just above the plot's top edge
         const addedY = Math.max(GRAPH.y1 + 12, gy(added()) - 5);
-        out += `<text class="axis-text" x="${GRAPH.x0 + 4}" y="${addedY.toFixed(1)}" fill="#d97706">넣은 양 ${added()} g</text>`;
+        out += `<text class="axis-text" x="${GRAPH.x0 + 4}" y="${addedY.toFixed(1)}" style="fill:#d97706">넣은 양 ${added()} g</text>`;
 
         const px = gx(temp()), py = gy(a.s1);
         out += `<line class="op-guide" x1="${px.toFixed(1)}" y1="${GRAPH.y0}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;

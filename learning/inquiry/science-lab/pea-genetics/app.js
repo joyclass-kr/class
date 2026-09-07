@@ -169,8 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const trait = TRAITS[state.trait];
             controlArea.innerHTML =
                 pickRow('형질', 'trait', Object.entries(TRAITS).map(([k, v]) => ({ value: k, label: v.name, hint: `${v.dom.label} ${v.gene} · ${v.rec.label} ${v.gene.toLowerCase()}` })), state.trait, 3) +
-                pickRow('어버이 ㄱ', 'parentA', genoOptions(trait), state.parentA, 3) +
-                pickRow('어버이 ㄴ', 'parentB', genoOptions(trait), state.parentB, 3) +
+                pickRow('부모 ⓐ', 'parentA', genoOptions(trait), state.parentA, 3) +
+                pickRow('부모 ⓑ', 'parentB', genoOptions(trait), state.parentB, 3) +
                 seedRow;
         } else {
             controlArea.innerHTML =
@@ -220,8 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const cell = n === 2 ? 36 : 27;
         const X = 26, Y = 52;
         let out = `<text class="part-label" x="${X}" y="26">유전자형 표 — 기대</text>`;
-        out += `<text class="small-label" x="${X + cell + (n * cell) / 2}" y="${Y - 6}" text-anchor="middle">어버이 ${a.kind === 'one' ? 'ㄱ' : a.cross.a}의 생식세포</text>`;
-        out += `<text class="small-label" transform="rotate(-90 ${X - 8} ${Y + cell + (n * cell) / 2})" x="${X - 8}" y="${Y + cell + (n * cell) / 2}" text-anchor="middle">어버이 ${a.kind === 'one' ? 'ㄴ' : a.cross.b}의 생식세포</text>`;
+        out += `<text class="small-label" x="${X + cell + (n * cell) / 2}" y="${Y - 6}" text-anchor="middle">부모 ⓐ${a.kind === 'one' ? '' : ' ' + a.cross.a}</text>`;
+        out += `<text class="small-label" transform="rotate(-90 ${X - 8} ${Y + cell + (n * cell) / 2})" x="${X - 8}" y="${Y + cell + (n * cell) / 2}" text-anchor="middle">부모 ⓑ${a.kind === 'one' ? '' : ' ' + a.cross.b}</text>`;
         for (let i = 0; i < n; i += 1) {
             out += `<rect class="pun-head" x="${X + cell * (i + 1)}" y="${Y}" width="${cell}" height="${cell}"/>`;
             out += `<text class="pun-gamete" x="${X + cell * (i + 1) + cell / 2}" y="${Y + cell / 2 + 4}" text-anchor="middle">${a.gamA[i]}</text>`;
@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (a.pDom === 1) {
                 s += `자손이 모두 ${alleles('Dd', a.gene).join('')}이어서 우성 유전자와 열성 유전자가 함께 있는데도 ${t.dom.label} 모습만 드러납니다. 이것이 우열의 원리입니다.`;
             } else if (a.pDom === 0) {
-                s += `어버이 둘 다 ${a.gene.toLowerCase()}만 가지고 있어 자손도 모두 ${t.rec.label} ${t.thing}입니다.`;
+                s += `부모 둘 다 ${a.gene.toLowerCase()}만 가지고 있어 자손도 모두 ${t.rec.label} ${t.thing}입니다.`;
             } else {
                 const exp = a.pDom === 0.75 ? '3 : 1' : '1 : 1';
                 const dev = Math.abs(d / n - a.pDom), sig = Math.sqrt(a.pDom * (1 - a.pDom) / n);

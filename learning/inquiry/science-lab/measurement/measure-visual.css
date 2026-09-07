@@ -86,13 +86,13 @@
 .stick { fill: #c9a35f; stroke: rgba(0, 0, 0, .4); stroke-width: 1; }
 .ruler-body { fill: #f5e6c8; stroke: rgba(0, 0, 0, .35); stroke-width: 1; }
 .ruler-tick { stroke: #3a3a3a; stroke-width: 1; }
-.zoom-box { fill: rgba(16, 34, 44, .95); stroke: #d97706; stroke-width: 1.2; }
+.zoom-box { fill: #fffbeb; stroke: #d97706; stroke-width: 1.2; }
 .reading-dot { fill: #0284c7; stroke: rgba(0, 0, 0, .4); stroke-width: .8; }
 .true-line { stroke: #059669; stroke-width: 1.6; stroke-dasharray: 5 4; }
 .mean-line { stroke: #d97706; stroke-width: 1.8; }
 
 /* the standards timeline */
-.card { fill: rgba(16, 34, 44, .9); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.card { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.1; }
 .card.active { stroke: #d97706; stroke-width: 2; }
 .card-text { fill: #0f172a; font-size: 13.5px; font-weight: 800; }
 .card-title { fill: #0f172a; font-size: 14px; font-weight: 900; }

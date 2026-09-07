@@ -72,7 +72,7 @@
 
 .part-label { fill: #334155; font-size: 14px; font-weight: 800; }
 .small-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
-.tiny-label { fill: #475569; font-size: 13.5px; font-weight: 800; }
+.tiny-label { fill: #475569; font-size: 13.5px; font-weight: 800; paint-order: stroke; stroke: #ffffff; stroke-width: 2.8; stroke-linejoin: round; }
 .read-text { fill: var(--mint); font-size: 14px; font-weight: 900; }
 .big-read { fill: var(--mint); font-size: 18px; font-weight: 900; }
 .note-text { fill: #475569; font-size: 14px; font-weight: 800; }

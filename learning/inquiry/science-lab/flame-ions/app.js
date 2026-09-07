@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // dark observation chamber for flame reaction
         out += `<rect class="flame-chamber" x="180" y="32" width="140" height="174" rx="8"/>`;
-        out += `<text class="small-label" fill="#94a3b8" x="250" y="48" text-anchor="middle">암실 관찰대</text>`;
+        out += `<text class="small-label" style="fill:#94a3b8" x="250" y="48" text-anchor="middle">암실 관찰대</text>`;
 
         // burner
         out += `<rect class="stand" x="${CX - 40}" y="192" width="80" height="8" rx="2"/>`;
@@ -237,9 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // readouts
         const c = COLOURS[a.colour];
         out += `<text class="part-label" x="336" y="82">불꽃 색</text>`;
-        out += `<text class="read-text" fill="#0f172a" x="336" y="102">${k > 0 ? c.label : '파란 불꽃'}</text>`;
+        out += `<text class="read-text" style="fill:#0f172a" x="336" y="102">${k > 0 ? c.label : '파란 불꽃'}</text>`;
         out += `<text class="part-label" x="336" y="128">색을 내는 원소</text>`;
-        out += `<text class="read-text" fill="#0f172a" x="336" y="148">${k > 0 ? `${a.metal.name} ${a.metal.symbol}` : '-'}</text>`;
+        out += `<text class="read-text" style="fill:#0f172a" x="336" y="148">${k > 0 ? `${a.metal.name} ${a.metal.symbol}` : '-'}</text>`;
         out += `<text class="note-text" x="336" y="170">${p < 0.18 ? '시료를 묻히는 중' : k > 0 ? '시료가 불꽃에서 빛을 냅니다' : p >= 0.85 ? '시료가 다 날아갔습니다' : '불꽃으로 옮기는 중'}</text>`;
 
         const text = k > 0 || p >= 0.85 ? `${a.compound.name} → ${c.label} 불꽃` : `${a.compound.name} — 불꽃에 넣기 전`;
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sx = MID + a.dir * 12, ex = sx + a.dir * len;
             out += `<line class="ion-arrow" stroke="${a.sample.hex}" x1="${sx}" y1="${ay}" x2="${ex}" y2="${ay}"/>`;
             out += `<path fill="${a.sample.hex}" d="M${ex},${ay} l${-a.dir * 7},-4 l0,8 z"/>`;
-            out += `<text class="small-label" fill="#0f172a" x="${sx + a.dir * len / 2}" y="${ay - 7}" text-anchor="middle">${a.sample.ionFormula}</text>`;
+            out += `<text class="small-label" style="fill:#0f172a" x="${sx + a.dir * len / 2}" y="${ay - 7}" text-anchor="middle">${a.sample.ionFormula}</text>`;
             const sx2 = MID - a.dir * 12, ex2 = sx2 - a.dir * len;
             out += `<line class="ion-arrow ghost" x1="${sx2}" y1="${ay}" x2="${ex2}" y2="${ay}"/>`;
             out += `<path fill="#8fa8b0" opacity=".7" d="M${ex2},${ay} l${a.dir * 7},-4 l0,8 z"/>`;

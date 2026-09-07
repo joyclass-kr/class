@@ -136,7 +136,7 @@ function mix(a, b, f) {
     return `rgb(${Math.round(a[0] + (b[0] - a[0]) * f)},${Math.round(a[1] + (b[1] - a[1]) * f)},${Math.round(a[2] + (b[2] - a[2]) * f)})`;
 }
 
-const NIGHT = [10, 20, 32], DAY = [21, 54, 78];
+const NIGHT = [148, 163, 184], DAY = [186, 230, 253];
 
 function drawLeaf(g) {
     const { light: I, co2: c, temp: t } = state;
@@ -301,8 +301,8 @@ function drawCell(g) {
         const [bx, by, bw, bh] = boxes[i];
         const on = i === idx;
         g.appendChild(el('rect', { x: bx, y: by, width: bw, height: bh, rx: 10, class: `step-box${on ? ' on' : ''}` }));
-        g.appendChild(el('text', { x: bx + bw / 2, y: by + (bh > 40 ? 20 : 16), 'text-anchor': 'middle', class: 'step-text', style: `fill:${on ? '#d97706' : '#0f172a'}` }, s.name));
-        g.appendChild(el('text', { x: bx + bw / 2, y: by + (bh > 40 ? 34 : 28), 'text-anchor': 'middle', class: 'step-sub', style: `fill:${on ? '#e6d9a0' : '#8fa8b0'}` }, `ATP ${s.atp} · ${s.made}`));
+        g.appendChild(el('text', { x: bx + bw / 2, y: by + (bh > 40 ? 20 : 16), 'text-anchor': 'middle', class: 'step-text', style: `fill:${on ? '#b45309' : '#0f172a'}` }, s.name));
+        g.appendChild(el('text', { x: bx + bw / 2, y: by + (bh > 40 ? 34 : 28), 'text-anchor': 'middle', class: 'step-sub', style: `fill:${on ? '#92400e' : '#475569'}` }, `ATP ${s.atp} · ${s.made}`));
     });
 
     g.appendChild(el('text', { x: 109, y: 48, 'text-anchor': 'middle', class: 'part-label' }, '포도당 1분자'));
@@ -364,7 +364,7 @@ function drawCellGraph(g) {
         const bw = Math.min(58, slot * 0.6);
         if (h > 0.02) g.appendChild(el('rect', { x: cx - bw / 2, y: Y(h), width: bw, height: yBot - Y(h), rx: 3, class: 'bar-body', style: 'fill:rgba(217, 119, 6, .5)' }));
         else g.appendChild(el('line', { x1: cx - bw / 2, y1: yBot - 1, x2: cx + bw / 2, y2: yBot - 1, style: 'stroke:rgba(217, 119, 6, .5);stroke-width:2' }));
-        g.appendChild(el('text', { x: cx, y: Y(h) - 6, 'text-anchor': 'middle', class: 'bar-text', style: 'fill:#d97706' }, fmt(h, h % 1 ? 1 : 0)));
+        g.appendChild(el('text', { x: cx, y: Y(h) - 6, 'text-anchor': 'middle', class: 'bar-text', style: 'fill:#b45309' }, fmt(h, h % 1 ? 1 : 0)));
         g.appendChild(el('text', { x: cx, y: yBot + 15, 'text-anchor': 'middle', class: 'axis-text' }, s.short));
     });
 

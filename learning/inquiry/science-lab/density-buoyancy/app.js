@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         g += `<path class="curve" d="M${pts.join('L')}"/>`;
         g += `<line class="float-line" x1="${gx(b.rhoFl, 0, rhoMax)}" y1="${GRAPH.y0}" x2="${gx(b.rhoFl, 0, rhoMax)}" y2="${GRAPH.y1}"/>`;
-        g += `<text class="axis-text" x="${gx(b.rhoFl, 0, rhoMax) + 4}" y="${GRAPH.y0 - 6}" fill="#059669">${f.name} ${b.rhoFl.toFixed(2)}</text>`;
+        g += `<text class="axis-text" x="${gx(b.rhoFl, 0, rhoMax) + 4}" y="${GRAPH.y0 - 6}" style="fill:#059669">${f.name} ${b.rhoFl.toFixed(2)}</text>`;
         const px = gx(Math.min(rhoMax, b.rhoObj), 0, rhoMax), py = gy(b.frac * 100, 100);
         g += `<line class="op-guide" x1="${px}" y1="${GRAPH.y0}" x2="${px}" y2="${py.toFixed(1)}"/>`;
         g += `<circle class="op-point" cx="${px}" cy="${py.toFixed(1)}" r="5"/>`;

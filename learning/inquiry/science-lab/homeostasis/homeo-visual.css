@@ -79,7 +79,7 @@
 /* blood sugar */
 .vessel { fill: rgba(255, 122, 89, .18); stroke: #dc2626; stroke-width: 1.4; }
 .sugar { fill: #c2410c; stroke: rgba(0, 0, 0, .35); stroke-width: .5; }
-.organ { fill: rgba(16, 34, 44, .9); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.organ { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.2; }
 .organ-text { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .hormone-bar { stroke: rgba(255, 255, 255, .25); stroke-width: .8; }
 .flow-arrow { stroke-width: 2; fill: none; }
@@ -89,7 +89,7 @@
 .skin { fill: none; stroke-width: 6; }
 .sweat { fill: #0284c7; }
 .shiver { stroke: #d97706; stroke-width: 1.4; }
-.thermo { fill: rgba(16, 34, 44, .9); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.thermo { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.2; }
 .thermo-fill { fill: #ff7a59; }
 .env-box { fill: rgba(82, 199, 255, .08); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
 

@@ -71,7 +71,7 @@
 .part-label { fill: #0f172a; font-size: 14px; font-weight: 800; }
 .small-label { fill: #334155; font-size: 13.5px; font-weight: 800; }
 .read-text { fill: #059669; font-size: 14px; font-weight: 900; }
-.note-text { fill: #334155; font-size: 14px; font-weight: 800; }
+.note-text { fill: #334155; font-size: 14px; font-weight: 800; paint-order: stroke; stroke: #ffffff; stroke-width: 2.8; stroke-linejoin: round; }
 .verdict-text { font-size: 14px; font-weight: 900; }
 
 .axis { stroke: #334155; stroke-width: 1.8; stroke-width: 1.6; }

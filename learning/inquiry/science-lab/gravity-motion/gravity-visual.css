@@ -101,7 +101,7 @@
 .floor.air { fill: #b96f6f; }
 .egg { fill: #f5e6c8; stroke: rgba(0, 0, 0, .4); stroke-width: .8; }
 .crack { stroke: #7a3b2e; stroke-width: 1.3; fill: none; }
-.meter { fill: rgba(16, 34, 44, .9); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.meter { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.1; }
 .meter-fill { fill: #0284c7; }
 .meter-fill.broken { fill: #ff7a59; }
 .limit { stroke: #ff7a59; stroke-width: 1.2; stroke-dasharray: 4 3; }

@@ -89,7 +89,7 @@
 .dipole-head { fill: #c2410c; }
 .net-dipole { stroke: #ff7a59; stroke-width: 3; fill: none; }
 .net-head { fill: #ff7a59; }
-.field-box { fill: rgba(16, 34, 44, .7); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.field-box { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.1; }
 .field-line { stroke: rgba(148, 163, 184, 0.35); stroke-width: 1; }
 .field-arrow { fill: #64748b; }
 .mol-glyph { fill: rgba(82, 199, 255, .35); stroke: #0284c7; stroke-width: 1; }

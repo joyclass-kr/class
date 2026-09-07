@@ -186,8 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = `<g clip-path="url(#waveClip)">${body}</g>`;
         out += `<rect class="peg" x="${X0 - 10}" y="${STRING_Y - 18}" width="10" height="36" rx="3"/>`;
         out += `<rect class="peg" x="${X1}" y="${STRING_Y - 18}" width="10" height="36" rx="3"/>`;
-        out += `<text class="small-label" fill="#ff7d6b" x="${X0}" y="${STRING_Y + STRING_A + 26}">● 마디 ${a.nodes}개 — 움직이지 않습니다</text>`;
-        out += `<text class="small-label" fill="#059669" x="${X1}" y="${STRING_Y + STRING_A + 26}" text-anchor="end">┆ 배 ${a.antinodes}개 — 가장 크게 흔들립니다</text>`;
+        out += `<text class="small-label" style="fill:#ff7d6b" x="${X0}" y="${STRING_Y + STRING_A + 26}">● 마디 ${a.nodes}개 — 움직이지 않습니다</text>`;
+        out += `<text class="small-label" style="fill:#059669" x="${X1}" y="${STRING_Y + STRING_A + 26}" text-anchor="end">┆ 배 ${a.antinodes}개 — 가장 크게 흔들립니다</text>`;
         out += `<text class="part-label" x="20" y="20">${a.n}배 진동 · 줄 ${a.L.toFixed(1)} m · v ${a.v} m/s</text>`;
         out += `<text class="read-text" x="20" y="190">λ = 2×${a.L.toFixed(1)}÷${a.n} = ${a.lambda.toFixed(2)} m · f = ${a.n}×${a.v}÷(2×${a.L.toFixed(1)}) = ${a.freq.toFixed(0)} Hz</text>`;
         out += `<text class="note-text" x="20" y="206">화면의 진동은 실제보다 ${SLOW}배 느리게 보여 줍니다 — 모드끼리의 빠르기 비는 그대로입니다</text>`;
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 5}" width="${Math.max(2, gx(row.freq) - GRAPH.x0).toFixed(1)}" height="12" rx="3" ` +
                    `fill="#d97706" opacity="${on ? 0.9 : 0.35}"/>`;
             const flip = gx(row.freq) > GRAPH.x1 - 80;
-            out += `<text class="bar-text" fill="${on ? '#d97706' : '#7f9298'}" x="${(gx(row.freq) + (flip ? -6 : 6)).toFixed(1)}" ` +
+            out += `<text class="bar-text" style="fill:${flip ? '#ffffff' : (on ? '#b45309' : '#475569')}" x="${(gx(row.freq) + (flip ? -6 : 6)).toFixed(1)}" ` +
                    `y="${(y + 4).toFixed(1)}"${flip ? ' text-anchor="end"' : ''}>${row.freq.toFixed(0)} Hz</text>`;
         });
         graphGroup.innerHTML = out;

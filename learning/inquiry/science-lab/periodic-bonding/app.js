@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const c = GROUPS.indexOf(String(e.group)), r = e.period - 1;
             const x = TX + c * CW, y = TY + r * CH;
             const mine = e.z === el.z, same = e.group === el.group;
-            out += `<rect class="cell" x="${x}" y="${y}" width="${CW}" height="${CH}" fill="${mine ? GROUP_COLOR[e.group] : same ? GROUP_COLOR[e.group] + '55' : 'rgba(16,34,44,.9)'}"/>`;
+            out += `<rect class="cell" x="${x}" y="${y}" width="${CW}" height="${CH}" fill="${mine ? GROUP_COLOR[e.group] : same ? GROUP_COLOR[e.group] + '55' : 'rgba(148,163,184,.18)'}"/>`;
             out += `<text class="cell-text" style="fill:${mine ? '#0a1c24' : '#0f172a'}" x="${x + CW / 2}" y="${y + CH / 2 + 3}" text-anchor="middle">${e.sym}</text>`;
         });
         out += `<text class="small-label" x="${TX}" y="${TY + 4 * CH + 14}">같은 세로줄(족) = 같은 바깥 전자 수</text>`;

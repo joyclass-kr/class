@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cloudy: { label: '흐림', hint: '구름에 흩어져 듦' },
     };
     const TILTS = {
-        '0': { label: '눕혀 놓기', deg: 0, color: '#ffb347' },
+        '0': { label: '눕혀 놓기', deg: 0, color: '#b45309' },
         '35': { label: '비스듬히', deg: 35, color: '#0284c7' },
         '70': { label: '많이 세우기', deg: 70, color: '#059669' },
     };

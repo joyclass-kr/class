@@ -89,7 +89,7 @@
 .ion.k { fill: #ffb347; }
 .ion-text { font-size: 13.5px; font-weight: 900; fill: #0a1c24; }
 .electrode { stroke: #ff7a59; stroke-width: 2.4; }
-.meter { fill: rgba(16, 34, 44, .9); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.meter { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.1; }
 .meter-fill { fill: #059669; }
 
 /* axon */

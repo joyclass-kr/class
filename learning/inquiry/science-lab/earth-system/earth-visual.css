@@ -84,29 +84,29 @@
 .link.active { stroke: #d97706; stroke-width: 2.4; }
 .parcel { fill: #c2410c; stroke: rgba(0, 0, 0, .4); stroke-width: .8; }
 .parcel-text { fill: #c2410c; font-size: 13.5px; font-weight: 900; }
-.cell { stroke: rgba(148, 163, 184, 0.35); stroke-width: .8; fill: rgba(16, 34, 44, .8); }
+.cell { stroke: #94a3b8; stroke-width: .8; fill: rgba(148, 163, 184, .14); }
 .cell.filled { fill: rgba(217, 119, 6, .18); stroke: rgba(217, 119, 6, .6); }
 .cell-text { font-size: 13.5px; font-weight: 800; fill: #0f172a; }
 .cell-head { font-size: 13.5px; font-weight: 900; fill: #334155; }
 
 /* the water budget */
 .sky { fill: rgba(82, 199, 255, .1); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
-.sea { fill: #1f5f8f; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
-.land { fill: #4a6a3a; stroke: rgba(148, 163, 184, 0.40); stroke-width: 1; }
+.sea { fill: #a8cee8; stroke: #1f5f8f; stroke-width: 1; }
+.land { fill: #c3d6ae; stroke: #4a6a3a; stroke-width: 1; }
 .flow { stroke: #0284c7; stroke-width: 2; fill: none; }
 .flow.rain { stroke: #9fd8ff; }
 .flow.river { stroke: #7fc8ff; }
 .flow-text { fill: #0f172a; font-size: 13.5px; font-weight: 800; }
-.tank { fill: rgba(16, 34, 44, .9); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1.2; }
-.old-water { fill: #2f7fbf; }
+.tank { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.2; }
+.old-water { fill: #a8cee8; }
 .new-water { fill: rgba(159, 216, 255, .55); }
 
 /* the carbon budget */
-.box { fill: rgba(16, 34, 44, .9); stroke: rgba(148, 163, 184, 0.40); stroke-width: 1.2; }
+.box { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.2; }
 .box.air { fill: rgba(82, 199, 255, .1); }
-.box.landbox { fill: rgba(74, 106, 58, .7); }
-.box.seabox { fill: rgba(31, 95, 143, .7); }
-.box.fossil { fill: rgba(40, 30, 25, .95); }
+.box.landbox { fill: rgba(74, 106, 58, .22); }
+.box.seabox { fill: rgba(31, 95, 143, .20); }
+.box.fossil { fill: rgba(120, 88, 60, .26); }
 .box-text { fill: #0f172a; font-size: 14px; font-weight: 900; }
 .box-sub { fill: #334155; font-size: 13.5px; font-weight: 800; }
 .carbon-flow { stroke: #334155; fill: none; stroke-dasharray: 6 5; }

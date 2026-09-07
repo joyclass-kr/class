@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="sky-text" x="24" y="66">${!canSee ? '해 가까이 있어 보이지 않음' : Math.abs(ha) < 90 ? `${WHERE[where(ha)]} · 높이 ${Math.round(60 * Math.cos(ha * D2R))}°` : '지평선 아래'}</text>`;
         out += `<text class="phase-name" x="436" y="52" text-anchor="end">${a.info.name}</text>`;
         out += moonShape(420, 74, 11, a.e);
-        out += `<text class="verdict-text" fill="#0f172a" x="20" y="16">음력 ${a.info.label} · ${a.info.name} → 저녁 7시에 ${WHERE[a.verdict]}</text>`;
+        out += `<text class="verdict-text" style="fill:#0f172a" x="20" y="16">음력 ${a.info.label} · ${a.info.name} → 저녁 7시에 ${WHERE[a.verdict]}</text>`;
         out += `<text class="note-text" x="20" y="208">${a.rise ? `${hourText(a.rise)}에 떠서 ` : a.visibleAtStart ? '해 질 때 이미 떠 있어 ' : ''}${a.set ? `${hourText(a.set)}에 짐` : a.seen > 0 ? '새벽까지 보임' : '이 밤에는 보이지 않음'} · 밤새 보인 시간 ${a.seen.toFixed(1)}시간</text>`;
         return out;
     }
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="sky-text" x="24" y="36">${hourText(hour)}</text>`;
         out += `<text class="sky-text" x="24" y="50">저녁 9시부터 ${Math.round(15 * (hour - STAR_START))}° 돌았음</text>`;
         const phiNow = polar({ ra: 12.5, dec: 56 }, state.season, hour).phi;
-        out += `<text class="verdict-text" fill="#0f172a" x="20" y="16">${a.season.label} 저녁 9시 → 북두칠성은 북극성 ${SIDE[a.verdict]} · 지금은 ${SIDE[side(phiNow)]}</text>`;
+        out += `<text class="verdict-text" style="fill:#0f172a" x="20" y="16">${a.season.label} 저녁 9시 → 북두칠성은 북극성 ${SIDE[a.verdict]} · 지금은 ${SIDE[side(phiNow)]}</text>`;
         return out;
     }
 

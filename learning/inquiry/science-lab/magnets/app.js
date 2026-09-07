@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const ax1 = ax0 + dir * mag;
             out += `<line class="force-arrow" x1="${ax0.toFixed(1)}" y1="${ay}" x2="${ax1.toFixed(1)}" y2="${ay}"/>`;
             out += `<path class="force-head" d="M${ax1.toFixed(1)},${ay} l${(-dir * 9).toFixed(1)},-5 l0,10 z"/>`;
-            out += `<text class="small-label" fill="#d97706" x="${((ax0 + ax1) / 2).toFixed(1)}" y="${ay - 8}" text-anchor="middle">${F > 0 ? '끌어당김' : '밀어냄'} ${Math.abs(F).toFixed(2)} N</text>`;
+            out += `<text class="small-label" style="fill:#d97706" x="${((ax0 + ax1) / 2).toFixed(1)}" y="${ay - 8}" text-anchor="middle">${F > 0 ? '끌어당김' : '밀어냄'} ${Math.abs(F).toFixed(2)} N</text>`;
         }
         // gap marker
         if (q.gap > 0.002) {

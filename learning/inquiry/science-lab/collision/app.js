@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = `<text class="axis-text" x="${GRAPH.x0 - 6}" y="${y + 4}" text-anchor="end">${label}</text>`;
         out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 7}" width="${Math.max(1, w).toFixed(1)}" height="15" rx="3" fill="${colour}" opacity=".85"/>`;
         const flip = GRAPH.x0 + w > GRAPH.x1 - 70;
-        out += `<text class="bar-text" fill="${colour}" x="${(GRAPH.x0 + w + (flip ? -6 : 6)).toFixed(1)}" y="${y + 4}"${flip ? ' text-anchor="end"' : ''}>${value.toFixed(2)} ${unit}</text>`;
+        out += `<text class="bar-text" style="fill:${flip ? '#ffffff' : colour}" x="${(GRAPH.x0 + w + (flip ? -6 : 6)).toFixed(1)}" y="${y + 4}"${flip ? ' text-anchor="end"' : ''}>${value.toFixed(2)} ${unit}</text>`;
         return out;
     }
 

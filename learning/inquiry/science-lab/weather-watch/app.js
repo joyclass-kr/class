@@ -139,7 +139,7 @@ function drawShore(g) {
     [[96, a.sea, '바다'], [340, a.land, '육지']].forEach(([x, t, label]) => {
         const h = clamp((t - 12) / 18, 0, 1);
         g.appendChild(el('rect', { x: x - 7, y: GROUND_Y + 8, width: 14, height: 44, rx: 7, class: 'thermo' }));
-        g.appendChild(el('rect', { x: x - 4, y: GROUND_Y + 48 - h * 36, width: 8, height: h * 36 + 2, rx: 4, class: 'thermo-fill', style: `fill:${label === '육지' ? '#ffb26b' : '#0284c7'}` }));
+        g.appendChild(el('rect', { x: x - 4, y: GROUND_Y + 48 - h * 36, width: 8, height: h * 36 + 2, rx: 4, class: 'thermo-fill', style: `fill:${label === '육지' ? '#9a3412' : '#075985'}` }));
         g.appendChild(el('text', { x, y: GROUND_Y + 4, 'text-anchor': 'middle', class: 'read-text', style: `fill:${label === '육지' ? '#ffb26b' : '#0284c7'}` }, `${fmt(t, 1)}℃`));
     });
 

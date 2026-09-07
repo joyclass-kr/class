@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tMax > 100) {
             g += `<line class="boil-line" x1="${GRAPH.x0}" y1="${gy(100, tMax)}" x2="${GRAPH.x1}" y2="${gy(100, tMax)}"/>`;
             // label sits inside the plot: placed past x1 it ran off the canvas
-            g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${gy(100, tMax) - 5}" fill="#d97706" text-anchor="end">물의 끓는점 100℃</text>`;
+            g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${gy(100, tMax) - 5}" style="fill:#d97706" text-anchor="end">물의 끓는점 100℃</text>`;
         }
         SUBS.forEach(s => {
             const pts = [];

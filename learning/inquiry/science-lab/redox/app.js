@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="axis-text" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${name}</text>`;
             out += `<rect class="bar" x="${GRAPH.x0}" y="${y - 6}" width="${Math.max(2, gx(mass) - GRAPH.x0).toFixed(1)}" height="13" rx="3" fill="${colour}" opacity=".85"/>`;
             const flip = gx(mass) > GRAPH.x1 - 60;
-            out += `<text class="bar-text" fill="${colour}" x="${(gx(mass) + (flip ? -6 : 6)).toFixed(1)}" y="${(y + 4).toFixed(1)}"${flip ? ' text-anchor="end"' : ''}>${mass.toFixed(3)} g</text>`;
+            out += `<text class="bar-text" style="fill:${flip ? '#ffffff' : colour}" x="${(gx(mass) + (flip ? -6 : 6)).toFixed(1)}" y="${(y + 4).toFixed(1)}"${flip ? ' text-anchor="end"' : ''}>${mass.toFixed(3)} g</text>`;
         });
         graphGroup.innerHTML = out;
     }

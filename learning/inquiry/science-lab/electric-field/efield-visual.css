@@ -80,8 +80,8 @@
 /* charges and field */
 .field-line { fill: none; stroke: #64748b; stroke-width: 1.1; }
 .field-arrow { fill: #64748b; }
-.charge-pos { fill: rgba(255, 122, 89, .55); stroke: #ff7a59; stroke-width: 1.6; }
-.charge-neg { fill: rgba(82, 199, 255, .5); stroke: #0284c7; stroke-width: 1.6; }
+.charge-pos { fill: #dc2626; stroke: #991b1b; stroke-width: 1.6; }
+.charge-neg { fill: #0284c7; stroke: #075985; stroke-width: 1.6; }
 .charge-text { fill: #fff; font-size: 13px; font-weight: 900; }
 .test-charge { fill: rgba(217, 119, 6, .85); stroke: #7a5a00; stroke-width: 1; }
 .force { stroke-width: 2.4; fill: none; }

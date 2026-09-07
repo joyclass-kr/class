@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dir = inward ? 1 : -1;
                 out += `<path class="gas-arrow ${inward ? 'gas-in' : 'gas-out'}" d="M${x - 5},${y1 - dir * 6} L${x},${y1} L${x + 5},${y1 - dir * 6}"/>`;
             }
-            out += `<text class="small-label" fill="${inward ? '#0284c7' : '#ea580c'}" x="${CX}" y="88" text-anchor="middle">` +
+            out += `<text class="small-label" style="fill:${inward ? '#0284c7' : '#ea580c'}" x="${CX}" y="88" text-anchor="middle">` +
                    `${inward ? '산소가 들어와 결합합니다' : '기체가 되어 날아갑니다'}</text>`;
         }
 

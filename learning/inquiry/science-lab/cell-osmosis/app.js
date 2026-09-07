@@ -137,9 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ax = x2 - dx * 7, ay = y2 - dy * 7 * 0.8;
                 out += `<path class="water-arrow ${cls}" d="M${(ax - dy * 5).toFixed(1)},${(ay - dx * 5).toFixed(1)} L${x2.toFixed(1)},${y2.toFixed(1)} L${(ax + dy * 5).toFixed(1)},${(ay + dx * 5).toFixed(1)}"/>`;
             });
-            out += `<text class="part-label" fill="${inward ? '#0284c7' : '#ea580c'}" x="358" y="150">물이 ${inward ? '들어옴' : '빠져나감'}</text>`;
+            out += `<text class="part-label" style="fill:${inward ? '#0284c7' : '#ea580c'}" x="358" y="150">물이 ${inward ? '들어옴' : '빠져나감'}</text>`;
         } else {
-            out += `<text class="part-label" fill="#059669" x="358" y="150">물의 출입 균형</text>`;
+            out += `<text class="part-label" style="fill:#059669" x="358" y="150">물의 출입 균형</text>`;
         }
         out += `<text class="state-label" fill="${s.tone}" x="358" y="60">${s.label}</text>`;
         out += `<text class="part-label" x="358" y="78">부피 ${(s.v * 100).toFixed(0)}%</text>`;
