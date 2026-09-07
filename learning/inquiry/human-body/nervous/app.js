@@ -1488,7 +1488,13 @@
         }
 
         if (quizContainerEl && data.quizzes && data.quizzes.length > 0 && typeof SimEngine !== 'undefined') {
-            SimEngine.renderQuizSet(quizContainerEl, data.quizzes);
+            // 시냅스 문항은 따로 적혀 있으면서 어느 방에도 붙어 있지 않았다.
+            // 시냅스는 신경계에서 나오는 대목이므로 여기에 이어 붙인다.
+            var qs = data.quizzes.slice();
+            if (ExamData.synapse && ExamData.synapse.quizzes) {
+                qs = qs.concat(ExamData.synapse.quizzes);
+            }
+            SimEngine.renderQuizSet(quizContainerEl, qs);
         }
     }
 

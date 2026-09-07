@@ -93,12 +93,20 @@
         ctx.scale(dpr, dpr);
     }
 
-    /** 사이드바 아래 개념 퀴즈를 그린다 */
+    /**
+     * 사이드바 아래 개념 퀴즈를 그린다.
+     * 지금 보고 있는 장면에 맞는 문제를 낸다 —
+     * 관절 장면이면 길항근, 근절 장면이면 활주설.
+     */
     function renderQuizSkeleton() {
         if (typeof ExamData === 'undefined' || typeof SimEngine === 'undefined') return;
         var box = document.getElementById('quizContainer');
-        var data = ExamData.skeleton;
-        if (!box || !data || !data.quizzes) return;
+        if (!box) return;
+        var key = currentSceneKey === 'sarcomere' ? 'muscle' : 'skeleton';
+        if (box.dataset.quizFor === key) return;
+        var data = ExamData[key];
+        if (!data || !data.quizzes) return;
+        box.dataset.quizFor = key;
         SimEngine.renderQuizSet(box, data.quizzes);
     }
 
@@ -603,6 +611,7 @@
                 sceneBtns.forEach(function (b) { b.classList.remove('active'); });
                 btn.classList.add('active');
                 currentSceneKey = btn.dataset.scene;
+                renderQuizSkeleton();
 
                 if (skeletonHudText) {
                     skeletonHudText.innerHTML = currentSceneKey === 'sarcomere' ?
