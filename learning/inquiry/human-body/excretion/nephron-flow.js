@@ -190,7 +190,10 @@
         var box = svg.getBoundingClientRect();
         if (!box.width) return;
         var vb = svg.viewBox.baseVal;
-        var sx = box.width / vb.width, sy = box.height / vb.height;
+        // 그림은 가운데 맞춤으로 들어가므로 남는 여백을 더해 줘야 조각 위에 붙는다
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var offX = (box.width - vb.width * k) / 2;
+        var offY = (box.height - vb.height * k) / 2;
 
         labelBox.innerHTML = '';
         LABELS.forEach(function (item) {
@@ -201,8 +204,8 @@
             var tag = document.createElement('span');
             tag.className = 'nephron-tag';
             tag.textContent = item.text;
-            tag.style.left = ((b.x + b.width / 2) * sx) + 'px';
-            tag.style.top = ((b.y + b.height / 2) * sy) + 'px';
+            tag.style.left = (offX + (b.x + b.width / 2) * k) + 'px';
+            tag.style.top = (offY + (b.y + b.height / 2) * k) + 'px';
             tag.addEventListener('click', function () { showDetail(item.id); });
             labelBox.appendChild(tag);
         });

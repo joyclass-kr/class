@@ -298,7 +298,10 @@
         var box = svg.getBoundingClientRect();
         if (!box.width) return;
         var vb = svg.viewBox.baseVal;
-        var sx = box.width / vb.width, sy = box.height / vb.height;
+        // 그림은 가운데 맞춤으로 들어가므로 남는 여백을 더해 줘야 조각 위에 붙는다
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var offX = (box.width - vb.width * k) / 2;
+        var offY = (box.height - vb.height * k) / 2;
 
         labelBox.innerHTML = '';
         LABELS.forEach(function (item) {
@@ -307,8 +310,8 @@
             var b;
             try { b = el.getBBox(); } catch (e) { return; }
 
-            var cx = (b.x + b.width * (item.fx === undefined ? 0.5 : item.fx)) * sx;
-            var cy = (b.y + b.height * (item.fy === undefined ? 0.5 : item.fy)) * sy;
+            var cx = offX + (b.x + b.width * (item.fx === undefined ? 0.5 : item.fx)) * k;
+            var cy = offY + (b.y + b.height * (item.fy === undefined ? 0.5 : item.fy)) * k;
 
             var tag = document.createElement('span');
             tag.className = 'heart-flow-tag';

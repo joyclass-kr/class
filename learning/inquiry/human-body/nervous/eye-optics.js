@@ -73,7 +73,7 @@
         var canvas = document.getElementById('nervousCanvas');
         // 다른 장면들이 캔버스를 쓰므로, 우리 장면일 때만 감춘다
         if (canvas && on) canvas.style.visibility = 'hidden';
-        else if (canvas && !document.querySelector('.pupil-layer:not([hidden])')) canvas.style.visibility = 'visible';
+        else if (canvas && !document.querySelector('.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden])')) canvas.style.visibility = 'visible';
         if (on) placeLabels();
         toggleHud(on);
     }
@@ -169,7 +169,10 @@
         var box = svg.getBoundingClientRect();
         if (!box.width) return;
         var vb = svg.viewBox.baseVal;
-        var sx = box.width / vb.width, sy = box.height / vb.height;
+        // 그림은 가운데 맞춤(xMidYMid meet)으로 들어가므로 남는 여백을 더해 줘야 한다
+        var k = Math.min(box.width / vb.width, box.height / vb.height);
+        var offX = (box.width - vb.width * k) / 2;
+        var offY = (box.height - vb.height * k) / 2;
 
         labelBox.innerHTML = '';
         if (leaderGroup) { while (leaderGroup.firstChild) leaderGroup.removeChild(leaderGroup.firstChild); }
@@ -199,8 +202,8 @@
             var tag = document.createElement('span');
             tag.className = 'eye-optics-tag';
             tag.textContent = item.text;
-            tag.style.left = (ax * sx) + 'px';
-            tag.style.top = (ay * sy) + 'px';
+            tag.style.left = (offX + ax * k) + 'px';
+            tag.style.top = (offY + ay * k) + 'px';
             tag.addEventListener('click', function () { showDetail(item.id); });
             labelBox.appendChild(tag);
         });

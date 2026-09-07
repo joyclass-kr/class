@@ -295,3 +295,93 @@
     display: flex; align-items: center; justify-content: center;
     color: #fca5a5; font-weight: 700;
 }
+
+/* ── 반사궁 (4번 장면) ───────────────────────────────────────── */
+
+.reflex-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 6;
+}
+
+.reflex-modes {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 4px 10px 0;
+    flex-wrap: wrap;
+}
+
+.reflex-modes button {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: rgba(6, 10, 24, 0.85);
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.reflex-modes button.on {
+    border-color: #a855f7;
+    color: #f8fafc;
+    background: rgba(168, 85, 247, 0.28);
+}
+
+.reflex-stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 50px 10px 0;
+}
+
+.reflex-stage svg { width: 100%; height: 100%; display: block; }
+
+.reflex-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.reflex-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.55);
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.reflex-tag.on { color: #f8fafc; border-color: #fde047; }
+.reflex-tag:hover { border-color: #a855f7; }
+
+.reflex-caption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 6px 10px 12px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(6, 10, 24, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.reflex-caption b { color: #fde047; }
+.reflex-route { color: #c084fc; font-weight: 800; }
+.reflex-time { color: #f8fafc; }
+.reflex-note { flex: 1 1 100%; color: #94a3b8; }
+
+.reflex-error {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fca5a5; font-weight: 700;
+}

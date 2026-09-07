@@ -1,343 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <!--
+    반사궁 도식 (자극 → 감각기 → 감각 뉴런 → 척수 → 운동 뉴런 → 반응기)
+
+    이 그림은 나중에 더 나은 그림으로 통째로 갈아 끼울 수 있게 만들었다.
+    갈아 끼울 때 지켜야 할 약속:
+      1) viewBox 는 "0 0 1000 700"
+      2) 글자(<text>)를 넣지 않는다. 이름표는 코드가 붙인다.
+      3) 아래 id 를 그대로 쓴다:
+         stimulus arm receptor sensoryNeuron sensoryGanglion
+         spinalCord grayMatter interneuron motorNeuron effector brain
+         synapseA synapseB
+      4) 보이지 않는 안내선 다섯 개를 남긴다 (신호가 지나갈 길):
+         flowSensory flowRelay flowMotor flowToBrain flowFromBrain
+         path 의 시작점이 신호의 출발점이 되도록 차례대로 그린다.
+      5) 채우기는 단색. 코드가 색을 바꾸므로 그라데이션·발광은 쓰지 않는다.
+
+    시험에 나오는 대목:
+      감각 뉴런의 세포체는 척수 <바깥> 신경절에 있다.
+      운동 뉴런의 세포체는 척수 회백질 <안>에 있다.
+      무조건 반사는 대뇌를 거치지 않아 빠르다.
+  -->
+
   <defs>
     <style>
-      /* 2D Flat Standard Korean Science Textbook / Exam Paper Schematic Style */
-      .arm-outline { fill: #1e293b; fill-opacity: 0.35; stroke: #64748b; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
-      .arm-crease { fill: none; stroke: #64748b; stroke-width: 2.0; stroke-linecap: round; }
-      
-      .stimulus-head { fill: #f59e0b; stroke: #b45309; stroke-width: 2.4; stroke-linejoin: round; }
-      .stimulus-pin { fill: #cbd5e1; stroke: #94a3b8; stroke-width: 2.4; stroke-linecap: round; }
-      .stimulus-spark { fill: none; stroke: #f59e0b; stroke-width: 2.2; stroke-linecap: round; }
-      
-      .receptor-skin { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.4; }
-      
-      .s-neuron { fill: none; stroke: #38bdf8; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
-      .s-soma { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.6; }
-      .s-nucleus { fill: #0369a1; }
-      
-      .white-matter { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 2.8; stroke-linejoin: round; stroke-linecap: round; }
-      .gray-matter { fill: #94a3b8; stroke: #64748b; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
-      
-      .inter-neuron { fill: #a855f7; stroke: #7c3aed; stroke-width: 2.6; stroke-linejoin: round; }
-      .inter-line { fill: none; stroke: #a855f7; stroke-width: 3.2; stroke-linecap: round; }
-      
-      .m-neuron { fill: none; stroke: #f43f5e; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
-      .m-soma { fill: #f43f5e; stroke: #be123c; stroke-width: 2.6; stroke-linejoin: round; }
-      .m-nucleus { fill: #9f1239; }
-      
-      .effector-muscle { fill: #fb7185; stroke: #e11d48; stroke-width: 2.8; stroke-linejoin: round; }
-      .muscle-tendon { fill: #e2e8f0; stroke: #cbd5e1; stroke-width: 2.2; }
-      .muscle-striation { fill: none; stroke: #fda4af; stroke-width: 1.6; stroke-linecap: round; opacity: 0.7; }
-      
-      .synapse-ring { fill: none; stroke: #facc15; stroke-width: 2.4; stroke-dasharray: 4,3; }
-      .synapse-dot { fill: #facc15; stroke: #ca8a04; stroke-width: 1.5; }
-      
-      .brain-shape { fill: #c4b5fd; stroke: #7c3aed; stroke-width: 2.8; stroke-linejoin: round; }
-      .brain-fissure { fill: none; stroke: #7c3aed; stroke-width: 2.2; stroke-linecap: round; }
-      
-      .tract-line { fill: none; stroke-width: 2.0; stroke-dasharray: 6,6; stroke-linecap: round; }
+      .outline  { stroke: #64748b; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+      .nerve    { fill: none; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+      .soma     { stroke: #0f172a; stroke-width: 2.4; }
+      .dendrite { fill: none; stroke-width: 4; stroke-linecap: round; }
     </style>
   </defs>
 
-  <!-- ================================================================= -->
-  <!-- 1. CEREBRUM (대뇌) - 위쪽에 작고 명확하게                          -->
-  <!-- ================================================================= -->
-  <g id="brain">
-    <!-- Cerebrum Hemispheric Contour -->
-    <path class="brain-shape"
-          d="M 455,150
-             C 430,132 430,85 465,60
-             C 500,38 565,38 595,65
-             C 620,88 615,130 585,150
-             C 550,156 490,156 455,150 Z" />
-
-    <!-- Cerebral Sulci / Gyri (대뇌 겉질 주름) -->
-    <path class="brain-fissure" d="M 475,70 C 495,84 522,80 545,68" />
-    <path class="brain-fissure" d="M 452,105 C 480,116 515,102 546,112 C 570,120 592,106 605,92" />
-    <path class="brain-fissure" d="M 485,135 C 510,126 538,130 560,144" />
-
-    <!-- Sensory Area (감각령: 두정엽 뒤중심회) Marker -->
-    <circle cx="545" cy="85" r="7.5" fill="#38bdf8" stroke="#0284c7" stroke-width="2" />
-    <!-- Motor Area (운동령: 전두엽 앞중심회) Marker -->
-    <circle cx="515" cy="85" r="7.5" fill="#f43f5e" stroke="#be123c" stroke-width="2" />
-  </g>
-
-  <!-- Conscious Pathway Visible Tracks (척수 ↔ 대뇌 연결 신경로: 의식적 반응 경로) -->
-  <g opacity="0.65">
-    <!-- Ascending Track (척수 후각 ➔ 대뇌 감각령) -->
-    <path class="tract-line" stroke="#38bdf8"
-          d="M 730,345 C 690,260 610,165 545,94" />
-    <!-- Descending Track (대뇌 운동령 ➔ 척수 전각) -->
-    <path class="tract-line" stroke="#f43f5e"
-          d="M 515,94 C 570,180 660,280 735,445" />
-    <!-- Arrowhead to Brain -->
-    <polygon points="545,94 552,102 540,103" fill="#38bdf8" />
-    <!-- Arrowhead from Brain to Spinal Cord -->
-    <polygon points="735,445 728,435 740,438" fill="#f43f5e" />
-  </g>
-
-  <!-- ================================================================= -->
-  <!-- 2. SPINAL CORD CROSS SECTION (척수 단면)                           -->
-  <!--    가운데 오른쪽: 바깥 백질, 안쪽 나비 모양 회백질                 -->
-  <!-- ================================================================= -->
-
-  <!-- Spinal Cord White Matter (spinalCord: 척수 바깥 백질) -->
-  <g id="spinalCord">
-    <!-- Smooth Transverse Contour with Anatomical Dorsal (Ganglionic) & Ventral Roots -->
-    <path class="white-matter"
-          d="M 780,280
-             C 845,280 925,320 925,400
-             C 925,480 845,520 780,520
-             C 745,520 710,500 680,480
-             L 590,485
-             C 575,487 568,478 568,468
-             C 568,458 575,450 590,450
-             L 668,442
-             C 676,420 676,380 668,358
-             L 595,350
-             C 585,350 545,352 542,320
-             C 540,296 575,296 595,302
-             L 680,320
-             C 710,300 745,280 780,280 Z" />
-
-    <!-- Anterior (Ventral) Median Fissure (전정중열: 배쪽 깊은 고랑) -->
-    <path d="M 776,520 L 776,462 C 776,458 784,458 784,462 L 784,520" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2" />
-    <!-- Posterior (Dorsal) Median Sulcus (후정중구: 등쪽 얕은 틈) -->
-    <path d="M 780,280 L 780,335" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3,3" />
-  </g>
-
-  <!-- Spinal Cord Gray Matter (grayMatter: 안쪽 나비 모양 회백질) -->
-  <g id="grayMatter">
-    <!-- Classic Butterfly / H-Shaped Gray Matter -->
-    <path class="gray-matter"
-          d="M 780,388
-             C 768,382 752,370 740,344
-             C 732,328 720,330 715,340
-             C 710,352 720,368 734,385
-             C 744,396 742,406 734,416
-             C 718,432 708,448 715,460
-             C 722,472 738,468 750,452
-             C 762,434 772,416 780,412
-             C 788,416 798,434 810,452
-             C 822,468 838,472 845,460
-             C 852,448 842,432 826,416
-             C 818,406 816,396 826,385
-             C 840,368 850,352 845,340
-             C 840,330 828,328 820,344
-             C 808,370 792,382 780,388 Z" />
-
-    <!-- Central Canal (중심관) -->
-    <circle cx="780" cy="400" r="5" fill="#475569" stroke="#334155" stroke-width="1.5" />
-  </g>
-
-  <!-- ================================================================= -->
-  <!-- 3. INTERNEURON (연합 뉴런) - 척수 회백질 안, 짧고 통통함           -->
-  <!-- ================================================================= -->
-  <g id="interneuron">
-    <!-- Interneuron Cell Body (Soma) in Dorsal/Intermediate Gray Matter -->
-    <circle cx="738" cy="375" r="11.5" class="inter-neuron" />
-    <circle cx="738" cy="375" r="4.8" fill="#581c87" />
-
-    <!-- Interneuron Dendrites (가지돌기) receiving at Synapse A -->
-    <path class="inter-line" d="M 730,368 L 722,358 M 734,364 L 728,352 M 742,364 L 742,350" />
-
-    <!-- Short Interneuron Axon descending to Ventral Horn -->
-    <path class="inter-line" d="M 738,386 C 738,404 734,420 734,435" />
-
-    <!-- Interneuron Axon Terminals contacting Motor Soma at Synapse B -->
-    <circle cx="731" cy="436" r="3.2" class="inter-neuron" />
-    <circle cx="737" cy="436" r="3.2" class="inter-neuron" />
-  </g>
-
-  <!-- Synapse A (synapseA: 감각 뉴런 ↔ 연합 뉴런 만나는 곳) -->
-  <g id="synapseA">
-    <ellipse cx="726" cy="352" rx="14" ry="10" class="synapse-ring" />
-    <circle cx="726" cy="352" r="3.2" class="synapse-dot" />
-  </g>
-
-  <!-- Synapse B (synapseB: 연합 뉴런 ↔ 운동 뉴런 만나는 곳) -->
-  <g id="synapseB">
-    <ellipse cx="734" cy="438" rx="14" ry="10" class="synapse-ring" />
-    <circle cx="734" cy="438" r="3.2" class="synapse-dot" />
-  </g>
-
-  <!-- ================================================================= -->
-  <!-- 4. MOTOR NEURON (운동 뉴런)                                       -->
-  <!--    ★ 시험 포인트: 세포체는 척수 회백질(전각) 안에 있음              -->
-  <!-- ================================================================= -->
-  <g id="motorNeuron">
-    <!-- Motor Neuron Multipolar Cell Body (전각 내부 다극 신경세포체) -->
-    <polygon points="738,444 750,448 752,460 742,466 730,460 730,448" class="m-soma" />
-    <circle cx="741" cy="454" r="4.5" class="m-nucleus" />
-
-    <!-- Motor Dendrites (회백질 내 가지돌기) -->
-    <path class="m-neuron" stroke-width="2.2"
-          d="M 734,444 L 732,438 M 744,444 L 746,438 M 751,450 L 758,448" />
-
-    <!-- Long Motor Axon exiting via Ventral Root (전근) to Arm Muscle -->
-    <path class="m-neuron"
-          d="M 738,464
-             C 725,480 685,475 640,468
-             C 580,458 500,452 420,460
-             C 380,465 355,475 330,488" />
-
-    <!-- Motor Axon Terminal Branches & Motor End-Plates on Effector Muscle -->
-    <path class="m-neuron" stroke-width="2.2"
-          d="M 330,488 L 308,480 M 330,488 L 312,495 M 330,488 L 318,510" />
-    <circle cx="306" cy="480" r="4" fill="#f43f5e" stroke="#be123c" stroke-width="1.5" />
-    <circle cx="310" cy="495" r="4" fill="#f43f5e" stroke="#be123c" stroke-width="1.5" />
-    <circle cx="316" cy="510" r="4" fill="#f43f5e" stroke="#be123c" stroke-width="1.5" />
-  </g>
-
-  <!-- ================================================================= -->
-  <!-- 5. ARM SILHOUETTE & EFFECTOR MUSCLE (팔 윤곽 & 반응기 근육)        -->
-  <!-- ================================================================= -->
-
-  <!-- Arm Outline (arm: 팔 윤곽 - 손가락, 손, 손목, 전완, 팔꿈치, 상완) -->
+  <!-- ── 팔과 자극 ───────────────────────────────────────────── -->
   <g id="arm">
-    <!-- Natural Bent Arm Posture (굴곡 반사 도식) -->
-    <path class="arm-outline"
-          d="M 285,410
-             C 320,425 355,445 375,475
-             C 395,505 405,535 440,560
-             C 452,568 456,580 448,590
-             C 438,602 410,612 360,615
-             C 300,618 250,610 215,600
-             C 175,590 145,595 125,602
-             L 100,608
-             C 92,610 88,604 94,598
-             C 106,586 122,572 150,560
-             C 180,548 208,542 235,540
-             C 275,538 310,518 325,490
-             C 340,460 325,435 295,420
-             C 285,415 280,412 285,410 Z" />
-
-    <!-- Forearm Crease & Details -->
-    <path class="arm-crease" d="M 335,505 C 348,518 360,528 375,532" />
-    <path class="arm-crease" d="M 125,602 C 132,608 140,612 150,610" />
+    <!-- 팔뚝: 굵은 선으로 그린다 (style 로 적어야 <style> 규칙에 안 먹힌다) -->
+    <path d="M540 640 L320 594 L186 556" fill="none"
+          style="stroke:#475569; stroke-width:54; stroke-linecap:round; stroke-linejoin:round"/>
+    <path d="M540 640 L320 594 L186 556" fill="none"
+          style="stroke:#94a3b8; stroke-width:2.6; fill:none" opacity="0"/>
+    <!-- 손 -->
+    <path d="M190 560 C160 548 132 546 116 556 C100 566 106 582 126 588
+             C148 592 176 586 194 578 Z"
+          style="fill:#475569; stroke:#94a3b8; stroke-width:2.6; stroke-linejoin:round"/>
+    <!-- 집게손가락 -->
+    <path d="M124 560 L98 570" fill="none"
+          style="stroke:#475569; stroke-width:17; stroke-linecap:round"/>
   </g>
 
-  <!-- Effector Muscle (effector: 팔 근육 / 상완이두근 - 반응기) -->
-  <g id="effector">
-    <!-- Upper & Lower Tendons (힘줄: 건) -->
-    <path class="muscle-tendon" d="M 315,445 L 300,458 L 308,468 L 324,455 Z" />
-    <path class="muscle-tendon" d="M 360,515 L 345,528 L 352,538 L 368,525 Z" />
-
-    <!-- Biceps Muscle Belly (상완이두근 방추형 근육) -->
-    <path class="effector-muscle"
-          d="M 308,460
-             C 335,445 365,465 372,492
-             C 378,520 355,535 338,530
-             C 310,522 295,498 302,475
-             C 305,466 306,462 308,460 Z" />
-
-    <!-- Striated Muscle Fibers (근섬유 가로무늬) -->
-    <path class="muscle-striation" d="M 322,468 C 334,484 330,504 316,518" />
-    <path class="muscle-striation" d="M 334,474 C 346,490 342,510 328,524" />
-    <path class="muscle-striation" d="M 346,482 C 356,498 352,516 340,528" />
-  </g>
-
-  <!-- ================================================================= -->
-  <!-- 6. STIMULUS & RECEPTOR (압정 & 손끝 감각기)                        -->
-  <!-- ================================================================= -->
-
-  <!-- Stimulus (stimulus: 뾰족한 압정) -->
+  <!-- 압정 (자극) -->
   <g id="stimulus">
-    <!-- Thumbtack Head Flange Base -->
-    <path class="stimulus-head" d="M 48,648 L 82,626 L 94,644 L 60,666 Z" />
-    <ellipse cx="54" cy="657" rx="15" ry="7.5" transform="rotate(-33 54 657)" fill="#d97706" stroke="#b45309" stroke-width="2.2" />
-    <!-- Sharp Pin / Needle Point touching fingertip at (98, 608) -->
-    <path class="stimulus-pin" d="M 70,634 L 98,608 L 78,629 Z" />
-    <!-- Sharp Pain Impact Radiating Sparks -->
-    <path class="stimulus-spark" d="M 98,600 L 98,592 M 88,604 L 80,600 M 106,604 L 114,600 M 92,616 L 86,624" />
+    <path fill="#f43f5e" stroke="#881337" stroke-width="2.2"
+          d="M68 618 L104 618 L86 592 Z"/>
+    <ellipse cx="86" cy="624" rx="26" ry="8" fill="#fb7185" stroke="#881337" stroke-width="2.2"/>
   </g>
 
-  <!-- Receptor (receptor: 손끝 피부의 감각기 / 통각 수용기) -->
-  <g id="receptor">
-    <!-- Sensory Receptor Terminal in Dermis -->
-    <ellipse cx="106" cy="605" rx="8" ry="6" class="receptor-skin" />
-    <!-- Dendritic Sensory Nerve Endings -->
-    <path class="s-neuron" stroke-width="2.2"
-          d="M 102,605 L 98,608 M 106,601 L 101,599 M 106,608 L 101,611" />
-    <circle cx="106" cy="605" r="2.5" fill="#ffffff" />
+  <!-- 감각기 (손끝 피부의 수용기) -->
+  <circle id="receptor" cx="106" cy="566" r="15" fill="#38bdf8" stroke="#0369a1" stroke-width="2.6"/>
+
+  <!-- ── 반응기 (팔 근육) ────────────────────────────────────── -->
+  <g id="effector">
+    <path fill="#fb7185" stroke="#9f1239" stroke-width="2.6"
+          d="M272 586 C308 564 366 572 408 592 C366 618 306 620 272 608 Z"/>
+    <path fill="none" stroke="#9f1239" stroke-width="1.8" opacity="0.7"
+          d="M296 586 C328 578 364 582 392 592 M292 600 C324 596 360 600 388 604"/>
   </g>
 
-  <!-- ================================================================= -->
-  <!-- 7. SENSORY NEURON & GANGLION (감각 뉴런 & 등쪽 신경절)             -->
-  <!--    ★ 시험 포인트: 감각 뉴런 세포체는 척수 바깥 등쪽 신경절에 위치   -->
-  <!-- ================================================================= -->
+  <!-- ── 척수 가로 단면 ─────────────────────────────────────── -->
+  <ellipse id="spinalCord" cx="790" cy="360" rx="148" ry="126"
+           fill="#f1f5f9" stroke="#64748b" stroke-width="3.4"/>
 
-  <!-- Sensory Ganglion (sensoryGanglion: 척수 바깥 등쪽 신경절 속 신경세포체) -->
-  <g id="sensoryGanglion">
-    <!-- Pseudo-unipolar Round Cell Body nestled inside the dorsal root ganglion -->
-    <circle cx="568" cy="320" r="13" class="s-soma" />
-    <circle cx="568" cy="320" r="5" class="s-nucleus" />
-    <circle cx="566" cy="318" r="2" fill="#bae6fd" />
-    <!-- T-junction stem connecting soma to main axon -->
-    <path class="s-neuron" stroke-width="2.8" d="M 568,333 L 568,338" />
+  <!-- 회백질 (나비 모양). 등쪽 뿔이 위, 배쪽 뿔이 아래 -->
+  <g id="grayMatter">
+    <!-- 등쪽 뿔 둘(가늘다) + 가운데 가로다리 -->
+    <path d="M748 292 L766 348 M832 292 L814 348 M764 358 L816 358"
+          fill="none" stroke="#64748b" stroke-width="23"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- 배쪽 뿔 둘(굵다) -->
+    <path d="M742 428 L766 372 M838 428 L814 372"
+          fill="none" stroke="#64748b" stroke-width="33"
+          stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <!-- Sensory Neuron Overall (sensoryNeuron: 감각 뉴런 전체) -->
+  <!-- 척수에서 대뇌로 올라가는 길 (뇌줄기) -->
+  <path id="brainStem" fill="#cbd5e1" stroke="#64748b" stroke-width="2.6" stroke-linejoin="round"
+        d="M762 246 C766 220 770 200 774 182 L812 182 C812 202 806 224 802 250 Z"/>
+
+  <!-- ── 감각 뉴런 (파랑) ───────────────────────────────────── -->
   <g id="sensoryNeuron">
-    <!-- Peripheral Axon from Receptor along Arm to Dorsal Root Ganglion -->
-    <path class="s-neuron"
-          d="M 106,605
-             C 140,580 190,545 250,510
-             C 330,460 420,400 495,360
-             C 525,345 546,338 568,338" />
-
-    <!-- Central Axon from Ganglion entering Spinal Cord via Dorsal Root (후근) -->
-    <path class="s-neuron"
-          d="M 568,338
-             C 610,338 650,342 685,348
-             C 700,350 714,351 726,352" />
-
-    <!-- Sensory Axon Terminals at Synapse A -->
-    <path class="s-neuron" stroke-width="2.2"
-          d="M 726,352 L 722,345 M 726,352 L 730,346 M 726,352 L 726,358" />
-    <circle cx="722" cy="345" r="2.8" fill="#38bdf8" stroke="#0284c7" stroke-width="1.2" />
-    <circle cx="730" cy="346" r="2.8" fill="#38bdf8" stroke="#0284c7" stroke-width="1.2" />
-    <circle cx="726" cy="358" r="2.8" fill="#38bdf8" stroke="#0284c7" stroke-width="1.2" />
+    <path class="nerve" stroke="#38bdf8" d="M112 560 C244 578 384 606 524 632"/>
+    <path class="nerve" stroke="#38bdf8" d="M524 632 C580 578 606 508 618 448"/>
+    <path class="nerve" stroke="#38bdf8" d="M652 400 C688 378 726 350 754 326"/>
+    <!-- 축삭 말단 -->
+    <circle cx="756" cy="325" r="9" fill="#38bdf8" stroke="#0369a1" stroke-width="2"/>
   </g>
 
-  <!-- ================================================================= -->
-  <!-- 8. INVISIBLE FLOW GUIDE PATHS (stroke="none" fill="none")         -->
-  <!--    신호가 지나갈 길: path 시작점이 출발점!                          -->
-  <!-- ================================================================= -->
+  <!-- 감각 뉴런의 세포체 = 척수 바깥 신경절 -->
+  <g id="sensoryGanglion">
+    <circle class="soma" cx="630" cy="420" r="26" fill="#7dd3fc"/>
+    <circle cx="630" cy="420" r="9" fill="#0369a1"/>
+    <path class="dendrite" stroke="#38bdf8" d="M608 404 L590 392 M612 442 L596 458 M654 404 L670 392"/>
+  </g>
 
-  <!-- #flowSensory : 감각기 → 감각 뉴런 → 척수 회백질 -->
+  <!-- ── 연합 뉴런 (보라, 회백질 안) ────────────────────────── -->
+  <g id="interneuron">
+    <path class="nerve" stroke="#a855f7" d="M786 356 C784 372 776 386 766 394"/>
+    <circle class="soma" cx="792" cy="352" r="18" fill="#c084fc"/>
+    <circle cx="792" cy="352" r="7" fill="#6b21a8"/>
+    <path class="dendrite" stroke="#a855f7" d="M778 338 L766 330 M806 338 L818 330"/>
+  </g>
+
+  <!-- ── 운동 뉴런 (빨강, 세포체는 회백질 안) ───────────────── -->
+  <g id="motorNeuron">
+    <circle class="soma" cx="757" cy="399" r="19" fill="#fb7185"/>
+    <circle cx="757" cy="399" r="7" fill="#9f1239"/>
+    <path class="dendrite" stroke="#f43f5e" d="M744 386 L734 376 M772 388 L784 380"/>
+    <path class="nerve" stroke="#f43f5e" d="M750 418 C726 496 660 588 552 648"/>
+    <path class="nerve" stroke="#f43f5e" d="M552 648 C480 638 420 620 352 602"/>
+  </g>
+
+  <!-- 시냅스 두 곳 -->
+  <circle id="synapseA" cx="770" cy="336" r="13" fill="#fde68a" stroke="#b45309" stroke-width="2.4" opacity="0.85"/>
+  <circle id="synapseB" cx="768" cy="386" r="13" fill="#fde68a" stroke="#b45309" stroke-width="2.4" opacity="0.85"/>
+
+  <!-- ── 대뇌 ───────────────────────────────────────────────── -->
+  <g id="brain">
+    <path fill="#c4b5fd" stroke="#6d28d9" stroke-width="3" stroke-linejoin="round"
+          d="M716 120 C716 84 750 62 792 62 C836 62 872 84 872 120
+             C872 150 852 172 822 178 L764 178 C732 172 716 150 716 120 Z"/>
+    <path fill="none" stroke="#6d28d9" stroke-width="2.2" opacity="0.75"
+          d="M732 110 C754 100 778 100 798 110 M728 134 C754 122 786 122 812 134
+             M752 86 C774 78 798 78 820 88 M846 106 C858 116 860 132 852 148"/>
+  </g>
+
+  <!-- ── 보이지 않는 안내선 (신호가 지나갈 길) ─────────────── -->
   <path id="flowSensory" fill="none" stroke="none"
-        d="M 106,605
-           C 140,580 190,545 250,510
-           C 330,460 420,400 495,360
-           C 525,345 546,338 568,338
-           C 610,338 650,342 685,348
-           C 700,350 714,351 726,352" />
-
-  <!-- #flowRelay : 회백질 안에서 연합 뉴런을 지나 운동 뉴런 시작점까지 -->
+        d="M106 566 C244 578 384 606 524 632 C580 578 606 508 618 448
+           L630 420 C688 378 726 350 754 326"/>
   <path id="flowRelay" fill="none" stroke="none"
-        d="M 726,352
-           C 730,360 738,366 738,375
-           C 738,395 734,415 734,435
-           C 734,442 738,448 741,454" />
-
-  <!-- #flowMotor : 척수 → 운동 뉴런 → 팔 근육 -->
+        d="M756 325 C770 332 784 342 792 352 C788 372 776 388 758 399"/>
   <path id="flowMotor" fill="none" stroke="none"
-        d="M 741,454
-           C 725,480 685,475 640,468
-           C 580,458 500,452 420,460
-           C 380,465 355,475 330,488
-           L 310,495" />
-
-  <!-- #flowToBrain : 척수 → 대뇌 -->
+        d="M757 399 C726 496 660 588 552 648 C480 638 420 620 344 598"/>
   <path id="flowToBrain" fill="none" stroke="none"
-        d="M 726,352
-           C 725,315 675,235 595,160
-           C 572,135 552,112 545,85" />
-
-  <!-- #flowFromBrain : 대뇌 → 척수 -->
+        d="M770 330 C776 296 776 250 780 182"/>
   <path id="flowFromBrain" fill="none" stroke="none"
-        d="M 515,85
-           C 535,130 595,225 665,325
-           C 702,380 728,422 741,454" />
+        d="M804 182 C810 250 802 322 786 360 C780 378 770 392 758 399"/>
 </svg>
