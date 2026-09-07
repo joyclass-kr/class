@@ -7,6 +7,8 @@ const read = (p) => JSON.parse(fs.readFileSync(path.join(root, p), 'utf8'));
 const plan = read('scripts/hanja-v2-subject-stages-plan.json');
 const noHomophoneDecoys = read('scripts/hanja-no-homophone-decoys.json').decoys;
 const noQuestion = read('scripts/hanja-no-question-characters.json').characters;
+const extraExamples = read('scripts/hanja-extra-examples.json').examples;
+const fewExamples = read('scripts/hanja-few-example-characters.json').characters;
 const db = read('tmp/worddb.json');
 const subjectWords = read('scripts/hanja-subject-word-weights.json');
 const hunEumTable = read('scripts/hanja-huneum-table.json');
@@ -36,9 +38,11 @@ function readingsOf(character) {
   if (!bucket) return [];
   const sorted = [...bucket].sort((a, b) => b[1] - a[1]);
   const main = sorted[0][0];
-  return sorted
+  const kept = sorted
     .filter(([s, n]) => n >= Math.max(2, sorted[0][1] * 0.05) || isHeadSoundPair(s, main))
     .map(([s]) => s);
+  // 드물게 쓰이는 글자는 낱말이 하나뿐이라 잣대에 걸린다. 으뜸 소리는 언제나 남긴다.
+  return kept.length ? kept : [main];
 }
 
 const hun = new Map();
@@ -68,7 +72,15 @@ const banned = new Set(['고려장', '처형', '극형', '사형', '피살', '�
   '배금주의', '중과부적', '섬섬옥수', '십년감수', '미수', '강술', '고희', '희대', '영락', '다과',
   '기상천외', '기인', '공덕', '군율', '중생', '사비', '외상', '내상', '화상', '위약', '안일',
   // 飛行으로 읽히기 쉬워 헷갈린다
-  '비행']);
+  '비행',
+  '능지처참', '수전노', '매국노', '간증', '정염', '단말마', '소주', '건달', '괴수', '유괴']);
+
+/* 파생형까지 막아야 하는 말 (단말마적·소주병처럼 뒤에 붙어 빠져나간다) */
+const bannedParts = ['단말마', '소주', '능지', '수전노', '매국노', '간증', '정염', '건달', '유괴', '괴수', '사형', '학살'];
+const isBanned = (record) =>
+  banned.has(record.term) ||
+  bannedForms.has(`${record.term}|${record.hanja}`) ||
+  bannedParts.some((part) => record.term.includes(part));
 
 /* 같은 한글인데 다른 한자를 쓰는 뜻은 헷갈리므로 그 짝만 막는다 */
 const bannedForms = new Set([
@@ -92,7 +104,7 @@ for (const records of Object.values(db)) {
   for (const record of records) {
     record.ex = record.ex.filter(usableSentence);
     if (!record.ex.length || record.term.length < 2 || record.term.length > 4) continue;
-    if (banned.has(record.term) || bannedForms.has(`${record.term}|${record.hanja}`)) continue;
+    if (isBanned(record)) continue;
     for (const character of new Set(record.hanja)) {
       if (!byChar.has(character)) byChar.set(character, []);
       byChar.get(character).push(record);
@@ -108,7 +120,7 @@ function distractorFor(character, sounds, avoid) {
   for (const records of Object.values(db)) {
     for (const record of records) {
       if (!record.ex.length || record.term.length < 2 || record.term.length > 3) continue;
-      if (banned.has(record.term) || bannedForms.has(`${record.term}|${record.hanja}`) || record.hanja.includes(character)) continue;
+      if (isBanned(record) || record.hanja.includes(character)) continue;
       for (let i = 0; i < record.term.length; i += 1) {
         if (!sounds.includes(record.term[i])) continue;
         const other = record.hanja[i];
@@ -143,9 +155,13 @@ for (const stage of Object.values(plan)) {
     const questions = [];
     for (const character of characters) {
       const sounds = readingsOf(character);
-      const pool = (byChar.get(character) || []).sort(
-        (a, b) => unknownIn(a, acquired) - unknownIn(b, acquired) || score(b) - score(a)
-      );
+      const pool = [
+        ...(byChar.get(character) || []),
+        // 사전에 예문이 없어 직접 적은 보기도 같은 잣대로 줄 세운다
+        ...(extraExamples[character] || []).map(([word, hanja, sentence]) => ({
+          term: word, hanja, level: '', ex: [sentence],
+        })),
+      ].sort((a, b) => unknownIn(a, acquired) - unknownIn(b, acquired) || score(b) - score(a));
       const picked = [];
       for (const pass of [1, 2]) {
         for (const record of pool) {
@@ -155,7 +171,9 @@ for (const stage of Object.values(plan)) {
           picked.push(record);
         }
       }
-      if (picked.length < 3) problems.push(`${term}:${character} 예문 낱말 ${picked.length}개`);
+      if (picked.length < 3 && !fewExamples[character]) {
+        problems.push(`${term}:${character} 예문 낱말 ${picked.length}개인데 까닭이 안 적힘`);
+      }
       const words = picked.map((r) => `${r.term}(${r.hanja})`).join('·');
       lessonCharacters.push({
         character,
@@ -167,12 +185,17 @@ for (const stage of Object.values(plan)) {
       });
       const avoid = new Set(picked.map((r) => r.term));
       const decoy = distractorFor(character, sounds.slice(0, 2), avoid);
+      /* 드물게 쓰이는 글자는 보기 낱말이 둘뿐이라 보기 3개짜리 문제로 낸다 */
       const options = picked.slice(0, 3).map(option);
+      if (options.length < 2) {
+        if (!noQuestion[character]) problems.push(`${term}:${character} 보기 낱말이 하나뿐인데 까닭이 안 적힘`);
+        continue;
+      }
       if (decoy) {
         options.push(option(decoy.record));
         questions.push({
           target: character,
-          answer: 3,
+          answer: options.length - 1,
           note: `‘${decoy.record.term}’에는 ‘${decoy.hunEum}’${objectParticle(decoy.hunEum)} 씁니다.`,
           options
         });
@@ -188,7 +211,7 @@ for (const stage of Object.values(plan)) {
       options.push([spare.term, spare.hanja, mark(spare.sentence, spare.term)]);
       questions.push({
         target: character,
-        answer: 3,
+        answer: options.length - 1,
         noHomophone: true,
         note: spare.kind === 'loanword'
           ? `‘${spare.term}’${topicParticle(spare.term)} 외래어이므로 한자를 쓰지 않습니다.`

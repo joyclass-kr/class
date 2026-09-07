@@ -11,6 +11,8 @@ const strokes = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja
 const expansionSelection = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-csat-expansion-selection.json'), 'utf8'));
 // 문제를 낼 수 없는 글자와 그 까닭
 const noQuestion = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-no-question-characters.json'), 'utf8')).characters;
+// 우리말에서 쓰이는 낱말이 한둘뿐이라 보기를 셋까지 못 채우는 글자
+const fewExamples = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-few-example-characters.json'), 'utf8')).characters;
 const subjectBatch = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-v2-lessons-07.json'), 'utf8'));
 const subjectCharacters = new Set(subjectBatch.flatMap((lesson) => lesson.characters.map((item) => item.character)));
 const expectedCharacterCount = 310 + [...expansionSelection.characters].length + subjectCharacters.size;
@@ -49,7 +51,10 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
   for (const character of lesson.characters) {
     if (!Array.isArray(character.hunEum) || character.hunEum.length === 0) errors.push(`${slug} ${character.character}: 훈음이 없습니다.`);
     if (!Array.isArray(strokes[character.character]) || strokes[character.character].length === 0) errors.push(`${slug} ${character.character}: 필순이 없습니다.`);
-    if (!Array.isArray(character.examples) || character.examples.length < 3) errors.push(`${slug} ${character.character}: 예문이 3개 미만입니다.`);
+    const leastExamples = fewExamples[character.character] ? 1 : 3;
+    if (!Array.isArray(character.examples) || character.examples.length < leastExamples) {
+      errors.push(`${slug} ${character.character}: 예문이 ${leastExamples}개 미만입니다.`);
+    }
     examples += character.examples.length;
     for (const [term, hanja, sentence] of character.examples || []) {
       if (![...hanja].includes(character.character)) errors.push(`${slug} ${character.character}: ${term}의 한자어에 목표 글자가 없습니다.`);
@@ -63,10 +68,15 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
     questions += 1;
     const character = lesson.characters.find((item) => item.character === question.target);
     if (!character) { errors.push(`${slug}: 문제 목표 글자가 카드에 없습니다.`); continue; }
-    if (question.options.length !== 4) errors.push(`${slug} ${question.target}: 보기가 4개가 아닙니다.`);
+    const leastOptions = fewExamples[question.target] ? 3 : 4;
+    if (question.options.length !== 4 && question.options.length !== leastOptions) {
+      errors.push(`${slug} ${question.target}: 보기가 ${leastOptions}개가 아닙니다.`);
+    }
     if (new Set(question.options.map((option) => option[0])).size !== question.options.length) errors.push(`${slug} ${question.target}: 같은 보기 낱말이 반복됩니다.`);
     const contains = question.options.map((option) => [...option[1]].includes(question.target));
-    if (contains.filter(Boolean).length !== 3) errors.push(`${slug} ${question.target}: 목표 한자가 든 보기는 정확히 3개여야 합니다.`);
+    if (contains.filter(Boolean).length !== question.options.length - 1) {
+      errors.push(`${slug} ${question.target}: 목표 한자가 없는 보기는 하나여야 합니다.`);
+    }
     if (contains[question.answer] !== false) errors.push(`${slug} ${question.target}: 정답 번호가 목표 한자가 없는 보기를 가리키지 않습니다.`);
     const correctWord = question.options[question.answer]?.[0] || '';
     if (!question.note.startsWith(`‘${correctWord}’`)) errors.push(`${slug} ${question.target}: 정답 해설이 정답 낱말로 시작하지 않습니다.`);
@@ -142,7 +152,10 @@ for (let stageIndex = 0; stageIndex < stageCount; stageIndex += 1) {
     if (!actual || actual.target !== expected.target || actual.note !== expected.note || JSON.stringify(actual.options) !== JSON.stringify(expected.options)) errors.push(`${stageNumber}단계 ${questionIndex + 1}번: 원본 문제·선지 내용이 달라졌습니다.`);
   }
   for (const question of quizData) {
-    if (question.options.length !== 4) errors.push(`${stageNumber}단계 ${question.target}: 선지가 4개가 아닙니다.`);
+    const wanted = fewExamples[question.target] ? 3 : 4;
+    if (question.options.length !== 4 && question.options.length !== wanted) {
+      errors.push(`${stageNumber}단계 ${question.target}: 선지가 ${wanted}개가 아닙니다.`);
+    }
     if (question.options.filter((option) => option.correct).length !== 1) errors.push(`${stageNumber}단계 ${question.target}: 정답 선지가 정확히 하나가 아닙니다.`);
   }
   if (!quizHtml.includes('questions=shuffle(source)') || !quizHtml.includes('options:shuffle(question.options)')) errors.push(`${stageNumber}단계: 문제·선지 순서 무작위화가 없습니다.`);

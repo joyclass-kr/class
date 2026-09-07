@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const files = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json', 'hanja-v2-lessons-06.json', 'hanja-v2-lessons-07.json'];
 const lessons = files.flatMap((name) => JSON.parse(fs.readFileSync(path.join(import.meta.dirname, name), 'utf8')));
+const fewExamples = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-few-example-characters.json'), 'utf8')).characters;
 const errors = [];
 
 for (const [lessonIndex, lesson] of lessons.entries()) {
@@ -14,7 +15,11 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
     errors.push(`${lesson.term}: 문제가 구성 글자 수보다 많습니다.`);
   }
   for (const [questionIndex, question] of lesson.questions.entries()) {
-    if (question.options.length !== 4) errors.push(`${lesson.term} Q${questionIndex + 1}: 보기는 4개여야 합니다.`);
+    // 우리말에서 쓰이는 낱말이 둘뿐인 글자는 보기를 셋까지만 채울 수 있다
+    const leastOptions = fewExamples[question.target] ? 3 : 4;
+    if (question.options.length !== 4 && question.options.length !== leastOptions) {
+      errors.push(`${lesson.term} Q${questionIndex + 1}: 보기는 ${leastOptions}개여야 합니다.`);
+    }
     const containing = question.options.map((option) => [...option[1]].includes(question.target));
     const nonContaining = containing.filter((value) => !value).length;
     if (nonContaining !== 1) errors.push(`${lesson.term} Q${questionIndex + 1}: 목표 한자가 없는 보기는 정확히 하나여야 합니다.`);
