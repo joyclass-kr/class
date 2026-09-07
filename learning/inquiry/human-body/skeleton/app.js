@@ -11,18 +11,9 @@
     var isRunning = true;
     var lastTime = 0;
 
-    var scenes = {
-        joint: {
-            src: '../assets/images/skeleton-hero.jpg',
-            img: null,
-            loaded: false
-        },
-        sarcomere: {
-            src: '../assets/images/sarcomere-hero.jpg',
-            img: null,
-            loaded: false
-        }
-    };
+    // 두 장면 모두 평면 2D 도식으로 바꿨다. 배경 사진은 이제 쓰지 않는다.
+    // (예전 skeleton-hero.jpg 724KB, sarcomere-hero.jpg 954KB 를 받아 놓고 한 번도 그리지 않았다.)
+    var scenes = {};
     var currentSceneKey = 'joint';
 
     // Joint Biomechanical State
@@ -62,16 +53,6 @@
         canvas = document.getElementById('skeletonCanvas');
         if (!canvas) return;
         ctx = canvas.getContext('2d');
-
-        Object.keys(scenes).forEach(function (key) {
-            var item = scenes[key];
-            var img = new Image();
-            img.src = item.src;
-            img.onload = function () {
-                item.img = img;
-                item.loaded = true;
-            };
-        });
 
         bindDOM();
         renderQuizSkeleton();
