@@ -635,7 +635,7 @@ const EN = {
             { w: "tell us first", k: "미리 말해 달라", s: "Just tell us first. We need time to hold on." }
         ],
         "after": [
-            { w: "a funny tale", k: "소화", s: "A story like this is called a funny tale, meaning one made to make you laugh." },
+            { w: "made to ~ (make)", k: "~하려고 지은", s: "This story was made to make people laugh." },
             { w: "for a laugh alone", k: "그저 웃자고", s: "Our old stories hold as many made for a laugh alone as made to teach." },
             { w: "shows ~ best", k: "가장 잘 보여 준다", s: "a story made for a laugh shows the times best" },
             { w: "did nothing wrong", k: "아무 잘못도 하지 않았다", s: "Look again and the bride did nothing wrong." },
@@ -653,7 +653,7 @@ const EN = {
             {
                 art: 'end.webp',
                 left: [
-                    "A story like this is called a funny tale, meaning one made to make you laugh. Our old stories hold as many made for a laugh alone as made to teach.",
+                    "This story was made to make people laugh. Our old stories hold as many made for a laugh alone as made to teach.",
                     "And sometimes a story made for a laugh shows the times best. This one does. That a bride could not even fart as she pleased is already a fact about those days.",
                     "Look again and the bride did nothing wrong. She held it in until her face went yellow. The fault was not the fart but the side that told her to hold it.",
                     "And that fart found a use the moment she left the house. The same gift was a reason to send her away inside, and worth money outside."
@@ -697,7 +697,7 @@ const AFTERWORD = {
         {
             art: 'end.webp',
             left: [
-                "이런 이야기를 소화(笑話)라고 합니다. 웃기려고 지은 이야기라는 뜻입니다. 우리 옛이야기에는 교훈을 주려는 것 못지않게 그저 웃자고 만든 것이 많습니다.",
+                "이 이야기는 웃기려고 지은 이야기입니다. 우리 옛이야기에는 교훈을 주려는 것 못지않게 그저 웃자고 만든 것이 많습니다.",
                 "그런데 웃자고 만든 이야기가 오히려 그 시절을 잘 보여 줄 때가 있습니다. 이 이야기가 그렇습니다. 며느리가 시집에서 방귀조차 마음대로 뀔 수 없었다는 것부터가 그 시절 이야기입니다.",
                 "다시 보면 며느리는 아무 잘못도 하지 않았습니다. 참느라 얼굴이 노래질 때까지 참았습니다. 흠이 된 것은 방귀가 아니라 참으라고 한 쪽이었습니다.",
                 "그리고 그 방귀는 밖에 나가자마자 쓸모가 생겼습니다. 같은 재주가 안에서는 내쫓길 까닭이었다가 밖에서는 값을 받는 재주가 된 것이지요."
