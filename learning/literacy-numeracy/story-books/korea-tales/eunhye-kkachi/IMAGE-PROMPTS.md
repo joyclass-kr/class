@@ -183,11 +183,6 @@ ridgeline. Lonely and a little eerie.
 
 ### `05-coil.webp` — 몸을 감은 구렁이
 
-> **이 그림은 다시 그려야 합니다.** 글이 아니라 그림이 어긋난 자리입니다.
-> 지금 그림은 구렁이 **목이 두 가닥으로 갈라져** 있고, 선비를 감은 토막이
-> 큰 구렁이 몸과 **이어져 있지 않습니다.** 아래 지시문의 대문자 부분을
-> 꼭 지켜 주세요.
-
 ```
 Wide interior of a dim Korean room at night, seen from the side. The scholar lies
 on a sleeping mat on the right, eyes wide open in shock, arms pinned, as the huge
@@ -202,11 +197,13 @@ realistic. Tense but not frightening.
 ### `06-revenge.webp` — 낮의 그 여인
 
 ```
-Wide interior of the same room. On the right, the snake's large head rises beside
-the scholar, calm rather than snarling, eyes steady. On the left, half in shadow
-near the door, the pale woman in white hanbok stands with her back partly turned,
-long black hair down, speaking quietly. The scholar looks between them, face
-drained. Cool blue moonlight, still and quiet.
+Wide interior of the same room, the scholar still wound in the coils on the left.
+On the right the snake's large head rises, calm rather than snarling, eyes steady
+— and THE WOMAN GROWS OUT OF THE SAME BODY: her white hanbok skirt fades down into
+the green coils, so a child can see at a glance that the woman and the snake are
+one creature. She stands beside the head, long black hair down, pointing at him.
+On the temple roof through the window, two magpies are already perched. The
+scholar's face is drained. Cool blue moonlight, still and quiet.
 ```
 
 ### `07-bell.webp` — 종을 치라는 조건
