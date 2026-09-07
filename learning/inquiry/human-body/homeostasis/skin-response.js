@@ -57,7 +57,9 @@
     function setVisible(on) {
         layer.hidden = !on;
         var canvas = document.getElementById('homeostasisCanvas');
-        if (canvas) canvas.style.visibility = on ? 'hidden' : 'visible';
+        // 다른 덧그림이 켜져 있으면 캔버스는 감춘 채로 둔다
+        if (canvas && on) canvas.style.visibility = 'hidden';
+        else if (canvas && !document.querySelector('.skin-layer:not([hidden]), .glucose-layer:not([hidden])')) canvas.style.visibility = 'visible';
         toggleHud(on);
     }
 
@@ -192,6 +194,12 @@
     }
 
     function loop(ts) {
+        // 다른 스크립트가 나중에 단추를 더해도 따라가도록 장면을 매 판마다 맞춘다
+        if (wrap && layer) {
+            var act = wrap.querySelector('.scene-btn.active');
+            var mine = !!(act && act.dataset.scene === 'skin');
+            if (layer.hidden === mine) setVisible(mine);
+        }
         t0 = ts || 0;
         render();
         requestAnimationFrame(loop);
