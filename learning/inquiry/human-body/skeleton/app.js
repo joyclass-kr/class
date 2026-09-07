@@ -37,15 +37,15 @@
     // Hotspots per Scene
     var hotspots = {
         joint: [
-            { x: 0.20, y: 0.28, r: 50, title: '위팔뼈 (Humerus)', desc: '팔의 위쪽 뼈로, 이두근과 삼두근이 부착되는 튼튼한 골격 지지대입니다.' },
+            { x: 0.20, y: 0.28, r: 50, title: '위팔뼈', desc: '팔의 위쪽 뼈로, 이두근과 삼두근이 부착되는 튼튼한 골격 지지대입니다.' },
             { x: 0.42, y: 0.35, r: 45, title: '위팔두갈래근 (이두근, Biceps)', desc: '팔을 굽힐 때 <strong>수축</strong>하여 노뼈를 당겨 올리는 주동근 역할을 합니다.' },
             { x: 0.28, y: 0.45, r: 45, title: '위팔세갈래근 (삼두근, Triceps)', desc: '팔을 굽힐 때 <strong>이완</strong>하고, 팔을 펼 때 <strong>수축</strong>하여 팔을 펴는 길항근입니다.' },
             { x: 0.45, y: 0.65, r: 40, title: '팔꿈치 관절 & 윤활액', desc: '관절 연골이 마찰을 방지하고 윤활액(활액)이 충격을 흡수하여 부드러운 회전을 가능케 합니다.' },
             { x: 0.58, y: 0.55, r: 35, title: '힘줄 (건, Tendon)', desc: '근육을 뼈에 단단히 고정하여 근육의 수축력을 뼈로 전달하는 질긴 결합 조직.' },
-            { x: 0.72, y: 0.65, r: 45, title: '노뼈 & 자뼈 (Radius & Ulna)', desc: '아래팔의 2개 뼈로, 이두근이 노뼈(Radius)에 붙어 팔을 회전하고 당깁니다.' }
+            { x: 0.72, y: 0.65, r: 45, title: '노뼈 & 자뼈 (Radius & Ulna)', desc: '아래팔의 2개 뼈로, 이두근이 노뼈에 붙어 팔을 회전하고 당깁니다.' }
         ],
         sarcomere: [
-            { x: 0.18, y: 0.50, r: 40, title: 'Z선 (Z-disc) - 근절 경계', desc: '근육 원섬유 마디(근절)의 양쪽 경계를 이루며, 수축 시 두 Z선 사이 거리가 짧아집니다.' },
+            { x: 0.18, y: 0.50, r: 40, title: 'Z선 - 근절 경계', desc: '근육 원섬유 마디(근절)의 양쪽 경계를 이루며, 수축 시 두 Z선 사이 거리가 짧아집니다.' },
             { x: 0.50, y: 0.50, r: 50, title: 'A대 (암대) - 마이오신 길이 (1.60μm 불변)', desc: '마이오신 필라멘트가 존재하는 구간으로, 수축이나 이완 시에도 <strong>길이가 절대 변하지 않습니다</strong>.' },
             { x: 0.50, y: 0.38, r: 40, title: 'H대 (마이오신만 있는 구간)', desc: 'A대 중앙에서 액틴과 겹치지 않는 구간으로, 근육 수축 시 <strong>감소</strong>합니다.' },
             { x: 0.30, y: 0.60, r: 40, title: 'I대 (명대) - 액틴만 있는 구간', desc: 'Z선을 중심으로 액틴만 존재하는 밝은 구간으로, 근육 수축 시 <strong>감소</strong>합니다.' }
@@ -140,12 +140,12 @@
         if (romGaugeEl) romGaugeEl.textContent = Math.round(jointAngle) + '°';
 
         if (bicepsStatusEl) {
-            bicepsStatusEl.textContent = isBicepsContracted ? '수축 (Contracted 🔥)' : '이완 (Relaxed)';
+            bicepsStatusEl.textContent = isBicepsContracted ? '수축 (Contracted 🔥)' : '이완';
             bicepsStatusEl.style.color = isBicepsContracted ? '#f43f5e' : '#94a3b8';
         }
 
         if (tricepsStatusEl) {
-            tricepsStatusEl.textContent = isBicepsContracted ? '이완 (Relaxed)' : '수축 (Contracted 🔥)';
+            tricepsStatusEl.textContent = isBicepsContracted ? '이완' : '수축 (Contracted 🔥)';
             tricepsStatusEl.style.color = isBicepsContracted ? '#94a3b8' : '#38bdf8';
         }
     }
@@ -170,6 +170,24 @@
             return;
         }
 
+        // 근절 장면은 사진을 쓰지 않는다.
+        // 예전 배경 사진에는 I-band, A-band, H-zone 같은 영어 글자가 그림 자체에 박혀 있어
+        // 우리말 이름표와 뒤섞이고, 글자 크기도 제각각이었다.
+        if (currentSceneKey === 'sarcomere') {
+            var back = ctx.createRadialGradient(width * 0.5, height * 0.45, 20, width * 0.5, height * 0.5, width * 0.75);
+            back.addColorStop(0, '#0d1730');
+            back.addColorStop(1, '#05070f');
+            ctx.fillStyle = back;
+            ctx.fillRect(0, 0, width, height);
+            var sbox = stageBox();
+            ctx.save();
+            ctx.translate(sbox.ox, sbox.oy);
+            ctx.scale(sbox.k, sbox.k);
+            drawSarcomereRig(0, 0, VW, VH, time);
+            ctx.restore();
+            return;
+        }
+
         var current = scenes[currentSceneKey];
         if (current && current.loaded && current.img) {
             var img = current.img;
@@ -185,19 +203,13 @@
                 dx = 0; dy = (height - dh) / 2;
             }
 
-            // Draw Dimmed Background Image
-            ctx.save();
-            ctx.globalAlpha = 0.22;
             ctx.drawImage(img, dx, dy, dw, dh);
-            ctx.restore();
-
-            // Draw Dynamic Kinematic Arm or Sarcomere Sliding Model
             drawSarcomereRig(dx, dy, dw, dh, time);
         } else {
             ctx.fillStyle = '#0a0f1d';
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#38bdf8';
-            ctx.font = 'bold 16px Pretendard, sans-serif';
+            ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('⚡ 근골격계 시뮬레이터 로딩 중...', width / 2, height / 2);
         }
@@ -268,7 +280,7 @@
         ctx.setLineDash([]);
 
         ctx.fillStyle = '#facc15';
-        ctx.font = 'bold 11px Pretendard, sans-serif';
+        ctx.font = 'bold 13px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('M선 (중심선)', cx, cy - 82);
 
@@ -293,7 +305,7 @@
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // 마이오신 머리 (Myosin Heads / Cross-Bridges): 액틴을 향해 돋아난 머리들
+        // 마이오신 머리: 액틴을 향해 돋아난 머리들
         var headPairs = 8;
         var headSpacing = aBandWidth / (headPairs + 1);
         for (var hi = 1; hi <= headPairs; hi++) {
@@ -381,7 +393,7 @@
         ctx.stroke();
 
         ctx.fillStyle = '#38bdf8';
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('근절 길이 (X): ' + sarcomereLength.toFixed(2) + ' μm', cx, dimY - 8);
 
@@ -396,10 +408,10 @@
         ctx.stroke();
 
         ctx.fillStyle = '#f43f5e';
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         ctx.fillText('A대 (암대): 1.60 μm (절대 불변!)', cx, aDimY + 18);
 
-        // ── 6. 하단 실시간 텔레메트리 HUD 카드 ───────────────────
+        // ── 6. 하단 실시간 길이 재기 HUD 카드 ───────────────────
         var aBand = 1.60;
         var hZone = Math.max(0, sarcomereLength - 2.00);
         var iBand = Math.max(0, (sarcomereLength - aBand) / 2);
@@ -417,16 +429,16 @@
         ctx.fill();
         ctx.stroke();
 
-        ctx.font = 'bold 13px Pretendard, sans-serif';
+        ctx.font = 'bold 14.5px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillStyle = '#ffffff';
-        ctx.fillText('🔬 근절 수축 텔레메트리 (근원섬유 마디 실시간 측정)', cx, hudY + 22);
+        ctx.fillText('🔬 근절 길이 재기 (수축할 때 어떻게 변하나)', cx, hudY + 22);
 
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         ctx.fillStyle = '#facc15';
         ctx.fillText('A대 1.60μm (불변)   |   H대 ' + hZone.toFixed(2) + 'μm   |   I대(한쪽) ' + iBand.toFixed(2) + 'μm', cx, hudY + 46);
 
-        ctx.font = '11.5px Pretendard, sans-serif';
+        ctx.font = '13.5px Pretendard, sans-serif';
         ctx.fillStyle = isContracting ? '#fca5a5' : '#7dd3fc';
         ctx.fillText(
             isContracting ?
@@ -439,7 +451,7 @@
         drawSmartTag(
             leftZ, cy - 75,
             leftZ - 0.12 * dw, cy - 0.14 * dh,
-            'Z선 (Z-disc)', '근절 경계 (수축 시 접근)', '#38bdf8', 0
+            'Z선', '근절 경계 (수축 시 접근)', '#38bdf8', 0
         );
 
         drawSmartTag(
@@ -451,7 +463,7 @@
         drawSmartTag(
             cx, cy - 10,
             cx + 0.12 * dw, cy - 0.12 * dh,
-            'H대 (H-zone)', '수축 시 감소 (마이오신만)', '#facc15', 2
+            'H대', '수축 시 감소 (마이오신만)', '#facc15', 2
         );
 
         drawSmartTag(
@@ -648,7 +660,7 @@
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // 관절 연골 캡 (Articular Cartilage)
+        // 관절 연골 캡
         ctx.fillStyle = 'rgba(56, 189, 248, 0.75)';
         ctx.beginPath();
         ctx.arc(sx, sy, 0.038 * dh, Math.PI * 1.15, Math.PI * 1.85);
@@ -697,7 +709,7 @@
         ctx.fill();
         ctx.stroke();
 
-        // ── 2. 골간막 (Interosseous membrane) ──
+        // ── 2. 골간막 ──
         ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
         ctx.lineWidth = 1;
         ctx.setLineDash([3, 3]);
@@ -832,7 +844,7 @@
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // ── 근섬유 다발 결 (Muscle Fascicle Striations) ──
+        // ── 근섬유 다발 결 ──
         var fiberCount = isContracted ? 8 : 5;
         ctx.lineWidth = 1.3;
         for (var f = 1; f <= fiberCount; f++) {
@@ -855,7 +867,7 @@
         return { mx: mx, my: my };
     }
 
-    /** 6. 관절 각도계(Goniometer) & 팔꿈치 관절축 */
+    /** 6. 관절 각도계 & 팔꿈치 관절축 */
     function drawGoniometerAndElbow(g, jointAngle, dh, time) {
         ctx.save();
         var ex = g.ex, ey = g.ey;
@@ -881,7 +893,7 @@
         ctx.moveTo(ex, ey - 8); ctx.lineTo(ex, ey + 8);
         ctx.stroke();
 
-        // 각도계 호(Goniometer Arc)
+        // 각도계 호
         var upAngle = -Math.PI / 2;
         var foreAngle = Math.atan2(g.fy, g.fx);
         var arcR = 0.115 * dh;
@@ -925,7 +937,7 @@
         ctx.stroke();
 
         ctx.fillStyle = '#facc15';
-        ctx.font = 'bold 13px Pretendard, sans-serif';
+        ctx.font = 'bold 14.5px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(Math.round(jointAngle) + '° (ROM)', bx, by);
@@ -974,7 +986,7 @@
         ctx.stroke();
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 11px Pretendard, sans-serif';
+        ctx.font = 'bold 13px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(isDraggingHand ? '✊ 당기는 중...' : '✋ 잡고 당기기', lx, ly + 0.5);
@@ -987,10 +999,10 @@
     var smartTagBoxes = [];
     function drawSmartTag(anchorX, anchorY, tagX, tagY, title, subtext, color, hotspotKey) {
         ctx.save();
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         var tw = ctx.measureText(title).width;
         if (subtext) {
-            ctx.font = '10px Pretendard, sans-serif';
+            ctx.font = '12.5px Pretendard, sans-serif';
             tw = Math.max(tw, ctx.measureText(subtext).width);
         }
         var boxW = tw + 22;
@@ -1034,12 +1046,12 @@
         // 텍스트
         ctx.textAlign = 'left';
         ctx.fillStyle = '#f8fafc';
-        ctx.font = 'bold 11.5px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         ctx.fillText(title, bx + 10, by + (subtext ? 15 : 16));
 
         if (subtext) {
             ctx.fillStyle = color;
-            ctx.font = '10px Pretendard, sans-serif';
+            ctx.font = '12.5px Pretendard, sans-serif';
             ctx.fillText(subtext, bx + 10, by + 29);
         }
 
@@ -1051,7 +1063,7 @@
         ctx.save();
         px = Math.max(16, px);
         py = Math.max(py, topGuard());
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         var maxW = 0;
         lines.forEach(function (l) { maxW = Math.max(maxW, ctx.measureText(l.t).width); });
         var boxW = Math.min(maxW + 24, width - px - 16);
@@ -1086,12 +1098,12 @@
         drawAnatomicalTorsoAndShoulder(g, dw, dh);
 
         // 3. 근육 부착부 좌표 계산
-        // 이두근: 어깨 관절상결절 ➔ 노뼈 거친면(Radial tuberosity)
+        // 이두근: 어깨 관절상결절 ➔ 노뼈 거친면
         var bicepsTopX = g.sx + 0.030 * dw, bicepsTopY = g.sy + 0.02 * dh;
         var bicepsEndX = g.ex + g.fx * (g.foreLen * 0.22) + (-g.fy) * 0.016 * dw;
         var bicepsEndY = g.ey + g.fy * (g.foreLen * 0.22) + (g.fx) * 0.016 * dw;
 
-        // 삼두근: 어깨 관절하결절 & 위팔뼈 뒷면 ➔ 자뼈 주두(Olecranon process)
+        // 삼두근: 어깨 관절하결절 & 위팔뼈 뒷면 ➔ 자뼈 주두
         var tricepsTopX = g.sx - 0.034 * dw, tricepsTopY = g.sy + 0.04 * dh;
         var olecranonX = g.ex - g.fx * 0.026 * dh + (-g.fy) * 0.022 * dw;
         var olecranonY = g.ey - g.fy * 0.026 * dh + (g.fx) * 0.022 * dw;
@@ -1118,7 +1130,7 @@
             bicepsW, isFlexed, true, flex, time, 1, dw, dh
         );
 
-        // 8. 팔꿈치 관절 & 관절 각도계(Goniometer) HUD
+        // 8. 팔꿈치 관절 & 관절 각도계 HUD
         drawGoniometerAndElbow(g, jointAngle, dh, time);
 
         // 9. 손잡이 및 드래그 조작계
@@ -1211,7 +1223,7 @@
 
             // Tag Label Pill
             var labelText = SimEngine.pinLabel(s);
-            ctx.font = 'bold 11px Pretendard, sans-serif';
+            ctx.font = 'bold 13px Pretendard, sans-serif';
             var txtMetrics = ctx.measureText(labelText);
             var pillW = txtMetrics.width + 16;
             var pillH = 22;
@@ -1308,6 +1320,13 @@
                 var clickX = event.clientX - rect.left;
                 var clickY = event.clientY - rect.top;
 
+                // 팔·근절 장면은 가상 화면에 그린 뒤 통째로 줄여 넣으므로
+                // 누른 자리도 가상 화면 좌표로 되돌려야 이름표와 맞는다.
+                if (currentSceneKey === 'joint' || currentSceneKey === 'sarcomere') {
+                    var pv = toVirtual(clickX, clickY);
+                    clickX = pv.x; clickY = pv.y;
+                }
+
                 // 1. 공통: 스마트 리더선 라벨 카드 클릭 확인
                 for (var ti = 0; ti < smartTagBoxes.length; ti++) {
                     var tb = smartTagBoxes[ti];
@@ -1328,8 +1347,6 @@
                 }
 
                 if (currentSceneKey === 'joint') {
-                    var cv = toVirtual(clickX, clickY);
-                    clickX = cv.x; clickY = cv.y;
                     var g = armGeometry(0, 0, VW, VH);
                     if (Math.hypot(clickX - g.wx, clickY - g.wy) <= 0.085 * VH) {
                         isDraggingHand = true;
@@ -1361,6 +1378,8 @@
                     }
                     return;
                 }
+
+                if (currentSceneKey === 'sarcomere') return;
 
                 var current = scenes[currentSceneKey];
                 if (!current || !current.loaded || !current.img) return;

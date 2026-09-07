@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>골격계 &amp; 관절 바이오메카닉스 시뮬레이터 | 2022 개정 교육과정</title>
-    <link rel="stylesheet" href="../styles.css?v=20260907ze">
-    <link rel="stylesheet" href="styles.css?v=20260907ze">
+    <title>골격계 · 관절과 길항근 | 인체 시뮬레이터</title>
+    <link rel="stylesheet" href="../styles.css?v=20260907zf">
+    <link rel="stylesheet" href="styles.css?v=20260907zf">
 </head>
 <body>
 
@@ -16,9 +16,7 @@
                 <span>◀</span> 목록
             </a>
             <div class="sim-title-group">
-                <h1 class="sim-title">골격계 &amp; 관절 바이오메카닉스</h1>
-                <span class="sim-subtitle">Joint Range of Motion &amp; Antagonistic Muscle Mechanics</span>
-                <span class="curriculum-badge">초등 [6과04-01] · 중등 [9과14-05]</span>
+                <h1 class="sim-title">골격계 · 관절과 길항근</h1>
             </div>
         </div>
         <div class="sim-header-right">
@@ -60,16 +58,12 @@
 
         <!-- Right Sidebar: Controls & Joint Telemetry -->
         <aside class="sim-sidebar">
-            <div class="sidebar-header">
-                <span class="sidebar-title">🦾 관절 가동범위(ROM) &amp; 길항근</span>
-            </div>
-
             <div class="sidebar-body" style="padding-top:16px;">
                 
                 <!-- Joint Angle & Muscle Pair State -->
                 <div class="joint-angle-meter">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12px; font-weight:800; color:#38bdf8;">
-                        <span>팔꿈치 관절 각도 (ROM)</span>
+                        <span>팔꿈치 관절 각도</span>
                         <span id="romGauge" style="color:#ffffff; font-size:15px;">75°</span>
                     </div>
 
@@ -80,7 +74,7 @@
                         </div>
                         <div class="muscle-state-box" style="background:rgba(56,189,248,0.15); border:1px solid #38bdf8;">
                             <span style="color:#7dd3fc; display:block; margin-bottom:2px;">삼두근 (길항근)</span>
-                            <strong id="tricepsStatus" style="color:#94a3b8;">이완 (Relaxed)</strong>
+                            <strong id="tricepsStatus" style="color:#94a3b8;">이완</strong>
                         </div>
                     </div>
                 </div>
@@ -89,7 +83,6 @@
                 <div id="organDetailCard" class="meter-card" style="border-color:#38bdf8; background:rgba(56, 189, 248, 0.08);">
                     <div class="meter-card-title">
                         <span id="organTitle" style="color:#38bdf8; font-size:15px;">위팔두갈래근 (이두근, Biceps)</span>
-                        <span class="curriculum-badge">ANTAGONISM</span>
                     </div>
                     <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">팔을 굽힐 때 수축하여 노뼈를 당겨 올리는 주동근 역할을 합니다.</p>
                 </div>
@@ -113,7 +106,7 @@
                     </div>
                     <ul class="concept-list">
                         <li class="concept-item"><span class="icon">📌</span><span><strong>길항 작용:</strong> 한쪽 근육이 수축할 때 반대쪽 근육은 반드시 이완해야 관절 운동이 원활하게 일어남</span></li>
-                        <li class="concept-item"><span class="icon">📌</span><span><strong>힘줄 vs 인대:</strong> <strong>힘줄(Tendon)</strong>은 근육과 뼈를 연결하고, <strong>인대(Ligament)</strong>는 뼈와 뼈를 연결하여 관절을 고정</span></li>
+                        <li class="concept-item"><span class="icon">📌</span><span><strong>힘줄 vs 인대:</strong> <strong>힘줄</strong>은 근육과 뼈를 연결하고, <strong>인대</strong>는 뼈와 뼈를 연결하여 관절을 고정</span></li>
                         <li class="concept-item"><span class="icon">📌</span><span><strong>관절 연골 &amp; 윤활액:</strong> 뼈와 뼈의 직접 마찰을 방지하고 충격을 흡수</span></li>
                     </ul>
                 </div>
@@ -132,8 +125,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260907ze"></script>
-    <script src="../shared/exam-data.js?v=20260907ze"></script>
-    <script src="app.js?v=20260907ze"></script>
+    <script src="../shared/engine-core.js?v=20260907zf"></script>
+    <script src="../shared/exam-data.js?v=20260907zf"></script>
+    <script src="app.js?v=20260907zf"></script>
 </body>
 </html>

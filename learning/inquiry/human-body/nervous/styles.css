@@ -52,7 +52,7 @@
     background: transparent;
     border: 1px solid transparent;
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     display: inline-flex;
@@ -84,7 +84,7 @@
     align-items: center;
     padding: 6px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .race-timer-row:last-child {
@@ -105,7 +105,7 @@
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 6px;
     color: #cbd5e1;
-    font-size: 11.5px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.15s;
@@ -132,7 +132,7 @@
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 6px;
     color: #cbd5e1;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.15s;
@@ -162,7 +162,7 @@
     background: rgba(255, 255, 255, 0.06);
     border: 1.5px solid rgba(255, 255, 255, 0.12);
     color: #94a3b8;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.2s;
@@ -187,7 +187,7 @@
 .autonomic-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 11.5px;
+    font-size: 13px;
     margin-top: 6px;
 }
 
@@ -262,7 +262,7 @@
     background: rgba(6, 10, 24, 0.88);
     border: 1px solid rgba(148, 163, 184, 0.6);
     color: #f8fafc;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
     white-space: nowrap;
     pointer-events: auto;
@@ -284,7 +284,7 @@
     background: rgba(6, 10, 24, 0.85);
     border: 1px solid rgba(148, 163, 184, 0.45);
     color: #cbd5e1;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
 }
 

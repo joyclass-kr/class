@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>인터랙티브 순환계 &amp; 심장·면역 시뮬레이터 | 2022 개정 교육과정</title>
-    <link rel="stylesheet" href="../styles.css?v=20260907ze">
-    <link rel="stylesheet" href="styles.css?v=20260907ze">
+    <title>순환계 · 심장과 혈액 | 인체 시뮬레이터</title>
+    <link rel="stylesheet" href="../styles.css?v=20260907zf">
+    <link rel="stylesheet" href="styles.css?v=20260907zf">
 </head>
 <body>
 
@@ -16,9 +16,7 @@
                 <span>◀</span> 목록
             </a>
             <div class="sim-title-group">
-                <h1 class="sim-title">순환계 &amp; 심장·면역 시뮬레이터</h1>
-                <span class="sim-subtitle">Cardiac Mechanics &amp; Capillary Immunity</span>
-                <span class="curriculum-badge">2022 개정 [6과04-03]</span>
+                <h1 class="sim-title">순환계 · 심장과 혈액</h1>
             </div>
         </div>
         <div class="sim-header-right">
@@ -54,10 +52,6 @@
 
         <!-- Right Sidebar: Details & Exam Traps -->
         <aside class="sim-sidebar">
-            <div class="sidebar-header">
-                <span class="sidebar-title">🫀 순환계 살펴보기</span>
-            </div>
-
             <div class="sidebar-tabs">
                 <button class="sidebar-tab-btn active" data-tab="focus">생체 조작 &amp; 심전도</button>
                 <button class="sidebar-tab-btn" data-tab="blood">혈액 성분 분석</button>
@@ -73,7 +67,7 @@
                     <!-- Live ECG Monitor -->
                     <div class="ecg-card">
                         <div class="ecg-header">
-                            <span>실시간 심전도 (ECG Monitor)</span>
+                            <span>실시간 심전도</span>
                             <span id="bpmVal" style="color:#ef4444; font-weight:800;">72 BPM</span>
                         </div>
                         <canvas id="ecgCanvas"></canvas>
@@ -81,8 +75,7 @@
 
                     <div id="organDetailCard" class="meter-card" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.08);">
                         <div class="meter-card-title">
-                            <span id="organTitle" style="color:#f87171; font-size:15px;">백혈구 (Leukocyte) - 식균 작용</span>
-                            <span class="curriculum-badge">IMMUNE FOCUS</span>
+                            <span id="organTitle" style="color:#f87171; font-size:15px;">백혈구 - 식균 작용</span>
                         </div>
                         <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">상처 부위로 침투한 세균을 세포 안으로 끌어들여 소화 분해(식균 작용)하여 체내를 방어합니다.</p>
                     </div>
@@ -123,15 +116,15 @@
                 <div id="tabPanel_blood" class="sidebar-tab-panel" style="display:none;">
                     <div class="meter-card">
                         <div class="meter-card-title">
-                            <span>혈액 원심분리 성분 (Blood Centrifuge)</span>
+                            <span>혈액 원심분리 성분</span>
                         </div>
                         <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
                             <div style="padding:8px 12px; background:rgba(234, 179, 8, 0.15); border:1px solid #eab308; border-radius:6px;">
-                                <strong style="color:#facc15;">1. 혈장 (Plasma) - 55%</strong>
+                                <strong style="color:#facc15;">1. 혈장 - 55%</strong>
                                 <p style="font-size:11px; color:#cbd5e1; margin-top:4px;">물(90%), 단백질(항체, 피브리노겐), 포도당, 무기염류, 노폐물(요소), 호르몬 운반</p>
                             </div>
                             <div style="padding:8px 12px; background:rgba(239, 68, 68, 0.15); border:1px solid #ef4444; border-radius:6px;">
-                                <strong style="color:#f87171;">2. 혈구 (Blood Cells) - 45%</strong>
+                                <strong style="color:#f87171;">2. 혈구 - 45%</strong>
                                 <ul style="font-size:11px; color:#cbd5e1; margin-top:4px; list-style:none; display:flex; flex-direction:column; gap:3px;">
                                     <li>• <strong>적혈구:</strong> 핵 없음, 헤모글로빈 산소 운반</li>
                                     <li>• <strong>백혈구:</strong> 핵 있음, 식균 작용 (가장 큼)</li>
@@ -158,9 +151,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260907ze"></script>
-    <script src="../shared/exam-data.js?v=20260907ze"></script>
-    <script src="app.js?v=20260907ze"></script>
-    <script src="heart-flow.js?v=20260907ze"></script>
+    <script src="../shared/engine-core.js?v=20260907zf"></script>
+    <script src="../shared/exam-data.js?v=20260907zf"></script>
+    <script src="app.js?v=20260907zf"></script>
+    <script src="heart-flow.js?v=20260907zf"></script>
 </body>
 </html>

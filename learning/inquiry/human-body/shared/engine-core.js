@@ -358,7 +358,7 @@
     /**
      * 캔버스 핀에 붙일 짧은 이름표를 고른다.
      * spot.label 이 있으면 그대로 쓰고, 없으면 title 앞머리를 다듬어 쓴다.
-     * ('1. 사구체 여과 (Filtration)' -> '사구체 여과')
+     * ('1. 사구체 여과' -> '사구체 여과')
      */
     function pinLabel(spot) {
         if (!spot) return '';
@@ -374,8 +374,44 @@
         return text;
     }
 
+    /**
+     * 장면 단추를 누르면 오른쪽 설명 카드를 그 장면의 안내로 되돌린다.
+     * 단추에 data-intro 가 있으면 그 문장을, 없으면 기본 안내를 쓴다.
+     * 단추가 나중에 더해져도 듣도록 바탕 요소에 한 번만 건다.
+     */
+    function bindSceneIntro() {
+        var bar = document.querySelector('.scene-switcher');
+        if (!bar || bar.dataset.introBound) return;
+        bar.dataset.introBound = '1';
+
+        bar.addEventListener('click', function (event) {
+            var btn = event.target.closest ? event.target.closest('.scene-btn') : null;
+            if (!btn || !bar.contains(btn)) return;
+
+            var titleEl = document.getElementById('organTitle');
+            var descEl = document.getElementById('organDesc');
+            var card = document.getElementById('organDetailCard');
+            if (!titleEl || !descEl) return;
+
+            var name = String(btn.textContent || '').replace(/^\s*\S*\s*\d+\.\s*/, '').trim();
+            titleEl.textContent = name;
+            descEl.innerHTML = btn.dataset.intro ||
+                '그림 위의 이름표를 눌러 자세한 설명을 보세요.';
+            if (card) card.style.display = 'block';
+            var std = document.getElementById('organStandard');
+            if (std) std.textContent = '';
+        }, true);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindSceneIntro);
+    } else {
+        bindSceneIntro();
+    }
+
     return {
         SoundFX: SoundFX,
+        bindSceneIntro: bindSceneIntro,
         setupCanvas: setupCanvas,
         bindDrag: bindDrag,
         renderQuiz: renderQuiz,

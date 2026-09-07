@@ -13,6 +13,8 @@
 (function () {
     'use strict';
 
+    var MIN_FONT = 13.5;   // 도식 글씨의 최소 크기
+
     var SVG_NS = 'http://www.w3.org/2000/svg';
     var CX = 260, CY = 290, IRIS_R = 150;
 
@@ -272,6 +274,7 @@
     }
 
     function text(x, y, str, size, fill, weight, anchor) {
+        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
         var n = el('text', {
             x: x, y: y, fill: fill, 'font-size': size, 'font-weight': weight || 700,
             'font-family': 'Pretendard, sans-serif', 'text-anchor': anchor || 'middle'

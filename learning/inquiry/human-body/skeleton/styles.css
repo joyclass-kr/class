@@ -51,7 +51,7 @@
     background: transparent;
     border: 1px solid transparent;
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     display: inline-flex;
@@ -87,6 +87,6 @@
 .muscle-state-box {
     padding: 8px 10px;
     border-radius: 6px;
-    font-size: 11px;
+    font-size: 13px;
     text-align: center;
 }

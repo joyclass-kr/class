@@ -54,14 +54,14 @@
         ],
         torso: [
             { x: 0.585, y: 0.28, r: 35, title: '폐순환 (소순환)', desc: '우심실 ➔ 폐동맥 ➔ 폐 모세혈관(가스교환) ➔ 폐정맥 ➔ 좌심방.' },
-            { x: 0.585, y: 0.48, r: 45, title: '심장 펌프 (Heart)', desc: '온몸으로 혈액을 뿜어내는 좌심실(가장 두꺼움)과 폐로 보내는 우심실로 구성된 순환의 중심 펌프.' },
+            { x: 0.585, y: 0.48, r: 45, title: '심장 펌프', desc: '온몸으로 혈액을 뿜어내는 좌심실(가장 두꺼움)과 폐로 보내는 우심실로 구성된 순환의 중심 펌프.' },
             { x: 0.585, y: 0.72, r: 35, title: '온몸순환 (대순환)', desc: '좌심실 ➔ 대동맥 ➔ 온몸 모세혈관 ➔ 대정맥 ➔ 우심방 (산소 공급).' }
         ],
         heart: [
-            { x: 0.25, y: 0.26, r: 40, title: '우심방 (Right Atrium)', desc: '온몸을 돌고 온 정맥혈(이산화탄소 많음)이 대정맥을 통해 들어옵니다.' },
-            { x: 0.18, y: 0.65, r: 42, title: '우심실 (Right Ventricle)', desc: '삼첨판을 거쳐 들어온 정맥혈을 폐동맥을 통해 폐로 뿜어냅니다.' },
-            { x: 0.52, y: 0.22, r: 40, title: '좌심방 (Left Atrium)', desc: '폐에서 산소를 가득 채운 동맥혈이 폐정맥을 통해 들어옵니다.' },
-            { x: 0.66, y: 0.58, r: 45, title: '좌심실 (Left Ventricle)', desc: '가장 두꺼운 근육벽으로 온몸에 혈액을 뿜어내는 가장 강력한 방실입니다.' }
+            { x: 0.25, y: 0.26, r: 40, title: '우심방', desc: '온몸을 돌고 온 정맥혈(이산화탄소 많음)이 대정맥을 통해 들어옵니다.' },
+            { x: 0.18, y: 0.65, r: 42, title: '우심실', desc: '삼첨판을 거쳐 들어온 정맥혈을 폐동맥을 통해 폐로 뿜어냅니다.' },
+            { x: 0.52, y: 0.22, r: 40, title: '좌심방', desc: '폐에서 산소를 가득 채운 동맥혈이 폐정맥을 통해 들어옵니다.' },
+            { x: 0.66, y: 0.58, r: 45, title: '좌심실', desc: '가장 두꺼운 근육벽으로 온몸에 혈액을 뿜어내는 가장 강력한 방실입니다.' }
         ]
     };
 
@@ -297,7 +297,7 @@
             ctx.fillStyle = '#0a0f1d';
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#ef4444';
-            ctx.font = 'bold 16px Pretendard, sans-serif';
+            ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('자료를 불러오는 중입니다.', width / 2, height / 2);
         }
@@ -500,7 +500,7 @@
 
             // Tag Label Pill
             var labelText = SimEngine.pinLabel(s);
-            ctx.font = 'bold 11px Pretendard, sans-serif';
+            ctx.font = 'bold 13px Pretendard, sans-serif';
             var txtMetrics = ctx.measureText(labelText);
             var pillW = txtMetrics.width + 16;
             var pillH = 22;

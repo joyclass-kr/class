@@ -45,7 +45,7 @@
     // Hotspots
     var hotspots = {
         hero: [
-            { x: 0.50, y: 0.20, r: 40, title: '간뇌 시상하부 (Hypothalamus)', desc: '체온, 혈당량, 삼투압 등 우리 몸의 항상성을 유지하는 최고 조절 중추입니다.' },
+            { x: 0.50, y: 0.20, r: 40, title: '간뇌 시상하부', desc: '체온, 혈당량, 삼투압 등 우리 몸의 항상성을 유지하는 최고 조절 중추입니다.' },
             { x: 0.50, y: 0.50, r: 45, title: '피부 혈관 & 땀샘 (체온 조절)', desc: '더울 때: 피부 혈관 확장 + 땀 분비 증가 (열 방출) / 추울 때: 피부 혈관 수축 + 근육 떨림 (열 보존)' },
             { x: 0.50, y: 0.65, r: 45, title: '이자 & 간 (혈당량 조절)', desc: '혈당 높을 때: 인슐린 분비(포도당 ➔ 글리코젠 저장) / 혈당 낮을 때: 글루카곤 분비(글리코젠 ➔ 포도당 분해)' }
         ],
@@ -217,7 +217,7 @@
             ctx.fillStyle = '#0a0f1d';
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#10b981';
-            ctx.font = 'bold 16px Pretendard, sans-serif';
+            ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('자료를 불러오는 중입니다.', width / 2, height / 2);
         }
@@ -240,17 +240,20 @@
             ctx.arc(sx, sy, pulseR, 0, Math.PI * 2);
             ctx.stroke();
 
+            // 이름표 상자는 글자 길이에 맞춰 넓힌다
+            ctx.font = 'bold 13px Pretendard, sans-serif';
+            var labelText = SimEngine.pinLabel(s);
+            var boxW = Math.max(64, ctx.measureText(labelText).width + 24);
             ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
-            ctx.fillRect(sx - 55, sy - 14, 110, 28);
+            ctx.fillRect(sx - boxW / 2, sy - 15, boxW, 30);
             ctx.strokeStyle = '#10b981';
             ctx.lineWidth = 1;
-            ctx.strokeRect(sx - 55, sy - 14, 110, 28);
+            ctx.strokeRect(sx - boxW / 2, sy - 15, boxW, 30);
 
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 11px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(SimEngine.pinLabel(s), sx, sy);
+            ctx.fillText(labelText, sx, sy);
             ctx.restore();
         }
     }

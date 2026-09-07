@@ -43,12 +43,12 @@
     // Hotspots
     var hotspots = {
         alveoli: [
-            { x: 0.35, y: 0.35, r: 50, title: '폐포 (Alveoli) - 기체 교환 표면', desc: '약 3~5억 개로 총 표면적이 약 100㎡(테니스 코트 크기)에 달해 모세혈관과의 기체 교환 효율을 극대화합니다.' },
+            { x: 0.35, y: 0.35, r: 50, title: '폐포 - 기체 교환 표면', desc: '약 3~5억 개로 총 표면적이 약 100㎡(테니스 코트 크기)에 달해 모세혈관과의 기체 교환 효율을 극대화합니다.' },
             { x: 0.65, y: 0.65, r: 45, title: '모세혈관망 & 산소/이산화탄소 확산', desc: '분압차에 의한 확산으로 에너지를 쓰지 않고 산소는 혈액으로(104 ➔ 40 mmHg), 이산화탄소는 폐포로(46 ➔ 40 mmHg) 이동합니다.' }
         ],
         airway: [
-            { x: 0.50, y: 0.25, r: 40, title: '기관 (Trachea)', desc: '안쪽에 섬모와 점액이 있어 먼지와 세균을 걸러내는 원통형 기도.' },
-            { x: 0.50, y: 0.55, r: 45, title: '기관지 분지 (Bronchi Tree)', desc: '좌우 폐로 갈라져 수많은 세기관지로 뻗어 나가는 통로.' }
+            { x: 0.50, y: 0.25, r: 40, title: '기관', desc: '안쪽에 섬모와 점액이 있어 먼지와 세균을 걸러내는 원통형 기도.' },
+            { x: 0.50, y: 0.55, r: 45, title: '기관지 분지', desc: '좌우 폐로 갈라져 수많은 세기관지로 뻗어 나가는 통로.' }
         ],
         hero: [
             { x: 0.50, y: 0.45, r: 50, title: '가로막 & 갈비뼈 호흡 운동', desc: '들숨: 가로막 하강 + 갈비뼈 상승 ➔ 흉강 부피 증가 ➔ 흉강 내압 감소 ➔ 공기 유입(보일 법칙).' }
@@ -267,7 +267,7 @@
             ctx.fillStyle = '#0a0f1d';
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#06b6d4';
-            ctx.font = 'bold 16px Pretendard, sans-serif';
+            ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('⚡ 호흡계 시뮬레이터 로딩 중...', width / 2, height / 2);
         }
@@ -355,7 +355,7 @@
 
         // Handle text prompt
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 11px Pretendard, sans-serif';
+        ctx.font = 'bold 13px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('↕️ 가로막 당기기', cx, curveControlY + 36);
         ctx.restore();
@@ -428,7 +428,7 @@
 
             // Tag Label Pill
             var labelText = SimEngine.pinLabel(s);
-            ctx.font = 'bold 11px Pretendard, sans-serif';
+            ctx.font = 'bold 13px Pretendard, sans-serif';
             var txtMetrics = ctx.measureText(labelText);
             var pillW = txtMetrics.width + 16;
             var pillH = 22;

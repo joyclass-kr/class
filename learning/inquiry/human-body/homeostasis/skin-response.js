@@ -10,6 +10,8 @@
 (function () {
     'use strict';
 
+    var MIN_FONT = 13.5;   // 도식 글씨의 최소 크기
+
     var SVG_NS = 'http://www.w3.org/2000/svg';
 
     var wrap, layer, svg;
@@ -33,8 +35,14 @@
         var b = document.createElement('button');
         b.className = 'scene-btn';
         b.dataset.scene = 'skin';
-        b.textContent = '🧴 2. 피부에서 일어나는 일';
+        b.textContent = '🧴 1. 피부에서 일어나는 일';
         bar.appendChild(b);
+
+        // 이 장면 하나뿐이면 처음부터 켜 둔다 (빈 화면이 뜨지 않게)
+        if (bar.querySelectorAll('.scene-btn').length === 1) {
+            b.classList.add('active');
+            requestAnimationFrame(function () { setVisible(true); });
+        }
 
         bar.querySelectorAll('.scene-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
@@ -310,6 +318,7 @@
     }
 
     function text(x, y, str, size, fill, weight, anchor) {
+        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
         var n = el('text', {
             x: x, y: y, fill: fill, 'font-size': size, 'font-weight': weight || 700,
             'font-family': 'Pretendard, sans-serif', 'text-anchor': anchor || 'middle'

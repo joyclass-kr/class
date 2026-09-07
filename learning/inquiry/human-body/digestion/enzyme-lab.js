@@ -10,6 +10,8 @@
 (function () {
     'use strict';
 
+    var MIN_FONT = 13.5;   // 도식 글씨의 최소 크기
+
     // 시험관 넷. 시험에 나오는 네 가지 영양소를 한 줄에 세워 둔다.
     var TUBES = [
         { key: 'starch', name: '녹말물', base: '#f1f5f9' },
@@ -334,6 +336,7 @@
     }
 
     function text(x, y, str, size, fill, weight, anchor) {
+        size = Math.max(MIN_FONT, size || MIN_FONT);   // 너무 작은 글씨를 막는다
         var n = el('text', {
             x: x, y: y, fill: fill, 'font-size': size,
             'font-weight': weight || 700,

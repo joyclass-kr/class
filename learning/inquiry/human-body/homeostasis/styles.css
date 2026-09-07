@@ -50,7 +50,7 @@
     background: transparent;
     border: 1px solid transparent;
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     display: inline-flex;
@@ -82,7 +82,7 @@
     align-items: center;
     padding: 6px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    font-size: 12px;
+    font-size: 13px;
 }
 
 /* ── 피부 체온 조절 (skin-response.js) ────────────────────── */

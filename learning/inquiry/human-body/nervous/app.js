@@ -53,7 +53,7 @@
     var brainParts = {
         cerebrum: {
             x: 0.37, y: 0.22, r: 52, side: 'below', color: '#a855f7',
-            title: '대뇌 (Cerebrum) - 고등 정신 활동의 최고 사령부',
+            title: '대뇌 - 고등 정신 활동의 최고 사령부',
             desc: '주름진 겉질(회색질)과 속질로 구성됩니다. 감각·운동을 총괄하며 <strong>기억, 추리, 판단, 언어, 감정 등 의식적인 활동</strong>의 최고 중추입니다.'
         },
         diencephalon: {
@@ -68,17 +68,17 @@
         },
         cerebellum: {
             x: 0.635, y: 0.655, r: 38, side: 'right', color: '#38bdf8',
-            title: '소뇌 (Cerebellum) - 평형 & 정밀 운동',
+            title: '소뇌 - 평형 & 정밀 운동',
             desc: '대뇌 후하방에 위치하며, 대뇌와 협력하여 정밀한 근육 운동을 조절하고 귀의 평형감각(반고리관·전정기관) 정보를 받아 <strong>몸의 균형(자세 평형)을 유지</strong>합니다.'
         },
         medulla: {
             x: 0.555, y: 0.79, r: 24, side: 'left', color: '#10b981',
-            title: '연수 (Medulla Oblongata) - 생명 유지 & 내장 반사',
+            title: '연수 - 생명 유지 & 내장 반사',
             desc: '중간뇌와 척수를 잇는 뇌줄기로 좌우 신경이 교차합니다. <strong>호흡 운동, 심장 박동, 소화 운동 조절(생명 유지 중추)</strong>과 <strong>기침, 재채기, 딸꾹질, 하품, 침 분비</strong>의 반사 중추입니다.'
         },
         spine: {
             x: 0.60, y: 0.90, r: 26, side: 'right', color: '#f59e0b',
-            title: '척수 (Spinal Cord) - 뇌신경 통로 & 무조건 반사',
+            title: '척수 - 뇌신경 통로 & 무조건 반사',
             desc: '척추 속 신경 다발로 뇌와 온몸 사이의 신호 전달 통로입니다. 위험을 피하는 <strong>무릎 반사, 뜨거운 물체 손 떼기(회피 반사), 배뇨·배변 반사</strong>의 중추입니다.'
         }
     };
@@ -135,9 +135,9 @@
             { x: 0.500, y: 0.925, r: 26, title: '방광', desc: '교감신경: <strong>방광 이완</strong> (배뇨 억제, 오줌 참음)<br>부교감신경: <strong>방광 수축</strong> (배뇨 촉진, 오줌 배출)<br>• 부교감 중추: <strong>척수 (엉치/골반)</strong>' }
         ],
         synapse: [
-            { x: 0.20, y: 0.50, r: 40, title: '감각 뉴런 (Sensory Neuron)', desc: '신경세포체가 축삭 옆에 볼록하게 나와 있는 구심성 뉴런으로 감각기 자극을 중추로 전달합니다.' },
-            { x: 0.50, y: 0.50, r: 45, title: '연합 뉴런 (Interneuron)', desc: '뇌와 척수를 구성하는 뉴런으로, 감각 정보를 분석하고 명령을 생성합니다.' },
-            { x: 0.80, y: 0.50, r: 45, title: '운동 뉴런 (Motor Neuron)', desc: '연합 뉴런의 명령을 반응기(근육)로 전달하는 원심성 뉴런입니다.' }
+            { x: 0.20, y: 0.50, r: 40, title: '감각 뉴런', desc: '신경세포체가 축삭 옆에 볼록하게 나와 있는 구심성 뉴런으로 감각기 자극을 중추로 전달합니다.' },
+            { x: 0.50, y: 0.50, r: 45, title: '연합 뉴런', desc: '뇌와 척수를 구성하는 뉴런으로, 감각 정보를 분석하고 명령을 생성합니다.' },
+            { x: 0.80, y: 0.50, r: 45, title: '운동 뉴런', desc: '연합 뉴런의 명령을 반응기(근육)로 전달하는 원심성 뉴런입니다.' }
         ],
         sensory: [
             { x: 0.700, y: 0.615, r: 26, side: 'right', title: '각막', desc: '눈의 가장 바깥에서 빛이 처음 들어오는 투명한 창입니다. 빛을 한 번 꺾어 주는 곳이기도 합니다.' },
@@ -320,7 +320,7 @@
      */
     function drawLabelTag(px, py, text, side, fillColor, lineColor) {
         var padX = 8, boxH = 21, gap = 15;
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         var tw = ctx.measureText(text).width;
         var boxW = tw + padX * 2;
         var bx, by;
@@ -488,7 +488,7 @@
         ctx.stroke();
 
         ctx.fillStyle = '#c084fc';
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('중추: ' + raceTargets[currentReflexMode].center, pxC, pyC - 21);
 
@@ -595,11 +595,11 @@
             ctx.stroke();
 
             ctx.fillStyle = '#fca5a5';
-            ctx.font = 'bold 11px Pretendard, sans-serif';
+            ctx.font = 'bold 13px Pretendard, sans-serif';
             ctx.textAlign = 'left';
             ctx.fillText('⚡ 교감신경 중추', bx + 10, sMid - 6);
             ctx.fillStyle = '#f8fafc';
-            ctx.font = '10.5px Pretendard, sans-serif';
+            ctx.font = '12.5px Pretendard, sans-serif';
             ctx.fillText('전부 척수 (가슴·허리)', bx + 10, sMid + 11);
             ctx.globalAlpha = 1;
         } else {
@@ -630,11 +630,11 @@
                 ctx.stroke();
 
                 ctx.fillStyle = '#6ee7b7';
-                ctx.font = 'bold 11px Pretendard, sans-serif';
+                ctx.font = 'bold 13px Pretendard, sans-serif';
                 ctx.textAlign = 'left';
                 ctx.fillText('🌿 부교감: ' + p.label, bx + 8, p.y - 4);
                 ctx.fillStyle = '#94a3b8';
-                ctx.font = '10px Pretendard, sans-serif';
+                ctx.font = '12.5px Pretendard, sans-serif';
                 ctx.fillText(p.sub, bx + 8, p.y + 10);
             });
             ctx.globalAlpha = 1;
@@ -710,11 +710,11 @@
             var subDesc = isSympathetic ? org.symSub : org.paraSub;
 
             ctx.fillStyle = '#f8fafc';
-            ctx.font = 'bold 11.5px Pretendard, sans-serif';
+            ctx.font = 'bold 13.5px Pretendard, sans-serif';
             ctx.fillText(mainTitle, cardX + 10, cardY - 3, cardW - 16);
 
             ctx.fillStyle = isSympathetic ? '#fca5a5' : '#6ee7b7';
-            ctx.font = '10.5px Pretendard, sans-serif';
+            ctx.font = '12.5px Pretendard, sans-serif';
             ctx.fillText(subDesc, cardX + 10, cardY + 11, cardW - 16);
         });
 
@@ -813,7 +813,7 @@
                 ctx.stroke();
 
                 ctx.fillStyle = '#f87171';
-                ctx.font = 'bold 10px Pretendard, sans-serif';
+                ctx.font = 'bold 12.5px Pretendard, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('⏸ 억제', ox, oy + 3.5);
             } else {
@@ -824,7 +824,7 @@
                 ctx.stroke();
 
                 ctx.fillStyle = '#34d399';
-                ctx.font = 'bold 10px Pretendard, sans-serif';
+                ctx.font = 'bold 12.5px Pretendard, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('▶ 촉진', ox, oy + 3.5);
             }
@@ -886,10 +886,10 @@
         ctx.stroke();
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('감각 뉴런', sX, yPos + 24);
-        ctx.font = '10px Pretendard, sans-serif';
+        ctx.font = '12.5px Pretendard, sans-serif';
         ctx.fillStyle = '#94a3b8';
         ctx.fillText('(신경세포체 돌출)', sX, yPos + 38);
 
@@ -902,9 +902,9 @@
         ctx.stroke();
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         ctx.fillText('연합 뉴런', iX, yPos + 24);
-        ctx.font = '10px Pretendard, sans-serif';
+        ctx.font = '12.5px Pretendard, sans-serif';
         ctx.fillStyle = '#94a3b8';
         ctx.fillText('(뇌·척수 중추)', iX, yPos + 38);
 
@@ -922,15 +922,15 @@
         ctx.stroke();
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         ctx.fillText('운동 뉴런', mX, yPos + 24);
-        ctx.font = '10px Pretendard, sans-serif';
+        ctx.font = '12.5px Pretendard, sans-serif';
         ctx.fillStyle = '#94a3b8';
         ctx.fillText('(근육 연결)', mX, yPos + 38);
 
         // 4. Direction Arrow
         var arrowText = '➔ 자극 전달 방향 (감각 ➔ 연합 ➔ 운동) ➔';
-        ctx.font = 'bold 14px Pretendard, sans-serif';
+        ctx.font = 'bold 15px Pretendard, sans-serif';
         var atw = ctx.measureText(arrowText).width;
         var acx = dx + 0.50 * dw, acy = dy + 0.24 * dh;
         ctx.fillStyle = 'rgba(6, 10, 24, 0.82)';
@@ -1101,7 +1101,7 @@
         ctx.save();
         px = Math.max(16, px);
         py = Math.max(py, 86); // 위쪽 장면 단추 줄 아래에서 시작
-        ctx.font = 'bold 12px Pretendard, sans-serif';
+        ctx.font = 'bold 13.5px Pretendard, sans-serif';
         var maxW = 0;
         lines.forEach(function (t) { maxW = Math.max(maxW, ctx.measureText(t).width); });
         var boxW = Math.min(maxW + 24, width - px - 16);
@@ -1239,7 +1239,7 @@
                 btnPara.classList.toggle('active', !isSympathetic);
             }
             if (autoTitle) {
-                autoTitle.textContent = isSympathetic ? '⚡ 교감신경 활성화 (Fight or Flight)' : '🌿 부교감신경 활성화 (Rest & Digest)';
+                autoTitle.textContent = isSympathetic ? '⚡ 교감신경 활성화' : '🌿 부교감신경 활성화 (Rest & Digest)';
                 autoTitle.style.color = isSympathetic ? '#ef4444' : '#10b981';
             }
             if (autoDesc) {

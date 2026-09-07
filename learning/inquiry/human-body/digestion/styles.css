@@ -50,7 +50,7 @@
     background: transparent;
     border: 1px solid transparent;
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     display: inline-flex;
@@ -78,7 +78,7 @@
     border: 1.5px solid #f59e0b;
     border-radius: 999px;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
     cursor: pointer;
     white-space: nowrap;
@@ -100,7 +100,7 @@
     border: 1px solid rgba(245, 158, 11, 0.4);
     border-radius: var(--radius-sm);
     color: #fbbf24;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
@@ -126,7 +126,7 @@
     background: rgba(6, 10, 24, 0.85);
     border: 1px solid rgba(148, 163, 184, 0.45);
     color: #cbd5e1;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
     line-height: 1.5;
 }

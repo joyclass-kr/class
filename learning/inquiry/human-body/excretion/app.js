@@ -49,17 +49,20 @@
             { x: 0.44, y: 0.46, r: 42, title: '사구체 & 보먼주머니', standard: '[6과04-05] · [9과14-04]', desc: '사구체의 높은 혈압으로 단백질·혈구를 제외한 물, 포도당, 요소가 보먼주머니로 여과(원뇨)됩니다.' },
             { x: 0.55, y: 0.65, r: 38, title: '세뇨관 (포도당 100% 재흡수)', standard: '[6과04-05] · [9과14-04]', desc: '포도당과 아미노산은 100% 모세혈관으로 능동수송 재흡수되며, ADH에 의해 물이 조절 재흡수됩니다.' },
             { x: 0.20, y: 0.60, r: 35, title: '신동맥 & 신정맥', standard: '[6과04-05]', desc: '신동맥(요소 많음)으로 들어와 여과된 후, 가장 깨끗해진 혈액이 신정맥을 통해 대정맥으로 나갑니다.' },
-            { x: 0.75, y: 0.50, r: 45, title: '콩팥 겉질 & 속질 (Kidney)', standard: '[6과04-05]', desc: '신장 1개당 약 100만 개의 네프론이 밀집되어 오줌을 형성하고 체액 삼투압을 조절합니다.' }
+            { x: 0.75, y: 0.50, r: 45, title: '콩팥 겉질 & 속질', standard: '[6과04-05]', desc: '신장 1개당 약 100만 개의 네프론이 밀집되어 오줌을 형성하고 체액 삼투압을 조절합니다.' }
         ],
         path: [
-            { x: 0.50, y: 0.25, r: 45, title: '1. 사구체 여과 (Filtration)', standard: '[6과04-05] · [9과14-04]', desc: '높은 혈압 차이에 의해 단백질과 혈구를 제외한 물질이 보먼주머니로 이동합니다.' },
-            { x: 0.50, y: 0.55, r: 45, title: '2. 세뇨관 재흡수 (Reabsorption)', standard: '[6과04-05] · [9과14-04]', desc: '포도당 100%, 아미노산 100%, 물 99%를 모세혈관으로 능동수송 재흡수합니다.' },
-            { x: 0.50, y: 0.80, r: 45, title: '3. 집합관 오줌 농축 (Excretion)', standard: '[6과04-05] · [9과14-04]', desc: '물이 재흡수되어 요소가 67배 고농도로 농축된 최종 오줌이 형성됩니다.' }
+            { x: 0.50, y: 0.25, r: 45, title: '1. 사구체 여과', standard: '[6과04-05] · [9과14-04]', desc: '높은 혈압 차이에 의해 단백질과 혈구를 제외한 물질이 보먼주머니로 이동합니다.' },
+            { x: 0.50, y: 0.55, r: 45, title: '2. 세뇨관 재흡수', standard: '[6과04-05] · [9과14-04]', desc: '포도당 100%, 아미노산 100%, 물 99%를 모세혈관으로 능동수송 재흡수합니다.' },
+            { x: 0.50, y: 0.80, r: 45, title: '3. 집합관 오줌 농축', standard: '[6과04-05] · [9과14-04]', desc: '물이 재흡수되어 요소가 67배 고농도로 농축된 최종 오줌이 형성됩니다.' }
         ],
         torso: [
-            { x: 0.46, y: 0.38, r: 35, title: '콩팥 (Kidney)', standard: '[6과04-05]', desc: '강낭콩 모양의 배설 기관으로 혈액 속 요소를 걸러 오줌을 만듭니다.' },
-            { x: 0.50, y: 0.52, r: 30, title: '수뇨관 (Ureter)', standard: '[6과04-05]', desc: '콩팥에서 생성된 오줌을 꿈틀운동으로 방광으로 수송합니다.' },
-            { x: 0.50, y: 0.72, r: 40, title: '방광 (Urinary Bladder)', standard: '[6과04-05]', desc: '오줌을 300~500mL까지 모아두었다가 요도를 통해 배뇨합니다.' }
+            { x: 0.605, y: 0.205, r: 34, title: '오른쪽 콩팥', standard: '[6과04-05]', desc: '강낭콩 모양이고 주먹만 합니다. 혈액 속 <strong>요소</strong>를 걸러 오줌을 만듭니다. 앞에서 본 그림이라 화면 왼쪽이 <strong>몸의 오른쪽</strong> 콩팥입니다.' },
+            { x: 0.800, y: 0.205, r: 34, title: '왼쪽 콩팥', standard: '[6과04-05]', desc: '콩팥은 등쪽 허리 높이에 좌우 <strong>한 쌍</strong>이 있습니다. 하나에 네프론이 약 100만 개 들어 있습니다.' },
+            { x: 0.640, y: 0.470, r: 26, title: '오줌관', standard: '[6과04-05]', desc: '콩팥에서 만들어진 오줌을 <strong>꿈틀 운동</strong>으로 방광까지 내려보내는 가는 관입니다. 좌우로 한 개씩 있습니다.' },
+            { x: 0.705, y: 0.735, r: 36, title: '방광', standard: '[6과04-05]', desc: '오줌을 <strong>300~500 mL</strong>까지 모아 두는 주머니입니다. 어느 정도 차면 오줌이 마렵다고 느낍니다.' },
+            { x: 0.705, y: 0.880, r: 24, title: '요도', standard: '[6과04-05]', desc: '방광에 모인 오줌이 <strong>몸 밖으로 나가는 마지막 길</strong>입니다.' },
+            { x: 0.895, y: 0.400, r: 34, title: '네프론 돋보기', standard: '[6과04-05]', desc: '콩팥을 확대한 그림입니다. <strong>사구체 + 보먼주머니 + 세뇨관</strong>을 합쳐 네프론이라 하고, 오줌을 만드는 기본 단위입니다.' }
         ]
     };
 
@@ -224,7 +227,7 @@
             ctx.fillStyle = '#0a0f1d';
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#38bdf8';
-            ctx.font = 'bold 16px Pretendard, sans-serif';
+            ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('자료를 불러오는 중입니다.', width / 2, height / 2);
         }
@@ -347,18 +350,20 @@
             ctx.arc(sx, sy, pulseR, 0, Math.PI * 2);
             ctx.stroke();
 
-            // Label Tag Box
+            // 이름표 상자는 글자 길이에 맞춰 넓힌다
+            ctx.font = 'bold 13px Pretendard, sans-serif';
+            var labelText = SimEngine.pinLabel(s);
+            var boxW = Math.max(64, ctx.measureText(labelText).width + 24);
             ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
-            ctx.fillRect(sx - 55, sy - 14, 110, 28);
+            ctx.fillRect(sx - boxW / 2, sy - 15, boxW, 30);
             ctx.strokeStyle = '#38bdf8';
             ctx.lineWidth = 1;
-            ctx.strokeRect(sx - 55, sy - 14, 110, 28);
+            ctx.strokeRect(sx - boxW / 2, sy - 15, boxW, 30);
 
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 11px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(SimEngine.pinLabel(s), sx, sy);
+            ctx.fillText(labelText, sx, sy);
             ctx.restore();
         }
     }

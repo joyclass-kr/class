@@ -51,24 +51,24 @@
     // Hotspots per Scene
     var hotspots = {
         barrier: [
-            { x: 0.20, y: 0.35, r: 40, title: '피부 각질층 (Stratum Corneum)', desc: '죽은 케라틴 세포층과 피지의 약산성(pH 5.5) 피지막이 병원체 침투를 1차로 물리적 차단합니다.' },
-            { x: 0.50, y: 0.42, r: 45, title: '점막 & 섬모 운동 (Cilia)', desc: '기도와 소화관의 점액이 병원체를 끈끈하게 포획하고, 섬모의 파도 운동으로 몸 밖으로 밀어냅니다.' },
-            { x: 0.80, y: 0.40, r: 40, label: '라이소자임', title: '라이소자임 살균 효소 (Lysozyme)', desc: '눈물, 침, 콧물에 포함되어 세균의 세포벽(펩티도글리칸)을 분해하여 세포를 터뜨려 죽입니다.' }
+            { x: 0.20, y: 0.35, r: 40, title: '피부 각질층', desc: '죽은 케라틴 세포층과 피지의 약산성(pH 5.5) 피지막이 병원체 침투를 1차로 물리적 차단합니다.' },
+            { x: 0.50, y: 0.42, r: 45, title: '점막 & 섬모 운동', desc: '기도와 소화관의 점액이 병원체를 끈끈하게 포획하고, 섬모의 파도 운동으로 몸 밖으로 밀어냅니다.' },
+            { x: 0.80, y: 0.40, r: 40, label: '라이소자임', title: '라이소자임 살균 효소', desc: '눈물, 침, 콧물에 포함되어 세균의 세포벽(펩티도글리칸)을 분해하여 세포를 터뜨려 죽입니다.' }
         ],
         innate: [
-            { x: 0.25, y: 0.30, r: 45, title: '비만세포 & 히스타민 분비 (Mast Cell)', desc: '상처 발생 시 히스타민을 분비하여 <strong>모세혈관을 확장</strong>시키고 혈류량을 늘려 염증(발적, 열감)을 유발합니다.' },
-            { x: 0.48, y: 0.52, r: 50, title: '대식세포 식균 작용 (Macrophage)', desc: '위족을 뻗어 세균을 둘러싸 삼킨 뒤(Phagocytosis), 리소좀 효소로 소화 분해하는 핵심 비특이적 방어입니다.' },
-            { x: 0.75, y: 0.45, r: 45, title: '호중구 혈관 탈출 (Diapedesis)', desc: '혈관벽 내피 틈새를 뚫고 감염 조직으로 가장 먼저 달려오는 백혈구로, 강력한 식균 작용을 합니다.' }
+            { x: 0.25, y: 0.30, r: 45, title: '비만세포 & 히스타민 분비', desc: '상처 발생 시 히스타민을 분비하여 <strong>모세혈관을 확장</strong>시키고 혈류량을 늘려 염증(발적, 열감)을 유발합니다.' },
+            { x: 0.48, y: 0.52, r: 50, title: '대식세포 식균 작용', desc: '위족을 뻗어 세균을 둘러싸 삼킨 뒤, 리소좀 효소로 소화 분해하는 핵심 비특이적 방어입니다.' },
+            { x: 0.75, y: 0.45, r: 45, title: '호중구 혈관 탈출', desc: '혈관벽 내피 틈새를 뚫고 감염 조직으로 가장 먼저 달려오는 백혈구로, 강력한 식균 작용을 합니다.' }
         ],
         adaptive: [
-            { x: 0.20, y: 0.45, r: 45, title: '항원 제시 (Antigen Presentation)', desc: '대식세포나 수지상세포가 병원체를 삼킨 후 항원 조각을 세포 표면(MHC)에 띄워 보조 T세포에 전달합니다.' },
-            { x: 0.42, y: 0.35, r: 45, title: '보조 T림프구 (Helper T cell)', desc: '항원 정보를 인식하여 사이토카인을 분비, B림프구와 세포독성 T림프구를 총지휘하는 <strong>면역의 총사령관</strong>.' },
-            { x: 0.65, y: 0.55, r: 45, label: 'B림프구', title: 'B림프구 ➔ 형질세포 (Plasma Cell)', desc: '보조 T세포의 신호로 분화하여 특정 항원에 꼭 맞는 <strong>Y자형 항체를 초당 2,000개씩 대량 분비</strong>합니다.' },
-            { x: 0.82, y: 0.35, r: 40, title: '세포독성 T림프구 (Cytotoxic T cell)', desc: '바이러스에 감염된 체세포나 암세포를 직접 접촉 파괴하는 <strong>세포성 면역</strong>의 주역입니다.' }
+            { x: 0.20, y: 0.45, r: 45, title: '항원 제시', desc: '대식세포나 수지상세포가 병원체를 삼킨 후 항원 조각을 세포 표면(MHC)에 띄워 보조 T세포에 전달합니다.' },
+            { x: 0.42, y: 0.35, r: 45, title: '보조 T림프구', desc: '항원 정보를 인식하여 사이토카인을 분비, B림프구와 세포독성 T림프구를 총지휘하는 <strong>면역의 총사령관</strong>.' },
+            { x: 0.65, y: 0.55, r: 45, label: 'B림프구', title: 'B림프구 ➔ 형질세포', desc: '보조 T세포의 신호로 분화하여 특정 항원에 꼭 맞는 <strong>Y자형 항체를 초당 2,000개씩 대량 분비</strong>합니다.' },
+            { x: 0.82, y: 0.35, r: 40, title: '세포독성 T림프구', desc: '바이러스에 감염된 체세포나 암세포를 직접 접촉 파괴하는 <strong>세포성 면역</strong>의 주역입니다.' }
         ],
         memory: [
             { x: 0.25, y: 0.60, r: 45, title: '1차 면역 반응 & 잠복기', desc: '항원 첫 침입 시 항원 인식과 림프구 증식에 1~2주의 긴 잠복기가 필요하며, 항체 농도가 완만합니다.' },
-            { x: 0.50, y: 0.45, r: 45, title: '기억 세포의 탄생 (Memory Cell)', desc: '1차 침입 후 일부 T·B세포가 기억 세포로 남아 림프절에 장기간 보존됩니다.' },
+            { x: 0.50, y: 0.45, r: 45, title: '기억 세포의 탄생', desc: '1차 침입 후 일부 T·B세포가 기억 세포로 남아 림프절에 장기간 보존됩니다.' },
             { x: 0.78, y: 0.30, r: 50, title: '2차 면역 반응 (폭발적 항체 생성)', desc: '동일 항원 재침입 시 <strong>잠복기 없이 즉각 대량의 형질세포로 분화</strong>하여 초고속·고농도 항체를 분비합니다(백신의 원리).' }
         ]
     };
@@ -422,7 +422,7 @@
             ctx.fillStyle = '#0a0f1d';
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#8b5cf6';
-            ctx.font = 'bold 16px Pretendard, sans-serif';
+            ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('🛡️ 면역계 시뮬레이터 로딩 중...', width / 2, height / 2);
         }
@@ -553,7 +553,7 @@
 
             // Label
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 11px Pretendard, sans-serif';
+            ctx.font = 'bold 13px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('대식세포', wx, wy + w.radius + 14);
             ctx.restore();
@@ -578,7 +578,7 @@
             ctx.fill();
 
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 11.5px Pretendard, sans-serif';
+            ctx.font = 'bold 13.5px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText(w.label, wx, wy + w.radius + 14);
             ctx.restore();
@@ -658,13 +658,13 @@
 
         // Title
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 14px Pretendard, sans-serif';
+        ctx.font = 'bold 15px Pretendard, sans-serif';
         ctx.textAlign = 'left';
         ctx.fillText('📈 항체 농도 변화 곡선 (1차 vs 2차 면역 반응 실시간 비교)', gx + 20, gy + 28);
 
         // Subtitle
         ctx.fillStyle = '#94a3b8';
-        ctx.font = '11.5px Pretendard, sans-serif';
+        ctx.font = '13.5px Pretendard, sans-serif';
         ctx.fillText('동일 항원이 재침입했을 때 기억 세포에 의해 잠복기 없이 폭발적으로 항체가 분비됩니다.', gx + 20, gy + 46);
 
         // Graph Plot Area
@@ -684,9 +684,9 @@
 
         // Axis Labels
         ctx.fillStyle = '#cbd5e1';
-        ctx.font = '10px Pretendard, sans-serif';
+        ctx.font = '12.5px Pretendard, sans-serif';
         ctx.textAlign = 'right';
-        ctx.fillText('항체 농도 (Titer)', px - 6, py + 12);
+        ctx.fillText('항체 농도', px - 6, py + 12);
         ctx.textAlign = 'center';
         ctx.fillText('경과 시간 (일, Days)', px + pw / 2, py + ph + 24);
 
@@ -731,7 +731,7 @@
         }
 
         // Legend
-        ctx.font = 'bold 11px Pretendard, sans-serif';
+        ctx.font = 'bold 13px Pretendard, sans-serif';
         ctx.fillStyle = '#38bdf8';
         ctx.fillText('■ 1차 면역 반응 (긴 잠복기, 완만한 농도)', gx + 20, gy + gh - 12);
         ctx.fillStyle = '#ec4899';
@@ -781,7 +781,7 @@
             ctx.strokeStyle = '#8b5cf6';
             ctx.lineWidth = 1;
             var labelText = (typeof SimEngine !== 'undefined') ? SimEngine.pinLabel(spot) : spot.title;
-            ctx.font = 'bold 11px Pretendard, sans-serif';
+            ctx.font = 'bold 13px Pretendard, sans-serif';
             var textW = ctx.measureText(labelText).width;
             var boxW = textW + 16;
             // 화면 가장자리에 있는 표시점은 이름표가 잘리므로 안쪽으로 당긴다

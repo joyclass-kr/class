@@ -60,7 +60,7 @@
     // Hotspot Definitions per Scene
     var hotspots = {
         journey: [
-            { x: 0.72, y: 0.22, r: 40, title: '위 (Stomach)', enzyme: '펩신 + 염산 (pH 2.0)', ph: 'pH 2.0 (강산성)', product: '단백질 ➔ 펩톤', desc: '강력한 위산(HCl)과 펩신이 단백질을 1차 분해하며 음식물을 죽(암죽) 상태로 만듭니다.' },
+            { x: 0.72, y: 0.22, r: 40, title: '위', enzyme: '펩신 + 염산 (pH 2.0)', ph: 'pH 2.0 (강산성)', product: '단백질 ➔ 펩톤', desc: '강력한 위산(HCl)과 펩신이 단백질을 1차 분해하며 음식물을 죽(암죽) 상태로 만듭니다.' },
             { x: 0.45, y: 0.48, r: 35, title: '십이지장 & 소장 입구', enzyme: '이자액 (아밀레이스·트립신·라이페이스) & 쓸개즙', ph: 'pH 8.0 (약염기성)', product: '3대 영양소 최종 분해', desc: '간에서 만든 쓸개즙이 지방을 유화하고, 이자액이 3대 영양소를 모두 최종 분해합니다.' },
             { x: 0.62, y: 0.78, r: 35, title: '소장 융털 흡수 경로', enzyme: '수용성(모세혈관) vs 지용성(암죽관)', ph: 'pH 8.0', product: '포도당, 아미노산, 지방산 흡수', desc: '수억 개의 융털이 표면적을 극대화하여 영양소를 온몸 세포로 보내기 위해 혈액과 림프로 흡수합니다.' }
         ],
@@ -213,7 +213,7 @@
             ctx.fillStyle = '#0f172a';
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#38bdf8';
-            ctx.font = 'bold 16px Pretendard, sans-serif';
+            ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
             ctx.fillText('자료를 불러오는 중입니다.', width / 2, height / 2);
         }
@@ -293,7 +293,7 @@
 
             // Tag Label Pill
             var labelText = SimEngine.pinLabel(s);
-            ctx.font = 'bold 11px Pretendard, sans-serif';
+            ctx.font = 'bold 13px Pretendard, sans-serif';
             var txtMetrics = ctx.measureText(labelText);
             var pillW = txtMetrics.width + 16;
             var pillH = 22;
