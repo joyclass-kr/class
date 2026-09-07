@@ -216,5 +216,83 @@
         });
     }
 
-    window.PianoEngine = { playMidi: playMidi, playNotes: playNotes, playSequence: playSequence, preload: loadSamples };
+    /* 리듬용 타격음. 음높이가 아니라 치는 때만 알려 주는 짧은 소리다. */
+    function tick(when, strong) {
+        const context = ensureAudio();
+        if (!context) return;
+        const start = Math.max(context.currentTime, when);
+        const envelope = context.createGain();
+        const band = context.createBiquadFilter();
+        band.type = "bandpass";
+        band.frequency.value = strong ? 1500 : 1000;
+        band.Q.value = 1.4;
+        envelope.gain.setValueAtTime(.0001, start);
+        envelope.gain.exponentialRampToValueAtTime(strong ? .22 : .13, start + .002);
+        envelope.gain.exponentialRampToValueAtTime(.0001, start + .075);
+        band.connect(envelope);
+        connectToMix(envelope, .01);
+
+        const noise = context.createBufferSource();
+        const length = Math.floor(context.sampleRate * .09);
+        const buffer = context.createBuffer(1, length, context.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let index = 0; index < length; index += 1) {
+            data[index] = (Math.random() * 2 - 1) * Math.pow(1 - index / length, 3);
+        }
+        noise.buffer = buffer;
+        noise.connect(band);
+        noise.start(start);
+        noise.stop(start + .1);
+
+        const tone = context.createOscillator();
+        const toneGain = context.createGain();
+        tone.type = "square";
+        tone.frequency.value = strong ? 1760 : 1320;
+        toneGain.gain.setValueAtTime(strong ? .05 : .028, start);
+        toneGain.gain.exponentialRampToValueAtTime(.0001, start + .05);
+        tone.connect(toneGain).connect(band);
+        tone.start(start);
+        tone.stop(start + .06);
+    }
+
+    /*
+     * 리듬을 울린다. beats는 4분음표 하나를 1로 센 치는 자리이며
+     * countIn만큼 미리 박을 세어 준다. 첫 박이 울리는 시각을 돌려준다.
+     */
+    function playRhythm(beats, beatSeconds, options) {
+        const settings = options || {};
+        const context = ensureAudio();
+        if (!context) return null;
+        const countIn = settings.countIn === undefined ? 4 : settings.countIn;
+        const lead = context.currentTime + .18;
+        for (let beat = 0; beat < countIn; beat += 1) {
+            tick(lead + beat * beatSeconds, beat === 0);
+        }
+        const zero = lead + countIn * beatSeconds;
+        beats.forEach(position => tick(zero + position * beatSeconds, position === 0 && settings.accentFirst !== false));
+        return zero;
+    }
+
+    function metronome(count, beatSeconds) {
+        const context = ensureAudio();
+        if (!context) return null;
+        const lead = context.currentTime + .18;
+        for (let beat = 0; beat < count; beat += 1) tick(lead + beat * beatSeconds, beat % 4 === 0);
+        return lead;
+    }
+
+    function audioNow() {
+        const context = ensureAudio();
+        return context ? context.currentTime : 0;
+    }
+
+    window.PianoEngine = {
+        playMidi: playMidi,
+        playNotes: playNotes,
+        playSequence: playSequence,
+        playRhythm: playRhythm,
+        metronome: metronome,
+        now: audioNow,
+        preload: loadSamples
+    };
 })();

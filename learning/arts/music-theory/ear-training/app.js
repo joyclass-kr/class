@@ -526,6 +526,67 @@
             make: progressionQuestion
         },
         {
+            id: "rhythmWrite",
+            name: label("Rhythm Dictation", "리듬 받아쓰기"),
+            ask: "들은 자리를 켜세요",
+            pickable: false,
+            inputs: ["grid"],
+            rhythmDrill: true,
+            items: [
+                { id: "g4", label: label("Quarters", "4분음표"), set: "g4", kind: "grid" },
+                { id: "g8", label: label("Quarters and Eighths", "4분음표와 8분음표"), set: "g8", kind: "grid" },
+                { id: "g8r", label: label("Rests", "쉼표"), set: "g8r", kind: "grid" },
+                { id: "gtie", label: label("Long Notes", "긴 음표"), set: "gtie", kind: "grid" },
+                { id: "gdot", label: label("Dotted Notes", "점음표"), set: "gdot", kind: "grid" },
+                { id: "g16", label: label("Sixteenths", "16분음표"), set: "g16", kind: "grid" },
+                { id: "pick", label: label("Choose the Bar", "악보 고르기"), set: "pick", kind: "bars" },
+                { id: "trip", label: label("Triplets", "셋잇단음표"), set: "trip", kind: "bars" },
+                { id: "tripMix", label: label("Triplets Mixed", "셋잇단음표 섞기"), set: "tripMix", kind: "bars" }
+            ],
+            levels: [
+                { id: "start", label: label("Quarters", "4분음표"), ids: ["g4"] },
+                { id: "easy", label: label("Quarters and Eighths", "4분음표와 8분음표"), ids: ["g8"] },
+                { id: "mid", label: label("Rests", "쉼표"), ids: ["g8r"] },
+                { id: "long", label: label("Long Notes", "긴 음표"), ids: ["gtie"] },
+                { id: "dot", label: label("Dotted Notes", "점음표"), ids: ["gdot"] },
+                { id: "hard", label: label("Sixteenths", "16분음표"), ids: ["g16"] },
+                { id: "pick", label: label("Choose the Bar", "악보 고르기"), ids: ["pick"] },
+                { id: "trip", label: label("Triplets", "셋잇단음표"), ids: ["trip", "tripMix"] }
+            ],
+            modes: [],
+            make: item => (item.kind === "bars" ? rhythmChoiceQuestion(item) : rhythmGridQuestion(item))
+        },
+        {
+            id: "rhythmRead",
+            name: label("Rhythm Reading", "리듬 읽기"),
+            ask: "박에 맞춰 두드리세요",
+            pickable: false,
+            inputs: ["tap"],
+            rhythmDrill: true,
+            items: [
+                { id: "t4", label: label("Quarters", "4분음표"), set: "g4" },
+                { id: "t8", label: label("Quarters and Eighths", "4분음표와 8분음표"), set: "g8" },
+                { id: "t8r", label: label("Rests", "쉼표"), set: "g8r" },
+                { id: "ttie", label: label("Long Notes", "긴 음표"), set: "gtie" },
+                { id: "tdot", label: label("Dotted Notes", "점음표"), set: "gdot" },
+                { id: "t16", label: label("Sixteenths", "16분음표"), set: "g16" },
+                { id: "ttrip", label: label("Triplets", "셋잇단음표"), set: "trip" },
+                { id: "tmix", label: label("Everything Mixed", "모두 섞기"), set: "tripMix" }
+            ],
+            levels: [
+                { id: "start", label: label("Quarters", "4분음표"), ids: ["t4"] },
+                { id: "easy", label: label("Quarters and Eighths", "4분음표와 8분음표"), ids: ["t8"] },
+                { id: "mid", label: label("Rests", "쉼표"), ids: ["t8r"] },
+                { id: "long", label: label("Long Notes", "긴 음표"), ids: ["ttie"] },
+                { id: "dot", label: label("Dotted Notes", "점음표"), ids: ["tdot"] },
+                { id: "hard", label: label("Sixteenths", "16분음표"), ids: ["t16"] },
+                { id: "trip", label: label("Triplets", "셋잇단음표"), ids: ["ttrip"] },
+                { id: "mix", label: label("Everything Mixed", "모두 섞기"), ids: ["tmix"] }
+            ],
+            modes: [],
+            make: rhythmTapQuestion
+        },
+        {
             id: "melody",
             name: label("Melodic Dictation", "가락 받아쓰기"),
             ask: "들은 차례대로 누르세요",
@@ -851,6 +912,245 @@
         return svg;
     }
 
+
+    /* 리듬 ---------------------------------------------------------------- */
+    const RN = window.RhythmNotation;
+    const BEAT_SECONDS = .62;
+
+    const BAR_CELLS = 48;
+
+    const RHYTHM_SETS = {
+        g4: { cells: 4, beat: ["quarter", "rest"], longs: ["h", "hd", "w"] },
+        g8: { cells: 8, beat: ["quarter", "eighths"], longs: ["h"] },
+        g8r: { cells: 8, beat: ["quarter", "eighths", "rest", "eighthRest", "offEighth"], longs: ["h", "hd"] },
+        g16: { cells: 16, beat: ["quarter", "eighths", "sixteenths", "twoThenOne", "oneThenTwo", "rest"], longs: ["h"] },
+        gdot: { cells: 16, beat: ["quarter", "eighths", "dottedPair", "oneThenTwo", "rest"], longs: ["h", "hd"] },
+        gtie: { cells: 8, beat: ["quarter", "eighths", "offEighth", "eighthRest"], longs: ["h", "hd", "w"] },
+        pick: { cells: 16, beat: ["quarter", "eighths", "sixteenths", "twoThenOne", "oneThenTwo", "dottedPair", "rest", "eighthRest"], longs: ["h", "hd"] },
+        trip: { cells: 0, beat: ["quarter", "eighths", "triplet"], longs: ["h"] },
+        tripMix: { cells: 0, beat: ["quarter", "eighths", "sixteenths", "triplet", "tripletHead", "rest"], longs: ["h"] }
+    };
+
+    function rhythmBar(setName) {
+        const set = RHYTHM_SETS[setName];
+        const names = set.beat.map(name => RN.BEAT_PATTERNS[name]);
+        return { bar: RN.makeBar(4, names, set.longs), cells: set.cells };
+    }
+
+    /* 칸으로 답하는 문제. 악보는 한 가지로 정리해 둔다. */
+    function rhythmGridQuestion(item) {
+        const made = rhythmBar(item.set);
+        const bar = RN.canonical(made.bar, BAR_CELLS);
+        const step = BAR_CELLS / made.cells;
+        const cells = RN.onsets(bar).map(cell => Math.round(cell / step));
+        return {
+            silentStaff: true,
+            rhythm: { bar: bar, onsets: RN.onsets(bar) },
+            grid: { cells: made.cells, answer: cells },
+            detail: made.cells + "칸"
+        };
+    }
+
+    /* 악보를 골라 답하는 문제. 보기끼리 치는 자리가 겹치지 않게 고른다. */
+    function rhythmChoiceQuestion(item) {
+        const answer = rhythmBar(item.set).bar;
+        const bars = [answer];
+        let guard = 0;
+        while (bars.length < 4 && guard < 60) {
+            guard += 1;
+            const other = rhythmBar(item.set).bar;
+            if (bars.some(existing => RN.sameOnsets(existing, other))) continue;
+            bars.push(other);
+        }
+        const order = bars.slice().sort(() => Math.random() - .5);
+        return {
+            silentStaff: true,
+            rhythm: { bar: answer, onsets: RN.onsets(answer) },
+            bars: { list: order, answer: order.indexOf(answer) },
+            detail: ""
+        };
+    }
+
+    /* 악보를 보고 두드리는 문제. */
+    function rhythmTapQuestion(item) {
+        const made = rhythmBar(item.set);
+        const bar = RN.canonical(made.bar, BAR_CELLS);
+        return {
+            showBar: bar,
+            rhythm: { bar: bar, onsets: RN.onsets(bar) },
+            tap: { onsets: RN.onsets(bar) },
+            detail: ""
+        };
+    }
+
+
+    /* 리듬 문제 화면 ------------------------------------------------------- */
+
+    function setupRhythm(question) {
+        els.staff.hidden = true;
+        els.choices.hidden = true;
+        els.pairWrap.hidden = true;
+        els.keyboardWrap.hidden = true;
+        els.typedCount.hidden = true;
+
+        /* 받아쓰기는 악보를 감추고, 읽기는 보여 준다. */
+        els.replayButton.textContent = question.tap ? "♪ 세어 주기" : "♪ 다시 듣기";
+        els.rhythmWrap.hidden = !question.showBar;
+        if (question.showBar) {
+            els.rhythmBoard.innerHTML = "";
+            els.rhythmBoard.append(RN.render(question.showBar, { meter: "4/4" }));
+        }
+
+        els.gridWrap.hidden = !question.grid;
+        els.barsWrap.hidden = !question.bars;
+        els.tapWrap.hidden = !question.tap;
+
+        if (question.grid) buildGrid(question.grid.cells);
+        if (question.bars) buildBarChoices(question.bars.list);
+        if (question.tap) resetTapPad(question);
+    }
+
+    /* 정간보처럼 한 마디를 칸으로 나눈다. */
+    function buildGrid(cells) {
+        session.grid = new Set();
+        els.beatGrid.innerHTML = "";
+        els.beatGrid.style.gridTemplateColumns = "repeat(" + cells + ", minmax(0, 1fr))";
+        const perBeat = cells / 4;
+        for (let cell = 0; cell < cells; cell += 1) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "beat-cell" + (cell % perBeat === 0 ? " is-beat" : "");
+            button.dataset.cell = String(cell);
+            button.setAttribute("aria-pressed", "false");
+            if (cell % perBeat === 0) button.textContent = String(cell / perBeat + 1);
+            button.addEventListener("click", () => {
+                if (session.answered) return;
+                if (session.grid.has(cell)) session.grid.delete(cell);
+                else {
+                    session.grid.add(cell);
+                    playTick();
+                }
+                button.setAttribute("aria-pressed", String(session.grid.has(cell)));
+            });
+            els.beatGrid.append(button);
+        }
+    }
+
+    function playTick() {
+        if (window.PianoEngine) window.PianoEngine.playRhythm([0], BEAT_SECONDS, { countIn: 0 });
+    }
+
+    function buildBarChoices(list) {
+        els.barsWrap.innerHTML = "";
+        list.forEach((bar, index) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "bar-choice";
+            button.dataset.index = String(index);
+            button.append(RN.render(bar, { meter: "4/4" }));
+            button.addEventListener("click", () => answerBarChoice(index));
+            els.barsWrap.append(button);
+        });
+    }
+
+    function resetTapPad(question) {
+        session.taps = [];
+        session.tapZero = null;
+        els.tapPad.disabled = true;
+        els.tapPad.textContent = "두드리기";
+        els.tapCount.textContent = "";
+    }
+
+    /* 받아쓰기: 켠 칸을 정답과 견준다. */
+    function submitGrid() {
+        if (session.answered) return;
+        const want = session.current.grid.answer.slice().sort((a, b) => a - b);
+        const got = Array.from(session.grid).sort((a, b) => a - b);
+        const correct = want.length === got.length && want.every((cell, index) => cell === got[index]);
+        markGrid(want, got);
+        settle(correct);
+    }
+
+    function markGrid(want, got) {
+        Array.from(els.beatGrid.children).forEach(cell => {
+            const index = Number(cell.dataset.cell);
+            cell.disabled = true;
+            if (want.indexOf(index) >= 0) cell.classList.add(got.indexOf(index) >= 0 ? "is-right" : "is-missed");
+            else if (got.indexOf(index) >= 0) cell.classList.add("is-wrong");
+        });
+    }
+
+    function answerBarChoice(index) {
+        if (session.answered) return;
+        const want = session.current.bars.answer;
+        Array.from(els.barsWrap.children).forEach((button, position) => {
+            button.disabled = true;
+            if (position === want) button.classList.add("right");
+            else if (position === index) button.classList.add("wrong");
+            else button.classList.add("dim");
+        });
+        settle(index === want);
+    }
+
+    /* 답을 보여 줄 때 정답 리듬을 악보로 그려 준다. */
+    function showRhythmAnswer(correct) {
+        els.rhythmWrap.hidden = false;
+        els.rhythmBoard.innerHTML = "";
+        els.rhythmBoard.append(RN.render(session.current.rhythm.bar, {
+            meter: "4/4",
+            mark: correct ? "right" : "wrong"
+        }));
+    }
+
+    /* 읽기: 세어 주기를 누르면 메트로놈이 돌고 그동안 두드린다. */
+    function startTapRound() {
+        if (session.answered || !window.PianoEngine) return;
+        const lead = window.PianoEngine.metronome(8, BEAT_SECONDS);
+        if (lead === null) return;
+        session.taps = [];
+        session.tapZero = lead + 4 * BEAT_SECONDS;
+        els.tapPad.disabled = false;
+        els.tapPad.textContent = "두드리기";
+        els.tapCount.textContent = "0 번";
+        window.clearTimeout(session.tapTimer);
+        const wait = (session.tapZero - window.PianoEngine.now() + 4 * BEAT_SECONDS + .35) * 1000;
+        session.tapTimer = window.setTimeout(judgeTaps, wait);
+    }
+
+    function onTap() {
+        if (session.answered || session.tapZero === null) return;
+        session.taps.push(window.PianoEngine.now());
+        els.tapCount.textContent = session.taps.length + " 번";
+        playTick();
+    }
+
+    /*
+     * 친 때를 악보의 자리와 견준다. 한 박의 4분의 1 안에 들면 맞은 것으로 본다.
+     */
+    function judgeTaps() {
+        if (session.answered) return;
+        const want = session.current.tap.onsets.map(cell => session.tapZero + cell / RN.PER_BEAT * BEAT_SECONDS);
+        const window_ = Math.max(.13, BEAT_SECONDS * .28);
+        const taken = new Set();
+        let hit = 0;
+        want.forEach(time => {
+            let best = -1;
+            let bestGap = window_;
+            session.taps.forEach((tap, index) => {
+                if (taken.has(index)) return;
+                const gap = Math.abs(tap - time);
+                if (gap < bestGap) { bestGap = gap; best = index; }
+            });
+            if (best >= 0) { taken.add(best); hit += 1; }
+        });
+        const extra = session.taps.length - taken.size;
+        const correct = hit === want.length && extra === 0;
+        els.tapPad.disabled = true;
+        els.tapCount.textContent = "맞은 자리 " + hit + " / " + want.length
+            + (extra ? " · 더 친 것 " + extra : "");
+        settle(correct);
+    }
+
     /* 과정 ---------------------------------------------------------------- */
     let course = null;
     let lessonIndex = -1;
@@ -921,7 +1221,9 @@
             els.lessonExamples.append(board);
         }
         (lesson.examples || []).forEach(entry => els.lessonExamples.append(
-            typeof entry === "string" ? intervalExample(entry) : chordExample(entry)
+            typeof entry === "string" ? intervalExample(entry)
+                : entry.pattern ? rhythmExample(entry)
+                    : chordExample(entry)
         ));
         els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
         els.lessonQuiz.hidden = !lesson.quiz;
@@ -929,6 +1231,8 @@
             els.lessonQuiz.dataset.items = lesson.quiz.join(",");
             els.lessonQuiz.dataset.drill = lesson.quizDrill || "reading";
             els.lessonQuiz.dataset.inversions = lesson.quizInversions ? "all" : "root";
+            els.lessonQuiz.dataset.limit = String(lesson.quizLimit || 0);
+            els.lessonQuiz.textContent = (lesson.quizDrill || "reading") === "rhythmWrite" ? "받아쓰기 문제" : "읽기 문제";
         }
         setLessonMark(course.id, lesson.id, { read: true });
         showScreen("lesson");
@@ -978,6 +1282,42 @@
         return block;
     }
 
+    /*
+     * 차시에 싣는 리듬 보기. "q e e -q" 처럼 적으면 4분음표, 8분음표 둘, 4분쉼표가 된다.
+     * 앞에 -를 붙이면 쉼표다.
+     */
+    function parseBar(text) {
+        return text.split(/\s+/).filter(Boolean).map(token => (token.charAt(0) === "-"
+            ? { v: token.slice(1), rest: true }
+            : { v: token }));
+    }
+
+    function rhythmExample(entry) {
+        const bar = parseBar(entry.pattern);
+        const block = document.createElement("div");
+        block.className = "example";
+
+        const caption = document.createElement("p");
+        caption.className = "example-caption";
+        caption.textContent = entry.caption;
+        block.append(caption);
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "example-play is-wide";
+        button.setAttribute("aria-label", entry.caption);
+        button.append(RN.render(bar, { meter: "4/4", label: entry.caption }));
+        button.addEventListener("click", () => {
+            window.PianoEngine.playRhythm(
+                RN.onsets(bar).map(cell => cell / RN.PER_BEAT),
+                BEAT_SECONDS,
+                { countIn: 4 }
+            );
+        });
+        block.append(button);
+        return block;
+    }
+
     const POSITION_LABEL = [
         label("Root Position", "근음 자리"),
         label("1st Inversion", "첫째 자리바꿈"),
@@ -988,7 +1328,7 @@
     function chordExample(entry) {
         const item = CHORDS.find(chord => chord.id === entry.chord);
         const inversion = entry.inversion || 0;
-        const notes = chordNotes(28, item, inversion);
+        const notes = chordNotes(N.natural(28), item, inversion);
         const midis = notes.map(note => note.midi);
 
         const block = document.createElement("div");
@@ -1029,7 +1369,7 @@
         session.input = drillId === "reading" ? "pair" : "buttons";
         session.inversions = els.lessonQuiz.dataset.inversions === "all" ? [0, 1, 2] : [0];
         session.reveal = drillId !== "reading";
-        session.limit = ids.length * 2;
+        session.limit = Number(els.lessonQuiz.dataset.limit) || ids.length * 2;
         session.enabled = new Set(ids);
         session.fromLesson = { courseId: course.id, lessonId: course.lessons[lessonIndex].id };
         beginRound();
@@ -1179,10 +1519,19 @@
         els.feedback.className = "feedback";
         els.nextButton.hidden = true;
         els.helpRow.hidden = !question.arpeggio;
-        drawStaff(question.staffBefore);
-        setupInput(question);
+        if (session.drill.rhythmDrill) setupRhythm(question);
+        else {
+            els.replayButton.textContent = "♪ 다시 듣기";
+            els.staff.hidden = false;
+            els.rhythmWrap.hidden = true;
+            els.gridWrap.hidden = true;
+            els.tapWrap.hidden = true;
+            els.barsWrap.hidden = true;
+            drawStaff(question.staffBefore);
+            setupInput(question);
+        }
         updateScore();
-        play();
+        if (!question.tap) play();
     }
 
     function drawStaff(columns) {
@@ -1273,6 +1622,13 @@
     }
 
     function play() {
+        if (session.drill && session.drill.rhythmDrill) {
+            const question = session.current;
+            if (!question || !window.PianoEngine) return;
+            if (question.tap) { startTapRound(); return; }
+            window.PianoEngine.playRhythm(question.rhythm.onsets.map(cell => cell / RN.PER_BEAT), BEAT_SECONDS, { countIn: 4 });
+            return;
+        }
         const playback = session.current && session.current.playback;
         if (!playback || !window.PianoEngine) return;
         els.replayButton.classList.add("playing");
@@ -1339,16 +1695,23 @@
         session.perItem.set(target.id, tally);
         recordAnswer(session.drill.id, target.id, correct);
 
-        const before = session.current.staffBefore;
-        drawStaff(session.current.staffAfter.map((column, index) => {
-            if (!column) return column;
-            const wasHidden = !before[index];
-            return wasHidden ? Object.assign({}, column, { mark: correct ? "right" : "wrong" }) : column;
-        }));
+        if (session.drill.rhythmDrill) showRhythmAnswer(correct);
+        else {
+            const before = session.current.staffBefore;
+            drawStaff(session.current.staffAfter.map((column, index) => {
+                if (!column) return column;
+                const wasHidden = !before[index];
+                return wasHidden ? Object.assign({}, column, { mark: correct ? "right" : "wrong" }) : column;
+            }));
+        }
 
-        els.feedback.textContent = correct
-            ? "맞았습니다 · " + answerText(target)
-            : "정답은 " + answerText(target) + "입니다";
+        if (session.drill.rhythmDrill) {
+            els.feedback.textContent = correct ? "맞았습니다" : "틀렸습니다";
+        } else {
+            els.feedback.textContent = correct
+                ? "맞았습니다 · " + answerText(target)
+                : "정답은 " + answerText(target) + "입니다";
+        }
         els.feedback.className = "feedback " + (correct ? "right" : "wrong");
 
         updateScore();
@@ -1370,10 +1733,23 @@
     function skipQuestion() {
         if (session.answered) { nextQuestion(); return; }
         session.answered = true;
-        drawStaff(session.current.staffAfter);
-        els.feedback.textContent = "정답은 " + answerText(session.current.item) + "입니다";
+        if (!session.drill.rhythmDrill) drawStaff(session.current.staffAfter);
+        els.feedback.textContent = session.drill.rhythmDrill
+            ? "정답은 위 악보와 같습니다"
+            : "정답은 " + answerText(session.current.item) + "입니다";
         els.feedback.className = "feedback wrong";
-        if (session.drill.pairAnswer) {
+        if (session.drill.rhythmDrill) {
+            window.clearTimeout(session.tapTimer);
+            if (session.current.grid) markGrid(session.current.grid.answer, []);
+            if (session.current.bars) {
+                Array.from(els.barsWrap.children).forEach((button, position) => {
+                    button.disabled = true;
+                    button.classList.add(position === session.current.bars.answer ? "right" : "dim");
+                });
+            }
+            if (session.current.tap) els.tapPad.disabled = true;
+            showRhythmAnswer(false);
+        } else if (session.drill.pairAnswer) {
             markPairRow(els.qualityRow, String(session.current.pair.quality), "");
             markPairRow(els.numberRow, String(session.current.pair.number), "");
         } else if (session.input === "keyboard" && session.current.keyboard) {
@@ -1476,7 +1852,8 @@
             "levelRow", "modeRow", "modeField", "inputRow", "inputField", "limitRow", "itemField",
             "itemPicker", "startButton", "setupWarning", "askText", "staff", "scoreText", "stopButton",
             "replayButton", "skipButton", "choices", "pairWrap", "qualityRow", "numberRow",
-            "keyboardWrap", "pianoKeys", "typedCount",
+            "keyboardWrap", "pianoKeys", "typedCount", "rhythmWrap", "rhythmBoard",
+            "gridWrap", "beatGrid", "gridSubmit", "barsWrap", "tapWrap", "tapPad", "tapCount",
             "feedback", "nextButton", "resultScore", "resultTable", "againButton",
             "toMenuButton"].forEach(id => { els[id] = byId(id); });
 
@@ -1497,6 +1874,8 @@
         els.replayButton.addEventListener("click", play);
         els.skipButton.addEventListener("click", skipQuestion);
         els.arpButton.addEventListener("click", () => playExtra("arpeggio"));
+        els.gridSubmit.addEventListener("click", submitGrid);
+        els.tapPad.addEventListener("pointerdown", event => { event.preventDefault(); onTap(); });
         els.rootButton.addEventListener("click", () => playExtra("rootPlay"));
         els.nextButton.addEventListener("click", nextQuestion);
         els.stopButton.addEventListener("click", finishDrill);

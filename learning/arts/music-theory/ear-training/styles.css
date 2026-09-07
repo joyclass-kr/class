@@ -548,6 +548,12 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
     #drillScreen .help-row { grid-column: 1; grid-row: 5; }
     #drillScreen #choices,
     #drillScreen #pairWrap { grid-column: 2; grid-row: 2 / span 4; align-content: start; }
+
+    /* 리듬 문제는 칸과 악보가 넓어야 눌리므로 한 줄을 통째로 쓴다. */
+    #drillScreen #rhythmWrap { grid-column: 1 / -1; grid-row: 3; }
+    #drillScreen #gridWrap,
+    #drillScreen #barsWrap { grid-column: 1 / -1; grid-row: 5; }
+    #drillScreen #tapWrap { grid-column: 2; grid-row: 4; align-content: center; }
     #drillScreen #keyboardWrap { grid-column: 1 / -1; grid-row: 6; }
     #drillScreen .feedback { grid-column: 1 / -1; grid-row: 7; }
     #drillScreen #nextButton { grid-column: 1 / -1; grid-row: 8; }
@@ -564,3 +570,78 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
     #lessonScreen .free-keys { grid-column: 1; }
     #lessonScreen .lesson-actions { grid-column: 1; }
 }
+
+/* 리듬 악보 */
+.rhythm { display: block; max-width: 100%; height: auto; }
+.rhythm-line { stroke: #6d7078; stroke-width: 1.1; }
+.rhythm-bar { stroke: #4a4f57; stroke-width: 1.4; }
+.rhythm-bar.is-end { stroke-width: 2.6; }
+.rhythm-meter { fill: #1b2029; font-family: Georgia, serif; font-size: 17px; font-weight: 800; text-anchor: middle; }
+.rhythm-ink { stroke: #1b2029; fill: #1b2029; }
+.rhythm-ink.is-right { stroke: #17714f; fill: #17714f; }
+.rhythm-ink.is-wrong { stroke: #ab3b3b; fill: #ab3b3b; }
+.rhythm-head { stroke-width: 1.5; }
+.rhythm-head.is-hollow { fill: none; stroke-width: 1.8; }
+.rhythm-stem { stroke-width: 1.5; }
+.rhythm-beam { stroke-width: 4.2; stroke-linecap: butt; }
+.rhythm-flag { fill: none; stroke-width: 1.8; }
+.rhythm-rest { font-family: "Noto Music", "Segoe UI Symbol", serif; font-size: 26px; text-anchor: middle; stroke: none; }
+.rhythm-triplet { font-family: Georgia, serif; font-size: 11px; font-style: italic; font-weight: 700; text-anchor: middle; stroke: none; }
+
+/* 정간보처럼 칸으로 답하기 */
+.grid-wrap { display: grid; gap: 9px; }
+.beat-grid { display: grid; gap: 3px; min-width: 440px; }
+.grid-scroll { overflow-x: auto; }
+
+.beat-cell {
+    min-height: 62px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--panel);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.beat-cell.is-beat { border-left: 3px solid #4d5f7d; }
+.beat-cell[aria-pressed="true"] { border-color: var(--gold); background: var(--gold); color: #241a05; }
+.beat-cell.is-right { border-color: var(--right); background: var(--right); color: #05281a; }
+.beat-cell.is-missed { border-color: var(--right); background: transparent; color: var(--right); }
+.beat-cell.is-wrong { border-color: var(--wrong); background: var(--wrong); color: #33100f; }
+
+/* 악보 고르기 */
+.bars-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 8px; }
+
+.bar-choice {
+    display: grid;
+    place-items: center;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #f6f4ee;
+    overflow-x: auto;
+}
+
+.bar-choice:hover:not(:disabled) { border-color: var(--gold); }
+.bar-choice.right { border-color: var(--right); box-shadow: inset 0 0 0 2px var(--right); }
+.bar-choice.wrong { border-color: var(--wrong); box-shadow: inset 0 0 0 2px var(--wrong); }
+.bar-choice.dim { opacity: .45; }
+.bar-choice .rhythm { width: 100% !important; }
+
+/* 두드리기 */
+.tap-wrap { display: grid; gap: 7px; }
+
+.tap-pad {
+    min-height: 96px;
+    border: 1px solid #6b5a2c;
+    border-radius: 14px;
+    color: var(--gold);
+    background: linear-gradient(160deg, #2a3550, #1b2436);
+    font-size: 19px;
+    font-weight: 850;
+    touch-action: none;
+}
+
+.tap-pad:not(:disabled):active { background: var(--gold); color: #241a05; }
+.tap-pad:disabled { opacity: .55; }

@@ -6,14 +6,12 @@
 메인 인덱스
 └─ 음악 이론
    ├─ 청음  → learning/arts/music-theory/ear-training/
-   ├─ 리듬  → learning/arts/music-theory/rhythm/
    └─ 피아노 스케일·보이싱 → learning/arts/music-theory/piano-skills/
 ```
 
 ## 디렉터리 책임
 
-- `ear-training/`: 음정·화음 성질·음계·화음 진행을 소리로만 판별하는 훈련. 피아노 음원과 재생 엔진을 여기서 갖는다.
-- `rhythm/`: 리듬 단계 목록, 박자 학습, 메트로놈, 탭 활동, 리듬 받아쓰기
+- `ear-training/`: 음정·화음·음계·화음 진행·리듬·가락을 소리로 판별하는 훈련. 피아노 음원과 재생 엔진을 여기서 갖는다. 리듬은 악보를 보고 두드리기와 받아쓰기로 나뉘고, 받아쓰기는 8·16칸 정간보식 칸에서 시작해 셋잇단음표부터 악보 고르기로 넘어간다.
 - `piano-skills/`: 스케일과 보이싱 연습
 
 ## 공통 설계 원칙
