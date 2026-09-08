@@ -146,10 +146,10 @@
              C 560,540 598,510 605,485
              C 615,475 622,450 625,430
              C 602,390 602,310 625,270 Z"
-          fill="#dbeafe" opacity="0.5" stroke="none" />
+          fill="#dbeafe" opacity="0.15" stroke="none" />
     <!-- Cloquet's Canal (유리체관 흔적) -->
     <path d="M 348,435 C 420,415 510,385 607,355 L 607,345 C 510,375 420,405 348,425 Z"
-          fill="#bfdbfe" opacity="0.25" />
+          fill="#bfdbfe" opacity="0.12" />
     <path d="M 348,430 C 425,410 515,380 607,350"
           fill="none" stroke="#93c5fd" stroke-width="1.2" stroke-dasharray="5,6" opacity="0.4" />
   </g>

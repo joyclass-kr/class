@@ -230,15 +230,32 @@
 
         // ── 0. 줄어드는 두 구간을 바탕에 깔아 둔다 ────────────────
         // 시험에서 제일 많이 틀리는 대목: A대는 그대로고 H대와 I대만 줄어든다.
+        // 띠 높이는 필라멘트가 놓인 만큼만. 액틴이 cy±32, 마이오신이 cy±10 이므로
+        // cy±38 이면 딱 감싼다. 전에는 cy±52 로 그려 위아래로 삐져나와,
+        // 「구간」이 아니라 웬 직사각형 상자처럼 보였다.
+        var BAND_H = 38;
         var actinReach = 145 * (dw / 800);
         var hLeft = leftZ + actinReach, hRight = rightZ - actinReach;
-        if (hRight > hLeft) {
-            ctx.fillStyle = 'rgba(250, 204, 21, 0.16)';
-            ctx.fillRect(hLeft, cy - 52, hRight - hLeft, 104);
+
+        function band(x, w, rgb) {
+            if (w <= 0) return;
+            ctx.fillStyle = 'rgba(' + rgb + ', 0.10)';
+            ctx.fillRect(x, cy - BAND_H, w, BAND_H * 2);
+            // 양 끝에 점선을 그어 「여기서 여기까지」임을 못 박는다
+            ctx.save();
+            ctx.strokeStyle = 'rgba(' + rgb + ', 0.55)';
+            ctx.lineWidth = 1.2;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(x, cy - BAND_H); ctx.lineTo(x, cy + BAND_H);
+            ctx.moveTo(x + w, cy - BAND_H); ctx.lineTo(x + w, cy + BAND_H);
+            ctx.stroke();
+            ctx.restore();
         }
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.14)';
-        ctx.fillRect(leftZ, cy - 52, (cx - aBandWidth / 2) - leftZ, 104);
-        ctx.fillRect(cx + aBandWidth / 2, cy - 52, rightZ - (cx + aBandWidth / 2), 104);
+
+        if (hRight > hLeft) band(hLeft, hRight - hLeft, '250, 204, 21');
+        band(leftZ, (cx - aBandWidth / 2) - leftZ, '56, 189, 248');
+        band(cx + aBandWidth / 2, rightZ - (cx + aBandWidth / 2), '56, 189, 248');
 
         // ── 1. Z선 (Z-disc: α-액티닌 지그재그 골격 격자) ─────────
         [leftZ, rightZ].forEach(function (zx) {

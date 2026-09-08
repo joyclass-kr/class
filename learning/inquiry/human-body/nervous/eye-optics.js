@@ -18,13 +18,17 @@
     var SVG_URL = '../assets/images/eye-diagram.svg';
 
     // ax, ay = 이름표가 놓일 자리 (그림 좌표). 조각 한가운데에서 이 자리까지 선을 긋는다.
+    // 여섯 조각이 x 589~770 좁은 띠에 겹쳐 있다. 이름표를 오른쪽 한 줄에
+    // 늘어놓고 조각 한가운데로 줄을 그으면 줄이 서로 엇갈려 무엇을 가리키는지
+    // 알 수 없다. 그래서 조각마다 잇는 점(sx, sy)을 따로 잡고,
+    // 그 점의 세로 차례와 이름표의 세로 차례를 같게 맞춘다. 그러면 안 엇갈린다.
     var LABELS = [
-        { id: 'cornea', text: '각막', ax: 880, ay: 150 },
-        { id: 'iris', text: '홍채', ax: 880, ay: 218 },
-        { id: 'pupil', text: '동공', ax: 880, ay: 286 },
-        { id: 'lens', text: '수정체', ax: 880, ay: 424 },
-        { id: 'zonule', text: '진대', ax: 880, ay: 492 },
-        { id: 'ciliaryBody', text: '섬모체', ax: 880, ay: 560 },
+        { id: 'ciliaryBody', text: '섬모체', sx: 612, sy: 170, ax: 880, ay: 150 },
+        { id: 'cornea', text: '각막', sx: 742, sy: 232, ax: 880, ay: 218 },
+        { id: 'iris', text: '홍채', sx: 650, sy: 262, ax: 880, ay: 286 },
+        { id: 'pupil', text: '동공', sx: 648, sy: 350, ax: 880, ay: 354 },
+        { id: 'lens', text: '수정체', sx: 625, sy: 400, ax: 880, ay: 422 },
+        { id: 'zonule', text: '진대', sx: 628, sy: 452, ax: 880, ay: 490 },
         { id: 'retina', text: '망막', ax: 470, ay: 120 },
         { id: 'vitreous', text: '유리체', ax: 470, ay: 350 },
         { id: 'fovea', text: '황반', ax: 210, ay: 300 },
@@ -191,9 +195,60 @@
         } catch (e) { return dflt; }
     }
 
+    /**
+     * 누른 조각에 노란 테를 두르고, 그 줄과 이름표도 함께 밝힌다.
+     * 전에는 글자만 바뀌어서, 여섯 조각이 겹쳐 있는 이 그림에서는
+     * 어느 것을 눌렀는지 알 길이 없었다.
+     */
+    function lightUp(id) {
+        if (!svg) return;
+        LABELS.forEach(function (item) {
+            var e = svg.querySelector('#' + item.id);
+            if (!e) return;
+            var on = (item.id === id);
+            var shapes = e.matches('path,circle,ellipse,rect,polygon')
+                ? [e] : [].slice.call(e.querySelectorAll('path,circle,ellipse,rect,polygon'));
+            shapes.forEach(function (sh) {
+                var f = sh.getAttribute('fill');
+                if (!f || f === 'none') return;        // 가는 결 선은 건드리지 않는다
+                if (sh.dataset.baseStroke === undefined) {
+                    sh.dataset.baseStroke = sh.getAttribute('stroke') || '';
+                    sh.dataset.baseWidth = sh.getAttribute('stroke-width') || '';
+                }
+                if (on) {
+                    sh.setAttribute('stroke', '#facc15');
+                    sh.setAttribute('stroke-width', 4);
+                } else {
+                    if (sh.dataset.baseStroke) sh.setAttribute('stroke', sh.dataset.baseStroke);
+                    else sh.removeAttribute('stroke');
+                    if (sh.dataset.baseWidth) sh.setAttribute('stroke-width', sh.dataset.baseWidth);
+                    else sh.removeAttribute('stroke-width');
+                }
+            });
+        });
+        if (leaderGroup) {
+            leaderGroup.querySelectorAll('[data-leader-for]').forEach(function (l) {
+                var on = l.dataset.leaderFor === id;
+                l.setAttribute('stroke', on ? '#facc15' : 'rgba(148, 163, 184, 0.75)');
+                l.setAttribute('stroke-width', on ? 3 : 1.6);
+            });
+            leaderGroup.querySelectorAll('[data-leader-dot]').forEach(function (c) {
+                var on = c.dataset.leaderDot === id;
+                c.setAttribute('fill', on ? '#facc15' : '#cbd5e1');
+                c.setAttribute('r', on ? 6.5 : 4.5);
+            });
+        }
+        if (labelBox) {
+            labelBox.querySelectorAll('.eye-optics-tag').forEach(function (t) {
+                t.classList.toggle('on', t.dataset.for === id);
+            });
+        }
+    }
+
     function showDetail(id) {
         var d = DETAIL[id];
         if (!d) return;
+        lightUp(id);
 
         // 누른 자리 바로 아래에 보여 준다.
         // 옆칸 설명 카드는 다른 갈피에 있어서, 눈 장면을 보는 동안에는 감춰져 있다.
@@ -229,8 +284,8 @@
             var b;
             try { b = elm.getBBox(); } catch (e) { return; }
 
-            var cx = b.x + b.width / 2;
-            var cy = b.y + b.height / 2;
+            var cx = (item.sx === undefined) ? b.x + b.width / 2 : item.sx;
+            var cy = (item.sy === undefined) ? b.y + b.height / 2 : item.sy;
             var ax = (item.ax === undefined) ? cx : item.ax;
             var ay = (item.ay === undefined) ? cy : item.ay;
 
@@ -242,11 +297,22 @@
                 line.setAttribute('y2', ay);
                 line.setAttribute('stroke', 'rgba(148, 163, 184, 0.75)');
                 line.setAttribute('stroke-width', 1.6);
+                line.dataset.leaderFor = item.id;
                 leaderGroup.appendChild(line);
+
+                // 줄 끝에 점을 찍어 어디를 가리키는지 못 박는다
+                var dot = document.createElementNS(SVG_NS, 'circle');
+                dot.setAttribute('cx', cx);
+                dot.setAttribute('cy', cy);
+                dot.setAttribute('r', 4.5);
+                dot.setAttribute('fill', '#cbd5e1');
+                dot.dataset.leaderDot = item.id;
+                leaderGroup.appendChild(dot);
             }
 
             var tag = document.createElement('span');
             tag.className = 'eye-optics-tag';
+            tag.dataset.for = item.id;
             tag.textContent = item.text;
             tag.style.left = (offX + ax * k) + 'px';
             tag.style.top = (offY + ay * k) + 'px';

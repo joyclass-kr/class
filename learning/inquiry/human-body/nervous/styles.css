@@ -682,3 +682,5 @@
 .autonomic-tag:hover { border-color: #facc15; }
 
 .autonomic-error { margin: auto; color: #f87171; font-size: 14px; }
+
+.eye-optics-tag.on { color: #0b1020; background: #facc15; border-color: #facc15; }
