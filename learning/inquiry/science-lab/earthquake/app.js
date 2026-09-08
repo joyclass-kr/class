@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         travelTimeContext.setTransform(ratio, 0, 0, ratio, 0, 0);
         travelTimeContext.clearRect(0, 0, width, height);
 
-        const plot = { left: 38, right: width - 10, top: 10, bottom: height - 26 };
+        const plot = { left: 38, right: width - 14, top: 10, bottom: height - 40 };
         const xFor = distance => plot.left + ((distance / 240) * (plot.right - plot.left));
         const yFor = seconds => plot.bottom - ((seconds / 80) * (plot.bottom - plot.top));
 
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             travelTimeContext.stroke();
             travelTimeContext.fillStyle = '#475569';
             travelTimeContext.textAlign = 'center';
-            travelTimeContext.fillText(String(distance), x, height - 9);
+            travelTimeContext.fillText(String(distance), x, plot.bottom + 15);
         }
         for (let seconds = 0; seconds <= 80; seconds += 10) {
             const y = yFor(seconds);
@@ -166,11 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 else travelTimeContext.lineTo(x, y);
             });
             travelTimeContext.stroke();
-            const lastPoint = travelTimeCurve.at(-1);
-            travelTimeContext.fillStyle = wave.color;
-            travelTimeContext.font = '800 12.5px system-ui';
-            travelTimeContext.textAlign = 'right';
-            travelTimeContext.fillText(wave.label, plot.right - 4, yFor(lastPoint[wave.key]) + (wave.key === 'pTime' ? -5 : 11));
         });
 
         observations.forEach((item, index) => {
@@ -194,17 +189,26 @@ document.addEventListener('DOMContentLoaded', () => {
             travelTimeContext.fill();
             travelTimeContext.font = '800 12.5px system-ui';
             travelTimeContext.textAlign = 'left';
-            travelTimeContext.fillText(`${item.id} ${item.difference}초`, x + 5, ((pY + sY) / 2) - (index * 8));
+            const label = `${item.id} ${item.difference}초`;
+            const labelWidth = travelTimeContext.measureText(label).width;
+            // 오른쪽 끝에 가까우면 왼쪽에 적어 액자를 넘지 않게 한다
+            const labelX = x + 7 + labelWidth > plot.right ? x - 7 - labelWidth : x + 7;
+            const labelY = ((pY + sY) / 2) - (index * 15) + 8;
+            travelTimeContext.strokeStyle = '#ffffff';
+            travelTimeContext.lineWidth = 3;
+            travelTimeContext.lineJoin = 'round';
+            travelTimeContext.strokeText(label, labelX, labelY);
+            travelTimeContext.fillText(label, labelX, labelY);
         });
 
         travelTimeContext.fillStyle = '#334155';
         travelTimeContext.font = '700 12.5px system-ui';
-        travelTimeContext.textAlign = 'right';
-        travelTimeContext.fillText('진앙 거리(km)', plot.right, height - 9);
+        travelTimeContext.textAlign = 'center';
+        travelTimeContext.fillText('진앙 거리(km)', (plot.left + plot.right) / 2, height - 6);
         travelTimeContext.save();
-        travelTimeContext.translate(10, plot.top);
+        travelTimeContext.translate(11, (plot.top + plot.bottom) / 2);
         travelTimeContext.rotate(-Math.PI / 2);
-        travelTimeContext.textAlign = 'right';
+        travelTimeContext.textAlign = 'center';
         travelTimeContext.fillText('도달 시간(초)', 0, 0);
         travelTimeContext.restore();
     }
