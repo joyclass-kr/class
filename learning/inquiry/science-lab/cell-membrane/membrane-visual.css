@@ -86,8 +86,8 @@
 .solution { fill: rgba(82, 199, 255, .16); }
 .solution.salty { fill: rgba(82, 199, 255, .3); }
 .solute { fill: #0f172a; }
-.cell-body { fill: rgba(255, 122, 89, .55); stroke: #dc2626; stroke-width: 1.6; }
-.cell-body.plant { fill: rgba(127, 212, 138, .5); stroke: #7fd48a; }
+.cell-body { fill: rgba(255, 122, 89, .28); stroke: #dc2626; stroke-width: 1.6; }
+.cell-body.plant { fill: rgba(127, 212, 138, .28); stroke: #059669; }
 .cell-wall { fill: none; stroke: #c9a35f; stroke-width: 2.4; }
 .water-arrow { stroke: #0284c7; stroke-width: 2; fill: none; }
 .water-head { fill: #0284c7; }
