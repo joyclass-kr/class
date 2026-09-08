@@ -220,11 +220,23 @@
                 body: [
                     "7화음 위에 3도를 더 쌓으면 9도, 11도, 13도가 나옵니다. 이렇게 7화음 위에 얹는 음을 Tension​(텐션)이라고 합니다. 9도는 밑음에서 한 옥타브 위 2도, 11도는 4도, 13도는 6도 자리입니다.",
                     "음이 다섯을 넘으면 한 손에 다 들어가지 않습니다. 그래서 왼손이 뿌리음을 짚고 오른손이 나머지 넷을 잡습니다. 텐션이 하나면 5도를 넣어 자리를 메우고, 둘이면 5도를 빼고 그 자리에 넣습니다.",
-                    "maj9​(장9화음)는 장7화음에 9도를, m9​(단9화음)는 단7화음에 9도를 얹은 것입니다. 6/9는 7도 대신 6도와 9도를 얹어 7도의 긴장을 없앤 화음입니다."
+                    "maj9​(장9화음)는 장7화음에 9도를 얹은 것이고, maj13​(장13화음)은 거기에 13도까지 얹은 것입니다. 6/9는 7도 대신 6도와 9도를 얹어 7도의 긴장을 없앤 화음입니다."
                 ],
-                examples: [{ chord: "maj9" }, { chord: "m9" }, { chord: "sixnine" }],
-                read: { drill: "chord", items: ["maj9", "maj13", "sixnine", "m9", "m11", "m13"], limit: 12 },
+                examples: [{ chord: "maj9" }, { chord: "maj13" }, { chord: "sixnine" }],
+                read: { drill: "chord", items: ["maj9", "maj13", "sixnine"] },
                 listen: { drill: "chord", preset: "majten", mode: "harmony", limit: 10 }
+            },
+            {
+                id: "min-tensions",
+                title: "Minor Tensions​(단화음의 텐션)",
+                body: [
+                    "단화음에서는 11도를 마음껏 쓸 수 있습니다. 11도가 3음보다 온음 위에 놓이기 때문입니다. 장화음에서는 11도가 3음과 반음으로 부딪혀 ♯11로 올려 써야 하지만, 단화음에서는 m11​(단11화음)이 그대로 화음 이름이 됩니다.",
+                    "13도를 얹으면 m13​(단13화음)이 됩니다. 6도가 제자리로 올라온 소리라 Dorian​(도리안) 쪽으로 들립니다. 7도를 빼고 6도와 9도만 얹은 m6/9는 단조의 으뜸화음 자리에 자주 놓입니다.",
+                    "mMaj9​(단장9화음)는 단장7화음에 9도를 얹은 것입니다. 3음은 단3도인데 7도는 장7도라, 화성단음계나 가락단음계에서 온 화음입니다."
+                ],
+                examples: [{ chord: "m11" }, { chord: "msixnine" }, { chord: "mmaj9" }],
+                read: { drill: "chord", items: ["m9", "m11", "m13", "msixnine", "mmaj9"], limit: 10 },
+                listen: { drill: "chord", preset: "minten", mode: "harmony", limit: 10 }
             },
             {
                 id: "dom-tensions",
@@ -238,7 +250,6 @@
                 read: { drill: "chord", items: ["dom9", "dom13", "dom9s11", "dom7b9", "dom7s9", "dom7b9b13"], limit: 12 },
                 listen: { drill: "chord", preset: "domten", mode: "harmony", limit: 10 }
             },
-            { kind: "preset", drill: "chord", preset: "minten" },
             { kind: "preset", drill: "chord", preset: "altten" }
         ]
     };
