@@ -93,13 +93,17 @@ test("the 36-lesson core course is loaded in dependency order", () => {
   }
   assert.match(lessonSource, /window\.COMPUTER_DETAILED_LESSONS[\s\S]{0,160}window\.COMPUTER_FOUNDATION_LESSONS/);
   assert.match(lessonSource, /window\.COMPUTER_LESSON_INDEX/);
-  assert.match(coursePage, /data-course-root="true"/);
   assert.match(lessonPage, /id="lessonTitle"/);
-  // 두 화면 모두 boot.js 한 줄만 두고, 그 차시에 필요한 파일은 boot.js가 차례대로 넣는다.
-  for (const page of [coursePage, lessonPage]) {
-    assert.match(page, /<script src="[^"]*boot\.js\?v=/);
-    assert.equal((page.match(/<script /g) || []).length, 1, "차시 화면은 boot.js 하나만 부른다");
-  }
+  // 첫 화면은 차시 목록이다. 차례표와 목록 그리는 것만 받고 차시 내용은 하나도 받지 않는다.
+  assert.match(coursePage, /id="lessonList" class="course-modules"/);
+  assert.doesNotMatch(coursePage, /id="lessonTitle"/);
+  assert.match(coursePage, /<script src="lessons\/index-data\.js\?v=[^"]*" defer><\/script>/);
+  assert.match(coursePage, /<script src="lessons\/course-index\.js\?v=[^"]*" defer><\/script>/);
+  assert.equal((coursePage.match(/<script /g) || []).length, 2, "첫 화면은 차례표와 목록 그리는 것만 부른다");
+  assert.match(read(`${courseRoot}/lessons/index-data.js`), /window\.COMPUTER_CORE_MODULES/);
+  // 차시 화면은 boot.js 한 줄만 두고, 그 차시에 필요한 파일은 boot.js가 차례대로 넣는다.
+  assert.match(lessonPage, /<script src="[^"]*boot\.js\?v=/);
+  assert.equal((lessonPage.match(/<script /g) || []).length, 1, "차시 화면은 boot.js 하나만 부른다");
   const boot = read(`${courseRoot}/lessons/boot.js`);
   const order = ["foundation-core.js", "index-data.js", "lab-shared.js", "shell.js"];
   let cursor = -1;
@@ -508,13 +512,11 @@ test("a wrong choice is disabled for retry without revealing the correct answer"
 });
 
 test("secondary explanations use one progressive disclosure instead of three always-open card walls", () => {
-  for (const page of [coursePage, lessonPage]) {
-    assert.match(page, /<details class="concept-reference">/);
-    assert.match(page, /동작 순서·개념 비교·비유/);
-    assert.match(page, /<div id="conceptStory"><\/div>/);
-    assert.match(page, /<div id="conceptCompare"><\/div>/);
-    assert.match(page, /<div id="conceptAnalogy"><\/div>/);
-  }
+  assert.match(lessonPage, /<details class="concept-reference">/);
+  assert.match(lessonPage, /동작 순서·개념 비교·비유/);
+  assert.match(lessonPage, /<div id="conceptStory"><\/div>/);
+  assert.match(lessonPage, /<div id="conceptCompare"><\/div>/);
+  assert.match(lessonPage, /<div id="conceptAnalogy"><\/div>/);
   assert.match(lessonStyles, /\.concept-reference > summary/);
   assert.match(lessonStyles, /min-height: 56px/);
   assert.match(lessonStyles, /\.concept-reference \.story-steps li/);

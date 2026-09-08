@@ -1,13 +1,10 @@
 (() => {
     "use strict";
 
-    const isCourseRootPage = document.body.dataset.courseRoot === "true";
-    const asset = (name) => `${isCourseRootPage ? "assets" : "../assets"}/images/${name}`;
-    const portalHref = isCourseRootPage ? "../../../../" : "../../../../../";
-    const lessonHref = (id) => {
-        if (id === "a01") return isCourseRootPage ? "./" : "../";
-        return isCourseRootPage ? `lessons/?lesson=${id}` : `?lesson=${id}`;
-    };
+    // 차시는 모두 이 자리에 있다. 한 단 위(../)는 차시 목록 화면이다.
+    const asset = (name) => `../assets/images/${name}`;
+    const courseHref = "../";
+    const lessonHref = (id) => `?lesson=${id}`;
 
     const loadedLessons = [...(window.COMPUTER_DETAILED_LESSONS || []), ...(window.COMPUTER_FOUNDATION_LESSONS || [])];
     // 차례표는 36차시를 모두 담고, 지금 보는 차시만 내용이 채워진 객체로 바뀐다.
@@ -25,7 +22,7 @@
     });
 
     const params = new URLSearchParams(window.location.search);
-    const requestedId = params.get("lesson") || (isCourseRootPage ? "a01" : "a02");
+    const requestedId = params.get("lesson") || "a01";
     const requestedIndex = lessons.findIndex((item) => item.id === requestedId);
     const lessonIndex = requestedIndex >= 0 ? requestedIndex : 0;
     const lesson = lessons[lessonIndex];
@@ -1094,8 +1091,8 @@
         renderStaticCanvases();
         renderLessonList();
         const back = document.querySelector(".back-button");
-        back.href = lessonIndex === 0 ? portalHref : lessonHref(lessons[lessonIndex - 1].id);
-        back.setAttribute("aria-label", lessonIndex === 0 ? "포털 메인으로 돌아가기" : "이전 차시로 돌아가기");
+        back.href = lessonIndex === 0 ? courseHref : lessonHref(lessons[lessonIndex - 1].id);
+        back.setAttribute("aria-label", lessonIndex === 0 ? "차시 목록으로 돌아가기" : "이전 차시로 돌아가기");
         document.getElementById("scoreTotal").textContent = `/ ${lesson.questions.length}`;
     }
 

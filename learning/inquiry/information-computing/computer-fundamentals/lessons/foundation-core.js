@@ -1,23 +1,8 @@
 (() => {
     "use strict";
 
-    const modules = [
-        ["A", "컴퓨터의 기본 원리", "Computer Principles"],
-        ["B", "하드웨어와 기기", "Hardware and Devices"],
-        ["C", "운영체제와 앱", "Operating Systems and Apps"],
-        ["D", "포인터·터치·키보드", "Pointer, Touch, and Keyboard"],
-        ["E", "파일과 저장 공간", "Files and Storage"],
-        ["F", "화면과 디지털 미디어", "Displays and Digital Media"],
-        ["G", "0과 1·데이터 크기", "Binary and Data Size"],
-        ["H", "네트워크와 웹", "Networks and the Web"],
-        ["I", "계정·보안·디지털 시민성", "Accounts, Security, and Digital Citizenship"],
-        ["J", "알고리즘과 코딩 논리", "Algorithms and Coding Logic"]
-    ].map(([code, title, english]) => ({ code, title, english }));
-
-    const imageAsset = (name) => {
-        const courseRoot = typeof document !== "undefined" && document.body?.dataset.courseRoot === "true";
-        return `${courseRoot ? "assets" : "../assets"}/images/${name}`;
-    };
+    // 차시는 모두 lessons/ 안에 있으므로 그림은 한 단 위에서 찾는다.
+    const imageAsset = (name) => `../assets/images/${name}`;
 
     const relationshipVisual = (nodes, caption) => `
         <figure class="concept-relationship-figure">
@@ -135,7 +120,6 @@
         }))
     });
 
-    window.COMPUTER_CORE_MODULES = modules;
     window.COMPUTER_IMAGE_ASSET = imageAsset;
     window.COMPUTER_LESSON_FACTORY = makeLesson;
     window.COMPUTER_FOUNDATION_LESSONS = [];

@@ -6,118 +6,19 @@
     <meta name="description" content="하드웨어, 소프트웨어, 운영체제, 앱, 아날로그와 디지털 변환의 구조와 동작 원리">
     <title>컴퓨터 이론</title>
     <link rel="icon" href="../../../../favicon.ico">
-    <link rel="stylesheet" href="styles.css?v=20260907-4">
-    <script src="lessons/boot.js?v=20260907-4"></script>
+    <link rel="stylesheet" href="styles.css?v=20260908-1">
+    <link rel="stylesheet" href="lessons/course-index.css?v=20260908-1">
+    <script src="lessons/index-data.js?v=20260908-1" defer></script>
+    <script src="lessons/course-index.js?v=20260908-1" defer></script>
 </head>
-<body data-course-root="true">
+<body>
     <nav class="app-bar" aria-label="페이지 기능">
         <a class="back-button" href="../../../../" aria-label="포털 메인으로 돌아가기">←</a>
-
-        <button id="openCourse" class="course-button" type="button">차시 목록 <small>Course Lessons</small></button>
     </nav>
 
-    <main class="lesson-shell">
-        <div class="lesson-meta">
-            <span id="lessonMeta">2차시</span>
-            <span id="stepStatus" aria-live="polite">장면·원리 1 / 2</span>
-        </div>
-        <h1 id="lessonTitle"></h1>
-
-        <section id="stageConcept" class="stage is-active" aria-labelledby="situationTitle">
-            <div class="stage-heading lesson-situation">
-                <div>
-                    <span class="stage-label">개념 설명 <small>Concept</small></span>
-                    <h2 id="situationTitle"></h2>
-                    <p id="situationLead" class="stage-lead"></p>
-                </div>
-            </div>
-            <div id="conceptParts"></div>
-            <div id="conceptOverview" class="concept-overview">
-                <div id="conceptVisual"></div>
-            </div>
-            <section class="principle-statement" aria-labelledby="conceptTitle">
-                <span>핵심 원리 <small>Core Principle</small></span>
-                <h2 id="conceptTitle"></h2>
-            </section>
-            <div id="conceptDiagram" class="concept-diagram"></div>
-            <div id="conceptDevices"></div>
-            <details id="conceptGlossary" class="concept-glossary">
-                <summary><span>핵심 용어</span><small>Core Terms</small></summary>
-                <div id="conceptDetails" class="concept-grid"></div>
-            </details>
-            <details class="concept-reference">
-                <summary>
-                    <span>동작 순서·개념 비교·비유</span>
-                    <small>Sequence, Comparison, and Analogy</small>
-                </summary>
-                <div class="concept-reference-body">
-                    <div id="conceptStory"></div>
-                    <div id="conceptCompare"></div>
-                    <div id="conceptAnalogy"></div>
-                </div>
-            </details>
-            <div class="stage-actions end-aligned">
-                <button id="startActivity" class="primary-button" type="button">문제 풀기 <small>Start Questions</small></button>
-            </div>
-        </section>
-
-        <section id="stageActivity" class="stage" aria-labelledby="activityTitle" hidden>
-            <div class="stage-heading">
-                <div>
-                    <span class="stage-label">직접 조작</span>
-                    <h2 id="activityTitle"></h2>
-                </div>
-                <button id="resetActivity" class="text-button" type="button">처음부터 <small>Reset</small></button>
-            </div>
-            <p id="activityInstruction" class="task-instruction"></p>
-            <div id="activityMount"></div>
-            <div class="stage-actions">
-                <p id="activityFeedback" class="feedback" aria-live="polite"></p>
-                <button id="checkActivity" class="primary-button" type="button">확인 <small>Check</small></button>
-            </div>
-        </section>
-
-        <section id="stageQuiz" class="stage" aria-labelledby="quizTitle" hidden>
-            <div class="stage-heading">
-                <div>
-                    <span id="quizCount" class="stage-label">문제 1 / 5</span>
-                    <h2 id="quizTitle">상황에 적용하기</h2>
-                </div>
-            </div>
-            <div class="quiz-card">
-                <p id="questionText" class="question-text"></p>
-                <div id="questionOptions" class="question-options"></div>
-                <p id="quizFeedback" class="feedback quiz-feedback" aria-live="polite"></p>
-            </div>
-            <div class="stage-actions end-aligned">
-                <button id="submitAnswer" class="primary-button" type="button" disabled>답 확인 <small>Check Answer</small></button>
-                <button id="nextQuestion" class="primary-button" type="button" hidden>다음 문제 <small>Next Question</small></button>
-            </div>
-        </section>
-
-        <section id="stageResult" class="stage" aria-labelledby="resultTitle" hidden>
-            <div class="result-grid">
-                <div class="result-score" aria-hidden="true"><strong id="scoreNumber">0</strong><span id="scoreTotal">/ 5</span></div>
-                <div>
-                    <span class="stage-label">차시 결과</span>
-                    <h2 id="resultTitle">학습 결과</h2>
-                    <p id="resultMessage"></p>
-                </div>
-            </div>
-            <div id="reviewList" class="review-list"></div>
-            <div class="stage-actions result-actions">
-                <button id="retryQuiz" class="secondary-button" type="button">문제 다시 풀기 <small>Retry Quiz</small></button>
-                <a id="nextLesson" class="primary-button" href="#">다음 차시 <small>Next Lesson</small></a>
-            </div>
-        </section>
-    </main>
-
-    <dialog id="courseDialog" class="course-dialog" aria-labelledby="courseTitle">
-        <div class="dialog-heading">
-            <h2 id="courseTitle">차시 목록</h2>
-            <button id="closeCourse" class="icon-button" type="button" aria-label="차시 목록 닫기">×</button>
-        </div>
+    <main class="course-shell">
+        <h1>컴퓨터 이론 <small>Computer Fundamentals</small></h1>
         <div id="lessonList" class="course-modules"></div>
-    </dialog>
+    </main>
 </body>
 </html>

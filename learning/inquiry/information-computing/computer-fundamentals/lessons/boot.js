@@ -5,10 +5,9 @@
     // 머리에서 바로 실행되므로 꾸미는 파일의 차례를 원래대로 맞출 수 있다.
     const current = document.currentScript;
     const version = (current.src.split("?v=")[1] || "");
-    const atCourseRoot = !/\/lessons\/?$/.test(location.pathname.replace(/[^/]*$/, ""));
     const base = current.src.replace(/[^/]*$/, "");
     const requested = new URLSearchParams(location.search).get("lesson");
-    const id = /^[a-j][0-9]{2}$/.test(requested || "") ? requested : (atCourseRoot ? "a01" : "a02");
+    const id = /^[a-j][0-9]{2}$/.test(requested || "") ? requested : "a01";
 
     const withLab = ["a04","a05","b02","b03","c01","c02","c03","c04","d01","d02","d03","e01","e02","e03","e04","e05","f01","f02","f03","g01","g02","g03","h01","h02","h03","h04","h05","i01","i02","j01","j02","j03"];
     const withReview = ["a02","a03","a05","b01","b02","b03","c01","c02","c03","c04","d01","d02","d03","e01","e02","e03","e04","e05","f01","f03","g01","g02","g03","h01","h02","h03","h04","h05","i01","i02","j01","j02","j03"];
