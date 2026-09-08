@@ -108,7 +108,7 @@
 
     function otherLayerShowing() {
         return !!document.querySelector(
-            '.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden]), .ear-layer:not([hidden])');
+            '.eye-optics-layer:not([hidden]), .pupil-layer:not([hidden]), .reflex-layer:not([hidden]), .ear-layer:not([hidden]), .centers-layer:not([hidden]), .brain-layer:not([hidden])');
     }
 
     function buildLayer() {

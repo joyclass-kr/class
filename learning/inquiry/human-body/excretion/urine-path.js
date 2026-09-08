@@ -69,7 +69,7 @@
         layer.hidden = !on;
         var canvas = document.getElementById('excretionCanvas');
         if (canvas && on) canvas.style.visibility = 'hidden';
-        else if (canvas && !document.querySelector('.nephron-layer:not([hidden])')) canvas.style.visibility = 'visible';
+        else if (canvas && !document.querySelector('.nephron-layer:not([hidden]), .urine-layer:not([hidden]), .excretion-map-layer:not([hidden])')) canvas.style.visibility = 'visible';
     }
 
     function buildLayer() {

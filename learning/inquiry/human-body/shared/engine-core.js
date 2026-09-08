@@ -437,6 +437,63 @@
         bindPause();
     }
 
+    /**
+     * 그림 조각을 한 쪽에 여러 장 얹을 때 이름이 겹치지 않게 갈아 끼운다.
+     *
+     * 옆방이 그린 도식들이 gradCerebrum 같은 흔한 이름을 저마다 쓰고 있다.
+     * 신경계 방은 뇌 도식과 반사 중추 도식을 한 쪽에 같이 얹는데, 이름이
+     * 겹치면 나중 것이 앞의 것 색을 가져다 써서 엉뚱하게 칠해진다.
+     * (실제로 대뇌가 통째로 빈 것처럼 보였다.)
+     *
+     * defs 안의 이름 앞에 표를 붙이고, 그것을 가리키는 url(#...) 도 같이 고친다.
+     * 조각 자체의 이름(cerebrum 같은 것)은 건드리지 않는다. 엔진이 그 이름으로 찾는다.
+     */
+    function isolateSvgIds(markup, prefix) {
+        if (!markup || !prefix) return markup;
+        var doc = new DOMParser().parseFromString(markup, 'image/svg+xml');
+        var svg = doc.querySelector('svg');
+        if (!svg) return markup;
+
+        var defs = svg.querySelectorAll('defs [id]');
+        if (!defs.length) return markup;
+
+        var map = {};
+        [].forEach.call(defs, function (e) {
+            var old = e.getAttribute('id');
+            if (!old) return;
+            map[old] = prefix + '-' + old;
+            e.setAttribute('id', map[old]);
+        });
+
+        var keys = Object.keys(map);
+        if (!keys.length) return markup;
+
+        // url(#이름) 과 xlink:href="#이름" 을 모두 바꾼다
+        var ATTRS = ['fill', 'stroke', 'filter', 'clip-path', 'mask',
+            'marker-start', 'marker-mid', 'marker-end', 'style'];
+        [].forEach.call(svg.querySelectorAll('*'), function (e) {
+            ATTRS.forEach(function (a) {
+                var v = e.getAttribute(a);
+                if (!v || v.indexOf('#') < 0) return;
+                var out = v;
+                keys.forEach(function (k) {
+                    out = out.split('url(#' + k + ')').join('url(#' + map[k] + ')');
+                    out = out.split("url('#" + k + "')").join("url('#" + map[k] + "')");
+                    out = out.split('url("#' + k + '")').join('url("#' + map[k] + '")');
+                });
+                if (out !== v) e.setAttribute(a, out);
+            });
+            ['href', 'xlink:href'].forEach(function (a) {
+                var v = e.getAttribute(a);
+                if (!v || v.charAt(0) !== '#') return;
+                var k = v.slice(1);
+                if (map[k]) e.setAttribute(a, '#' + map[k]);
+            });
+        });
+
+        return new XMLSerializer().serializeToString(svg);
+    }
+
     return {
         SoundFX: SoundFX,
         bindSceneIntro: bindSceneIntro,
@@ -446,6 +503,7 @@
         bindDrag: bindDrag,
         renderQuiz: renderQuiz,
         renderQuizSet: renderQuizSet,
-        pinLabel: pinLabel
+        pinLabel: pinLabel,
+        isolateSvgIds: isolateSvgIds
     };
 });

@@ -23,11 +23,7 @@
             img: null,
             loaded: false
         },
-        torso: {
-            src: '../assets/images/excretion-hero-v2.webp',
-            img: null,
-            loaded: false
-        }
+        // 전신 장면은 excretion-map.js 의 평면 도식이 맡는다. 사진을 받지 않는다.
     };
 
     var currentSceneKey = 'main';
@@ -56,14 +52,8 @@
             { x: 0.50, y: 0.55, r: 45, title: '2. 세뇨관 재흡수', standard: '[6과04-05] · [9과14-04]', desc: '포도당 100%, 아미노산 100%, 물 99%를 모세혈관으로 능동수송 재흡수합니다.' },
             { x: 0.50, y: 0.80, r: 45, title: '3. 집합관 오줌 농축', standard: '[6과04-05] · [9과14-04]', desc: '물이 재흡수되어 요소가 67배 고농도로 농축된 최종 오줌이 형성됩니다.' }
         ],
-        torso: [
-            { x: 0.605, y: 0.205, r: 34, title: '오른쪽 콩팥', standard: '[6과04-05]', desc: '강낭콩 모양이고 주먹만 합니다. 혈액 속 <strong>요소</strong>를 걸러 오줌을 만듭니다. 앞에서 본 그림이라 화면 왼쪽이 <strong>몸의 오른쪽</strong> 콩팥입니다.' },
-            { x: 0.800, y: 0.205, r: 34, title: '왼쪽 콩팥', standard: '[6과04-05]', desc: '콩팥은 등쪽 허리 높이에 좌우 <strong>한 쌍</strong>이 있습니다. 하나에 네프론이 약 100만 개 들어 있습니다.' },
-            { x: 0.640, y: 0.470, r: 26, title: '오줌관', standard: '[6과04-05]', desc: '콩팥에서 만들어진 오줌을 <strong>꿈틀 운동</strong>으로 방광까지 내려보내는 가는 관입니다. 좌우로 한 개씩 있습니다.' },
-            { x: 0.705, y: 0.735, r: 36, title: '방광', standard: '[6과04-05]', desc: '오줌을 <strong>300~500 mL</strong>까지 모아 두는 주머니입니다. 어느 정도 차면 오줌이 마렵다고 느낍니다.' },
-            { x: 0.705, y: 0.880, r: 24, title: '요도', standard: '[6과04-05]', desc: '방광에 모인 오줌이 <strong>몸 밖으로 나가는 마지막 길</strong>입니다.' },
-            { x: 0.895, y: 0.400, r: 34, title: '네프론 돋보기', standard: '[6과04-05]', desc: '콩팥을 확대한 그림입니다. <strong>사구체 + 보먼주머니 + 세뇨관</strong>을 합쳐 네프론이라 하고, 오줌을 만드는 기본 단위입니다.' }
-        ]
+        // 전신 장면의 표시점과 설명은 excretion-map.js 가 갖는다
+        torso: []
     };
 
     // DOM Elements

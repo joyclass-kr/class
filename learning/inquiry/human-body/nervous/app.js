@@ -13,12 +13,7 @@
 
     // Assets
     var scenes = {
-        brain: {
-            src: '../assets/images/nervous-brain.webp',
-            fallback: '../assets/images/nervous-hero-v2.webp',
-            img: null,
-            loaded: false
-        },
+        // 뇌 장면은 brain-anatomy.js 의 평면 도식이 맡는다. 사진을 받지 않는다.
         response: {
             src: '../assets/images/nervous-response.webp',
             img: null,
@@ -53,32 +48,32 @@
     var brainParts = {
         cerebrum: {
             x: 0.37, y: 0.22, r: 52, side: 'below', color: '#a855f7',
-            title: '대뇌 - 고등 정신 활동의 최고 사령부',
+            title: '대뇌 — 의식적인 활동의 최고 중추',
             desc: '주름진 겉질(회색질)과 속질로 구성됩니다. 감각·운동을 총괄하며 <strong>기억, 추리, 판단, 언어, 감정 등 의식적인 활동</strong>의 최고 중추입니다.'
         },
         diencephalon: {
             x: 0.495, y: 0.435, r: 26, side: 'left', color: '#06b6d4',
-            title: '간뇌 (Diencephalon - 시상 & 시상하부)',
+            title: '간뇌 — 항상성의 최고 조절 중추',
             desc: '대뇌 아래에 위치하며, 자율신경계와 호르몬을 조절하여 <strong>체온, 혈당량, 삼투압 등 항상성을 일정하게 유지하는 최고 조절 중추</strong>입니다.'
         },
         midbrain: {
             x: 0.545, y: 0.545, r: 22, side: 'left', color: '#f43f5e',
-            title: '중간뇌 (Midbrain, 중뇌) - 눈 조절 중추',
+            title: '중간뇌 — 눈 조절 중추',
             desc: '간뇌 아래, 소뇌 앞쪽에 위치합니다. <strong>안구 운동과 홍채의 수축·이완을 통한 동공 반사(빛의 명암 조절)</strong>의 중추입니다.'
         },
         cerebellum: {
             x: 0.635, y: 0.655, r: 38, side: 'right', color: '#38bdf8',
-            title: '소뇌 - 평형 & 정밀 운동',
+            title: '소뇌 — 몸의 균형과 정밀한 운동',
             desc: '대뇌 후하방에 위치하며, 대뇌와 협력하여 정밀한 근육 운동을 조절하고 귀의 평형감각(반고리관·전정기관) 정보를 받아 <strong>몸의 균형(자세 평형)을 유지</strong>합니다.'
         },
         medulla: {
             x: 0.555, y: 0.79, r: 24, side: 'left', color: '#10b981',
-            title: '연수 - 생명 유지 & 내장 반사',
+            title: '연수 — 생명 유지와 내장 반사',
             desc: '중간뇌와 척수를 잇는 뇌줄기로 좌우 신경이 교차합니다. <strong>호흡 운동, 심장 박동, 소화 운동 조절(생명 유지 중추)</strong>과 <strong>기침, 재채기, 딸꾹질, 하품, 침 분비</strong>의 반사 중추입니다.'
         },
         spine: {
             x: 0.60, y: 0.90, r: 26, side: 'right', color: '#f59e0b',
-            title: '척수 - 뇌신경 통로 & 무조건 반사',
+            title: '척수 — 신호가 지나는 길, 무조건 반사',
             desc: '척추 속 신경 다발로 뇌와 온몸 사이의 신호 전달 통로입니다. 위험을 피하는 <strong>무릎 반사, 뜨거운 물체 손 떼기(회피 반사), 배뇨·배변 반사</strong>의 중추입니다.'
         }
     };

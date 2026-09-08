@@ -277,3 +277,43 @@
 .urine-tag.medulla { color: #fecaca; }
 .urine-tag.warm { color: #fde68a; }
 .urine-tag.urine { color: #78350f; }
+
+/* ── 전신 배설계 (1번 장면) ──────────────────────────────── */
+.excretion-map-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 6;
+}
+
+.excretion-map-stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 50px 10px 10px;
+}
+
+.excretion-map-stage svg { width: 100%; height: 100%; display: block; }
+
+.excretion-map-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.excretion-map-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.excretion-map-tag.on { color: #0b1020; background: #38bdf8; border-color: #38bdf8; }
+.excretion-map-tag:hover { border-color: #facc15; }
+
+.excretion-map-error { margin: auto; color: #f87171; font-size: 14px; }

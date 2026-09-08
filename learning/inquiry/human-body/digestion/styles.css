@@ -359,3 +359,43 @@
 .enzyme-tag.name { color: #f8fafc; font-weight: 800; }
 .enzyme-tag.dim { color: #94a3b8; }
 .enzyme-tag.warm { color: #fbbf24; font-weight: 800; }
+
+/* ── 전신 소화관 (1번 장면) ──────────────────────────────── */
+.tract-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 6;
+}
+
+.tract-stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 50px 10px 10px;
+}
+
+.tract-stage svg { width: 100%; height: 100%; display: block; }
+
+.tract-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.tract-tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.tract-tag.on { color: #0b1020; background: #fbbf24; border-color: #fbbf24; }
+.tract-tag:hover { border-color: #facc15; }
+
+.tract-error { margin: auto; color: #f87171; font-size: 14px; }

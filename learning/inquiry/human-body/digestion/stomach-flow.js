@@ -117,7 +117,7 @@
         layer.hidden = !on;
         var canvas = document.getElementById('simulationCanvas');
         if (canvas && on) canvas.style.visibility = 'hidden';
-        else if (canvas && !document.querySelector('.enzyme-lab-layer:not([hidden]), .villus-layer:not([hidden]), .stomach-layer:not([hidden])')) {
+        else if (canvas && !document.querySelector('.enzyme-lab-layer:not([hidden]), .villus-layer:not([hidden]), .stomach-layer:not([hidden]), .tract-layer:not([hidden])')) {
             canvas.style.visibility = 'visible';
         }
         var hud = wrap.querySelector('.sim-hud-overlay');

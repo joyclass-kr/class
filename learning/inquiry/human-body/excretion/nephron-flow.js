@@ -107,7 +107,11 @@
         if (!layer) return;
         layer.hidden = !on;
         var canvas = document.getElementById('excretionCanvas');
-        if (canvas) canvas.style.visibility = on ? 'hidden' : 'visible';
+        // 다른 겹판이 떠 있으면 캔버스를 도로 켜지 않는다
+        if (canvas && on) canvas.style.visibility = 'hidden';
+        else if (canvas && !document.querySelector('.urine-layer:not([hidden]), .excretion-map-layer:not([hidden])')) {
+            canvas.style.visibility = 'visible';
+        }
         if (on) placeLabels();
         toggleHud(on);
     }
