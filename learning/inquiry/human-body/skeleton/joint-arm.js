@@ -222,7 +222,7 @@
         // 한 번 잡고 나면 멎는다 — 계속 반짝이면 그것도 소음이다.
         handleRing = el('circle', { fill: 'none', stroke: '#38bdf8', 'stroke-width': 3 });
         svg.appendChild(handleRing);
-        handle = el('circle', { r: 21, fill: '#38bdf8', stroke: '#e0f2fe', 'stroke-width': 3, cursor: 'grab' });
+        handle = el('circle', { r: HANDLE_R, fill: '#38bdf8', stroke: '#e0f2fe', 'stroke-width': 3, cursor: 'grab' });
         svg.appendChild(handle);
 
         buildLabels();
@@ -380,7 +380,8 @@
             ghost.setAttribute('opacity', 0.5);
 
             var beat = (nowMs() % 1400) / 1400;          // 0 ~ 1 을 되풀이
-            handleRing.setAttribute('r', (21 + beat * 20).toFixed(1));
+            var hr = handle ? parseFloat(handle.getAttribute('r')) || HANDLE_R : HANDLE_R;
+            handleRing.setAttribute('r', (hr + beat * 20).toFixed(1));
             handleRing.setAttribute('opacity', (0.9 * (1 - beat)).toFixed(2));
         }
 
@@ -568,6 +569,16 @@
 
     }
 
+    // 손잡이는 그림과 함께 줄어들면 안 된다. 화면이 좁아도 손가락이 닿아야 한다.
+    // 우리 사이트에서 누르는 자리는 지름 44px 이 기준이다.
+    var HANDLE_R = 21;          // 그림에 그린 크기
+    var HANDLE_MIN_PX = 44;     // 화면에서 이보다 작아지지 않는다
+
+    function handleRadius(k) {
+        if (!k) return HANDLE_R;
+        return Math.max(HANDLE_R, (HANDLE_MIN_PX / 2) / k);
+    }
+
     function placeLabels() {
         if (!svg || !labelBox || layer.hidden) return;
         var box = svg.getBoundingClientRect();
@@ -576,6 +587,8 @@
         var k = Math.min(box.width / vb.width, box.height / vb.height);
         var offX = (box.width - vb.width * k) / 2;
         var offY = (box.height - vb.height * k) / 2;
+
+        if (handle) handle.setAttribute('r', handleRadius(k).toFixed(1));
 
         if (anglePlate) {
             anglePlate.style.left = (offX + angleAt.x * k) + 'px';
