@@ -485,6 +485,90 @@
     };
 
 
+
+    /*
+     * 화음 진행 과정.
+     * 예시는 진행을 눌러 듣는 것이고, 연습은 그 자리에 맞는 판을 그대로 연다.
+     */
+    const PROGRESSION_COURSE = {
+        id: "progression",
+        name: "Chord Progressions​(화음 진행)",
+        lessons: [
+            {
+                id: "numerals",
+                kind: "text",
+                title: "Roman Numerals​(로마숫자)",
+                body: [
+                    "화음을 C·F·G처럼 부르면 조가 바뀔 때마다 이름이 다 달라집니다. 그래서 음계의 몇째 음에 쌓았는지로 셉니다. 장음계 첫 음에 쌓으면 I, 넷째 음에 쌓으면 IV, 다섯째 음에 쌓으면 V입니다.",
+                    "대문자는 장3화음, 소문자는 단3화음입니다. 그래서 로마숫자 하나에 자리와 성질이 함께 담깁니다.",
+                    "I은 돌아가 쉬는 자리입니다. V는 I로 돌아가려는 힘이 가장 센 자리고, IV는 그 사이를 잇는 자리입니다. 이 셋만으로 노래 한 곡이 됩니다."
+                ],
+                examples: [{ prog: "I–IV–V–I" }, { prog: "I–V–IV–I" }],
+                drill: { drillId: "progression", preset: "p1", limit: 10 }
+            },
+            {
+                id: "loops",
+                kind: "text",
+                title: "Four-chord Loops​(네 화음 순환)",
+                body: [
+                    "I·IV·V에 vi를 더한 네 화음을 돌려 쓰는 진행이 팝에서 가장 많이 쓰입니다. I–V–vi–IV가 대표입니다.",
+                    "같은 네 화음이라도 어디서 시작하느냐에 따라 다른 진행이 됩니다. vi–IV–I–V와 IV–I–V–vi는 같은 고리를 다른 자리에서 끊은 것입니다.",
+                    "그래서 이 진행을 알아들으려면 어느 화음이 I인지 먼저 찾아야 합니다. 조를 모르면 I–V–vi–IV와 vi–IV–I–V를 구별할 방법이 아예 없습니다."
+                ],
+                examples: [{ prog: "I–V–vi–IV" }, { prog: "vi–IV–I–V" }],
+                drill: { drillId: "progression", preset: "p2", limit: 10 }
+            },
+            {
+                id: "diatonic",
+                kind: "text",
+                title: "Diatonic Triads​(온음계 3화음)",
+                body: [
+                    "장음계 일곱 음에 3화음을 쌓으면 I ii iii IV V vi vii°가 됩니다. I·IV·V는 장3화음, ii·iii·vi는 단3화음, vii°는 감3화음입니다.",
+                    "ii는 V로 가는 길을 열어 줍니다. ii–V–I은 가장 자주 쓰는 마침꼴입니다.",
+                    "iii와 vi는 I과 음 두 개를 함께 갖고 있어 I 대신 놓아도 자리가 흔들리지 않습니다. 같은 자리를 되풀이하지 않고 색을 바꿀 때 씁니다."
+                ],
+                examples: [{ prog: "ii–V–I" }, { prog: "I–iii–IV–V" }],
+                drill: { drillId: "progression", preset: "p3", limit: 10 }
+            },
+            {
+                id: "minor-key",
+                kind: "text",
+                title: "Minor Key​(단조 진행)",
+                body: [
+                    "단조에서는 로마숫자를 그 단음계를 기준으로 셉니다. 자연단음계에 3화음을 쌓으면 i ii° III iv v VI VII입니다.",
+                    "III·VI·VII에 ♭을 붙이지 않는 것이 중요합니다. 단음계 자신의 셋째·여섯째·일곱째 음이기 때문입니다. 숫자 앞의 ♭은 빌려 온 화음이라는 표시로만 씁니다.",
+                    "i–VI–VII–i처럼 딸림화음을 거치지 않고 도는 진행이 단조에서 많이 쓰입니다. v를 V(장3화음)로 바꿔 쓰면 마침이 확실하게 닫히는데, 그것은 화성단음계에서 빌려 온 것입니다."
+                ],
+                examples: [{ prog: "i–VI–VII–i", minor: true }, { prog: "i–iv–V–i", minor: true }],
+                drill: { drillId: "progression", preset: "p6", limit: 10 }
+            },
+            {
+                id: "borrowed",
+                kind: "text",
+                title: "Borrowed Chords​(차용화음)",
+                body: [
+                    "조를 바꾸지 않고 화음 하나만 나란한 단조에서 가져다 쓰는 것을 Modal Interchange​(차용화음)라고 합니다. 장조의 IV를 iv로 바꾸는 것이 가장 흔합니다.",
+                    "무엇이 달라졌는지는 그 자리의 3음입니다. IV에서 iv로 가면 3음이 장3도에서 단3도로 반음 내려갑니다. 도수는 그대로고 성질만 바뀝니다.",
+                    "♭VII은 딸림화음을 거치지 않고 으뜸화음으로 내려오는 길을 열어 줍니다. ♭VI–♭VII–I은 한 단계씩 올라서며 마치는 꼴입니다."
+                ],
+                examples: [{ prog: "I–IV–iv–I" }, { prog: "I–♭VII–IV–I" }, { prog: "I–♭VI–♭VII–I" }],
+                drill: { drillId: "progression", preset: "p7", limit: 10 }
+            },
+            {
+                id: "secondary",
+                kind: "text",
+                title: "Secondary Dominants​(부속화음)",
+                body: [
+                    "V가 I로 가려는 힘을 다른 자리에 빌려 쓰는 것이 Secondary Dominant​(부속화음)입니다. V로 가는 V를 V/V로 적습니다. C 장조에서 V/V는 D 장3화음입니다.",
+                    "V/V는 라이디언에서 빌려 온 II와 소리가 같습니다. C 장조에서 둘 다 D 장3화음입니다. 가르는 것은 다음 화음입니다 — V로 가면 V/V, 가지 않으면 II입니다.",
+                    "그래서 이 진행은 화음 하나만 듣고는 답이 없습니다. 두 화음을 묶어 들어야 합니다."
+                ],
+                examples: [{ prog: "I–V/V–V–I" }, { prog: "I–II–IV–I" }],
+                drill: { drillId: "progression", preset: "p11", limit: 10 }
+            }
+        ]
+    };
+
     const RHYTHM_COURSE = {
         id: "rhythm",
         name: "Rhythm​(리듬)",
@@ -714,5 +798,5 @@
         ]
     };
 
-    window.EarCourses = [INTERVAL_COURSE, CHORD_COURSE, SCALE_COURSE, RHYTHM_COURSE];
+    window.EarCourses = [INTERVAL_COURSE, CHORD_COURSE, PROGRESSION_COURSE, SCALE_COURSE, RHYTHM_COURSE];
 })();

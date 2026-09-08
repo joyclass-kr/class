@@ -1314,6 +1314,7 @@
     const COURSE_META = {
         interval: { en: "Interval Theory", ko: "음정 과정", theme: "interval", icon: "course" },
         chord: { en: "Chord Theory", ko: "화음 과정", theme: "chord", icon: "course" },
+        progression: { en: "Progression Theory", ko: "화음 진행 과정", theme: "chord", icon: "course" },
         scale: { en: "Scale Theory", ko: "음계 과정", theme: "scale", icon: "course" },
         rhythm: { en: "Rhythm Theory", ko: "리듬 과정", theme: "rhythm", icon: "course" }
     };
@@ -1885,7 +1886,8 @@
             typeof entry === "string" ? intervalExample(entry)
                 : entry.pattern ? rhythmExample(entry)
                     : entry.scale ? scaleExample(entry)
-                        : chordExample(entry)
+                        : entry.prog ? progressionExample(entry)
+                            : chordExample(entry)
         ));
         /* 근음을 옮겨도 오선과 건반 안에 머무는 차시에서만 근음을 고르게 한다. */
         const pickable = exampleBlocks.length > 0
@@ -1906,6 +1908,8 @@
             els.lessonQuiz.dataset.limit = String(lesson.quizLimit || 0);
             els.lessonQuiz.textContent = (lesson.quizDrill || "reading") === "rhythmWrite" ? "받아쓰기 문제" : "읽기 문제";
         }
+        /* 그 차시가 가리키는 판을 바로 열 수 있게 둔다. */
+        els.lessonDrill.hidden = !lesson.drill;
         /* 음정 차시는 건반으로 만들어 보는 문제를 하나 더 둔다. */
         els.lessonBuild.hidden = !lesson.build;
         if (lesson.build) {
@@ -2248,6 +2252,55 @@
         return block;
     }
 
+    /*
+     * 진행 예시. 누르면 화음이 하나씩 울리면서 악보 칸과 건반에 불이 들어온다.
+     * 차시 건반은 C4~C6이라 왼손 베이스가 닿지 않으므로, 예시에서는 베이스를
+     * 따로 두지 않고 오른손 3화음만 이어 붙인다(문제 화면에서는 베이스를 쓴다).
+     */
+    function progressionExample(entry) {
+        const symbols = entry.prog.split("–");
+        const item = { id: "ex:" + entry.prog, chords: symbols, minor: entry.minor === true };
+        const tonic = pick(progressionRoots(item));
+        const scale = item.minor ? minorScale(tonic) : majorScale(tonic);
+
+        const columns = [];
+        const groups = [];
+        let hand = null;
+        symbols.forEach(symbol => {
+            const voiced = leadVoicing(numeralNotes(tonic, symbol), hand);
+            hand = voiced.map(note => note.midi);
+            columns.push({ notes: voiced });
+            groups.push(hand.slice());
+        });
+
+        const block = document.createElement("div");
+        block.className = "example";
+
+        const caption = document.createElement("p");
+        caption.className = "example-caption";
+        caption.textContent = keyName(tonic, item.minor) + " · " + entry.prog;
+        block.append(caption);
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "example-play is-wide";
+        button.setAttribute("aria-label", entry.prog);
+        button.append(N.render(columns, {
+            label: entry.prog,
+            zoom: EXAMPLE_ZOOM,
+            minWidth: STAFF_UNITS,
+            keySignature: keySignatureOf(scale)
+        }));
+        button.onclick = () => playRun(button, groups.map((midis, index) => ({
+            column: index, midis: midis
+        })), 1.1);
+        block.append(button);
+
+        /* 조를 옮겨 그리지 않는다 — 진행은 폭이 넓어 근음 고르기를 쓰지 않는다. */
+        exampleBlocks.push({ draw: () => {}, deep: () => 0, span: 40, play: () => button.click() });
+        return block;
+    }
+
     /* 이론 차시에서 그 차시가 다룬 음정만 읽기 문제로 낸다. */
     function startLessonQuiz() {
         const ids = (els.lessonQuiz.dataset.items || "").split(",").filter(Boolean);
@@ -2284,14 +2337,21 @@
 
     function startLessonDrill(lesson) {
         const drill = DRILL_BY_ID[lesson.drill.drillId || "interval"];
+        /*
+         * 판을 가리키는 차시(화음 진행)는 그 판을 그대로 연다 — 로마숫자 보기를
+         * 판이 들고 있어서, 판 없이는 답할 자리가 그려지지 않는다.
+         */
+        const preset = lesson.drill.preset
+            && (PRESETS[drill.id] || []).find(entry => entry.id === lesson.drill.preset);
         session.drill = drill;
         session.mode = lesson.drill.mode || (drill.modes[0] && drill.modes[0].id) || "";
-        session.input = lesson.drill.input || "buttons";
+        session.input = lesson.drill.input || (drill.inputs[0] === "slots" ? "slots" : "buttons");
         session.limit = lesson.drill.limit || 10;
         session.inversions = lesson.drill.inversions || [0];
         session.reveal = false;
-        session.enabled = new Set(lesson.drill.items);
-        session.preset = null;
+        session.slots = [];
+        session.enabled = new Set(preset ? preset.ids : lesson.drill.items);
+        session.preset = preset || null;
         session.fromLesson = { courseId: course.id, lessonId: lesson.id };
         beginRound();
     }
@@ -2992,7 +3052,7 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "drillScreen", "resultScreen",
             "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "lessonQuiz", "lessonBuild", "lessonKeys", "lessonKeysLabel", "wheelKeys", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
+            "lessonNext", "lessonQuiz", "lessonBuild", "lessonDrill", "lessonKeys", "lessonKeysLabel", "wheelKeys", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence",
             "helpRow", "arpButton",
             "presetScreen", "presetTitle", "presetList", "exerciseList", "melodicButton",
@@ -3044,6 +3104,10 @@
         els.lessonNext.addEventListener("click", nextLesson);
         els.lessonQuiz.addEventListener("click", startLessonQuiz);
         els.lessonBuild.addEventListener("click", startLessonBuild);
+        els.lessonDrill.addEventListener("click", () => {
+            const lesson = course && course.lessons[lessonIndex];
+            if (lesson && lesson.drill) startLessonDrill(lesson);
+        });
         els.wheelPrev.addEventListener("click", () => wheel.step(-1));
         els.wheelNext.addEventListener("click", () => wheel.step(1));
         els.wheelFlat.addEventListener("click", () => wheel.toggleFlat());

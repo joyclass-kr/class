@@ -48,7 +48,8 @@ html { min-width: 320px; }
 body {
     margin: 0;
     min-height: 100vh;
-    padding: 0 0 60px;
+    /* 아래 여백이 크면 한 화면에 들어와야 하는 문제·차시 화면이 밀려난다. */
+    padding: 0 0 16px;
     color: var(--ink);
     background-color: #0c121e;
     background-image: url("assets/backgrounds/ear-training-bg.webp?v=20260908-2");
@@ -775,7 +776,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .typed-count { margin: 0; color: var(--muted); font-size: 15px; font-weight: 800; text-align: center; }
 
 /* Roman Numeral Slots */
-.slot-wrap { display: grid; gap: 12px; justify-items: center; }
+.slot-wrap { display: grid; gap: 8px; justify-items: center; }
 .slot-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 
 .slot {
