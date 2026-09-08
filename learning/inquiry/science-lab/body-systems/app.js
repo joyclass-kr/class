@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const beat = 60 / a.d.hr, breath = 60 / a.d.rr;
         let out = '';
         out += `<text class="organ-label" x="${CX}" y="18" text-anchor="middle">${a.d.label}</text>`;
-        out += `<rect class="torso" x="186" y="24" width="88" height="148" rx="28"/>`;
+        out += `<path class="torso" d="M 230 24 C 236 24 240 28 240 34 C 240 39 236 43 234 44 C 242 46 252 50 258 55 C 263 60 266 72 266 86 C 266 98 264 109 261 112 C 259 115 256 113 255 109 C 253 99 254 82 253 71 C 250 69 248 72 248 79 C 248 95 246 114 245 127 C 245 137 243 154 243 172 C 238 172 237 172 236 172 C 235 159 234 146 231 138 C 229 138 229 138 229 138 C 226 146 225 159 224 172 C 223 172 222 172 217 172 C 217 154 215 137 215 127 C 214 114 212 95 212 79 C 212 72 210 69 207 71 C 206 82 207 99 205 109 C 204 113 201 115 199 112 C 196 109 194 98 194 86 C 194 72 197 60 202 55 C 208 50 218 46 226 44 C 224 43 220 39 220 34 C 220 28 224 24 230 24 Z"/>`;
 
         // the blood loop, with cells taking one real lap of the body
         const path = 'M230,80 C194,86 192,118 200,142 C210,168 250,168 260,142 C268,118 266,86 230,80';
@@ -76,23 +76,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // lungs filling and emptying at the real breathing rate
-        [206, 254].forEach(cx => {
-            out += `<ellipse class="lung" cx="${cx}" cy="56" rx="16" ry="22">` +
-                   `<animate attributeName="ry" values="19;25;19" dur="${breath.toFixed(2)}s" repeatCount="indefinite"/></ellipse>`;
+        const lungPaths = [
+            { cx: 206, d: 'M 200 34 C 206 34 220 37 222 51 C 222 65 215 78 206 78 C 195 78 190 69 190 56 C 190 43 194 34 200 34 Z' },
+            { cx: 254, d: 'M 260 34 C 266 34 270 43 270 56 C 270 69 265 78 254 78 C 245 78 238 65 238 51 C 240 37 254 34 260 34 Z' },
+        ];
+        lungPaths.forEach(l => {
+            out += `<g style="transform-origin:${l.cx}px 56px">` +
+                   `<path class="lung" d="${l.d}">` +
+                   `<animateTransform attributeName="transform" type="scale" values="0.95 0.88; 1.05 1.12; 0.95 0.88" dur="${breath.toFixed(2)}s" repeatCount="indefinite"/></path></g>`;
         });
         out += `<text class="organ-label" x="186" y="58" text-anchor="end">폐</text>`;
 
         // the heart, squeezing at the real pulse
-        out += `<ellipse class="heart" cx="${CX}" cy="96" rx="15" ry="17">` +
-               `<animate attributeName="rx" values="15;11.5;15" dur="${beat.toFixed(3)}s" repeatCount="indefinite"/>` +
-               `<animate attributeName="ry" values="17;13;17" dur="${beat.toFixed(3)}s" repeatCount="indefinite"/></ellipse>`;
+        out += `<g style="transform-origin:${CX}px 96px">` +
+               `<path class="heart" d="M 228 79 C 235 79 245 82 245 91 C 245 102 233 109 226 113 C 221 108 215 100 215 90 C 215 82 222 79 228 79 Z">` +
+               `<animateTransform attributeName="transform" type="scale" values="1;0.85;1" dur="${beat.toFixed(3)}s" repeatCount="indefinite"/></path></g>`;
         // outside the torso: the right side of the blood loop passes there
         out += `<text class="organ-label" x="182" y="99" text-anchor="end">심장</text>`;
 
         out += `<path class="gut" d="M204,120 q10,-8 20,0 q10,8 20,0 q10,-8 12,6 q-2,12 -14,10 q-12,-2 -20,4 q-10,6 -18,-2 q-6,-8 0,-18 Z"/>`;
         out += `<text class="organ-label" x="190" y="132" text-anchor="end">소장</text>`;
 
-        [206, 254].forEach(cx => { out += `<ellipse class="kidney" cx="${cx}" cy="156" rx="12" ry="14"/>`; });
+        out += `<path class="kidney" d="M 211 142 C 218 142 218 150 214 156 C 218 162 218 170 211 170 C 201 170 194 162 194 156 C 194 150 201 142 211 142 Z M 249 142 C 259 142 266 150 266 156 C 266 162 259 170 249 170 C 242 170 242 162 246 156 C 242 150 242 142 249 142 Z"/>`;
         out += `<text class="organ-label" x="190" y="160" text-anchor="end">콩팥</text>`;
 
         // Breathing and pumping on the left, feeding and filtering on the right.

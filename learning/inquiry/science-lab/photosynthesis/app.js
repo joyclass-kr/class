@@ -99,7 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="stem" d="M210,${TUBE.bottom - 8} L210,${surface + 22}"/>`;
         for (let i = 0; i < 6; i += 1) {
             const y = TUBE.bottom - 20 - i * 18, side = i % 2 === 0 ? -1 : 1;
-            out += `<ellipse class="leaf${pale ? ' pale' : ''}" cx="${210 + side * 13}" cy="${y}" rx="12" ry="5.5" transform="rotate(${side * 22} ${210 + side * 13} ${y})"/>`;
+            const lx = 210 + side * 13;
+            out += `<g transform="translate(${lx - 12}, ${y - 8}) scale(0.24) rotate(${side * 60 + 90} 50 50)">` +
+                   `<path class="leaf${pale ? ' pale' : ''}" d="M 50 10 C 78 28 88 56 50 90 C 12 56 22 28 50 10 Z" fill="#2d6a4f"/>` +
+                   `<path d="M 50 18 L 50 86 M 50 36 L 68 46 M 50 54 L 72 64 M 50 36 L 32 46 M 50 54 L 28 64" stroke="#52b788" stroke-width="2" fill="none"/>` +
+                   `</g>`;
         }
         // bubbles: the rate they leave is the measurement
         const bubbles = Math.min(14, Math.round(a.rate / 7));

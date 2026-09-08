@@ -119,7 +119,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const LX = 20, RX = 174, W = 150, Y = 40, H = 130, MX = 172;
         let out = `<rect class="chamber" x="${LX}" y="${Y}" width="${W}" height="${H}" rx="4"/><rect class="chamber" x="${RX}" y="${Y}" width="${W}" height="${H}" rx="4"/>`;
         out += `<line class="membrane" x1="${MX}" y1="${Y}" x2="${MX}" y2="${Y + H}"/>`;
-        for (let k = 0; k < 6; k += 1) out += `<line class="pore" x1="${MX}" y1="${Y + 14 + k * 21}" x2="${MX}" y2="${Y + 20 + k * 21}"/>`;
+        for (let py = Y + 4; py <= Y + H - 4; py += 10) {
+            if (py >= Y + 50 && py <= Y + 76) continue;
+            out += `<circle cx="${MX - 4}" cy="${py}" r="2" fill="#d97706"/>`;
+            out += `<line x1="${MX - 2}" y1="${py - 0.8}" x2="${MX}" y2="${py - 0.8}" stroke="#d97706" stroke-width="0.7"/>`;
+            out += `<line x1="${MX - 2}" y1="${py + 0.8}" x2="${MX}" y2="${py + 0.8}" stroke="#d97706" stroke-width="0.7"/>`;
+            out += `<circle cx="${MX + 4}" cy="${py}" r="2" fill="#d97706"/>`;
+            out += `<line x1="${MX + 2}" y1="${py - 0.8}" x2="${MX}" y2="${py - 0.8}" stroke="#d97706" stroke-width="0.7"/>`;
+            out += `<line x1="${MX + 2}" y1="${py + 0.8}" x2="${MX}" y2="${py + 0.8}" stroke="#d97706" stroke-width="0.7"/>`;
+        }
+        out += `<g transform="translate(${MX - 8}, ${Y + 50}) scale(0.16, 0.28)">` +
+               `<path d="M 24 14 C 36 14 42 28 40 50 C 42 72 36 86 24 86 L 36 86 C 48 86 52 72 50 50 C 52 28 48 14 36 14 Z M 76 14 C 64 14 58 28 60 50 C 58 72 64 86 76 86 L 64 86 C 52 86 48 72 50 50 C 48 28 52 14 64 14 Z" fill="#0284c7"/>` +
+               `</g>`;
         // molecules jiggle about fixed spots; warmer water, bigger jiggle
         const amp = a.tmp.k > 0.06 ? 7 : 4;
         const dot = (x0, i, count) => { for (let n = 0; n < count; n += 1) { const bx = x0 + 12 + ((n * 37) % (W - 24)), by = Y + 12 + ((n * 53) % (H - 24)); const ph = n * 1.7; out += `<circle class="molecule" cx="${(bx + amp * Math.sin(t * (1.3 + (n % 5) * 0.4) + ph)).toFixed(1)}" cy="${(by + amp * Math.cos(t * (1.1 + (n % 7) * 0.3) + ph * 2)).toFixed(1)}" r="3"/>`; } };

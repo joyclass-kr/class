@@ -93,7 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // the two centres this signal does not use, drawn faint
         const usesBrain = p.apexY === PATHS.conscious.apexY;
         const usesMedulla = p.apexY === PATHS.pupil.apexY;
-        out += nodeBox(210, 50, 76, 30, 'centre', usesBrain);
+        out += `<g transform="translate(210, 44) scale(0.38)">` +
+               `<path class="node centre${usesBrain ? '' : ' off'}" d="M 50 14 C 74 14 88 28 88 50 C 88 64 78 74 68 76 C 66 84 58 88 50 88 C 44 88 42 82 40 76 C 26 76 14 64 14 48 C 14 28 28 14 50 14 Z"/>` +
+               `</g>`;
         out += `<text class="node-label${usesBrain ? '' : ' off'}" x="248" y="69" text-anchor="middle">대뇌</text>`;
         out += nodeBox(216, 90, 64, 26, 'centre', usesMedulla);
         out += `<text class="node-label${usesMedulla ? '' : ' off'}" x="248" y="107" text-anchor="middle">연수</text>`;
@@ -105,6 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
         out += nodeBox(30, 122, 76, 34, 'sense', true);
         out += `<text class="node-label" x="68" y="137" text-anchor="middle">감각 기관</text>`;
         out += `<text class="node-sub" x="68" y="150" text-anchor="middle">${p.sense}</text>`;
+        out += `<g transform="translate(228, 120) scale(0.4, 0.22)">` +
+               `<path class="node centre" d="M 14 10 C 26 10 26 10 26 150 C 14 150 14 150 14 10 Z"/>` +
+               `</g>`;
         out += nodeBox(216, 122, 64, 34, 'centre', true);
         out += `<text class="node-label" x="248" y="143" text-anchor="middle">척수</text>`;
         out += nodeBox(386, 122, 70, 34, 'muscle', true);

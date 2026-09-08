@@ -176,8 +176,10 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="drop${cond.water ? '' : ' off'}" d="M${cx},39 q6,8 0,14 q-6,-6 0,-14 z"/>`;
         out += `<text class="cond-text" x="${cx + 34}" y="50" text-anchor="middle">${cond.warm ? '25 ℃' : '5 ℃'}</text>`;
         // pot and soil
-        out += `<path class="pot" d="M${cx - 34},${SOIL_Y} L${cx - 28},${SOIL_Y + 34} L${cx + 28},${SOIL_Y + 34} L${cx + 34},${SOIL_Y} Z"/>`;
-        out += `<rect class="soil" x="${cx - 32}" y="${SOIL_Y - 4}" width="64" height="8" rx="2"/>`;
+        out += `<g transform="translate(${cx - 36}, ${SOIL_Y - 4}) scale(0.72, 0.65)">` +
+               `<path class="pot" d="M 18 42 L 82 42 L 72 86 L 28 86 Z M 14 34 L 86 34 L 86 42 L 14 42 Z"/>` +
+               `</g>`;
+        out += `<rect class="soil" x="${cx - 30}" y="${SOIL_Y + 1}" width="60" height="6" rx="2"/>`;
         const h = heightAt(day, profile.maxCm);
         if (!profile.sprouts) {
             out += `<ellipse class="seed" cx="${cx}" cy="${SOIL_Y - 1}" rx="5" ry="3.2"/>`;
@@ -191,6 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ls > 0.05) {
                 out += `<ellipse class="leaf" fill="${hue.leaf}" cx="${(cx - rx * 0.9).toFixed(1)}" cy="${(top + 2).toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" transform="rotate(-20 ${(cx - rx * 0.9).toFixed(1)} ${(top + 2).toFixed(1)})"/>`;
                 out += `<ellipse class="leaf" fill="${hue.leaf}" cx="${(cx + rx * 0.9).toFixed(1)}" cy="${(top + 2).toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" transform="rotate(20 ${(cx + rx * 0.9).toFixed(1)} ${(top + 2).toFixed(1)})"/>`;
+                if (h > 8) {
+                    // bean pod when well grown
+                    out += `<path d="M ${cx - 2} ${top + 24} C ${cx - 10} ${top + 28} ${cx - 12} ${top + 38} ${cx - 4} ${top + 42}" stroke="${hue.leaf}" stroke-width="2.5" fill="none"/>`;
+                }
             }
         }
         // the reading sits on the face of the pot

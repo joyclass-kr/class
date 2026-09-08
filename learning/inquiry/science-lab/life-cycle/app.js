@@ -124,6 +124,31 @@ function elapsedDays() {
     return d + (list[a.step].days || 0) * (state.running || state.t > 0 ? within : 0);
 }
 
+const STAGE_PATHS = {
+    butterfly: [
+        'M 50 16 C 66 16 72 44 72 64 C 72 78 62 84 50 84 C 38 84 28 78 28 64 C 28 44 34 16 50 16 Z',
+        'M 18 62 C 14 56 16 48 24 46 C 26 42 30 40 36 44 C 44 38 56 38 66 42 C 76 40 84 46 88 54 C 92 62 88 70 80 72 C 72 74 60 70 50 72 C 40 70 30 74 22 70 C 16 68 14 64 18 62 M 16 58 L 10 60 L 14 64 Z',
+        'M 48 10 C 56 10 60 22 62 38 C 68 50 64 74 54 90 C 48 90 42 74 38 52 C 34 36 40 10 48 10 Z',
+        'M 50 40 C 42 20 20 18 14 26 C 8 34 16 52 38 54 C 20 58 12 74 20 84 C 28 94 44 80 48 64 L 52 64 C 56 80 72 94 80 84 C 88 74 80 58 62 54 C 84 52 92 34 86 26 C 80 18 58 20 50 40 M 50 36 C 48 30 46 22 42 20 C 38 18 42 14 45 16 C 48 18 50 28 50 36 Z',
+    ],
+    mantis: [
+        'M 50 18 C 72 18 82 36 82 56 C 82 76 68 84 50 84 C 32 84 18 76 18 56 C 18 36 28 18 50 18 Z',
+        'M 48 18 L 54 18 L 56 36 L 68 28 L 72 34 L 58 44 L 60 64 L 74 82 L 68 86 L 56 70 L 52 86 L 46 86 L 48 64 L 40 74 L 34 70 L 44 54 L 44 36 L 48 18 Z',
+        'M 46 12 L 54 12 L 56 28 L 74 16 L 78 24 L 62 38 L 62 88 L 54 88 L 54 50 L 46 50 L 46 88 L 38 88 L 38 38 L 22 24 L 26 16 L 44 28 Z',
+    ],
+    frog: [
+        'M 50 18 C 68 18 82 32 82 50 C 82 68 68 82 50 82 C 32 82 18 68 18 50 C 18 32 32 18 50 18 M 50 38 C 57 38 62 43 62 50 C 62 57 57 62 50 62 C 43 62 38 57 38 50 C 38 43 43 38 50 38 Z',
+        'M 36 30 C 50 30 60 40 60 50 C 60 60 50 70 36 70 C 22 70 14 60 14 50 C 14 40 22 30 36 30 M 58 48 C 74 44 88 40 92 50 C 88 60 74 56 58 52 Z',
+        'M 36 30 C 50 30 60 40 60 50 C 60 60 50 70 36 70 C 22 70 14 60 14 50 C 14 40 22 30 36 30 M 58 48 C 74 44 88 40 92 50 C 88 60 74 56 58 52 M 48 64 L 56 78 L 66 80 L 64 84 L 52 82 L 44 68 Z',
+        'M 50 20 C 66 20 74 32 74 48 C 84 50 90 68 84 82 L 74 80 C 76 68 70 58 64 56 C 64 70 58 82 50 82 C 42 82 36 70 36 56 C 30 58 24 68 26 80 L 16 82 C 10 68 16 50 26 48 C 26 32 34 20 50 20 Z',
+    ],
+    chick: [
+        'M 50 14 C 68 14 78 36 78 58 C 78 74 66 86 50 86 C 34 86 22 74 22 58 C 22 36 32 14 50 14 Z',
+        'M 38 28 C 48 28 54 34 54 44 C 62 46 72 54 72 68 C 72 78 62 84 48 84 C 36 84 28 78 28 66 C 28 56 32 50 30 44 C 30 34 34 28 38 28 M 28 38 L 18 42 L 28 46 Z M 44 84 L 40 92 M 52 84 L 56 92',
+        'M 36 14 C 44 14 48 22 48 30 C 58 34 76 44 82 58 C 86 68 82 78 72 82 C 58 82 46 76 40 64 L 38 82 L 32 82 L 34 56 C 28 48 28 34 36 14 M 28 26 L 16 30 L 28 34 Z M 38 82 L 36 94 M 50 82 L 52 94',
+    ],
+};
+
 function drawStages(g) {
     const a = analyse();
     const list = a.animal.stages, n = list.length;
@@ -136,12 +161,25 @@ function drawStages(g) {
     g.appendChild(el('text', { x: 444, y: 24, 'text-anchor': 'end', class: 'read-text' }, `어른까지 ${a.total}일`));
 
     const beat = 1 + 0.05 * Math.sin(state.phase * 3.2);
+    const paths = STAGE_PATHS[state.animal] || [];
     list.forEach((s, i) => {
         const cx = 10 + slot * (i + 0.5), cy = 92;
         const here = i === a.step;
         const r = here ? 25 * (state.running ? beat : 1) : 21;
         g.appendChild(el('circle', { cx, cy, r, class: `stage-disc${here ? ' now' : ''}`, style: `fill:${s.tint}` }));
-        g.appendChild(el('text', { x: cx, y: cy + 4, 'text-anchor': 'middle', class: 'stage-name', style: 'fill:#14242c' }, String(i + 1)));
+        if (paths[i]) {
+            const sc = (r * 1.35 / 50).toFixed(3);
+            const pathEl = el('path', {
+                d: paths[i],
+                fill: '#24343d',
+                stroke: '#24343d',
+                'stroke-width': '1.5',
+                transform: `translate(${(cx - 50 * sc).toFixed(1)}, ${(cy - 50 * sc).toFixed(1)}) scale(${sc})`,
+            });
+            g.appendChild(pathEl);
+        } else {
+            g.appendChild(el('text', { x: cx, y: cy + 4, 'text-anchor': 'middle', class: 'stage-name', style: 'fill:#14242c' }, String(i + 1)));
+        }
         g.appendChild(el('text', { x: cx, y: 132, 'text-anchor': 'middle', class: 'stage-name', style: `fill:${here ? '#d97706' : '#0f172a'}` }, s.n));
         g.appendChild(el('text', { x: cx, y: 146, 'text-anchor': 'middle', class: 'stage-days' }, s.days ? `${s.days}일` : '어른'));
         if (i < n - 1) {

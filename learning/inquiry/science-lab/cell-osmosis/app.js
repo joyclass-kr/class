@@ -95,16 +95,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (cell === 'animal') {
-            const r = 46 * scaleOf(s.v);
+            const sc = (scaleOf(s.v)).toFixed(3);
             if (s.burst) {
-                out += `<circle class="animal-cell burst membrane" cx="${CX}" cy="${CY}" r="${(46 * scaleOf(BURST_V)).toFixed(1)}"/>`;
+                out += `<g transform="translate(${CX - 50 * BURST_V}, ${CY - 50 * BURST_V}) scale(${BURST_V})">` +
+                       `<path class="animal-cell burst membrane" d="M 50 8 C 76 6 94 24 92 50 C 90 74 76 94 50 92 C 24 90 6 76 8 50 C 10 24 24 10 50 8 Z"/></g>`;
                 for (let i = 0; i < 9; i += 1) {
                     const a = (i * 40) * Math.PI / 180, rr = 62 + (i % 3) * 9;
                     out += `<circle class="burst-bit" cx="${(CX + rr * Math.cos(a)).toFixed(1)}" cy="${(CY + rr * Math.sin(a) * 0.7).toFixed(1)}" r="${3 + (i % 3)}"/>`;
                 }
             } else {
-                out += `<circle class="animal-cell membrane" cx="${CX}" cy="${CY}" r="${r.toFixed(1)}"/>`;
-                out += `<circle class="nucleus" cx="${CX}" cy="${CY}" r="${(13 * scaleOf(s.v)).toFixed(1)}"/>`;
+                out += `<g transform="translate(${(CX - 50 * sc).toFixed(1)}, ${(CY - 50 * sc).toFixed(1)}) scale(${sc})">` +
+                       `<path class="animal-cell membrane" d="M 50 8 C 76 6 94 24 92 50 C 90 74 76 94 50 92 C 24 90 6 76 8 50 C 10 24 24 10 50 8 Z"/>` +
+                       `<path class="nucleus" d="M 50 28 C 62 28 70 36 70 48 C 70 60 62 68 50 68 C 38 68 30 60 30 48 C 30 36 38 28 50 28 Z"/></g>`;
             }
             out += `<text class="cell-label" x="${CX}" y="30" text-anchor="middle">동물세포 (세포벽 없음)</text>`;
             out += `<text class="part-label" x="${CX}" y="196" text-anchor="middle">세포막만 있어 부피를 제한하지 못합니다</text>`;
@@ -113,13 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const k = scaleOf(s.v);
             const pw = W * k, ph = H * k;
             out += `<rect class="gap-fill" x="${CX - W / 2}" y="${CY - H / 2}" width="${W}" height="${H}" rx="6"/>`;
-            out += `<rect class="protoplast membrane" x="${(CX - pw / 2).toFixed(1)}" y="${(CY - ph / 2).toFixed(1)}" width="${pw.toFixed(1)}" height="${ph.toFixed(1)}" rx="${(10 * k).toFixed(1)}"/>`;
+            out += `<g transform="translate(${(CX - 50 * k).toFixed(1)}, ${(CY - 50 * k).toFixed(1)}) scale(${k.toFixed(3)})">` +
+                   `<rect class="protoplast membrane" x="18" y="18" width="64" height="64" rx="10"/>` +
+                   `<path class="vacuole" d="M 38 28 C 64 26 76 34 76 56 C 76 76 58 80 38 78 C 24 76 22 62 24 48 C 26 34 32 30 38 28 Z"/>` +
+                   `<path class="nucleus" d="M 74 66 C 80 66 84 70 84 76 C 84 82 80 86 74 86 C 68 86 64 82 64 76 C 64 70 68 66 74 66 Z"/></g>`;
             out += `<rect class="wall" x="${CX - W / 2}" y="${CY - H / 2}" width="${W}" height="${H}" rx="6"/>`;
-            out += `<ellipse class="vacuole" cx="${CX}" cy="${CY}" rx="${(34 * k).toFixed(1)}" ry="${(24 * k).toFixed(1)}"/>`;
-            out += `<circle class="nucleus" cx="${(CX - 34 * k).toFixed(1)}" cy="${(CY + 24 * k).toFixed(1)}" r="${(9 * k).toFixed(1)}"/>`;
             for (let i = 0; i < 6; i += 1) {
                 const a = (i * 61) * Math.PI / 180;
-                out += `<ellipse class="chloroplast" cx="${(CX + 42 * k * Math.cos(a)).toFixed(1)}" cy="${(CY + 32 * k * Math.sin(a)).toFixed(1)}" rx="5.5" ry="3.4"/>`;
+                const chx = (CX + 38 * k * Math.cos(a)).toFixed(1), chy = (CY + 28 * k * Math.sin(a)).toFixed(1);
+                out += `<g transform="translate(${chx - 5}, ${chy - 3.5}) scale(0.1)">` +
+                       `<path class="chloroplast" d="M 50 38 C 60 38 66 44 66 50 C 66 56 60 62 50 62 C 40 62 34 56 34 50 C 34 44 40 38 50 38 Z"/></g>`;
             }
             out += `<text class="cell-label" x="${CX}" y="30" text-anchor="middle">식물세포 (세포벽 있음)</text>`;
             out += `<text class="part-label" x="${CX}" y="196" text-anchor="middle">${s.v < 0.98 ? '세포막이 세포벽에서 떨어졌습니다' : '세포벽이 더 부풀지 못하게 막습니다'}</text>`;

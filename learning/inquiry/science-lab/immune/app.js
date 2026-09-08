@@ -246,6 +246,13 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let k = 0; k < nA; k += 1) { const x = 34 + ((k * 61 + Math.floor(t * 4)) % 258), y = 42 + ((k * 29) % 104); out += yShape(x, y, 'ab', 3.5); }
         out += `<text class="small-label" x="22" y="166">몸속 (혈액·조직액)${nV ? ' — 옅은 점은 백신 항원' : ''}</text>`;
         // the cells below
+        const CELL_PATHS = {
+            'cell-mac': 'M 50 10 C 60 12 62 24 72 20 C 82 16 86 30 84 40 C 82 50 94 56 90 68 C 86 80 74 82 70 92 C 66 102 50 90 40 94 C 30 98 22 86 16 78 C 10 70 20 60 14 50 C 8 40 18 32 22 22 C 26 12 40 8 50 10 Z',
+            'cell-b': 'M 50 15 C 69 15 85 31 85 50 C 85 69 69 85 50 85 C 31 85 15 69 15 50 C 15 31 31 15 50 15 M 50 25 C 64 25 75 36 75 50 C 75 64 64 75 50 75 C 36 75 25 64 25 50 C 25 36 36 25 50 25 Z',
+            'cell-plasma': 'M 42 12 C 68 12 88 28 88 56 C 88 78 72 90 46 90 C 20 90 12 74 12 52 C 12 30 24 12 42 12 M 34 32 C 46 32 54 40 54 52 C 54 64 46 72 34 72 C 22 72 14 64 14 52 C 14 40 22 32 34 32 Z',
+            'cell-mem': 'M 50 12 C 71 12 88 29 88 50 C 88 71 71 88 50 88 C 29 88 12 71 12 50 C 12 29 29 12 50 12 M 50 20 C 67 20 80 33 80 50 C 80 67 67 80 50 80 C 33 80 20 67 20 50 C 20 33 33 20 50 20 M 50 30 C 61 30 70 39 70 50 C 70 61 61 70 50 70 C 39 70 30 61 30 50 C 30 39 39 30 50 30 Z',
+            'cell-t': 'M 50 18 C 53 18 53 10 50 10 C 47 10 47 18 50 18 C 66 18 78 28 82 42 C 86 40 90 44 88 47 C 82 52 82 60 76 72 C 78 76 74 80 70 78 C 62 84 54 86 50 86 C 50 92 46 92 46 86 C 36 84 28 78 24 70 C 20 72 18 68 20 64 C 18 56 20 46 26 36 C 22 32 26 28 30 32 C 36 24 44 18 50 18 Z',
+        };
         const cells = [
             { x: 44, cls: 'cell-mac', r: 8, name: '큰포식세포', sub: P >= 1 || Ag >= 100 ? '잡아먹는 중' : '대기' },
             { x: 106, cls: 'cell-b', r: 7, name: 'B 림프구', sub: !lymph ? '없음' : act > 0.3 ? '항원 알아봄' : '대기' },
@@ -254,7 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
             { x: 292, cls: 'cell-t', r: 7, name: 'T 림프구', sub: !lymph ? '없음' : act > 0.3 ? '도움 신호' : '대기' },
         ];
         cells.forEach(c => {
-            out += `<circle class="cell ${c.cls}" cx="${c.x}" cy="184" r="${c.r}"${!lymph && c.cls !== 'cell-mac' ? ' opacity=".3"' : ''}/>`;
+            const sc = (c.r / 50 * 2.2).toFixed(3);
+            out += `<g transform="translate(${(c.x - 50 * sc).toFixed(1)}, ${(184 - 50 * sc).toFixed(1)}) scale(${sc})"` +
+                   `${!lymph && c.cls !== 'cell-mac' ? ' opacity=".3"' : ''}>` +
+                   `<path class="cell ${c.cls}" d="${CELL_PATHS[c.cls]}"/>` +
+                   `</g>`;
             if (c.cls === 'cell-plasma' && plasma >= 0.5) out += yShape(c.x + 11, 180, 'ab', 3);
             out += `<text class="cell-text" x="${c.x}" y="204" text-anchor="middle">${c.name}</text><text class="small-label prose" x="0" y="0">${c.name} — ${c.sub}</text>`;
         });

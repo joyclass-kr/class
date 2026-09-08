@@ -104,6 +104,14 @@ function drawRuler(g) {
     g.appendChild(el('text', { x: 18, y: 48, class: 'big-read' }, `${fmt(a.t, 2)}초`));
     g.appendChild(el('text', { x: 18, y: 66, class: 'tiny-label' }, a.caught ? `자가 ${fmt(a.d, 1)} cm 떨어짐` : `${fmt(a.d, 0)} cm — 자보다 김`));
 
+    const SENSE_PATHS = {
+        '눈': 'M 10 50 C 26 26 74 26 90 50 C 74 74 26 74 10 50 Z M 50 34 C 59 34 66 41 66 50 C 66 59 59 66 50 66 C 41 66 34 59 34 50 C 34 41 41 34 50 34 Z M 50 43 C 54 43 57 46 57 50 C 57 54 54 57 50 57 C 46 57 43 54 43 50 C 43 46 46 43 50 43 Z',
+        '귀': 'M 38 14 C 58 14 74 28 74 46 C 74 62 62 70 60 78 C 58 86 50 88 42 86 C 36 84 34 76 38 72 C 44 68 54 62 54 46 C 54 34 44 26 36 26 C 30 26 28 20 38 14 Z',
+        '코': 'M 48 16 C 56 16 62 38 66 62 C 68 70 62 82 50 82 C 38 82 32 70 34 62 C 38 38 42 16 48 16 Z',
+        '혀': 'M 30 20 C 42 18 58 18 70 20 C 78 36 80 58 76 74 C 70 86 58 90 50 90 C 42 90 30 86 24 74 C 20 58 22 36 30 20 M 50 24 L 50 72',
+        '피부': 'M 10 24 L 90 24 L 90 86 L 10 86 Z M 10 40 L 90 40 M 10 60 L 90 60 M 34 24 C 34 14 42 14 42 24 M 64 24 C 64 10 74 10 74 24',
+    };
+
     // The road a signal travels, lit up in order while the ruler falls.
     const steps = ['자극', a.sense.organ, '신경', '뇌', '신경', '근육'];
     const lit = state.running ? Math.min(steps.length - 1, Math.floor(state.t * steps.length)) : -1;
@@ -112,6 +120,16 @@ function drawRuler(g) {
         const on = i === lit;
         g.appendChild(el('rect', { x: 232, y: y - 12, width: 76, height: 22, rx: 6, class: `step-box${on ? ' lit' : ''}` }));
         g.appendChild(el('text', { x: 270, y: y + 3, 'text-anchor': 'middle', class: 'step-name', style: `fill:${on ? '#d97706' : '#0f172a'}` }, n));
+        if (i === 1 && SENSE_PATHS[n]) {
+            const sc = 0.18;
+            g.appendChild(el('path', {
+                d: SENSE_PATHS[n],
+                fill: on ? '#d97706' : '#64748b',
+                stroke: on ? '#d97706' : '#64748b',
+                'stroke-width': '1.5',
+                transform: `translate(${(196).toFixed(1)}, ${(y - 12).toFixed(1)}) scale(${sc})`,
+            }));
+        }
         if (i < steps.length - 1) {
             g.appendChild(el('line', { x1: 270, y1: y + 10, x2: 270, y2: y + 18, class: 'arrow-line' }));
             g.appendChild(el('path', { d: `M 270 ${y + 19} l -4 -6 l 8 0 z`, class: 'arrow-head' }));

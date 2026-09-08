@@ -187,7 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < 26; i += 1) {
                 const sx = FX + 10 + ((i * 97) % (FW - 20)), sy = FY + 12 + ((i * 61) % (FH - 24));
                 const big = SEEDS[state.seeds].targets.length === 2 ? i % 2 === 0 : SEEDS[state.seeds].targets[0] > 5;
-                out += `<ellipse class="${big ? 'seed-large' : 'seed-small'}" cx="${sx}" cy="${sy}" rx="${big ? 4 : 2.2}" ry="${big ? 2.8 : 1.5}"/>`;
+                const sc = big ? 0.1 : 0.06;
+                out += `<g transform="translate(${sx - 50 * sc}, ${sy - 50 * sc}) scale(${sc})">` +
+                       `<path class="${big ? 'seed-large' : 'seed-small'}" d="M 50 32 C 64 32 72 40 72 50 C 72 62 64 68 50 68 C 36 68 28 62 28 50 C 28 40 36 32 50 32 Z"/></g>`;
             }
         } else {
             out += `<rect class="field ${groundAt(g).cls}" x="${FX}" y="${FY}" width="${FW}" height="${FH}" rx="8"/>`;
@@ -200,8 +202,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const t = gen.traits[i];
             const dead = culled && !gen.alive[i];
             if (a.kind === 'beak') {
-                out += `<g class="${dead ? 'dead' : ''}"><circle class="bird" fill="#8fb3d9" cx="${cx}" cy="${cy}" r="7"/>` +
-                    `<path class="beak" d="M${cx + 6},${cy - 1.5 - t * 0.35} L${cx + 6 + 4 + t * 1.3},${cy} L${cx + 6},${cy + 1.5 + t * 0.35} Z"/></g>`;
+                out += `<g class="${dead ? 'dead' : ''}">` +
+                    `<g transform="translate(${cx - 10}, ${cy - 12}) scale(0.24)">` +
+                    `<path class="bird" fill="#8fb3d9" stroke="#8fb3d9" stroke-width="2" d="M 34 32 C 44 30 54 36 56 46 C 66 46 80 54 88 68 L 76 72 C 66 82 50 82 38 74 C 30 68 28 58 30 48 C 30 40 28 36 34 32 Z M 48 78 L 46 92 M 56 78 L 58 92"/>` +
+                    `</g>` +
+                    `<path class="beak" fill="#d97706" d="M${(cx - 3).toFixed(1)},${(cy - 4 - t * 0.35).toFixed(1)} L${(cx - 3 - 3 - t * 1.2).toFixed(1)},${(cy - 2).toFixed(1)} L${(cx - 3).toFixed(1)},${(cy + t * 0.35).toFixed(1)} Z"/></g>`;
             } else {
                 out += `<g class="${dead ? 'dead' : ''}"><ellipse class="mouse" fill="${shadeHex(t)}" cx="${cx}" cy="${cy}" rx="9" ry="6"/><circle class="mouse" fill="${shadeHex(t)}" cx="${cx + 8}" cy="${cy - 3}" r="3.2"/></g>`;
             }
