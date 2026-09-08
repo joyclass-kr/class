@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
+    <linearGradient id="gradPlasma" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fef1be"/>
+      <stop offset="100%" stop-color="#fcdc59"/>
+    </linearGradient>
+    <linearGradient id="gradBuffy" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e7ecf3"/>
+      <stop offset="100%" stop-color="#c9d4e3"/>
+    </linearGradient>
+    <linearGradient id="gradRbc" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e25050"/>
+      <stop offset="100%" stop-color="#b81e1e"/>
+    </linearGradient>
+    <linearGradient id="gradWbc" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e2dcfe"/>
+      <stop offset="100%" stop-color="#beaffd"/>
+    </linearGradient>
+    <linearGradient id="gradRbcCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e25050"/>
+      <stop offset="100%" stop-color="#b81e1e"/>
+    </linearGradient>
+    <linearGradient id="gradPlatelet" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fccc55"/>
+      <stop offset="100%" stop-color="#ebaa05"/>
+    </linearGradient>
     <!-- Clip path conforming liquid layers to the inner U-shaped test tube profile -->
     <clipPath id="tubeLiquidClip">
       <path d="M 135,175 L 135,520 A 60,60 0 0,0 255,520 L 255,175 Z" />
@@ -21,15 +45,15 @@
       .vessel-endothelium { fill: none; stroke: #64748b; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
       .endo-nucleus { fill: #334155; stroke: #64748b; stroke-width: 1.8; }
       
-      .cell-wbc { fill: #ddd6fe; stroke: #a78bfa; stroke-width: 2.8; stroke-linejoin: round; }
+      .cell-wbc { fill: url(#gradWbc); stroke: #a78bfa; stroke-width: 2.8; stroke-linejoin: round; }
       .wbc-granule { fill: #c4b5fd; }
       .cell-wbc-nucleus { fill: #7c3aed; stroke: #5b21b6; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
       
-      .cell-rbc { fill: #dc2626; stroke: #991b1b; stroke-width: 2.8; stroke-linejoin: round; }
+      .cell-rbc { fill: url(#gradRbcCell); stroke: #991b1b; stroke-width: 2.8; stroke-linejoin: round; }
       .rbc-slope { fill: #ef4444; stroke: #b91c1c; stroke-width: 1.8; }
       .rbc-depression { fill: #f87171; stroke: #ef4444; stroke-width: 2.0; }
       
-      .cell-platelet { fill: #fbbf24; stroke: #d97706; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+      .cell-platelet { fill: url(#gradPlatelet); stroke: #d97706; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
     </style>
   </defs>
 
@@ -54,13 +78,13 @@
   <!-- Centrifuged Blood Layers (위에서부터 3개 층, 반드시 <rect>) -->
   <g clip-path="url(#tubeLiquidClip)">
     <!-- 1. Plasma Layer (혈장: 55% of 400 = 220px, #fde68a) -->
-    <rect id="plasmaLayer" x="135" y="180" width="120" height="220" fill="#fde68a" />
+    <rect id="plasmaLayer" x="135" y="180" width="120" height="220" fill="url(#gradPlasma)" />
     
     <!-- 2. Buffy Coat Layer (백혈구·혈소판 층: 3% of 400 = 12px, #e2e8f0) -->
-    <rect id="buffyLayer" x="135" y="400" width="120" height="12" fill="#e2e8f0" />
+    <rect id="buffyLayer" x="135" y="400" width="120" height="12" fill="url(#gradBuffy)" />
     
     <!-- 3. Red Blood Cell Layer (적혈구 층: 42% of 400 = 168px, #dc2626) -->
-    <rect id="rbcLayer" x="135" y="412" width="120" height="168" fill="#dc2626" />
+    <rect id="rbcLayer" x="135" y="412" width="120" height="168" fill="url(#gradRbc)" />
   </g>
 
   <!-- Test Tube Glass (시험관 유리, id="tube") -->

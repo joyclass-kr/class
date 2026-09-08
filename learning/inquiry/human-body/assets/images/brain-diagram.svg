@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <!-- linearGradient stop 2개, 빛 좌상단 -> 우하단, 밝기 차 10~25%, 순백/순흑 금지 -->
+    <linearGradient id="gradCerebrum" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f2cad5"/>
+      <stop offset="100%" stop-color="#d99aa9"/>
+    </linearGradient>
+    <linearGradient id="gradDiencephalon" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f7dc9f"/>
+      <stop offset="100%" stop-color="#dfba72"/>
+    </linearGradient>
+    <linearGradient id="gradPituitary" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fae8b2"/>
+      <stop offset="100%" stop-color="#e5c77e"/>
+    </linearGradient>
+    <linearGradient id="gradCallosum" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#faf3ea"/>
+      <stop offset="100%" stop-color="#dfd2bf"/>
+    </linearGradient>
+    <linearGradient id="gradMidbrain" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#a2cdae"/>
+      <stop offset="100%" stop-color="#7eaf8e"/>
+    </linearGradient>
+    <linearGradient id="gradPons" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#d7e0ec"/>
+      <stop offset="100%" stop-color="#b4c1d4"/>
+    </linearGradient>
+    <linearGradient id="gradMedulla" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#b0cef0"/>
+      <stop offset="100%" stop-color="#8aafd2"/>
+    </linearGradient>
+    <linearGradient id="gradCerebellum" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#cfb38c"/>
+      <stop offset="100%" stop-color="#af8e64"/>
+    </linearGradient>
+    <linearGradient id="gradSpinalCord" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#ebf1f7"/>
+      <stop offset="100%" stop-color="#cad4df"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 1. CEREBRUM (대뇌) - 전체 상부 및 전/후두엽, 고랑과 이랑             -->
+  <!--    칠: #e9b7c4, 테두리: #c98a9c                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="cerebrum">
+    <!-- 외곽 윤곽: 전두엽(좌측 170) -> 두정엽(상부 85) -> 후두엽(우측 830) -> 측두엽 기저부 -->
+    <path d="M 230 400
+             C 175 390 155 330 168 260
+             C 175 220 205 160 255 125
+             C 320 80 430 70 540 75
+             C 650 80 755 125 805 185
+             C 845 235 845 305 815 365
+             C 790 415 725 435 680 430
+             C 630 425 610 380 580 340
+             C 550 310 470 295 410 320
+             C 360 340 330 380 290 410
+             C 265 425 245 415 230 400 Z"
+          fill="url(#gradCerebrum)" stroke="#c98a9c" stroke-width="2.2" stroke-linejoin="round"/>
+
+    <!-- 대뇌 겉질 주름 (고랑 Sulci & 이랑 Gyri) - 가는 선으로 해부학적 디테일 -->
+    <g fill="none" stroke="#c98a9c" stroke-width="1.3" stroke-linecap="round" opacity="0.75">
+      <!-- 중심고랑 및 전두엽 고랑들 -->
+      <path d="M 215 295 C 240 280 275 305 315 280 C 340 265 375 275 400 250"/>
+      <path d="M 185 240 C 220 230 250 245 285 225 C 320 205 370 215 415 195"/>
+      <path d="M 230 170 C 270 165 310 185 365 170 C 420 155 480 175 515 150"/>
+      <path d="M 330 115 C 380 120 425 140 475 125 C 525 110 580 135 625 120"/>
+      <!-- 두정엽 및 후두엽 고랑들 -->
+      <path d="M 490 85 C 530 110 570 145 615 155 C 660 165 710 150 755 175"/>
+      <path d="M 645 135 C 675 165 720 180 750 215 C 775 245 805 255 825 290"/>
+      <path d="M 610 205 C 655 210 690 235 735 240 C 770 245 795 280 810 320"/>
+      <path d="M 685 260 C 720 275 750 305 770 345"/>
+      <path d="M 640 310 C 685 330 720 355 750 395"/>
+      <!-- 대뇌 안쪽 뇌들보 둘레 고랑 (Cingulate sulcus) -->
+      <path d="M 285 365 C 320 330 380 270 470 260 C 560 250 630 290 665 340"/>
+    </g>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 2. CORPUS CALLOSUM (뇌들보 / 뇌량) - 좌우 대뇌 반구를 잇는 백색 궁   -->
+  <!--    칠: #f5ece0, 테두리: #c9b9a5                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="corpusCallosum">
+    <!-- 무릎(Genu) -> 몸통(Body) -> 팽대(Splenium)로 이어지는 C자형 아치 -->
+    <path d="M 345 340
+             C 325 330 320 300 340 280
+             C 370 250 430 230 500 230
+             C 570 230 630 255 655 290
+             C 665 305 660 325 640 330
+             C 625 330 620 315 605 300
+             C 580 275 530 260 485 260
+             C 435 260 385 275 360 305
+             C 350 320 355 335 345 340 Z"
+          fill="url(#gradCallosum)" stroke="#c9b9a5" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- 투명중격 (Septum pellucidum) 및 뇌활 (Fornix) 융합 구역 -->
+    <path d="M 360 305 C 390 320 440 330 490 325 C 540 320 590 300 620 310"
+          fill="none" stroke="#c9b9a5" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 3. DIENCEPHALON (간뇌) - 시상(Thalamus)과 시상하부(Hypothalamus)   -->
+  <!--    칠: #f2cf8e, 테두리: #d1a95f                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="diencephalon">
+    <!-- 난원형 시상 본체 및 아래쪽 시상하부 영역 -->
+    <path d="M 400 330
+             C 430 305 480 295 535 300
+             C 585 305 605 330 595 360
+             C 585 385 545 405 500 405
+             C 460 405 440 400 425 390
+             C 410 380 390 350 400 330 Z"
+          fill="url(#gradDiencephalon)" stroke="#d1a95f" stroke-width="1.8"/>
+    <!-- 시상간교 (Interthalamic adhesion / 중간질 부착부 타원) -->
+    <ellipse cx="490" cy="345" rx="16" ry="12" fill="#d1a95f" opacity="0.35"/>
+    <!-- 시상하부 홈 (Hypothalamic sulcus) -->
+    <path d="M 425 365 C 460 365 505 375 550 365" fill="none" stroke="#d1a95f" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 4. PITUITARY (뇌하수체) - 간뇌 시상하부 아래 매달린 내분비샘          -->
+  <!--    칠: #f8df9e, 테두리: #d8b96f                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="pituitary">
+    <!-- 깔때기 줄기(Infundibulum) -> 뇌하수체 전엽/후엽 본체 타원 -->
+    <path d="M 425 388 L 418 412
+             C 405 415 398 426 400 438
+             C 402 450 415 458 428 456
+             C 440 454 448 442 445 430
+             C 442 420 432 414 425 412 L 430 388 Z"
+          fill="url(#gradPituitary)" stroke="#d8b96f" stroke-width="1.5" stroke-linejoin="round"/>
+    <!-- 전엽/후엽 경계선 -->
+    <path d="M 422 418 C 420 430 422 445 425 455" fill="none" stroke="#d8b96f" stroke-width="1" opacity="0.5"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 5. MIDBRAIN (중간뇌 / 중뇌) - 간뇌 아래, 안구·동공 반사 중추          -->
+  <!--    칠: #8fbf9f, 테두리: #5f9a73                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="midbrain">
+    <!-- 대뇌다리(앞쪽) 및 덮개(뒤쪽 네둔덕판 Tectum) -->
+    <path d="M 455 402
+             C 490 402 525 400 555 395
+             C 565 405 570 420 560 435
+             C 530 438 495 440 460 442
+             C 452 425 450 412 455 402 Z"
+          fill="url(#gradMidbrain)" stroke="#5f9a73" stroke-width="1.8"/>
+    <!-- 중간뇌 수도관 (Cerebral aqueduct 통로선) -->
+    <path d="M 525 402 C 528 418 530 432 533 438" fill="none" stroke="#5f9a73" stroke-width="1.4" stroke-dasharray="3,3" opacity="0.7"/>
+    <!-- 상구/하구 (네둔덕 융기) -->
+    <path d="M 552 405 Q 562 415 558 425 Q 562 432 555 437" fill="none" stroke="#5f9a73" stroke-width="1.3"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 6. PONS (다리뇌 / 교뇌) - 앞쪽으로 볼록한 신경 다리 팽대부            -->
+  <!--    칠: #c9d4e3, 테두리: #9aa8bd                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="pons">
+    <!-- 앞쪽(좌측)으로 둥글게 불룩 튀어나온 다리뇌 융기 -->
+    <path d="M 460 442
+             C 495 440 530 438 560 435
+             C 568 458 565 480 555 500
+             C 525 502 490 505 465 505
+             C 435 485 435 460 460 442 Z"
+          fill="url(#gradPons)" stroke="#9aa8bd" stroke-width="1.8"/>
+    <!-- 가로 신경 섬유 결 (Transverse pontine fibers) -->
+    <g fill="none" stroke="#9aa8bd" stroke-width="1.1" opacity="0.6">
+      <path d="M 452 455 C 475 455 515 452 550 450"/>
+      <path d="M 445 472 C 472 472 518 470 555 468"/>
+      <path d="M 450 490 C 478 490 520 488 552 485"/>
+    </g>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 7. MEDULLA (연수 / 숨골) - 호흡·심장 중추 및 신경 교차                -->
+  <!--    칠: #9fc0e0, 테두리: #6e94ba                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="medulla">
+    <!-- 다리뇌 아래에서 점차 좁아지며 척수로 이어지는 원추형 줄기 -->
+    <path d="M 465 505
+             C 490 505 525 502 555 500
+             C 552 530 548 558 542 580
+             C 520 582 500 583 480 582
+             C 475 558 470 530 465 505 Z"
+          fill="url(#gradMedulla)" stroke="#6e94ba" stroke-width="1.8"/>
+    <!-- 피라미드 및 올리브 핵 음영선 -->
+    <path d="M 495 510 L 502 575" fill="none" stroke="#6e94ba" stroke-width="1.2" opacity="0.65"/>
+    <ellipse cx="482" cy="535" rx="6" ry="14" fill="#6e94ba" opacity="0.25"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 8. CEREBELLUM (소뇌) - 후하방 잎사귀형 주름 및 수지상 생명의 나무     -->
+  <!--    칠: #c2a37a, 테두리: #9a7c53                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="cerebellum">
+    <!-- 엽(Folia)으로 둘러싸인 조개/꽃양배추 모양 소뇌 반구 -->
+    <path d="M 565 435
+             C 610 410 670 415 725 435
+             C 775 455 810 495 805 545
+             C 800 595 750 635 690 640
+             C 630 645 580 615 555 560
+             C 545 538 550 515 555 500
+             C 565 480 568 458 565 435 Z"
+          fill="url(#gradCerebellum)" stroke="#9a7c53" stroke-width="2.2" stroke-linejoin="round"/>
+
+    <!-- 생명의 나무 (Arbor Vitae) 백색질 수지상 분기선 -->
+    <g fill="none" stroke="#f5ede2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+      <!-- 중앙 줄기 (다리뇌 소뇌각 부위에서 뻗어나옴) -->
+      <path d="M 570 500 C 600 505 625 510 655 515"/>
+      <!-- 상부 주요 가지들 -->
+      <path d="M 625 510 C 640 480 665 460 695 450"/>
+      <path d="M 665 460 C 685 445 715 440 735 445"/>
+      <path d="M 650 495 C 680 485 715 480 745 485"/>
+      <!-- 후방 주요 가지들 -->
+      <path d="M 655 515 C 690 520 725 525 765 530"/>
+      <path d="M 710 523 C 735 510 760 512 780 520"/>
+      <path d="M 705 528 C 730 545 755 555 775 565"/>
+      <!-- 하부 주요 가지들 -->
+      <path d="M 640 512 C 655 545 680 575 710 595"/>
+      <path d="M 675 565 C 695 590 720 610 745 618"/>
+      <path d="M 625 510 C 620 540 635 570 655 595"/>
+    </g>
+
+    <!-- 소뇌 겉질 잔주름 (Folia striations) -->
+    <g fill="none" stroke="#9a7c53" stroke-width="1.1" opacity="0.6">
+      <path d="M 715 435 C 750 460 780 485 795 520"/>
+      <path d="M 750 485 C 775 510 795 545 790 580"/>
+      <path d="M 730 550 C 755 575 760 605 735 625"/>
+      <path d="M 670 600 C 685 620 660 635 630 635"/>
+    </g>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 9. SPINAL CORD (척수) - 연수에서 척추관을 따라 내려가는 신경 줄기     -->
+  <!--    칠: #dfe6ee, 테두리: #a8b3c2                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <g id="spinalCord">
+    <!-- 아래쪽으로 곧게 뻗어나가는 척수 기둥 -->
+    <path d="M 480 582
+             C 480 610 482 645 485 680
+             C 502 682 522 682 540 680
+             C 540 645 541 610 542 580
+             C 520 582 500 583 480 582 Z"
+          fill="url(#gradSpinalCord)" stroke="#a8b3c2" stroke-width="1.8"/>
+    <!-- 척수 전정중열 (Anterior median fissure) 홈 -->
+    <line x1="510" y1="582" x2="512" y2="680" stroke="#a8b3c2" stroke-width="1.3" opacity="0.7"/>
+    <!-- 척수신경 뿌리 (Spinal nerve rootlets) 분기 흔적선 -->
+    <path d="M 483 615 L 468 625 M 484 645 L 469 655 M 485 670 L 470 680" stroke="#a8b3c2" stroke-width="1.4" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 541 615 L 556 625 M 541 645 L 556 655 M 540 670 L 555 680" stroke="#a8b3c2" stroke-width="1.4" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

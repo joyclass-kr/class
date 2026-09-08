@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <linearGradient id="gradSclera" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e8ecf2"/>
+      <stop offset="100%" stop-color="#d5dce7"/>
+    </linearGradient>
+    <linearGradient id="gradChoroid" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#974966"/>
+      <stop offset="100%" stop-color="#5d2d3e"/>
+    </linearGradient>
+    <linearGradient id="gradRetina" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f5dbb2"/>
+      <stop offset="100%" stop-color="#eab661"/>
+    </linearGradient>
+    <linearGradient id="gradLens" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fff8db"/>
+      <stop offset="100%" stop-color="#ffec9e"/>
+    </linearGradient>
+    <linearGradient id="gradIris" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#5596be"/>
+      <stop offset="100%" stop-color="#346889"/>
+    </linearGradient>
+    <linearGradient id="gradCornea" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e1f1f9"/>
+      <stop offset="100%" stop-color="#afd8ef"/>
+    </linearGradient>
+    <linearGradient id="gradOptic" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f8f1e2"/>
+      <stop offset="100%" stop-color="#ebd6a8"/>
+    </linearGradient>
+  </defs>
   <!-- ═══════════════════════════════════════════════════════════════════ -->
   <!-- 1. OPTIC NERVE (시각 신경) - Left Inferior Exit                      -->
   <!--    칠: #f1e3c4, 테두리: #c9b48a                                     -->
@@ -17,7 +47,7 @@
              C 105,509 95,524 95,538
              C 95,550 106,560 120,556
              C 192,532 265,498 328,465 Z"
-          fill="#f1e3c4" stroke="#c9b48a" stroke-width="1.8" />
+          fill="url(#gradOptic)" stroke="#c9b48a" stroke-width="1.8" />
     <!-- Inner Sheath Shading (납작한 두 번째 그늘색) -->
     <path d="M 327,425
              C 272,444 202,475 125,507
@@ -52,7 +82,7 @@
              C 605,165 565,148 518,140
              C 445,130 365,152 328,233
              C 298,304 322,368 348,405 Z"
-          fill="#e8ecf2" stroke="#9aa5b4" stroke-width="1.5" />
+          fill="url(#gradSclera)" stroke="#9aa5b4" stroke-width="1.5" />
     <!-- Lower Scleral Shell (from Optic Nerve bottom to Lower Cornea Limbus at 635, 525) -->
     <path d="M 328,465
              C 346,515 388,565 448,582
@@ -62,7 +92,7 @@
              C 630,518 625,528 616,536
              C 578,568 515,578 454,562
              C 400,548 362,507 346,467 Z"
-          fill="#e8ecf2" stroke="#9aa5b4" stroke-width="1.5" />
+          fill="url(#gradSclera)" stroke="#9aa5b4" stroke-width="1.5" />
     <!-- Subtle Posterior Contour Arc to define the outer eyeball curvature -->
     <path d="M 326,420 C 285,375 270,310 290,250 M 328,465 C 338,505 365,545 405,572" fill="none" stroke="#9aa5b4" stroke-width="1.5" />
   </g>
@@ -250,7 +280,7 @@
     <path d="M 625,270
              C 648,310 648,390 625,430
              C 602,390 602,310 625,270 Z"
-          fill="#fff4c9" fill-opacity="0.75" stroke="#e0c877" stroke-width="2.2" />
+          fill="url(#gradLens)" fill-opacity="0.85" stroke="#e0c877" stroke-width="2.2" />
     <!-- Lens Internal Cortex Rings (피질 층상 구조) -->
     <path d="M 625,295
              C 640,322 640,378 625,405
@@ -272,7 +302,7 @@
              C 648,245 660,265 665,278
              L 655,305
              C 648,285 640,260 632,238 Z"
-          fill="#3f7fa6" stroke="#8fc0d8" stroke-width="1.4" />
+          fill="url(#gradIris)" stroke="#8fc0d8" stroke-width="1.4" />
     <!-- Upper Iris Pupillary Margin & Sphincter Muscle -->
     <ellipse cx="655" cy="305" rx="3.5" ry="4.5" fill="#2d6080" stroke="#8fc0d8" stroke-width="1.2" />
     <path d="M 642,246 C 652,266 660,282 660,296" fill="none" stroke="#8fc0d8" stroke-width="0.9" opacity="0.8" />
@@ -282,7 +312,7 @@
              C 648,455 660,435 665,422
              L 655,395
              C 648,415 640,440 632,462 Z"
-          fill="#3f7fa6" stroke="#8fc0d8" stroke-width="1.4" />
+          fill="url(#gradIris)" stroke="#8fc0d8" stroke-width="1.4" />
     <!-- Lower Iris Pupillary Margin & Sphincter Muscle -->
     <ellipse cx="655" cy="395" rx="3.5" ry="4.5" fill="#2d6080" stroke="#8fc0d8" stroke-width="1.2" />
     <path d="M 642,454 C 652,434 660,418 660,404" fill="none" stroke="#8fc0d8" stroke-width="0.9" opacity="0.8" />
@@ -316,7 +346,7 @@
              L 635,505
              C 700,490 748,425 748,350
              C 748,275 700,210 635,195 Z"
-          fill="#cfe8f5" fill-opacity="0.55" stroke="#9ec9de" stroke-width="1.8" />
+          fill="url(#gradCornea)" fill-opacity="0.65" stroke="#9ec9de" stroke-width="1.8" />
     <!-- Corneoscleral Limbus Transition Zones (각막-공막 이행부) -->
     <ellipse cx="635" cy="185" rx="5" ry="8" fill="#b9dff2" opacity="0.6" stroke="none" />
     <ellipse cx="635" cy="515" rx="5" ry="8" fill="#b9dff2" opacity="0.6" stroke="none" />

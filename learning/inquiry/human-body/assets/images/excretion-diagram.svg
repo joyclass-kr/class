@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 900" width="700" height="900">
+  <defs>
+    <!-- 2-stop linearGradients: light from top-left (20% 20% to 80% 80%), brightness diff 12~20%, hue diff <= 2 deg -->
+    <linearGradient id="gradAorta" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#d7546e"/>
+      <stop offset="100%" stop-color="#9e2a41"/>
+    </linearGradient>
+    <linearGradient id="gradVena" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#5e83b8"/>
+      <stop offset="100%" stop-color="#395886"/>
+    </linearGradient>
+    <linearGradient id="gradCortex" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e49b8b"/>
+      <stop offset="100%" stop-color="#b66f5f"/>
+    </linearGradient>
+    <linearGradient id="gradMedulla" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#b9645f"/>
+      <stop offset="100%" stop-color="#873c38"/>
+    </linearGradient>
+    <linearGradient id="gradPelvis" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f7e8be"/>
+      <stop offset="100%" stop-color="#cfbc8b"/>
+    </linearGradient>
+    <linearGradient id="gradKidneyLeft" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#ce8070"/>
+      <stop offset="100%" stop-color="#a35545"/>
+    </linearGradient>
+    <linearGradient id="gradUreter" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f2e4b8"/>
+      <stop offset="100%" stop-color="#c8b786"/>
+    </linearGradient>
+    <linearGradient id="gradBladder" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#ecd080"/>
+      <stop offset="100%" stop-color="#c29f45"/>
+    </linearGradient>
+    <linearGradient id="gradBowman" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e4edf5"/>
+      <stop offset="100%" stop-color="#bfd0de"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1. Body Outline (Centered lower abdomen: symmetric margins x min 130, x max 570) -->
+  <path id="bodyOutline" d="
+    M 210 90
+    C 280 85, 420 85, 490 90
+    C 525 150, 545 280, 535 380
+    C 525 450, 540 540, 565 620
+    C 575 660, 555 760, 540 850
+    C 515 855, 460 850, 440 820
+    C 415 780, 395 740, 375 700
+    C 365 680, 335 680, 325 700
+    C 305 740, 285 780, 260 820
+    C 240 850, 185 855, 160 850
+    C 145 760, 125 660, 135 620
+    C 160 540, 175 450, 165 380
+    C 155 280, 175 150, 210 90 Z"
+    fill="none" stroke="#5b6a80" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+
+  <!-- 2. Major Vessels (Aorta & Vena Cava) -->
+  <!-- Vena Cava (대정맥: 푸른색, 가운데 세로) -->
+  <g id="venaCava">
+    <path d="
+      M 315 90 L 335 90
+      L 335 550 L 350 610 L 335 610 L 325 565 L 315 565 L 305 610 L 290 610 L 305 550 L 315 550 Z"
+      fill="url(#gradVena)" stroke="#365380" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Aorta (대동맥: 붉은색, 가운데 세로) -->
+  <g id="aorta">
+    <path d="
+      M 345 90 L 365 90
+      L 365 540 L 395 610 L 380 610 L 358 560 L 352 560 L 330 610 L 315 610 L 345 540 Z"
+      fill="url(#gradAorta)" stroke="#a13549" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 3. Renal Vessels (콩팥동맥 & 콩팥정맥) -->
+  <!-- Renal Artery (대동맥에서 콩팥으로, touches aorta) -->
+  <g id="renalArtery">
+    <!-- Right renal artery (branches to viewer left, passing behind vena cava) -->
+    <path d="M 345 265 L 245 265 L 245 277 L 345 277 Z" fill="url(#gradAorta)" stroke="#a13549" stroke-width="1.8"/>
+    <!-- Left renal artery (branches to viewer right) -->
+    <path d="M 365 265 L 450 265 L 450 277 L 365 277 Z" fill="url(#gradAorta)" stroke="#a13549" stroke-width="1.8"/>
+  </g>
+
+  <!-- Renal Vein (콩팥에서 대정맥으로, touches venaCava) -->
+  <g id="renalVein">
+    <!-- Right renal vein (viewer left) -->
+    <path d="M 245 250 L 315 250 L 315 264 L 245 264 Z" fill="url(#gradVena)" stroke="#365380" stroke-width="1.8"/>
+    <!-- Left renal vein (viewer right, crossing in front of aorta) -->
+    <path d="M 335 250 L 450 250 L 450 264 L 335 264 Z" fill="url(#gradVena)" stroke="#365380" stroke-width="1.8"/>
+  </g>
+
+  <!-- 4. Right Kidney (오른쪽 콩팥 / 화면 왼쪽) — 반으로 잘라 속을 보인다 -->
+  <g id="kidneyRight">
+    <!-- cortex (겉질 — 바깥 테두리) -->
+    <path id="cortex" d="
+      M 235 185
+      C 200 185, 160 215, 160 265
+      C 160 315, 200 345, 235 345
+      C 260 345, 265 315, 252 285
+      C 245 265, 245 255, 252 245
+      C 265 215, 260 185, 235 185 Z"
+      fill="url(#gradCortex)" stroke="#b06a59" stroke-width="2" stroke-linejoin="round"/>
+
+    <!-- medulla (속질 — 안쪽 삼각형/피라미드 여럿) -->
+    <g id="medulla">
+      <!-- Pyramid 1 (top) -->
+      <path d="M 225 200 C 205 205, 195 215, 195 225 L 225 235 Z" fill="url(#gradMedulla)" stroke="#84403c" stroke-width="1.5"/>
+      <!-- Pyramid 2 (upper mid) -->
+      <path d="M 190 230 C 180 240, 180 255, 185 265 L 220 255 Z" fill="url(#gradMedulla)" stroke="#84403c" stroke-width="1.5"/>
+      <!-- Pyramid 3 (lower mid) -->
+      <path d="M 185 270 C 182 285, 190 295, 200 305 L 222 275 Z" fill="url(#gradMedulla)" stroke="#84403c" stroke-width="1.5"/>
+      <!-- Pyramid 4 (bottom) -->
+      <path d="M 205 310 C 215 320, 228 325, 235 325 L 228 290 Z" fill="url(#gradMedulla)" stroke="#84403c" stroke-width="1.5"/>
+    </g>
+
+    <!-- renalPelvis (콩팥깔때기 — 가운데 빈 곳 깔때기 모양) -->
+    <path id="renalPelvis" d="
+      M 225 240
+      L 220 255 L 222 275 L 228 290
+      C 238 288, 252 280, 255 270
+      C 255 258, 240 242, 225 240 Z"
+      fill="url(#gradPelvis)" stroke="#c9b47c" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 5. Left Kidney (왼쪽 콩팥 / 화면 오른쪽) — 겉모습 그대로 -->
+  <g id="kidneyLeft">
+    <path d="
+      M 465 185
+      C 500 185, 540 215, 540 265
+      C 540 315, 500 345, 465 345
+      C 440 345, 435 315, 448 285
+      C 455 265, 455 255, 448 245
+      C 435 215, 440 185, 465 185 Z"
+      fill="url(#gradKidneyLeft)" stroke="#96513f" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Kidney surface convex shading crease -->
+    <path d="M 480 205 C 515 235, 515 295, 480 325" fill="none" stroke="#96513f" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- 6. Ureters (오줌관 둘: continuous from kidneys to bladder) -->
+  <g id="ureterR">
+    <path d="
+      M 245 280
+      C 250 350, 290 470, 325 585
+      L 337 585
+      C 305 470, 265 350, 255 280 Z"
+      fill="url(#gradUreter)" stroke="#bfae7c" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+
+  <g id="ureterL">
+    <path d="
+      M 455 280
+      C 450 350, 410 470, 375 585
+      L 363 585
+      C 395 470, 435 350, 445 280 Z"
+      fill="url(#gradUreter)" stroke="#bfae7c" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 7. Bladder (방광: 아래쪽 주머니) -->
+  <g id="bladder">
+    <path d="
+      M 320 590
+      C 320 575, 380 575, 380 590
+      C 395 615, 395 645, 375 665
+      C 362 675, 338 675, 325 665
+      C 305 645, 305 615, 320 590 Z"
+      fill="url(#gradBladder)" stroke="#bb9c40" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Bladder wall expansion fold -->
+    <path d="M 330 615 C 350 635, 370 615, 370 615" fill="none" stroke="#bb9c40" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- 8. Urethra (요도: 방광에서 아래로) -->
+  <g id="urethra">
+    <path d="
+      M 344 670 L 356 670
+      L 356 730 L 344 730 Z"
+      fill="url(#gradUreter)" stroke="#bfae7c" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 9. Nephron Zoom (네프론 돋보기: 오른쪽 아래 큰 원, diameter > 220px) -->
+  <g id="nephronZoom">
+    <!-- Circular magnifying frame: center (540, 730), radius 125 -> diameter 250px (> 220px!) -->
+    <circle id="zoomCircle" cx="540" cy="730" r="125" fill="#f7f9fc" stroke="#8fa0b5" stroke-width="3"/>
+
+    <!-- bowman (보먼주머니: 사구체를 감싼 C자 컵) -->
+    <path id="bowman" d="
+      M 480 690
+      C 460 705, 460 735, 480 750
+      C 495 760, 515 755, 520 740
+      L 512 735
+      C 508 745, 495 748, 485 740
+      C 472 730, 472 710, 485 700
+      C 495 692, 508 695, 512 705
+      L 520 700
+      C 515 685, 495 680, 480 690 Z"
+      fill="url(#gradBowman)" stroke="#93a7ba" stroke-width="1.8" stroke-linejoin="round"/>
+
+    <!-- glomerulus (사구체: 보먼주머니 안쪽 모세혈관 실뭉치) -->
+    <g id="glomerulus">
+      <circle cx="492" cy="720" r="14" fill="url(#gradAorta)" stroke="#a13549" stroke-width="1.8"/>
+      <!-- Capillary ball folds -->
+      <path d="M 484 715 C 490 710, 495 725, 500 718" fill="none" stroke="#a13549" stroke-width="1.2"/>
+      <path d="M 486 725 C 492 730, 498 722, 500 726" fill="none" stroke="#a13549" stroke-width="1.2"/>
+    </g>
+
+    <!-- tubule (세뇨관: 보먼주머니에서 이어져 구불구불 도는 관) -->
+    <path id="tubule" d="
+      M 520 740
+      C 535 760, 510 780, 525 805
+      C 535 820, 555 820, 560 800
+      C 565 770, 545 745, 560 720
+      C 570 700, 595 705, 605 715"
+      fill="none" stroke="#c8b786" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- collecting (집합관: 아래로 내려가는 굵은 관) -->
+    <path id="collecting" d="
+      M 605 640 L 605 820"
+      fill="none" stroke="#bfae7c" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- peritubular (모세혈관망: 세뇨관을 감은 모세혈관) -->
+    <path id="peritubular" d="
+      M 515 720 C 530 735, 540 760, 530 785
+      M 535 750 C 550 765, 555 780, 545 810
+      M 545 730 C 560 740, 575 755, 565 780"
+      fill="none" stroke="#4a6fa5" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

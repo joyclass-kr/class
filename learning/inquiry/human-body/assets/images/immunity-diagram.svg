@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
+    <linearGradient id="gradSkin" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fed2d7"/>
+      <stop offset="100%" stop-color="#fc7887"/>
+    </linearGradient>
+    <linearGradient id="gradMucus" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fed2d7"/>
+      <stop offset="100%" stop-color="#fc7887"/>
+    </linearGradient>
+    <linearGradient id="gradPathogen" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#3bde77"/>
+      <stop offset="100%" stop-color="#1b9d4a"/>
+    </linearGradient>
+    <linearGradient id="gradMacrophage" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f7b23b"/>
+      <stop offset="100%" stop-color="#c98208"/>
+    </linearGradient>
+    <linearGradient id="gradTCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#6bcffa"/>
+      <stop offset="100%" stop-color="#0eb1f6"/>
+    </linearGradient>
+    <linearGradient id="gradBCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#60dcaf"/>
+      <stop offset="100%" stop-color="#27b480"/>
+    </linearGradient>
+    <linearGradient id="gradPlasmaCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#14e6a0"/>
+      <stop offset="100%" stop-color="#0c8d62"/>
+    </linearGradient>
+    <linearGradient id="gradMemoryCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f075b3"/>
+      <stop offset="100%" stop-color="#e71d82"/>
+    </linearGradient>
+    <linearGradient id="gradVessel" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e25050"/>
+      <stop offset="100%" stop-color="#b81e1e"/>
+    </linearGradient>
     <style>
       /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
       .panel-divider { stroke: #334155; stroke-width: 1.6; stroke-dasharray: 6,6; opacity: 0.45; }
@@ -8,7 +44,7 @@
       
       /* Column 1: First Line of Defense */
       .skin-dermis { fill: #fda4af; fill-opacity: 0.45; stroke: #fb7185; stroke-width: 2.4; }
-      .skin-epidermis { fill: #fda4af; stroke: #fb7185; stroke-width: 2.6; stroke-linejoin: round; }
+      .skin-epidermis { fill: url(#gradSkin); stroke: #fb7185; stroke-width: 2.6; stroke-linejoin: round; }
       .skin-corneum { fill: #fecdd3; stroke: #f43f5e; stroke-width: 2.6; stroke-linejoin: round; }
       .skin-scale { stroke: #f43f5e; stroke-width: 1.8; stroke-linecap: round; }
       .skin-cell-line { stroke: #fb7185; stroke-width: 1.4; opacity: 0.75; }
@@ -17,24 +53,24 @@
       .wound-edge { stroke: #dc2626; stroke-width: 2.6; stroke-linecap: round; }
       .wound-splinter { stroke: #a16207; stroke-width: 2.8; stroke-linecap: round; }
 
-      .mucus-tissue { fill: #fda4af; stroke: #fb7185; stroke-width: 2.6; stroke-linejoin: round; }
+      .mucus-tissue { fill: url(#gradMucus); stroke: #fb7185; stroke-width: 2.6; stroke-linejoin: round; }
       .mucus-layer { fill: #fecdd3; fill-opacity: 0.65; stroke: #f43f5e; stroke-width: 2.2; }
       .cilia-hair { stroke: #fb7185; stroke-width: 2.2; stroke-linecap: round; }
       
       .lysozyme-drop { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.6; stroke-linejoin: round; }
       .lysozyme-spark { fill: none; stroke: #7dd3fc; stroke-width: 2.2; stroke-linecap: round; }
       
-      .pathogen-body { fill: #22c55e; stroke: #15803d; stroke-width: 2.4; stroke-linejoin: round; }
+      .pathogen-body { fill: url(#gradPathogen); stroke: #15803d; stroke-width: 2.4; stroke-linejoin: round; }
       .pathogen-spike { stroke: #15803d; stroke-width: 2.0; stroke-linecap: round; }
       .pathogen-flagella { fill: none; stroke: #15803d; stroke-width: 1.8; stroke-linecap: round; }
       .bounce-arc { fill: none; stroke: #ef4444; stroke-width: 2.4; stroke-dasharray: 4,4; stroke-linecap: round; }
       
       /* Column 2: Innate Non-specific Defense */
-      .macrophage-body { fill: #f59e0b; stroke: #b45309; stroke-width: 2.8; stroke-linejoin: round; }
+      .macrophage-body { fill: url(#gradMacrophage); stroke: #b45309; stroke-width: 2.8; stroke-linejoin: round; }
       .macrophage-nucleus { fill: #b45309; opacity: 0.88; }
       .phago-vesicle { fill: #d97706; fill-opacity: 0.35; stroke: #b45309; stroke-width: 1.8; stroke-dasharray: 3,3; }
       
-      .vessel-wall { fill: #dc2626; stroke: #991b1b; stroke-width: 2.8; stroke-linejoin: round; }
+      .vessel-wall { fill: url(#gradVessel); stroke: #991b1b; stroke-width: 2.8; stroke-linejoin: round; }
       .vessel-lumen { fill: #dc2626; fill-opacity: 0.18; }
       .vessel-endothelial { fill: #b91c1c; stroke: #991b1b; stroke-width: 1.8; }
       .wbc-cell { fill: #fef08a; stroke: #ca8a04; stroke-width: 2.4; }
@@ -44,19 +80,19 @@
       .mhc-receptor { fill: #d97706; stroke: #78350f; stroke-width: 2.2; }
       .antigen-fragment { fill: #22c55e; stroke: #15803d; stroke-width: 2.2; }
       
-      .t-cell-helper { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.8; }
+      .t-cell-helper { fill: url(#gradTCell); stroke: #0284c7; stroke-width: 2.8; }
       .t-cell-nucleus { fill: #0369a1; opacity: 0.9; }
       .t-cell-receptor { fill: #0284c7; stroke: #0369a1; stroke-width: 2.2; }
       
-      .b-cell { fill: #34d399; stroke: #059669; stroke-width: 2.8; }
+      .b-cell { fill: url(#gradBCell); stroke: #059669; stroke-width: 2.8; }
       .b-cell-nucleus { fill: #047857; opacity: 0.9; }
       .b-cell-receptor { fill: none; stroke: #059669; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
       
-      .plasma-cell { fill: #10b981; stroke: #047857; stroke-width: 2.8; }
+      .plasma-cell { fill: url(#gradPlasmaCell); stroke: #047857; stroke-width: 2.8; }
       .plasma-nucleus { fill: #065f46; opacity: 0.9; }
       .plasma-er { fill: none; stroke: #059669; stroke-width: 2.0; stroke-linecap: round; }
       
-      .memory-cell { fill: #ec4899; stroke: #be185d; stroke-width: 2.8; }
+      .memory-cell { fill: url(#gradMemoryCell); stroke: #be185d; stroke-width: 2.8; }
       .memory-nucleus { fill: #9d174d; opacity: 0.9; }
       
       .antibody-y { fill: none; stroke: #fbbf24; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }

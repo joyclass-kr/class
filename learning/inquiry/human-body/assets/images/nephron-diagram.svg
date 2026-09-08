@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
+    <linearGradient id="gradTubule" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fef7bd"/>
+      <stop offset="100%" stop-color="#fdea58"/>
+    </linearGradient>
+    <linearGradient id="gradDuct" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fef1be"/>
+      <stop offset="100%" stop-color="#fcdc59"/>
+    </linearGradient>
+    <linearGradient id="gradArtery" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f26e6e"/>
+      <stop offset="100%" stop-color="#eb1919"/>
+    </linearGradient>
+    <linearGradient id="gradVein" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#689ff8"/>
+      <stop offset="100%" stop-color="#1068f4"/>
+    </linearGradient>
     <style>
       /* 2D Flat Standard Korean Science Textbook / Exam Paper Style */
       .cortex-medulla-line { stroke: #475569; stroke-width: 1.5; stroke-dasharray: 6,8; fill: none; opacity: 0.8; }
       
       /* Nephron Tubules: Flat solid warm yellow with amber outline */
-      .tubule-fill { fill: #fef08a; stroke: #ca8a04; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
-      .duct-fill { fill: #fde68a; stroke: #b45309; stroke-width: 2.8; stroke-linejoin: round; stroke-linecap: round; }
+      .tubule-fill { fill: url(#gradTubule); stroke: #ca8a04; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+      .duct-fill { fill: url(#gradDuct); stroke: #b45309; stroke-width: 2.8; stroke-linejoin: round; stroke-linecap: round; }
       
       /* Arterial Blood Vessels: Flat solid red with clean outline */
-      .artery-thick { fill: #ef4444; stroke: #991b1b; stroke-width: 2.6; stroke-linejoin: round; }
+      .artery-thick { fill: url(#gradArtery); stroke: #991b1b; stroke-width: 2.6; stroke-linejoin: round; }
       .artery-thin { fill: #f87171; stroke: #b91c1c; stroke-width: 2.0; stroke-linejoin: round; }
       .glomerulus-loop { fill: none; stroke: #dc2626; stroke-width: 4.6; stroke-linecap: round; stroke-linejoin: round; }
       
       /* Venous Blood Vessels: Flat solid blue with clean outline */
-      .vein-thick { fill: #3b82f6; stroke: #1d4ed8; stroke-width: 2.6; stroke-linejoin: round; }
+      .vein-thick { fill: url(#gradVein); stroke: #1d4ed8; stroke-width: 2.6; stroke-linejoin: round; }
       
       /* Peritubular Capillary Network */
       .cap-art { fill: none; stroke: #ef4444; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }

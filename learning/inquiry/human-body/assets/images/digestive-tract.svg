@@ -1,0 +1,229 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 900" width="700" height="900">
+  <defs>
+    <!-- 2-stop linearGradients: light from top-left (20% 20% to 80% 80%), brightness diff 15~18%, hue diff <= 2 deg -->
+    <linearGradient id="gradMouth" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#efc8b9"/>
+      <stop offset="100%" stop-color="#cba08f"/>
+    </linearGradient>
+    <linearGradient id="gradStomach" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e4847c"/>
+      <stop offset="100%" stop-color="#b6574f"/>
+    </linearGradient>
+    <linearGradient id="gradLiver" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#9f574b"/>
+      <stop offset="100%" stop-color="#6e352d"/>
+    </linearGradient>
+    <linearGradient id="gradGall" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#7fac68"/>
+      <stop offset="100%" stop-color="#537941"/>
+    </linearGradient>
+    <linearGradient id="gradPancreas" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#edcd75"/>
+      <stop offset="100%" stop-color="#c7a445"/>
+    </linearGradient>
+    <linearGradient id="gradSmall" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f4b890"/>
+      <stop offset="100%" stop-color="#cc8b61"/>
+    </linearGradient>
+    <linearGradient id="gradLarge" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#cfa17e"/>
+      <stop offset="100%" stop-color="#a47451"/>
+    </linearGradient>
+    <linearGradient id="gradRectum" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#be8d72"/>
+      <stop offset="100%" stop-color="#936247"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1. Body Outline (Centered torso: x min 120, max 580 -> symmetric margins 120 each) -->
+  <path id="bodyOutline" d="
+    M 310 40
+    C 330 38, 370 38, 390 40
+    C 420 50, 425 90, 420 120
+    C 415 138, 405 145, 395 152
+    C 425 160, 520 180, 575 220
+    C 585 240, 565 340, 550 410
+    C 538 460, 528 500, 532 550
+    C 536 600, 550 670, 545 740
+    C 540 790, 490 830, 450 855
+    C 410 862, 380 840, 350 810
+    C 320 840, 290 862, 250 855
+    C 210 830, 160 790, 155 740
+    C 150 670, 164 600, 168 550
+    C 172 500, 162 460, 150 410
+    C 135 340, 115 240, 125 220
+    C 180 180, 275 160, 305 152
+    C 295 145, 285 138, 280 120
+    C 275 90, 280 50, 310 40 Z"
+    fill="none" stroke="#5b6a80" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+
+  <!-- 2. Portal Vein (간문맥: 소장 ➔ 간, #8f6d86, touches smallIntestine and liver) -->
+  <path id="portalVein" d="M 330 460 C 310 420, 280 380, 265 330"
+    fill="none" stroke="#8f6d86" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- 3. Liver (간: 오른쪽 위/viewer left, dark brown, wedge shaped) -->
+  <g id="liver">
+    <path d="
+      M 345 250
+      C 345 235, 290 220, 240 225
+      C 180 230, 165 260, 170 295
+      C 175 335, 205 355, 250 355
+      C 295 355, 335 340, 345 320
+      C 350 305, 345 265, 345 250 Z"
+      fill="url(#gradLiver)" stroke="#6d382f" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Hepatic lobe fissure -->
+    <path d="M 270 230 C 265 265, 260 310, 275 350" fill="none" stroke="#6d382f" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- 4. Gallbladder (쓸개: 간 아래 작은 주머니, green) -->
+  <g id="gallbladder">
+    <path d="
+      M 275 335
+      C 265 335, 258 348, 262 360
+      C 266 372, 282 375, 288 362
+      C 292 352, 285 335, 275 335 Z"
+      fill="url(#gradGall)" stroke="#517341" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- Surface contour -->
+    <path d="M 268 345 Q 275 355 282 345" fill="none" stroke="#517341" stroke-width="0.8"/>
+  </g>
+
+  <!-- 5. Continuous Alimentary Canal: Mouth & Esophagus -->
+  <g id="mouth">
+    <ellipse cx="350" cy="70" rx="20" ry="12" fill="url(#gradMouth)" stroke="#c08d79" stroke-width="1.8"/>
+    <!-- Oral cavity opening slit -->
+    <path d="M 338 70 Q 350 75 362 70" fill="none" stroke="#c08d79" stroke-width="1.2"/>
+  </g>
+
+  <g id="esophagus">
+    <path d="
+      M 342 78 L 358 78
+      L 358 245 L 342 245 Z"
+      fill="url(#gradMouth)" stroke="#c08d79" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- Peristalsis contraction lines -->
+    <line x1="344" y1="120" x2="356" y2="120" stroke="#c08d79" stroke-width="1" opacity="0.6"/>
+    <line x1="344" y1="165" x2="356" y2="165" stroke="#c08d79" stroke-width="1" opacity="0.6"/>
+    <line x1="344" y1="210" x2="356" y2="210" stroke="#c08d79" stroke-width="1" opacity="0.6"/>
+  </g>
+
+  <!-- 6. Stomach (위: J-shaped pouch, expands to viewer's right, stays above y=356) -->
+  <g id="stomach">
+    <path d="
+      M 342 240
+      C 342 235, 360 235, 368 240
+      C 390 248, 445 265, 455 305
+      C 465 345, 430 355, 395 355
+      C 365 355, 350 348, 345 340
+      C 335 315, 340 265, 342 240 Z"
+      fill="url(#gradStomach)" stroke="#b0524a" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Rugae folds (위 주름) -->
+    <path d="M 365 260 C 385 278, 415 300, 420 330" fill="none" stroke="#b0524a" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 378 275 C 395 295, 410 320, 400 345" fill="none" stroke="#b0524a" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- 7. Pancreas (이자: 가로로 길쭉한 엽상 장기, yellow, >= 70% visible, placed below stomach at y=362..395) -->
+  <g id="pancreas">
+    <path d="
+      M 342 365
+      C 365 362, 415 362, 442 364
+      C 450 368, 450 380, 438 384
+      C 405 392, 365 392, 338 384
+      C 332 380, 332 368, 342 365 Z"
+      fill="url(#gradPancreas)" stroke="#b89a41" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- Pancreatic lobule texture -->
+    <path d="M 365 366 L 368 384 M 390 366 L 393 384 M 415 367 L 417 380" fill="none" stroke="#b89a41" stroke-width="1" opacity="0.6"/>
+  </g>
+
+  <!-- 8. Duodenum (십이지장: C-shaped loop from stomach exit x=345,y=340 down around pancreas to x=340,y=420) -->
+  <g id="duodenum">
+    <path d="
+      M 345 338
+      C 330 340, 316 358, 320 382
+      C 324 406, 332 420, 345 420
+      L 345 435
+      C 318 435, 305 412, 302 380
+      C 298 348, 320 325, 345 325 Z"
+      fill="url(#gradSmall)" stroke="#c1815a" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 9. Ducts (쓸개관 & 이자관: both touch duodenum) -->
+  <g id="ducts" fill="none" stroke="#7fae8f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- bileDuct: gallbladder (275, 360) to duodenum (315, 380) -->
+    <path id="bileDuct" d="M 275 360 C 285 370, 300 375, 318 380" />
+    <!-- pancreaticDuct: along pancreas (380, 375) into duodenum (320, 380) -->
+    <path id="pancreaticDuct" d="M 410 372 L 355 375 L 318 380" />
+  </g>
+
+  <!-- 10. Small Intestine (소장: convoluted folds filling center abdomen from x=240 to 460, y=430 to 650) -->
+  <g id="smallIntestine">
+    <path d="
+      M 335 435
+      C 360 435, 410 440, 425 460
+      C 440 480, 420 500, 385 500
+      C 350 500, 270 485, 260 510
+      C 250 535, 310 545, 360 540
+      C 420 535, 435 560, 415 585
+      C 395 610, 310 595, 270 615
+      C 240 630, 250 655, 300 650
+      C 350 645, 410 650, 415 635
+      C 420 620, 390 605, 370 605
+      C 330 605, 250 590, 245 565
+      C 240 540, 310 525, 350 525
+      C 410 525, 445 505, 440 475
+      C 435 445, 380 425, 335 425 Z"
+      fill="url(#gradSmall)" stroke="#c1815a" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Fold textures -->
+    <path d="
+      M 285 470 C 310 475, 360 470, 390 475
+      M 280 530 C 320 535, 370 525, 400 545
+      M 275 570 C 310 580, 365 570, 390 575
+      M 290 630 C 330 635, 370 630, 395 630"
+      fill="none" stroke="#c1815a" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- 11. Large Intestine (대장: ㄷ-shape framing small intestine, starts at cecum x=235, y=630) -->
+  <g id="largeIntestine">
+    <path d="
+      M 220 640
+      C 210 630, 210 500, 215 440
+      C 220 400, 250 395, 300 398
+      L 410 398
+      C 460 395, 485 400, 490 440
+      C 495 500, 495 620, 485 660
+      C 475 700, 430 705, 395 695
+      L 395 675
+      C 420 682, 455 680, 465 650
+      C 475 615, 472 505, 470 445
+      C 468 420, 445 418, 405 418
+      L 295 418
+      C 255 418, 238 420, 235 445
+      C 232 505, 232 615, 240 645 Z"
+      fill="url(#gradLarge)" stroke="#9a6f4f" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Haustra colon bands -->
+    <line x1="215" y1="480" x2="235" y2="480" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="215" y1="530" x2="235" y2="530" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="215" y1="580" x2="235" y2="580" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="470" y1="480" x2="490" y2="480" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="470" y1="530" x2="490" y2="530" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="470" y1="580" x2="490" y2="580" stroke="#9a6f4f" stroke-width="1.2"/>
+  </g>
+
+  <!-- 12. Rectum (곧창자: straight tube from sigmoid colon x=395, y=695 down to x=350, y=765) -->
+  <g id="rectum">
+    <path d="
+      M 395 690
+      C 375 700, 360 720, 358 765
+      L 342 765
+      C 344 715, 365 685, 395 675 Z"
+      fill="url(#gradRectum)" stroke="#8a5f47" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 13. Anus (항문: canal end from y=765 to y=785) -->
+  <g id="anus">
+    <path d="
+      M 342 765 L 358 765
+      L 356 785 L 344 785 Z"
+      fill="url(#gradRectum)" stroke="#8a5f47" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- Sphincter lines -->
+    <ellipse cx="350" cy="785" rx="7" ry="2.5" fill="none" stroke="#8a5f47" stroke-width="1.2"/>
+  </g>
+</svg>

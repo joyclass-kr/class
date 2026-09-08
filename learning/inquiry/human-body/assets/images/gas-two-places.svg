@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
+    <linearGradient id="gradAlveolusBg" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#ffecd7"/>
+      <stop offset="100%" stop-color="#fec17c"/>
+    </linearGradient>
+    <linearGradient id="gradAlveolusWall" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fed3a5"/>
+      <stop offset="100%" stop-color="#fca445"/>
+    </linearGradient>
+    <linearGradient id="gradTissueCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#cbbafc"/>
+      <stop offset="100%" stop-color="#845df8"/>
+    </linearGradient>
+    <linearGradient id="gradBloodOx" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e25050"/>
+      <stop offset="100%" stop-color="#b81e1e"/>
+    </linearGradient>
+    <linearGradient id="gradBloodDeox" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#4e81ef"/>
+      <stop offset="100%" stop-color="#134ecd"/>
+    </linearGradient>
     <style>
       /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
       
       /* Alveolus (폐포) */
-      .alveolus-bg { fill: #fed7aa; stroke: #fdba74; stroke-width: 2.8; stroke-linejoin: round; }
-      .alveolus-wall { fill: #fdba74; stroke: #ea580c; stroke-width: 2.4; stroke-linejoin: round; }
+      .alveolus-bg { fill: url(#gradAlveolusBg); stroke: #fdba74; stroke-width: 2.8; stroke-linejoin: round; }
+      .alveolus-wall { fill: url(#gradAlveolusWall); stroke: #ea580c; stroke-width: 2.4; stroke-linejoin: round; }
       .airway-lumen { fill: #fed7aa; stroke: none; }
       .airway-wall { fill: #fdba74; stroke: #ea580c; stroke-width: 2.4; stroke-linejoin: round; }
       .squamous-nucleus { fill: #c2410c; }
@@ -17,8 +37,8 @@
       .endo-nucleus { fill: #475569; }
       
       /* Blood Flow Lumens (혈액 내강: 산소 많은 피 #dc2626, 산소 적은 피 #2563eb) */
-      .blood-ox { fill: #dc2626; stroke: none; }
-      .blood-deox { fill: #2563eb; stroke: none; }
+      .blood-ox { fill: url(#gradBloodOx); stroke: none; }
+      .blood-deox { fill: url(#gradBloodDeox); stroke: none; }
       
       /* Red Blood Cells (RBCs, 적혈구) */
       .rbc-ox-body { fill: #f87171; stroke: #b91c1c; stroke-width: 2.0; }
@@ -33,7 +53,7 @@
       .streamline-deox { fill: none; stroke: #93c5fd; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 8,8; opacity: 0.75; }
       
       /* Tissue Cells (온몸 세포들) */
-      .tissue-cell-body { fill: #a78bfa; stroke: #7c3aed; stroke-width: 2.6; stroke-linejoin: round; }
+      .tissue-cell-body { fill: url(#gradTissueCell); stroke: #7c3aed; stroke-width: 2.6; stroke-linejoin: round; }
       .tissue-nucleus { fill: #6d28d9; stroke: #5b21b6; stroke-width: 1.8; }
       .tissue-nucleolus { fill: #ddd6fe; }
       .organelle-dot { fill: #5b21b6; opacity: 0.65; }

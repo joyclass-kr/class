@@ -1,40 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
+    <linearGradient id="gradPinna" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fed2d7"/>
+      <stop offset="100%" stop-color="#fc7887"/>
+    </linearGradient>
+    <linearGradient id="gradEardrum" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fef0b9"/>
+      <stop offset="100%" stop-color="#fddd5e"/>
+    </linearGradient>
+    <linearGradient id="gradOssicle" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e7ecf3"/>
+      <stop offset="100%" stop-color="#c9d4e3"/>
+    </linearGradient>
+    <linearGradient id="gradAmpulla" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#6bcffa"/>
+      <stop offset="100%" stop-color="#0eb1f6"/>
+    </linearGradient>
+    <linearGradient id="gradVestibule" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#60dcaf"/>
+      <stop offset="100%" stop-color="#27b480"/>
+    </linearGradient>
+    <linearGradient id="gradCochlea" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#cbbafc"/>
+      <stop offset="100%" stop-color="#845df8"/>
+    </linearGradient>
+    <linearGradient id="gradNerve" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fccc55"/>
+      <stop offset="100%" stop-color="#ebaa05"/>
+    </linearGradient>
     <style>
       /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
       .bone-contour { fill: #1e293b; fill-opacity: 0.22; stroke: #475569; stroke-width: 2.0; stroke-dasharray: 6,4; }
       
       /* Outer Ear */
-      .pinna-body { fill: #fda4af; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .pinna-body { fill: url(#gradPinna); stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
       .pinna-fold { fill: none; stroke: #f43f5e; stroke-width: 2.4; stroke-linecap: round; }
       .ear-canal-lumen { fill: #fda4af; fill-opacity: 0.22; stroke: none; }
       .ear-canal-wall { fill: none; stroke: #fb7185; stroke-width: 2.8; stroke-linecap: round; }
       .canal-cilia { stroke: #e11d48; stroke-width: 1.6; stroke-linecap: round; opacity: 0.65; }
       
-      .eardrum-sheet { fill: #fde68a; stroke: #d97706; stroke-width: 2.6; stroke-linejoin: round; }
+      .eardrum-sheet { fill: url(#gradEardrum); stroke: #d97706; stroke-width: 2.6; stroke-linejoin: round; }
       .eardrum-detail { fill: none; stroke: #d97706; stroke-width: 1.4; stroke-linecap: round; }
       
       /* Middle Ear */
       .middle-ear-cavity { fill: #0f172a; fill-opacity: 0.35; stroke: #334155; stroke-width: 2.2; stroke-dasharray: 5,4; }
-      .ossicle-bone { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 2.6; stroke-linejoin: round; }
+      .ossicle-bone { fill: url(#gradOssicle); stroke: #94a3b8; stroke-width: 2.6; stroke-linejoin: round; }
       .eustachian-wall { fill: #fca5a5; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
       
       /* Inner Ear */
       .canal-arch-outer { fill: none; stroke: #0284c7; stroke-width: 14.0; stroke-linecap: round; stroke-linejoin: round; }
       .canal-arch-inner { fill: none; stroke: #38bdf8; stroke-width: 8.8; stroke-linecap: round; stroke-linejoin: round; }
-      .ampulla-bulb { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.6; }
+      .ampulla-bulb { fill: url(#gradAmpulla); stroke: #0284c7; stroke-width: 2.6; }
       
-      .vestibule-body { fill: #34d399; stroke: #059669; stroke-width: 2.8; stroke-linejoin: round; }
+      .vestibule-body { fill: url(#gradVestibule); stroke: #059669; stroke-width: 2.8; stroke-linejoin: round; }
       .macula-chamber { fill: #a7f3d0; fill-opacity: 0.45; stroke: #059669; stroke-width: 1.8; stroke-dasharray: 3,3; }
       .otolith-bead { fill: #fef08a; stroke: #ca8a04; stroke-width: 1.2; }
       
-      .cochlea-solid { fill: #a78bfa; stroke: #7c3aed; stroke-width: 2.8; stroke-linejoin: round; }
+      .cochlea-solid { fill: url(#gradCochlea); stroke: #7c3aed; stroke-width: 2.8; stroke-linejoin: round; }
       .cochlea-seam { fill: none; stroke: #6d28d9; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
       .cochlea-core { fill: #7c3aed; stroke: #5b21b6; stroke-width: 2.4; }
       .corti-track { fill: none; stroke: #ede9fe; stroke-width: 2.0; stroke-dasharray: 4,3; }
       
-      .nerve-trunk { fill: #fbbf24; stroke: #d97706; stroke-width: 2.8; stroke-linejoin: round; }
+      .nerve-trunk { fill: url(#gradNerve); stroke: #d97706; stroke-width: 2.8; stroke-linejoin: round; }
       .nerve-fiber { fill: none; stroke: #b45309; stroke-width: 1.6; stroke-linecap: round; opacity: 0.8; }
       .nerve-pulse { fill: #b45309; }
       

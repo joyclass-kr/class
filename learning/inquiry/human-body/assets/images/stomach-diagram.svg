@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
+    <linearGradient id="gradStomachWall" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fed2d7"/>
+      <stop offset="100%" stop-color="#fc7887"/>
+    </linearGradient>
+    <linearGradient id="gradMuscle1" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fa9e9e"/>
+      <stop offset="100%" stop-color="#f64646"/>
+    </linearGradient>
+    <linearGradient id="gradChief" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e3dcfe"/>
+      <stop offset="100%" stop-color="#9f88fc"/>
+    </linearGradient>
+    <linearGradient id="gradParietal" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#aef4c8"/>
+      <stop offset="100%" stop-color="#5dea90"/>
+    </linearGradient>
+    <linearGradient id="gradEsoph" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fdcece"/>
+      <stop offset="100%" stop-color="#fb7e7e"/>
+    </linearGradient>
     <style>
       /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
       
       /* Overview: Left Macroscopic Stomach Section */
-      .esophagus-tube { fill: #fca5a5; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
-      .duodenum-tube { fill: #fca5a5; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .esophagus-tube { fill: url(#gradEsoph); stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .duodenum-tube { fill: url(#gradEsoph); stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
       
-      .muscle-layer-1 { fill: #f87171; stroke: #ef4444; stroke-width: 2.4; stroke-linejoin: round; }
+      .muscle-layer-1 { fill: url(#gradMuscle1); stroke: #ef4444; stroke-width: 2.4; stroke-linejoin: round; }
       .muscle-layer-2 { fill: #ef4444; stroke: #dc2626; stroke-width: 2.4; stroke-linejoin: round; }
       .muscle-layer-3 { fill: #dc2626; stroke: #b91c1c; stroke-width: 2.4; stroke-linejoin: round; }
       .muscle-texture { fill: none; stroke: #fca5a5; stroke-width: 1.6; stroke-linecap: round; opacity: 0.65; }
       
       .stomach-cavity { fill: #1e293b; fill-opacity: 0.35; stroke: none; }
-      .stomach-wall-base { fill: #fda4af; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .stomach-wall-base { fill: url(#gradStomachWall); stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
       .rugae-fold { fill: none; stroke: #f43f5e; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
       .rugae-crest { fill: #fda4af; stroke: #f43f5e; stroke-width: 2.0; stroke-linejoin: round; }
       
@@ -26,7 +46,7 @@
       .lumen-bg { fill: #0f172a; fill-opacity: 0.25; }
       .mucus-barrier { fill: #fecdd3; fill-opacity: 0.45; stroke: #fda4af; stroke-width: 1.6; stroke-dasharray: 4,4; }
       
-      .stomach-wall-expanded { fill: #fda4af; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
+      .stomach-wall-expanded { fill: url(#gradStomachWall); stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
       .surface-epith { fill: #fda4af; stroke: #f43f5e; stroke-width: 2.0; stroke-linejoin: round; }
       .surface-epith-nucleus { fill: #9f1239; }
       
@@ -39,11 +59,11 @@
       .gland-cross-lumen { fill: #fecdd3; stroke: #fb7185; stroke-width: 1.8; }
       
       /* Glandular Cells */
-      .chief-cell-body { fill: #c4b5fd; stroke: #7c3aed; stroke-width: 2.6; stroke-linejoin: round; }
+      .chief-cell-body { fill: url(#gradChief); stroke: #7c3aed; stroke-width: 2.6; stroke-linejoin: round; }
       .chief-nucleus { fill: #5b21b6; }
       .chief-zymogen { fill: #a78bfa; stroke: #6d28d9; stroke-width: 1.2; }
       
-      .parietal-cell-body { fill: #86efac; stroke: #16a34a; stroke-width: 2.6; stroke-linejoin: round; }
+      .parietal-cell-body { fill: url(#gradParietal); stroke: #16a34a; stroke-width: 2.6; stroke-linejoin: round; }
       .parietal-nucleus { fill: #15803d; }
       .parietal-canal { fill: none; stroke: #15803d; stroke-width: 1.4; stroke-dasharray: 2,2; }
       

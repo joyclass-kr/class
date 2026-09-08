@@ -1,4 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <linearGradient id="gradVenous" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#02a6f7"/>
+      <stop offset="100%" stop-color="#016292"/>
+    </linearGradient>
+    <linearGradient id="gradArterial" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e84a6c"/>
+      <stop offset="100%" stop-color="#b9183b"/>
+    </linearGradient>
+    <linearGradient id="gradMyo" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#455873"/>
+      <stop offset="100%" stop-color="#222c39"/>
+    </linearGradient>
+    <linearGradient id="gradLungs" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e7edf3"/>
+      <stop offset="100%" stop-color="#c1d1e1"/>
+    </linearGradient>
+    <linearGradient id="gradBody" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#303f55"/>
+      <stop offset="100%" stop-color="#181f2a"/>
+    </linearGradient>
+  </defs>
   <!--
     심장과 순환 경로 2D 교과서 표준 도식 (2022 개정 과학과 교육과정)
     - 폐순환: 우심실 ➔ 폐동맥 ➔ 폐(모세혈관) ➔ 폐정맥 ➔ 좌심방
@@ -32,7 +54,7 @@
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <g id="bodyCapillaries">
     <!-- 온몸 조직 상자: x=175..825, y=586..670 (대정맥 x=185..245 및 대동맥 x=730..780과 100% 밀착) -->
-    <rect class="vessel-contour" fill="#1e293b" x="175" y="586" width="650" height="84" rx="22"/>
+    <rect class="vessel-contour" fill="url(#gradBody)" x="175" y="586" width="650" height="84" rx="22"/>
 
     <!-- 조직 세포들 (Somatic Cells) -->
     <g class="somatic-cell">
@@ -77,7 +99,7 @@
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <g id="lungs">
     <!-- 좌우 폐 및 중앙 연결 폐실질 (동일한 단색 #e2e8f0) -->
-    <path class="organ-bg"
+    <path class="organ-bg" fill="url(#gradLungs)"
           d="M290 28 C225 30 170 65 165 115 C160 145 180 172 225 178 C265 182 320 174 360 155
              C410 175 460 180 500 180 C540 180 590 175 640 155
              C680 174 735 182 775 178 C820 172 840 145 835 115 C830 65 775 30 710 28
@@ -127,7 +149,7 @@
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <!-- 3. 심장 외벽 근육 틀 (Myocardium outline)                         -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <path id="heartOutline" class="vessel-contour" fill="#334155"
+  <path id="heartOutline" class="vessel-contour" fill="url(#gradMyo)"
         d="M316 232 C316 212 335 205 365 205 L635 205 C665 205 684 212 684 232
            L684 420 C684 515 615 570 520 576 C415 570 316 515 316 420 Z"/>
 
@@ -136,19 +158,19 @@
   <!-- ═══════════════════════════════════════════════════════════════ -->
 
   <!-- 1) 대정맥 (Vena Cava): 온몸(y=586, x=185..245) ➔ 우심방(x=320, y=238..296) -->
-  <path id="vesselVenaCava" class="vessel-contour" fill="#0284c7"
+  <path id="vesselVenaCava" class="vessel-contour" fill="url(#gradVenous)"
         d="M185 586 L185 295 C185 245 235 238 320 238 L320 296 C265 296 245 315 245 345 L245 586 Z"/>
 
   <!-- 2) 대동맥 (Aorta): 좌심실 상단(x=520..568, y=348) ➔ 대동맥궁 ➔ 온몸(y=586, x=730..780) -->
-  <path id="vesselAorta" class="vessel-contour" fill="#e11d48"
+  <path id="vesselAorta" class="vessel-contour" fill="url(#gradArterial)"
         d="M520 348 L520 220 C520 155 580 135 650 135 C740 135 780 175 780 265 L780 586 L730 586 L730 270 C730 215 705 185 650 185 C595 185 568 215 568 265 L568 348 Z"/>
 
   <!-- 3) 폐동맥 (Pulmonary Artery): 우심실 상단(x=432..480, y=348) ➔ 폐(y=165, x=355..405) -->
-  <path id="vesselPulmonaryArtery" class="vessel-contour" fill="#0284c7"
+  <path id="vesselPulmonaryArtery" class="vessel-contour" fill="url(#gradVenous)"
         d="M432 348 L432 235 C432 195 405 175 355 165 L405 165 C450 175 480 200 480 240 L480 348 Z"/>
 
   <!-- 4) 폐정맥 (Pulmonary Vein): 폐(y=165, x=595..645) ➔ 좌심방 상단(y=238, x=595..645) -->
-  <path id="vesselPulmonaryVein" class="vessel-contour" fill="#e11d48"
+  <path id="vesselPulmonaryVein" class="vessel-contour" fill="url(#gradArterial)"
         d="M595 238 L595 165 L645 165 L645 238 Z"/>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -156,19 +178,19 @@
   <!-- ═══════════════════════════════════════════════════════════════ -->
 
   <!-- 우심방 (Right Atrium): 외측에 위치 (x=320..420, y=238..335) -->
-  <path id="rightAtrium" class="chamber-rect" fill="#0284c7"
+  <path id="rightAtrium" class="chamber-rect" fill="url(#gradVenous)"
         d="M320 238 L420 238 L420 335 L320 335 Z"/>
 
   <!-- 좌심방 (Left Atrium): 외측에 위치 (x=580..680, y=238..335) -->
-  <path id="leftAtrium" class="chamber-rect" fill="#e11d48"
+  <path id="leftAtrium" class="chamber-rect" fill="url(#gradArterial)"
         d="M580 238 L680 238 L680 335 L580 335 Z"/>
 
   <!-- 우심실 (Right Ventricle): 우심방 아래, 폐동맥과 직결 (x=320..480, y=348..525) -->
-  <path id="rightVentricle" class="chamber-rect" fill="#0284c7"
+  <path id="rightVentricle" class="chamber-rect" fill="url(#gradVenous)"
         d="M320 348 L480 348 L480 525 C415 520 365 490 335 445 C322 420 320 380 320 348 Z"/>
 
   <!-- 좌심실 (Left Ventricle): 좌심방 아래, 대동맥과 직결 (x=520..680, y=348..535) -->
-  <path id="leftVentricle" class="chamber-rect" fill="#e11d48"
+  <path id="leftVentricle" class="chamber-rect" fill="url(#gradArterial)"
         d="M520 348 L680 348 C680 380 678 420 660 455 C635 500 585 530 520 535 Z"/>
 
   <!-- ── 심실벽 두께 대비 (좌심실벽 24px vs 우심실벽 8px, 정확히 3배!) ── -->

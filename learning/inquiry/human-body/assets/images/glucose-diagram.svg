@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
+    <linearGradient id="gradPancreas" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#fed2d7"/>
+      <stop offset="100%" stop-color="#fc7887"/>
+    </linearGradient>
+    <linearGradient id="gradLiver" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#e4690c"/>
+      <stop offset="100%" stop-color="#883f07"/>
+    </linearGradient>
+    <linearGradient id="gradBodyCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#cbbafc"/>
+      <stop offset="100%" stop-color="#845df8"/>
+    </linearGradient>
+    <linearGradient id="gradBetaCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#6bcffa"/>
+      <stop offset="100%" stop-color="#0eb1f6"/>
+    </linearGradient>
+    <linearGradient id="gradAlphaCell" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f76e85"/>
+      <stop offset="100%" stop-color="#f11338"/>
+    </linearGradient>
     <style>
       /* 2D Flat Textbook Schematic Styles (Crisp 2.4 ~ 3.0px strokes, solid flat colors) */
       .symmetry-axis { stroke: #334155; stroke-width: 1.4; stroke-dasharray: 6,6; opacity: 0.35; }
@@ -15,14 +35,14 @@
       .glucose-inner { fill: none; stroke: #d97706; stroke-width: 1.4; }
       
       /* Pancreas & Endocrine Islets */
-      .pancreas-body { fill: #fda4af; stroke: #f43f5e; stroke-width: 2.8; stroke-linejoin: round; }
+      .pancreas-body { fill: url(#gradPancreas); stroke: #f43f5e; stroke-width: 2.8; stroke-linejoin: round; }
       .islet-border { fill: #fecdd3; stroke: #fb7185; stroke-width: 2.2; stroke-dasharray: 4,3; }
       
-      .beta-cell-body { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.6; }
+      .beta-cell-body { fill: url(#gradBetaCell); stroke: #0284c7; stroke-width: 2.6; }
       .beta-cell-nucleus { fill: #0369a1; opacity: 0.85; }
       .beta-granule { fill: #0284c7; }
       
-      .alpha-cell-body { fill: #f43f5e; stroke: #be123c; stroke-width: 2.6; }
+      .alpha-cell-body { fill: url(#gradAlphaCell); stroke: #be123c; stroke-width: 2.6; }
       .alpha-cell-nucleus { fill: #9f1239; opacity: 0.85; }
       .alpha-granule { fill: #be123c; }
       
@@ -31,7 +51,7 @@
       .glucagon-mol { fill: #f43f5e; stroke: #be123c; stroke-width: 2.2; stroke-linejoin: round; }
       
       /* Liver High & Low */
-      .liver-body { fill: #b45309; stroke: #78350f; stroke-width: 2.8; stroke-linejoin: round; }
+      .liver-body { fill: url(#gradLiver); stroke: #78350f; stroke-width: 2.8; stroke-linejoin: round; }
       .liver-sinusoid { fill: none; stroke: #d97706; stroke-width: 2.0; stroke-dasharray: 4,4; opacity: 0.7; }
       .liver-receptor-in { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.0; }
       .liver-receptor-glu { fill: #f43f5e; stroke: #be123c; stroke-width: 2.0; }
@@ -42,7 +62,7 @@
       .glycogen-highlight { fill: #fef08a; }
       
       /* Body Cell */
-      .body-cell-membrane { fill: #a78bfa; stroke: #7c3aed; stroke-width: 2.8; stroke-linejoin: round; }
+      .body-cell-membrane { fill: url(#gradBodyCell); stroke: #7c3aed; stroke-width: 2.8; stroke-linejoin: round; }
       .body-cell-nucleus { fill: #6d28d9; opacity: 0.85; }
       .body-glut4 { fill: #c4b5fd; stroke: #7c3aed; stroke-width: 2.0; }
       .body-receptor { fill: #38bdf8; stroke: #0284c7; stroke-width: 2.0; }
