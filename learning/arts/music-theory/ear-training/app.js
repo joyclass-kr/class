@@ -316,63 +316,63 @@
 
     const PROGRESSION_SETS = [
         {
-            id: "p1", name: label("I, IV and V", "1·4·5도"),
+            id: "p1", name: label("Primary triads", "주요 3화음"),
             palette: [["I", "IV", "V"]],
             given: true,
             ids: ["I IV V", "I V IV", "I IV V I", "I V IV I", "I IV I V", "I V I IV"]
         },
         {
-            id: "p2", name: label("Circle of four", "순환 진행"),
+            id: "p2", name: label("Four-chord loops", "네 화음 순환"),
             palette: [["I", "IV", "V", "vi"]],
             given: true,
             ids: ["I V vi IV", "I vi IV V", "I IV V vi", "I IV vi V", "I V IV vi", "I vi V IV"]
         },
         {
-            id: "p3", name: label("Three chords", "세 화음"),
+            id: "p3", name: label("Three-chord progressions", "세 화음 진행"),
             palette: [["I", "ii", "IV", "V", "vi"]],
             ids: ["ii V I", "IV V I", "I vi V", "vi IV V", "I ii V", "vi ii V", "IV I V", "I V vi"]
         },
         {
-            id: "p4", name: label("Circle turned", "돌린 순환 진행"),
+            id: "p4", name: label("Rotated loops", "자리를 옮긴 순환"),
             palette: [["I", "IV", "V", "vi"]],
             ids: ["V vi IV I", "vi IV I V", "IV I V vi", "vi IV V I", "IV V I vi", "V I vi IV"]
         },
         {
-            id: "p5", name: label("All diatonic chords", "온음계 두루"),
+            id: "p5", name: label("All diatonic triads", "온음계 3화음"),
             palette: [["I", "ii", "iii", "IV", "V", "vi"]],
             ids: ["I iii IV V", "I IV ii V", "I vi ii V", "I V vi iii", "ii V I vi", "I iii vi IV", "vi ii V I", "I ii iii IV", "iii vi ii V", "IV I iii vi"]
         },
         {
-            id: "p6", name: label("Minor key", "단조 진행"),
+            id: "p6", name: label("Minor key", "단조"),
             palette: [["i", "ii°", "III", "iv", "v", "VI", "VII"]],
             ids: ["i VI VII i", "i VII VI VII", "i iv v i", "ii° v i", "i VI III VII", "i iv VII III", "i v VI VII", "VI VII i"]
         },
         {
-            id: "p7", name: label("Turning dark", "어두워지기"),
+            id: "p7", name: label("Borrowed iv", "차용화음 iv"),
             palette: [["I", "IV", "V", "vi"], [null, "iv", null, null]],
             given: true,
             ids: ["I IV iv I", "I IV I iv", "I iv V I", "I IV iv V", "I V iv I", "I vi iv I", "I IV V iv"]
         },
         {
-            id: "p8", name: label("Stepping down bright", "밝게 내려오기"),
+            id: "p8", name: label("Borrowed ♭VII", "차용화음 ♭VII"),
             palette: [["I", "ii", "IV", "V", "vi"], ["♭VII"]],
             given: true,
             ids: ["I ♭VII IV I", "I IV ♭VII I", "I ♭VII IV V", "I V ♭VII IV", "I vi ♭VII IV", "I ♭VII I IV"]
         },
         {
-            id: "p9", name: label("Rising cadence", "올라서는 마침꼴"),
+            id: "p9", name: label("Borrowed ♭III, ♭VI, ♭VII", "차용화음 ♭III·♭VI·♭VII"),
             palette: [["I", "ii", "IV", "V", "vi"], ["♭III", "♭VI", "♭VII"]],
             freeBass: true,
             ids: ["I ♭VI ♭VII I", "♭VI ♭VII I", "I ♭III ♭VI ♭VII", "I ♭III IV I", "IV ♭VI ♭VII I", "I V ♭VI ♭VII"]
         },
         {
-            id: "p10", name: label("Borrowing into minor", "단조에 빌리기"),
+            id: "p10", name: label("Borrowing in minor", "단조의 차용화음"),
             palette: [["i", "ii°", "III", "iv", "v", "VI", "VII"], [null, "ii", null, "IV", "V", null, null]],
             freeBass: true,
             ids: ["i iv V i", "ii° V i", "ii V i", "i IV i iv", "i IV VII i", "i VII IV i", "i iv V VI", "i ii V i"]
         },
         {
-            id: "p11", name: label("Floating chords", "뜬 화음 갈라 듣기"),
+            id: "p11", name: label("Secondary dominants", "부속화음"),
             palette: [["I", "ii", "iii", "IV", "V", "vi"], ["II", "V/V", "V/vi", "V/ii"]],
             freeBass: true,
             ids: ["I II IV I", "I II IV V", "I V/V V I", "I IV V/V V", "I V/vi vi IV", "I V/ii ii V", "vi V/V V I", "I V/vi vi V"]
