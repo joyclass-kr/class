@@ -1,62 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
-    <!-- 2-stop linearGradients, light from top-left (20% 20% to 80% 80%), brightness diff 12~20%, hue diff <= 2 deg -->
+    <!-- Clean, subtle LinearGradients (angle ~ 135deg, brightness diff <= 25%, hue diff <= 20deg) -->
     <linearGradient id="autoSpine" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#e6edf4"/>
-      <stop offset="100%" stop-color="#c5d0de"/>
+      <stop offset="0%" stop-color="#dfe6ee"/>
+      <stop offset="100%" stop-color="#b8c4d2"/>
     </linearGradient>
     <linearGradient id="autoEye" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#e2e7ee"/>
-      <stop offset="100%" stop-color="#bac5d4"/>
+      <stop offset="0%" stop-color="#d9e6f2"/>
+      <stop offset="100%" stop-color="#b0c5dc"/>
     </linearGradient>
     <linearGradient id="autoLung" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#e8b2bc"/>
-      <stop offset="100%" stop-color="#be7b87"/>
+      <stop offset="0%" stop-color="#e29aa7"/>
+      <stop offset="100%" stop-color="#ba6b79"/>
     </linearGradient>
     <linearGradient id="autoHeart" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#d7546e"/>
-      <stop offset="100%" stop-color="#9e2a41"/>
+      <stop offset="0%" stop-color="#d95d73"/>
+      <stop offset="100%" stop-color="#ad3349"/>
     </linearGradient>
     <linearGradient id="autoAdrenal" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#e9b080"/>
-      <stop offset="100%" stop-color="#bc7e48"/>
+      <stop offset="0%" stop-color="#d49b65"/>
+      <stop offset="100%" stop-color="#a86e39"/>
+    </linearGradient>
+    <linearGradient id="autoKidney" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#ce8070"/>
+      <stop offset="100%" stop-color="#a35545"/>
     </linearGradient>
     <linearGradient id="autoGut" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#e5b172"/>
-      <stop offset="100%" stop-color="#b67f3c"/>
+      <stop offset="0%" stop-color="#cca05c"/>
+      <stop offset="100%" stop-color="#9e7333"/>
     </linearGradient>
     <linearGradient id="autoBladder" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#ecd080"/>
-      <stop offset="100%" stop-color="#c29f45"/>
+      <stop offset="0%" stop-color="#dcbe55"/>
+      <stop offset="100%" stop-color="#ad912d"/>
     </linearGradient>
   </defs>
 
-  <!-- 1. Body Outline (Very faint, transparent silhouette so organs stand out) -->
+  <!-- 1. Body Contour (FAINT & SUBTLE per fix order: stroke-opacity 0.32) -->
   <path id="bodyOutline" d="
-    M 450 18
-    C 475 14, 525 14, 550 18
-    C 595 28, 605 80, 595 120
-    C 588 140, 570 152, 555 162
-    C 600 172, 700 190, 735 220
-    C 750 240, 735 305, 720 360
-    C 705 415, 690 455, 675 490
-    C 660 525, 680 560, 695 605
-    C 705 645, 690 675, 675 688
-    C 655 690, 580 690, 555 688
-    C 542 650, 528 610, 514 570
-    C 508 555, 492 555, 486 570
-    C 472 610, 458 650, 445 688
-    C 420 690, 345 690, 325 688
-    C 310 675, 295 645, 305 605
-    C 320 560, 340 525, 325 490
-    C 310 455, 295 415, 280 360
-    C 265 305, 250 240, 265 220
-    C 300 190, 400 172, 445 162
-    C 430 152, 412 140, 405 120
-    C 395 80, 405 28, 450 18 Z"
-    fill="none" stroke="#5b6a80" stroke-width="1.8" stroke-opacity="0.32" stroke-linejoin="round" stroke-linecap="round" />
+    M 500 35
+    C 545 35, 575 65, 575 110
+    C 575 145, 555 170, 535 185
+    C 590 195, 715 250, 745 340
+    C 775 430, 715 540, 685 640
+    C 665 700, 605 700, 565 670
+    C 545 655, 525 645, 500 645
+    C 475 645, 455 655, 435 670
+    C 395 700, 335 700, 315 640
+    C 285 540, 225 430, 255 340
+    C 285 250, 410 195, 465 185
+    C 445 170, 425 145, 425 110
+    C 425 65, 455 35, 500 35 Z"
+    fill="none" stroke="#5b6a80" stroke-width="2.0" stroke-opacity="0.32"/>
 
-  <!-- 2. Spine (Center vertical column) -->
+  <!-- 2. Central Spine Column (x: 486..514) -->
   <g id="spine">
     <path d="
       M 486 115 L 514 115
@@ -87,22 +84,11 @@
     <path d="M 486 460 L 436 460" stroke-width="3.5"/>
 
     <!-- Branches to organs (each stroke-width 4.0, touches organ bounding box) -->
-    <!-- symToEye: from trunk T1 (436, 170) ascending to eye left edge (465, 70) -->
     <path id="symToEye" d="M 436 170 C 420 120, 430 75, 465 70" stroke-width="4.0"/>
-
-    <!-- symToLung: from trunk (436, 200) to lung left edge (436, 200) -->
     <path id="symToLung" d="M 436 200 L 420 200" stroke-width="4.0"/>
-
-    <!-- symToHeart: from trunk (436, 325) to heart left edge (457, 325) -->
     <path id="symToHeart" d="M 436 325 L 460 325" stroke-width="4.0"/>
-
-    <!-- symToAdrenal: from trunk (436, 415) to adrenal gland right edge (415, 415) -->
     <path id="symToAdrenal" d="M 436 415 L 410 415" stroke-width="4.0"/>
-
-    <!-- symToGut: from trunk (436, 460) to gut left edge (448, 460) -->
     <path id="symToGut" d="M 436 460 L 448 460" stroke-width="4.0"/>
-
-    <!-- symToBladder: from trunk (436, 570) to bladder left-top (470, 595) -->
     <path id="symToBladder" d="M 436 570 C 436 590, 450 595, 470 595" stroke-width="4.0"/>
   </g>
 
@@ -115,25 +101,16 @@
     <path d="M 514 325 L 564 325" stroke-width="3.5"/>
 
     <!-- Branches to organs (each stroke-width 4.0, touches organ bounding box) -->
-    <!-- paraToEye: from cranial outflow (564, 130) to eye right edge (535, 70) -->
     <path id="paraToEye" d="M 564 130 C 580 100, 570 75, 535 70" stroke-width="4.0"/>
-
-    <!-- paraToLung: from vagus nerve (564, 200) to lung right inner edge (580, 200) -->
     <path id="paraToLung" d="M 564 200 L 580 200" stroke-width="4.0"/>
-
-    <!-- paraToHeart: from vagus nerve (564, 325) to heart right edge (560, 325) -->
     <path id="paraToHeart" d="M 564 325 L 555 325" stroke-width="4.0"/>
-
-    <!-- paraToGut: from vagus nerve (564, 460) to gut right inner (560, 460) -->
     <path id="paraToGut" d="M 564 460 L 555 460" stroke-width="4.0"/>
-
-    <!-- paraToBladder: from pelvic splanchnic (530, 610) to bladder right edge (530, 610) -->
     <path id="paraToBladder" d="M 564 610 L 525 610" stroke-width="4.0"/>
   </g>
 
-  <!-- 5. Organs (GENEROUS SIZES per fix-order.md, NOT touching each other) -->
+  <!-- 5. Organs -->
 
-  <!-- organEye: 최소 60x40 -> 80x48 (x: 460..540, y: 46..94) -->
+  <!-- organEye: 76x46 (x: 462..538, y: 47..93) -->
   <g id="organEye">
     <ellipse cx="500" cy="70" rx="38" ry="23" fill="url(#autoEye)" stroke="#9aa5b4" stroke-width="2.2"/>
     <circle cx="500" cy="70" r="14" fill="#4a6fa5" stroke="#365380" stroke-width="1.8"/>
@@ -141,79 +118,89 @@
     <path d="M 468 70 C 478 88, 522 88, 532 70" fill="none" stroke="#9aa5b4" stroke-width="1.2" opacity="0.6"/>
   </g>
 
-  <!-- organLung: 최소 130x110 -> 320x125 (x: 340..660, y: 130..255) -->
+  <!-- organLung: 319x125 (x: 340..659, y: 130..255) -->
   <g id="organLung">
-    <!-- Trachea and Bronchial Tree -->
-    <path d="M 500 130 L 500 155 M 500 155 L 430 180 M 500 155 L 570 180" fill="none" stroke="#bd7a86" stroke-width="3.5" stroke-linecap="round"/>
-    <!-- Left Lung (viewer left, large lobe 105x115: x 340..445, y 140..255) -->
+    <path d="M 500 125 L 500 150 M 500 150 L 430 175 M 500 150 L 570 175" fill="none" stroke="#bd7a86" stroke-width="3.5" stroke-linecap="round"/>
     <path d="
-      M 435 148
-      C 390 140, 350 160, 342 195
-      C 335 230, 355 255, 395 255
-      C 425 255, 442 238, 445 205
-      C 448 175, 442 155, 435 148 Z"
+      M 435 143
+      C 390 135, 350 155, 342 190
+      C 335 225, 355 250, 395 250
+      C 425 250, 442 233, 445 200
+      C 448 170, 442 150, 435 143 Z"
       fill="url(#autoLung)" stroke="#bd7a86" stroke-width="2.2" stroke-linejoin="round"/>
-    <!-- Right Lung (viewer right, large lobe 105x115: x 555..660, y 140..255) -->
     <path d="
-      M 565 148
-      C 610 140, 650 160, 658 195
-      C 665 230, 645 255, 605 255
-      C 575 255, 558 238, 555 205
-      C 552 175, 558 155, 565 148 Z"
+      M 565 143
+      C 610 135, 650 155, 658 190
+      C 665 225, 645 250, 605 250
+      C 575 250, 558 233, 555 200
+      C 552 170, 558 150, 565 143 Z"
       fill="url(#autoLung)" stroke="#bd7a86" stroke-width="2.2" stroke-linejoin="round"/>
-    <!-- Bronchiole internal textures -->
-    <path d="M 410 185 C 385 195, 375 220, 370 240 M 415 205 Q 395 225 395 245" fill="none" stroke="#bd7a86" stroke-width="1.4" opacity="0.6"/>
-    <path d="M 590 185 C 615 195, 625 220, 630 240 M 585 205 Q 605 225 605 245" fill="none" stroke="#bd7a86" stroke-width="1.4" opacity="0.6"/>
+    <path d="M 410 180 C 385 190, 375 215, 370 235 M 415 200 Q 395 220 395 240" fill="none" stroke="#bd7a86" stroke-width="1.4" opacity="0.6"/>
+    <path d="M 590 180 C 615 190, 625 215, 630 235 M 585 200 Q 605 220 605 240" fill="none" stroke="#bd7a86" stroke-width="1.4" opacity="0.6"/>
   </g>
 
-  <!-- organHeart: 최소 90x90 -> 106x110 (x: 457..563, y: 270..380) -->
+  <!-- organHeart: Anatomical scaled from heart-diagram.svg (106x108, ratio 0.98) -->
   <g id="organHeart">
-    <path d="
-      M 510 290
-      C 498 270, 460 275, 460 305
-      C 460 338, 495 365, 510 380
-      C 525 365, 560 338, 560 305
-      C 560 275, 522 270, 510 290 Z"
-      fill="url(#autoHeart)" stroke="#e88a9a" stroke-width="2.4" stroke-linejoin="round"/>
-    <!-- Aorta Arch Top -->
-    <path d="M 502 284 C 496 268, 524 268, 520 282" fill="none" stroke="#e88a9a" stroke-width="2.6"/>
-    <!-- Ventricle muscular contour line -->
-    <path d="M 478 315 C 495 348, 525 352, 540 322" fill="none" stroke="#9e2a41" stroke-width="1.5" opacity="0.7"/>
+    <path d="M 457.0 281.9 C 457.0 276.0, 462.5 274.0, 471.1 274.0 L 548.9 274.0 C 557.5 274.0, 563.0 276.0, 563.0 281.9 L 563.0 336.6 C 563.0 364.2, 543.1 380.3, 515.8 382.0 C 485.5 380.3, 457.0 364.2, 457.0 336.6 Z" fill="url(#autoHeart)" stroke="#e88a9a" stroke-width="2.4" stroke-linejoin="round"/>
+    <!-- Subtle aorta/pulmonary base contour inside heart base -->
+    <path d="M 496 280 C 500 276, 520 276, 524 280" fill="none" stroke="#e88a9a" stroke-width="2.0" stroke-linecap="round"/>
+    <!-- Coronary sulcus and ventricle crease -->
+    <path d="M 470 315 C 495 342, 528 348, 550 320" fill="none" stroke="#9e2a41" stroke-width="1.6" opacity="0.7"/>
+    <path d="M 492 342 C 505 358, 514 368, 516 376" fill="none" stroke="#9e2a41" stroke-width="1.3" opacity="0.6"/>
   </g>
 
-  <!-- organAdrenal: 60x45 (x: 355..415, y: 395..440) -->
+  <!-- organKidney: Supporting kidney under adrenal gland (69x95, x: 350..419, y: 428..523) -->
+  <g id="organKidney">
+    <path d="
+      M 368 430
+      C 382 427, 400 426, 412 426
+      C 424 445, 418 465, 405 475
+      C 418 488, 421 505, 405 520
+      C 388 528, 372 522, 365 510
+      C 348 485, 348 455, 368 430 Z"
+      fill="url(#autoKidney)" stroke="#96513f" stroke-width="2.0" stroke-linejoin="round"/>
+    <!-- Kidney surface lobar crease -->
+    <path d="M 368 452 C 360 475, 364 498, 380 514" fill="none" stroke="#96513f" stroke-width="1.2" opacity="0.6"/>
+  </g>
+
+  <!-- organAdrenal: Cap-like adrenal sitting directly on top of kidney (x: 366..414, y: 402..431) -->
   <g id="organAdrenal">
     <path d="
-      M 360 435
-      C 365 408, 400 400, 412 422
-      C 410 438, 385 440, 360 435 Z"
+      M 368 430
+      C 372 408, 395 402, 412 418
+      C 413 424, 398 428, 368 430 Z"
       fill="url(#autoAdrenal)" stroke="#b47844" stroke-width="2.0" stroke-linejoin="round"/>
-    <path d="M 370 422 Q 388 428 402 420" fill="none" stroke="#b47844" stroke-width="1.2"/>
+    <path d="M 378 420 Q 392 425 405 418" fill="none" stroke="#b47844" stroke-width="1.2"/>
   </g>
 
-  <!-- organGut: 최소 140x120 -> 190x140 (x: 435..625, y: 395..535) -->
+  <!-- organGut: Stomach + Intestine (total size >= 171x138, both filled with url(#autoGut), gap 0) -->
   <g id="organGut">
-    <!-- Stomach (upper left/center part of gut: x 445..545, y 395..465) -->
-    <path d="
+    <!-- 1. Stomach (upper part: x 448..545, y 398..462) -->
+    <path id="stomachPart" d="
       M 485 398
       C 455 395, 442 415, 448 440
       C 455 465, 490 470, 525 455
       C 542 445, 545 422, 528 410
       C 515 402, 502 398, 485 398 Z"
       fill="url(#autoGut)" stroke="#b07c3c" stroke-width="2.2" stroke-linejoin="round"/>
-    <!-- Small & Large Intestine Loops (x 465..625, y 445..535) -->
-    <path d="
-      M 515 460
-      C 545 455, 600 460, 615 480
-      C 625 498, 605 515, 570 515
-      C 525 515, 480 500, 475 520
-      C 470 535, 510 538, 555 535
-      C 605 532, 622 518, 615 500"
-      fill="none" stroke="#b07c3c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- 2. Intestine Mass (directly below stomach, filled with url(#autoGut), gap 0, x: 440..612, y: 450..538) -->
+    <path id="intestinePart" d="
+      M 490 455
+      C 515 452, 530 455, 555 460
+      C 585 460, 612 472, 612 492
+      C 612 515, 580 538, 535 538
+      C 490 538, 442 532, 440 505
+      C 438 480, 465 462, 490 455 Z"
+      fill="url(#autoGut)" stroke="#b07c3c" stroke-width="2.2" stroke-linejoin="round"/>
+
+    <!-- Internal intestinal fold lines -->
+    <path d="M 460 488 C 485 502, 535 500, 585 485" fill="none" stroke="#b07c3c" stroke-width="1.6" stroke-linecap="round" opacity="0.65"/>
+    <path d="M 475 512 C 505 522, 545 520, 580 508" fill="none" stroke="#b07c3c" stroke-width="1.6" stroke-linecap="round" opacity="0.65"/>
     <path d="M 470 435 C 488 450, 510 445, 525 430" fill="none" stroke="#b07c3c" stroke-width="1.4" opacity="0.6"/>
   </g>
 
-  <!-- organBladder: 최소 70x70 -> 90x85 (x: 455..545, y: 585..670) -->
+  <!-- organBladder: 90x85 (x: 455..545, y: 585..670) -->
   <g id="organBladder">
     <path d="
       M 465 600
