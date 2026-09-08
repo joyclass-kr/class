@@ -467,6 +467,18 @@
 
 .ear-lead { font-weight: 800; }
 .ear-note { flex: 1; color: #e2e8f0; }
+
+.ear-part {
+    flex-basis: 100%;
+    padding-top: 6px;
+    border-top: 1px solid rgba(148, 163, 184, 0.25);
+    color: #e2e8f0;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.ear-part b { color: #fde047; }
+.ear-part strong { color: #7dd3fc; }
 .ear-note b { color: #fde047; }
 .ear-trap { flex: 1 1 100%; color: #94a3b8; }
 .ear-trap b { color: #cbd5e1; }
@@ -659,6 +671,23 @@
 .autonomic-stage svg { width: 100%; height: 100%; display: block; }
 
 .autonomic-labels { position: absolute; inset: 0; pointer-events: none; }
+
+.autonomic-caption {
+    flex: none;
+    margin: 6px 10px 12px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(6, 10, 24, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #e2e8f0;
+    font-size: 13px;
+    line-height: 1.5;
+    max-height: 25%;
+    overflow-y: auto;
+}
+
+.autonomic-caption b { color: #fde047; }
+.autonomic-caption strong { color: #7dd3fc; }
 
 .autonomic-tag {
     position: absolute;

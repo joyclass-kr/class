@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>신경계 · 뇌와 반사 | 인체 모형</title>
     <link rel="stylesheet" href="../styles.css?v=20260907ay">
-    <link rel="stylesheet" href="styles.css?v=20260908g">
+    <link rel="stylesheet" href="styles.css?v=20260908i">
 </head>
 <body>
 
@@ -60,9 +60,9 @@
         <!-- Right Sidebar: Details & Exam Traps -->
         <aside class="sim-sidebar">
             <div class="sidebar-tabs">
-                <button class="sidebar-tab-btn active" data-for-scene="brain,response,reflex" data-tab="focus">뇌와 반사 조작</button>
+                <button class="sidebar-tab-btn active" data-tab="focus">뇌와 반사 조작</button>
                 <button class="sidebar-tab-btn" data-for-scene="autonomic" data-tab="autonomic">자율신경 비교표</button>
-                <button class="sidebar-tab-btn" data-for-scene="sensory,ear" data-tab="sensory">눈과 귀 감각</button>
+                <button class="sidebar-tab-btn" data-for-scene="sensory,ear,pupil" data-tab="sensory">눈과 귀 감각</button>
                 <button class="sidebar-tab-btn" data-tab="traps">헷갈리기 쉬운 것</button>
                 <button class="sidebar-tab-btn" data-tab="quiz">개념 문제</button>
             </div>
@@ -73,7 +73,7 @@
                 <div id="tabPanel_focus" class="sidebar-tab-panel">
                     
                     <!-- Brain Region Quick Selector -->
-                    <div class="meter-card" style="border-color: #a855f7; background: rgba(168, 85, 247, 0.08);">
+                    <div class="meter-card" data-for-scene="brain" style="border-color: #a855f7; background: rgba(168, 85, 247, 0.08);">
                         <div class="brain-selector-grid">
                             <button class="brain-pill-btn active" data-part="cerebrum">대뇌</button>
                             <button class="brain-pill-btn" data-part="diencephalon">간뇌</button>
@@ -92,27 +92,10 @@
                         <p id="organDesc" style="font-size:12.5px; color:#f1f5f9; line-height:1.5; margin-top:6px;">그림 위의 이름표를 눌러 뇌의 각 부분이 하는 일을 보세요.</p>
                     </div>
 
-                    <!-- Reflex 4-Way Mode Selector & Timer Card -->
-                    <div class="meter-card">
-                        <div class="reflex-mode-list">
-                            <button class="reflex-mode-btn active" data-mode="conscious">
-                                <span>🧠 1. 대뇌 의식적 반응 (자 보고 잡기)</span>
-                                <strong id="consciousTimer" style="color:#38bdf8;">250 ms</strong>
-                            </button>
-                            <button class="reflex-mode-btn" data-mode="spinal">
-                                <span>⚡ 2. 척수 무조건 반사 (뜨거운 것 손 떼기)</span>
-                                <strong id="spinalTimer" style="color:#34d399;">30 ms</strong>
-                            </button>
-                            <button class="reflex-mode-btn" data-mode="medulla">
-                                <span>🫁 3. 연수 무조건 반사 (기침·재채기·침)</span>
-                                <strong id="medullaTimer" style="color:#f59e0b;">40 ms</strong>
-                            </button>
-                            <button class="reflex-mode-btn" data-mode="midbrain">
-                                <span>👁️ 4. 중간뇌 동공 반사 (동공 축소)</span>
-                                <strong id="midbrainTimer" style="color:#ec4899;">35 ms</strong>
-                            </button>
-                        </div>
-                    </div>
+                    <!-- 반사 갈래 단추 넷은 여기 있었지만 지웠다.
+                         누르면 캔버스만 바뀌는데 캔버스는 어느 장면에서도 안 보인다.
+                         게다가 무대의 「반사의 중추」 화면에 같은 넷이 같은 밀리초로
+                         이미 놓여 있고, 그쪽은 막대가 실제로 달린다. -->
 
                     <!-- 2022 Curriculum Checklist -->
                     <div class="meter-card">
@@ -183,14 +166,20 @@
                 <!-- Tab 3: Sensory Organs (Eye & Ear) -->
                 <div id="tabPanel_sensory" class="sidebar-tab-panel" style="display:none;">
                     
-                    <!-- Eye Controls -->
-                    <div class="meter-card">
+                    <!-- 물체 거리 — 눈 장면에서만 수정체 두께가 바뀐다 -->
+                    <div class="meter-card" data-for-scene="sensory">
                         <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
                             <div class="sim-slider-wrapper">
                                 <span class="sim-slider-label">물체 거리 (원근)</span>
                                 <input id="distSlider" class="sim-slider" type="range" min="10" max="100" value="50" step="5">
                                 <span id="distVal" class="sim-slider-value">50 cm</span>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- 빛의 밝기 — 눈 장면과 동공 반사 장면 둘 다에서 쓴다 -->
+                    <div class="meter-card" data-for-scene="sensory,pupil">
+                        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
                             <div class="sim-slider-wrapper">
                                 <span class="sim-slider-label">빛의 밝기 (명암)</span>
                                 <input id="lightSlider" class="sim-slider" type="range" min="10" max="100" value="50" step="5">
@@ -200,7 +189,7 @@
                     </div>
 
                     <!-- Ear Anatomy & Balance -->
-                    <div class="sensory-card" style="border-left: 3px solid #38bdf8;">
+                    <div class="sensory-card" data-for-scene="ear" style="border-left: 3px solid #38bdf8;">
                         <div style="font-size:13px; font-weight:800; color:#38bdf8; margin-bottom:4px;">
                             <span>👂 귀의 기능 (청각과 평형감각)</span>
                         </div>
@@ -241,15 +230,15 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260908g"></script>
-    <script src="../shared/exam-data.js?v=20260908e"></script>
-    <script src="app.js?v=20260908g"></script>
-    <script src="pupil-reflex.js?v=20260908c"></script>
-    <script src="reflex-arc.js?v=20260908c"></script>
-    <script src="ear-anatomy.js?v=20260908c"></script>
-    <script src="reflex-centers.js?v=20260908c"></script>
-    <script src="eye-optics.js?v=20260908h"></script>
-    <script src="brain-anatomy.js?v=20260908e"></script>
+    <script src="../shared/engine-core.js?v=20260908b"></script>
+    <script src="../shared/exam-data.js?v=20260908b"></script>
+    <script src="app.js?v=20260908b"></script>
+    <script src="pupil-reflex.js?v=20260908b"></script>
+    <script src="reflex-arc.js?v=20260908b"></script>
+    <script src="ear-anatomy.js?v=20260908b"></script>
+    <script src="reflex-centers.js?v=20260908b"></script>
+    <script src="eye-optics.js?v=20260908b"></script>
+    <script src="brain-anatomy.js?v=20260908b"></script>
     <script src="autonomic-map.js?v=20260908b"></script>
 </body>
 </html>

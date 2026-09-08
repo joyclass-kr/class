@@ -535,20 +535,42 @@
     }
 
     /**
-     * 옆칸 갈피를 장면에 묶는다.
+     * 옥칸의 손잡이를 장면에 묶는다.
      *
-     * 갈피 단추에 data-for-scene="lab" 처럼 적어 두면, 그 장면일 때만 보인다.
-     * (전신 소화관 화면에 시험관·검출 시약이 떠 있던 것을 막는다. 그 손잡이
-     *  열다섯은 재 보니 lab 장면에서만 화면을 바꾸고 다른 장면에서는 0 이었다.)
-     * data-for-scene 이 없는 갈피는 모든 장면에서 보인다.
+     * 어느 태그에든 data-for-scene="lab" 처럼 적어 두면 그 장면일 때만 보인다.
+     * 갈피 단추에도, 갈피 안의 손잡이 묶음(meter-card)에도 붙일 수 있다.
+     * (전신 소화관 화면에 시험관·검출 시약이 떠 있던 것을 막는다.)
+     *
+     * 갈피 단추에 붙이는 것은 조심해야 한다. 그 갈피 안에 기관 설명 칸
+     * (#organDetailCard) 이 들어 있으면, 갈피를 숨기는 순간 그림을 눌러도
+     * 설명이 보이지 않는다. 실제로 자율신경·눈·귀 장면에서 그러했다.
+     * 그래서 설명 칸을 품은 갈피는 숨기지 않고, 안의 손잡이 묶음만 숨긴다.
      */
     function bindSceneTabs() {
         var tabs = [].slice.call(document.querySelectorAll('.sidebar-tab-btn'));
-        if (!tabs.length) return;
+        var marked = [].slice.call(document.querySelectorAll('[data-for-scene]'));
+        if (!tabs.length && !marked.length) return;
 
         function activeScene() {
             var b = document.querySelector('.scene-btn.active');
             return b ? b.dataset.scene : null;
+        }
+
+        function wants(el, scene) {
+            var only = el.getAttribute('data-for-scene');
+            if (!only) return true;
+            return only.split(',').some(function (x) { return x.trim() === scene; });
+        }
+
+        // 설명 칸을 품은 갈피는 숨길 수 없다 — 그림을 눌렀을 때 글이 갈 곳이 없어진다
+        var holder = document.getElementById('organDetailCard');
+        var holderPanel = holder ? holder.closest('.sidebar-tab-panel') : null;
+        if (holderPanel) {
+            tabs.forEach(function (t) {
+                if (t.dataset.tab && ('tabPanel_' + t.dataset.tab) === holderPanel.id) {
+                    t.removeAttribute('data-for-scene');
+                }
+            });
         }
 
         function apply() {
@@ -556,10 +578,16 @@
             if (!scene) return;
             var hidActive = false;
             tabs.forEach(function (t) {
-                var only = t.getAttribute('data-for-scene');
-                var show = !only || only.split(',').some(function (x) { return x.trim() === scene; });
+                var show = wants(t, scene);
                 t.hidden = !show;
                 if (!show && t.classList.contains('active')) hidActive = true;
+            });
+            marked.forEach(function (el) {
+                if (el.classList.contains('sidebar-tab-btn')) return;
+                var show = wants(el, scene);
+                // hidden 하나만으로는 모자란다. 칸에 display 가 박혀 있으면 그것이 이긴다.
+                el.hidden = !show;
+                el.style.display = show ? '' : 'none';
             });
             // 보고 있던 갈피가 숨으면 첫 번째로 보이는 갈피로 옮긴다
             if (hidActive) {

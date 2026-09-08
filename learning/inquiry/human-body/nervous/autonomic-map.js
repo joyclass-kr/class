@@ -62,7 +62,7 @@
         { id: 'parasympathetic', text: '부교감신경 — 휴식·안정', ax: 786, ay: 610, on: false }
     ];
 
-    var wrap, layer, svg, labelBox, leaderGroup;
+    var wrap, layer, svg, labelBox, leaderGroup, capBox;
     var mode = null;          // true = 교감
 
     function init() {
@@ -109,9 +109,11 @@
                     markup = SimEngine.isolateSvgIds(markup, 'autofig');
                 }
                 layer.innerHTML = '<div class="autonomic-stage">' + markup +
-                    '<div class="autonomic-labels"></div></div>';
+                    '<div class="autonomic-labels"></div></div>' +
+                    '<div class="autonomic-caption">기관을 누르면 두 신경이 어떻게 반대로 움직이는지 여기에 나옵니다.</div>';
                 svg = layer.querySelector('svg');
                 labelBox = layer.querySelector('.autonomic-labels');
+                capBox = layer.querySelector('.autonomic-caption');
                 if (!svg) return;
 
                 svg.removeAttribute('width');
@@ -147,6 +149,13 @@
         if (t) t.textContent = item.text;
         if (p) p.innerHTML = item.desc || trunkDesc(item);
         if (card) { card.style.display = 'block'; card.style.borderColor = '#38bdf8'; }
+
+        // 옆칸의 기관 설명 칸은 이 장면에서 숨은 갈피 안에 있다 (방이 스스로
+        // 「자율신경 비교표」 갈피로 옮겨 놓는다). 그래서 눌러도 아무 말이 안 보였다.
+        // 눈·귀 장면처럼 무대 아래에 같은 설명을 놓는다.
+        if (capBox) {
+            capBox.innerHTML = '<b>' + item.text + '</b> ' + (item.desc || trunkDesc(item));
+        }
         if (labelBox) {
             labelBox.querySelectorAll('.autonomic-tag').forEach(function (x) {
                 x.classList.toggle('picked', x.dataset.for === item.id);

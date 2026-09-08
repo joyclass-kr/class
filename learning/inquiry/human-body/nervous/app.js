@@ -1214,7 +1214,7 @@
                 btnPara.classList.toggle('active', !isSympathetic);
             }
             if (autoTitle) {
-                autoTitle.textContent = isSympathetic ? '⚡ 교감신경 활성화' : '🌿 부교감신경 활성화 (Rest & Digest)';
+                autoTitle.textContent = isSympathetic ? '⚡ 교감신경 활성화' : '🌿 부교감신경 활성화';
                 autoTitle.style.color = isSympathetic ? '#ef4444' : '#10b981';
             }
             if (autoDesc) {

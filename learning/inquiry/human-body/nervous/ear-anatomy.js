@@ -74,6 +74,7 @@
     };
 
     var wrap, layer, svg, labelBox, leaderGroup, partGroup, capBox;
+    var picked = '';   // 마지막으로 누른 조각의 설명 (무대 아래 띠에 같이 적는다)
     var mode = 'sound';
     var bits = {};
 
@@ -212,6 +213,12 @@
         var p = document.getElementById('organDesc');
         if (t) t.textContent = d[0];
         if (p) p.innerHTML = d[1];
+
+        // 옆칸의 기관 설명 칸은 귀 장면에서는 다른 갈피에 가려져 있다.
+        // 그래서 눌러도 아무 말이 안 보였다. 무대 아래 띠에 같이 적는다.
+        picked = '<span class="ear-part"><b>' + d[0] + '</b> ' + d[1] + '</span>';
+        drawCaption();
+
         if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
     }
 
@@ -315,7 +322,8 @@
             '<span class="ear-lead" style="color:' + cur.color + '">' + cur.name + '</span>' +
             '<span class="ear-note">' + cur.note + '</span>' +
             '<span class="ear-trap">셋을 바꿔 보면 하는 일이 다르다는 것이 한눈에 보입니다. ' +
-            '<b>달팽이관은 소리, 반고리관은 회전, 전정기관은 기울기</b> — 시험에서 가장 자주 바꿔 내는 대목입니다.</span>';
+            '<b>달팽이관은 소리, 반고리관은 회전, 전정기관은 기울기</b> — 시험에서 가장 자주 바꿔 내는 대목입니다.</span>' +
+            picked;
     }
 
     if (document.readyState === 'loading') {

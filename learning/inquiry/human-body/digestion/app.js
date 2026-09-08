@@ -443,7 +443,7 @@
             heatBtn.addEventListener('click', function () {
                 isHeating = !isHeating;
                 heatBtn.classList.toggle('active', isHeating);
-                heatBtn.innerHTML = isHeating ? '<span>🔥</span> 가열 중 (ON)' : '<span>♨️</span> 베네딕트 가열';
+                heatBtn.innerHTML = isHeating ? '<span>🔥</span> 가열 중' : '<span>♨️</span> 베네딕트 가열';
                 updateLabMetrics();
                 if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
             });

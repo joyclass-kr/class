@@ -87,7 +87,7 @@
                         <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">체온, 혈당량, 삼투압 등 우리 몸의 항상성을 유지하는 최고 조절 중추입니다.</p>
                     </div>
 
-                    <div class="meter-card">
+                    <div class="meter-card" data-for-scene="skin">
                         <div class="sim-slider-wrapper" style="margin-top:6px;">
                             <span class="sim-slider-label">외부 기온</span>
                             <input id="envSlider" class="sim-slider" type="range" min="-10" max="40" value="25" step="1">
@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="meter-card">
+                    <div class="meter-card" data-for-scene="glucose">
                         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:6px;">
                             <button id="mealBtn" class="sim-pill-btn" type="button">🍚 식사 (혈당↑)</button>
                             <button id="exerciseBtn" class="sim-pill-btn" type="button">🏃 운동 (혈당↓)</button>
@@ -144,10 +144,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260907azc"></script>
-    <script src="../shared/exam-data.js?v=20260908e"></script>
+    <script src="../shared/engine-core.js?v=20260908b"></script>
+    <script src="../shared/exam-data.js?v=20260908b"></script>
     <script src="app.js?v=20260908b"></script>
     <script src="skin-response.js?v=20260908b"></script>
-    <script src="glucose-flow.js?v=20260907az"></script>
+    <script src="glucose-flow.js?v=20260908b"></script>
 </body>
 </html>

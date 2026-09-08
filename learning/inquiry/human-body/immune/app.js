@@ -673,7 +673,7 @@
         ctx.textAlign = 'right';
         ctx.fillText('항체 농도', px - 6, py + 12);
         ctx.textAlign = 'center';
-        ctx.fillText('경과 시간 (일, Days)', px + pw / 2, py + ph + 24);
+        ctx.fillText('경과 시간 (일)', px + pw / 2, py + ph + 24);
 
         // Plot Memory History
         if (memoryHistory.length > 1) {

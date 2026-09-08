@@ -67,7 +67,7 @@
                 <div id="tabPanel_focus" class="sidebar-tab-panel">
                     
                     <!-- Live Bladder Capacity Gauge -->
-                    <div class="bladder-gauge-box">
+                    <div class="bladder-gauge-box" data-for-scene="urine,nephron">
                         <div class="bladder-gauge-header">
                             <span>방광 오줌 저장량</span>
                             <span id="bladderText">35 % (140 mL)</span>
@@ -89,7 +89,7 @@
                         <p id="organDesc" style="font-size:13px; color:#f1f5f9; line-height:1.5;">그림 위의 이름표를 눌러 자세한 설명을 보세요.</p>
                     </div>
 
-                    <div class="meter-card">
+                    <div class="meter-card" data-for-scene="urine,nephron">
                         <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
                             <div class="sim-slider-wrapper">
                                 <span class="sim-slider-label">혈압 (사구체 여과압)</span>
@@ -178,9 +178,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260908g"></script>
-    <script src="../shared/exam-data.js?v=20260908e"></script>
-    <script src="app.js?v=20260908c"></script>
+    <script src="../shared/engine-core.js?v=20260908b"></script>
+    <script src="../shared/exam-data.js?v=20260908b"></script>
+    <script src="app.js?v=20260908b"></script>
     <script src="nephron-flow.js?v=20260908b"></script>
     <script src="urine-path.js?v=20260908b"></script>
     <script src="excretion-map.js?v=20260908b"></script>

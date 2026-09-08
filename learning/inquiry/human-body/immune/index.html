@@ -99,27 +99,30 @@
                         <p id="organDesc" style="font-size:12.5px; color:#f1f5f9; line-height:1.5; margin-top:6px;">아래 단계 단추를 눌러 방어 작용이 이어지는 차례를 보세요.</p>
                     </div>
 
-                    <!-- Interactive Control Box -->
-                    <div class="meter-card">
+                    <!-- 항원 고르기 — 방어 작용 장면에서만 그림이 바뀐다 -->
+                    <div class="meter-card" data-for-scene="defense">
                         <div class="meter-card-title">
                             <span>항원 고르기</span>
                         </div>
-                        <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
-                            <div style="display:flex; gap:6px;">
-                                <button id="btnBacteria" class="sim-pill-btn active" type="button" style="flex:1;">🦠 세균 (박테리아)</button>
-                                <button id="btnVirus" class="sim-pill-btn" type="button" style="flex:1;">🧬 바이러스</button>
-                                <button id="btnVaccine" class="sim-pill-btn" type="button" style="flex:1;">💉 백신 항원</button>
-                            </div>
-                            <div style="display:flex; gap:8px;">
-                                <button id="firstInfectBtn" class="sim-btn" type="button" style="width:100%; font-size:12px; background:rgba(244, 63, 94, 0.15); border:1px solid #f43f5e; color:#fda4af;">
-                                    <span>🦠 1차 침입 (항원이 처음 들어옴)</span>
-                                </button>
-                            </div>
-                            <div style="display:flex; gap:8px;">
-                                <button id="secondaryInfectBtn" class="sim-btn" type="button" style="width:100%; font-size:12px; background:rgba(236, 72, 153, 0.15); border:1px solid #ec4899; color:#f472b6;">
-                                    <span>⚡ 2차 감염 유발 (면역 기억 발동)</span>
-                                </button>
-                            </div>
+                        <div style="display:flex; gap:6px; margin-top:8px;">
+                            <button id="btnBacteria" class="sim-pill-btn active" type="button" style="flex:1;">🦠 세균 (박테리아)</button>
+                            <button id="btnVirus" class="sim-pill-btn" type="button" style="flex:1;">🧬 바이러스</button>
+                            <button id="btnVaccine" class="sim-pill-btn" type="button" style="flex:1;">💉 백신 항원</button>
+                        </div>
+                    </div>
+
+                    <!-- 침입시키기 — 1차·2차 반응 그래프 장면에서만 곡선이 그려진다 -->
+                    <div class="meter-card" data-for-scene="graph">
+                        <div class="meter-card-title">
+                            <span>항원을 넣어 보기</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+                            <button id="firstInfectBtn" class="sim-btn" type="button" style="width:100%; font-size:12px; background:rgba(244, 63, 94, 0.15); border:1px solid #f43f5e; color:#fda4af;">
+                                <span>🦠 1차 침입 (항원이 처음 들어옴)</span>
+                            </button>
+                            <button id="secondaryInfectBtn" class="sim-btn" type="button" style="width:100%; font-size:12px; background:rgba(236, 72, 153, 0.15); border:1px solid #ec4899; color:#f472b6;">
+                                <span>⚡ 2차 감염 유발 (면역 기억 발동)</span>
+                            </button>
                         </div>
                     </div>
 
@@ -198,10 +201,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260907azc"></script>
-    <script src="../shared/exam-data.js?v=20260908e"></script>
+    <script src="../shared/engine-core.js?v=20260908b"></script>
+    <script src="../shared/exam-data.js?v=20260908b"></script>
     <script src="app.js?v=20260908b"></script>
     <script src="antibody-graph.js?v=20260908b"></script>
-    <script src="defense-flow.js?v=20260907aza"></script>
+    <script src="defense-flow.js?v=20260908b"></script>
 </body>
 </html>
