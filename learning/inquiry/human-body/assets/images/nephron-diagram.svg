@@ -9,13 +9,13 @@
       <stop offset="0%" stop-color="#fef1be"/>
       <stop offset="100%" stop-color="#fcdc59"/>
     </linearGradient>
-    <linearGradient id="gradArtery" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#f26e6e"/>
-      <stop offset="100%" stop-color="#eb1919"/>
+    <linearGradient id="nephronArtery" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="100%" stop-color="#dc2626"/>
     </linearGradient>
-    <linearGradient id="gradVein" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#689ff8"/>
-      <stop offset="100%" stop-color="#1068f4"/>
+    <linearGradient id="nephronVein" x1="20%" y1="20%" x2="80%" y2="80%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#2563eb"/>
     </linearGradient>
     <style>
       /* 2D Flat Standard Korean Science Textbook / Exam Paper Style */
@@ -26,12 +26,12 @@
       .duct-fill { fill: url(#gradDuct); stroke: #b45309; stroke-width: 2.8; stroke-linejoin: round; stroke-linecap: round; }
       
       /* Arterial Blood Vessels: Flat solid red with clean outline */
-      .artery-thick { fill: url(#gradArtery); stroke: #991b1b; stroke-width: 2.6; stroke-linejoin: round; }
+      .artery-thick { fill: url(#nephronArtery); stroke: #991b1b; stroke-width: 2.6; stroke-linejoin: round; }
       .artery-thin { fill: #f87171; stroke: #b91c1c; stroke-width: 2.0; stroke-linejoin: round; }
       .glomerulus-loop { fill: none; stroke: #dc2626; stroke-width: 4.6; stroke-linecap: round; stroke-linejoin: round; }
       
       /* Venous Blood Vessels: Flat solid blue with clean outline */
-      .vein-thick { fill: url(#gradVein); stroke: #1d4ed8; stroke-width: 2.6; stroke-linejoin: round; }
+      .vein-thick { fill: url(#nephronVein); stroke: #1d4ed8; stroke-width: 2.6; stroke-linejoin: round; }
       
       /* Peritubular Capillary Network */
       .cap-art { fill: none; stroke: #ef4444; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }

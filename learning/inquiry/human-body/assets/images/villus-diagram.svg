@@ -17,11 +17,11 @@
       <stop offset="0%" stop-color="#fff8db"/>
       <stop offset="100%" stop-color="#fff4c7"/>
     </linearGradient>
-    <linearGradient id="gradArtery" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="villusArtery" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#e25050"/>
       <stop offset="100%" stop-color="#b81e1e"/>
     </linearGradient>
-    <linearGradient id="gradVein" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="villusVein" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#4e81ef"/>
       <stop offset="100%" stop-color="#134ecd"/>
     </linearGradient>
@@ -55,8 +55,8 @@
       .cap-net-blue { fill: none; stroke: #2563eb; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
       .cap-net-behind { fill: none; stroke: #fb7185; stroke-width: 2.2; stroke-dasharray: 5,4; stroke-linecap: round; opacity: 0.65; }
       
-      .artery-vessel { fill: url(#gradArtery); stroke: #991b1b; stroke-width: 2.8; stroke-linejoin: round; }
-      .vein-vessel { fill: url(#gradVein); stroke: #1e40af; stroke-width: 2.8; stroke-linejoin: round; }
+      .artery-vessel { fill: url(#villusArtery); stroke: #991b1b; stroke-width: 2.8; stroke-linejoin: round; }
+      .vein-vessel { fill: url(#villusVein); stroke: #1e40af; stroke-width: 2.8; stroke-linejoin: round; }
       .lymph-base { fill: #fffbeb; stroke: #d4d4d8; stroke-width: 2.8; stroke-linejoin: round; }
     </style>
   </defs>

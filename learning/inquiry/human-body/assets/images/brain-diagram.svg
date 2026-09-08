@@ -2,39 +2,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
     <!-- linearGradient stop 2개, 빛 좌상단 -> 우하단, 밝기 차 10~25%, 순백/순흑 금지 -->
-    <linearGradient id="gradCerebrum" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainCerebrum" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#f2cad5"/>
       <stop offset="100%" stop-color="#d99aa9"/>
     </linearGradient>
-    <linearGradient id="gradDiencephalon" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainDiencephalon" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#f7dc9f"/>
       <stop offset="100%" stop-color="#dfba72"/>
     </linearGradient>
-    <linearGradient id="gradPituitary" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainPituitary" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#fae8b2"/>
       <stop offset="100%" stop-color="#e5c77e"/>
     </linearGradient>
-    <linearGradient id="gradCallosum" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainCallosum" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#faf3ea"/>
       <stop offset="100%" stop-color="#dfd2bf"/>
     </linearGradient>
-    <linearGradient id="gradMidbrain" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainMidbrain" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#a2cdae"/>
       <stop offset="100%" stop-color="#7eaf8e"/>
     </linearGradient>
-    <linearGradient id="gradPons" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainPons" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#d7e0ec"/>
       <stop offset="100%" stop-color="#b4c1d4"/>
     </linearGradient>
-    <linearGradient id="gradMedulla" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainMedulla" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#b0cef0"/>
       <stop offset="100%" stop-color="#8aafd2"/>
     </linearGradient>
-    <linearGradient id="gradCerebellum" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainCerebellum" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#cfb38c"/>
       <stop offset="100%" stop-color="#af8e64"/>
     </linearGradient>
-    <linearGradient id="gradSpinalCord" x1="20%" y1="20%" x2="80%" y2="80%">
+    <linearGradient id="brainSpinalCord" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#ebf1f7"/>
       <stop offset="100%" stop-color="#cad4df"/>
     </linearGradient>
@@ -57,10 +57,10 @@
              C 550 310 470 295 410 320
              C 360 340 330 380 290 410
              C 265 425 245 415 230 400 Z"
-          fill="url(#gradCerebrum)" stroke="#c98a9c" stroke-width="2.2" stroke-linejoin="round"/>
+          fill="url(#brainCerebrum)" stroke="#c98a9c" stroke-width="2.2" stroke-linejoin="round"/>
 
     <!-- 대뇌 겉질 주름 (고랑 Sulci & 이랑 Gyri) - 가는 선으로 해부학적 디테일 -->
-    <g fill="none" stroke="#c98a9c" stroke-width="1.3" stroke-linecap="round" opacity="0.75">
+    <g fill="none" stroke="#b0687c" stroke-width="1.8" stroke-linecap="round" opacity="0.9">
       <!-- 중심고랑 및 전두엽 고랑들 -->
       <path d="M 215 295 C 240 280 275 305 315 280 C 340 265 375 275 400 250"/>
       <path d="M 185 240 C 220 230 250 245 285 225 C 320 205 370 215 415 195"/>
@@ -92,7 +92,7 @@
              C 580 275 530 260 485 260
              C 435 260 385 275 360 305
              C 350 320 355 335 345 340 Z"
-          fill="url(#gradCallosum)" stroke="#c9b9a5" stroke-width="1.8" stroke-linejoin="round"/>
+          fill="url(#brainCallosum)" stroke="#c9b9a5" stroke-width="1.8" stroke-linejoin="round"/>
     <!-- 투명중격 (Septum pellucidum) 및 뇌활 (Fornix) 융합 구역 -->
     <path d="M 360 305 C 390 320 440 330 490 325 C 540 320 590 300 620 310"
           fill="none" stroke="#c9b9a5" stroke-width="1.2" opacity="0.6"/>
@@ -110,7 +110,7 @@
              C 585 385 545 405 500 405
              C 460 405 440 400 425 390
              C 410 380 390 350 400 330 Z"
-          fill="url(#gradDiencephalon)" stroke="#d1a95f" stroke-width="1.8"/>
+          fill="url(#brainDiencephalon)" stroke="#d1a95f" stroke-width="1.8"/>
     <!-- 시상간교 (Interthalamic adhesion / 중간질 부착부 타원) -->
     <ellipse cx="490" cy="345" rx="16" ry="12" fill="#d1a95f" opacity="0.35"/>
     <!-- 시상하부 홈 (Hypothalamic sulcus) -->
@@ -128,7 +128,7 @@
              C 402 450 415 458 428 456
              C 440 454 448 442 445 430
              C 442 420 432 414 425 412 L 430 388 Z"
-          fill="url(#gradPituitary)" stroke="#d8b96f" stroke-width="1.5" stroke-linejoin="round"/>
+          fill="url(#brainPituitary)" stroke="#d8b96f" stroke-width="1.5" stroke-linejoin="round"/>
     <!-- 전엽/후엽 경계선 -->
     <path d="M 422 418 C 420 430 422 445 425 455" fill="none" stroke="#d8b96f" stroke-width="1" opacity="0.5"/>
   </g>
@@ -144,7 +144,7 @@
              C 565 405 570 420 560 435
              C 530 438 495 440 460 442
              C 452 425 450 412 455 402 Z"
-          fill="url(#gradMidbrain)" stroke="#5f9a73" stroke-width="1.8"/>
+          fill="url(#brainMidbrain)" stroke="#5f9a73" stroke-width="1.8"/>
     <!-- 중간뇌 수도관 (Cerebral aqueduct 통로선) -->
     <path d="M 525 402 C 528 418 530 432 533 438" fill="none" stroke="#5f9a73" stroke-width="1.4" stroke-dasharray="3,3" opacity="0.7"/>
     <!-- 상구/하구 (네둔덕 융기) -->
@@ -162,7 +162,7 @@
              C 568 458 565 480 555 500
              C 525 502 490 505 465 505
              C 435 485 435 460 460 442 Z"
-          fill="url(#gradPons)" stroke="#9aa8bd" stroke-width="1.8"/>
+          fill="url(#brainPons)" stroke="#9aa8bd" stroke-width="1.8"/>
     <!-- 가로 신경 섬유 결 (Transverse pontine fibers) -->
     <g fill="none" stroke="#9aa8bd" stroke-width="1.1" opacity="0.6">
       <path d="M 452 455 C 475 455 515 452 550 450"/>
@@ -182,7 +182,7 @@
              C 552 530 548 558 542 580
              C 520 582 500 583 480 582
              C 475 558 470 530 465 505 Z"
-          fill="url(#gradMedulla)" stroke="#6e94ba" stroke-width="1.8"/>
+          fill="url(#brainMedulla)" stroke="#6e94ba" stroke-width="1.8"/>
     <!-- 피라미드 및 올리브 핵 음영선 -->
     <path d="M 495 510 L 502 575" fill="none" stroke="#6e94ba" stroke-width="1.2" opacity="0.65"/>
     <ellipse cx="482" cy="535" rx="6" ry="14" fill="#6e94ba" opacity="0.25"/>
@@ -193,40 +193,35 @@
   <!--    칠: #c2a37a, 테두리: #9a7c53                                     -->
   <!-- ═══════════════════════════════════════════════════════════════════ -->
   <g id="cerebellum">
-    <!-- 엽(Folia)으로 둘러싸인 조개/꽃양배추 모양 소뇌 반구 -->
-    <path d="M 565 435
-             C 610 410 670 415 725 435
-             C 775 455 810 495 805 545
-             C 800 595 750 635 690 640
-             C 630 645 580 615 555 560
-             C 545 538 550 515 555 500
-             C 565 480 568 458 565 435 Z"
-          fill="url(#gradCerebellum)" stroke="#9a7c53" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- 소뇌 (대뇌 뒤아래에 자연스럽게 파묻히는 타원형 엽) -->
+    <path d="M 552 435
+             C 585 410 635 415 670 428
+             C 705 442 718 470 714 502
+             C 708 535 675 558 638 560
+             C 600 562 568 542 550 508
+             C 544 492 546 472 550 458
+             C 554 448 554 440 552 435 Z"
+          fill="url(#brainCerebellum)" stroke="#9a7c53" stroke-width="2.2" stroke-linejoin="round"/>
 
     <!-- 생명의 나무 (Arbor Vitae) 백색질 수지상 분기선 -->
-    <g fill="none" stroke="#f5ede2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
-      <!-- 중앙 줄기 (다리뇌 소뇌각 부위에서 뻗어나옴) -->
-      <path d="M 570 500 C 600 505 625 510 655 515"/>
-      <!-- 상부 주요 가지들 -->
-      <path d="M 625 510 C 640 480 665 460 695 450"/>
-      <path d="M 665 460 C 685 445 715 440 735 445"/>
-      <path d="M 650 495 C 680 485 715 480 745 485"/>
-      <!-- 후방 주요 가지들 -->
-      <path d="M 655 515 C 690 520 725 525 765 530"/>
-      <path d="M 710 523 C 735 510 760 512 780 520"/>
-      <path d="M 705 528 C 730 545 755 555 775 565"/>
-      <!-- 하부 주요 가지들 -->
-      <path d="M 640 512 C 655 545 680 575 710 595"/>
-      <path d="M 675 565 C 695 590 720 610 745 618"/>
-      <path d="M 625 510 C 620 540 635 570 655 595"/>
+    <g fill="none" stroke="#f5ede2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+      <path d="M 555 480 C 580 482 605 485 630 488"/>
+      <path d="M 605 485 C 618 460 638 445 662 438"/>
+      <path d="M 638 445 C 655 435 678 432 695 438"/>
+      <path d="M 625 475 C 650 468 675 465 700 470"/>
+      <path d="M 630 488 C 655 492 680 495 705 500"/>
+      <path d="M 665 494 C 682 485 698 488 710 495"/>
+      <path d="M 660 498 C 678 510 694 520 706 528"/>
+      <path d="M 618 486 C 630 510 648 530 668 542"/>
+      <path d="M 645 520 C 660 536 676 546 692 550"/>
+      <path d="M 605 485 C 602 505 615 528 628 544"/>
     </g>
 
     <!-- 소뇌 겉질 잔주름 (Folia striations) -->
-    <g fill="none" stroke="#9a7c53" stroke-width="1.1" opacity="0.6">
-      <path d="M 715 435 C 750 460 780 485 795 520"/>
-      <path d="M 750 485 C 775 510 795 545 790 580"/>
-      <path d="M 730 550 C 755 575 760 605 735 625"/>
-      <path d="M 670 600 C 685 620 660 635 630 635"/>
+    <g fill="none" stroke="#9a7c53" stroke-width="1.0" opacity="0.6">
+      <path d="M 670 428 C 692 445 708 465 712 488"/>
+      <path d="M 698 465 C 712 485 714 508 706 528"/>
+      <path d="M 678 512 C 694 528 696 544 676 555"/>
     </g>
   </g>
 
@@ -241,11 +236,10 @@
              C 502 682 522 682 540 680
              C 540 645 541 610 542 580
              C 520 582 500 583 480 582 Z"
-          fill="url(#gradSpinalCord)" stroke="#a8b3c2" stroke-width="1.8"/>
+          fill="url(#brainSpinalCord)" stroke="#a8b3c2" stroke-width="1.8"/>
     <!-- 척수 전정중열 (Anterior median fissure) 홈 -->
     <line x1="510" y1="582" x2="512" y2="680" stroke="#a8b3c2" stroke-width="1.3" opacity="0.7"/>
     <!-- 척수신경 뿌리 (Spinal nerve rootlets) 분기 흔적선 -->
-    <path d="M 483 615 L 468 625 M 484 645 L 469 655 M 485 670 L 470 680" stroke="#a8b3c2" stroke-width="1.4" stroke-linecap="round" opacity="0.6"/>
-    <path d="M 541 615 L 556 625 M 541 645 L 556 655 M 540 670 L 555 680" stroke="#a8b3c2" stroke-width="1.4" stroke-linecap="round" opacity="0.6"/>
+    
   </g>
 </svg>

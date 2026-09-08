@@ -19,11 +19,7 @@
             img: null,
             loaded: false
         },
-        autonomic: {
-            src: '../assets/images/nervous-autonomic.webp',
-            img: null,
-            loaded: false
-        },
+        // 자율신경 장면은 autonomic-map.js 의 평면 도식이 맡는다. 사진을 받지 않는다.
         synapse: {
             src: '../assets/images/synapse-hero.jpg',
             img: null,
