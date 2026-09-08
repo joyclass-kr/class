@@ -81,7 +81,7 @@
     }
 
     /**
-     * 사이드바 아래 개념 퀴즈를 그린다.
+     * 사이드바 아래 개념 문제를 그린다.
      * 지금 보고 있는 장면에 맞는 문제를 낸다 —
      * 관절 장면이면 길항근, 근절 장면이면 활주설.
      */
@@ -195,7 +195,7 @@
             ctx.fillStyle = '#38bdf8';
             ctx.font = 'bold ' + fpx(15) + ' Pretendard, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('⚡ 근골격계 시뮬레이터 로딩 중...', width / 2, height / 2);
+            ctx.fillText('⚡ 근골격계 그림을 불러오는 중...', width / 2, height / 2);
         }
     }
 
@@ -625,7 +625,7 @@
 
                 if (skeletonHudText) {
                     skeletonHudText.innerHTML = currentSceneKey === 'sarcomere' ?
-                        '슬라이더나 버튼으로 팔을 움직이면 <strong>근절 길이(X)와 I대·H대가 실시간으로 줄어들고 A대(1.60μm)는 불변</strong>하는 것을 확인하세요.' :
+                        '손잡이나 단추로 팔을 움직이면 <strong>근절 길이(X)와 I대·H대가 실시간으로 줄어들고 A대(1.60μm)는 불변</strong>하는 것을 확인하세요.' :
                         '화면의 <strong>[✋ 잡고 당기기]</strong> 핸들을 마우스로 잡고 당겨 이두근과 삼두근의 실시간 수축을 확인하세요.';
                 }
 

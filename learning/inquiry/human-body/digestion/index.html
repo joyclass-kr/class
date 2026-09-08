@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>소화계 · 소화 효소 | 인체 시뮬레이터</title>
+    <title>소화계 · 소화 효소 | 인체 모형</title>
     <link rel="stylesheet" href="../styles.css?v=20260907ay">
     <link rel="stylesheet" href="styles.css?v=20260908b">
 </head>
@@ -12,7 +12,7 @@
     <!-- Header Navigation -->
     <header class="sim-header">
         <div class="sim-header-left">
-            <a href="../" class="nav-back-btn" aria-label="인체 시뮬레이터 메인으로">
+            <a href="../" class="nav-back-btn" aria-label="인체 모형 메인으로">
                 <span>◀</span> 목록
             </a>
             <div class="sim-title-group">
@@ -48,7 +48,7 @@
                 <div class="sim-hud-overlay">
                     <div class="sim-hud-badge">
                         <span class="indicator"></span>
-                        <span>화면 속 황금빛 핀(위, 소장, 융털)을 클릭하여 세부 소화 메커니즘을 확인하세요.</span>
+                        <span>화면 속 황금빛 핀(위, 소장, 융털)을 눌러 자세한 소화 과정을 보세요.</span>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 <button class="sidebar-tab-btn active" data-tab="focus">장기 정보</button>
                 <button class="sidebar-tab-btn" data-tab="lab">가상 실험실</button>
                 <button class="sidebar-tab-btn" data-tab="traps">헷갈리기 쉬운 것</button>
-                <button class="sidebar-tab-btn" data-tab="quiz">개념 퀴즈</button>
+                <button class="sidebar-tab-btn" data-tab="quiz">개념 문제</button>
             </div>
 
             <div class="sidebar-body">
@@ -95,7 +95,7 @@
                 <div id="tabPanel_lab" class="sidebar-tab-panel" style="display:none;">
                     <div class="meter-card">
                         <div class="meter-card-title">
-                            <span>1. 환경 조절 (온도 &amp; pH)</span>
+                            <span>1. 환경 조절 (온도와 pH)</span>
                         </div>
                         <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
                             <div class="sim-slider-wrapper">
@@ -180,7 +180,7 @@
     <!-- Scripts -->
     <script src="../shared/engine-core.js?v=20260908c"></script>
     <script src="../shared/exam-data.js?v=20260908e"></script>
-    <script src="app.js?v=20260908c"></script>
+    <script src="app.js?v=20260908d"></script>
     <script src="enzyme-lab.js?v=20260908d"></script>
     <script src="villus-flow.js?v=20260908a"></script>
     <script src="stomach-flow.js?v=20260908a"></script>

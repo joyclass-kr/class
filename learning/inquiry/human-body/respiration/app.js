@@ -259,7 +259,7 @@
             ctx.fillStyle = '#06b6d4';
             ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('⚡ 호흡계 시뮬레이터 로딩 중...', width / 2, height / 2);
+            ctx.fillText('⚡ 호흡계 그림을 불러오는 중...', width / 2, height / 2);
         }
     }
 

@@ -322,7 +322,7 @@
         var line;
         if (hot) line = '더움 ➔ 간뇌 시상하부 ➔ 피부 혈관 확장 · 땀 분비 ➔ 열을 많이 내보내 체온이 내려갑니다';
         else if (cold) line = '추움 ➔ 간뇌 시상하부 ➔ 피부 혈관 수축 · 몸 떨림 ➔ 열을 덜 내보내고 더 만들어 체온이 올라갑니다';
-        else line = '슬라이더로 바깥 기온을 바꿔 보세요. 피부 혈관과 땀, 털이 어떻게 달라지는지 보입니다.';
+        else line = '손잡이로 바깥 기온을 바꿔 보세요. 피부 혈관과 땀, 털이 어떻게 달라지는지 보입니다.';
         verdictText.textContent = line;
         verdictText.style.color = color;
         verdictText.style.borderColor = color;

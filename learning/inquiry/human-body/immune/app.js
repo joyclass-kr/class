@@ -409,7 +409,7 @@
             ctx.fillStyle = '#8b5cf6';
             ctx.font = 'bold 17px Pretendard, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('🛡️ 면역계 시뮬레이터 로딩 중...', width / 2, height / 2);
+            ctx.fillText('🛡️ 면역계 그림을 불러오는 중...', width / 2, height / 2);
         }
     }
 

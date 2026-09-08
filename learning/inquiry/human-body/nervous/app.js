@@ -1231,10 +1231,10 @@
                 actionBtnText.textContent = isSympathetic ? '🌿 부교감신경으로 전환' : '⚡ 교감신경으로 전환';
                 actionTriggerBtn.style.background = isSympathetic ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)';
             } else if (currentSceneKey === 'response') {
-                actionBtnText.textContent = '반사 신호 레이스 시작';
+                actionBtnText.textContent = '반사 속도 겨루기';
                 actionTriggerBtn.style.background = 'linear-gradient(135deg, #a855f7, #7e22ce)';
             } else {
-                actionBtnText.textContent = '반사 신호 레이스 시작';
+                actionBtnText.textContent = '반사 속도 겨루기';
                 actionTriggerBtn.style.background = 'linear-gradient(135deg, #a855f7, #7e22ce)';
             }
         }
@@ -1420,15 +1420,15 @@
     function updateHudInstruction(sceneKey) {
         if (!hudInstructionEl) return;
         if (sceneKey === 'brain') {
-            hudInstructionEl.innerHTML = '화면 속 뇌 부위(<strong>대뇌, 소뇌, 간뇌, 중간뇌, 연수, 척수</strong>)를 클릭하여 핵심 기능을 탐색하세요.';
+            hudInstructionEl.innerHTML = '화면 속 뇌 부위(<strong>대뇌, 소뇌, 간뇌, 중간뇌, 연수, 척수</strong>)를 눌러 핵심 기능을 탐색하세요.';
         } else if (sceneKey === 'response') {
-            hudInstructionEl.innerHTML = '우측 상단 <strong>[반사 신호 레이스 시작]</strong>을 눌러 대뇌 반응과 척수·연수·중간뇌 반사의 속도를 비교하세요.';
+            hudInstructionEl.innerHTML = '우측 상단 <strong>[반사 속도 겨루기]</strong>을 눌러 대뇌 반응과 척수·연수·중간뇌 반사의 속도를 비교하세요.';
         } else if (sceneKey === 'autonomic') {
-            hudInstructionEl.innerHTML = '우측 탭에서 <strong>[교감신경]</strong>과 <strong>[부교감신경]</strong>을 토글하여 온몸 장기의 길항 작용을 관찰하세요.';
+            hudInstructionEl.innerHTML = '오른쪽 갈피에서 <strong>[교감신경]</strong>과 <strong>[부교감신경]</strong>을 바꿔 눌러 온몸 장기의 길항 작용을 관찰하세요.';
         } else if (sceneKey === 'synapse') {
             hudInstructionEl.innerHTML = '<strong>감각뉴런 ➔ 연합뉴런 ➔ 운동뉴런</strong>의 구조와 단방향 시냅스 전달 원리를 확인하세요.';
         } else if (sceneKey === 'sensory') {
-            hudInstructionEl.innerHTML = '오른쪽 슬라이더로 <strong>물체 거리</strong>와 <strong>빛의 밝기</strong>를 바꿔 수정체 두께와 동공 크기를 살펴보세요.';
+            hudInstructionEl.innerHTML = '오른쪽 손잡이로 <strong>물체 거리</strong>와 <strong>빛의 밝기</strong>를 바꿔 수정체 두께와 동공 크기를 살펴보세요.';
         } else if (sceneKey === 'ear') {
             hudInstructionEl.innerHTML = '소리가 <strong>귓바퀴 ➔ 외이도 ➔ 고막 ➔ 귓속뼈 ➔ 달팽이관</strong>으로 흐르는 길을 따라가 보세요. 부위를 누르면 설명이 나옵니다.';
         }
