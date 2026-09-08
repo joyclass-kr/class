@@ -432,9 +432,10 @@
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bindPause);
+        document.addEventListener('DOMContentLoaded', function () { bindPause(); bindSceneTabs(); });
     } else {
         bindPause();
+        bindSceneTabs();
     }
 
     /**
@@ -533,6 +534,48 @@
         });
     }
 
+    /**
+     * 옆칸 갈피를 장면에 묶는다.
+     *
+     * 갈피 단추에 data-for-scene="lab" 처럼 적어 두면, 그 장면일 때만 보인다.
+     * (전신 소화관 화면에 시험관·검출 시약이 떠 있던 것을 막는다. 그 손잡이
+     *  열다섯은 재 보니 lab 장면에서만 화면을 바꾸고 다른 장면에서는 0 이었다.)
+     * data-for-scene 이 없는 갈피는 모든 장면에서 보인다.
+     */
+    function bindSceneTabs() {
+        var tabs = [].slice.call(document.querySelectorAll('.sidebar-tab-btn'));
+        if (!tabs.length) return;
+
+        function activeScene() {
+            var b = document.querySelector('.scene-btn.active');
+            return b ? b.dataset.scene : null;
+        }
+
+        function apply() {
+            var scene = activeScene();
+            if (!scene) return;
+            var hidActive = false;
+            tabs.forEach(function (t) {
+                var only = t.getAttribute('data-for-scene');
+                var show = !only || only.split(',').some(function (x) { return x.trim() === scene; });
+                t.hidden = !show;
+                if (!show && t.classList.contains('active')) hidActive = true;
+            });
+            // 보고 있던 갈피가 숨으면 첫 번째로 보이는 갈피로 옮긴다
+            if (hidActive) {
+                for (var i = 0; i < tabs.length; i++) {
+                    if (!tabs[i].hidden) { tabs[i].click(); break; }
+                }
+            }
+        }
+
+        document.addEventListener('click', function (e) {
+            var b = e.target.closest ? e.target.closest('.scene-btn') : null;
+            if (b) setTimeout(apply, 0);
+        });
+        apply();
+    }
+
     function litPart(svgEl, ids, activeId) {
         if (!svgEl || !ids) return;
         ids.forEach(function (id) {
@@ -576,6 +619,7 @@
         renderQuizSet: renderQuizSet,
         pinLabel: pinLabel,
         isolateSvgIds: isolateSvgIds,
-        litPart: litPart
+        litPart: litPart,
+        bindSceneTabs: bindSceneTabs
     };
 });

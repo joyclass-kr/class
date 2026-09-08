@@ -197,12 +197,60 @@ function box(svg, id) {
 }
 
 /** 두 조각 사이 틈. 겹치거나 닿으면 0. */
+/**
+ * 두 조각이 정말 닿아 있는지 잰다.
+ *
+ * 예전에는 네모틀(bbox)끼리 쟀는데, 그건 거짓말을 한다.
+ * 소장이 대장 틀 '안에' 둥둥 떠 있어도 네모틀은 겹치므로 틈 0 이 나왔다.
+ * 실제로는 7 만큼 떨어져 있었는데 검사는 통과시켰다.
+ *
+ * 이제는 한쪽 조각의 테두리를 따라가며 점을 찍고, 그 점이 다른 조각
+ * 안(또는 선 위)에 들어가는지 본다. 들어가면 0, 아니면 가장 가까운 거리.
+ */
+function outlines(svg, id) {
+    var e = svg.querySelector('#' + CSS.escape(id));
+    if (!e) return [];
+    return e.matches('path,circle,ellipse,rect,polygon,polyline')
+        ? [e] : [].slice.call(e.querySelectorAll('path,circle,ellipse,rect,polygon,polyline'));
+}
+
+function samples(el, cap) {
+    var pts = [];
+    var len = 0;
+    try { len = el.getTotalLength(); } catch (e) { return pts; }
+    if (!len) return pts;
+    var n = Math.min(cap, Math.max(40, Math.round(len / 8)));
+    for (var i = 0; i <= n; i++) {
+        try { pts.push(el.getPointAtLength(len * i / n)); } catch (e) { break; }
+    }
+    return pts;
+}
+
 function gap(svg, a, b) {
-    var A = box(svg, a), B = box(svg, b);
-    if (!A || !B) return null;
-    var dx = Math.max(0, Math.max(A.x, B.x) - Math.min(A.r, B.r));
-    var dy = Math.max(0, Math.max(A.y, B.y) - Math.min(A.b, B.b));
-    return Math.round(Math.hypot(dx, dy) * 10) / 10;
+    var A = outlines(svg, a), B = outlines(svg, b);
+    if (!A.length || !B.length) return null;
+
+    var bPts = [];
+    B.forEach(function (el) { bPts = bPts.concat(samples(el, 240)); });
+
+    var best = Infinity;
+    for (var i = 0; i < A.length; i++) {
+        var aPts = samples(A[i], 240);
+        for (var k = 0; k < aPts.length; k++) {
+            var pt = svg.createSVGPoint();
+            pt.x = aPts[k].x; pt.y = aPts[k].y;
+            for (var j = 0; j < B.length; j++) {
+                try {
+                    if (B[j].isPointInFill(pt) || B[j].isPointInStroke(pt)) return 0;
+                } catch (e) { }
+            }
+            for (var m = 0; m < bPts.length; m++) {
+                var d = Math.hypot(bPts[m].x - aPts[k].x, bPts[m].y - aPts[k].y);
+                if (d < best) best = d;
+            }
+        }
+    }
+    return best === Infinity ? null : Math.round(best * 10) / 10;
 }
 
 /** 축 기울기와 끝점 거리 */
