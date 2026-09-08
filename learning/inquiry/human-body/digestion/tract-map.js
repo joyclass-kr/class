@@ -90,19 +90,34 @@
         { x: 350, y: 80 },   // 입
         { x: 350, y: 240 },  // 식도
         { x: 398, y: 296 },  // 위
-        { x: 323, y: 400 },  // 십이지장
-        { x: 350, y: 500 },  // 소장 위쪽
-        { x: 330, y: 600 },  // 소장 아래쪽
-        { x: 272, y: 634 },  // 소장 끝
+        // 위와 십이지장이 맞닿는 자리는 좁다. 눈금을 2씩 훑어 두 조각이
+        // 나란히 닿는 줄(y 336~338)을 찾아 그리로 지난다. 조금만 비껴도
+        // 음식이 배 속 빈 곳을 가로지른다.
+        { x: 352, y: 330 },  // 위의 아래쪽
+        { x: 344, y: 336 },  // 유문 (위의 출구)
+        { x: 338, y: 338 },  // 십이지장 들머리
+        { x: 320, y: 356 },  // 십이지장 위
+        { x: 316, y: 396 },  // 십이지장 가운데
+        { x: 334, y: 424 },  // 십이지장 끝
+        { 소장: true },      // ← 여기에 소장 길을 그림에서 읽어 끼워 넣는다
+        // 아래 대장 자리는 새 그림에서 벽을 한 줄씩 훑어 한가운데를 집은 값이다
+        // (x=230 세로줄은 y 408~643, x=300 가로줄은 y 397~419 …).
         { x: 226, y: 630 },  // 맹장 (왼쪽 아래)
-        { x: 223, y: 540 },  // 상행결장 — 벽의 한가운데를 집어 잰 값
-        { x: 224, y: 460 },  // 상행결장 위쪽
-        { x: 245, y: 425 },  // 결장 왼쪽 위 모서리
-        { x: 400, y: 418 },  // 횡행결장
-        { x: 476, y: 440 },  // 결장 오른쪽 위 모서리
-        { x: 482, y: 520 },  // 하행결장
-        { x: 481, y: 610 },  // 하행결장 아래쪽
-        { x: 430, y: 686 },  // 구불결장
+        { x: 228, y: 560 },  // 상행결장
+        { x: 228, y: 470 },  // 상행결장 위쪽
+        { x: 234, y: 424 },  // 결장 왼쪽 위 모서리
+        { x: 300, y: 408 },  // 횡행결장 왼쪽
+        { x: 400, y: 408 },  // 횡행결장 오른쪽
+        { x: 462, y: 420 },  // 결장 오른쪽 위 모서리
+        { x: 480, y: 470 },  // 하행결장
+        { x: 480, y: 560 },  // 하행결장 가운데
+        { x: 480, y: 640 },  // 하행결장 아래쪽
+        { x: 455, y: 672 },  // 구불결장
+        { x: 411, y: 690 },  // 구불결장 아래
+        // 구불결장과 곧창자가 겹치는 줄은 y 700~706 뿐이다. 그리로 지난다.
+        { x: 380, y: 698 },  // 구불결장 끝
+        { x: 366, y: 703 },  // 곧창자로 넘어가는 자리
+        { x: 355, y: 708 },  // 곧창자 들머리
         { x: 351, y: 720 },  // 곧창자
         { x: 350, y: 776 }   // 항문
     ];
@@ -110,6 +125,51 @@
     var wrap, layer, svg, labelBox, leaderGroup, bolus;
     var swallowing = false, progress = 1;
     var lastT = 0;
+    // 그림을 못 읽으면 표시 자리만 빼고 쓴다 (음식이 소장을 건너뛰지만 멈추지는 않는다)
+    var route = ROUTE.filter(function (p) { return !p.소장; });
+
+    /**
+     * 소장은 굵게 그은 선 하나다. 그러니 그 선 자체가 관의 한가운데다.
+     * 좌표를 손으로 적는 대신 선을 따라 점을 떠서 길에 끼워 넣는다.
+     * 그러면 그림이 바뀌어도 음식은 늘 관 속으로 지나간다.
+     */
+    function traceSmallIntestine() {
+        route = ROUTE.filter(function (p) { return !p.소장; });
+        if (!svg) return;
+        var g = svg.querySelector('#smallIntestine');
+        if (!g) return;
+
+        // 여러 겹으로 그려진 가운데 가장 굵은 선이 관의 몸통이다
+        var best = null, bestW = -1;
+        [].slice.call(g.querySelectorAll('path')).forEach(function (p) {
+            var w = parseFloat(p.getAttribute('stroke-width') || 0);
+            if (w > bestW) { bestW = w; best = p; }
+        });
+        if (!best || bestW < 6) return;
+
+        var len = 0;
+        try { len = best.getTotalLength(); } catch (e) { return; }
+        if (!len) return;
+
+        var pts = [];
+        // 소장은 촘촘히 감겨 있다. 점을 성기게 뜨면 점과 점을 잇는 곧은 줄이
+        // 굽이를 가로질러 관 밖으로 나간다 (열여섯 점으로 떴더니 133 자리가 밖이었다).
+        // 열두 눈금마다 한 점씩 뜬다.
+        var STEPS = Math.max(24, Math.round(len / 12));
+        for (var i = 0; i <= STEPS; i++) {
+            var q = best.getPointAtLength(len * i / STEPS);
+            pts.push({ x: Math.round(q.x * 10) / 10, y: Math.round(q.y * 10) / 10 });
+        }
+
+        // 표시해 둔 자리에 끼운다
+        var at = -1;
+        for (var k = 0; k < ROUTE.length; k++) if (ROUTE[k].소장) { at = k; break; }
+        if (at < 0) return;
+        route = ROUTE.slice(0, at).concat(pts, ROUTE.slice(at + 1));
+
+        // 잣대(_relevance.js)가 이 길을 훑어 관 밖으로 나간 자리를 셀 수 있게 내놓는다
+        window.__tractRoute = route;
+    }
 
     function init() {
         wrap = document.querySelector('.cinematic-viewport');
@@ -183,6 +243,7 @@
                     e.addEventListener('click', function () { show(item); });
                 });
 
+                traceSmallIntestine();
                 placeLabels();
                 window.addEventListener('resize', placeLabels);
             })
@@ -270,10 +331,10 @@
                 if (progress >= 1) { progress = 1; swallowing = false; }
             }
             if (progress < 1) {
-                var seg = progress * (ROUTE.length - 1);
+                var seg = progress * (route.length - 1);
                 var i = Math.floor(seg), f = seg - i;
-                var p1 = ROUTE[i] || ROUTE[0];
-                var p2 = ROUTE[Math.min(i + 1, ROUTE.length - 1)];
+                var p1 = route[i] || route[0];
+                var p2 = route[Math.min(i + 1, route.length - 1)];
                 bolus.setAttribute('cx', (p1.x + (p2.x - p1.x) * f).toFixed(1));
                 bolus.setAttribute('cy', (p1.y + (p2.y - p1.y) * f).toFixed(1));
                 bolus.setAttribute('opacity', 1);

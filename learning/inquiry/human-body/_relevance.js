@@ -279,3 +279,114 @@
         return out;
     };
 })();
+
+/*
+ * 「음식이 관 밖을 지나간다」를 잡는 잣대.
+ *
+ * 음식 구슬이 지나는 길은 좌표로 적어 두는데, 옆방이 그림을 다시 그리면
+ * 그 좌표가 관 밖으로 밀려난다. 실제로 소장을 다시 받았을 때 두 점이
+ * 빈 곳이 되어 음식이 배 속을 가로질렀다.
+ *
+ *   await __routeCheck()   → 길을 촘촘히 훑어 관 밖으로 나간 자리를 센다
+ */
+(function () {
+    'use strict';
+
+    var TRACT = ['mouth', 'esophagus', 'stomach', 'duodenum',
+        'smallIntestine', 'largeIntestine', 'rectum', 'anus', 'cecum', 'colon'];
+
+    function shapes(g) {
+        var SEL = 'path,rect,ellipse,circle,polygon,polyline,line';
+        return g.matches(SEL) ? [g] : [].slice.call(g.querySelectorAll(SEL));
+    }
+
+    /** 길 전체를 촘촘히 훑어 관 밖으로 나간 자리를 센다 */
+    window.__routeWalk = function () {
+        var svg = [].slice.call(document.querySelectorAll('svg'))
+            .filter(function (s) { return s.querySelector('#smallIntestine'); })[0];
+        var route = window.__tractRoute;
+        if (!svg || !route) return '길을 찾지 못했습니다 (겹판이 아직 안 떴을 수 있습니다)';
+
+        var parts = [];
+        TRACT.forEach(function (id) {
+            var e = svg.querySelector('#' + id);
+            if (e) shapes(e).forEach(function (s) { parts.push({ id: id, el: s }); });
+        });
+        function 어디(x, y) {
+            var p = svg.createSVGPoint(); p.x = x; p.y = y;
+            for (var i = 0; i < parts.length; i++) {
+                try { if (parts[i].el.isPointInFill(p) || parts[i].el.isPointInStroke(p)) return parts[i].id; }
+                catch (e) { }
+            }
+            return null;
+        }
+
+        var 밖 = [], 총 = 0;
+        for (var i = 0; i < route.length - 1; i++) {
+            var a = route[i], b = route[i + 1];
+            var d = Math.hypot(b.x - a.x, b.y - a.y);
+            var n = Math.max(1, Math.round(d / 2));
+            for (var j = 0; j <= n; j++) {
+                var x = a.x + (b.x - a.x) * j / n;
+                var y = a.y + (b.y - a.y) * j / n;
+                총++;
+                if (!어디(x, y)) 밖.push(Math.round(x) + ',' + Math.round(y));
+            }
+        }
+        return { 잰자리: 총, 관밖: 밖.length, 어디: 밖.slice(0, 12) };
+    };
+
+    window.__routeCheck = async function () {
+        var svg = [].slice.call(document.querySelectorAll('svg'))
+            .filter(function (s) { return s.querySelector('#smallIntestine'); })[0];
+        if (!svg) return '소화관 그림을 찾지 못했습니다';
+
+        var parts = [];
+        TRACT.forEach(function (id) {
+            var e = svg.querySelector('#' + id);
+            if (e) shapes(e).forEach(function (s) { parts.push({ id: id, el: s }); });
+        });
+
+        function 어디(x, y) {
+            var p = svg.createSVGPoint(); p.x = x; p.y = y;
+            for (var i = 0; i < parts.length; i++) {
+                try { if (parts[i].el.isPointInFill(p) || parts[i].el.isPointInStroke(p)) return parts[i].id; }
+                catch (e) { }
+            }
+            return null;
+        }
+
+        // 겹판이 실제로 쓰는 길을 알 수 없으니, 구슬을 굴려 가며 자리를 본다.
+        // 화면 갱신이 도구 부름 사이에만 도니 여기서는 길 자체를 다시 떠서 잰다.
+        var b = document.getElementById('swallowBtn');
+        var bolus = svg.querySelector('#bolus') || svg.querySelector('circle[r]');
+        if (!b || !bolus) return '삼키기 단추나 음식 구슬을 찾지 못했습니다';
+
+        return { 안내: '단추를 눌러 굴린 뒤 __routeSpot() 을 여러 번 부르세요' };
+    };
+
+    window.__routeSpot = function () {
+        var svg = [].slice.call(document.querySelectorAll('svg'))
+            .filter(function (s) { return s.querySelector('#smallIntestine'); })[0];
+        if (!svg) return '없음';
+        var cands = [].slice.call(svg.querySelectorAll('circle')).filter(function (c) {
+            return c.getAttribute('opacity') === '1';
+        });
+        var bolus = cands[cands.length - 1];
+        if (!bolus) return '구슬 안 보임';
+        var x = +bolus.getAttribute('cx'), y = +bolus.getAttribute('cy');
+
+        var parts = [];
+        TRACT.forEach(function (id) {
+            var e = svg.querySelector('#' + id);
+            if (e) shapes(e).forEach(function (s) { parts.push({ id: id, el: s }); });
+        });
+        var p = svg.createSVGPoint(); p.x = x; p.y = y;
+        var hit = null;
+        for (var i = 0; i < parts.length && !hit; i++) {
+            try { if (parts[i].el.isPointInFill(p) || parts[i].el.isPointInStroke(p)) hit = parts[i].id; }
+            catch (e) { }
+        }
+        return Math.round(x) + ',' + Math.round(y) + ' → ' + (hit || '✘ 관 밖');
+    };
+})();
