@@ -204,14 +204,14 @@ at a broken tether. On the left, the boy stands with his mouth open, the horse
 towering over him. Cool early light.
 ```
 
-### `07-ox.webp` — 뿔을 휘두른 황소
+### `07-ox.webp` — 말을 내쌄은 황소와 송아지
 
 ```
-Wide scene at a cattle shed in the morning. On the right, an enormous
-yellow-brown ox fills much of the frame, head lowered, one great horn tipped as
-if he has just swung it, chewing placidly. Beside him a bearded farmer bows
-slightly with both hands together, apologising. On the left, the boy looks up and
-up at the ox, tiny in comparison. Strong size contrast.
+Wide farmyard scene in the morning. In the cattle shed at the back a huge
+yellow-brown ox lies on the straw with its horns up, calm. In the middle of the
+yard its calf gallops after a brown horse, which is bolting out through the open
+wooden gate on the right, dust puffing under its hooves. Beside the well the boy
+and a bearded farmer look on. Sunny, comic, nobody hurt.
 ```
 
 ### `08-road.webp` — 황소를 끌고 가는 소년

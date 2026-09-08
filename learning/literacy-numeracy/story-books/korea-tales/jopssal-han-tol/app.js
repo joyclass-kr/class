@@ -118,16 +118,16 @@ const CHAPTERS = [
                 art: "07-ox.webp",
                 emoji: "🐂",
                 left: [
-                    "소년은 커다란 말의 고삐를 잡고 또 길을 갔어요.",
+                    "소년은 커다란 말의 고삐를 잡고 또 길을 갔어요. 말은 소년을 잘 따랐어요.",
                     "말발굽 소리가 저벅저벅 났지요.",
-                    "그날 밤 묵은 집에서는 말을 외양간에 매어 두었습니다. 그 외양간에는 커다란 황소가 한 마리 있었어요.",
-                    "말은 소년을 잘 따랐어요."
+                    "그날 밤 묵은 집에서는 말을 외양간에 매어 두었습니다.",
+                    "그 외양간에는 커다란 황소와 송아지가 있었어요."
                 ],
                 right: [
-                    "아침이 되자 황소가 뿔을 휘둘러 말을 밖으로 내쫓아 버렸지 뭐예요.",
+                    "아침이 되자 황소와 송아지가 달려들어 말을 대문 밖으로 내쫓아 버렸지 뭐예요.",
                     "\"세상에 이런 일이 다 있나.\"",
                     "\"…그 황소를 주시겠습니까?\"",
-                    "\"어허, 어떻게 알았누?\"",
+                    "\"어허, 내 그럴 줄 알았네.\"",
                     "주인은 한숨을 쉬며 황소의 고삐를 소년에게 건네주었답니다."
                 ]
             },
@@ -330,15 +330,15 @@ const EN = {
                     art: "07-ox.webp",
                     emoji: "🐂",
                     left: [
-                        "The boy walked on, leading the big horse. Its hooves went clop, clop along the road.",
-                        "That night the house he stayed at tied the horse in the barn. A great ox was standing in that barn.",
-                        "The horse followed the boy nicely."
+                        "The boy walked on, leading the big horse. The horse followed the boy nicely.",
+                        "Its hooves went clop, clop along the road.",
+                        "That night the house he stayed at tied the horse in the barn. A great ox and a calf were standing in that barn."
                     ],
                     right: [
-                        "In the morning the ox swung its horns and drove the horse right out of the barn.",
+                        "In the morning the ox and the calf charged at the horse and drove it right out of the gate.",
                         { t: "\"Well, I've never seen anything like it.\"", v: "man" },
                         { t: "\"...Could I have that ox?\"", v: "boy" },
-                        { t: "\"Ha! How did you know I'd say yes?\"", v: "man" },
+                        { t: "\"Ha! I knew you'd say that.\"", v: "man" },
                         "The owner sighed and handed the boy the ox's rope."
                     ]
                 },
@@ -604,14 +604,14 @@ const EN = {
             { w: "along the road", k: "길을 따라", s: "clop, clop along the road" },
             { w: "the house he stayed at", k: "그가 묵은 집", s: "the house he stayed at tied the horse in the barn" },
             { w: "barn", k: "외양간, 헛간", s: "tied the horse in the barn" },
-            { w: "a great ox", k: "커다란 황소 한 마리", s: "A great ox was standing in that barn." },
+            { w: "a great ox", k: "커다란 황소 한 마리", s: "A great ox and a calf were standing in that barn." },
             { w: "followed ~ nicely", k: "~을 잘 따랐다", s: "The horse followed the boy nicely." },
-            { w: "swung (swing)", k: "휘둘렀다", s: "the ox swung its horns" },
-            { w: "horns (horn)", k: "뿔", s: "the ox swung its horns" },
-            { w: "drove ~ out (drive out)", k: "~을 몰아냈다", s: "drove the horse right out of the barn" },
-            { w: "right out of ~", k: "~ 밖으로 곧장", s: "drove the horse right out of the barn" },
+            { w: "a calf", k: "송아지 한 마리", s: "A great ox and a calf were standing in that barn." },
+            { w: "charged at ~ (charge)", k: "~에게 달려들었다", s: "the ox and the calf charged at the horse" },
+            { w: "drove ~ out (drive out)", k: "~을 몰아냈다", s: "drove it right out of the gate" },
+            { w: "right out of ~", k: "~ 밖으로 곧장", s: "drove it right out of the gate" },
             { w: "I've never seen anything like it. (see)", k: "이런 건 처음 봐.", s: "Well, I've never seen anything like it." },
-            { w: "I'd (I would)", k: "나는 ~할 것이다", s: "How did you know I'd say yes?" },
+            { w: "you'd (you would)", k: "네가 ~할 줄", s: "I knew you'd say that." },
             { w: "sighed (sigh)", k: "한숨을 쉬었다", s: "The owner sighed" },
             { w: "handed ~ ... (hand)", k: "~에게 ...을 건네주었다", s: "handed the boy the ox's rope" }
         ],
@@ -784,8 +784,8 @@ const WORDS_KO = {
     "07-ox.webp": [
         { w: "저벅저벅", k: "발소리가 크게 나는 모양.", s: "말발굽 소리가 저벅저벅 났지요." },
         { w: "외양간", k: "소를 기르는 집.", s: "그날 밤 묵은 집에서는 말을 외양간에 매어 두었습니다." },
-        { w: "황소", k: "다 자란 수소.", s: "그 외양간에는 커다란 황소가 한 마리 있었어요." },
-        { w: "내쫓다", k: "밖으로 몰아내다.", s: "아침이 되자 황소가 뿔을 휘둘러 말을 밖으로 내쫓아 버렸지 뭐예요." }
+        { w: "황소", k: "다 자란 수소.", s: "그 외양간에는 커다란 황소와 송아지가 있었어요." },
+        { w: "내쫓다", k: "밖으로 몰아내다.", s: "아침이 되자 황소와 송아지가 달려들어 말을 대문 밖으로 내쫓아 버렸지 뭐예요." }
     ],
     "08-road.webp": [
         { w: "뚜벅뚜벅", k: "힘 있게 한 발 한 발 걷는 모양.", s: "소년은 커다란 황소의 고삐를 잡고 뚜벅뚜벅 길을 걸었습니다." },
