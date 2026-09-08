@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="강낭콩을 햇빛·물·온도 조건이 다른 곳에서 기르며 기준 화분과 견주고, 풀·토끼·여우가 사는 들판에서 한 생물이 줄면 먹이 사슬을 따라 다른 생물 수가 어떻게 바뀌는지 지켜보는 초등 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=5">
-    <link rel="stylesheet" href="living-visual.css?v=5">
-    <link rel="stylesheet" href="quiz.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="living-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=4">
 </head>
 <body>
     <main>
@@ -44,8 +44,10 @@
                     <legend id="predictionLegend">어떻게 될까요?</legend>
                     <div class="prediction-buttons three" id="predictionArea"></div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">실험 시작</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">실험 시작</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 실험을 시작해 보세요.</p>
@@ -62,6 +64,7 @@
 
             <section class="panel burn-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -72,6 +75,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">왼쪽은 햇빛·물·따뜻함을 모두 준 기준 화분, 오른쪽은 내가 고른 조건의 화분입니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -144,6 +149,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=5"></script>
+    <script src="app.js?v=12"></script>
 </body>
 </html>

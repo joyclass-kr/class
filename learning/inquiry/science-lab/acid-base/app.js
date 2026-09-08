@@ -299,3 +299,111 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clearResult();
 });
+
+/* 그림 속 문장을 HTML로 내린다. 액자를 벗어나거나 서로 겹치는 글자만 옮기므로
+   조건이 바뀌어도 스스로 맞는다. 그림에는 짧은 이름표만 남는다. */
+(function () {
+    const stageVerdict = document.getElementById('stageVerdict');
+    const stageReadout = document.getElementById('stageReadout');
+    const stageNote = document.getElementById('stageNote');
+    if (!stageReadout) return;
+    const pairs = [['mainGroup', '.main-svg'], ['graphGroup', '.graph-svg']]
+        .map(([id, sel]) => [document.getElementById(id), document.querySelector(sel)])
+        .filter(([g, s]) => g && s);
+    if (!pairs.length) return;
+
+    // 그림에서 쓰던 색이 흰 바탕에서는 너무 흐린 경우가 있어, 그런 색은 버리고 기본색을 쓴다.
+    function readableOnWhite(c) {
+        let r, g, b;
+        if (c[0] === '#') {
+            let h = c.slice(1);
+            if (h.length === 3) h = h.split('').map(x => x + x).join('');
+            if (h.length !== 6) return false;
+            r = parseInt(h.slice(0, 2), 16); g = parseInt(h.slice(2, 4), 16); b = parseInt(h.slice(4, 6), 16);
+        } else {
+            const m = c.match(/[\d.]+/g);
+            if (!m || m.length < 3) return false;
+            r = +m[0]; g = +m[1]; b = +m[2];
+            const a = m.length > 3 ? +m[3] : 1;
+            r = a * r + (1 - a) * 255; g = a * g + (1 - a) * 255; b = a * b + (1 - a) * 255;
+        }
+        const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+        const L = 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+        return 1.05 / (L + 0.05) >= 3.5;
+    }
+
+    function liftProse() {
+        const rows = [], notes = [], verdicts = [];
+        const takeOut = t => {
+            const cls = t.getAttribute('class') || '', txt = t.textContent.trim();
+            if (txt) {
+                if (/verdict-text/.test(cls)) verdicts.push(txt);
+                else if (/note-text/.test(cls)) notes.push(txt);
+                else rows.push({ txt, fill: t.style.fill || '' });
+            }
+            t.remove();
+        };
+        pairs.forEach(([g, svg]) => {
+            const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+            const outside = b => b.x < -0.5 || b.x + b.width > W + 0.5 || b.y + b.height > H + 0.5 || b.y < -0.5;
+            [...g.querySelectorAll('text')].forEach(t => {
+                const cls = t.getAttribute('class') || '';
+                const must = /verdict-text|note-text|prose/.test(cls);
+                let b; try { b = t.getBBox(); } catch (e) { return; }
+                // 눈금 같은 짧은 이름표는 밖으로 내보내면 뜻을 잃는다. 액자 안으로 밀어 넣어 본다.
+                if (!must && outside(b) && b.width < W * 0.6 && !t.getAttribute('transform')) {
+                    const x = parseFloat(t.getAttribute('x')), y = parseFloat(t.getAttribute('y'));
+                    if (!Number.isNaN(x)) {
+                        const dx = b.x + b.width > W - 2 ? (W - 2) - (b.x + b.width) : (b.x < 2 ? 2 - b.x : 0);
+                        if (dx) { t.setAttribute('x', (x + dx).toFixed(1)); b = t.getBBox(); }
+                    }
+                    if (!Number.isNaN(y)) {
+                        const dy = b.y + b.height > H - 1 ? (H - 1) - (b.y + b.height) : (b.y < 1 ? 1 - b.y : 0);
+                        if (dy) { t.setAttribute('y', (y + dy).toFixed(1)); b = t.getBBox(); }
+                    }
+                }
+                if (must || outside(b)) takeOut(t);
+            });
+            const items = [...g.querySelectorAll('text')].map(t => {
+                let b; try { b = t.getBBox(); } catch (e) { b = null; }
+                return { t, b, len: t.textContent.trim().length };
+            }).filter(o => o.b);
+            const drop = new Set();
+            for (let i = 0; i < items.length; i += 1) for (let j = i + 1; j < items.length; j += 1) {
+                if (drop.has(i) || drop.has(j)) continue;
+                const a = items[i].b, c = items[j].b;
+                if (Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x) <= 3) continue;
+                if (Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y) <= 1.5) continue;
+                const k = items[i].len >= items[j].len ? i : j;
+                if (items[k].len < 8) continue;
+                drop.add(k);
+            }
+            [...drop].sort((x, y) => x - y).forEach(k => takeOut(items[k].t));
+        });
+        // 옮긴 것이 없는 실행은 우리 자신이 일으킨 메아리다. 그때 지우면 방금 옮긴 글이 사라진다.
+        if (!rows.length && !notes.length && !verdicts.length) return;
+        if (stageVerdict) stageVerdict.textContent = verdicts.join(' ');
+        stageReadout.textContent = '';
+        rows.forEach(r => {
+            const s = document.createElement('span');
+            s.textContent = r.txt;
+            if (r.fill && readableOnWhite(r.fill)) s.style.color = r.fill;
+            stageReadout.appendChild(s);
+        });
+        if (stageNote) stageNote.textContent = notes.join(' ');
+    }
+
+    // 화면이 다시 그려지면 곧바로 돈다. 옮기는 동안 스스로를 깨우지 않도록 잠근다.
+    let busy = false, obs;
+    // 글자를 옮기는 것도 화면 변경이라 감시기가 다시 불린다. 그때는 기록이 비어 있으므로
+    // 그냥 돌아가야 한다. 그러지 않으면 두 번째 실행이 방금 옮긴 결과를 지운다.
+    const run = recs => {
+        if (busy || (recs && recs.length === 0)) return;
+        busy = true;
+        try { liftProse(); } finally { obs.takeRecords(); busy = false; }
+    };
+    obs = new MutationObserver(run);
+    pairs.forEach(([g]) => obs.observe(g, { childList: true, subtree: true }));
+    run();
+    document.addEventListener('DOMContentLoaded', run);
+})();

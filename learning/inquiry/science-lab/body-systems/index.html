@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="앉아 있을 때와 달릴 때 호흡·순환·소화·배설 기관이 어떻게 함께 달라지는지 실제 수치로 확인하는 중학교 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=5">
-    <link rel="stylesheet" href="body-visual.css?v=5">
-    <link rel="stylesheet" href="quiz.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="body-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=4">
 </head>
 <body>
     <main>
@@ -59,8 +59,10 @@
                     </div>
                 </fieldset>
 
-                <button class="run-button" id="checkBtn" type="button">결과 보기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">결과 보기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
 
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
@@ -78,6 +80,7 @@
 
             <section class="panel body-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -88,6 +91,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">심장과 폐는 실제 빠르기로 뜁니다. 활동을 바꾸면 눈에 띄게 빨라집니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -159,6 +164,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=5"></script>
+    <script src="app.js?v=12"></script>
 </body>
 </html>

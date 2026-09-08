@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="밀도로 물체가 뜨는지 가라앉는지 확인하고, 부피를 줄여 기체 압력이 어떻게 변하는지 관찰하는 중학교 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=5">
-    <link rel="stylesheet" href="buoy-visual.css?v=5">
-    <link rel="stylesheet" href="quiz.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="buoy-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=4">
 </head>
 <body>
     <main>
@@ -100,6 +100,7 @@
 
             <section class="panel buoy-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">물</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 260" aria-hidden="true">
@@ -110,6 +111,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">밀도를 바꾸며 뜨는지 가라앉는지 관찰해 보세요.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -181,6 +184,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=10"></script>
 </body>
 </html>

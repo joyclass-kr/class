@@ -95,3 +95,6 @@
 .germ { fill: #ea580c; stroke: rgba(0, 0, 0, .3); stroke-width: .4; }
 .count-text { fill: #ea580c; font-size: 20px; font-weight: 900; }
 .trace.other { stroke-dasharray: 5 4; opacity: .7; }
+
+.run-row { display: grid; grid-template-columns: 1.8fr 1fr; gap: 8px; align-items: stretch; margin-top: 10px; }
+.run-row .run-button, .run-row .reset-button { width: 100%; margin: 0; }

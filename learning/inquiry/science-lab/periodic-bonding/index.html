@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="1~20번 원소를 주기와 족으로 골라 전자 껍질 배치를 그리고 어떤 이온이 되는지 확인한 뒤, 금속과 비금속·비금속과 비금속 짝을 맺어 전자가 옮겨 가는 이온 결합과 함께 쓰는 공유 결합을 보고 녹는점·전기 전도를 견주는 고등학교 통합과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=6">
-    <link rel="stylesheet" href="bonding-visual.css?v=6">
-    <link rel="stylesheet" href="quiz.css?v=4">
+    <link rel="stylesheet" href="styles.css?v=7">
+    <link rel="stylesheet" href="bonding-visual.css?v=7">
+    <link rel="stylesheet" href="quiz.css?v=5">
 </head>
 <body>
     <main>
@@ -44,8 +44,10 @@
                     <legend id="predictionLegend">어떻게 될까요?</legend>
                     <div class="prediction-buttons" id="predictionArea"></div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">전자 배치 보기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">전자 배치 보기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
@@ -62,6 +64,7 @@
 
             <section class="panel burn-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -72,6 +75,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">원자핵 둘레의 껍질에 전자가 안쪽부터 차례로 들어갑니다. 첫 껍질은 2개, 다음은 8개까지입니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -144,6 +149,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=11"></script>
 </body>
 </html>

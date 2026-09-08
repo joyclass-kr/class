@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="수소가 헬륨이 되는 것부터 규소가 철이 되는 것까지 핵융합 단계마다 나오는 에너지와 줄어드는 질량을 원자핵 묶는 에너지 자료로 견주고, 별의 질량에 따라 어느 원소까지 만들고 어떻게 끝나는지 따라가며, 수소·탄소·철·금이 각각 어디서 왔는지 우주·지각·사람 몸의 비율과 함께 확인하는 고등학교 통합과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=5">
-    <link rel="stylesheet" href="star-visual.css?v=5">
-    <link rel="stylesheet" href="quiz.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="star-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=4">
 </head>
 <body>
     <main>
@@ -45,8 +45,10 @@
                     <legend id="predictionLegend">어떻게 될까요?</legend>
                     <div class="prediction-buttons" id="predictionArea"></div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">합쳐 보기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">합쳐 보기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
@@ -63,6 +65,7 @@
 
             <section class="panel burn-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -73,6 +76,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">원자핵들이 가까이 다가가 하나로 합쳐지고, 줄어든 질량만큼 빛과 열이 나옵니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -145,6 +150,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=10"></script>
 </body>
 </html>

@@ -99,3 +99,6 @@
 .ebar-text { font-size: 14px; font-weight: 900; }
 .bar { stroke: rgba(255, 255, 255, .25); stroke-width: .8; }
 .bar-text { font-size: 14px; font-weight: 900; }
+
+.run-row { display: grid; grid-template-columns: 1.8fr 1fr; gap: 8px; align-items: stretch; margin-top: 10px; }
+.run-row .run-button, .run-row .reset-button { width: 100%; margin: 0; }

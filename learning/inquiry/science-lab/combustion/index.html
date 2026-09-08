@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="강철솜과 나무를 열린 그릇과 밀폐 용기에서 태워, 저울 눈금과 전체 질량이 어떻게 달라지는지 재어 보고 질량 보존 법칙을 확인하는 중학교 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=5">
-    <link rel="stylesheet" href="combustion-visual.css?v=5">
-    <link rel="stylesheet" href="quiz.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="combustion-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=4">
 </head>
 <body>
     <main>
@@ -41,8 +41,10 @@
                         <button type="button" data-prediction="down">줄어든다</button>
                     </div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">실험 시작</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">실험 시작</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 실험을 시작해 보세요.</p>
@@ -140,6 +142,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=5"></script>
+    <script src="app.js?v=6"></script>
 </body>
 </html>

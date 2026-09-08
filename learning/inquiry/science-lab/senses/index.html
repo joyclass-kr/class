@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="떨어지는 자를 잡아 반응 시간을 재고, 눈·귀·피부·코·혀 가운데 어느 감각이 빠른지 견주어 보는 초등 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=5">
-    <link rel="stylesheet" href="sense-visual.css?v=5">
-    <link rel="stylesheet" href="quiz.css?v=4">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="sense-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=5">
 </head>
 <body>
     <main>
@@ -62,8 +62,10 @@
                     </div>
                 </fieldset>
 
-                <button class="run-button" id="runBtn" type="button">자 떨어뜨리기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="runBtn" type="button">자 떨어뜨리기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
 
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
@@ -81,6 +83,7 @@
 
             <section class="panel sense-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -92,6 +95,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">자는 놓는 순간부터 점점 빨라지며 떨어집니다. 그래서 반응이 조금만 늦어도 떨어진 거리는 훨씬 길어집니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -163,6 +168,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=11"></script>
 </body>
 </html>

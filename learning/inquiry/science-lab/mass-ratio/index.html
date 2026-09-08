@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="마그네슘과 산소를 반응시켜 질량 보존과 일정 성분비를 확인하고 발열·흡열 반응의 온도 변화를 관찰하는 중학교 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=4">
-    <link rel="stylesheet" href="mass-visual.css?v=4">
-    <link rel="stylesheet" href="quiz.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="mass-visual.css?v=5">
+    <link rel="stylesheet" href="quiz.css?v=3">
 </head>
 <body>
     <main>
@@ -83,8 +83,10 @@
                     <div class="range-scale" aria-hidden="true"><span>0초</span><span>30초</span><span>60초</span></div>
                 </div>
 
-                <button class="run-button" id="runBtn" type="button">결과 확인하기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="runBtn" type="button">결과 확인하기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
 
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
@@ -183,6 +185,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=1"></script>
+    <script src="app.js?v=2"></script>
 </body>
 </html>

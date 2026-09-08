@@ -96,3 +96,6 @@
 .cell-box.on { fill: #fef3c7; stroke: #d97706; stroke-width: 2; }
 
 .data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+
+.run-row { display: grid; grid-template-columns: 1.8fr 1fr; gap: 8px; align-items: stretch; margin-top: 10px; }
+.run-row .run-button, .run-row .reset-button { width: 100%; margin: 0; }

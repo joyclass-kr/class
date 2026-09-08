@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="중화 적정에서 당량점의 부피를 계산하고, 산과 염기의 세기에 따라 당량점 pH가 달라지는 것과 알맞은 지시약을 고르는 고등학교 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=4">
-    <link rel="stylesheet" href="titration-visual.css?v=4">
-    <link rel="stylesheet" href="quiz.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="titration-visual.css?v=5">
+    <link rel="stylesheet" href="quiz.css?v=3">
 </head>
 <body>
     <main>
@@ -73,8 +73,10 @@
                     </div>
                 </fieldset>
 
-                <button class="run-button" id="checkBtn" type="button">적정 시작</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">적정 시작</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
 
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
@@ -174,6 +176,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>

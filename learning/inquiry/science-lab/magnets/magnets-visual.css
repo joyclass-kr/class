@@ -98,3 +98,6 @@
 .needle-s { fill: #94a3b8; stroke: #64748b; stroke-width: 0.5; }
 .field-line { fill: none; stroke: rgba(148, 163, 184, 0.5); stroke-width: 1; stroke-dasharray: 4 3; }
 .north-text { fill: #475569; font-size: 14px; font-weight: 900; }
+
+.run-row { display: grid; grid-template-columns: 1.8fr 1fr; gap: 8px; align-items: stretch; margin-top: 10px; }
+.run-row .run-button, .run-row .reset-button { width: 100%; margin: 0; }

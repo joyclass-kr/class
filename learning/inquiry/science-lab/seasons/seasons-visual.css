@@ -106,3 +106,6 @@
 .ray { stroke: rgba(217, 119, 6, .7); stroke-width: 1.6; }
 .patch { fill: rgba(217, 119, 6, .35); stroke: #d97706; stroke-width: 1; }
 .season-text { fill: #0f172a; font-size: 14px; font-weight: 900; }
+
+.run-row { display: grid; grid-template-columns: 1.8fr 1fr; gap: 8px; align-items: stretch; margin-top: 10px; }
+.run-row .run-button, .run-row .reset-button { width: 100%; margin: 0; }

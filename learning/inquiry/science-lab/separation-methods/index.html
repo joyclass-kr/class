@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="거름·증류·크로마토그래피로 혼합물을 나누며 알갱이 크기, 끓는점 차이, 이동 속도 차이를 확인하는 중학교 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=4">
-    <link rel="stylesheet" href="separation-visual.css?v=4">
-    <link rel="stylesheet" href="quiz.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="separation-visual.css?v=5">
+    <link rel="stylesheet" href="quiz.css?v=3">
 </head>
 <body>
     <main>
@@ -63,8 +63,10 @@
                     </div>
                 </fieldset>
 
-                <button class="run-button" id="checkBtn" type="button">분리 시작</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">분리 시작</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
 
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
@@ -82,6 +84,7 @@
 
             <section class="panel sep-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -92,6 +95,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">무엇이 걸러지고 무엇이 그대로 빠져나가는지 보세요.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -163,6 +168,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=10"></script>
+    <script src="app.js?v=17"></script>
 </body>
 </html>

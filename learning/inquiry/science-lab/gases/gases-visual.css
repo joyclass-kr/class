@@ -109,3 +109,6 @@
 .bath.cold { fill: rgba(150, 220, 255, .28); }
 .scale-tick { stroke: #64748b; stroke-width: 1; }
 .start-line { stroke: #059669; stroke-width: 1.4; stroke-dasharray: 5 4; }
+
+.run-row { display: grid; grid-template-columns: 1.8fr 1fr; gap: 8px; align-items: stretch; margin-top: 10px; }
+.run-row .run-button, .run-row .reset-button { width: 100%; margin: 0; }

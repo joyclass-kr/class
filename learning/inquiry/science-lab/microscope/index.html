@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="접안렌즈와 대물렌즈를 바꿔 배율을 정하고, 초점을 맞춰 양파 표피와 기공 같은 세포를 관찰하는 초등 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=5">
-    <link rel="stylesheet" href="scope-visual.css?v=5">
-    <link rel="stylesheet" href="quiz.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="scope-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=4">
 </head>
 <body>
     <main>
@@ -69,8 +69,10 @@
                     </div>
                 </fieldset>
 
-                <button class="run-button" id="runBtn" type="button">초점 맞추기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="runBtn" type="button">초점 맞추기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
 
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
@@ -175,6 +177,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>

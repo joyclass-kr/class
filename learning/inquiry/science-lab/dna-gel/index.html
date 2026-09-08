@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="세제와 소금, 찬 에탄올로 DNA를 뽑아내고 제한 효소로 자른 뒤 전기 영동으로 조각의 크기를 읽어 보는 고등학교 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=5">
-    <link rel="stylesheet" href="gel-visual.css?v=5">
-    <link rel="stylesheet" href="quiz.css?v=4">
+    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="gel-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=5">
 </head>
 <body>
     <main>
@@ -83,8 +83,10 @@
                     </div>
                 </fieldset>
 
-                <button class="run-button" id="runBtn" type="button">전기 영동 시작</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="runBtn" type="button">전기 영동 시작</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
 
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
@@ -183,6 +185,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=5"></script>
 </body>
 </html>

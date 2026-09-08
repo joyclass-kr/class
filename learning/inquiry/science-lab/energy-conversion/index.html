@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="계절과 날씨에 따라 태양광 판의 기울기별 하루 전기를 견주고, 풍속과 날개 길이를 바꾼 풍력 발전기의 전력을 기준 발전기와 비교하고, 발전소에서 전등까지 100 J의 에너지가 어디로 가는지 따라가 보는 고등학교 통합과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=4">
-    <link rel="stylesheet" href="energy-visual.css?v=4">
-    <link rel="stylesheet" href="quiz.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="energy-visual.css?v=5">
+    <link rel="stylesheet" href="quiz.css?v=3">
 </head>
 <body>
     <main>
@@ -45,8 +45,10 @@
                     <legend id="predictionLegend">어떻게 될까요?</legend>
                     <div class="prediction-buttons" id="predictionArea"></div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">하루 돌려 보기</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">하루 돌려 보기</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 시작해 보세요.</p>
@@ -63,6 +65,7 @@
 
             <section class="panel burn-stage" aria-label="관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+                <p class="stage-verdict" id="stageVerdict"></p>
 
                 <div class="stage-views">
                     <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
@@ -73,6 +76,8 @@
                     </svg>
                 </div>
 
+                <div class="stage-readout" id="stageReadout"></div>
+                <p class="stage-note" id="stageNote"></p>
                 <p class="stage-caption" id="stageCaption">같은 판 세 장을 기울기만 다르게 놓고 하루 동안 만드는 전기를 견줍니다.</p>
                 <div class="data-note" id="dataNote"></div>
             </section>
@@ -145,6 +150,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=9"></script>
 </body>
 </html>

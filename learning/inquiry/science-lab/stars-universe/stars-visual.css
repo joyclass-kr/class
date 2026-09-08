@@ -96,3 +96,6 @@
 .recede { stroke: #ea580c; stroke-width: 1.8; fill: none; }
 .recede-text { fill: #ea580c; font-size: 13.5px; font-weight: 900; }
 .hubble-line { stroke: #059669; stroke-width: 1.6; stroke-dasharray: 5 4; }
+
+.run-row { display: grid; grid-template-columns: 1.8fr 1fr; gap: 8px; align-items: stretch; margin-top: 10px; }
+.run-row .run-button, .run-row .reset-button { width: 100%; margin: 0; }

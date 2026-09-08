@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="탈 물질·산소·발화점 이상의 온도 가운데 무엇이 빠지면 불이 붙지 않거나 꺼지는지 확인하고, 타고 나서 무엇이 생기는지 알아보는 초등 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=4">
-    <link rel="stylesheet" href="burning-visual.css?v=4">
-    <link rel="stylesheet" href="quiz.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="burning-visual.css?v=5">
+    <link rel="stylesheet" href="quiz.css?v=3">
 </head>
 <body>
     <main>
@@ -41,8 +41,10 @@
                         <button type="button" data-prediction="none">불이 붙지 않는다</button>
                     </div>
                 </fieldset>
-                <button class="run-button" id="checkBtn" type="button">실험 시작</button>
-                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                <div class="run-row">
+                    <button class="run-button" id="checkBtn" type="button">실험 시작</button>
+                    <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+                </div>
                 <section class="result-box" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
                     <p id="resultEmpty">조건을 정하고 실험을 시작해 보세요.</p>
@@ -141,6 +143,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=1"></script>
+    <script src="app.js?v=2"></script>
 </body>
 </html>
