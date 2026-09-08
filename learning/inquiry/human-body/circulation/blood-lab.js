@@ -68,9 +68,12 @@
     var plasma, buffy, rbcLayerEl, flowPath;
     var beads = [];
     var SPIN_MS = 1600;          // 층이 다 갈라지는 데 걸리는 시간
-    var sep = 1;                 // 0 = 섞인 피, 1 = 다 갈라짐
-    var target = 1, spinning = false;
-    var spinFrom = 1, spinAt = 0;
+    // 섞인 피로 시작한다. 갈라진 채로 열면 이 장면의 주인공인
+    // [원심분리기 돌리기] 가 눌러도 할 일이 없다. 안내글도 「눌러 갈라 보세요」라고
+    // 적혀 있는데 정작 학생은 그 상태를 만나지 못했다.
+    var sep = 0;                 // 0 = 섞인 피, 1 = 다 갈라짐
+    var target = 0, spinning = false;
+    var spinFrom = 0, spinAt = 0;
 
     function init() {
         wrap = document.querySelector('.circulation-viewport');
