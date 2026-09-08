@@ -1128,17 +1128,16 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .rhythm-line { stroke: #64748b; stroke-width: 1.2; }
 .rhythm-bar { stroke: #475569; stroke-width: 1.5; }
 .rhythm-bar.is-end { stroke-width: 2.8; }
-.rhythm-meter { fill: #1e293b; font-family: Georgia, serif; font-size: 17px; font-weight: 800; text-anchor: middle; }
+.rhythm-meter { fill: #1e293b; stroke: none; font-family: Georgia, serif; font-size: 17px; font-weight: 800; text-anchor: middle; }
 .rhythm-ink { stroke: #1e293b; fill: #1e293b; }
 .rhythm-ink.is-right { stroke: #16a34a; fill: #16a34a; }
 .rhythm-ink.is-wrong { stroke: #dc2626; fill: #dc2626; }
-.rhythm-head { stroke-width: 1.6; }
-.rhythm-head.is-hollow { fill: none; stroke-width: 1.8; }
-.rhythm-stem { stroke-width: 1.6; }
+/* 머리와 꼬리는 채운 모양이므로 선을 두르지 않는다. */
+.rhythm-head, .rhythm-flag { stroke: none; }
+.rhythm-stem { stroke-width: 1.7; }
 .rhythm-beam { stroke-width: 4.4; stroke-linecap: butt; }
-.rhythm-flag { fill: none; stroke-width: 1.8; }
-.rhythm-rest rect, .rhythm-rest circle { stroke: none; }
-.rhythm-rest path { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.rhythm-rest { stroke: none; font-family: "Noto Music", "Segoe UI Symbol", Symbola, serif; }
+.rhythm-bracket { fill: none; stroke-width: 1.2; }
 .rhythm-triplet { font-family: Georgia, serif; font-size: 11px; font-style: italic; font-weight: 700; text-anchor: middle; stroke: none; }
 
 .grid-wrap { display: grid; gap: 10px; }

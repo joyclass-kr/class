@@ -428,6 +428,10 @@
 
     window.Notation = {
         natural: natural,
+        /* 리듬 악보도 같은 방법으로 글리프를 재고 같은 모양으로 머리를 그린다. */
+        inkBox: inkBox,
+        glyph: glyphNode,
+        ring: ellipseRing,
         spell: spell,
         step: step,
         name: name,

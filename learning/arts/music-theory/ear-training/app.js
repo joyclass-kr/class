@@ -1501,10 +1501,22 @@
         tripMix: { cells: 0, triplets: true, beat: ["quarter", "eighths", "sixteenths", "triplet", "tripletHead", "rest"], longs: ["h"] }
     };
 
+    /*
+     * 마디 하나를 만든다. "치는 자리에서 다음 칠 자리까지 이어진다"는 규칙으로
+     * 적을 수 없는 리듬(붙임줄이 필요한 것)은 버리고 다시 만든다. 그러면 어느
+     * 문제에서나 악보가 한 가지로만 적히고, 마디 속에 쓸데없는 쉼표가 생기지
+     * 않는다 — 8분음표 다음에 8분쉼표를 붙이는 것은 4분음표 하나로 적을 일이다.
+     */
     function rhythmBar(setName) {
         const set = RHYTHM_SETS[setName];
         const names = set.beat.map(name => RN.BEAT_PATTERNS[name]);
-        return { bar: RN.makeBar(4, names, set.longs), cells: set.cells };
+        let last = null;
+        for (let tries = 0; tries < 80; tries += 1) {
+            last = RN.makeBar(4, names, set.longs);
+            const bar = RN.fromOnsets(RN.onsets(last), RN.barCells(last));
+            if (bar) return { bar: bar, cells: set.cells };
+        }
+        return { bar: last, cells: set.cells };
     }
 
     /* 칸으로 답하는 문제. 악보는 한 가지로 정리해 둔다. */
@@ -1554,7 +1566,11 @@
      * 다르면 소리를 몇 번 들었는지 손가락으로 세기만 해도 답이 나온다.
      */
     function rhythmChoiceQuestion(item) {
-        const answer = rhythmBar(item.set).bar;
+        /*
+         * 정답도 보기와 같은 방법으로 적어야 한다. 만든 그대로 두면 정답만
+         * 8분음표+8분쉼표처럼 쉼표를 품어, 쉼표가 있는 보기를 찾으면 답이 된다.
+         */
+        const answer = RN.canonical(rhythmBar(item.set).bar, BAR_CELLS);
         const want = RN.onsets(answer).length;
         const bars = [answer];
         const fresh = bar => bar && RN.barCells(bar) === BAR_CELLS
@@ -1573,7 +1589,7 @@
         fill(() => nudgeOnsets(RN.onsets(answer), false), 300);
         fill(() => nudgeOnsets(RN.onsets(answer), true), 300);
         fill(() => nudgeOnsets(RN.onsets(pick(bars)), true), 200);
-        fill(() => rhythmBar(item.set).bar, 300);
+        fill(() => RN.canonical(rhythmBar(item.set).bar, BAR_CELLS), 300);
 
         const order = shuffled(bars);
         return {

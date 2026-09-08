@@ -18,7 +18,8 @@
         e: { cells: 6, hollow: false, stem: true, flags: 1, rest: "e" },
         ed: { cells: 9, hollow: false, stem: true, flags: 1, dot: true, rest: "e" },
         s: { cells: 3, hollow: false, stem: true, flags: 2, rest: "s" },
-        te: { cells: 4, hollow: false, stem: true, flags: 1, rest: "e", triplet: true }
+        te: { cells: 4, hollow: false, stem: true, flags: 1, rest: "e", triplet: true },
+        tq: { cells: 8, hollow: false, stem: true, flags: 0, rest: "q", triplet: true }
     };
 
     Object.keys(VALUES).forEach(name => { VALUES[name].beats = VALUES[name].cells / PER_BEAT; });
@@ -26,7 +27,7 @@
     const BEAT_W = 74;
     const LEFT = 44;
     const LINE_Y = 62;
-    const STEM_TOP = 24;
+    const STEM_TOP = 28;
     const HEAD_RX = 6.4;
     const HEAD_RY = 4.6;
 
@@ -38,25 +39,59 @@
     }
 
     /*
-     * 쉼표도 글꼴 글리프로 그리면 컴퓨터에 깔린 글꼴에 따라 크기와 자리가 달라진다.
-     * 온쉼표는 줄에 매달고 2분쉼표는 줄 위에 얹는다. 4분쉼표는 굽은 획, 8분·16분쉼표는
-     * 기운 획에 동그란 머리를 붙인다.
+     * 쉼표는 공식 글리프를 쓴다. 손으로 그으면 지렁이가 된다. 글꼴마다 글리프가
+     * 차지하는 자리와 크기가 달라서, 먹이 닿는 테두리를 재서 맞춘다(notation.js와
+     * 같은 방법). 온쉼표는 줄에 매달고 2분쉼표는 줄 위에 얹고, 나머지는 줄에 걸친다.
      */
+    const REST_GLYPHS = {
+        w: { char: "\uD834\uDD3B", height: 5.2, anchor: 0 },
+        h: { char: "\uD834\uDD3C", height: 5.2, anchor: 1 },
+        q: { char: "\uD834\uDD3D", height: 19, anchor: 0.5 },
+        e: { char: "\uD834\uDD3E", height: 13, anchor: 0.52 },
+        s: { char: "\uD834\uDD3F", height: 18, anchor: 0.5 }
+    };
+
     function restNode(kind, x) {
-        const group = make("g", { class: "rhythm-rest", transform: "translate(" + x + "," + LINE_Y + ")" });
-        if (kind === "w") {
-            group.append(make("rect", { x: -8, y: 0, width: 16, height: 7 }));
-        } else if (kind === "h") {
-            group.append(make("rect", { x: -8, y: -7, width: 16, height: 7 }));
-        } else if (kind === "q") {
-            group.append(make("path", { d: "M-4,-11 C-1,-8 3,-6 4,-3 C5,0 0,1 -1,4 C-2,7 1,9 4,11" }));
-        } else {
-            const twoHeads = kind === "s";
-            group.append(make("path", { d: twoHeads ? "M0,-10 L4,9" : "M0,-7 L4,8" }));
-            group.append(make("circle", { cx: -3, cy: twoHeads ? -9 : -6, r: 2.7 }));
-            if (twoHeads) group.append(make("circle", { cx: -1, cy: -1, r: 2.7 }));
+        const spec = REST_GLYPHS[kind] || REST_GLYPHS.q;
+        const N = window.Notation;
+        const ink = N && N.inkBox ? N.inkBox(spec.char) : null;
+        if (!ink || !ink.height) return null;
+        const width = ink.right * (spec.height / ink.height);
+        return N.glyph(spec.char, "rhythm-rest", x + width / 2, LINE_Y, spec.height, spec.anchor);
+    }
+
+    /*
+     * 음표머리. 4분음표는 비스듬히 기운 채운 타원이고, 2분음표는 구멍이 비스듬히
+     * 뚫린 고리다 — 테두리만 그린 타원이 아니다.
+     */
+    function headNode(cx, cy, hollow) {
+        if (!hollow) {
+            return make("ellipse", {
+                class: "rhythm-head", cx: cx, cy: cy, rx: HEAD_RX, ry: HEAD_RY,
+                transform: "rotate(-20 " + cx + " " + cy + ")"
+            });
         }
-        return group;
+        const ring = window.Notation.ring;
+        return make("path", {
+            class: "rhythm-head is-hollow", "fill-rule": "evenodd",
+            d: ring(cx, cy, HEAD_RX, HEAD_RY, -20) + ring(cx, cy, 4.3, 2.1, 24)
+        });
+    }
+
+    /*
+     * 꼬리는 채운 모양이다. 선으로 그으면 지렁이가 된다. 기둥 끝에서 오른쪽으로
+     * 부풀어 내려오다 끝이 기둥 쪽으로 감긴다. 기둥이 위로 섰으므로 꼬리는 늘
+     * 기둥 오른쪽에 붙어 아래로 흐른다.
+     */
+    function flagNode(x, y) {
+        return make("path", {
+            class: "rhythm-flag",
+            d: "M" + x + "," + y
+                + " C" + (x + 7) + "," + (y + 3) + " " + (x + 10) + "," + (y + 9)
+                + " " + (x + 6.5) + "," + (y + 16)
+                + " C" + (x + 7.5) + "," + (y + 10) + " " + (x + 4.5) + "," + (y + 7)
+                + " " + x + "," + (y + 6) + " Z"
+        });
     }
 
     /* 마디의 길이를 칸으로 센다. */
@@ -108,8 +143,28 @@
     }
 
 
+    /* 한 박 안에서 이어지는 셋잇단 음표 묶음. 쉼표나 박이 바뀌면 끊긴다. */
+    function tripletRuns(bar) {
+        const runs = [];
+        let current = null;
+        let position = 0;
+        bar.forEach((event, index) => {
+            const value = VALUES[event.v];
+            const beat = Math.floor(position / PER_BEAT);
+            if (value.triplet && !event.rest && current && current.beat === beat) current.items.push(index);
+            else if (value.triplet && !event.rest) {
+                current = { beat: beat, items: [index] };
+                runs.push(current);
+            } else current = null;
+            position += value.cells;
+        });
+        return runs.map(run => run.items);
+    }
+
     /* 칸 수로 잰 길이를 음표 하나로 적을 수 있는지 표 */
-    const CELL_VALUE = { 3: "s", 6: "e", 9: "ed", 12: "q", 18: "qd", 24: "h", 36: "hd", 48: "w" };
+    const CELL_VALUE = {
+        3: "s", 4: "te", 6: "e", 8: "tq", 9: "ed", 12: "q", 18: "qd", 24: "h", 36: "hd", 48: "w"
+    };
 
     /*
      * 치는 자리만 정해 놓고, "다음 칠 자리까지 이어진다"는 규칙으로 음표를 정한다.
@@ -223,15 +278,12 @@
             const value = VALUES[event.v];
             const x = xs[index];
             if (event.rest) {
-                ink.append(restNode(value.rest, x));
+                const rest = restNode(value.rest, x);
+                if (rest) ink.append(rest);
                 if (value.dot) ink.append(make("circle", { class: "rhythm-dot", cx: x + 12, cy: LINE_Y - 4, r: 1.9 }));
                 return;
             }
-            ink.append(make("ellipse", {
-                class: "rhythm-head" + (value.hollow ? " is-hollow" : ""),
-                cx: x, cy: LINE_Y, rx: HEAD_RX, ry: HEAD_RY,
-                transform: "rotate(-16 " + x + " " + LINE_Y + ")"
-            }));
+            ink.append(headNode(x, LINE_Y, value.hollow));
             if (value.stem) {
                 ink.append(make("line", {
                     class: "rhythm-stem",
@@ -242,21 +294,36 @@
             /* 무리에 들지 못한 꼬리는 하나씩 그린다. */
             if (value.flags > 0 && !beamed.has(index)) {
                 for (let flag = 0; flag < value.flags; flag += 1) {
-                    const y = STEM_TOP + flag * 7;
-                    ink.append(make("path", {
-                        class: "rhythm-flag",
-                        d: "M" + (x + HEAD_RX - .6) + "," + y + " c 7,3 9,8 6,14"
-                    }));
+                    ink.append(flagNode(x + HEAD_RX - .6, STEM_TOP + flag * 7));
                 }
             }
         });
 
+        /* 셋잇단 표시는 한 박 안에 이어진 셋잇단 음표 묶음 위에 붙인다. */
+        tripletRuns(bar).forEach(run => {
+            const stemX = index => xs[index] + HEAD_RX - .6;
+            const from = stemX(run[0]);
+            const to = stemX(run[run.length - 1]);
+            const middle = (from + to) / 2;
+            const beamedRun = run.length > 1 && run.every(index => VALUES[bar[index].v].flags > 0);
+            /* 대로 이은 무리는 대 위에, 꺾쇠를 씌운 무리는 꺾쇠 사이에 3을 넣는다. */
+            const digitY = beamedRun ? STEM_TOP - 6 : STEM_TOP - 3;
+            if (!beamedRun) {
+                /* 대로 잇지 못한 묶음에는 꺾쇠를 씌운다. */
+                const y = STEM_TOP - 7;
+                ink.append(make("path", {
+                    class: "rhythm-bracket",
+                    d: "M" + (from - 3) + "," + (y + 4) + " L" + (from - 3) + "," + y
+                        + " L" + (middle - 5) + "," + y
+                        + " M" + (middle + 5) + "," + y + " L" + (to + 3) + "," + y
+                        + " L" + (to + 3) + "," + (y + 4)
+                }));
+            }
+            ink.append(make("text", { class: "rhythm-triplet", x: middle, y: digitY }, "3"));
+        });
+
         beamGroups(bar).forEach(group => {
             const stemX = index => xs[index] + HEAD_RX - .6;
-            if (group.items.every(index => VALUES[bar[index].v].triplet)) {
-                const middle = (stemX(group.items[0]) + stemX(group.items[group.items.length - 1])) / 2;
-                ink.append(make("text", { class: "rhythm-triplet", x: middle, y: STEM_TOP - 5 }, "3"));
-            }
             const flagsOf = index => VALUES[bar[index].v].flags;
             const depth = Math.max.apply(null, group.items.map(flagsOf));
             for (let level = 0; level < depth; level += 1) {
@@ -266,8 +333,12 @@
                 const flush = () => {
                     if (!run.length) return;
                     const from = stemX(run[0]);
-                    /* 혼자 남으면 짧은 토막으로 그린다. */
-                    const to = run.length > 1 ? stemX(run[run.length - 1]) : from + 9;
+                    /*
+                     * 혼자 남으면 짧은 토막으로 그린다. 토막은 제 무리가 있는 쪽을
+                     * 가리켜야 한다 — 무리의 첫 음표면 오른쪽, 아니면 왼쪽이다.
+                     */
+                    const to = run.length > 1 ? stemX(run[run.length - 1])
+                        : from + (run[0] === group.items[0] ? 9 : -9);
                     ink.append(make("line", { class: "rhythm-beam", x1: from, y1: y, x2: to, y2: y }));
                     run = [];
                 };
