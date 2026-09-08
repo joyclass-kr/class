@@ -899,6 +899,23 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 }
 
 .example-caption { margin: 0; font-size: 16px; font-weight: 800; color: var(--gold); }
+
+/*
+ * 악보는 어두운 판 위에 두면 안 된다. 음표와 자리표가 짙은 먹빛이라 바탕이
+ * 어두우면 읽히지 않는다. 문제 화면 오선(.staff-wrap)과 같은 밝은 종이를 깐다.
+ */
+.example-play {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    padding: 8px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    background: rgba(248, 246, 240, 0.94);
+    overflow-x: auto;
+}
+
+.example-play:hover { border-color: var(--gold); }
 .example-board {
     display: grid;
     place-items: center;
