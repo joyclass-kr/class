@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let observations = [];
     let revealed = false;
     let predictedPoint = null;
-    const defaultMapNote = '노브를 조절한 뒤 원 세 개가 만나는 곳을 클릭하세요. 지도 눈금 한 칸은 50km입니다.';
+    const defaultMapNote = "아래 노브를 ‘자료에서 읽은 거리’에 맞추면 원 세 개가 한 점에서 만납니다. 그 점을 클릭하세요. 지도 눈금 한 칸은 50km입니다.";
 
     function clearMapAttention() {
         delete mapPanel.dataset.state;
@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resultSummary.textContent = '오른쪽 지도에서 진앙으로 예상되는 곳을 먼저 눌러주세요.';
             resultExplanation.textContent = '거리 원 세 개가 만나는 곳을 누르면 내 예측 위치가 표시됩니다.';
             mapPanel.dataset.state = 'attention';
-            mapNote.textContent = '거리 원 세 개가 만나는 곳을 눌러 예측 위치를 표시하세요.';
+            mapNote.textContent = '원 세 개가 한 점에서 만납니다. 그 점을 눌러 예측 위치를 표시하세요.';
             canvas.focus({ preventScroll: true });
             return;
         }
