@@ -7,36 +7,36 @@
     <title>청음</title>
     <meta name="description" content="음정·화음·음계·화음 진행·리듬·가락 받아쓰기를 소리로 듣고 맞히는 청음 훈련">
     <link rel="preload" href="assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260907-112">
+    <link rel="stylesheet" href="styles.css?v=20260908-9">
     <script src="piano-engine.js?v=20260907-1" defer></script>
-    <script src="notation.js?v=20260907-112" defer></script>
-    <script src="keyboard.js?v=20260907-112" defer></script>
-    <script src="wheel.js?v=20260907-112" defer></script>
-    <script src="rhythm.js?v=20260907-112" defer></script>
-    <script src="course.js?v=20260907-112" defer></script>
-    <script src="app.js?v=20260907-112" defer></script>
+    <script src="notation.js?v=20260908-9" defer></script>
+    <script src="keyboard.js?v=20260908-9" defer></script>
+    <script src="wheel.js?v=20260908-9" defer></script>
+    <script src="rhythm.js?v=20260908-9" defer></script>
+    <script src="course.js?v=20260908-9" defer></script>
+    <script src="app.js?v=20260908-9" defer></script>
 </head>
 <body>
     <main class="shell">
         <section id="menuScreen" class="screen">
             <h1 class="visually-hidden">청음</h1>
-            <div id="areaList" class="area-list"></div>
+            <div class="field">
+                <span class="field-label">혼자 연습</span>
+                <div id="exerciseList" class="drill-list"></div>
+            </div>
+            <div class="field">
+                <span class="field-label">과정</span>
+                <div id="courseList" class="drill-list"></div>
+            </div>
             <div class="field">
                 <span class="field-label">찾아보기</span>
                 <div id="toolList" class="drill-list"></div>
             </div>
         </section>
 
-        <section id="areaScreen" class="screen" hidden>
-            <h1 id="areaTitle" class="visually-hidden"></h1>
-            <div class="field">
-                <span class="field-label">과정</span>
-                <div id="areaCourse" class="drill-list"></div>
-            </div>
-            <div class="field">
-                <span class="field-label">혼자 연습</span>
-                <div id="areaDrills" class="drill-list"></div>
-            </div>
+        <section id="presetScreen" class="screen" hidden>
+            <h1 id="presetTitle" class="visually-hidden"></h1>
+            <div id="presetList" class="preset-list"></div>
         </section>
 
         <section id="wheelScreen" class="screen" hidden>
@@ -73,43 +73,6 @@
             </div>
         </section>
 
-        <section id="setupScreen" class="screen" hidden>
-            <h1 id="setupTitle" class="visually-hidden"></h1>
-
-            <div class="field">
-                <span class="field-label">범위</span>
-                <div id="levelRow" class="chip-row" role="group" aria-label="범위"></div>
-            </div>
-
-            <div class="field" id="modeField">
-                <span class="field-label">들려주는 방법</span>
-                <div id="modeRow" class="chip-row" role="group" aria-label="들려주는 방법"></div>
-            </div>
-
-            <div class="field" id="inputField">
-                <span class="field-label">답하는 방법</span>
-                <div id="inputRow" class="chip-row" role="group" aria-label="답하는 방법"></div>
-            </div>
-
-            <div class="field" id="inversionField">
-                <span class="field-label">화음 자리</span>
-                <div id="inversionRow" class="chip-row" role="group" aria-label="화음 자리"></div>
-            </div>
-
-            <div class="field">
-                <span class="field-label">문제 수</span>
-                <div id="limitRow" class="chip-row" role="group" aria-label="문제 수"></div>
-            </div>
-
-            <div class="field" id="itemField">
-                <span class="field-label">낼 문제</span>
-                <div id="itemPicker" class="item-picker" role="group" aria-label="낼 문제"></div>
-            </div>
-
-            <button id="startButton" class="primary-button" type="button">시작</button>
-            <p id="setupWarning" class="warning" hidden>둘 이상 골라야 문제를 낼 수 있습니다.</p>
-        </section>
-
         <section id="drillScreen" class="screen" hidden>
             <header class="drill-bar">
                 <span id="scoreText" class="score"></span>
@@ -126,8 +89,8 @@
             </div>
 
             <div id="helpRow" class="help-row" hidden>
-                <button id="arpButton" class="quiet-button" type="button">한 음씩 펼쳐 듣기</button>
-                <button id="rootButton" class="quiet-button" type="button">근음 자리로 듣기</button>
+                <button id="arpButton" class="quiet-button" type="button" hidden>한 음씩 펼쳐 듣기</button>
+                <button id="melodicButton" class="quiet-button" type="button" hidden>한 음씩 듣기</button>
             </div>
 
             <div id="choices" class="choices" role="group" aria-label="정답 고르기"></div>

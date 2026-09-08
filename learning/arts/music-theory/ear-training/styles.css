@@ -78,12 +78,47 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 }
 
 /* 갈래 고르기 */
-.area-list { display: grid; gap: 12px; }
+.drill-list { display: grid; gap: 10px; }
 
-/* 첫 화면은 갈래 넷뿐이므로 크게 두어 빈 자리를 남기지 않는다. */
-.area-list .drill-card { min-height: 92px; padding: 18px 22px; }
-.area-list .drill-card b { font-size: 23px; }
-.drill-list { display: grid; gap: 12px; }
+/* 판 목록: 줄마다 이름과 진도, 그리고 답하는 방법 아이콘 둘 */
+.preset-list { display: grid; gap: 6px; align-content: start; }
+
+/* 판이 열 줄을 넘는 연습이 있으니 넓은 화면에서는 두 칸으로 나눈다. */
+@media (min-width: 700px) {
+    .preset-list { grid-template-columns: 1fr 1fr; column-gap: 10px; }
+    /* 첫 화면도 연습·과정이 열 줄을 넘으므로 두 칸으로 나눈다. */
+    #menuScreen .drill-list { grid-template-columns: 1fr 1fr; column-gap: 10px; }
+}
+
+.preset-row {
+    min-height: 52px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 10px 7px 15px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--panel);
+}
+
+.preset-name { font-size: 17px; font-weight: 800; word-break: keep-all; }
+.preset-rate { min-width: 40px; color: var(--gold); font-size: 15px; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+.preset-inputs { display: flex; gap: 7px; }
+
+.preset-input {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel-2);
+    color: var(--gold);
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.preset-input:hover { border-color: var(--gold); }
+.preset-input:active { color: #241a05; background: var(--gold); }
 
 .drill-card {
     min-height: 62px;
@@ -187,7 +222,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .replay-button:active { transform: scale(.99); }
 .replay-button.playing { border-color: var(--gold); color: #241a05; background: var(--gold); }
 
-.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 7px; }
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 6px; }
 
 .choice {
     min-height: 46px;
@@ -313,7 +348,7 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .key-white {
     flex: 1;
-    min-width: 26px;
+    min-width: 34px;
     border-radius: 0 0 5px 5px;
     background: linear-gradient(105deg, #fffefa, #dce1e6);
     box-shadow: inset 2px 0 rgba(255,255,255,.55), inset -2px 0 rgba(0,0,0,.12), 0 3px 2px rgba(0,0,0,.5);
@@ -597,8 +632,25 @@ body.wheel-open .shell { width: min(1280px, calc(100% - 24px)); }
     #drillScreen .staff-wrap { grid-column: 1; grid-row: 3; }
     #drillScreen .play-row { grid-column: 1; grid-row: 4; }
     #drillScreen .help-row { grid-column: 1; grid-row: 5; }
+    /* 보기가 스물에 가까운 판이 있어 보기 칸 안에서만 밀어 본다. */
     #drillScreen #choices,
-    #drillScreen #pairWrap { grid-column: 2; grid-row: 2 / span 4; align-content: start; }
+    #drillScreen #pairWrap {
+        grid-column: 2;
+        grid-row: 2 / span 4;
+        align-content: start;
+        min-height: 0;
+        max-height: 62vh;
+        overflow-y: auto;
+    }
+
+    /* 건반으로 답할 때는 오른쪽 칸이 비므로 한 칸으로 넓게 쓴다. */
+    #drillScreen.is-keys { grid-template-columns: minmax(0, 1fr); }
+    #drillScreen.is-keys .ask,
+    #drillScreen.is-keys .staff-wrap,
+    #drillScreen.is-keys .play-row,
+    #drillScreen.is-keys .help-row,
+    #drillScreen.is-keys .feedback,
+    #drillScreen.is-keys #nextButton { grid-column: 1; }
 
     /* 리듬 문제는 칸과 악보가 넓어야 눌리므로 한 줄을 통째로 쓴다. */
     #drillScreen #rhythmWrap { grid-column: 1 / -1; grid-row: 3; }

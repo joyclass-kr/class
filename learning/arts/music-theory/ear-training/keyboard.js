@@ -52,11 +52,15 @@
             keys.set(midi, key);
         });
 
-        container.addEventListener("click", event => {
+        /*
+         * 건반을 다시 짤 때 옛 손잡이가 남으면 한 번 누른 것이 두 번 세어진다.
+         * addEventListener 대신 onclick에 얹어 늘 하나만 남게 한다.
+         */
+        container.onclick = event => {
             const key = event.target.closest(".key");
             if (!key || key.disabled) return;
             onPress(Number(key.dataset.midi));
-        });
+        };
 
         return {
             element: container,
