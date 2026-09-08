@@ -124,7 +124,7 @@
 
   <!-- Top Half: Skin Barrier with Thick Stratum Corneum (id="skinBarrier") -->
   <g id="skinBarrier">
-    <!-- Living Epidermal & Dermal Base Layer (#fda4af) -->
+    <!-- Living Epidermal and Dermal Base Layer (#fda4af) -->
     <path class="skin-epidermis"
           d="M 170,40
              L 245,40
@@ -201,7 +201,7 @@
     <polygon points="175,337 185,340 175,343" fill="#a16207" />
   </g>
 
-  <!-- Bottom Half: Mucous Membrane with Cilia & Mucus (id="mucusBarrier") -->
+  <!-- Bottom Half: Mucous Membrane with Cilia and Mucus (id="mucusBarrier") -->
   <g id="mucusBarrier">
     <!-- Simple Columnar Epithelium Base (#fda4af) -->
     <path class="mucus-tissue"
@@ -297,7 +297,7 @@
       <!-- Flagella -->
       <path class="pathogen-flagella" d="M -18,0 C -26,-5 -30,5 -38,0" />
     </g>
-    <!-- Bounce impact trajectory & deflection -->
+    <!-- Bounce impact trajectory and deflection -->
     <path class="bounce-arc" d="M 50,85 C 85,105 120,118 120,118 C 120,118 95,145 60,165" />
     <polygon points="56,165 68,159 64,171" fill="#ef4444" />
 
@@ -397,7 +397,7 @@
     <circle cx="475" cy="300" r="3.5" fill="#b45309" />
   </g>
 
-  <!-- Dilated Capillary & Extravasating Leukocytes (염증, id="inflammation") -->
+  <!-- Dilated Capillary and Extravasating Leukocytes (염증, id="inflammation") -->
   <!-- Vasodilation (#dc2626) + Diapedesis of white blood cells into tissues -->
   <g id="inflammation">
     <!-- Dilated Capillary Vessel Interior / Lumen -->
@@ -468,7 +468,7 @@
   <!-- COLUMN 3: 특이적 방어 (Acquired Specific Defense: x 560 ~ 960)     -->
   <!-- ================================================================= -->
 
-  <!-- Antigen Presentation Platform & Peptide Piece (항원 제시, id="antigenPiece") -->
+  <!-- Antigen Presentation Platform and Peptide Piece (항원 제시, id="antigenPiece") -->
   <!-- ★ CRITICAL EXAM POINT: Macrophage presents digested pathogen fragment on MHC II -->
   <g id="antigenPiece">
     <!-- MHC II Molecule Cradle Platform on Macrophage Surface -->
@@ -527,7 +527,7 @@
   </g>
 
 
-  <!-- --- UPPER BRANCH: HUMORAL IMMUNITY (체액성 면역) --- -->
+  <!-- —- UPPER BRANCH: HUMORAL IMMUNITY (체액성 면역) —- -->
 
   <!-- B-Cell to Plasma Cell / Memory Cell Differentiation Branch Cues -->
   <g opacity="0.75">
@@ -593,7 +593,7 @@
     <path class="b-cell-receptor" stroke="#be185d" d="M 885,280 L 885,290 M 880,297 L 885,290 L 890,297" />
   </g>
 
-  <!-- Antibodies & Neutralization Complex (항체, id="antibody") -->
+  <!-- Antibodies and Neutralization Complex (항체, id="antibody") -->
   <!-- ★ CRITICAL EXAM POINT: Distinct Y-shaped proteins (#fbbf24) binding antigens -->
   <g id="antibody">
     <!-- Antibody 1: Just released from Plasma Cell -->
@@ -655,7 +655,7 @@
   </g>
 
 
-  <!-- --- LOWER BRANCH: CELLULAR IMMUNITY (세포성 면역) --- -->
+  <!-- —- LOWER BRANCH: CELLULAR IMMUNITY (세포성 면역) —- -->
 
   <!-- Cytotoxic T-Lymphocyte (세포독성 T림프구, id="cytotoxicT") -->
   <!-- Directly attacks and destroys virus-infected cells or abnormal cells -->
@@ -665,7 +665,7 @@
     <!-- Large Round Nucleus (#9f1239) -->
     <circle class="cytotoxic-nucleus" cx="770" cy="420" r="20" />
 
-    <!-- Cytotoxic Granules (Perforin & Granzyme storage granules) -->
+    <!-- Cytotoxic Granules (Perforin and Granzyme storage granules) -->
     <circle class="granule" cx="756" cy="410" r="3.2" />
     <circle class="granule" cx="762" cy="432" r="3.2" />
     <circle class="granule" cx="780" cy="412" r="3.5" />
@@ -683,7 +683,7 @@
   </g>
 
   <!-- Infected Host Cell Being Destroyed (감염된 세포, id="infectedCell") -->
-  <!-- Target cell with perforated membrane holes & disintegrating apoptosis -->
+  <!-- Target cell with perforated membrane holes and disintegrating apoptosis -->
   <g id="infectedCell">
     <!-- Irregular / Lyzing Host Cell Membrane (#94a3b8) -->
     <path class="infected-target"

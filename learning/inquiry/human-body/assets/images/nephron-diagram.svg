@@ -41,7 +41,7 @@
   </defs>
 
   <!-- Clean Dark Background Canvas -->
-  <rect width="1000" height="700" fill="#070d1e" />
+  <!-- 배경 사각형을 뗐다. 방마다 바탕색이 다르므로 그림은 투명해야 한다. -->
 
   <!-- Cortex / Medulla Demarcation Line (피질 / 수질 경계선: y=350) -->
   <line x1="30" y1="350" x2="970" y2="350" class="cortex-medulla-line" />

@@ -42,7 +42,7 @@
       .zoom-circle-ring { fill: none; stroke: #38bdf8; stroke-width: 2.4; stroke-dasharray: 5,4; }
       .zoom-line { fill: none; stroke: #38bdf8; stroke-width: 1.8; stroke-dasharray: 5,4; opacity: 0.75; }
       
-      /* Detailed Right Section: Enlarged Gastric Wall & Pit */
+      /* Detailed Right Section: Enlarged Gastric Wall and Pit */
       .lumen-bg { fill: #0f172a; fill-opacity: 0.25; }
       .mucus-barrier { fill: #fecdd3; fill-opacity: 0.45; stroke: #fda4af; stroke-width: 1.6; stroke-dasharray: 4,4; }
       
@@ -53,7 +53,7 @@
       .pit-lumen { fill: #fecdd3; stroke: #fb7185; stroke-width: 2.8; stroke-linejoin: round; }
       .pit-stream { fill: none; stroke: #fda4af; stroke-width: 1.8; stroke-dasharray: 4,4; }
       
-      /* Micro-vascular & Glandular Lamina Propria */
+      /* Micro-vascular and Glandular Lamina Propria */
       .cap-art { fill: none; stroke: #ef4444; stroke-width: 2.2; stroke-linecap: round; opacity: 0.75; }
       .cap-vein { fill: none; stroke: #3b82f6; stroke-width: 2.2; stroke-linecap: round; opacity: 0.75; }
       .gland-cross-lumen { fill: #fecdd3; stroke: #fb7185; stroke-width: 1.8; }
@@ -67,7 +67,7 @@
       .parietal-nucleus { fill: #15803d; }
       .parietal-canal { fill: none; stroke: #15803d; stroke-width: 1.4; stroke-dasharray: 2,2; }
       
-      /* Secretory Granules & Enzymes */
+      /* Secretory Granules and Enzymes */
       .pepsinogen-pellet { fill: #c4b5fd; stroke: #7c3aed; stroke-width: 2.2; }
       .hcl-pellet { fill: #22c55e; stroke: #15803d; stroke-width: 1.8; }
       .pepsin-shears { fill: #7c3aed; stroke: #5b21b6; stroke-width: 2.6; stroke-linejoin: round; }
@@ -295,7 +295,7 @@
 
 
   <!-- ================================================================= -->
-  <!-- 2. RIGHT SECTION: EXPANDED GASTRIC WALL & PIT (x 390 ~ 965)       -->
+  <!-- 2. RIGHT SECTION: EXPANDED GASTRIC WALL and PIT (x 390 ~ 965)       -->
   <!-- ================================================================= -->
 
   <!-- Gastric Lumen Cavity (위 안쪽 공간: y 60 ~ 335) -->
@@ -444,11 +444,11 @@
 
 
   <!-- ================================================================= -->
-  <!-- 3. GLANDULAR CELLS IN GASTRIC PIT (벽세포 & 주세포 나란히 배치)    -->
+  <!-- 3. GLANDULAR CELLS IN GASTRIC PIT (벽세포 and 주세포 나란히 배치)    -->
   <!-- ================================================================= -->
 
   <!-- Parietal Cells: 염산을 내는 세포 (벽세포, id="parietalCell") -->
-  <!-- ★ CRITICAL EXAM POINT: Secrete hydrochloric acid (HCl) providing pH 1.5~2.0 for pepsin activation & germicidal action -->
+  <!-- ★ CRITICAL EXAM POINT: Secrete hydrochloric acid (HCl) providing pH 1.5~2.0 for pepsin activation and germicidal action -->
   <!-- Positioned along the left wall of the gastric pit (#86efac, border #16a34a) -->
   <g id="parietalCell">
     <!-- Left Pit Wall: Parietal Cell 1 (Upper Neck) -->
