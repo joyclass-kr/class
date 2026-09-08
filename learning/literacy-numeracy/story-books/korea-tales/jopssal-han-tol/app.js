@@ -69,7 +69,7 @@ const CHAPTERS = [
                     "주인은 어이가 없어 눈만 껌뻑였지요."
                 ],
                 right: [
-                    "그런데 아침에 보니 그 집 고양이가 쥐를 물어 가 버렸지 뭐예요. 마당에 꼬리만 하나 떨어져 있었습니다.",
+                    "그런데 아침에 보니 그 집 고양이가 쥐를 쫓아 버렸지 뭐예요. 쥐는 그길로 풀숲으로 쏙 달아났지요.",
                     "\"어허, 이걸 어쩌나.\"",
                     "\"미안하게 됐네.\"",
                     "\"할 수 없구먼. 그럼 이 고양이를 데려가게.\""
@@ -282,7 +282,7 @@ const EN = {
                         "He was so puzzled that he could only blink."
                     ],
                     right: [
-                        "But in the morning the house cat had carried the mouse off. All that was left in the yard was one small tail.",
+                        "But in the morning the house cat had chased the mouse off. It had run away into the grass and was gone.",
                         { t: "\"Oh dear. What do we do now?\"", v: "man" },
                         { t: "\"I'm so sorry about this.\"", v: "man" },
                         { t: "\"Well, then. Take the cat instead.\"", v: "man" }
@@ -397,7 +397,7 @@ const EN = {
     quiz: [
         { q: "What did the boy tell his mother as he left home?", choices: ["That he'd bring back rice", "That he'd see the wide world", "That he'd buy an ox"], answer: 1 },
         { q: "What ate the grain of millet?", choices: ["A bird", "A dog", "A mouse"], answer: 2 },
-        { q: "What carried the mouse off?", choices: ["A cat", "A dog", "An ox"], answer: 0 },
+        { q: "What chased the mouse off?", choices: ["A cat", "A dog", "An ox"], answer: 0 },
         { q: "How did the dog leave that house?", choices: ["It was chased over the wall", "It snapped its rope and ran", "It bit through the reins"], answer: 1 },
         { q: "What did the boy get last of all?", choices: ["A horse", "A cat", "An ox"], answer: 2 },
         { q: "What did the boy take out of his coat and open up?", choices: ["The ox's rope", "An old bundle", "A folded sheet of paper"], answer: 2 },
@@ -550,11 +550,11 @@ const EN = {
             { w: "puzzled", k: "어리둥절한", s: "He was so puzzled" },
             { w: "so ~ that ...", k: "너무 ~해서 ...하다", s: "so puzzled that he could only blink" },
             { w: "could only blink", k: "눈만 껌뻑일 뿐이었다", s: "he could only blink" },
-            { w: "had carried ~ off (carry off)", k: "물고 가 버렸다", s: "the house cat had carried the mouse off" },
-            { w: "house cat", k: "그 집 고양이", s: "the house cat had carried the mouse off" },
-            { w: "All that was left", k: "남은 것이라고는", s: "All that was left in the yard" },
-            { w: "yard", k: "마당", s: "All that was left in the yard" },
-            { w: "tail", k: "꼬리", s: "was one small tail" },
+            { w: "had chased ~ off (chase off)", k: "쫓아 버렸다", s: "the house cat had chased the mouse off" },
+            { w: "house cat", k: "그 집 고양이", s: "the house cat had chased the mouse off" },
+            { w: "run away (run)", k: "달아났다", s: "It had run away into the grass and was gone." },
+            { w: "grass", k: "풀숲", s: "It had run away into the grass" },
+            { w: "was gone (go)", k: "없어졌다", s: "It had run away into the grass and was gone." },
             { w: "Oh dear.", k: "아이고, 저런.", s: "Oh dear. What do we do now?" },
             { w: "Well, then.", k: "할 수 없구먼.", s: "Well, then. Take the cat instead." },
             { w: "instead", k: "대신에", s: "Take the cat instead." }
@@ -689,7 +689,7 @@ const EN = {
 const QUIZ = [
     { q: "소년은 집을 떠나며 어머니에게 뭐라고 했나요?", choices: ["쌀을 구해 오겠다고", "큰 세상을 보겠다고", "황소를 사 오겠다고"], answer: 1 },
     { q: "좁쌀을 먹어 버린 것은 무엇인가요?", choices: ["새", "개", "쥐"], answer: 2 },
-    { q: "쥐를 물어 간 것은 무엇인가요?", choices: ["고양이", "개", "황소"], answer: 0 },
+    { q: "쥐를 쫓아 버린 것은 무엇인가요?", choices: ["고양이", "개", "황소"], answer: 0 },
     { q: "개는 어떻게 그 집을 떠났나요?", choices: ["담 밖으로 쫓겨 갔다", "줄을 끊고 달아났다", "고삐를 물어뜯었다"], answer: 1 },
     { q: "소년이 마지막으로 얻은 것은 무엇인가요?", choices: ["말", "고양이", "황소"], answer: 2 },
     { q: "소년이 품에서 꺼내 편 것은 무엇인가요?", choices: ["황소의 고삐", "낡은 봇짐 하나", "접힌 종이 한 장"], answer: 2 },
