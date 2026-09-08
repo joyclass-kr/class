@@ -207,6 +207,11 @@
     }
 
     function showDetail(id) {
+        // 누른 조각에 노란 테를 두른다. 글자만 바뀌면 겹쳐 있는 조각 가운데
+        // 어느 것을 골랐는지 알 수 없다.
+        if (typeof SimEngine !== 'undefined' && SimEngine.litPart) {
+            SimEngine.litPart(svg, Object.keys(DETAIL), id);
+        }
         var d = DETAIL[id];
         if (!d) return;
         var t = document.getElementById('organTitle');

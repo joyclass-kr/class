@@ -175,6 +175,10 @@
     }
 
     function show(item) {
+        // 누른 조각에 노란 테를 두른다
+        if (typeof SimEngine !== 'undefined' && SimEngine.litPart) {
+            SimEngine.litPart(svg, PARTS.map(function (x) { return x.id; }), item.id);
+        }
         var set = function (id, v, html) {
             var e = document.getElementById(id);
             if (!e) return;

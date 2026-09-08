@@ -137,6 +137,10 @@
     }
 
     function show(item) {
+        // 누른 조각에 노란 테를 두른다
+        if (typeof SimEngine !== 'undefined' && SimEngine.litPart) {
+            SimEngine.litPart(svg, PARTS.concat(TRUNK).map(function (x) { return x.id; }), item.id);
+        }
         var t = document.getElementById('organTitle');
         var p = document.getElementById('organDesc');
         var card = document.getElementById('organDetailCard');

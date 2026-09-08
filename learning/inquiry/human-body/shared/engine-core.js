@@ -494,6 +494,47 @@
         return new XMLSerializer().serializeToString(svg);
     }
 
+    /**
+     * 이름표를 눌렀을 때 그 조각에 노란 테를 두른다.
+     *
+     * 도식은 조각이 겹쳐 있어서 글자만 바뀌면 어느 것을 눌렀는지 알 수 없다.
+     * (눈 장면에서 각막·홍채·동공·수정체·진대·섬모체 여섯이 겹쳐 있는데
+     *  눌러도 불이 안 들어와 무엇을 골랐는지 알 길이 없었다.)
+     *
+     * svgEl   : 겹판 안의 <svg>
+     * ids     : 이 장면에서 고를 수 있는 조각 이름들
+     * activeId: 지금 고른 것 (없으면 모두 되돌린다)
+     */
+    function litPart(svgEl, ids, activeId) {
+        if (!svgEl || !ids) return;
+        ids.forEach(function (id) {
+            var e = svgEl.querySelector('#' + id);
+            if (!e) return;
+            var shapes = e.matches('path,circle,ellipse,rect,polygon,polyline')
+                ? [e] : [].slice.call(e.querySelectorAll('path,circle,ellipse,rect,polygon,polyline'));
+            var on = (id === activeId);
+            shapes.forEach(function (sh) {
+                // 속성이 아니라 실제로 칠해진 색을 본다. 어떤 도식은 fill 을 CSS 로 준다.
+                // (귀 그림의 귓바퀴가 그랬는데, 속성만 보고 건너뛰어 불이 안 켜졌다.)
+                var f = getComputedStyle(sh).fill;
+                if (!f || f === 'none' || /rgba\(0, 0, 0, 0\)/.test(f)) return;
+                if (sh.dataset.baseStroke === undefined) {
+                    sh.dataset.baseStroke = sh.getAttribute('stroke') || '';
+                    sh.dataset.baseWidth = sh.getAttribute('stroke-width') || '';
+                }
+                if (on) {
+                    sh.setAttribute('stroke', '#facc15');
+                    sh.setAttribute('stroke-width', 4);
+                } else {
+                    if (sh.dataset.baseStroke) sh.setAttribute('stroke', sh.dataset.baseStroke);
+                    else sh.removeAttribute('stroke');
+                    if (sh.dataset.baseWidth) sh.setAttribute('stroke-width', sh.dataset.baseWidth);
+                    else sh.removeAttribute('stroke-width');
+                }
+            });
+        });
+    }
+
     return {
         SoundFX: SoundFX,
         bindSceneIntro: bindSceneIntro,
@@ -504,6 +545,7 @@
         renderQuiz: renderQuiz,
         renderQuizSet: renderQuizSet,
         pinLabel: pinLabel,
-        isolateSvgIds: isolateSvgIds
+        isolateSvgIds: isolateSvgIds,
+        litPart: litPart
     };
 });
