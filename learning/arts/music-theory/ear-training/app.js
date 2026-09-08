@@ -207,21 +207,177 @@
     ];
 
     /* 화음 진행 ---------------------------------------------------------- */
-    const DEGREE_INDEX = { "I": 0, "ii": 1, "iii": 2, "IV": 3, "V": 4, "vi": 5 };
+
+    /*
+     * 로마숫자는 그 조의 음계를 기준으로 센다. 그래서 단조에서는 III·VI·VII에
+     * ♭을 붙이지 않는다 — 숫자 앞의 ♭은 늘 "빌려 온 화음"이라는 표시로 남긴다.
+     * 값은 [음이름 걸음 수, 반음 수, 삼화음 성질]이다.
+     * V/V와 II는 같은 소리다. 뒤에 V가 오면 딴 조 딸림화음이고, 오지 않으면
+     * 라이디언에서 빌려 온 II다 — 그래서 다음 화음까지 들어야 답이 나온다.
+     */
+    const NUMERALS = {
+        "I": [0, 0, "maj"], "ii": [1, 2, "min"], "iii": [2, 4, "min"],
+        "IV": [3, 5, "maj"], "V": [4, 7, "maj"], "vi": [5, 9, "min"],
+        "vii°": [6, 11, "dim"],
+        "iv": [3, 5, "min"], "♭VII": [6, 10, "maj"], "♭VI": [5, 8, "maj"],
+        "♭III": [2, 3, "maj"], "II": [1, 2, "maj"],
+        "V/V": [1, 2, "maj"], "V/vi": [2, 4, "maj"], "V/ii": [5, 9, "maj"],
+        "i": [0, 0, "min"], "ii°": [1, 2, "dim"], "III": [2, 3, "maj"],
+        "v": [4, 7, "min"], "VI": [5, 8, "maj"], "VII": [6, 10, "maj"]
+    };
+
+    const TRIAD_SHAPE = {
+        maj: [[0, 0], [2, 4], [4, 7]],
+        min: [[0, 0], [2, 3], [4, 7]],
+        dim: [[0, 0], [2, 3], [4, 6]]
+    };
+
     const PROGRESSIONS = [
-        ["I", "V", "vi", "IV"],
-        ["I", "vi", "IV", "V"],
-        ["I", "IV", "V", "I"],
-        ["ii", "V", "I"],
-        ["I", "V", "IV", "I"],
-        ["vi", "IV", "I", "V"],
-        ["I", "iii", "IV", "V"],
-        ["I", "IV", "ii", "V"],
-        ["I", "vi", "ii", "V"],
-        ["IV", "I", "V", "vi"],
-        ["I", "V", "vi", "iii"],
-        ["ii", "V", "I", "vi"]
-    ].map(chords => ({ id: chords.join("-"), label: chords.join("–"), chords: chords }));
+        { id: "I IV V", chords: ["I", "IV", "V"] },
+        { id: "I V IV", chords: ["I", "V", "IV"] },
+        { id: "I IV V I", chords: ["I", "IV", "V", "I"] },
+        { id: "I V IV I", chords: ["I", "V", "IV", "I"] },
+        { id: "I IV I V", chords: ["I", "IV", "I", "V"] },
+        { id: "I V I IV", chords: ["I", "V", "I", "IV"] },
+        { id: "I V vi IV", chords: ["I", "V", "vi", "IV"] },
+        { id: "I vi IV V", chords: ["I", "vi", "IV", "V"] },
+        { id: "I IV V vi", chords: ["I", "IV", "V", "vi"] },
+        { id: "I IV vi V", chords: ["I", "IV", "vi", "V"] },
+        { id: "I V IV vi", chords: ["I", "V", "IV", "vi"] },
+        { id: "I vi V IV", chords: ["I", "vi", "V", "IV"] },
+        { id: "ii V I", chords: ["ii", "V", "I"] },
+        { id: "IV V I", chords: ["IV", "V", "I"] },
+        { id: "I vi V", chords: ["I", "vi", "V"] },
+        { id: "vi IV V", chords: ["vi", "IV", "V"] },
+        { id: "I ii V", chords: ["I", "ii", "V"] },
+        { id: "vi ii V", chords: ["vi", "ii", "V"] },
+        { id: "IV I V", chords: ["IV", "I", "V"] },
+        { id: "I V vi", chords: ["I", "V", "vi"] },
+        { id: "V vi IV I", chords: ["V", "vi", "IV", "I"] },
+        { id: "vi IV I V", chords: ["vi", "IV", "I", "V"] },
+        { id: "IV I V vi", chords: ["IV", "I", "V", "vi"] },
+        { id: "vi IV V I", chords: ["vi", "IV", "V", "I"] },
+        { id: "IV V I vi", chords: ["IV", "V", "I", "vi"] },
+        { id: "V I vi IV", chords: ["V", "I", "vi", "IV"] },
+        { id: "I iii IV V", chords: ["I", "iii", "IV", "V"] },
+        { id: "I IV ii V", chords: ["I", "IV", "ii", "V"] },
+        { id: "I vi ii V", chords: ["I", "vi", "ii", "V"] },
+        { id: "I V vi iii", chords: ["I", "V", "vi", "iii"] },
+        { id: "ii V I vi", chords: ["ii", "V", "I", "vi"] },
+        { id: "I iii vi IV", chords: ["I", "iii", "vi", "IV"] },
+        { id: "vi ii V I", chords: ["vi", "ii", "V", "I"] },
+        { id: "I ii iii IV", chords: ["I", "ii", "iii", "IV"] },
+        { id: "iii vi ii V", chords: ["iii", "vi", "ii", "V"] },
+        { id: "IV I iii vi", chords: ["IV", "I", "iii", "vi"] },
+        { id: "i VI VII i", chords: ["i", "VI", "VII", "i"], minor: true },
+        { id: "i VII VI VII", chords: ["i", "VII", "VI", "VII"], minor: true },
+        { id: "i iv v i", chords: ["i", "iv", "v", "i"], minor: true },
+        { id: "ii° v i", chords: ["ii°", "v", "i"], minor: true },
+        { id: "i VI III VII", chords: ["i", "VI", "III", "VII"], minor: true },
+        { id: "i iv VII III", chords: ["i", "iv", "VII", "III"], minor: true },
+        { id: "i v VI VII", chords: ["i", "v", "VI", "VII"], minor: true },
+        { id: "VI VII i", chords: ["VI", "VII", "i"], minor: true },
+        { id: "I IV iv I", chords: ["I", "IV", "iv", "I"] },
+        { id: "I IV I iv", chords: ["I", "IV", "I", "iv"] },
+        { id: "I iv V I", chords: ["I", "iv", "V", "I"] },
+        { id: "I IV iv V", chords: ["I", "IV", "iv", "V"] },
+        { id: "I V iv I", chords: ["I", "V", "iv", "I"] },
+        { id: "I vi iv I", chords: ["I", "vi", "iv", "I"] },
+        { id: "I IV V iv", chords: ["I", "IV", "V", "iv"] },
+        { id: "I ♭VII IV I", chords: ["I", "♭VII", "IV", "I"] },
+        { id: "I IV ♭VII I", chords: ["I", "IV", "♭VII", "I"] },
+        { id: "I ♭VII IV V", chords: ["I", "♭VII", "IV", "V"] },
+        { id: "I V ♭VII IV", chords: ["I", "V", "♭VII", "IV"] },
+        { id: "I vi ♭VII IV", chords: ["I", "vi", "♭VII", "IV"] },
+        { id: "I ♭VII I IV", chords: ["I", "♭VII", "I", "IV"] },
+        { id: "I ♭VI ♭VII I", chords: ["I", "♭VI", "♭VII", "I"] },
+        { id: "♭VI ♭VII I", chords: ["♭VI", "♭VII", "I"] },
+        { id: "I ♭III ♭VI ♭VII", chords: ["I", "♭III", "♭VI", "♭VII"] },
+        { id: "I ♭III IV I", chords: ["I", "♭III", "IV", "I"] },
+        { id: "IV ♭VI ♭VII I", chords: ["IV", "♭VI", "♭VII", "I"] },
+        { id: "I V ♭VI ♭VII", chords: ["I", "V", "♭VI", "♭VII"] },
+        { id: "i iv V i", chords: ["i", "iv", "V", "i"], minor: true },
+        { id: "ii° V i", chords: ["ii°", "V", "i"], minor: true },
+        { id: "ii V i", chords: ["ii", "V", "i"], minor: true },
+        { id: "i IV i iv", chords: ["i", "IV", "i", "iv"], minor: true },
+        { id: "i IV VII i", chords: ["i", "IV", "VII", "i"], minor: true },
+        { id: "i VII IV i", chords: ["i", "VII", "IV", "i"], minor: true },
+        { id: "i iv V VI", chords: ["i", "iv", "V", "VI"], minor: true },
+        { id: "i ii V i", chords: ["i", "ii", "V", "i"], minor: true },
+        { id: "I II IV I", chords: ["I", "II", "IV", "I"] },
+        { id: "I II IV V", chords: ["I", "II", "IV", "V"] },
+        { id: "I V/V V I", chords: ["I", "V/V", "V", "I"] },
+        { id: "I IV V/V V", chords: ["I", "IV", "V/V", "V"] },
+        { id: "I V/vi vi IV", chords: ["I", "V/vi", "vi", "IV"] },
+        { id: "I V/ii ii V", chords: ["I", "V/ii", "ii", "V"] },
+        { id: "vi V/V V I", chords: ["vi", "V/V", "V", "I"] },
+        { id: "I V/vi vi V", chords: ["I", "V/vi", "vi", "V"] }
+    ].map(item => Object.assign(item, { label: item.chords.join("–") }));
+
+    const PROGRESSION_SETS = [
+        {
+            id: "p1", name: label("I, IV and V", "1·4·5도"),
+            palette: [["I", "IV", "V"]],
+            given: true,
+            ids: ["I IV V", "I V IV", "I IV V I", "I V IV I", "I IV I V", "I V I IV"]
+        },
+        {
+            id: "p2", name: label("Circle of four", "순환 진행"),
+            palette: [["I", "IV", "V", "vi"]],
+            given: true,
+            ids: ["I V vi IV", "I vi IV V", "I IV V vi", "I IV vi V", "I V IV vi", "I vi V IV"]
+        },
+        {
+            id: "p3", name: label("Three chords", "세 화음"),
+            palette: [["I", "ii", "IV", "V", "vi"]],
+            ids: ["ii V I", "IV V I", "I vi V", "vi IV V", "I ii V", "vi ii V", "IV I V", "I V vi"]
+        },
+        {
+            id: "p4", name: label("Circle turned", "돌린 순환 진행"),
+            palette: [["I", "IV", "V", "vi"]],
+            ids: ["V vi IV I", "vi IV I V", "IV I V vi", "vi IV V I", "IV V I vi", "V I vi IV"]
+        },
+        {
+            id: "p5", name: label("All diatonic chords", "온음계 두루"),
+            palette: [["I", "ii", "iii", "IV", "V", "vi"]],
+            ids: ["I iii IV V", "I IV ii V", "I vi ii V", "I V vi iii", "ii V I vi", "I iii vi IV", "vi ii V I", "I ii iii IV", "iii vi ii V", "IV I iii vi"]
+        },
+        {
+            id: "p6", name: label("Minor key", "단조 진행"),
+            palette: [["i", "ii°", "III", "iv", "v", "VI", "VII"]],
+            ids: ["i VI VII i", "i VII VI VII", "i iv v i", "ii° v i", "i VI III VII", "i iv VII III", "i v VI VII", "VI VII i"]
+        },
+        {
+            id: "p7", name: label("Turning dark", "어두워지기"),
+            palette: [["I", "IV", "V", "vi"], [null, "iv", null, null]],
+            given: true,
+            ids: ["I IV iv I", "I IV I iv", "I iv V I", "I IV iv V", "I V iv I", "I vi iv I", "I IV V iv"]
+        },
+        {
+            id: "p8", name: label("Stepping down bright", "밝게 내려오기"),
+            palette: [["I", "ii", "IV", "V", "vi"], ["♭VII"]],
+            given: true,
+            ids: ["I ♭VII IV I", "I IV ♭VII I", "I ♭VII IV V", "I V ♭VII IV", "I vi ♭VII IV", "I ♭VII I IV"]
+        },
+        {
+            id: "p9", name: label("Rising cadence", "올라서는 마침꼴"),
+            palette: [["I", "ii", "IV", "V", "vi"], ["♭III", "♭VI", "♭VII"]],
+            freeBass: true,
+            ids: ["I ♭VI ♭VII I", "♭VI ♭VII I", "I ♭III ♭VI ♭VII", "I ♭III IV I", "IV ♭VI ♭VII I", "I V ♭VI ♭VII"]
+        },
+        {
+            id: "p10", name: label("Borrowing into minor", "단조에 빌리기"),
+            palette: [["i", "ii°", "III", "iv", "v", "VI", "VII"], [null, "ii", null, "IV", "V", null, null]],
+            freeBass: true,
+            ids: ["i iv V i", "ii° V i", "ii V i", "i IV i iv", "i IV VII i", "i VII IV i", "i iv V VI", "i ii V i"]
+        },
+        {
+            id: "p11", name: label("Floating chords", "뜬 화음 갈라 듣기"),
+            palette: [["I", "ii", "iii", "IV", "V", "vi"], ["II", "V/V", "V/vi", "V/ii"]],
+            freeBass: true,
+            ids: ["I II IV I", "I II IV V", "I V/V V I", "I IV V/V V", "I V/vi vi IV", "I V/ii ii V", "vi V/V V I", "I V/vi vi V"]
+        }
+    ];
 
     [INTERVALS, DISPLAY_INTERVALS, CHORDS, SCALES, POSITIONS, QUALITIES, NUMBERS].forEach(list => {
         list.forEach(item => { item.label = label(item.en, item.ko); });
@@ -246,32 +402,19 @@
     /* 조표 자리에 붙는 기호 */
     const ACC_MARK = { "-2": "♭♭", "-1": "♭", "0": "", "1": "♯", "2": "♯♯" };
 
-    function keyName(tonic) {
-        return N.LETTER_NAMES[tonic.letter] + (ACC_MARK[String(tonic.accidental)] || "") + " major​(장조)";
+    function keyName(tonic, minor) {
+        return N.LETTER_NAMES[tonic.letter] + (ACC_MARK[String(tonic.accidental)] || "")
+            + (minor ? " minor​(단조)" : " major​(장조)");
+    }
+
+    const MINOR_TONES = [[0, 0], [1, 2], [2, 3], [3, 5], [4, 7], [5, 8], [6, 10]];
+
+    function minorScale(tonic) {
+        return MINOR_TONES.map(tone => N.step(tonic, tone[0], tone[1]));
     }
 
     function majorScale(tonic) {
         return MAJOR_TONES.map(tone => N.step(tonic, tone[0], tone[1]));
-    }
-
-    function degreeTriad(scale, symbol) {
-        const index = DEGREE_INDEX[symbol];
-        return [0, 2, 4].map(offset => {
-            const note = scale[(index + offset) % 7];
-            const octaveUp = index + offset >= 7;
-            return octaveUp ? N.spell(note.letterAbs + 7, note.accidental) : note;
-        });
-    }
-
-    /* 한 옥타브 안으로 모아 좁은 자리에서 울리게 한다. */
-    function closeVoicing(tonic, notes) {
-        const floorMidi = tonic.midi;
-        return notes.map(note => {
-            let midi = note.midi;
-            while (midi - floorMidi >= 12) midi -= 12;
-            while (midi < floorMidi) midi += 12;
-            return midi;
-        });
     }
 
     /* 증3화음은 자리를 바꿔도 구조가 같아 귀로 구별할 수 없으므로 뺀다. */
@@ -501,20 +644,124 @@
         });
     }
 
-    function progressionQuestion(item) {
-        const tonic = pick(keyRoots(28, 34));
-        const scale = majorScale(tonic);
-        const groups = item.chords.map(symbol => {
-            const triad = degreeTriad(scale, symbol);
-            const voiced = closeVoicing(tonic, triad);
-            return [voiced[0] - 12].concat(voiced);
+    /*
+     * 화음 진행 -----------------------------------------------------------
+     * 왼손에 뿌리음, 오른손에 삼화음. 오른손은 앞 화음에서 손이 가장 덜
+     * 움직이는 자리를 잡는다 — 실제 음악에서 보이스 리딩을 하다 보면 전위형이
+     * 나오기도 하고 안 나오기도 하는 것과 같다.
+     */
+    const RH_HOME = 67;    /* 오른손이 머무는 자리 */
+    const RH_LOW = 58;
+    const RH_HIGH = 81;
+    /*
+     * 왼손이 놓일 띠. 낮은음자리표에 제대로 앉으려면 이 자리여야 한다. 좁게
+     * 잡으면 옥타브가 하나뿐인 음이 생겨 베이스가 10도씩 뛰어 버린다.
+     */
+    const BASS_LOW = 40;
+    const BASS_HIGH = 57;
+    /*
+     * 베이스도 같은 방법으로 고르되 뿌리음에 무게를 얹는다. 그래서 뿌리음이
+     * 자연스러우면 그대로 두고, 3음이나 5음으로 가는 편이 훨씬 매끄러울 때만
+     * 전위형이 된다. 첫 화음은 조를 세워야 하므로 늘 뿌리음이다.
+     */
+    const BASS_ROOT_PULL = 4;
+
+    function numeralNotes(tonic, symbol) {
+        const spec = NUMERALS[symbol];
+        const root = N.step(tonic, spec[0], spec[1]);
+        return TRIAD_SHAPE[spec[2]].map(pair => N.step(root, pair[0], pair[1]));
+    }
+
+    /* rotation 번째 음을 맨 아래에 두고 나머지를 그 위로 쌓는다. */
+    function stackFrom(notes, rotation, octave) {
+        const out = [];
+        let floorAbs = -999;
+        for (let step = 0; step < notes.length; step += 1) {
+            const note = notes[(rotation + step) % notes.length];
+            let abs = note.letterAbs + octave * 7;
+            while (abs <= floorAbs) abs += 7;
+            out.push(N.spell(abs, note.accidental));
+            floorAbs = abs;
+        }
+        return out;
+    }
+
+    function leadVoicing(notes, previous) {
+        let best = null;
+        let bestCost = Infinity;
+        for (let rotation = 0; rotation < notes.length; rotation += 1) {
+            for (let octave = -2; octave <= 2; octave += 1) {
+                const stack = stackFrom(notes, rotation, octave);
+                if (!inRange(stack, RH_LOW, RH_HIGH)) continue;
+                const cost = stack.reduce((sum, note, index) => sum
+                    + Math.abs(note.midi - (previous ? previous[index] : RH_HOME)), 0);
+                if (cost < bestCost) { bestCost = cost; best = stack; }
+            }
+        }
+        return best;
+    }
+
+    function bassSeat(notes, previous, free) {
+        let best = null;
+        let bestCost = Infinity;
+        const count = free ? notes.length : 1;
+        for (let index = 0; index < count; index += 1) {
+            for (let octave = -3; octave <= 1; octave += 1) {
+                const seat = N.spell(notes[index].letterAbs + octave * 7, notes[index].accidental);
+                if (seat.midi < BASS_LOW || seat.midi > BASS_HIGH) continue;
+                const from = previous === null ? (BASS_LOW + BASS_HIGH) / 2 : previous;
+                const cost = Math.abs(seat.midi - from) + (index === 0 ? 0 : BASS_ROOT_PULL);
+                if (cost < bestCost) { bestCost = cost; best = seat; }
+            }
+        }
+        return best;
+    }
+
+    /* 그 진행의 모든 화음이 홑임시표로 적히는 조만 고른다. */
+    function progressionRoots(item) {
+        return collectRoots("pg:" + item.id, 28, 34, root => {
+            const scale = item.minor ? minorScale(root) : majorScale(root);
+            if (scale.filter(note => note.accidental !== 0).length > 6) return null;
+            let notes = scale.slice();
+            item.chords.forEach(symbol => { notes = notes.concat(numeralNotes(root, symbol)); });
+            return notes;
         });
+    }
+
+    function progressionQuestion(item) {
+        const preset = session.preset || {};
+        const tonic = pick(progressionRoots(item));
+        const scale = item.minor ? minorScale(tonic) : majorScale(tonic);
+        const columns = [];
+        const groups = [];
+        let hand = null;
+        let bass = null;
+        item.chords.forEach((symbol, index) => {
+            const notes = numeralNotes(tonic, symbol);
+            const seat = bassSeat(notes, bass, preset.freeBass === true && index > 0);
+            const voiced = leadVoicing(notes, hand);
+            hand = voiced.map(note => note.midi);
+            bass = seat.midi;
+            columns.push({ notes: [seat].concat(voiced) });
+            groups.push([bass].concat(hand));
+        });
+
+        /* 조를 먼저 심는다 — 으뜸화음 한 번, 한 박 쉬고 진행. */
+        const home = numeralNotes(tonic, item.minor ? "i" : "I");
+        const homeGroup = [bassSeat(home, null, false).midi]
+            .concat(leadVoicing(home, null).map(note => note.midi));
+
         return {
-            playback: { groups: groups, beat: 1.1 },
+            playback: { groups: [homeGroup, []].concat(groups), beat: 1.05 },
+            chordsPlay: { groups: groups, beat: 1.9 },
+            homePlay: { groups: [homeGroup], beat: 1.2 },
+            slots: { symbols: item.chords.slice(), columns: columns, given: preset.given ? 1 : 0 },
             staffBefore: [null],
-            staffAfter: item.chords.map(symbol => ({ notes: degreeTriad(scale, symbol) })),
+            staffAfter: columns,
             keyboard: null,
-            detail: keyName(tonic)
+            grand: true,
+            keySignature: keySignatureOf(scale),
+            detail: keyName(tonic, item.minor)
         };
     }
 
@@ -665,7 +912,8 @@
                 id: "dom", name: label("Dominant scales", "속화음 음계"),
                 ids: ["mixolydian", "lydb7", "altered", "dimhw", "phrydom"]
             }
-        ]
+        ],
+        progression: PROGRESSION_SETS
     };
 
     /* 판 이름은 답 이름으로도 쓰이므로 label로도 들고 있는다. */
@@ -780,12 +1028,9 @@
             name: label("Chord Progressions", "화음 진행"),
             ask: "무슨 진행인가요?",
             items: PROGRESSIONS,
-            inputs: ["buttons"],
-            levels: [
-                { id: "easy", label: "쉬움", ids: PROGRESSIONS.slice(0, 4).map(item => item.id) },
-                { id: "mid", label: "보통", ids: PROGRESSIONS.slice(0, 8).map(item => item.id) },
-                { id: "hard", label: "전부", ids: PROGRESSIONS.map(item => item.id) }
-            ],
+            inputs: ["slots"],
+            slotAnswer: true,
+            levels: [],
             modes: [],
             make: progressionQuestion
         },
@@ -1038,6 +1283,7 @@
         buttons: { mark: "\u2637", text: "보기 단추로 답하기" },
         pair: { mark: "\u2637", text: "보기 단추로 답하기" },
         grid: { mark: "\u2637", text: "칸으로 답하기" },
+        slots: { mark: "\u2637", text: "로마숫자로 답하기" },
         tap: { mark: "\u1F3B9", text: "두드려 답하기" }
     };
 
@@ -1095,6 +1341,7 @@
         session.reveal = false;
         session.fromLesson = null;
         session.enabled = new Set(preset.ids || [preset.id]);
+        session.slots = [];
         beginRound();
     }
 
@@ -2070,9 +2317,13 @@
         els.feedback.textContent = "";
         els.feedback.className = "feedback";
         els.nextButton.hidden = true;
-        els.arpButton.hidden = !question.arpeggio;
+        els.arpButton.hidden = !question.arpeggio && !question.chordsPlay;
+        els.arpButton.textContent = question.chordsPlay ? "한 화음씩 끊어 듣기" : "한 음씩 펼쳐 듣기";
         els.melodicButton.hidden = !question.melodic;
-        els.helpRow.hidden = !question.arpeggio && !question.melodic;
+        els.keyButton.hidden = !question.homePlay;
+        els.helpRow.hidden = els.arpButton.hidden && els.melodicButton.hidden && els.keyButton.hidden;
+        els.drillScreen.classList.remove("is-keys", "is-slots");
+        els.slotWrap.hidden = true;
         if (session.drill.rhythmDrill) setupRhythm(question);
         else {
             els.replayButton.textContent = "♪ 다시 듣기";
@@ -2134,7 +2385,12 @@
             setupPairInput(question);
             return;
         }
+        if (session.drill.slotAnswer) {
+            setupSlotInput(question);
+            return;
+        }
         els.pairWrap.hidden = true;
+        els.slotWrap.hidden = true;
         const useKeyboard = session.input === "keyboard" && question.keyboard;
         els.choices.hidden = useKeyboard;
         /* 보기 단추가 없으면 오른쪽 칸이 비므로 화면을 한 칸으로 쓴다. */
@@ -2159,6 +2415,117 @@
             els.choices.append(button);
         });
         els.typedCount.hidden = true;
+    }
+
+    /*
+     * 화음 진행 답하기 ----------------------------------------------------
+     * 칸을 왼쪽부터 채운다. 맞은 칸은 초록으로 굳고 그 화음이 악보에 그려진다.
+     * 틀리면 그 칸만 빨갛게 되고 문제는 틀림으로 굳지만, 칸은 다음으로 밀리지
+     * 않아 끝까지 풀 수 있다. 건반 채점과 같은 규칙이다.
+     */
+    function setupSlotInput(question) {
+        els.drillScreen.classList.add("is-slots");
+        els.choices.hidden = true;
+        els.pairWrap.hidden = true;
+        els.typedCount.hidden = true;
+        els.slotWrap.hidden = false;
+
+        const info = question.slots;
+        session.slots = info.symbols.slice(0, info.given);
+        els.slotRow.innerHTML = "";
+        info.symbols.forEach((symbol, index) => {
+            const box = document.createElement("span");
+            box.className = "slot" + (index < info.given ? " is-given" : "");
+            const number = document.createElement("i");
+            number.className = "slot-no";
+            number.textContent = index + 1;
+            const text = document.createElement("b");
+            text.className = "slot-text";
+            text.textContent = index < info.given ? symbol : "";
+            box.append(number, text);
+            els.slotRow.append(box);
+        });
+
+        els.numeralRows.innerHTML = "";
+        ((session.preset && session.preset.palette) || []).forEach(row => {
+            const line = document.createElement("div");
+            line.className = "numeral-line";
+            row.forEach(symbol => {
+                /* null은 짝 맞추기용 빈 자리다 — 아래 줄의 iv가 위 줄 IV 밑에 오게. */
+                if (!symbol) {
+                    const gap = document.createElement("span");
+                    gap.className = "numeral-gap";
+                    line.append(gap);
+                    return;
+                }
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "numeral";
+                button.textContent = symbol;
+                button.addEventListener("click", () => answerBySlot(symbol));
+                line.append(button);
+            });
+            els.numeralRows.append(line);
+        });
+        drawSlotStaff();
+    }
+
+    /* 맞힌 데까지만 악보에 그린다. 나머지 칸은 물음표로 남는다. */
+    function drawSlotStaff() {
+        const info = session.current.slots;
+        drawStaff(info.columns.map((column, index) => index < session.slots.length ? column : null));
+    }
+
+    function slotMiss(index, symbol) {
+        const box = els.slotRow.children[index];
+        if (!box) return;
+        let miss = box.querySelector(".slot-miss");
+        if (!miss) {
+            miss = document.createElement("u");
+            miss.className = "slot-miss";
+            box.append(miss);
+        }
+        miss.textContent = symbol;
+        /* 빨강은 한 칸에만 켜 둔다 — 앞서 켠 칸이 남아 있으면 지운다. */
+        Array.from(els.slotRow.children).forEach(node => node.classList.remove("is-wrong"));
+        box.classList.add("is-wrong");
+        window.clearTimeout(session.flashTimer);
+        session.flashTimer = window.setTimeout(() => box.classList.remove("is-wrong"), 600);
+    }
+
+    function answerBySlot(symbol) {
+        if (session.answered) return;
+        const info = session.current.slots;
+        const index = session.slots.length;
+        if (index >= info.symbols.length) return;
+        if (symbol !== info.symbols[index]) {
+            session.missed = true;
+            slotMiss(index, symbol);
+            return;
+        }
+        session.slots.push(symbol);
+        const box = els.slotRow.children[index];
+        box.classList.remove("is-wrong");
+        box.classList.add("is-right");
+        box.querySelector(".slot-text").textContent = symbol;
+        drawSlotStaff();
+        if (window.PianoEngine) {
+            const notes = info.columns[index].notes.map(note => note.midi);
+            window.PianoEngine.playSequence([notes], .9).catch(() => {});
+        }
+        if (session.slots.length < info.symbols.length) return;
+        settle(!session.missed);
+    }
+
+    /* 못 채운 칸을 정답으로 채워 보여 준다. */
+    function fillSlots() {
+        const info = session.current.slots;
+        info.symbols.forEach((symbol, index) => {
+            const box = els.slotRow.children[index];
+            if (!box || index < session.slots.length) return;
+            box.classList.add("is-shown");
+            box.querySelector(".slot-text").textContent = symbol;
+        });
     }
 
     /* 성질과 도수를 한 줄씩 고른다. 둘 다 고르면 채점한다. */
@@ -2313,6 +2680,7 @@
         recordAnswer(session.drill.id, target.id, correct);
         if (session.preset) recordPreset(session.drill.id, session.preset.id, correct);
 
+        if (session.drill.slotAnswer) fillSlots();
         if (session.drill.rhythmDrill) showRhythmAnswer(correct);
         else {
             const before = session.current.staffBefore;
@@ -2367,6 +2735,8 @@
             }
             if (session.current.tap) els.tapPad.disabled = true;
             showRhythmAnswer(false);
+        } else if (session.drill.slotAnswer) {
+            fillSlots();
         } else if (session.drill.pairAnswer) {
             markPairRow(els.qualityRow, String(session.current.pair.quality), "");
             markPairRow(els.numberRow, String(session.current.pair.number), "");
@@ -2472,6 +2842,7 @@
             "presetScreen", "presetTitle", "presetList", "exerciseList", "melodicButton",
             "askText", "staff", "scoreText", "stopButton",
             "replayButton", "skipButton", "choices", "pairWrap", "qualityRow", "numberRow",
+            "slotWrap", "slotRow", "numeralRows", "keyButton",
             "keyboardWrap", "pianoKeys", "typedCount", "rhythmWrap", "rhythmBoard",
             "gridWrap", "beatGrid", "gridSubmit", "barsWrap", "tapWrap", "tapPad", "tapCount",
             "feedback", "nextButton", "resultScore", "resultTable", "againButton",
@@ -2491,8 +2862,11 @@
 
         els.replayButton.addEventListener("click", play);
         els.skipButton.addEventListener("click", skipQuestion);
-        els.arpButton.addEventListener("click", () => playExtra("arpeggio"));
+        els.arpButton.addEventListener("click", () => {
+            playExtra(session.current && session.current.chordsPlay ? "chordsPlay" : "arpeggio");
+        });
         els.melodicButton.addEventListener("click", () => playExtra("melodic"));
+        els.keyButton.addEventListener("click", () => playExtra("homePlay"));
         els.gridSubmit.addEventListener("click", submitGrid);
         els.tapPad.addEventListener("pointerdown", event => { event.preventDefault(); onTap(); });
         els.nextButton.addEventListener("click", nextQuestion);

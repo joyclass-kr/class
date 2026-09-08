@@ -7,14 +7,14 @@
     <title>청음</title>
     <meta name="description" content="음정·화음·음계·화음 진행·리듬·가락 받아쓰기를 소리로 듣고 맞히는 청음 훈련">
     <link rel="preload" href="assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260908-10">
+    <link rel="stylesheet" href="styles.css?v=20260908-11">
     <script src="piano-engine.js?v=20260907-1" defer></script>
-    <script src="notation.js?v=20260908-10" defer></script>
-    <script src="keyboard.js?v=20260908-10" defer></script>
-    <script src="wheel.js?v=20260908-10" defer></script>
-    <script src="rhythm.js?v=20260908-10" defer></script>
-    <script src="course.js?v=20260908-10" defer></script>
-    <script src="app.js?v=20260908-10" defer></script>
+    <script src="notation.js?v=20260908-11" defer></script>
+    <script src="keyboard.js?v=20260908-11" defer></script>
+    <script src="wheel.js?v=20260908-11" defer></script>
+    <script src="rhythm.js?v=20260908-11" defer></script>
+    <script src="course.js?v=20260908-11" defer></script>
+    <script src="app.js?v=20260908-11" defer></script>
 </head>
 <body>
     <main class="shell">
@@ -91,9 +91,15 @@
             <div id="helpRow" class="help-row" hidden>
                 <button id="arpButton" class="quiet-button" type="button" hidden>한 음씩 펼쳐 듣기</button>
                 <button id="melodicButton" class="quiet-button" type="button" hidden>한 음씩 듣기</button>
+                <button id="keyButton" class="quiet-button" type="button" hidden>조 확인</button>
             </div>
 
             <div id="choices" class="choices" role="group" aria-label="정답 고르기"></div>
+
+            <div id="slotWrap" class="slot-wrap" hidden>
+                <div id="slotRow" class="slot-row"></div>
+                <div id="numeralRows" class="numeral-rows" role="group" aria-label="로마숫자 고르기"></div>
+            </div>
 
             <div id="pairWrap" class="pair-wrap" hidden>
                 <div id="qualityRow" class="choices" role="group" aria-label="성질 고르기"></div>

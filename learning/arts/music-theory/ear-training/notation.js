@@ -66,7 +66,8 @@
 
     function accidentalNode(accidental, right, y) {
         const group = make("g", { class: "sheet-ink" });
-        const mark = accidental === 2 ? MARKS.doubleSharp
+        const mark = accidental === 0 ? MARKS.natural
+            : accidental === 2 ? MARKS.doubleSharp
             : accidental > 0 ? MARKS.sharp : MARKS.flat;
         const times = accidental === -2 ? 2 : 1;
         const step = markWidth(mark) + 1;
@@ -164,6 +165,7 @@
     const FLAT_GLYPH = "\u266D";
     const DOUBLE_SHARP_GLYPH = "\uD834\uDD2A";
     const BASS_CLEF_GLYPH = "\uD834\uDD22";
+    const NATURAL_GLYPH = "\u266E";
     const G_LINE_ABS = 4 * 7 + 4;   /* 높은음자리표가 가리키는 G4 */
     const PROBE_SIZE = 100;
 
@@ -268,7 +270,8 @@
     const MARKS = {
         sharp: { char: SHARP_GLYPH, height: STEP_Y * 4, anchor: 0.5 },
         flat: { char: FLAT_GLYPH, height: STEP_Y * 5, anchor: 0.72 },
-        doubleSharp: { char: DOUBLE_SHARP_GLYPH, height: STEP_Y * 2, anchor: 0.5 }
+        doubleSharp: { char: DOUBLE_SHARP_GLYPH, height: STEP_Y * 2, anchor: 0.5 },
+        natural: { char: NATURAL_GLYPH, height: STEP_Y * 4.2, anchor: 0.5 }
     };
 
     /* 자리표가 위아래로 먹는 띠. 소용돌이를 G선에 맞춘 결과다. */
@@ -278,6 +281,21 @@
     /* 높은음자리표에서 조표가 붙는 자리. 붙는 차례대로 적은 음자리 번호다. */
     const SHARP_SEATS = [38, 35, 39, 36, 33, 37, 34];
     const FLAT_SEATS = [34, 37, 33, 36, 32, 35, 31];
+
+    /*
+     * 조표가 이미 올리거나 내려 둔 음에는 임시표를 다시 붙이지 않는다. 거꾸로,
+     * 조표가 건드린 음을 제자리로 되돌릴 때는 제자리표(♮)를 붙여야 한다.
+     * 빌려 온 화음(장조의 ♭VII 같은 것)이 바로 이 경우다.
+     */
+    function signatureAlters(sign) {
+        const table = {};
+        if (!sign || !sign.count) return table;
+        const seats = sign.sharp ? SHARP_SEATS : FLAT_SEATS;
+        for (let mark = 0; mark < sign.count; mark += 1) {
+            table[seats[mark] % 7] = sign.sharp ? 1 : -1;
+        }
+        return table;
+    }
 
     /*
      * 온음표는 단순한 동그라미가 아니다. 가운데 구멍이 비스듬히 뚫려 있어서
@@ -371,6 +389,7 @@
             svg.append(signatureMarks(sign.count, sign.sharp, COLUMN_X - 6).node);
         }
 
+        const alters = signatureAlters(sign);
         columns.forEach((column, index) => {
             const x = firstX + index * COLUMN_GAP;
             if (!column) {
@@ -397,7 +416,7 @@
                 const previous = sorted[noteIndex - 1];
                 shift = previous && note.letterAbs - previous.letterAbs === 1 && shift === 0 ? 15 : 0;
                 group.append(wholeHead(x + shift, y));
-                if (note.accidental !== 0) {
+                if (note.accidental !== (alters[note.letter] || 0)) {
                     group.append(accidentalNode(note.accidental, x + shift - HEAD_RX - 3, y));
                 }
             });
