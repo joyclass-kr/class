@@ -7,11 +7,11 @@
     <title>악기</title>
     <meta name="description" content="최적화된 콘서트 그랜드 멀티샘플과 다양한 악기를 바로 연주하는 디지털 악기실">
     <link rel="preload" href="instrument-worklet-v2.js?v=20260824-fast-adsr" as="script">
-    <link rel="stylesheet" href="styles.css?v=20260904-ambient-studio-v1">
+    <link rel="stylesheet" href="styles.css?v=20260908-physical-keys-v1">
     <script src="instrument-core.js?v=20260824-physical-room" defer></script>
     <script src="instrument-details.js?v=20260905-recorder-v1" defer></script>
     <script src="korean-percussion-data.js?v=20260901-ad2-map-v2" defer></script>
-    <script src="app.js?v=20260907-hat-boost-v1" defer></script>
+    <script src="app.js?v=20260908-octave-arrows-v2" defer></script>
 </head>
 <body>
     <div class="room-glow" aria-hidden="true"></div>
@@ -167,10 +167,11 @@
                 <div class="play-toolbar">
                     <small id="noteReadout" class="screen-reader-only" aria-live="polite">준비됨</small>
                     <div id="rangeLegend" class="range-legend hidden"><i></i><span id="rangeReadout"></span></div>
+                    <button id="keySizeButton" class="key-size-button" type="button" aria-haspopup="dialog"><span>건반 크기</span><b id="keySizeReadout">100%</b></button>
                     <div id="octaveControls" class="octave-controls" aria-label="컴퓨터 키보드 옥타브">
-                        <button id="octaveDown" type="button" aria-label="한 옥타브 내리기">−</button>
+                        <button id="octaveDown" type="button" aria-label="한 옥타브 내리기 (왼쪽 화살표 키)">←</button>
                         <span>키보드 옥타브 <b id="octaveReadout">4</b></span>
-                        <button id="octaveUp" type="button" aria-label="한 옥타브 올리기">＋</button>
+                        <button id="octaveUp" type="button" aria-label="한 옥타브 올리기 (오른쪽 화살표 키)">→</button>
                     </div>
                 </div>
                 <div id="keyboardViewport" class="keyboard-viewport">
@@ -188,6 +189,31 @@
         </main>
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <div id="keySizeModal" class="key-size-modal hidden" aria-hidden="true">
+        <button class="key-size-backdrop" type="button" data-key-size-close aria-label="건반 크기 설정 닫기"></button>
+        <section id="keySizeDialog" class="key-size-dialog" role="dialog" aria-modal="true" aria-labelledby="keySizeTitle" tabindex="-1">
+            <header>
+                <div><span>PHYSICAL KEY SIZE</span><h2 id="keySizeTitle">실물 건반 크기 맞춤</h2></div>
+                <button class="key-size-close" type="button" data-key-size-close aria-label="닫기">×</button>
+            </header>
+            <div class="key-size-content">
+                <p><b>100%</b>는 일반 피아노 백건반 <b>23.5 × 150mm</b>, 흑건반 <b>13.7 × 95mm</b> 크기입니다. 화면마다 실제 크기가 달라 카드를 한 번만 맞춰 주세요.</p>
+                <section class="screen-calibration" aria-labelledby="calibrationTitle">
+                    <div class="calibration-heading"><b id="calibrationTitle">화면 보정</b><span id="calibrationStatus">보정 전 추정값</span></div>
+                    <div class="calibration-stage"><div id="calibrationCard" class="calibration-card"><span>신용카드 긴 변</span><b>85.6 mm</b></div></div>
+                    <label for="calibrationSlider">실제 카드를 화면에 대고 막대 폭을 맞추세요.</label>
+                    <input id="calibrationSlider" type="range" min="80" max="640" step="1" value="324">
+                    <div class="calibration-actions"><button id="calibrationReset" type="button">추정값으로 초기화</button><button id="calibrationSave" class="primary" type="button">이 기기 보정 저장</button></div>
+                </section>
+                <section class="key-scale-control" aria-labelledby="keyScaleTitle">
+                    <div><b id="keyScaleTitle">건반 크기</b><output id="keyScaleOutput">100%</output></div>
+                    <input id="keyScaleSlider" type="range" min="50" max="100" step="1" value="100">
+                    <small>기본은 실물 크기 100%이며, 큰 전자칠판에서는 필요에 따라 50%까지 줄일 수 있어요.</small>
+                </section>
+            </div>
+        </section>
+    </div>
 
     <div id="instrumentDetailModal" class="instrument-detail-modal hidden" aria-hidden="true">
         <button class="instrument-detail-backdrop" type="button" data-detail-close aria-label="악기 설명 닫기"></button>

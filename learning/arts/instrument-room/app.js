@@ -126,6 +126,11 @@
         ["Semicolon", 16, ";"], ["Quote", 17, "'"]
     ];
     const DISPLAY_RANGE = { start: 21, end: 108 };
+    const PIANO_WHITE_KEY_MM = { width: 23.5, length: 150 };
+    const PIANO_BLACK_KEY_MM = { width: 13.7, length: 95 };
+    const REFERENCE_CARD_MM = 85.6;
+    const CSS_PX_PER_MM = 96 / 25.4;
+    const KEY_SIZE_STORAGE = "instrument-room-key-size-v1";
 
     const DRUMS = [
         { id: "kick", name: "킥", family: "MEMBRANE", key: "A", code: "KeyA", color: "#8ef0c6" },
@@ -377,6 +382,10 @@
         articulation: "finger",
         stringPreset: "clean",
         keyboardOctave: 4,
+        keyboardScale: 1,
+        pixelsPerMm: CSS_PX_PER_MM,
+        screenCalibrated: false,
+        displayKey: "",
         audioContext: null,
         masterGain: null,
         compressor: null,
@@ -436,9 +445,100 @@
             "visualFamily", "visualModel", "studioStage", "instrumentArtwork", "instrumentLayers", "scaleGuide", "scaleBar", "scaleValue", "scaleNote", "classicalRender", "machineDeck", "malletRender", "stringCanvas", "pianoControls", "keyboardPatchControls", "stringControls", "classicalControls", "classicalArticulationButtons", "classicalArticulationHint", "guitarFxControls", "drumControls", "drumSystemLabel", "drumSystemDescription", "drumResonanceLabel", "drumToneLabel", "sustainButton",
             "articulationButtons", "articulationHint", "soundPresetGroup", "soundPresetButtons", "soundPresetHint", "physicalStringControls", "toneSlider", "toneOutput", "muteSlider", "muteOutput", "pickSlider", "pickOutput",
             "driveSlider", "driveOutput", "drumResonanceSlider", "drumResonanceOutput", "drumToneSlider", "drumToneOutput",
-            "noteReadout", "rangeLegend", "rangeReadout", "octaveControls", "octaveReadout", "octaveDown", "octaveUp", "keyboardViewport",
-            "keyboard", "chordSurface", "chordPads", "drumPads", "toast", "instrumentInfoButton", "instrumentDetailModal", "instrumentDetailDialog", "detailFamily", "detailTitle", "detailSubtitle", "detailPrevious", "detailNext", "detailClose", "detailArtworkFrame", "detailArtwork", "detailArtworkLayers", "detailArtworkFallback", "detailPartPicker", "detailFacts", "detailArticle"
+            "noteReadout", "rangeLegend", "rangeReadout", "keySizeButton", "keySizeReadout", "octaveControls", "octaveReadout", "octaveDown", "octaveUp", "keyboardViewport",
+            "keyboard", "chordSurface", "chordPads", "drumPads", "toast", "instrumentInfoButton", "instrumentDetailModal", "instrumentDetailDialog", "detailFamily", "detailTitle", "detailSubtitle", "detailPrevious", "detailNext", "detailClose", "detailArtworkFrame", "detailArtwork", "detailArtworkLayers", "detailArtworkFallback", "detailPartPicker", "detailFacts", "detailArticle",
+            "keySizeModal", "keySizeDialog", "calibrationCard", "calibrationSlider", "calibrationStatus", "calibrationReset", "calibrationSave", "keyScaleSlider", "keyScaleOutput"
         ].forEach(function (id) { elements[id] = document.getElementById(id); });
+    }
+
+    function currentDisplayKey() {
+        const shortSide = Math.min(window.screen.width, window.screen.height);
+        const longSide = Math.max(window.screen.width, window.screen.height);
+        return shortSide + "x" + longSide + "@" + Number(window.devicePixelRatio || 1).toFixed(2);
+    }
+
+    function loadKeyboardSize() {
+        state.displayKey = currentDisplayKey();
+        state.keyboardScale = 1;
+        state.pixelsPerMm = CSS_PX_PER_MM;
+        state.screenCalibrated = false;
+        try {
+            const saved = JSON.parse(window.localStorage.getItem(KEY_SIZE_STORAGE) || "null");
+            const profile = saved && saved.profiles ? saved.profiles[state.displayKey] : null;
+            if (!profile) return;
+            if (profile.calibrated && Number.isFinite(profile.pixelsPerMm) && profile.pixelsPerMm > .5 && profile.pixelsPerMm < 12) {
+                state.pixelsPerMm = profile.pixelsPerMm;
+                state.screenCalibrated = true;
+            }
+            if (Number.isFinite(profile.scale)) state.keyboardScale = Math.max(.5, Math.min(1, profile.scale));
+        } catch (error) { /* 저장을 막은 브라우저에서는 현재 세션 값만 사용한다. */ }
+    }
+
+    function saveKeyboardSize() {
+        try {
+            const saved = JSON.parse(window.localStorage.getItem(KEY_SIZE_STORAGE) || "null") || {};
+            if (!saved.profiles) saved.profiles = {};
+            saved.profiles[state.displayKey || currentDisplayKey()] = { pixelsPerMm: state.pixelsPerMm, scale: state.keyboardScale, calibrated: state.screenCalibrated };
+            window.localStorage.setItem(KEY_SIZE_STORAGE, JSON.stringify(saved));
+        } catch (error) { /* 저장을 막은 브라우저에서는 현재 세션 값만 사용한다. */ }
+    }
+
+    function applyKeyboardSize(shouldRender) {
+        const root = document.documentElement;
+        const factor = state.pixelsPerMm * state.keyboardScale;
+        root.style.setProperty("--key-width", (PIANO_WHITE_KEY_MM.width * factor).toFixed(2) + "px");
+        root.style.setProperty("--key-height", (PIANO_WHITE_KEY_MM.length * factor).toFixed(2) + "px");
+        root.style.setProperty("--black-width", (PIANO_BLACK_KEY_MM.width * factor).toFixed(2) + "px");
+        root.style.setProperty("--black-height", (PIANO_BLACK_KEY_MM.length * factor).toFixed(2) + "px");
+        const percent = Math.round(state.keyboardScale * 100) + "%";
+        if (elements.keySizeReadout) elements.keySizeReadout.textContent = percent;
+        if (elements.keyScaleOutput) elements.keyScaleOutput.textContent = percent;
+        if (elements.keyScaleSlider) elements.keyScaleSlider.value = String(Math.round(state.keyboardScale * 100));
+        if (shouldRender && elements.keyboard && elements.keyboard.children.length) renderKeyboard();
+    }
+
+    function syncCalibrationUi() {
+        const cardPixels = state.pixelsPerMm * REFERENCE_CARD_MM;
+        const maxPixels = Math.max(160, Math.min(640, Math.floor(window.innerWidth - 64)));
+        elements.calibrationSlider.max = String(maxPixels);
+        elements.calibrationSlider.value = String(Math.max(80, Math.min(maxPixels, Math.round(cardPixels))));
+        elements.calibrationCard.style.width = elements.calibrationSlider.value + "px";
+        elements.calibrationStatus.textContent = state.screenCalibrated ? "이 기기 보정됨" : "보정 전 추정값";
+        elements.calibrationStatus.classList.toggle("saved", state.screenCalibrated);
+    }
+
+    function openKeySizeDialog() {
+        syncCalibrationUi();
+        elements.keySizeModal.classList.remove("hidden");
+        elements.keySizeModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("key-size-open");
+        window.requestAnimationFrame(function () { elements.keySizeDialog.focus(); });
+    }
+
+    function closeKeySizeDialog() {
+        if (elements.keySizeModal.classList.contains("hidden")) return;
+        elements.keySizeModal.classList.add("hidden");
+        elements.keySizeModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("key-size-open");
+        elements.keySizeButton.focus();
+    }
+
+    function saveScreenCalibration() {
+        state.pixelsPerMm = Number(elements.calibrationSlider.value) / REFERENCE_CARD_MM;
+        state.screenCalibrated = true;
+        saveKeyboardSize();
+        syncCalibrationUi();
+        applyKeyboardSize(true);
+        showToast("이 기기의 실물 건반 크기를 저장했어요.");
+    }
+
+    function resetScreenCalibration() {
+        state.pixelsPerMm = CSS_PX_PER_MM;
+        state.screenCalibrated = false;
+        saveKeyboardSize();
+        syncCalibrationUi();
+        applyKeyboardSize(true);
+        showToast("화면 크기 추정값으로 초기화했어요.");
     }
 
     function showToast(message) {
@@ -2128,6 +2228,7 @@
         elements.drumPads.style.display = drums ? "grid" : "";
         elements.octaveControls.classList.toggle("hidden", drums || chords);
         elements.rangeLegend.classList.toggle("hidden", drums || chords);
+        elements.keySizeButton.classList.toggle("hidden", drums || chords);
     }
 
     function selectInstrument(instrument) {
@@ -2201,12 +2302,27 @@
         updatePlaySurface();
     }
 
+    function changeKeyboardOctave(delta) {
+        const nextOctave = Math.max(0, Math.min(7, state.keyboardOctave + delta));
+        if (nextOctave === state.keyboardOctave) return;
+        state.keyboardOctave = nextOctave;
+        renderKeyboard();
+        preloadConcertGrandRange();
+    }
+
     function handleComputerKeyDown(event) {
         if (state.detailOpen) return;
         if (event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
         const tag = event.target && event.target.tagName;
         const textEntry = tag === "TEXTAREA" || tag === "SELECT" || (tag === "INPUT" && event.target.type !== "range");
         if (textEntry) return;
+        const octaveDirection = event.code === "ArrowLeft" ? -1 : event.code === "ArrowRight" ? 1 : 0;
+        const octaveUnavailable = state.instrument === "drums" && !isPitchedPercussion() || state.instrument === "guitar" && state.guitarMode === "chords";
+        if (octaveDirection && tag !== "INPUT" && !octaveUnavailable && elements.keySizeModal.classList.contains("hidden")) {
+            event.preventDefault();
+            changeKeyboardOctave(octaveDirection);
+            return;
+        }
         if (event.code === "Space" && supportsPianoSustain()) {
             event.preventDefault();
             setSustain(true);
@@ -2251,11 +2367,22 @@
     }
 
     function bindEvents() {
+        elements.keySizeButton.addEventListener("click", openKeySizeDialog);
+        document.querySelectorAll("[data-key-size-close]").forEach(function (button) { button.addEventListener("click", closeKeySizeDialog); });
+        elements.calibrationSlider.addEventListener("input", function () { elements.calibrationCard.style.width = elements.calibrationSlider.value + "px"; });
+        elements.calibrationSave.addEventListener("click", saveScreenCalibration);
+        elements.calibrationReset.addEventListener("click", resetScreenCalibration);
+        elements.keyScaleSlider.addEventListener("input", function () {
+            state.keyboardScale = Number(elements.keyScaleSlider.value) / 100;
+            saveKeyboardSize();
+            applyKeyboardSize(true);
+        });
         elements.instrumentInfoButton.addEventListener("click", function () { openInstrumentDetail(); });
         document.querySelectorAll("[data-detail-close]").forEach(function (button) { button.addEventListener("click", closeInstrumentDetail); });
         elements.detailPrevious.addEventListener("click", function () { moveInstrumentDetail(-1); });
         elements.detailNext.addEventListener("click", function () { moveInstrumentDetail(1); });
         document.addEventListener("keydown", handleDetailKeydown, true);
+        document.addEventListener("keydown", function (event) { if (event.key === "Escape") closeKeySizeDialog(); }, true);
         elements.audioButton.addEventListener("click", function () {
             ensureAudio();
             elements.audioButton.textContent = "준비 중…";
@@ -2283,13 +2410,17 @@
         elements.sustainButton.addEventListener("click", function () { if (supportsPianoSustain()) setSustain(!state.sustain, !state.sustain); });
         [elements.toneSlider, elements.muteSlider, elements.pickSlider, elements.driveSlider, elements.drumResonanceSlider, elements.drumToneSlider]
             .forEach(function (slider) { slider.addEventListener("input", syncRangeOutputs); });
-        elements.octaveDown.addEventListener("click", function () { state.keyboardOctave = Math.max(0, state.keyboardOctave - 1); renderKeyboard(); preloadConcertGrandRange(); });
-        elements.octaveUp.addEventListener("click", function () { state.keyboardOctave = Math.min(7, state.keyboardOctave + 1); renderKeyboard(); preloadConcertGrandRange(); });
+        elements.octaveDown.addEventListener("click", function () { changeKeyboardOctave(-1); });
+        elements.octaveUp.addEventListener("click", function () { changeKeyboardOctave(1); });
         document.addEventListener("keydown", handleComputerKeyDown);
         document.addEventListener("keyup", handleComputerKeyUp);
         window.addEventListener("blur", allNotesOff);
         document.addEventListener("visibilitychange", function () { if (document.hidden) allNotesOff(); });
-        window.addEventListener("resize", function () { if (state.instrument !== "drums") renderKeyboard(); });
+        window.addEventListener("resize", function () {
+            if (currentDisplayKey() !== state.displayKey) { loadKeyboardSize(); applyKeyboardSize(false); }
+            syncCalibrationUi();
+            if (state.instrument !== "drums") renderKeyboard();
+        });
     }
 
     function animateVisual() {
@@ -2337,6 +2468,8 @@
 
     function init() {
         cacheElements();
+        loadKeyboardSize();
+        applyKeyboardSize(false);
         renderChordPads();
         renderDrumPads();
         bindEvents();

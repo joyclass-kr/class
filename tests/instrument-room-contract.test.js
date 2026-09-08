@@ -505,6 +505,24 @@ test('renders a full keyboard and disables notes outside each model range', () =
   assert.match(css, /\.key\.unavailable/);
 });
 
+test('defaults to full physical piano dimensions and supports per-device shrinking', () => {
+  assert.match(html, /id="keySizeButton"/);
+  assert.match(html, /id="calibrationCard"/);
+  assert.match(html, /id="keyScaleSlider"[^>]*min="50"[^>]*max="100"[^>]*value="100"/);
+  assert.match(app, /PIANO_WHITE_KEY_MM = \{ width: 23\.5, length: 150 \}/);
+  assert.match(app, /PIANO_BLACK_KEY_MM = \{ width: 13\.7, length: 95 \}/);
+  assert.match(app, /REFERENCE_CARD_MM = 85\.6/);
+  assert.match(app, /CSS_PX_PER_MM = 96 \/ 25\.4/);
+  assert.match(app, /instrument-room-key-size-v1/);
+  assert.match(app, /function saveScreenCalibration\(\)/);
+  assert.match(app, /function currentDisplayKey\(\)/);
+  assert.match(app, /saved\.profiles\[state\.displayKey\]/);
+  assert.match(app, /state\.keyboardScale = Math\.max\(\.5, Math\.min\(1, profile\.scale\)\)/);
+  assert.match(css, /--key-width: 88\.82px/);
+  assert.match(css, /--key-height: 566\.93px/);
+  assert.match(css, /height: var\(--key-height\)/);
+});
+
 test('offers a single-scroll accessible encyclopedia dialog without external links', () => {
   assert.match(html, /instrument-details\.js[^>]*defer/);
   assert.ok(html.indexOf('instrument-details.js') < html.indexOf('app.js'));
@@ -565,6 +583,17 @@ test('pitched ranges align computer keys and hide shortcuts outside the range', 
   assert.match(app, /state\.family === "keyboard"[\s\S]*?state\.keyboardOctave = 4/);
   assert.match(app, /start \+ Math\.round\(\(end - start\) \* 0\.2\)/);
   assert.match(app, /key\.dataset\.shortcut = unavailable \? ""/);
+});
+
+test('uses left and right arrow keys for octave changes', () => {
+  assert.match(html, /id="octaveDown"[^>]*>←<\/button>/);
+  assert.match(html, /id="octaveUp"[^>]*>→<\/button>/);
+  assert.doesNotMatch(html, /id="octaveDown"[^>]*>−<\/button>|id="octaveUp"[^>]*>＋<\/button>/);
+  assert.match(app, /function changeKeyboardOctave\(delta\)/);
+  assert.match(app, /event\.code === "ArrowLeft" \? -1 : event\.code === "ArrowRight" \? 1 : 0/);
+  assert.match(app, /octaveDirection && tag !== "INPUT"/);
+  assert.match(app, /changeKeyboardOctave\(-1\)/);
+  assert.match(app, /changeKeyboardOctave\(1\)/);
 });
 
 test('browser app source is syntactically valid', () => {
