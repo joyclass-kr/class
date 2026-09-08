@@ -935,7 +935,15 @@
                 ids: ["mixolydian", "lydb7", "altered", "dimhw", "phrydom"]
             }
         ],
-        progression: PROGRESSION_SETS
+        progression: PROGRESSION_SETS,
+        position: [
+            { id: "easy", name: label("Root and first", "근음 자리와 첫째 자리"), ids: ["root", "first"] },
+            { id: "hard", name: label("All three positions", "세 자리 전부"), ids: ["root", "first", "second"] }
+        ],
+        /* 리듬은 차시의 두드리기·받아쓰기가 판을 대신한다. 악보 고르기만 따로 남긴다. */
+        rhythmWrite: [
+            { id: "pick", name: label("Choose the Bar", "악보 고르기"), ids: ["pick"] }
+        ]
     };
 
     /* 판 이름은 답 이름으로도 쓰이므로 label로도 들고 있는다. */
@@ -943,18 +951,6 @@
         PRESETS[key].forEach(preset => { preset.label = preset.name; });
     });
 
-    /*
-     * 연습 목록. 한 연습이 여러 훈련에서 판을 가져올 수 있다 —
-     * 음정 연습은 두 음(음정)과 세 음(가락)을 함께 담는다.
-     */
-    const EXERCISES = [
-        { id: "interval", en: "Intervals", ko: "음정", theme: "interval", name: label("Intervals", "음정"), drills: ["interval", "melody"] },
-        { id: "chord", en: "Chords", ko: "화음", theme: "chord", name: label("Chords", "화음"), drills: ["chord"] },
-        { id: "scale", en: "Scales", ko: "음계", theme: "scale", name: label("Scales", "음계"), drills: ["scale"] },
-        { id: "position", en: "Chord Inversions", ko: "화음 자리", theme: "position", name: label("Chord Inversions", "화음 자리"), drills: ["position"] },
-        { id: "progression", en: "Chord Progressions", ko: "화음 진행", theme: "progression", name: label("Chord Progressions", "화음 진행"), drills: ["progression"] },
-        { id: "rhythm", en: "Rhythm", ko: "리듬", theme: "rhythm", name: label("Rhythm", "리듬"), drills: ["rhythmRead", "rhythmWrite"] }
-    ];
 
     const DRILLS = [
         {
@@ -1229,13 +1225,12 @@
 
     function showScreen(name) {
         if (session.screen === "lesson" && name !== "lesson") stopLit();
-        ["menu", "preset", "course", "lesson", "wheel", "drill", "result"].forEach(key => {
+        ["menu", "course", "lesson", "wheel", "drill", "result"].forEach(key => {
             els[key + "Screen"].hidden = key !== name;
         });
         session.screen = name;
         document.body.classList.toggle("wheel-open", name === "wheel");
         document.body.classList.toggle("lesson-open", name === "lesson");
-        document.body.classList.toggle("preset-open", name === "preset");
         window.scrollTo({ top: 0 });
     }
 
@@ -1312,11 +1307,11 @@
     };
 
     const COURSE_META = {
-        interval: { en: "Interval Theory", ko: "음정 과정", theme: "interval", icon: "course" },
-        chord: { en: "Chord Theory", ko: "화음 과정", theme: "chord", icon: "course" },
-        progression: { en: "Progression Theory", ko: "화음 진행 과정", theme: "chord", icon: "course" },
-        scale: { en: "Scale Theory", ko: "음계 과정", theme: "scale", icon: "course" },
-        rhythm: { en: "Rhythm Theory", ko: "리듬 과정", theme: "rhythm", icon: "course" }
+        interval: { en: "Intervals", ko: "음정", theme: "interval", icon: "interval" },
+        chord: { en: "Chords", ko: "화음", theme: "chord", icon: "chord" },
+        progression: { en: "Chord Progressions", ko: "화음 진행", theme: "progression", icon: "progression" },
+        scale: { en: "Scales", ko: "음계", theme: "scale", icon: "scale" },
+        rhythm: { en: "Rhythm", ko: "리듬", theme: "rhythm", icon: "rhythm" }
     };
 
     function createGlassCard(meta, onOpen) {
@@ -1351,25 +1346,9 @@
         return button;
     }
 
-    /* 그 연습의 판을 한 줄로 늘어놓는다. 판마다 어느 훈련에서 왔는지 함께 들고 있는다. */
-    function presetRows(exercise) {
-        const rows = [];
-        exercise.drills.forEach(drillId => {
-            const drill = DRILL_BY_ID[drillId];
-            if (!drill) return;
-            (PRESETS[drillId] || drill.levels || []).forEach(preset => {
-                rows.push({ drill: drill, preset: preset });
-            });
-        });
-        return rows;
-    }
 
+    /* 첫 화면은 과정과 찾아보기뿐이다. 판은 과정 줄에 섞여 들어갔다. */
     function renderMenu() {
-        els.exerciseList.innerHTML = "";
-        EXERCISES.forEach(exercise => {
-            els.exerciseList.append(createGlassCard(exercise, () => openExercise(exercise.id)));
-        });
-
         els.courseList.innerHTML = "";
         (window.EarCourses || []).forEach(course => {
             const meta = COURSE_META[course.id] || { en: "Music Theory", ko: course.name, theme: "gold", icon: "course" };
@@ -1383,56 +1362,6 @@
             theme: "wheel",
             icon: "wheel"
         }, () => { session.exercise = null; openWheel(); }));
-    }
-
-    /*
-     * 판 목록 화면. 줄마다 아이콘 둘을 달아 누르는 순간 그 방법으로 시작한다.
-     * 준비 화면은 없다 — 범위는 판이 정하고 문제 수는 열 개다.
-     */
-    const INPUT_ICONS = {
-        keyboard: { mark: "♪", text: "건반으로 답하기" },
-        buttons: { mark: "▤", text: "보기 단추로 답하기" },
-        pair: { mark: "▤", text: "보기 단추로 답하기" },
-        grid: { mark: "▤", text: "칸으로 답하기" },
-        slots: { mark: "▤", text: "로마숫자로 답하기" },
-        tap: { mark: "♪", text: "두드려 답하기" }
-    };
-
-    function inputIcon(row, input) {
-        const icon = INPUT_ICONS[input] || INPUT_ICONS.buttons;
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "preset-input is-" + input;
-        button.textContent = icon.mark;
-        button.setAttribute("aria-label", row.preset.name + " — " + icon.text);
-        button.title = icon.text;
-        button.addEventListener("click", () => startPreset(row.drill, row.preset, input));
-        return button;
-    }
-
-    function openExercise(id) {
-        const exercise = EXERCISES.find(entry => entry.id === id);
-        if (!exercise) return;
-        session.exercise = id;
-        els.presetTitle.textContent = (exercise.en ? exercise.en + " " : "") + exercise.ko;
-        els.presetList.innerHTML = "";
-        presetRows(exercise).forEach(row => {
-            const line = document.createElement("div");
-            line.className = "preset-row";
-
-            const name = document.createElement("span");
-            name.className = "preset-name";
-            name.textContent = row.preset.name || row.preset.label;
-            line.append(name);
-
-            const icons = document.createElement("span");
-            icons.className = "preset-inputs";
-            row.drill.inputs.forEach(input => icons.append(inputIcon(row, input)));
-            line.append(icons);
-
-            els.presetList.append(line);
-        });
-        showScreen("preset");
     }
 
     /* 판 하나를 그 방법으로 시작한다. */
@@ -1841,30 +1770,102 @@
         showScreen("course");
     }
 
+    /*
+     * 과정 줄 --------------------------------------------------------------
+     * 한 줄이 한 마디다. 그 줄에서 할 수 있는 것만 아이콘으로 붙는다.
+     * 판(preset) 줄은 설명과 읽기가 없는 줄일 뿐이라 같은 꼴로 그린다.
+     */
+    const ROW_ACTS = [
+        { key: "text", mark: "≡", text: "설명 읽기" },
+        { key: "read", mark: "𝄞", text: "악보 보고 고르기" },
+        { key: "listen", mark: "♪", text: "소리 듣고 고르기" },
+        { key: "keys", mark: "🎹", text: "건반 찍기" }
+    ];
+
+    function rowName(lesson) {
+        if (lesson.kind !== "preset") return lesson.title;
+        const preset = presetOf(lesson);
+        return preset ? preset.name : lesson.preset;
+    }
+
+    function presetOf(lesson) {
+        return (PRESETS[lesson.drill] || []).find(entry => entry.id === lesson.preset);
+    }
+
+    /* 판 줄에서 쓸 수 있는 답하는 방법을 아이콘 이름으로 바꾼다. */
+    function presetActs(lesson) {
+        const drill = DRILL_BY_ID[lesson.drill];
+        if (!drill) return [];
+        return drill.inputs.map(input => (input === "keyboard" ? "keys" : "listen"));
+    }
+
+    function actsOf(lesson) {
+        if (lesson.kind === "preset") return presetActs(lesson);
+        const list = [];
+        if (lesson.body) list.push("text");
+        if (lesson.read) list.push("read");
+        if (lesson.listen) list.push("listen");
+        if (lesson.keys) list.push("keys");
+        return list;
+    }
+
+    function actButton(index, lesson, act) {
+        const spec = ROW_ACTS.find(entry => entry.key === act);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "row-act is-" + act;
+        button.textContent = spec.mark;
+        button.title = spec.text;
+        button.setAttribute("aria-label", rowName(lesson) + " — " + spec.text);
+        button.addEventListener("click", () => startRowAct(index, act));
+        return button;
+    }
+
     function renderLessonList() {
         els.lessonList.innerHTML = "";
+        let step = 0;
         course.lessons.forEach((lesson, index) => {
-            const row = document.createElement("button");
-            row.type = "button";
-            row.className = "lesson-row";
-            row.innerHTML = '<span class="lesson-order"></span><span class="lesson-name"></span>'
-                + '<span class="lesson-kind"></span>';
-            row.querySelector(".lesson-order").textContent = (index + 1) + "차시";
-            row.querySelector(".lesson-name").textContent = lesson.title;
-            row.querySelector(".lesson-kind").textContent = lesson.kind === "text" ? "설명" : "연습";
-            row.addEventListener("click", () => openLesson(index));
+            const acts = actsOf(lesson);
+            const row = document.createElement("div");
+            row.className = "lesson-row" + (lesson.kind === "preset" ? " is-preset" : "");
+
+            const order = document.createElement("span");
+            order.className = "lesson-order";
+            if (lesson.kind !== "preset") { step += 1; order.textContent = step + "차시"; }
+            row.append(order);
+
+            const name = document.createElement("span");
+            name.className = "lesson-name";
+            name.textContent = rowName(lesson);
+            row.append(name);
+
+            const marks = document.createElement("span");
+            marks.className = "row-acts";
+            acts.forEach(act => marks.append(actButton(index, lesson, act)));
+            row.append(marks);
+
             els.lessonList.append(row);
         });
+    }
+
+    /* 줄의 아이콘 하나를 누르면 그 활동만 바로 연다. */
+    function startRowAct(index, act) {
+        const lesson = course.lessons[index];
+        if (!lesson) return;
+        lessonIndex = index;
+        if (act === "text") { openLesson(index); return; }
+        if (lesson.kind === "preset") {
+            const preset = presetOf(lesson);
+            if (preset) startPreset(DRILL_BY_ID[lesson.drill], preset, act === "keys" ? "keyboard" : null);
+            return;
+        }
+        startActivity(lesson, act);
     }
 
     function openLesson(index) {
         const lesson = course.lessons[index];
         if (!lesson) return;
         lessonIndex = index;
-        if (lesson.kind === "drill") {
-            startLessonDrill(lesson);
-            return;
-        }
         els.lessonTitle.textContent = lesson.title;
         els.lessonBody.innerHTML = "";
         lesson.body.forEach(paragraph => {
@@ -1899,23 +1900,10 @@
             ? midi => setExampleRoot(pickRoot(((midi % 12) + 12) % 12), true)
             : null;
 
-        els.lessonNext.textContent = index + 1 < course.lessons.length ? "다음 차시" : "과정 목록";
-        els.lessonQuiz.hidden = !lesson.quiz;
-        if (lesson.quiz) {
-            els.lessonQuiz.dataset.items = lesson.quiz.join(",");
-            els.lessonQuiz.dataset.drill = lesson.quizDrill || "reading";
-            els.lessonQuiz.dataset.inversions = lesson.quizInversions ? "all" : "root";
-            els.lessonQuiz.dataset.limit = String(lesson.quizLimit || 0);
-            els.lessonQuiz.textContent = (lesson.quizDrill || "reading") === "rhythmWrite" ? "받아쓰기 문제" : "읽기 문제";
-        }
-        /* 그 차시가 가리키는 판을 바로 열 수 있게 둔다. */
-        els.lessonDrill.hidden = !lesson.drill;
-        /* 음정 차시는 건반으로 만들어 보는 문제를 하나 더 둔다. */
-        els.lessonBuild.hidden = !lesson.build;
-        if (lesson.build) {
-            els.lessonBuild.dataset.items = lesson.build.join(",");
-            els.lessonBuild.dataset.limit = String(lesson.buildLimit || 0);
-        }
+        const nextText = course.lessons.findIndex((entry, at) => at > index && entry.body);
+        els.lessonNext.textContent = nextText >= 0 ? "다음 차시" : "과정 목록";
+        els.lessonNext.dataset.next = String(nextText);
+        /* 문제는 과정 목록 줄의 아이콘으로 연다. 설명 화면에는 두지 않는다. */
         setLessonMark(course.id, lesson.id, { read: true });
         showScreen("lesson");
     }
@@ -2301,63 +2289,41 @@
         return block;
     }
 
-    /* 이론 차시에서 그 차시가 다룬 음정만 읽기 문제로 낸다. */
-    function startLessonQuiz() {
-        const ids = (els.lessonQuiz.dataset.items || "").split(",").filter(Boolean);
-        if (!ids.length) return;
-        const drillId = els.lessonQuiz.dataset.drill || "reading";
-        session.drill = DRILL_BY_ID[drillId];
-        session.mode = session.drill.modes.length ? session.drill.modes[0].id : "";
-        session.input = drillId === "reading" ? "pair" : "buttons";
-        session.inversions = els.lessonQuiz.dataset.inversions === "all" ? [0, 1, 2] : [0];
-        session.reveal = drillId !== "reading";
-        session.limit = Number(els.lessonQuiz.dataset.limit) || ids.length * 2;
-        session.enabled = new Set(ids);
-        session.preset = null;
-        session.fromLesson = { courseId: course.id, lessonId: course.lessons[lessonIndex].id };
-        beginRound();
-    }
-
-    /* 건반으로 음정을 만들어 보는 문제. */
-    function startLessonBuild() {
-        const ids = (els.lessonBuild.dataset.items || "").split(",").filter(Boolean);
-        if (!ids.length) return;
-        session.drill = DRILL_BY_ID.build;
-        session.mode = "";
-        session.input = "keyboard";
-        session.inversions = [0];
-        session.reveal = false;
-        session.limit = Number(els.lessonBuild.dataset.limit) || ids.length * 3;
-        session.enabled = new Set(ids);
-        session.preset = null;
-        session.slots = [];
-        session.fromLesson = { courseId: course.id, lessonId: course.lessons[lessonIndex].id };
-        beginRound();
-    }
-
-    function startLessonDrill(lesson) {
-        const drill = DRILL_BY_ID[lesson.drill.drillId || "interval"];
-        /*
-         * 판을 가리키는 차시(화음 진행)는 그 판을 그대로 연다 — 로마숫자 보기를
-         * 판이 들고 있어서, 판 없이는 답할 자리가 그려지지 않는다.
-         */
-        const preset = lesson.drill.preset
-            && (PRESETS[drill.id] || []).find(entry => entry.id === lesson.drill.preset);
+    /*
+     * 차시의 활동 하나를 연다. read는 악보를 보여 준 채로, listen은 소리만,
+     * keys는 건반으로 답한다. 판을 가리키는 활동이면 그 판을 그대로 연다.
+     */
+    function startActivity(lesson, act) {
+        const spec = lesson[act];
+        if (!spec) return;
+        const drillId = act === "keys" ? "build" : (spec.drill || "interval");
+        const drill = DRILL_BY_ID[drillId];
+        if (!drill) return;
+        const preset = spec.preset && (PRESETS[drillId] || []).find(entry => entry.id === spec.preset);
         session.drill = drill;
-        session.mode = lesson.drill.mode || (drill.modes[0] && drill.modes[0].id) || "";
-        session.input = lesson.drill.input || (drill.inputs[0] === "slots" ? "slots" : "buttons");
-        session.limit = lesson.drill.limit || 10;
-        session.inversions = lesson.drill.inversions || [0];
-        session.reveal = false;
-        session.slots = [];
-        session.enabled = new Set(preset ? preset.ids : lesson.drill.items);
+        session.mode = spec.mode || (act === "read" ? "" : (drill.modes[0] && drill.modes[0].id) || "");
+        session.input = act === "keys" ? "keyboard"
+            : drillId === "reading" ? "pair"
+                : drill.inputs[0] === "slots" ? "slots" : "buttons";
+        session.inversions = spec.inversions ? [0, 1, 2] : [0];
+        /* 악보를 보고 고르는 문제만 처음부터 악보를 보여 준다. */
+        session.reveal = act === "read" && drillId !== "reading";
+        session.limit = spec.limit || (spec.items ? spec.items.length * 2 : 10);
+        session.enabled = new Set(preset ? preset.ids : (spec.items || []));
         session.preset = preset || null;
+        session.slots = [];
+        session.typed = [];
         session.fromLesson = { courseId: course.id, lessonId: lesson.id };
         beginRound();
     }
 
+
+
+
+    /* 설명이 있는 다음 줄로 간다 — 판 줄은 건너뛴다. */
     function nextLesson() {
-        if (lessonIndex + 1 < course.lessons.length) openLesson(lessonIndex + 1);
+        const next = Number(els.lessonNext.dataset.next);
+        if (next >= 0) openLesson(next);
         else { renderLessonList(); showScreen("course"); }
     }
 
@@ -3017,7 +2983,7 @@
             showScreen("course");
             return;
         }
-        if (session.exercise) { openExercise(session.exercise); return; }
+        if (session.fromLesson) { openCourse(session.fromLesson.courseId); return; }
         renderMenu();
         showScreen("menu");
     }
@@ -3026,7 +2992,7 @@
         if (session.screen === "drill") { finishDrill(); return true; }
         if (session.screen === "result") { backToHub(); return true; }
         if (session.screen === "lesson") { renderLessonList(); showScreen("course"); return true; }
-        if (session.screen === "wheel" || session.screen === "course" || session.screen === "preset") {
+        if (session.screen === "wheel" || session.screen === "course") {
             session.exercise = null;
             renderMenu();
             showScreen("menu");
@@ -3052,10 +3018,10 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "drillScreen", "resultScreen",
             "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "lessonQuiz", "lessonBuild", "lessonDrill", "lessonKeys", "lessonKeysLabel", "wheelKeys", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
+            "lessonNext", "lessonKeys", "lessonKeysLabel", "wheelKeys", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence",
             "helpRow", "arpButton",
-            "presetScreen", "presetTitle", "presetList", "exerciseList", "melodicButton",
+            "melodicButton",
             "presetBack", "courseBack", "wheelBack", "lessonBack",
             "askText", "staff", "scoreText", "stopButton",
             "replayButton", "skipButton", "choices", "pairWrap", "qualityRow", "numberRow",
@@ -3102,12 +3068,6 @@
         });
         els.toMenuButton.addEventListener("click", backToHub);
         els.lessonNext.addEventListener("click", nextLesson);
-        els.lessonQuiz.addEventListener("click", startLessonQuiz);
-        els.lessonBuild.addEventListener("click", startLessonBuild);
-        els.lessonDrill.addEventListener("click", () => {
-            const lesson = course && course.lessons[lessonIndex];
-            if (lesson && lesson.drill) startLessonDrill(lesson);
-        });
         els.wheelPrev.addEventListener("click", () => wheel.step(-1));
         els.wheelNext.addEventListener("click", () => wheel.step(1));
         els.wheelFlat.addEventListener("click", () => wheel.toggleFlat());
