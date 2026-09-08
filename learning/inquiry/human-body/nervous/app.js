@@ -12,30 +12,11 @@
     var lastTime = 0;
 
     // Assets
-    var scenes = {
-        // 뇌 장면은 brain-anatomy.js 의 평면 도식이 맡는다. 사진을 받지 않는다.
-        response: {
-            src: '../assets/images/nervous-response.webp',
-            img: null,
-            loaded: false
-        },
-        // 자율신경 장면은 autonomic-map.js 의 평면 도식이 맡는다. 사진을 받지 않는다.
-        synapse: {
-            src: '../assets/images/synapse-hero.jpg',
-            img: null,
-            loaded: false
-        },
-        sensory: {
-            src: '../assets/images/eye-diagram.svg',
-            img: null,
-            loaded: false
-        },
-        ear: {
-            src: '../assets/images/nervous-ear.webp',
-            img: null,
-            loaded: false
-        }
-    };
+    // 이 방의 장면은 모두 평면 도식 겹판이 맡는다. 캔버스는 어느 장면에서도 보이지 않는다.
+    // 그런데 배경 사진 4장(1175KB)을 계속 받아 놓고 한 번도 그리지 않았다. 뗀다.
+    // 뗀 것: nervous-response.webp, synapse-hero.jpg, nervous-ear.webp
+    // (eye-diagram.svg 는 파일이 그대로 있다. eye-optics.js 가 스스로 불러 쓴다.)
+    var scenes = {};
 
     var currentSceneKey = 'brain';
 

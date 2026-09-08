@@ -12,19 +12,10 @@
     var lastTime = 0;
 
     // High-Resolution 3D Masterpiece Assets
-    var scenes = {
-        main: {
-            src: '../assets/images/excretion-kidney.webp',
-            img: null,
-            loaded: false
-        },
-        path: {
-            src: '../assets/images/excretion-path.webp',
-            img: null,
-            loaded: false
-        },
-        // 전신 장면은 excretion-map.js 의 평면 도식이 맡는다. 사진을 받지 않는다.
-    };
+    // 이 방의 장면은 모두 평면 도식 겹판이 맡는다. 캔버스는 어느 장면에서도 보이지 않는다.
+    // 그런데 배경 사진 2장(188KB)을 계속 받아 놓고 한 번도 그리지 않았다. 뗀다.
+    // 뗀 것: excretion-kidney.webp, excretion-path.webp
+    var scenes = {};
 
     var currentSceneKey = 'main';
 

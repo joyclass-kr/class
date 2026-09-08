@@ -12,23 +12,10 @@
     var lastTime = 0;
 
     // High-Resolution Masterpiece Assets
-    var scenes = {
-        alveoli: {
-            src: '../assets/images/respiration-alveoli.webp',
-            img: null,
-            loaded: false
-        },
-        airway: {
-            src: '../assets/images/respiration-airway.webp',
-            img: null,
-            loaded: false
-        },
-        hero: {
-            src: '../assets/images/respiration-hero.webp',
-            img: null,
-            loaded: false
-        }
-    };
+    // 이 방의 장면은 모두 평면 도식 겹판이 맡는다. 캔버스는 어느 장면에서도 보이지 않는다.
+    // 그런데 배경 사진 3장(583KB)을 계속 받아 놓고 한 번도 그리지 않았다. 뗀다.
+    // 뗀 것: respiration-alveoli.webp, respiration-airway.webp, respiration-hero.webp
+    var scenes = {};
 
     var currentSceneKey = 'alveoli';
 

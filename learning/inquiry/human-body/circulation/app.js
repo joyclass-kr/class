@@ -12,23 +12,10 @@
     var lastTime = 0;
 
     // High-Resolution 3D Masterpiece Assets
-    var scenes = {
-        immune: {
-            src: '../assets/images/circulation-hero.webp',
-            img: null,
-            loaded: false
-        },
-        torso: {
-            src: '../assets/images/circulation-hero-v2.webp',
-            img: null,
-            loaded: false
-        },
-        heart: {
-            src: '../assets/images/heart-interior.webp',
-            img: null,
-            loaded: false
-        }
-    };
+    // 이 방의 장면은 모두 평면 도식 겹판이 맡는다. 캔버스는 어느 장면에서도 보이지 않는다.
+    // 그런데 배경 사진 3장(566KB)을 계속 받아 놓고 한 번도 그리지 않았다. 뗀다.
+    // 뗀 것: circulation-hero.webp, circulation-hero-v2.webp, heart-interior.webp
+    var scenes = {};
 
     var currentSceneKey = 'immune';
 

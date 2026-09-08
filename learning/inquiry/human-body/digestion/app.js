@@ -12,20 +12,10 @@
     var lastTime = 0;
 
     // Loaded Image Assets Cache
-    var scenes = {
-        // journey 장면은 단추가 없어 아무도 못 본다. 사진(170KB)을 받지 않는다.
-        // 전신 장면은 tract-map.js 의 평면 도식이 맡는다. 사진을 받지 않는다.
-        stomach: {
-            src: '../assets/images/digestion-stomach.webp',
-            img: null,
-            loaded: false
-        },
-        villi: {
-            src: '../assets/images/digestion-villi.webp',
-            img: null,
-            loaded: false
-        }
-    };
+    // 이 방의 장면은 모두 평면 도식 겹판이 맡는다. 캔버스는 어느 장면에서도 보이지 않는다.
+    // 그런데 배경 사진 2장(339KB)을 계속 받아 놓고 한 번도 그리지 않았다. 뗀다.
+    // 뗀 것: digestion-stomach.webp, digestion-villi.webp
+    var scenes = {};
 
     var currentSceneKey = 'journey';
 
