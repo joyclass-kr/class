@@ -82,31 +82,31 @@
             "cheje-system", "chejae-stay", "gonyok", "gonhok", "gyeongsin", "gaengsin",
             "iljeol", "ilche", "hanchang", "hancham", "munanhada"
         ]),
-        lesson("homophone-1", "소리가 같은 말 (1)", "낫다·낳다·나았다, 맞히다·맞추다, 매다·메다", [
+        lesson("homophone-1", "소리가 비슷한 말 (1)", "낫다·낳다·나았다, 맞히다·맞추다, 매다·메다", [
             "naatda", "natda-better", "natda-happen", "nahda-birth", "natda-better-nahda", "nahda-lay",
             "machyeotda", "menatda", "maetda", "deulleotda"
         ]),
-        lesson("homophone-2", "소리가 같은 말 (2)", "거치다·걷히다, 바치다·받치다, 부치다·붙이다", [
+        lesson("homophone-2", "소리가 비슷한 말 (2)", "거치다·걷히다, 바치다·받치다, 부치다·붙이다", [
             "geochida", "geothida", "bachida-devote", "batchida-support", "bathida-hit", "buchida-send",
             "butida-attach", "anchida-rice", "anjida-seat", "geotjapda-control", "geotjapda-estimate"
         ]),
-        lesson("homophone-3", "소리가 같은 말 (3)", "늘이다·늘리다, 조리다·졸이다, 가늠·갈음", [
+        lesson("homophone-3", "소리가 비슷한 말 (3)", "늘이다·늘리다, 조리다·졸이다, 가늠·갈음", [
             "neurida-length", "neullida-amount", "darida-clothes", "darida-medicine", "jeorida-numb", "jeorida-salt",
             "jorida-food", "jorida-worry", "jurida-hunger", "jurida-reduce", "ganeum", "gareum", "gareum-replace"
         ]),
-        lesson("homophone-4", "소리가 같은 말 (4)", "이따가·있다가, 로서·로써, 띠다·띄다, 벌이다·벌리다", [
+        lesson("homophone-4", "소리가 비슷한 말 (4)", "이따가·있다가, 로서·로써, 띠다·띄다, 벌이다·벌리다", [
             "ittaga-later", "itdaga-stay", "roseo-role", "rosseo-means", "ttida-have", "ttuida-notice",
             "bitda-make", "bitda-comb", "beorida-event", "beollida-gap", "deureonaeda-reveal", "deureonaeda-remove"
         ]),
-        lesson("homophone-5", "소리가 같은 말 (5)", "좇다·쫓다, 바라다·바래다, 썩이다·썩히다", [
+        lesson("homophone-5", "소리가 비슷한 말 (5)", "좇다·쫓다, 바라다·바래다, 썩이다·썩히다", [
             "jotda-follow", "jjotda-chase", "barada-hope", "baraeda-fade", "sseogida-worry", "sseoghida-waste",
             "sagida-calm", "saghida-ferment", "haechida-harm", "hechida-push", "bongori-flower", "bonguri-mountain"
         ]),
-        lesson("homophone-6", "소리가 같은 말 (6)", "새다·세다, 배다·베다, 너머·넘어, 뺐다·뺏다", [
+        lesson("homophone-6", "소리가 비슷한 말 (6)", "새다·세다, 배다·베다, 너머·넘어, 뺐다·뺏다", [
             "saeda-leak", "seda-count", "baeda-soak", "beda-cut", "kkotda", "gujeun",
             "neomeo-place", "neomeo-verb", "ppaeda-remove", "ppaetda-snatch", "ppaetda-snatch2"
         ]),
-        lesson("homophone-7", "소리가 같은 말 (7)", "젖히다·제치다, 부수다·부시다, 맡다·맞다, 무치다·묻히다", [
+        lesson("homophone-7", "소리가 비슷한 말 (7)", "젖히다·제치다, 부수다·부시다, 맡다·맞다, 무치다·묻히다", [
             "jeochida-tilt", "jechida-pass", "jigeusi-softly", "jigeusi-aged", "busuda-break", "busida-dazzle",
             "matda-smell", "matda-correct", "muchida-mix", "mutida-coat"
         ]),

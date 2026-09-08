@@ -236,7 +236,7 @@ function guideEventCode(event){if(/^Key[A-Z]$/.test(event.code))return event.cod
 document.addEventListener('keydown',e=>{if($('#fingerGuide').hidden||e.ctrlKey||e.altKey||e.metaKey)return;if(e.code==='ShiftLeft'){heldShift.left=true;return}if(e.code==='ShiftRight'){heldShift.right=true;return}checkGuide(guideEventCode(e),heldShift.left?'left':heldShift.right?'right':'')});
 document.addEventListener('keyup',e=>{if(e.code==='ShiftLeft')heldShift.left=false;if(e.code==='ShiftRight')heldShift.right=false});
 $$('[data-practice-mode]').forEach(button=>button.addEventListener('click',()=>{const mode=button.dataset.practiceMode,saved=readTypingSession(),resume=saved?.mode===mode&&!saved.completed;mode==='position'?openGuide(resume):openPractice(mode,resume)}));
-$$('[data-back-to-menu]').forEach(button=>button.addEventListener('click',showHome));
+window.addEventListener('sitebackrequest',event=>{if(!$('#typingHome').hidden){event.preventDefault();showHome()}});
 $('#recordsButton').addEventListener('click',openRecords);
 $('#resetRecordsButton').addEventListener('click',()=>{if(!confirm('타자연습 기록과 이어하기 정보를 모두 지울까요?'))return;const keys=[];for(let index=0;index<localStorage.length;index++){const name=localStorage.key(index);if(name?.startsWith('typing-'))keys.push(name)}keys.forEach(name=>localStorage.removeItem(name));renderRecords();updateHomeContinue()});
 $('#audioPromptButton')?.addEventListener('click',()=>speakWord(target()));

@@ -76,13 +76,12 @@
     </section>
 
     <section id="recordsCard" class="records-card" aria-labelledby="recordsTitle" hidden>
-      <div class="practice-heading"><button class="back-to-menu" type="button" data-back-to-menu>← 연습 선택</button><h2 id="recordsTitle">내 기록</h2></div>
+      <div class="practice-heading"><h2 id="recordsTitle">내 기록</h2></div>
       <div id="recordsList" class="records-list"></div>
       <button id="resetRecordsButton" class="secondary reset-records" type="button">기록 초기화</button>
     </section>
 
     <section id="fingerGuide" class="finger-guide" aria-labelledby="guideTitle" hidden>
-      <button class="back-to-menu" type="button" data-back-to-menu>← 연습 선택</button>
       <div class="guide-head"><h2 id="guideTitle">손가락 자리</h2><div class="segmented guide-language" aria-label="운지법 종류"><button class="active" type="button" data-guide-language="ko" aria-pressed="true">가 한글</button><button type="button" data-guide-language="en" aria-pressed="false">a 영어</button><button type="button" data-guide-language="symbols" aria-pressed="false">123 숫자·기호</button></div></div>
       <div id="guideStages" class="guide-stages" aria-label="자리 익히기 단계"></div>
       <div class="finger-stage">
@@ -98,7 +97,7 @@
       <div class="actions"><button id="guideNextButton" class="primary" type="button" hidden>다음 단계</button><button id="startWordsButton" class="secondary" type="button">낱말 연습으로 건너뛰기</button></div>
     </section>
     <section class="practice" aria-labelledby="practiceTitle" hidden>
-      <div class="practice-heading"><button class="back-to-menu" type="button" data-back-to-menu>← 연습 선택</button><h2 id="practiceTitle">단어 연습</h2></div>
+      <div class="practice-heading"><h2 id="practiceTitle">단어 연습</h2></div>
       <div id="practiceFilters" class="practice-filters" aria-label="연습 범위"></div>
       <div class="mode-row">
         <div id="languageControls" class="segmented" aria-label="연습 언어">
@@ -133,7 +132,6 @@
       <h2 id="resultTitle">참 잘했어요!</h2>
       <div class="result-stats"><span>평균 타수 <b id="resultSpeed">0</b></span><span>정확도 <b id="resultAccuracy">100%</b></span></div>
       <button id="againButton" class="primary" type="button">한 번 더 연습하기</button>
-      <button class="secondary" type="button" data-back-to-menu>연습 선택으로</button>
     </section>
   </main>
   <script src="avatar-words.js"></script>
