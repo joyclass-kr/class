@@ -833,6 +833,7 @@ const UI = {
     ko: {
         toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
         home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        wordsDown: '낱말 ⌄',
         done: (n, all) => `${n} / 총 ${all}문항 완료`
     },
     en: {
@@ -1319,9 +1320,10 @@ const vocabScreenEl = document.getElementById('vocabScreen');
 const vocabPanelEl = document.getElementById('vocabPanel');
 const scrollDownEl = document.getElementById('scrollDown');
 const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+const HAS_WORDS_KO = typeof WORDS_KO !== 'undefined' && WORDS_KO && Object.keys(WORDS_KO).length > 0;
 
 function vocabFor() {
-    const all = (HAS_WORDS && EN.words) || {};
+    const all = LANG === 'en' ? ((HAS_WORDS && EN.words) || {}) : ((HAS_WORDS_KO && WORDS_KO) || {});
     const page = PAGES[current];
     // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
     const key = !page ? null
@@ -1329,27 +1331,28 @@ function vocabFor() {
         : page.kind === 'cover' ? 'cover'
         : page.kind === 'after' ? 'after'
         : null;
-    if (key && all[key]) return { list: all[key] };
+    if (key) return { list: all[key] || [] };     // 어려운 말이 없는 쪽은 빈 채로 둔다
     // 문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
     const list = [];
     (all.cover || []).forEach(w => list.push(w));
-    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    CH().forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
     (all.after || []).forEach(w => list.push(w));
     return { list };
 }
 
 function renderVocab() {
-    const on = HAS_WORDS && LANG === 'en';
+    const { list } = vocabFor();
+    // 그 쪽에 보여 줄 낱말이 하나도 없으면 단추도 판도 내지 않는다.
+    const on = (LANG === 'en' ? HAS_WORDS : HAS_WORDS_KO) && list.length > 0;
     if (vocabScreenEl) vocabScreenEl.hidden = !on;
     if (scrollDownEl) {
         scrollDownEl.hidden = !on;
-        scrollDownEl.textContent = T().wordsDown || 'Words ⌄';
+        scrollDownEl.textContent = T().wordsDown || (LANG === 'en' ? 'Words ⌄' : '낱말 ⌄');
     }
     if (!on) {
         if (window.scrollY) window.scrollTo({ top: 0 });
         return;
     }
-    const { list } = vocabFor();
     VOCAB_NOW = list;
     vocabPanelEl.innerHTML = `
         <ul class="vocab-list">
@@ -1376,12 +1379,13 @@ function sayWord(item) {
         speechSynthesis.cancel();
         // 「shook out (shake out)」처럼 괄호로 적어 둔 기본형은 읽지 않는다.
         const bare = item.w.replace(/\s*\([^)]*\)/g, '').trim();
+        const 말 = LANG === 'en' ? 'en-US' : 'ko-KR';
         const word = new SpeechSynthesisUtterance(bare);
-        word.lang = 'en-US';
+        word.lang = 말;
         dressVoice(word, 'narration');
         word.rate = 0.75;
         const sent = new SpeechSynthesisUtterance(item.s);
-        sent.lang = 'en-US';
+        sent.lang = 말;
         dressVoice(sent, 'narration');
         speechSynthesis.speak(word);
         speechSynthesis.speak(sent);

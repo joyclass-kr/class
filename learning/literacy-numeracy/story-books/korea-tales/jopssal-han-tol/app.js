@@ -728,6 +728,82 @@ const AFTERWORD = {
     ]
 };
 
+
+/* ── 우리말 낱말 ────────────────────────────────────────────
+   아이가 아직 안 배웠을 만한 말을 그 쪽마다 모았다. 사전처럼 풀지 않는다.
+   아이가 그대로 알아들을 말로 짧게 쓴다. 예문은 그 쪽에 나온 문장 그대로다. */
+const WORDS_KO = {
+    "cover": [
+        { w: "톨", k: "쌀이나 밤처럼 작고 동그란 것을 셀 때 쓰는 말.", s: "좁쌀 한 톨은 지은이가 없는 구전 설화예요." },
+        { w: "누적담", k: "작은 것이 조금씩 커지는 이야기.", s: "작은 것이 점점 큰 것으로 바뀌어 가는 짜임을 누적담이라고 불러요." },
+        { w: "짜임", k: "이야기가 짜인 모양.", s: "세계 곳곳에 같은 짜임의 이야기가 있는데" },
+        { w: "곡식", k: "쌀, 보리, 조처럼 밥이나 떡을 해 먹는 것.", s: "좁쌀은 조라는 곡식의 알갱이예요." },
+        { w: "알갱이", k: "낱낱의 작고 동그란 것.", s: "좁쌀은 조라는 곡식의 알갱이예요." }
+    ],
+    "01-depart.webp": [
+        { w: "단둘이", k: "다른 사람 없이 둘만.", s: "어머니와 단둘이 다 쓰러져 가는 초가집에 살았지요." },
+        { w: "초가집", k: "짚으로 지붕을 덮은 집.", s: "어머니와 단둘이 다 쓰러져 가는 초가집에 살았지요." },
+        { w: "마음먹다", k: "하기로 마음을 정하다.", s: "어느 날 소년은 큰 세상을 보러 길을 떠나기로 마음먹었어요." },
+        { w: "봇짐", k: "등에 지고 다니는 짐 보따리.", s: "떠나기 전에 봇짐을 뒤져 보았지만 나올 것이 하나도 없었습니다." },
+        { w: "정성스레", k: "마음을 다해 조심조심.", s: "소년은 그것을 정성스레 종이에 싸서 품 깊숙이 넣었답니다." },
+        { w: "품", k: "옷 안쪽 가슴께.", s: "소년은 그것을 정성스레 종이에 싸서 품 깊숙이 넣었답니다." }
+    ],
+    "02-first.webp": [
+        { w: "저물다", k: "해가 져서 어두워지다.", s: "하루 종일 걷다 보니 해가 저물었습니다." },
+        { w: "묵다", k: "남의 집에서 자고 가다.", s: "하룻밤만 묵어 갈 수 있을까요?" },
+        { w: "꾸벅", k: "고개를 한 번 크게 숙이는 모양.", s: "소년은 꾸벅 절을 했어요." },
+        { w: "선선히", k: "싫은 기색 없이 얼른.", s: "주인은 선선히 문을 열어 주었지요." },
+        { w: "별나다", k: "남과 달라서 좀 이상하다.", s: "이 아이가 참 별나구먼." },
+        { w: "선반", k: "벽에 달아 물건을 얹어 두는 널빤지.", s: "주인은 터져 나오는 웃음을 겨우 참으며 그것을 선반에 올려 두었답니다." }
+    ],
+    "03-mouse.webp": [
+        { w: "이튿날", k: "그다음 날.", s: "이튿날 아침이었어요." },
+        { w: "온데간데없다", k: "어디로 갔는지 하나도 안 보이다.", s: "소년이 선반을 올려다보니 좁쌀이 온데간데없었습니다." },
+        { w: "벌게지다", k: "얼굴이 빨개지다.", s: "주인은 얼굴이 벌게져 어쩔 줄을 몰랐지요." },
+        { w: "어쩔 줄을 모르다", k: "무엇을 해야 할지 몰라 쩔쩔매다.", s: "주인은 얼굴이 벌게져 어쩔 줄을 몰랐지요." },
+        { w: "기어이", k: "어떻게 해서든 끝내.", s: "주인은 온 집을 뒤져 기어이 쥐 한 마리를 잡아 왔습니다." },
+        { w: "뻘뻘", k: "땀을 아주 많이 흘리는 모양.", s: "땀을 뻘뻘 흘리면서요." }
+    ],
+    "04-cat.webp": [
+        { w: "공손히", k: "어른께 예의 바르게.", s: "쥐를 두 손으로 공손히 내밀면서요." },
+        { w: "어이가 없다", k: "너무 뜻밖이라 말이 안 나오다.", s: "주인은 어이가 없어 눈만 껌뻑였지요." },
+        { w: "껌뻑이다", k: "눈을 감았다 떴다 하다.", s: "주인은 어이가 없어 눈만 껌뻑였지요." }
+    ],
+    "05-dog.webp": [
+        { w: "긁적이다", k: "손톱으로 슬슬 긁다.", s: "주인은 머리를 긁적이다가 개의 목줄을 풀었습니다." },
+        { w: "목줄", k: "짐승 목에 매어 두는 줄.", s: "주인은 머리를 긁적이다가 개의 목줄을 풀었습니다." },
+        { w: "그길로", k: "그 자리에서 곧바로.", s: "고양이는 그길로 어디론가 사라졌지요." }
+    ],
+    "06-horse.webp": [
+        { w: "마구간", k: "말을 기르는 집.", s: "주인은 개를 마구간 옆 기둥에 매어 두었지요." },
+        { w: "뒷발질", k: "뒷발로 뻥 차는 짓.", s: "그런데 밤중에 말이 뒷발질을 하는 바람에 개가 깜짝 놀라 줄을 끊고 달아나 버렸답니다." },
+        { w: "헛일", k: "해도 아무 소용 없는 일.", s: "주인은 밤새 온 동네를 찾아다녔지만 헛일이었지요." },
+        { w: "차마", k: "안타까워서 도저히.", s: "소년의 얼굴을 차마 볼 수가 없었거든요." },
+        { w: "고삐", k: "소나 말을 끌려고 매단 줄.", s: "소년은 두 손으로 고삐를 받았답니다." }
+    ],
+    "07-ox.webp": [
+        { w: "저벅저벅", k: "발소리가 크게 나는 모양.", s: "말발굽 소리가 저벅저벅 났지요." },
+        { w: "외양간", k: "소를 기르는 집.", s: "그날 밤 묵은 집에서는 말을 외양간에 매어 두었습니다." },
+        { w: "황소", k: "다 자란 수소.", s: "그 외양간에는 커다란 황소가 한 마리 있었어요." },
+        { w: "내쫓다", k: "밖으로 몰아내다.", s: "아침이 되자 황소가 뿔을 휘둘러 말을 밖으로 내쫓아 버렸지 뭐예요." }
+    ],
+    "08-road.webp": [
+        { w: "뚜벅뚜벅", k: "힘 있게 한 발 한 발 걷는 모양.", s: "소년은 커다란 황소의 고삐를 잡고 뚜벅뚜벅 길을 걸었습니다." },
+        { w: "당당하다", k: "부끄러울 것 없이 떳떳하다.", s: "소년의 걸음이 아주 당당했어요." },
+        { w: "빙그레", k: "소리 없이 살짝 웃는 모양.", s: "소년이 빙그레 웃으며 대답했지요." }
+    ],
+    "09-home.webp": [
+        { w: "휘둥그레지다", k: "놀라서 눈이 동그래지다.", s: "문을 열고 나온 어머니는 눈이 휘둥그레졌어요." },
+        { w: "떡하니", k: "눈에 잘 띄게 버젓이.", s: "마당에 황소가 떡하니 서 있었으니까요." },
+        { w: "번갈아", k: "하나씩 차례로 왔다 갔다.", s: "어머니는 소와 아들을 번갈아 보았답니다." }
+    ],
+    "10-millet.webp": [
+        { w: "자국", k: "무엇이 지나가거나 닿아서 남은 자리.", s: "이리저리 접힌 자국이 그대로 남아 있었습니다." },
+        { w: "환하다", k: "밝고 기쁘다.", s: "소년의 얼굴이 환했어요." },
+        { w: "음메", k: "소가 우는 소리.", s: "마당에서 황소가 커다랗게 음메— 하고 울었습니다." }
+    ]
+};
+
 /* ── 한국어·영어 ────────────────────────────────────────────
    글은 두 벌이다. 위쪽 단추를 누르면 EN 쪽으로 갈아 끼우고 쪽을 다시 짠다.
    영어 원고가 없는 책은 단추가 아예 뜨지 않는다. */
@@ -735,6 +811,7 @@ const UI = {
     ko: {
         toc: '차례', quiz: '이야기 문제', after: '읽고 나서',
         home: '학습 허브로 돌아가기', other: 'EN', otherAria: 'Read in English',
+        wordsDown: '낱말 ⌄',
         done: (n, all) => `${n} / 총 ${all}문항 완료`
     },
     en: {
@@ -1221,9 +1298,10 @@ const vocabScreenEl = document.getElementById('vocabScreen');
 const vocabPanelEl = document.getElementById('vocabPanel');
 const scrollDownEl = document.getElementById('scrollDown');
 const HAS_WORDS = HAS_EN && EN.words && Object.keys(EN.words).length > 0;
+const HAS_WORDS_KO = typeof WORDS_KO !== 'undefined' && WORDS_KO && Object.keys(WORDS_KO).length > 0;
 
 function vocabFor() {
-    const all = (HAS_WORDS && EN.words) || {};
+    const all = LANG === 'en' ? ((HAS_WORDS && EN.words) || {}) : ((HAS_WORDS_KO && WORDS_KO) || {});
     const page = PAGES[current];
     // 그 쪽에 실제로 있는 글의 낱말을, 글에 나온 차례대로 보여 준다.
     const key = !page ? null
@@ -1231,27 +1309,28 @@ function vocabFor() {
         : page.kind === 'cover' ? 'cover'
         : page.kind === 'after' ? 'after'
         : null;
-    if (key && all[key]) return { list: all[key] };
+    if (key) return { list: all[key] || [] };     // 어려운 말이 없는 쪽은 빈 채로 둔다
     // 문제 쪽에는 글이 없으니 책에 나온 낱말을 다 보여 준다.
     const list = [];
     (all.cover || []).forEach(w => list.push(w));
-    EN.chapters.forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
+    CH().forEach(ch => ch.beats.forEach(b => (all[b.art] || []).forEach(w => list.push(w))));
     (all.after || []).forEach(w => list.push(w));
     return { list };
 }
 
 function renderVocab() {
-    const on = HAS_WORDS && LANG === 'en';
+    const { list } = vocabFor();
+    // 그 쪽에 보여 줄 낱말이 하나도 없으면 단추도 판도 내지 않는다.
+    const on = (LANG === 'en' ? HAS_WORDS : HAS_WORDS_KO) && list.length > 0;
     if (vocabScreenEl) vocabScreenEl.hidden = !on;
     if (scrollDownEl) {
         scrollDownEl.hidden = !on;
-        scrollDownEl.textContent = T().wordsDown || 'Words ⌄';
+        scrollDownEl.textContent = T().wordsDown || (LANG === 'en' ? 'Words ⌄' : '낱말 ⌄');
     }
     if (!on) {
         if (window.scrollY) window.scrollTo({ top: 0 });
         return;
     }
-    const { list } = vocabFor();
     VOCAB_NOW = list;
     vocabPanelEl.innerHTML = `
         <ul class="vocab-list">
@@ -1278,12 +1357,13 @@ function sayWord(item) {
         speechSynthesis.cancel();
         // 「shook out (shake out)」처럼 괄호로 적어 둔 기본형은 읽지 않는다.
         const bare = item.w.replace(/\s*\([^)]*\)/g, '').trim();
+        const 말 = LANG === 'en' ? 'en-US' : 'ko-KR';
         const word = new SpeechSynthesisUtterance(bare);
-        word.lang = 'en-US';
+        word.lang = 말;
         dressVoice(word, 'narration');
         word.rate = 0.75;
         const sent = new SpeechSynthesisUtterance(item.s);
-        sent.lang = 'en-US';
+        sent.lang = 말;
         dressVoice(sent, 'narration');
         speechSynthesis.speak(word);
         speechSynthesis.speak(sent);
