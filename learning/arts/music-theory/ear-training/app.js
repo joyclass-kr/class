@@ -1245,13 +1245,9 @@
 
     function renderMenu() {
         els.exerciseList.innerHTML = "";
+        /* 판이 몇 개인지는 알 필요가 없다 — 눌러 보면 목록이 나온다. */
         EXERCISES.forEach(exercise => {
-            const rows = presetRows(exercise);
-            els.exerciseList.append(menuCard(
-                exercise.name,
-                rows.length + "판",
-                () => openExercise(exercise.id)
-            ));
+            els.exerciseList.append(menuCard(exercise.name, "", () => openExercise(exercise.id)));
         });
 
         els.courseList.innerHTML = "";
