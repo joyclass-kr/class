@@ -216,43 +216,65 @@
         });
     }
 
-    /* 리듬용 타격음. 음높이가 아니라 치는 때만 알려 주는 짧은 소리다. */
+    /*
+     * 메트로놈 소리. 나무를 때리는 마른 「똑」이라, 아주 짧은 잡음 한 방을 좁은
+     * 띠로 걸러 공명만 남긴다. 잡음이 길거나 띠가 넓으면 메트로놈이 아니라
+     * 하이햇처럼 들린다. 첫 박에는 종을 얹는다 — 메트로놈의 그 「띵」이다.
+     * 울림(reverb)은 거의 주지 않는다. 메트로놈은 마른 소리여야 박이 또렷하다.
+     */
     function tick(when, strong) {
         const context = ensureAudio();
         if (!context) return;
         const start = Math.max(context.currentTime, when);
-        const envelope = context.createGain();
-        const band = context.createBiquadFilter();
-        band.type = "bandpass";
-        band.frequency.value = strong ? 1500 : 1000;
-        band.Q.value = 1.4;
-        envelope.gain.setValueAtTime(.0001, start);
-        envelope.gain.exponentialRampToValueAtTime(strong ? .22 : .13, start + .002);
-        envelope.gain.exponentialRampToValueAtTime(.0001, start + .075);
-        band.connect(envelope);
-        connectToMix(envelope, .01);
+
+        const body = context.createBiquadFilter();
+        body.type = "bandpass";
+        body.frequency.value = strong ? 2100 : 1250;
+        body.Q.value = 6;
+        const bodyGain = context.createGain();
+        bodyGain.gain.setValueAtTime(.0001, start);
+        bodyGain.gain.exponentialRampToValueAtTime(strong ? .3 : .2, start + .001);
+        bodyGain.gain.exponentialRampToValueAtTime(.0001, start + (strong ? .045 : .035));
+        body.connect(bodyGain);
+        connectToMix(bodyGain, .004);
 
         const noise = context.createBufferSource();
-        const length = Math.floor(context.sampleRate * .09);
+        const length = Math.floor(context.sampleRate * .04);
         const buffer = context.createBuffer(1, length, context.sampleRate);
         const data = buffer.getChannelData(0);
         for (let index = 0; index < length; index += 1) {
-            data[index] = (Math.random() * 2 - 1) * Math.pow(1 - index / length, 3);
+            data[index] = (Math.random() * 2 - 1) * Math.pow(1 - index / length, 6);
         }
         noise.buffer = buffer;
-        noise.connect(band);
+        noise.connect(body);
         noise.start(start);
-        noise.stop(start + .1);
+        noise.stop(start + .05);
 
-        const tone = context.createOscillator();
-        const toneGain = context.createGain();
-        tone.type = "square";
-        tone.frequency.value = strong ? 1760 : 1320;
-        toneGain.gain.setValueAtTime(strong ? .05 : .028, start);
-        toneGain.gain.exponentialRampToValueAtTime(.0001, start + .05);
-        tone.connect(toneGain).connect(band);
-        tone.start(start);
-        tone.stop(start + .06);
+        if (!strong) return;
+        const bell = context.createOscillator();
+        const bellGain = context.createGain();
+        bell.type = "sine";
+        bell.frequency.value = 2637;
+        bellGain.gain.setValueAtTime(.0001, start);
+        bellGain.gain.exponentialRampToValueAtTime(.055, start + .003);
+        bellGain.gain.exponentialRampToValueAtTime(.0001, start + .22);
+        bell.connect(bellGain);
+        connectToMix(bellGain, .012);
+        bell.start(start);
+        bell.stop(start + .25);
+    }
+
+    /*
+     * 리듬을 울리는 소리는 피아노 도(C4)다. 메트로놈과 같은 타격음으로 울리면
+     * 박을 세어 주는 소리와 리듬이 섞여 어느 것이 문제인지 알 수 없다.
+     * 표본을 아직 못 받았으면 합성음으로 대신 울린다(다음 번에는 피아노가 된다).
+     */
+    const RHYTHM_MIDI = 60;
+
+    function rhythmNote(when, strong) {
+        loadSamples();
+        if (playLoadedMidi(RHYTHM_MIDI, when, .5, strong ? .14 : .105, 0)) return;
+        playSynthetic(RHYTHM_MIDI, when, .45, strong ? .075 : .055);
     }
 
     /*
@@ -269,7 +291,8 @@
             tick(lead + beat * beatSeconds, beat === 0);
         }
         const zero = lead + countIn * beatSeconds;
-        beats.forEach(position => tick(zero + position * beatSeconds, position === 0 && settings.accentFirst !== false));
+        beats.forEach(position => rhythmNote(zero + position * beatSeconds,
+            position === 0 && settings.accentFirst !== false));
         return zero;
     }
 
