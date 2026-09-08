@@ -505,6 +505,34 @@
      * ids     : 이 장면에서 고를 수 있는 조각 이름들
      * activeId: 지금 고른 것 (없으면 모두 되돌린다)
      */
+    // 고른 조각의 테두리가 천천히 숨 쉬게 한다.
+    // 멈춰 있는 테두리보다 어디를 골랐는지 훨씬 잘 보인다.
+    // 눈이 피로하지 않게 느리게(1.6초 한 번) 그리고 은은하게 (굵기 4~6, 진하기 1~0.5).
+    // rAF 가 아니라 SVG 자체 움직임(SMIL)이라 화면이 멈춰 있어도 돈다.
+    var GLOW_MARK = 'engineGlow';
+
+    function clearGlow(sh) {
+        [].slice.call(sh.querySelectorAll('animate')).forEach(function (a) {
+            if (a.getAttribute('data-' + GLOW_MARK) !== null) a.remove();
+        });
+    }
+
+    function addGlow(sh) {
+        var NS = 'http://www.w3.org/2000/svg';
+        [['stroke-width', '4;6;4'], ['stroke-opacity', '1;0.5;1']].forEach(function (pair) {
+            var a = document.createElementNS(NS, 'animate');
+            a.setAttribute('attributeName', pair[0]);
+            a.setAttribute('values', pair[1]);
+            a.setAttribute('dur', '1.6s');
+            a.setAttribute('repeatCount', 'indefinite');
+            a.setAttribute('calcMode', 'spline');
+            a.setAttribute('keyTimes', '0;0.5;1');
+            a.setAttribute('keySplines', '0.4 0 0.6 1;0.4 0 0.6 1');
+            a.setAttribute('data-' + GLOW_MARK, '1');
+            sh.appendChild(a);
+        });
+    }
+
     function litPart(svgEl, ids, activeId) {
         if (!svgEl || !ids) return;
         ids.forEach(function (id) {
@@ -522,9 +550,11 @@
                     sh.dataset.baseStroke = sh.getAttribute('stroke') || '';
                     sh.dataset.baseWidth = sh.getAttribute('stroke-width') || '';
                 }
+                clearGlow(sh);
                 if (on) {
                     sh.setAttribute('stroke', '#facc15');
                     sh.setAttribute('stroke-width', 4);
+                    addGlow(sh);
                 } else {
                     if (sh.dataset.baseStroke) sh.setAttribute('stroke', sh.dataset.baseStroke);
                     else sh.removeAttribute('stroke');

@@ -202,30 +202,10 @@
      */
     function lightUp(id) {
         if (!svg) return;
-        LABELS.forEach(function (item) {
-            var e = svg.querySelector('#' + item.id);
-            if (!e) return;
-            var on = (item.id === id);
-            var shapes = e.matches('path,circle,ellipse,rect,polygon')
-                ? [e] : [].slice.call(e.querySelectorAll('path,circle,ellipse,rect,polygon'));
-            shapes.forEach(function (sh) {
-                var f = sh.getAttribute('fill');
-                if (!f || f === 'none') return;        // 가는 결 선은 건드리지 않는다
-                if (sh.dataset.baseStroke === undefined) {
-                    sh.dataset.baseStroke = sh.getAttribute('stroke') || '';
-                    sh.dataset.baseWidth = sh.getAttribute('stroke-width') || '';
-                }
-                if (on) {
-                    sh.setAttribute('stroke', '#facc15');
-                    sh.setAttribute('stroke-width', 4);
-                } else {
-                    if (sh.dataset.baseStroke) sh.setAttribute('stroke', sh.dataset.baseStroke);
-                    else sh.removeAttribute('stroke');
-                    if (sh.dataset.baseWidth) sh.setAttribute('stroke-width', sh.dataset.baseWidth);
-                    else sh.removeAttribute('stroke-width');
-                }
-            });
-        });
+        // 테 두르기는 공용 함수가 맡는다 (숨 쉬는 불빛까지 같이 온다)
+        if (typeof SimEngine !== 'undefined' && SimEngine.litPart) {
+            SimEngine.litPart(svg, LABELS.map(function (x) { return x.id; }), id);
+        }
         if (leaderGroup) {
             leaderGroup.querySelectorAll('[data-leader-for]').forEach(function (l) {
                 var on = l.dataset.leaderFor === id;
@@ -236,6 +216,19 @@
                 var on = c.dataset.leaderDot === id;
                 c.setAttribute('fill', on ? '#facc15' : '#cbd5e1');
                 c.setAttribute('r', on ? 6.5 : 4.5);
+                // 끝점도 조각과 같은 가락으로 숨 쉬게 한다
+                [].slice.call(c.querySelectorAll('animate')).forEach(function (a) { a.remove(); });
+                if (on) {
+                    var an = document.createElementNS(SVG_NS, 'animate');
+                    an.setAttribute('attributeName', 'r');
+                    an.setAttribute('values', '6.5;9;6.5');
+                    an.setAttribute('dur', '1.6s');
+                    an.setAttribute('repeatCount', 'indefinite');
+                    an.setAttribute('calcMode', 'spline');
+                    an.setAttribute('keyTimes', '0;0.5;1');
+                    an.setAttribute('keySplines', '0.4 0 0.6 1;0.4 0 0.6 1');
+                    c.appendChild(an);
+                }
             });
         }
         if (labelBox) {

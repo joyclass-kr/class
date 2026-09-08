@@ -207,28 +207,12 @@
 
         LABELS.forEach(function (item) {
             var e = svg.querySelector('#' + item.id);
-            if (!e) return;
-            e.setAttribute('opacity', 1);
-            var shapes = e.matches('path,circle,ellipse,rect,polygon,polyline') ? [e]
-                : [].slice.call(e.querySelectorAll('path,circle,ellipse,rect,polygon,polyline'));
-            shapes.forEach(function (sh) {
-                var f = sh.getAttribute('fill');
-                if (!f || f === 'none') return;       // 결을 그린 가는 선은 건드리지 않는다
-                if (sh.dataset.baseStroke === undefined) {
-                    sh.dataset.baseStroke = sh.getAttribute('stroke') || '';
-                    sh.dataset.baseWidth = sh.getAttribute('stroke-width') || '';
-                }
-                if (item.id === selected) {
-                    sh.setAttribute('stroke', '#facc15');
-                    sh.setAttribute('stroke-width', 4);
-                } else {
-                    if (sh.dataset.baseStroke) sh.setAttribute('stroke', sh.dataset.baseStroke);
-                    else sh.removeAttribute('stroke');
-                    if (sh.dataset.baseWidth) sh.setAttribute('stroke-width', sh.dataset.baseWidth);
-                    else sh.removeAttribute('stroke-width');
-                }
-            });
+            if (e) e.setAttribute('opacity', 1);
         });
+        // 테 두르기는 공용 함수가 맡는다 (숨 쉬는 불빛까지 같이 온다)
+        if (typeof SimEngine !== 'undefined' && SimEngine.litPart) {
+            SimEngine.litPart(svg, LABELS.map(function (x) { return x.id; }), selected);
+        }
 
         if (labelBox) {
             labelBox.querySelectorAll('.brain-tag').forEach(function (t) {

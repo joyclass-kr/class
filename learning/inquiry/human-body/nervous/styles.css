@@ -684,3 +684,12 @@
 .autonomic-error { margin: auto; color: #f87171; font-size: 14px; }
 
 .eye-optics-tag.on { color: #0b1020; background: #facc15; border-color: #facc15; }
+
+/* 고른 이름표도 조각과 같은 가락으로 숨 쉰다 */
+@keyframes hb-tag-breathe {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.55); }
+    50%      { box-shadow: 0 0 0 5px rgba(250, 204, 21, 0); }
+}
+.eye-optics-tag.on, .brain-tag.on, .autonomic-tag.picked {
+    animation: hb-tag-breathe 1.6s ease-in-out infinite;
+}
