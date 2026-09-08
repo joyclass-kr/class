@@ -214,9 +214,31 @@
             },
             { kind: "preset", drill: "chord", preset: "basic7" },
             { kind: "preset", drill: "chord", preset: "adv7" },
-            { kind: "preset", drill: "chord", preset: "majten" },
+            {
+                id: "tensions",
+                title: "Tensions​(텐션)",
+                body: [
+                    "7화음 위에 3도를 더 쌓으면 9도, 11도, 13도가 나옵니다. 이렇게 7화음 위에 얹는 음을 Tension​(텐션)이라고 합니다. 9도는 밑음에서 한 옥타브 위 2도, 11도는 4도, 13도는 6도 자리입니다.",
+                    "음이 다섯을 넘으면 한 손에 다 들어가지 않습니다. 그래서 왼손이 뿌리음을 짚고 오른손이 나머지 넷을 잡습니다. 텐션이 하나면 5도를 넣어 자리를 메우고, 둘이면 5도를 빼고 그 자리에 넣습니다.",
+                    "maj9​(장9화음)는 장7화음에 9도를, m9​(단9화음)는 단7화음에 9도를 얹은 것입니다. 6/9는 7도 대신 6도와 9도를 얹어 7도의 긴장을 없앤 화음입니다."
+                ],
+                examples: [{ chord: "maj9" }, { chord: "m9" }, { chord: "sixnine" }],
+                read: { drill: "chord", items: ["maj9", "maj13", "sixnine", "m9", "m11", "m13"], limit: 12 },
+                listen: { drill: "chord", preset: "majten", mode: "harmony", limit: 10 }
+            },
+            {
+                id: "dom-tensions",
+                title: "Dominant Tensions​(속화음의 텐션)",
+                body: [
+                    "속7화음의 텐션은 다른 화음보다 훨씬 자유롭습니다. 어차피 으뜸화음으로 가려는 힘이 센 화음이라, 텐션을 얹어 그 힘을 더 세게 만들어도 자리가 흔들리지 않습니다.",
+                    "9도와 13도를 얹은 dom9​(속9화음)·dom13​(속13화음)이 기본입니다. 11도는 그냥 얹으면 3음과 반음으로 부딪히므로 반음 올려 ♯11로 씁니다. 이때 9도가 함께 있어야 합니다 — 9도가 없으면 그냥 7♭5로 들립니다.",
+                    "9도와 13도를 반음 내리거나 올린 것이 Altered Dominant​(변화된 속화음)입니다. ♭9, ♯9, ♭13이 그것이고, 셋은 서로 잘 어울려 함께 쓰입니다."
+                ],
+                examples: [{ chord: "dom9" }, { chord: "dom13" }, { chord: "dom7b9" }],
+                read: { drill: "chord", items: ["dom9", "dom13", "dom9s11", "dom7b9", "dom7s9", "dom7b9b13"], limit: 12 },
+                listen: { drill: "chord", preset: "domten", mode: "harmony", limit: 10 }
+            },
             { kind: "preset", drill: "chord", preset: "minten" },
-            { kind: "preset", drill: "chord", preset: "domten" },
             { kind: "preset", drill: "chord", preset: "altten" }
         ]
     };
@@ -234,6 +256,7 @@
                     "I은 돌아가 쉬는 자리입니다. V는 I로 돌아가려는 힘이 가장 센 자리고, IV는 그 사이를 잇는 자리입니다. 이 셋만으로 노래 한 곡이 됩니다."
                 ],
                 examples: [{ prog: "I–IV–V–I" }, { prog: "I–V–IV–I" }],
+                read: { drill: "progression", preset: "p1" },
                 listen: { drill: "progression", preset: "p1", limit: 10 }
             },
             {
@@ -245,6 +268,7 @@
                     "그래서 이 진행을 알아들으려면 어느 화음이 I인지 먼저 찾아야 합니다. 조를 모르면 I–V–vi–IV와 vi–IV–I–V를 구별할 방법이 아예 없습니다."
                 ],
                 examples: [{ prog: "I–V–vi–IV" }, { prog: "vi–IV–I–V" }],
+                read: { drill: "progression", preset: "p2" },
                 listen: { drill: "progression", preset: "p2", limit: 10 }
             },
             { kind: "preset", drill: "progression", preset: "p4" },
@@ -257,6 +281,7 @@
                     "iii와 vi는 I과 음 두 개를 함께 갖고 있어 I 대신 놓아도 자리가 흔들리지 않습니다. 같은 자리를 되풀이하지 않고 색을 바꿀 때 씁니다."
                 ],
                 examples: [{ prog: "ii–V–I" }, { prog: "I–iii–IV–V" }],
+                read: { drill: "progression", preset: "p3" },
                 listen: { drill: "progression", preset: "p3", limit: 10 }
             },
             { kind: "preset", drill: "progression", preset: "p5" },
@@ -269,6 +294,7 @@
                     "i–VI–VII–i처럼 딸림화음을 거치지 않고 도는 진행이 단조에서 많이 쓰입니다. v를 V(장3화음)로 바꿔 쓰면 마침이 확실하게 닫히는데, 그것은 화성단음계에서 빌려 온 것입니다."
                 ],
                 examples: [{ prog: "i–VI–VII–i", minor: true }, { prog: "i–iv–V–i", minor: true }],
+                read: { drill: "progression", preset: "p6" },
                 listen: { drill: "progression", preset: "p6", limit: 10 }
             },
             {
@@ -280,6 +306,7 @@
                     "♭VII은 딸림화음을 거치지 않고 으뜸화음으로 내려오는 길을 열어 줍니다. ♭VI–♭VII–I은 한 단계씩 올라서며 마치는 꼴입니다."
                 ],
                 examples: [{ prog: "I–IV–iv–I" }, { prog: "I–♭VII–IV–I" }, { prog: "I–♭VI–♭VII–I" }],
+                read: { drill: "progression", preset: "p7" },
                 listen: { drill: "progression", preset: "p7", limit: 10 }
             },
             { kind: "preset", drill: "progression", preset: "p8" },
@@ -294,6 +321,7 @@
                     "그래서 이 진행은 화음 하나만 듣고는 답이 없습니다. 두 화음을 묶어 들어야 합니다."
                 ],
                 examples: [{ prog: "I–V/V–V–I" }, { prog: "I–II–IV–I" }],
+                read: { drill: "progression", preset: "p11" },
                 listen: { drill: "progression", preset: "p11", limit: 10 }
             }
         ]

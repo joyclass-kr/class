@@ -774,6 +774,11 @@
             .concat(leadVoicing(home, null).map(note => note.midi));
 
         return {
+            /* 악보를 보고 적는 문제에서는 조를 물음에 적어 준다 — 조표만으로는
+               장조인지 나란한 단조인지 가려지지 않는다. */
+            ask: session.reveal
+                ? keyName(tonic, item.minor) + " — 로마숫자로 적어 보세요"
+                : session.drill.ask,
             playback: { groups: [homeGroup, []].concat(groups), beat: 1.05 },
             chordsPlay: { groups: groups, beat: 1.9 },
             homePlay: { groups: [homeGroup], beat: 1.2 },
@@ -1058,6 +1063,7 @@
             items: PROGRESSIONS,
             inputs: ["slots"],
             slotAnswer: true,
+            readable: true,
             levels: [],
             modes: [],
             make: progressionQuestion
@@ -1365,14 +1371,15 @@
     }
 
     /* 판 하나를 그 방법으로 시작한다. */
-    function startPreset(drill, preset, input) {
+    function startPreset(drill, preset, input, reveal) {
         session.drill = drill;
         session.preset = preset;
         session.input = input;
         session.mode = "";
         session.limit = 10;
         session.inversions = [0];
-        session.reveal = false;
+        /* 악보를 보고 고르는 문제는 처음부터 악보를 다 보여 준다. */
+        session.reveal = reveal === true;
         session.fromLesson = null;
         session.enabled = new Set(preset.ids || [preset.id]);
         session.slots = [];
@@ -1796,7 +1803,10 @@
     function presetActs(lesson) {
         const drill = DRILL_BY_ID[lesson.drill];
         if (!drill) return [];
-        return drill.inputs.map(input => (input === "keyboard" ? "keys" : "listen"));
+        const list = drill.inputs.map(input => (input === "keyboard" ? "keys" : "listen"));
+        /* 화음 진행은 악보를 보고 로마숫자로 적어 볼 수도 있다. */
+        if (drill.readable) list.unshift("read");
+        return list;
     }
 
     function actsOf(lesson) {
@@ -1856,7 +1866,10 @@
         if (act === "text") { openLesson(index); return; }
         if (lesson.kind === "preset") {
             const preset = presetOf(lesson);
-            if (preset) startPreset(DRILL_BY_ID[lesson.drill], preset, act === "keys" ? "keyboard" : null);
+            if (preset) {
+                startPreset(DRILL_BY_ID[lesson.drill], preset,
+                    act === "keys" ? "keyboard" : null, act === "read");
+            }
             return;
         }
         startActivity(lesson, act);
@@ -2634,9 +2647,13 @@
         drawSlotStaff();
     }
 
-    /* 맞힌 데까지만 악보에 그린다. 나머지 칸은 물음표로 남는다. */
+    /*
+     * 맞힌 데까지만 악보에 그린다. 나머지 칸은 물음표로 남는다.
+     * 악보를 보고 고르는 문제에서는 처음부터 다 그려 준다.
+     */
     function drawSlotStaff() {
         const info = session.current.slots;
+        if (session.reveal) { drawStaff(info.columns); return; }
         drawStaff(info.columns.map((column, index) => index < session.slots.length ? column : null));
     }
 
