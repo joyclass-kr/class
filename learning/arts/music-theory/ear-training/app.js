@@ -926,12 +926,12 @@
      * 음정 연습은 두 음(음정)과 세 음(가락)을 함께 담는다.
      */
     const EXERCISES = [
-        { id: "interval", name: label("Intervals", "음정"), drills: ["interval", "melody"] },
-        { id: "chord", name: label("Chords", "화음"), drills: ["chord"] },
-        { id: "scale", name: label("Scales", "음계"), drills: ["scale"] },
-        { id: "position", name: label("Chord Inversions", "화음 자리"), drills: ["position"] },
-        { id: "progression", name: label("Chord Progressions", "화음 진행"), drills: ["progression"] },
-        { id: "rhythm", name: label("Rhythm", "리듬"), drills: ["rhythmRead", "rhythmWrite"] }
+        { id: "interval", en: "Intervals", ko: "음정", theme: "interval", name: label("Intervals", "음정"), drills: ["interval", "melody"] },
+        { id: "chord", en: "Chords", ko: "화음", theme: "chord", name: label("Chords", "화음"), drills: ["chord"] },
+        { id: "scale", en: "Scales", ko: "음계", theme: "scale", name: label("Scales", "음계"), drills: ["scale"] },
+        { id: "position", en: "Chord Inversions", ko: "화음 자리", theme: "position", name: label("Chord Inversions", "화음 자리"), drills: ["position"] },
+        { id: "progression", en: "Chord Progressions", ko: "화음 진행", theme: "progression", name: label("Chord Progressions", "화음 진행"), drills: ["progression"] },
+        { id: "rhythm", en: "Rhythm", ko: "리듬", theme: "rhythm", name: label("Rhythm", "리듬"), drills: ["rhythmRead", "rhythmWrite"] }
     ];
 
     const DRILLS = [
@@ -1207,19 +1207,113 @@
         window.scrollTo({ top: 0 });
     }
 
-    function courseProgress(course) {
-        const marks = saved.progress[course.id] || {};
-        const done = course.lessons.filter(lesson => marks[lesson.id]).length;
-        return { done: done, total: course.lessons.length };
-    }
+    const CARD_ICONS = {
+        interval: `<svg class="genre-icon" viewBox="0 0 48 48" fill="none">
+            <path d="M19 8 L19 22 C19 26 23 26 23 26 C23 26 27 26 27 22 L27 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="23" y1="26" x2="23" y2="38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="10" cy="34" r="3.5" fill="currentColor"/>
+            <line x1="13.5" y1="34" x2="13.5" y2="18" stroke="currentColor" stroke-width="2"/>
+            <circle cx="38" cy="18" r="3.5" fill="currentColor"/>
+            <line x1="41.5" y1="18" x2="41.5" y2="6" stroke="currentColor" stroke-width="2"/>
+            <path d="M13.5 18 C24 14 30 10 41.5 6" stroke="currentColor" stroke-width="1.8" stroke-dasharray="2 2" opacity="0.85"/>
+        </svg>`,
+        chord: `<svg class="genre-icon" viewBox="0 0 48 48" fill="none">
+            <circle cx="18" cy="34" r="4.2" fill="currentColor" fill-opacity="0.8"/>
+            <circle cx="18" cy="24" r="4.2" fill="currentColor" fill-opacity="0.8"/>
+            <circle cx="18" cy="14" r="4.2" fill="currentColor" fill-opacity="0.8"/>
+            <line x1="22.2" y1="34" x2="22.2" y2="8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M22.2 8 Q34 10 38 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M8 24 C14 20 24 20 30 24" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.6"/>
+        </svg>`,
+        scale: `<svg class="genre-icon" viewBox="0 0 48 48" fill="none">
+            <circle cx="10" cy="36" r="3" fill="currentColor"/>
+            <circle cx="18" cy="30" r="3" fill="currentColor"/>
+            <circle cx="26" cy="24" r="3" fill="currentColor"/>
+            <circle cx="34" cy="18" r="3" fill="currentColor"/>
+            <circle cx="42" cy="12" r="3" fill="currentColor"/>
+            <path d="M10 36 L18 30 L26 24 L34 18 L42 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="8" y1="41" x2="44" y2="41" stroke="currentColor" stroke-width="1.8" opacity="0.4"/>
+        </svg>`,
+        position: `<svg class="genre-icon" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="25" width="13" height="13" rx="3" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+            <text x="14.5" y="34.5" fill="currentColor" font-size="9" font-weight="900" text-anchor="middle" dominant-baseline="middle">1</text>
+            <rect x="27" y="10" width="13" height="13" rx="3" fill="currentColor" fill-opacity="0.45" stroke="currentColor" stroke-width="2"/>
+            <text x="33.5" y="19.5" fill="currentColor" font-size="9" font-weight="900" text-anchor="middle" dominant-baseline="middle">3</text>
+            <path d="M18 19 C22 13 25 12 27 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M25 9 L29 12 L25 15" fill="currentColor"/>
+            <path d="M30 29 C26 35 23 36 21 36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M23 39 L19 36 L23 33" fill="currentColor"/>
+        </svg>`,
+        progression: `<svg class="genre-icon" viewBox="0 0 48 48" fill="none">
+            <circle cx="11" cy="24" r="6" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1.8"/>
+            <text x="11" y="24.5" fill="currentColor" font-size="8" font-weight="900" text-anchor="middle" dominant-baseline="middle">I</text>
+            <line x1="17" y1="24" x2="21" y2="24" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="27" cy="16" r="6" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1.8"/>
+            <text x="27" y="16.5" fill="currentColor" font-size="7" font-weight="900" text-anchor="middle" dominant-baseline="middle">IV</text>
+            <line x1="33" y1="18" x2="37" y2="24" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="41" cy="30" r="6" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1.8"/>
+            <text x="41" y="30.5" fill="currentColor" font-size="7" font-weight="900" text-anchor="middle" dominant-baseline="middle">V</text>
+            <path d="M35 34 C25 40 18 36 14 30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2" stroke-linecap="round"/>
+        </svg>`,
+        rhythm: `<svg class="genre-icon" viewBox="0 0 48 48" fill="none">
+            <path d="M16 40 L20 11 C20.5 9 27.5 9 28 11 L32 40 Z" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="24" y1="36" x2="33" y2="16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="33" cy="16" r="3" fill="currentColor"/>
+            <path d="M11 22 C8 24 8 28 11 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M37 22 C40 24 40 28 37 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="12" y1="40" x2="36" y2="40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>`,
+        course: `<svg class="genre-icon" viewBox="0 0 48 48" fill="none">
+            <path d="M24 16 C20 12 12 12 8 14 L8 36 C12 34 20 34 24 38 C28 34 36 34 40 36 L40 14 C36 12 28 12 24 16 Z" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="24" y1="16" x2="24" y2="38" stroke="currentColor" stroke-width="2"/>
+            <path d="M24 6 L25.8 9.6 L29.8 10.2 L26.9 13 L27.6 17 L24 15.1 L20.4 17 L21.1 13 L18.2 10.2 L22.2 9.6 Z" fill="currentColor"/>
+        </svg>`,
+        wheel: `<svg class="genre-icon" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="17" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/>
+            <circle cx="24" cy="24" r="11" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="24" cy="24" r="3" fill="currentColor"/>
+            <line x1="24" y1="7" x2="24" y2="13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="24" y1="35" x2="24" y2="41" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="7" y1="24" x2="13" y2="24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="35" y1="24" x2="41" y2="24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>`
+    };
 
-    function menuCard(name, stat, onOpen) {
+    const COURSE_META = {
+        interval: { en: "Interval Theory", ko: "음정 과정", theme: "interval", icon: "course" },
+        chord: { en: "Chord Theory", ko: "화음 과정", theme: "chord", icon: "course" },
+        scale: { en: "Scale Theory", ko: "음계 과정", theme: "scale", icon: "course" },
+        rhythm: { en: "Rhythm Theory", ko: "리듬 과정", theme: "rhythm", icon: "course" }
+    };
+
+    function createGlassCard(meta, onOpen) {
         const button = document.createElement("button");
         button.type = "button";
-        button.className = "drill-card";
-        button.innerHTML = '<b></b><span class="drill-stat"></span>';
-        button.querySelector("b").textContent = name;
-        button.querySelector(".drill-stat").textContent = stat;
+        button.className = "genre-card card-" + (meta.theme || "gold");
+        button.setAttribute("aria-label", meta.ko + " (" + meta.en + ")");
+
+        const glow = document.createElement("div");
+        glow.className = "card-glow";
+        glow.setAttribute("aria-hidden", "true");
+
+        const iconWrap = document.createElement("div");
+        iconWrap.className = "card-icon-wrap";
+        iconWrap.setAttribute("aria-hidden", "true");
+        iconWrap.innerHTML = CARD_ICONS[meta.icon || meta.theme] || CARD_ICONS.interval;
+
+        const body = document.createElement("div");
+        body.className = "card-body";
+
+        const en = document.createElement("span");
+        en.className = "genre-en";
+        en.textContent = meta.en;
+
+        const ko = document.createElement("strong");
+        ko.className = "genre-ko";
+        ko.textContent = meta.ko;
+
+        body.append(en, ko);
+        button.append(glow, iconWrap, body);
         button.addEventListener("click", onOpen);
         return button;
     }
@@ -1237,37 +1331,25 @@
         return rows;
     }
 
-    function presetRate(drillId, presetId) {
-        const table = saved.presets[drillId] || {};
-        const entry = table[presetId];
-        return entry && entry.total ? Math.round((entry.right / entry.total) * 100) : null;
-    }
-
     function renderMenu() {
         els.exerciseList.innerHTML = "";
-        /* 판이 몇 개인지는 알 필요가 없다 — 눌러 보면 목록이 나온다. */
         EXERCISES.forEach(exercise => {
-            els.exerciseList.append(menuCard(exercise.name, "", () => openExercise(exercise.id)));
+            els.exerciseList.append(createGlassCard(exercise, () => openExercise(exercise.id)));
         });
 
         els.courseList.innerHTML = "";
         (window.EarCourses || []).forEach(course => {
-            const progress = courseProgress(course);
-            els.courseList.append(menuCard(
-                course.name,
-                progress.done + " / " + progress.total + "차시",
-                () => openCourse(course.id)
-            ));
+            const meta = COURSE_META[course.id] || { en: "Music Theory", ko: course.name, theme: "gold", icon: "course" };
+            els.courseList.append(createGlassCard(meta, () => openCourse(course.id)));
         });
 
         els.toolList.innerHTML = "";
-        const wheelCard = document.createElement("button");
-        wheelCard.type = "button";
-        wheelCard.className = "drill-card";
-        wheelCard.innerHTML = "<b></b>";
-        wheelCard.querySelector("b").textContent = label("Circle of Fifths", "5도권 원판");
-        wheelCard.addEventListener("click", () => { session.exercise = null; openWheel(); });
-        els.toolList.append(wheelCard);
+        els.toolList.append(createGlassCard({
+            en: "Circle of Fifths",
+            ko: "5도권 원판",
+            theme: "wheel",
+            icon: "wheel"
+        }, () => { session.exercise = null; openWheel(); }));
     }
 
     /*
@@ -1275,12 +1357,12 @@
      * 준비 화면은 없다 — 범위는 판이 정하고 문제 수는 열 개다.
      */
     const INPUT_ICONS = {
-        keyboard: { mark: "\u1F3B9", text: "건반으로 답하기" },
-        buttons: { mark: "\u2637", text: "보기 단추로 답하기" },
-        pair: { mark: "\u2637", text: "보기 단추로 답하기" },
-        grid: { mark: "\u2637", text: "칸으로 답하기" },
-        slots: { mark: "\u2637", text: "로마숫자로 답하기" },
-        tap: { mark: "\u1F3B9", text: "두드려 답하기" }
+        keyboard: { mark: "♪", text: "건반으로 답하기" },
+        buttons: { mark: "▤", text: "보기 단추로 답하기" },
+        pair: { mark: "▤", text: "보기 단추로 답하기" },
+        grid: { mark: "▤", text: "칸으로 답하기" },
+        slots: { mark: "▤", text: "로마숫자로 답하기" },
+        tap: { mark: "♪", text: "두드려 답하기" }
     };
 
     function inputIcon(row, input) {
@@ -1288,7 +1370,7 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "preset-input is-" + input;
-        button.textContent = input === "keyboard" || input === "tap" ? "♪" : "▤";
+        button.textContent = icon.mark;
         button.setAttribute("aria-label", row.preset.name + " — " + icon.text);
         button.title = icon.text;
         button.addEventListener("click", () => startPreset(row.drill, row.preset, input));
@@ -1299,7 +1381,7 @@
         const exercise = EXERCISES.find(entry => entry.id === id);
         if (!exercise) return;
         session.exercise = id;
-        els.presetTitle.textContent = exercise.name;
+        els.presetTitle.textContent = (exercise.en ? exercise.en + " " : "") + exercise.ko;
         els.presetList.innerHTML = "";
         presetRows(exercise).forEach(row => {
             const line = document.createElement("div");
@@ -1309,12 +1391,6 @@
             name.className = "preset-name";
             name.textContent = row.preset.name || row.preset.label;
             line.append(name);
-
-            const rate = presetRate(row.drill.id, row.preset.id);
-            const mark = document.createElement("span");
-            mark.className = "preset-rate";
-            mark.textContent = rate === null ? "" : rate + "%";
-            line.append(mark);
 
             const icons = document.createElement("span");
             icons.className = "preset-inputs";
@@ -1719,19 +1795,14 @@
     function renderLessonList() {
         els.lessonList.innerHTML = "";
         course.lessons.forEach((lesson, index) => {
-            const mark = lessonMark(course.id, lesson.id);
             const row = document.createElement("button");
             row.type = "button";
             row.className = "lesson-row";
             row.innerHTML = '<span class="lesson-order"></span><span class="lesson-name"></span>'
-                + '<span class="lesson-kind"></span><span class="lesson-mark"></span>';
+                + '<span class="lesson-kind"></span>';
             row.querySelector(".lesson-order").textContent = (index + 1) + "차시";
             row.querySelector(".lesson-name").textContent = lesson.title;
             row.querySelector(".lesson-kind").textContent = lesson.kind === "text" ? "설명" : "연습";
-            const badge = row.querySelector(".lesson-mark");
-            if (mark && mark.read) badge.textContent = "✓";
-            else if (mark && mark.total) badge.textContent = Math.round((mark.right / mark.total) * 100) + "%";
-            if (mark) row.classList.add("is-done");
             row.addEventListener("click", () => openLesson(index));
             els.lessonList.append(row);
         });
@@ -2836,6 +2907,7 @@
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence",
             "helpRow", "arpButton",
             "presetScreen", "presetTitle", "presetList", "exerciseList", "melodicButton",
+            "presetBack", "courseBack", "wheelBack", "lessonBack",
             "askText", "staff", "scoreText", "stopButton",
             "replayButton", "skipButton", "choices", "pairWrap", "qualityRow", "numberRow",
             "slotWrap", "slotRow", "numeralRows", "keyButton",
@@ -2855,6 +2927,11 @@
 
         renderMenu();
         showScreen("menu");
+
+        if (els.presetBack) els.presetBack.addEventListener("click", goBack);
+        if (els.courseBack) els.courseBack.addEventListener("click", goBack);
+        if (els.wheelBack) els.wheelBack.addEventListener("click", goBack);
+        if (els.lessonBack) els.lessonBack.addEventListener("click", goBack);
 
         els.replayButton.addEventListener("click", play);
         els.skipButton.addEventListener("click", skipQuestion);
@@ -2885,6 +2962,13 @@
         window.addEventListener("sitebackrequest", event => {
             if (goBack()) event.preventDefault();
         });
+
+        const pageBack = document.querySelector(".page-back");
+        if (pageBack) {
+            pageBack.addEventListener("click", event => {
+                if (goBack()) event.preventDefault();
+            });
+        }
 
         bindKeys();
 
