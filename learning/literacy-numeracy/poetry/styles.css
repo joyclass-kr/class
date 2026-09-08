@@ -762,46 +762,237 @@ a {
     text-align: center;
 }
 
-/* ── 차시 마무리 결과 ────────────────────────────────────────── */
-.score-medallion {
+/* ── 책장(첫 화면) ───────────────────────────────────────────── */
+.shelf-screen {
+    width: min(1100px, calc(100% - 24px));
+    margin: 0 auto;
+    padding: 8px 0 40px;
+}
+
+.shelf-head {
+    text-align: center;
+}
+
+.shelf-head h1 {
+    margin: 0 0 14px;
+    font-family: Georgia, "Nanum Myeongjo", serif;
+    font-size: clamp(26px, 4.4vw, 36px);
+    color: #fff3d9;
+    letter-spacing: -0.02em;
+}
+
+.continue-bar {
+    max-width: 420px;
+    margin: 0 auto 22px;
+    text-align: center;
+}
+
+.continue-bar.hidden {
+    display: none;
+}
+
+.shelf {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px 14px;
+    margin: 22px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.book-card {
     display: flex;
-    width: 138px;
-    height: 138px;
-    margin: 22px auto 16px;
     flex-direction: column;
+    gap: 8px;
+    padding: 14px 12px 12px;
+    border: 2px solid #c1a176;
+    border-radius: 10px;
+    background: #fffdf7;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+}
+
+.book-card:hover:not(:disabled),
+.book-card:focus-visible:not(:disabled) {
+    border-color: #855021;
+    background: #fff0d2;
+}
+
+.book-card.is-done {
+    border-color: #8fb79c;
+    background: #f1f8f3;
+}
+
+.book-card.is-perfect {
+    border-color: var(--green);
+    background: var(--green-light);
+}
+
+.book-cover {
+    display: flex;
     align-items: center;
     justify-content: center;
-    border: 4px double #a87432;
-    border-radius: 50%;
-    background: #fff1d2;
-    box-shadow: 0 7px 0 #dbc092;
-}
-
-.score-medallion strong {
-    font-family: Georgia, serif;
-    font-size: 55px;
-    line-height: 0.9;
-}
-
-.score-medallion span {
-    margin-top: 8px;
-    color: #7a624c;
-    font-size: 14px;
+    aspect-ratio: 3 / 4;
+    border-radius: 6px;
+    background: linear-gradient(150deg, #77431e, #3d1e0d);
+    color: #fff3d9;
+    font-family: Georgia, "Nanum Myeongjo", serif;
+    font-size: 13px;
     font-weight: 800;
-}
-
-.result-message {
-    margin: 10px 0 5px;
-    font-size: 19px;
-    font-weight: 900;
     text-align: center;
+    padding: 10px;
+    line-height: 1.4;
     word-break: keep-all;
 }
 
-.best-message {
-    margin: 0;
+.book-card-number {
+    color: #8d5524;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.book-card-title {
+    font-size: 14.5px;
+    font-weight: 800;
+    line-height: 1.35;
+    word-break: keep-all;
+}
+
+.book-card-meta {
     color: var(--muted-ink);
-    text-align: center;
+    font-size: 12.5px;
+}
+
+/* ── 시 읽기: 책 펼침면 ──────────────────────────────────────── */
+.book-stage {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.book {
+    position: relative;
+    width: min(1200px, 96vw, calc((100dvh - 220px) * 4 / 3));
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+    container-type: size;
+}
+
+.book-spread {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--paper);
+    border: 8px solid var(--gold);
+    border-radius: 12px;
+    box-shadow: var(--shadow), inset 0 0 0 4px rgba(210, 164, 84, 0.2);
+    overflow: hidden;
+}
+
+.book-page {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: clamp(14px, 4.5cqh, 42px);
+}
+
+.book-page-left {
+    border-right: 1px solid var(--rule);
+}
+
+.book .poem-title {
+    font-size: clamp(17px, 4.2cqh, 30px);
+}
+
+.book .poem-byline {
+    font-size: clamp(11px, 1.9cqh, 15px);
+}
+
+.book .poem-body {
+    font-size: clamp(14px, 2.8cqh, 22px);
+    line-height: 1.85;
+}
+
+.version-toggle {
+    display: flex;
+    gap: 6px;
+    margin: 6px 0 14px;
+}
+
+.version-toggle.hidden {
+    display: none;
+}
+
+.version-btn {
+    padding: 5px 12px;
+    border: 1px solid #c3a276;
+    border-radius: 999px;
+    background: #fffdf7;
+    color: #66391a;
+    font-size: clamp(11px, 1.8cqh, 13px);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.version-btn.is-active {
+    border-color: #4d2a11;
+    background: linear-gradient(135deg, #77431e, #3d1e0d);
+    color: #fff3d9;
+}
+
+.book .poem-words {
+    display: block;
+    margin: 0 0 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed var(--rule);
+    font-size: clamp(12px, 2cqh, 15px);
+}
+
+.book .poem-words dt {
+    margin-top: 8px;
+    color: var(--brown);
+    font-weight: 800;
+}
+
+.book .poem-words dt:first-child {
+    margin-top: 0;
+}
+
+.book .poem-words dd {
+    margin: 2px 0 0;
+    color: var(--muted-ink);
+    line-height: 1.5;
+}
+
+.book .poem-point {
+    font-size: clamp(12.5px, 2.1cqh, 15px);
+    margin: 0 0 16px;
+}
+
+.siwha-slot {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    border: 1px dashed rgba(90, 48, 22, 0.3);
+    border-radius: 10px;
+    background: repeating-linear-gradient(135deg, rgba(210, 164, 84, 0.08) 0 12px, transparent 12px 24px);
+}
+
+.siwha-placeholder {
+    color: var(--muted-ink);
+    font-size: clamp(11px, 1.8cqh, 13px);
+}
+
+.book-actions {
+    margin-top: 18px;
 }
 
 /* ── 좁은 화면 ───────────────────────────────────────────────── */
@@ -855,6 +1046,37 @@ a {
 
     .sheet-actions > * {
         width: 100%;
+    }
+
+    /* 좁은 화면에서는 책 펼침면을 좌우가 아니라 위아래로 쌓는다. */
+    .book {
+        width: min(560px, 100%);
+        aspect-ratio: auto;
+        height: auto;
+    }
+
+    .book-spread {
+        position: static;
+        grid-template-columns: 1fr;
+        box-shadow: var(--shadow);
+    }
+
+    .book-page {
+        overflow-y: visible;
+        max-height: none;
+    }
+
+    .book-page-left {
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .siwha-slot {
+        min-height: 120px;
+    }
+
+    .shelf {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 }
 

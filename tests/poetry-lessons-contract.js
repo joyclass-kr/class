@@ -3,8 +3,8 @@
 // 시 읽기 검사.
 //   (1) 저작권 — 본문을 실은 시가 정말 실어도 되는 시인지
 //   (2) 시마다 갖출 것 — 작품 설명(note)과 제 문제를 가지고 있는지
-//   (3) 차시 배정 — 마무리 문제가 정확히 한 차시에만 들어가는지
-//   (4) 참조 — 문제와 차시가 가리키는 시가 실제로 있는지
+//   (3) 시집 — 실린 시가 실제로 있고, 시집 안에서 겹치지 않는지
+//   (4) 참조 — 문제가 가리키는 시가 실제로 있는지, 모든 시가 어느 시집엔가는 실려 있는지
 // 저작권 쪽은 눈으로 훑다 놓치면 그대로 사고라 기계가 막는다.
 const assert = require("assert");
 const fs = require("fs");
@@ -23,7 +23,7 @@ const read = (name) => fs.readFileSync(path.join(poetryDir, name), "utf8");
 
 const context = { window: {} };
 vm.createContext(context);
-for (const name of ["poems-index.js", "wrap-questions.js", "lesson-wrap-counts.js", "lessons.js"]) {
+for (const name of ["poems-index.js", "lessons.js"]) {
     vm.runInContext(read(name), context, { filename: name });
 }
 
@@ -38,10 +38,7 @@ const poems = context.window.POETRY_POEM_INDEX.map((entry) => {
     assert.ok(part, `시 ${entry.id}: 본문 파일이 자기 자리에 등록되지 않았습니다.`);
     return { ...entry, ...part.poem, lines: part.poem.lines || [] };
 });
-const questions = [
-    ...context.window.POETRY_POEM_INDEX.flatMap((entry) => context.window.POETRY_PART[entry.id].questions || []),
-    ...context.window.POETRY_WRAP_QUESTIONS
-];
+const questions = context.window.POETRY_POEM_INDEX.flatMap((entry) => context.window.POETRY_PART[entry.id].questions || []);
 
 // 차례표에 적어 둔 문제 수가 실제 문제 수와 어긋나면 목록 화면이 거짓말을 한다.
 for (const entry of context.window.POETRY_POEM_INDEX) {
@@ -49,20 +46,12 @@ for (const entry of context.window.POETRY_POEM_INDEX) {
     assert.strictEqual(entry.questionCount, actual,
         `시 ${entry.id}: 차례표의 문제 수(${entry.questionCount})와 실제 문제 수(${actual})가 다릅니다.`);
 }
-// 차시별 마무리 문제 수도 마찬가지다.
-const wrapIdSet = new Set(context.window.POETRY_WRAP_QUESTIONS.map((question) => question.id));
-context.window.POETRY_LESSONS.forEach((lesson, index) => {
-    const actual = (lesson.wrapIds || []).filter((id) => wrapIdSet.has(id)).length;
-    assert.strictEqual(context.window.POETRY_WRAP_COUNTS[index], actual,
-        `${index + 1}번째 차시: 적어 둔 마무리 문제 수와 실제 수가 다릅니다.`);
-});
-const lessons = context.window.POETRY_LESSONS;
-const grades = context.window.POETRY_GRADES;
+
+const books = context.window.POETRY_BOOKS;
 
 assert.ok(Array.isArray(poems) && poems.length > 0, "시 창고가 비어 있습니다.");
 assert.ok(Array.isArray(questions) && questions.length > 0, "문제 은행이 비어 있습니다.");
-assert.ok(Array.isArray(lessons) && lessons.length > 0, "차시 배정표가 비어 있습니다.");
-assert.ok(Array.isArray(grades) && grades.length > 0, "학년 목록이 비어 있습니다.");
+assert.ok(Array.isArray(books) && books.length > 0, "시집 차례표가 비어 있습니다.");
 
 // ── 1. 시와 저작권 ───────────────────────────────────────────────
 const poemIds = new Set();
@@ -80,6 +69,14 @@ for (const poem of poems) {
     for (const paragraph of poem.note) {
         assert.ok(typeof paragraph === "string" && paragraph.trim(),
             `${where}: 작품 설명에 빈 문단이 있습니다.`);
+    }
+    // 현대어 버전은 있어도 되고 없어도 된다. 있다면 원문과 같은 모양이어야 한다.
+    if (poem.modern !== undefined) {
+        assert.ok(Array.isArray(poem.modern) && poem.modern.length > 0,
+            `${where}: modern을 두려면 줄이 하나 이상 있는 배열이어야 합니다.`);
+        for (const line of poem.modern) {
+            assert.strictEqual(typeof line, "string", `${where}: modern의 줄은 문자열이어야 합니다.`);
+        }
     }
     assert.ok(["public", "protected"].includes(poem.rights), `${where}: rights는 public 또는 protected여야 합니다.`);
 
@@ -113,6 +110,7 @@ for (const poem of poems) {
 }
 
 // ── 2. 문제 ──────────────────────────────────────────────────────
+// 이제 문제는 전부 어느 시엔가 붙어 있다. 시 없이 떠도는 문제는 없다.
 const questionIds = new Set();
 const seenSentences = new Map();
 for (const question of questions) {
@@ -132,65 +130,44 @@ for (const question of questions) {
     assert.ok(!seenSentences.has(question.sentence),
         `${where}: 물음 글이 ${seenSentences.get(question.sentence)}와 똑같습니다. 다르게 고쳐 주세요: "${question.sentence}"`);
     seenSentences.set(question.sentence, question.id);
-    assert.ok(typeof question.poemId === "string", `${where}: poemId 칸이 없습니다. 정리 문제는 빈 문자열로 둡니다.`);
-    if (question.poemId) {
-        assert.ok(poemIds.has(question.poemId), `${where}: 없는 시를 가리킵니다: ${question.poemId}`);
-    }
+    assert.ok(typeof question.poemId === "string" && question.poemId,
+        `${where}: poemId가 없습니다. 문제는 반드시 시 하나에 붙어야 합니다.`);
+    assert.ok(poemIds.has(question.poemId), `${where}: 없는 시를 가리킵니다: ${question.poemId}`);
 }
 
-// ── 3. 차시 ──────────────────────────────────────────────────────
-const knownGrades = new Set(grades.map((item) => item.grade));
-const lessonIds = new Set();
-const assigned = new Map();
+// ── 3. 시집 ──────────────────────────────────────────────────────
+const bookIds = new Set();
+for (const book of books) {
+    const where = `시집 ${book.id || "(id 없음)"}`;
+    assert.ok(book.id && /^[a-z0-9-]+$/.test(book.id), `${where}: id가 올바르지 않습니다.`);
+    assert.ok(!bookIds.has(book.id), `${where}: id가 겹칩니다.`);
+    bookIds.add(book.id);
+    assert.ok(typeof book.title === "string" && book.title.trim(), `${where}: 이름이 없습니다.`);
+    assert.ok(typeof book.note === "string" && book.note.trim(), `${where}: 설명이 없습니다.`);
+    assert.ok(Array.isArray(book.poemIds) && book.poemIds.length > 0, `${where}: 실린 시가 없습니다.`);
+    assert.strictEqual(new Set(book.poemIds).size, book.poemIds.length, `${where}: 같은 시가 두 번 실려 있습니다.`);
 
-for (const lesson of lessons) {
-    const where = `차시 ${lesson.id || "(id 없음)"}`;
-    assert.ok(lesson.id && /^[a-z0-9-]+$/.test(lesson.id), `${where}: id가 올바르지 않습니다.`);
-    assert.ok(!lessonIds.has(lesson.id), `${where}: id가 겹칩니다.`);
-    lessonIds.add(lesson.id);
-    assert.ok(knownGrades.has(lesson.grade), `${where}: 학년이 학년 목록에 없습니다: ${lesson.grade}`);
-    assert.ok(typeof lesson.title === "string" && lesson.title.trim(), `${where}: 이름이 없습니다.`);
-    assert.ok(typeof lesson.note === "string" && lesson.note.trim(), `${where}: 설명이 없습니다.`);
-    assert.ok(Array.isArray(lesson.poemIds), `${where}: poemIds가 배열이 아닙니다.`);
-    assert.ok(Array.isArray(lesson.wrapIds), `${where}: wrapIds가 배열이 아닙니다.`);
-
-    for (const id of lesson.poemIds) {
+    for (const id of book.poemIds) {
         assert.ok(poemIds.has(id), `${where}: 없는 시를 가리킵니다: ${id}`);
-    }
-    for (const id of lesson.wrapIds) {
-        assert.ok(questionIds.has(id), `${where}: 없는 문제를 가리킵니다: ${id}`);
-        const question = questions.find((item) => item.id === id);
-        assert.ok(!question.poemId,
-            `${where}: 시 문제가 wrapIds에 들어 있습니다 (${id} → ${question.poemId}). 시 문제는 poemId로만 묶습니다.`);
-        assert.ok(!assigned.has(id), `마무리 문제가 두 차시에 들어 있습니다: ${id} (${assigned.get(id)}, ${lesson.id})`);
-        assigned.set(id, lesson.id);
     }
 }
 
 // ── 4. 남은 것이 없는지 ──────────────────────────────────────────
-// 시 없는 문제는 어느 차시의 마무리 문제로든 들어가 있어야 한다. 아니면 화면에 나올 길이 없다.
-for (const question of questions) {
-    if (question.poemId) continue;
-    assert.ok(assigned.has(question.id),
-        `어느 차시의 마무리 문제도 아닌 문제가 있습니다: ${question.id}`);
-}
-
-const usedPoems = new Set(lessons.flatMap((lesson) => lesson.poemIds));
+const usedPoems = new Set(books.flatMap((book) => book.poemIds));
 const questionCount = new Map();
 for (const question of questions) {
-    if (!question.poemId) continue;
     questionCount.set(question.poemId, (questionCount.get(question.poemId) || 0) + 1);
 }
 for (const poem of poems) {
-    assert.ok(usedPoems.has(poem.id), `어느 차시에서도 읽지 않는 시가 있습니다: ${poem.id}`);
+    assert.ok(usedPoems.has(poem.id), `어느 시집에도 실리지 않은 시가 있습니다: ${poem.id}`);
     // 시 하나가 읽기 → 문제 → 작품 설명으로 이어지므로, 문제가 없으면 그 흐름이 끊긴다.
     assert.ok((questionCount.get(poem.id) || 0) >= 2,
         `시 ${poem.id}: 제 문제가 ${questionCount.get(poem.id) || 0}개뿐입니다. 두 개 이상이어야 합니다.`);
 }
 
-const readyLessons = lessons.filter((lesson) => lesson.poemIds.length > 0);
 const publicPoems = poems.filter((poem) => poem.rights === "public");
+const modernPoems = poems.filter((poem) => Array.isArray(poem.modern) && poem.modern.length > 0);
 console.log(
-    `시 읽기 검사 통과 — 시 ${poems.length}편(본문 게재 ${publicPoems.length}편), `
-    + `문제 ${questions.length}개, 차시 ${readyLessons.length}/${lessons.length}개`
+    `시 읽기 검사 통과 — 시 ${poems.length}편(본문 게재 ${publicPoems.length}편, 현대어 병기 ${modernPoems.length}편), `
+    + `문제 ${questions.length}개, 시집 ${books.length}권`
 );

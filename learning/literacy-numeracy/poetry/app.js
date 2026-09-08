@@ -2,22 +2,16 @@
     "use strict";
 
     const PLAYER_NAME_KEY = "classPlayerName";
-    const LESSON_PROGRESS_KEY = "poetryLessonProgressV1";
     const POEM_PROGRESS_KEY = "poetryPoemProgressV1";
-    const GRADE_KEY = "poetryLastGradeV1";
 
     // 처음에는 제목·시인·소재만 있는 차례표를 받는다.
     // 본문과 낱말, 작품 설명, 그 시의 문제는 시를 열 때 poems/<아이디>.js로 받아 여기에 채운다.
     const poems = Array.isArray(window.POETRY_POEM_INDEX) ? window.POETRY_POEM_INDEX : [];
     const poemById = new Map(poems.map((poem) => [poem.id, poem]));
-    const lessons = Array.isArray(window.POETRY_LESSONS) ? window.POETRY_LESSONS : [];
-    const grades = Array.isArray(window.POETRY_GRADES) ? window.POETRY_GRADES : [];
-    const wrapCounts = Array.isArray(window.POETRY_WRAP_COUNTS) ? window.POETRY_WRAP_COUNTS : [];
+    // 시집 차례표. 학년 표시는 없다 — 배열 순서가 곧 "차례대로" 읽는 순서다.
+    const books = Array.isArray(window.POETRY_BOOKS) ? window.POETRY_BOOKS : [];
 
-    // 문제는 시에 붙는다. 한 시가 여러 차시에 나와도 그 시를 열면 제 문제를 다 만난다.
-    // poemId가 없는 문제는 차시를 마무리하는 문제라 차시 배정표(lesson.wrapIds)로만 모은다.
     const questionsByPoem = new Map();
-    const questionById = new Map();
 
     const here = document.currentScript ? document.currentScript.src.replace(/[^/]*$/, "") : "";
     const version = (document.currentScript?.src.split("?v=")[1] || "");
@@ -44,20 +38,10 @@
         Object.assign(poem, part.poem);
         if (!poem.lines) poem.lines = [];
         questionsByPoem.set(poem.id, part.questions || []);
-        (part.questions || []).forEach((question) => questionById.set(question.id, question));
         return poem;
     }
 
-    let wrapLoaded = false;
-    async function loadWrapQuestions() {
-        if (wrapLoaded) return;
-        await fetchScript("wrap-questions.js");
-        (window.POETRY_WRAP_QUESTIONS || []).forEach((question) => questionById.set(question.id, question));
-        wrapLoaded = true;
-    }
-
-    // 소재로 고르는 문. 학년 탭 끝에 '소재별' 탭 하나로 들어간다.
-    const TOPIC_TAB = "topic";
+    // 소재로 고르는 문. "소재로 찾기" 갈래에서 쓴다.
     const TOPICS = ["봄", "여름", "가을", "겨울", "가족", "동물", "밤과 달", "고향",
         "그리움", "이별", "자연", "다짐", "시대", "나라", "사랑", "옛이야기", "놀이", "기다림"];
     const poemsByTopic = new Map(TOPICS.map((topic) => [topic, poems.filter((poem) => (poem.topics || []).includes(topic))]));
@@ -65,25 +49,28 @@
     const $ = (id) => document.getElementById(id);
     const elements = {
         backLink: document.querySelector(".back-link"),
-        lessonScreen: $("lessonScreen"),
-        lessonDetailScreen: $("lessonDetailScreen"),
+        shelfScreen: $("shelfScreen"),
+        bookScreen: $("bookScreen"),
         readScreen: $("readScreen"),
         quizScreen: $("quizScreen"),
         afterScreen: $("afterScreen"),
-        resultScreen: $("resultScreen"),
-        gradeTabs: $("gradeTabs"),
-        lessonProgressSummary: $("lessonProgressSummary"),
-        lessonList: $("lessonList"),
+        orderTabBtn: $("orderTabBtn"),
+        topicTabBtn: $("topicTabBtn"),
+        orderView: $("orderView"),
+        topicView: $("topicView"),
+        continueBar: $("continueBar"),
+        continueButton: $("continueButton"),
+        bookShelf: $("bookShelf"),
         topicChips: $("topicChips"),
         topicPoemList: $("topicPoemList"),
-        lessonDetailKicker: $("lessonDetailKicker"),
-        lessonDetailTitle: $("lessonDetailTitle"),
-        lessonDetailNote: $("lessonDetailNote"),
-        lessonPoemList: $("lessonPoemList"),
-        startWrapButton: $("startWrapButton"),
+        bookTitle: $("bookTitle"),
+        bookNote: $("bookNote"),
+        bookPoemList: $("bookPoemList"),
+        bookShelfButton: $("bookShelfButton"),
         readKicker: $("readKicker"),
         poemTitle: $("poemTitle"),
         poemByline: $("poemByline"),
+        versionToggle: $("versionToggle"),
         poemBody: $("poemBody"),
         poemNotice: $("poemNotice"),
         poemWords: $("poemWords"),
@@ -117,36 +104,24 @@
         afterMissedList: $("afterMissedList"),
         afterNextButton: $("afterNextButton"),
         afterListButton: $("afterListButton"),
-        resultTitle: $("resultTitle"),
-        finalScore: $("finalScore"),
-        finalTotal: $("finalTotal"),
-        resultMessage: $("resultMessage"),
-        bestMessage: $("bestMessage"),
-        perfectReview: $("perfectReview"),
-        missedList: $("missedList"),
-        restartButton: $("restartButton"),
-        nextLessonButton: $("nextLessonButton"),
-        lessonDetailButton: $("lessonDetailButton"),
-        lessonListButton: $("lessonListButton"),
         announcer: $("announcer")
     };
 
     const screens = [
-        elements.lessonScreen,
-        elements.lessonDetailScreen,
+        elements.shelfScreen,
+        elements.bookScreen,
         elements.readScreen,
         elements.quizScreen,
-        elements.afterScreen,
-        elements.resultScreen
+        elements.afterScreen
     ];
 
     const state = {
-        grade: grades[0] ? grades[0].grade : 3,
+        shelfMode: "order",
         topic: "",
         browse: null,
-        lessonIndex: -1,
+        bookIndex: -1,
         poemIndex: -1,
-        mode: "poem",
+        version: "original",
         questions: [],
         currentIndex: 0,
         score: 0,
@@ -209,34 +184,23 @@
         return questionsByPoem.get(poemId) || [];
     }
 
-    function wrapQuestionsOf(lesson) {
-        if (!lesson) return [];
-        return (lesson.wrapIds || [])
-            .map((id) => questionById.get(id))
-            .filter((question) => question && !question.poemId);
+    function isReady(book) {
+        return Array.isArray(book.poemIds) && book.poemIds.length > 0;
     }
 
-    function isReady(lesson) {
-        return Array.isArray(lesson.poemIds) && lesson.poemIds.length > 0;
+    function orderOf(book) {
+        return books.indexOf(book) + 1;
     }
 
-    function lessonsOfGrade(grade) {
-        return lessons.filter((lesson) => lesson.grade === grade);
-    }
-
-    function currentLesson() {
-        return lessons[state.lessonIndex] || null;
-    }
-
-    function orderInGradeOf(lesson) {
-        return lessonsOfGrade(lesson.grade).indexOf(lesson) + 1;
+    function currentBook() {
+        return books[state.bookIndex] || null;
     }
 
     function currentPoemList() {
         if (state.browse) return state.browse.poems;
-        const lesson = currentLesson();
-        if (!lesson) return [];
-        return lesson.poemIds.map((id) => poemById.get(id)).filter(Boolean);
+        const book = currentBook();
+        if (!book) return [];
+        return book.poemIds.map((id) => poemById.get(id)).filter(Boolean);
     }
 
     function currentPoem() {
@@ -250,17 +214,6 @@
         return loaded ? loaded.length : (poem.questionCount || 0);
     }
 
-    function wrapCountOf(lesson) {
-        if (!lesson) return 0;
-        if (wrapLoaded) return wrapQuestionsOf(lesson).length;
-        return wrapCounts[lessons.indexOf(lesson)] || 0;
-    }
-
-    function lessonQuestionCount(lesson) {
-        const fromPoems = lesson.poemIds.reduce((sum, id) => sum + poemQuestionCount(poemById.get(id)), 0);
-        return fromPoems + wrapCountOf(lesson);
-    }
-
     function setScreen(activeScreen) {
         screens.forEach((screen) => screen?.classList.toggle("hidden", screen !== activeScreen));
     }
@@ -270,12 +223,16 @@
     }
 
     // ── 시 그리기 ────────────────────────────────────────────────
-    function renderPoemLines(container, poem) {
+    function activeLines(poem) {
+        if (state.version === "modern" && Array.isArray(poem.modern) && poem.modern.length > 0) return poem.modern;
+        return poem.lines || [];
+    }
+
+    function renderPoemLines(container, lines) {
         container.replaceChildren();
-        if (poem.rights !== "public") return;
         let stanza = document.createElement("p");
         stanza.className = "poem-stanza";
-        poem.lines.forEach((line) => {
+        lines.forEach((line) => {
             if (line === "") {
                 if (stanza.childNodes.length > 0) container.append(stanza);
                 stanza = document.createElement("p");
@@ -288,11 +245,18 @@
         if (stanza.childNodes.length > 0) container.append(stanza);
     }
 
+    function renderReadingPoem() {
+        const poem = currentPoem();
+        if (!poem) return;
+        if (poem.rights !== "public") {
+            elements.poemBody.replaceChildren();
+        } else {
+            renderPoemLines(elements.poemBody, activeLines(poem));
+        }
+    }
+
     function bylineOf(poem) {
-        const badges = [poem.poet];
-        const gradeLabel = grades.find((item) => item.grade === poem.grade);
-        if (gradeLabel) badges.push(gradeLabel.short);
-        return badges.join(" · ");
+        return poem.poet;
     }
 
     function makeCard({ number, title, note, meta, onClick, disabled, className }) {
@@ -331,26 +295,74 @@
         return item;
     }
 
-    // ── 차시 목록 ────────────────────────────────────────────────
-    function renderGradeTabs() {
-        const tabs = [...grades.map((item) => ({ key: item.grade, label: item.label })), { key: TOPIC_TAB, label: "소재별" }];
-        elements.gradeTabs.replaceChildren(...tabs.map((item) => {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "grade-tab";
-            button.textContent = item.label;
-            button.setAttribute("role", "tab");
-            const isActive = item.key === state.grade;
-            button.classList.toggle("is-active", isActive);
-            button.setAttribute("aria-selected", isActive ? "true" : "false");
-            button.addEventListener("click", () => {
-                state.grade = item.key;
-                writeStoredValue(GRADE_KEY, item.key);
-                renderGradeTabs();
-                renderLessonList();
-            });
-            return button;
-        }));
+    function makeBookCard(book, poemProgress) {
+        const item = document.createElement("li");
+        const button = document.createElement("button");
+        const cover = document.createElement("span");
+        const numberEl = document.createElement("span");
+        const titleEl = document.createElement("span");
+        const metaEl = document.createElement("span");
+
+        button.type = "button";
+        button.className = "book-card";
+
+        const readCount = book.poemIds.filter((id) => poemProgress[id]).length;
+        const allRead = readCount === book.poemIds.length;
+        if (allRead) button.classList.add("is-done");
+
+        cover.className = "book-cover";
+        cover.textContent = book.title;
+        numberEl.className = "book-card-number";
+        numberEl.textContent = `${orderOf(book)}권`;
+        titleEl.className = "book-card-title";
+        titleEl.textContent = book.title;
+        metaEl.className = "book-card-meta";
+        metaEl.textContent = allRead
+            ? "✓ 다 읽음"
+            : readCount > 0
+                ? `${book.poemIds.length}편 가운데 ${readCount}편 읽음`
+                : `시 ${book.poemIds.length}편`;
+
+        button.append(cover, numberEl, titleEl, metaEl);
+        button.addEventListener("click", () => {
+            state.browse = null;
+            openBookDetail(books.indexOf(book));
+        });
+        item.append(button);
+        return item;
+    }
+
+    // ── 이어서 읽기 ──────────────────────────────────────────────
+    function findResumePoint() {
+        const progress = readProgress(POEM_PROGRESS_KEY);
+        for (let bi = 0; bi < books.length; bi += 1) {
+            const book = books[bi];
+            if (!isReady(book)) continue;
+            for (let pi = 0; pi < book.poemIds.length; pi += 1) {
+                if (!progress[book.poemIds[pi]]) return { bookIndex: bi, poemIndex: pi };
+            }
+        }
+        return null;
+    }
+
+    function renderContinueBar() {
+        const point = findResumePoint();
+        if (!point) {
+            elements.continueBar.classList.add("hidden");
+            return;
+        }
+        const book = books[point.bookIndex];
+        const poem = poemById.get(book.poemIds[point.poemIndex]);
+        const startedAny = Object.keys(readProgress(POEM_PROGRESS_KEY)).length > 0;
+        elements.continueButton.textContent = startedAny
+            ? `이어서 읽기 · 「${poem.title}」`
+            : `시작하기 · 「${poem.title}」`;
+        elements.continueButton.onclick = () => guardedNav(() => {
+            state.browse = null;
+            state.bookIndex = point.bookIndex;
+            return openReadingUnlocked(point.poemIndex);
+        });
+        elements.continueBar.classList.remove("hidden");
     }
 
     // ── 소재별 ───────────────────────────────────────────────────
@@ -372,10 +384,9 @@
         const list = poemsByTopic.get(state.topic) || [];
         const poemProgress = readProgress(POEM_PROGRESS_KEY);
         elements.topicPoemList.replaceChildren(...list.map((poem, index) => {
-            const gradeLabel = grades.find((entry) => entry.grade === poem.grade);
             const record = poemProgress[poem.id];
             return makeCard({
-                number: gradeLabel ? gradeLabel.short : "",
+                number: "",
                 title: poem.title,
                 note: poem.point || "",
                 meta: record ? `✓ ${record.best}/${record.total}` : poem.poet,
@@ -385,95 +396,68 @@
         }));
     }
 
-    function openBrowse(list, index) {
+    function openBrowseUnlocked(list, index) {
         state.browse = { topic: state.topic, poems: list };
-        state.lessonIndex = -1;
-        openReading(index);
+        state.bookIndex = -1;
+        return openReadingUnlocked(index);
     }
 
-    function renderLessonList() {
-        const topicMode = state.grade === TOPIC_TAB;
-        elements.topicChips.classList.toggle("hidden", !topicMode);
-        elements.topicPoemList.classList.toggle("hidden", !topicMode);
-        elements.lessonProgressSummary.classList.toggle("hidden", topicMode);
-        elements.lessonList.classList.toggle("hidden", topicMode);
-        if (topicMode) {
+    function openBrowse(list, index) {
+        return guardedNav(() => openBrowseUnlocked(list, index));
+    }
+
+    function setShelfMode(mode) {
+        state.shelfMode = mode;
+        elements.orderTabBtn.classList.toggle("is-active", mode === "order");
+        elements.orderTabBtn.setAttribute("aria-selected", mode === "order" ? "true" : "false");
+        elements.topicTabBtn.classList.toggle("is-active", mode === "topic");
+        elements.topicTabBtn.setAttribute("aria-selected", mode === "topic" ? "true" : "false");
+        elements.orderView.classList.toggle("hidden", mode !== "order");
+        elements.topicView.classList.toggle("hidden", mode !== "topic");
+        elements.continueBar.classList.toggle("hidden", mode !== "order");
+        if (mode === "order") {
+            renderBookShelf();
+            renderContinueBar();
+        } else {
             renderTopicView();
-            return;
         }
-
-        const progress = readProgress(LESSON_PROGRESS_KEY);
-        const poemProgress = readProgress(POEM_PROGRESS_KEY);
-        const list = lessonsOfGrade(state.grade);
-        const ready = list.filter(isReady);
-        const done = ready.filter((lesson) => lesson.poemIds.every((id) => poemProgress[id])).length;
-        elements.lessonProgressSummary.textContent = ready.length === 0
-            ? "아직 준비 중이에요."
-            : `${ready.length}차시 가운데 ${done}차시를 끝냈어요.`;
-
-        elements.lessonList.replaceChildren(...list.map((lesson) => {
-            const globalIndex = lessons.indexOf(lesson);
-            if (!isReady(lesson)) {
-                return makeCard({
-                    number: `${orderInGradeOf(lesson)}차시`,
-                    title: lesson.title,
-                    note: lesson.note || "",
-                    meta: "준비 중",
-                    disabled: true
-                });
-            }
-
-            const readCount = lesson.poemIds.filter((id) => poemProgress[id]).length;
-            const allRead = readCount === lesson.poemIds.length;
-            const record = progress[lesson.id];
-            let meta = `시 ${lesson.poemIds.length}편 · 문제 ${lessonQuestionCount(lesson)}개`;
-            if (readCount > 0 && !allRead) meta = `${lesson.poemIds.length}편 가운데 ${readCount}편 읽음`;
-            else if (allRead) meta = record ? `✓ 마무리 ${record.best}/${record.total}` : "✓ 시를 다 읽음";
-
-            return makeCard({
-                number: `${orderInGradeOf(lesson)}차시`,
-                title: lesson.title,
-                note: lesson.note || "",
-                meta,
-                className: allRead ? (record && record.best === record.total ? "is-perfect" : "is-done") : "",
-                onClick: () => openLessonDetail(globalIndex)
-            });
-        }));
     }
 
-    function showLessonList() {
-        state.lessonIndex = -1;
+    function renderBookShelf() {
+        const poemProgress = readProgress(POEM_PROGRESS_KEY);
+        elements.bookShelf.replaceChildren(...books.filter(isReady).map((book) => makeBookCard(book, poemProgress)));
+    }
+
+    function showShelfUnlocked(mode) {
+        state.bookIndex = -1;
         state.poemIndex = -1;
         state.browse = null;
-        const storedRaw = readStoredValue(GRADE_KEY);
-        const stored = Number.parseInt(storedRaw, 10);
-        if (storedRaw === TOPIC_TAB) state.grade = TOPIC_TAB;
-        else if (grades.some((item) => item.grade === stored)) state.grade = stored;
-        renderGradeTabs();
-        renderLessonList();
-        setScreen(elements.lessonScreen);
+        setShelfMode(mode || state.shelfMode || "order");
+        setScreen(elements.shelfScreen);
         toTop();
     }
 
-    // ── 차시 상세 (시 목차) ──────────────────────────────────────
-    function openLessonDetail(lessonIndex) {
+    function showShelf(mode) {
+        return guardedNav(() => showShelfUnlocked(mode));
+    }
+
+    // ── 책 목차 ──────────────────────────────────────────────────
+    function openBookDetailUnlocked(bookIndex) {
         state.browse = null;
-        state.lessonIndex = lessonIndex;
+        state.bookIndex = bookIndex;
         state.poemIndex = -1;
-        const lesson = currentLesson();
-        if (!lesson) {
-            showLessonList();
+        const book = currentBook();
+        if (!book) {
+            showShelfUnlocked();
             return;
         }
 
-        const gradeLabel = grades.find((item) => item.grade === lesson.grade);
-        elements.lessonDetailKicker.textContent = `${gradeLabel ? gradeLabel.label : ""} · ${orderInGradeOf(lesson)}차시`;
-        elements.lessonDetailTitle.textContent = lesson.title;
-        elements.lessonDetailNote.textContent = lesson.note;
+        elements.bookTitle.textContent = `${orderOf(book)}권 · ${book.title}`;
+        elements.bookNote.textContent = book.note;
 
         const poemProgress = readProgress(POEM_PROGRESS_KEY);
         const poemList = currentPoemList();
-        elements.lessonPoemList.replaceChildren(...poemList.map((poem, index) => {
+        elements.bookPoemList.replaceChildren(...poemList.map((poem, index) => {
             const record = poemProgress[poem.id];
             const count = poemQuestionCount(poem);
             return makeCard({
@@ -486,33 +470,58 @@
             });
         }));
 
-        const wrapCount = wrapCountOf(lesson);
-        elements.startWrapButton.classList.toggle("hidden", wrapCount === 0);
-        elements.startWrapButton.textContent = `차시 마무리 문제 ${wrapCount}개`;
-
-        setScreen(elements.lessonDetailScreen);
+        setScreen(elements.bookScreen);
         toTop();
     }
 
+    function openBookDetail(bookIndex) {
+        return guardedNav(() => openBookDetailUnlocked(bookIndex));
+    }
+
     // ── 1단계 · 시 읽기 ──────────────────────────────────────────
-    async function openReading(poemIndex) {
+    // 화면 전환은 전부 이 잠금 하나를 거쳐야 한다. 다음 시를 받는 동안(await) 같은 자리를
+    // 두 번 눌러도, 두 번째 누름이 첫 번째가 아직 안 바꾼 자리를 잘못 짚어 건너뛰는 일이 없도록.
+    let navBusy = false;
+    async function guardedNav(run) {
+        if (navBusy) return;
+        navBusy = true;
+        try {
+            await run();
+        } finally {
+            navBusy = false;
+        }
+    }
+
+    function openReading(poemIndex) {
+        return guardedNav(() => openReadingUnlocked(poemIndex));
+    }
+
+    async function openReadingUnlocked(poemIndex) {
         state.poemIndex = poemIndex;
+        state.version = "original";
         const poem = currentPoem();
         if (poem) await loadPoem(poem);
         if (!poem) {
-            showLessonList();
+            showShelfUnlocked();
             return;
         }
 
         const list = currentPoemList();
-        const lesson = currentLesson();
+        const book = currentBook();
         elements.readKicker.textContent = state.browse
             ? `소재별 · ${state.browse.topic} · ${poemIndex + 1}/${list.length}`
-            : `${orderInGradeOf(lesson)}차시 · ${lesson.title} · ${poemIndex + 1}/${list.length}`;
+            : `${orderOf(book)}권 · ${book.title} · ${poemIndex + 1}/${list.length}`;
 
         elements.poemTitle.textContent = poem.title;
         elements.poemByline.textContent = bylineOf(poem);
-        renderPoemLines(elements.poemBody, poem);
+
+        const hasModern = Array.isArray(poem.modern) && poem.modern.length > 0;
+        elements.versionToggle.classList.toggle("hidden", !hasModern);
+        elements.versionToggle.querySelectorAll(".version-btn").forEach((button) => {
+            button.classList.toggle("is-active", button.dataset.version === state.version);
+        });
+
+        renderReadingPoem();
 
         const isProtected = poem.rights !== "public";
         elements.poemNotice.classList.toggle("hidden", !isProtected);
@@ -542,20 +551,25 @@
         toTop();
     }
 
+    function setVersion(nextVersion) {
+        if (state.version === nextVersion) return;
+        state.version = nextVersion;
+        elements.versionToggle.querySelectorAll(".version-btn").forEach((button) => {
+            button.classList.toggle("is-active", button.dataset.version === nextVersion);
+        });
+        renderReadingPoem();
+    }
+
     // ── 2단계 · 문제 풀기 ────────────────────────────────────────
     function buildSession(list) {
         return list.map((question) => ({ ...question, choices: shuffle(question.choices) }));
     }
 
-    async function startQuiz(mode) {
-        if (mode === "wrap") await loadWrapQuestions();
-        const lesson = currentLesson();
+    function startQuiz() {
         const poem = currentPoem();
-        const source = mode === "wrap" ? wrapQuestionsOf(lesson) : questionsOfPoem(poem ? poem.id : "");
-        const session = buildSession(source);
+        const session = buildSession(questionsOfPoem(poem ? poem.id : ""));
         if (session.length === 0) return;
 
-        state.mode = mode;
         state.questions = session;
         state.currentIndex = 0;
         state.score = 0;
@@ -564,10 +578,7 @@
 
         elements.currentScore.textContent = "0";
         elements.questionTotal.textContent = String(session.length);
-        elements.quizKicker.textContent = mode === "wrap"
-            ? `${orderInGradeOf(lesson)}차시 마무리 · ${lesson.title}`
-            : `${poem.title} · 문제`;
-        elements.quizScreen.querySelector(".step-trail").classList.toggle("hidden", mode === "wrap");
+        elements.quizKicker.textContent = `「${poem.title}」 · 문제`;
 
         setScreen(elements.quizScreen);
         renderQuestion();
@@ -580,12 +591,14 @@
         if (!poem) return;
         elements.quizPoemTitle.textContent = poem.title;
         elements.quizPoemByline.textContent = bylineOf(poem);
-        renderPoemLines(elements.quizPoemBody, poem);
         if (poem.rights !== "public") {
+            elements.quizPoemBody.replaceChildren();
             const notice = document.createElement("p");
             notice.className = "poem-notice";
             notice.textContent = "교과서를 펴고 이 시를 읽은 뒤 답해 보세요.";
             elements.quizPoemBody.append(notice);
+        } else {
+            renderPoemLines(elements.quizPoemBody, poem.lines || []);
         }
     }
 
@@ -605,9 +618,7 @@
         elements.choiceList.replaceChildren();
         elements.feedback.classList.add("hidden");
         elements.feedback.classList.remove("is-wrong");
-        elements.nextButton.textContent = state.currentIndex === total - 1
-            ? (state.mode === "wrap" ? "결과 보기" : "작품 설명 보기")
-            : "다음 문제";
+        elements.nextButton.textContent = state.currentIndex === total - 1 ? "작품 설명 보기" : "다음 문제";
 
         question.choices.forEach((choice, index) => {
             const button = document.createElement("button");
@@ -676,8 +687,7 @@
     function goToNextQuestion() {
         if (!state.answered) return;
         if (state.currentIndex >= state.questions.length - 1) {
-            if (state.mode === "wrap") showResults();
-            else showAfterword();
+            showAfterword();
             return;
         }
         state.currentIndex += 1;
@@ -694,16 +704,13 @@
 
     function appendMissed(list, answerRecord) {
         const item = document.createElement("li");
-        const poem = answerRecord.question.poemId ? poemById.get(answerRecord.question.poemId) : null;
         const sentence = document.createElement("span");
         const answer = document.createElement("span");
         const chosen = document.createElement("span");
         const explanation = document.createElement("span");
 
         sentence.className = "review-sentence";
-        sentence.textContent = poem && list === elements.missedList
-            ? `「${poem.title}」 ${answerRecord.question.sentence}`
-            : answerRecord.question.sentence;
+        sentence.textContent = answerRecord.question.sentence;
         answer.className = "review-answer";
         answer.textContent = `정답: ${answerRecord.question.answer}`;
         chosen.className = "review-chosen";
@@ -714,21 +721,37 @@
         list.append(item);
     }
 
+    // 이 시가 지금 읽는 줄에서 마지막 시인지, 다음은 무엇인지를 미리 정한다.
+    function nextStopAfter() {
+        const list = currentPoemList();
+        if (state.poemIndex < list.length - 1) {
+            return { kind: "poem", label: `다음 시 · ${list[state.poemIndex + 1].title}` };
+        }
+        if (state.browse) {
+            return { kind: "shelf-topic", label: "소재 목록으로" };
+        }
+        const nextBookIndex = state.bookIndex + 1;
+        const nextBook = books[nextBookIndex];
+        if (nextBook && isReady(nextBook)) {
+            return { kind: "book", bookIndex: nextBookIndex, label: `다음 책 · ${nextBook.title}` };
+        }
+        return { kind: "shelf-order", label: "책장으로" };
+    }
+
     function showAfterword() {
         const poem = currentPoem();
         if (!poem) {
-            showLessonList();
+            showShelf();
             return;
         }
 
         const total = state.questions.length;
         const { best, isNewBest } = saveResult(POEM_PROGRESS_KEY, poem.id, state.score, total);
-        const list = currentPoemList();
-        const lesson = currentLesson();
+        const book = currentBook();
 
         elements.afterKicker.textContent = state.browse
             ? `소재별 · ${state.browse.topic}`
-            : `${orderInGradeOf(lesson)}차시 · ${lesson.title}`;
+            : `${orderOf(book)}권 · ${book.title}`;
         elements.afterTitle.textContent = `「${poem.title}」 읽고 나서`;
 
         elements.afterByline.textContent = `${poem.poet} 지음`;
@@ -750,91 +773,43 @@
         missed.forEach((record) => appendMissed(elements.afterMissedList, record));
         elements.afterMissed.classList.toggle("hidden", missed.length === 0);
 
-        const isLast = state.poemIndex >= list.length - 1;
-        const wrapCount = state.browse ? 0 : wrapCountOf(lesson);
-        if (!isLast) elements.afterNextButton.textContent = `다음 시 · ${list[state.poemIndex + 1].title}`;
-        else if (wrapCount > 0) elements.afterNextButton.textContent = `차시 마무리 문제 ${wrapCount}개`;
-        else elements.afterNextButton.textContent = "시 목록";
+        elements.afterNextButton.textContent = nextStopAfter().label;
+        elements.afterListButton.textContent = state.browse ? "소재 목록" : "책 목차";
 
         setScreen(elements.afterScreen);
         elements.afterNextButton.focus({ preventScroll: true });
         toTop();
     }
 
+    // 다음 자리를 정하는 일과 그리로 옮겨 가는 일을 한 잠금 안에서 함께 한다.
+    // 따로 하면, 두 번 눌렀을 때 두 번째 누름이 첫 번째가 아직 옮기지 않은 자리를 보고
+    // 다음 자리를 잘못 짚어 시 한 편을 건너뛸 수 있다.
     function goAfterNext() {
-        const list = currentPoemList();
-        if (state.poemIndex < list.length - 1) {
-            openReading(state.poemIndex + 1);
-            return;
-        }
-        const lesson = currentLesson();
-        if (!state.browse && lesson && wrapCountOf(lesson) > 0) {
-            startQuiz("wrap");
-            return;
-        }
-        backToList();
+        return guardedNav(() => {
+            const stop = nextStopAfter();
+            if (stop.kind === "poem") {
+                return openReadingUnlocked(state.poemIndex + 1);
+            }
+            if (stop.kind === "book") {
+                state.browse = null;
+                state.bookIndex = stop.bookIndex;
+                return openReadingUnlocked(0);
+            }
+            if (stop.kind === "shelf-topic") {
+                return showShelfUnlocked("topic");
+            }
+            return showShelfUnlocked("order");
+        });
+    }
+
+    function backToListUnlocked() {
+        if (state.browse) return showShelfUnlocked("topic");
+        if (state.bookIndex >= 0) return openBookDetailUnlocked(state.bookIndex);
+        return showShelfUnlocked();
     }
 
     function backToList() {
-        if (state.browse) showLessonList();
-        else if (state.lessonIndex >= 0) openLessonDetail(state.lessonIndex);
-        else showLessonList();
-    }
-
-    // ── 차시 마무리 결과 ─────────────────────────────────────────
-    function getResultMessage(score, total) {
-        const playerName = getPlayerName();
-        const subject = playerName ? `${playerName} 님, ` : "";
-        const ratio = total > 0 ? score / total : 0;
-        if (score === total) return `${subject}완벽해요! 시를 아주 잘 읽었어요.`;
-        if (ratio >= 0.8) return `${subject}훌륭해요! 거의 다 짚어 냈어요.`;
-        if (ratio >= 0.6) return `${subject}좋아요! 헷갈린 시만 다시 읽어 봐요.`;
-        return `${subject}괜찮아요. 시를 한 번 더 읽고 도전해 봐요.`;
-    }
-
-    function showResults() {
-        const lesson = currentLesson();
-        if (!lesson) {
-            showLessonList();
-            return;
-        }
-        const total = state.questions.length;
-        const missed = state.answers.filter((answer) => !answer.isCorrect);
-        elements.finalScore.textContent = String(state.score);
-        elements.finalTotal.textContent = String(total);
-        elements.resultMessage.textContent = getResultMessage(state.score, total);
-        elements.missedList.replaceChildren();
-        missed.forEach((record) => appendMissed(elements.missedList, record));
-        elements.perfectReview.classList.toggle("hidden", missed.length !== 0);
-        elements.missedList.classList.toggle("hidden", missed.length === 0);
-
-        const gradeList = lessonsOfGrade(lesson.grade);
-        const nextLesson = gradeList[gradeList.indexOf(lesson) + 1];
-        const { best, isNewBest } = saveResult(LESSON_PROGRESS_KEY, lesson.id, state.score, total);
-        elements.resultTitle.textContent = `${orderInGradeOf(lesson)}차시 · ${lesson.title}`;
-        elements.bestMessage.textContent = isNewBest
-            ? `이 차시 최고 기록이에요! ${best}/${total}`
-            : `이 차시 최고 기록 ${best}/${total}`;
-        elements.nextLessonButton.classList.toggle("hidden", !nextLesson || !isReady(nextLesson));
-
-        setScreen(elements.resultScreen);
-        elements.restartButton.focus({ preventScroll: true });
-        toTop();
-    }
-
-    function goToNextLesson() {
-        const lesson = currentLesson();
-        if (!lesson) {
-            showLessonList();
-            return;
-        }
-        const gradeList = lessonsOfGrade(lesson.grade);
-        const nextLesson = gradeList[gradeList.indexOf(lesson) + 1];
-        if (!nextLesson || !isReady(nextLesson)) {
-            showLessonList();
-            return;
-        }
-        openLessonDetail(lessons.indexOf(nextLesson));
+        return guardedNav(() => backToListUnlocked());
     }
 
     // ── 손놀림 ───────────────────────────────────────────────────
@@ -854,39 +829,35 @@
         }
     }
 
-    // 뒤로 가기는 한 단계씩만 물러난다. 차시 목록에서만 사이트 메인으로 나간다.
+    // 뒤로 가기는 한 단계씩만 물러난다. 책장에서만 사이트 메인으로 나간다.
     function handleBackNavigation(event) {
         const step = (run) => {
             event?.preventDefault();
             run();
         };
         if (!elements.readScreen.classList.contains("hidden")) return step(backToList);
-        if (!elements.quizScreen.classList.contains("hidden")) {
-            return step(() => {
-                if (state.mode === "wrap") backToList();
-                else openReading(state.poemIndex);
-            });
-        }
+        if (!elements.quizScreen.classList.contains("hidden")) return step(() => openReading(state.poemIndex));
         if (!elements.afterScreen.classList.contains("hidden")) return step(backToList);
-        if (!elements.resultScreen.classList.contains("hidden")) return step(backToList);
-        if (!elements.lessonDetailScreen.classList.contains("hidden")) return step(showLessonList);
-        // 차시 목록에서는 사이트 메인 링크 동작을 그대로 둔다.
+        if (!elements.bookScreen.classList.contains("hidden")) return step(() => showShelf());
+        // 책장에서는 사이트 메인 링크 동작을 그대로 둔다.
     }
 
-    elements.readQuizButton.addEventListener("click", () => startQuiz("poem"));
+    elements.orderTabBtn.addEventListener("click", () => setShelfMode("order"));
+    elements.topicTabBtn.addEventListener("click", () => setShelfMode("topic"));
+    elements.bookShelfButton.addEventListener("click", () => showShelf());
+    elements.versionToggle.addEventListener("click", (event) => {
+        const button = event.target.closest(".version-btn");
+        if (button) setVersion(button.dataset.version);
+    });
+    elements.readQuizButton.addEventListener("click", startQuiz);
     elements.readListButton.addEventListener("click", backToList);
-    elements.startWrapButton.addEventListener("click", () => startQuiz("wrap"));
     elements.nextButton.addEventListener("click", goToNextQuestion);
     elements.afterNextButton.addEventListener("click", goAfterNext);
     elements.afterListButton.addEventListener("click", backToList);
-    elements.restartButton.addEventListener("click", () => startQuiz("wrap"));
-    elements.nextLessonButton.addEventListener("click", goToNextLesson);
-    elements.lessonDetailButton.addEventListener("click", backToList);
-    elements.lessonListButton.addEventListener("click", showLessonList);
     document.addEventListener("keydown", handleKeyboard);
 
     elements.backLink?.addEventListener("click", handleBackNavigation);
     window.addEventListener("sitebackrequest", handleBackNavigation);
 
-    showLessonList();
+    showShelf("order");
 })();
