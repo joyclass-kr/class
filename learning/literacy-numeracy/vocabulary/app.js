@@ -2,7 +2,8 @@
     "use strict";
 
     const DATA_URL = "assets/data/english-vocabulary-3000-v2.json";
-    const IMAGE_MANIFEST_URL = "assets/data/vocabulary-word-images-v1.json";
+    const CURATED_EXAMPLES_URL = "assets/data/curated-examples-v1.json";
+    const IMAGE_MANIFEST_URL = "assets/data/vocabulary-word-images-v1.json?v=20260908a";
     const SPELLING_GAME_URL = "assets/data/vocabulary-spelling-game-v1.json";
     const IMAGE_BASE_URL = "assets/images/";
     const PROGRESS_KEY = "englishVocabulary3000ProgressV1";
@@ -35,6 +36,38 @@
 
     function levelName(level) {
         return `Level ${level}`;
+    }
+
+    function applyCuratedExamples(data, curatedData) {
+        const entries = Array.isArray(curatedData?.examples) ? curatedData.examples : [];
+        if (!Array.isArray(data?.words) || !entries.length) return 0;
+        const wordsById = new Map(data.words.map((word) => [String(word.id), word]));
+        let appliedCount = 0;
+        entries.forEach((entry) => {
+            const word = wordsById.get(String(entry?.id));
+            const en = String(entry?.en || "").trim();
+            const ko = String(entry?.ko || "").trim();
+            const meanings = Array.isArray(entry?.meanings)
+                ? entry.meanings.map((meaning) => String(meaning || "").trim()).filter(Boolean)
+                : [];
+            if (!word) return;
+            let changed = false;
+            if (meanings.length) {
+                word.meanings = meanings;
+                changed = true;
+            }
+            if (en && ko) {
+                word.example = {
+                    en,
+                    ko,
+                    source: "curated_school_example",
+                    translationType: "translation",
+                };
+                changed = true;
+            }
+            if (changed) appliedCount += 1;
+        });
+        return appliedCount;
     }
 
     const core = window.VocabularyCore;
@@ -295,7 +328,7 @@
             pronunciationButton.type = "button";
             pronunciationButton.className = "sheet-speak-button";
             pronunciationButton.textContent = "🔊";
-            pronunciationButton.setAttribute("aria-label", `Hear ${word.word}`);
+            pronunciationButton.setAttribute("aria-label", `${word.word} 듣기`);
             pronunciationButton.addEventListener("click", () => speakText(word.word));
             english.append(wordLabel, pronunciationButton);
             const meaning = document.createElement("td");
@@ -377,7 +410,7 @@
         const unknownOnly = Boolean(options.unknownOnly);
         const unknownWords = baseWords.filter((word) => state.progress[String(word.id)]?.status === "unknown");
         if (unknownOnly && !unknownWords.length) {
-            showToast("이 차시에 ‘Not yet’으로 표시한 단어가 없습니다.");
+            showToast("이 차시에 ‘아직 어려워요’로 표시한 단어가 없습니다.");
             return;
         }
         state.unknownOnly = unknownOnly;
@@ -423,7 +456,7 @@
 
     function updateShuffleToggle() {
         elements.shuffleButton.setAttribute("aria-checked", String(state.shuffleEnabled));
-        elements.shuffleButton.setAttribute("aria-label", `Shuffle ${state.shuffleEnabled ? "on" : "off"}`);
+        elements.shuffleButton.setAttribute("aria-label", `순서 섞기 ${state.shuffleEnabled ? "켜짐" : "꺼짐"}`);
     }
 
     function renderWordImage(word) {
@@ -445,7 +478,7 @@
         const summary = core.summarizeWords(baseWords, state.progress);
         const completion = Math.round(((state.currentIndex + 1) / state.currentWords.length) * 100);
 
-        elements.studyStage.textContent = `${STAGE_CARD_LABELS[word.stageCode] || word.stage} · Official 2022 List`;
+        elements.studyStage.textContent = `${STAGE_CARD_LABELS[word.stageCode] || word.stage} · 2022 개정 교육과정`;
         elements.studyTitle.textContent = `${levelName(word.globalLevel)} · ${state.currentLesson + 1}차시${state.unknownOnly ? " 복습" : ""}`;
         elements.cardPosition.textContent = `${state.currentIndex + 1} / ${state.currentWords.length}`;
         elements.levelStatus.textContent = `확인 ${summary.known + summary.unknown}/${baseWords.length} · 복습 ${summary.unknown}`;
@@ -484,12 +517,12 @@
             return chip;
         }));
         elements.relatedBlock.hidden = related.length === 0;
-        elements.cardBadge.textContent = status === "known" ? "Learned" : status === "unknown" ? "Review" : "New";
+        elements.cardBadge.textContent = status === "known" ? "외웠어요" : status === "unknown" ? "다시 보기" : "새 단어";
         elements.cardBadge.className = `card-badge ${status === "unseen" ? "" : status}`.trim();
         updateRevealState();
         elements.previousButton.disabled = state.currentIndex === 0;
         elements.nextButton.disabled = state.currentIndex === state.currentWords.length - 1;
-        elements.studyMessage.textContent = state.unknownOnly ? "Reviewing words marked ‘Not yet’." : "Tap the card or press Space to see more.";
+        elements.studyMessage.textContent = state.unknownOnly ? "‘아직 어려워요’로 표시한 단어를 복습하고 있어요." : "카드를 누르거나 Space를 눌러 뜻을 보세요.";
     }
 
     function toggleMeaning() {
@@ -711,7 +744,7 @@
 
     function speakText(text, rate = 0.85) {
         if (!text || !("speechSynthesis" in window)) {
-            showToast("Sound is not available in this browser.");
+            showToast("이 브라우저에서는 소리를 들을 수 없어요.");
             return;
         }
         window.speechSynthesis.cancel();
@@ -741,7 +774,7 @@
         state.revealed = false;
         updateShuffleToggle();
         renderStudyCard();
-        showToast(state.shuffleEnabled ? "Shuffle on" : "Shuffle off");
+        showToast(state.shuffleEnabled ? "순서 섞기를 켰어요." : "순서 섞기를 껐어요.");
     }
 
     function backToLevels() {
@@ -799,13 +832,13 @@
         });
         const meaning = state.gameTarget.meanings[0] || "";
         if (isCorrect) {
-            elements.gameFeedback.textContent = `Correct! ${state.gameTarget.word} — ${meaning}`;
+            elements.gameFeedback.textContent = `정답! ${state.gameTarget.word} — ${meaning}`;
             elements.gameFeedback.className = "game-feedback correct";
         }
         elements.gameNextButton.disabled = false;
         elements.gameNextButton.textContent = state.gameQuestionNumber >= state.gameRoundLength
-            ? "See results"
-            : "Next";
+            ? "결과 보기"
+            : "다음";
         updateGameStats();
     }
 
@@ -822,10 +855,10 @@
 
     function renderGameQuestion() {
         elements.gameWord.textContent = state.gameTarget.word;
-        elements.gameFeedback.textContent = "Choose picture 1, 2, 3, or 4.";
+        elements.gameFeedback.textContent = "그림을 하나 고르세요.";
         elements.gameFeedback.className = "game-feedback";
         elements.gameNextButton.disabled = true;
-        elements.gameNextButton.textContent = "Next";
+        elements.gameNextButton.textContent = "다음";
         elements.gameChoices.replaceChildren(...state.gameChoices.map((word, index) => {
             const button = document.createElement("button");
             button.type = "button";
@@ -972,8 +1005,8 @@
 
     function setSpellingReviewMode(isReview) {
         state.spellingReviewMode = isReview;
-        elements.spellingModeLabel.textContent = isReview ? "Saved words to try again" : "Read the meaning and build the word.";
-        elements.spellingTitle.textContent = isReview ? "Try Missed Words" : "Spell the Meaning";
+        elements.spellingModeLabel.textContent = isReview ? "틀린 단어를 다시 풀어 봐요." : "뜻을 보고 영어 단어를 완성해요.";
+        elements.spellingTitle.textContent = isReview ? "틀린 단어 다시 풀기" : "철자 완성하기";
         if (isReview) {
             elements.spellingLevelSelect.disabled = true;
         }
@@ -1001,12 +1034,12 @@
         elements.spellingInput.disabled = false;
         elements.spellingInput.className = "spelling-input";
         elements.spellingHint.textContent = core.spellingHint(state.spellingTarget.word, false);
-        elements.spellingFeedback.textContent = "Type the word.";
+        elements.spellingFeedback.textContent = "단어를 완성하세요.";
         elements.spellingFeedback.className = "game-feedback";
         elements.spellingHintButton.disabled = false;
         elements.spellingCheckButton.disabled = false;
         elements.spellingNextButton.disabled = true;
-        elements.spellingNextButton.textContent = "Next";
+        elements.spellingNextButton.textContent = "다음";
         updateSpellingStats();
         renderSpellingTiles();
         speakText(state.spellingTarget.word);
@@ -1055,7 +1088,7 @@
             checkSpellingAnswer();
             return;
         }
-        elements.spellingFeedback.textContent = "Not quite. Press Backspace and try again.";
+        elements.spellingFeedback.textContent = "아직 아니에요. 마지막 글자를 지우고 다시 해 보세요.";
         elements.spellingFeedback.className = "game-feedback incorrect";
         elements.spellingBuiltWord.animate(
             [{ transform: "translateX(-5px)" }, { transform: "translateX(5px)" }, { transform: "none" }],
@@ -1113,13 +1146,13 @@
         elements.spellingHintButton.disabled = true;
         elements.spellingCheckButton.disabled = true;
         elements.spellingFeedback.textContent = isCorrect
-            ? `Correct! ${state.spellingTarget.word}`
-            : `Not quite. The word is ${state.spellingTarget.word}.`;
+            ? `정답! ${state.spellingTarget.word}`
+            : `아쉬워요. 정답은 ${state.spellingTarget.word}예요.`;
         elements.spellingFeedback.className = `game-feedback ${isCorrect ? "correct" : "incorrect"}`;
         elements.spellingNextButton.disabled = false;
         elements.spellingNextButton.textContent = state.spellingQuestionNumber >= state.spellingRoundLength
-            ? "See results"
-            : "Next";
+            ? "결과 보기"
+            : "다음";
         updateSpellingStats();
     }
 
@@ -1156,7 +1189,7 @@
         elements.spellingRetryWrongButton.hidden = state.spellingWrongEntries.length === 0;
         const remainingStored = storedSpellingWrongWords().length;
         elements.spellingPlayAgainButton.textContent = state.spellingReviewMode && remainingStored
-            ? `${remainingStored} missed words left`
+            ? `남은 틀린 단어 ${remainingStored}개`
             : "10 new questions";
     }
 
@@ -1382,19 +1415,25 @@
 
     async function initialize() {
         try {
-            const [response, imageResponse, spellingResponse] = await Promise.all([
+            const [response, curatedExamplesResponse, imageResponse, spellingResponse] = await Promise.all([
                 fetch(DATA_URL),
+                fetch(CURATED_EXAMPLES_URL).catch(() => null),
                 fetch(IMAGE_MANIFEST_URL).catch(() => null),
                 fetch(SPELLING_GAME_URL).catch(() => null),
             ]);
             if (!response.ok) throw new Error(`Vocabulary data request failed: ${response.status}`);
             state.data = await response.json();
+            if (curatedExamplesResponse?.ok) {
+                const curatedExamples = await curatedExamplesResponse.json();
+                const appliedCount = applyCuratedExamples(state.data, curatedExamples);
+                console.info(`Applied ${appliedCount} curated vocabulary examples.`);
+            }
             if (imageResponse?.ok) {
                 const manifest = await imageResponse.json();
                 const imageEntries = Object.entries(manifest.images || {}).filter(([id, image]) => (
                     /^\d+$/.test(id)
                     && image?.word
-                    && /^[a-z0-9-]+\.webp$/.test(image?.file || "")
+                    && /^[a-z0-9-]+\.(?:webp|png)$/.test(image?.file || "")
                 ));
                 state.imageMap = new Map(imageEntries);
             }

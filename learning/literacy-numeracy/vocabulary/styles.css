@@ -310,11 +310,11 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 .card-divider { width: 54px; height: 3px; margin: 14px 0 12px; background: var(--gold); }
 .answer-layout { display: block; width: min(690px, 100%); }
 .answer-copy { display: block; min-width: 0; }
-.word-image-block { display: none; overflow: hidden; width: 128px; aspect-ratio: 1; border: 1px solid rgba(199,154,82,.34); border-radius: 14px; background: #f7f0e2; opacity: 0; visibility: hidden; transform: translateY(5px); transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
-.word-image-block img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.word-image-block { display: none; overflow: hidden; width: 144px; aspect-ratio: 1; padding: 6px; border: 1px solid rgba(199,154,82,.34); border-radius: 14px; background: #f7f0e2; opacity: 0; visibility: hidden; transform: translateY(5px); transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
+.word-image-block img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .meaning-text { display: block; max-width: 650px; margin: 0 auto; color: transparent; font-size: clamp(20px, 3vw, 26px); font-weight: 900; line-height: 1.4; text-shadow: 0 0 12px rgba(36,48,45,.28); transition: color .16s ease, text-shadow .16s ease; }
 .flashcard.revealed .meaning-text { color: var(--ink); text-shadow: none; }
-.flashcard.revealed .answer-layout.has-image { display: grid; grid-template-columns: 128px minmax(0, 1fr); align-items: start; gap: 16px; }
+.flashcard.revealed .answer-layout.has-image { display: grid; grid-template-columns: 144px minmax(0, 1fr); align-items: start; gap: 16px; }
 .flashcard.revealed .answer-layout.has-image .meaning-text { text-align: left; }
 .flashcard.revealed .word-image-block { display: block; opacity: 1; visibility: visible; transform: none; }
 .example-block, .related-block {
@@ -560,7 +560,7 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
     border-radius: 18px;
     background: #f7f0e2;
 }
-.spelling-image-frame img { display: block; width: 100%; height: 100%; border-radius: 12px; object-fit: cover; }
+.spelling-image-frame img { display: block; width: 100%; height: 100%; border-radius: 12px; object-fit: contain; }
 .spelling-clue-card { display: flex; flex-direction: column; justify-content: center; gap: 12px; aspect-ratio: auto; min-height: 280px; text-align: center; }
 .spelling-clue-card img { height: 170px; flex: 0 0 170px; }
 .spelling-clue-card.no-image img { display: none; }
@@ -674,8 +674,8 @@ body:has(#levelScreen:not([hidden])) main { padding-bottom: 14px; }
     .example-ko { font-size: 15px; }
     .utility-actions { grid-template-columns: 1fr 1fr; }
     .example-block { padding: 14px 16px; }
-    .flashcard.revealed .answer-layout.has-image { grid-template-columns: 92px minmax(0, 1fr); gap: 14px; }
-    .word-image-block { width: 92px; border-radius: 10px; }
+    .flashcard.revealed .answer-layout.has-image { grid-template-columns: 104px minmax(0, 1fr); gap: 14px; }
+    .word-image-block { width: 104px; padding: 4px; border-radius: 10px; }
     .memory-actions button { min-height: 58px; font-size: 18px; }
     .game-toolbar { grid-template-columns: 1fr 1fr; align-items: center; }
     .game-toolbar > div { grid-column: 1 / -1; grid-row: 1; }
