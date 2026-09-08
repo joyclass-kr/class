@@ -423,10 +423,33 @@
                     "장음계와 견주면 넷째 음부터 어긋나기 시작하고, Lydian​(리디아)과는 넷째 음까지 같습니다."
                 ],
                 examples: [{ scale: "whole" }, { scale: "lydian" }],
-                read: { drill: "scale", items: ["whole", "lydian", "major"], limit: 10 }
+                read: { drill: "scale", items: ["whole", "lydian", "major"], limit: 10 },
+                listen: { drill: "scale", items: ["whole", "lydian", "major"], mode: "mixed", limit: 9 }
             },
-            { kind: "preset", drill: "scale", preset: "sym" },
-            { kind: "preset", drill: "scale", preset: "dom" }
+            {
+                id: "diminished",
+                title: "Diminished Scales​(감음계)",
+                body: [
+                    "온음과 반음을 번갈아 쌓으면 음이 여덟인 Diminished Scale​(감음계)이 됩니다. 온음으로 시작하는 온반과 반음으로 시작하는 반온, 두 가지가 있습니다.",
+                    "이 음계는 단3도마다 같은 꼴이 되풀이됩니다. 그래서 서로 다른 감음계는 셋뿐입니다. 열두 음 가운데 여덟을 쓰니 어느 조에 있는지가 흐려집니다.",
+                    "온반은 dim7​(감7화음)에 얹고, 반온은 속7화음에 얹습니다. 반온에는 ♭9·♯9·♯11·13이 다 들어 있어 변화된 속화음의 텐션을 한꺼번에 담습니다."
+                ],
+                examples: [{ scale: "dimwh" }, { scale: "dimhw" }],
+                read: { drill: "scale", items: ["dimwh", "dimhw", "whole"], limit: 9 },
+                listen: { drill: "scale", preset: "sym", mode: "mixed", limit: 9 }
+            },
+            {
+                id: "dominant-scales",
+                title: "Dominant Scales​(속화음 음계)",
+                body: [
+                    "속7화음 하나에도 얹을 수 있는 음계가 여럿입니다. 무엇을 얹느냐는 그 화음이 어떤 텐션을 갖고 있느냐로 정해집니다.",
+                    "텐션이 없으면 Mixolydian​(믹솔리디안)입니다. ♯11이 있으면 Lydian ♭7, ♭9·♯9·♭13이 있으면 Altered Scale​(변화된 음계)을 얹습니다. Altered는 가락단음계의 일곱째 선법입니다.",
+                    "Half-whole Diminished​(반온 감음계)는 ♭9·♯9·♯11·13을 함께 담습니다. Phrygian Dominant​(프리지안 도미넌트)는 화성단음계의 다섯째 선법으로, 단조의 V 자리에 얹습니다."
+                ],
+                examples: [{ scale: "lydb7" }, { scale: "altered" }, { scale: "phrydom" }],
+                read: { drill: "scale", items: ["mixolydian", "lydb7", "altered", "dimhw", "phrydom"], limit: 10 },
+                listen: { drill: "scale", preset: "dom", mode: "mixed", limit: 10 }
+            }
         ]
     };
 
