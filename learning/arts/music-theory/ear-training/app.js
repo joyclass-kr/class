@@ -4,6 +4,18 @@
     const byId = id => document.getElementById(id);
     const pick = list => list[Math.floor(Math.random() * list.length)];
     const randomInt = (low, high) => low + Math.floor(Math.random() * (high - low + 1));
+
+    /* sort(() => Math.random() - .5)는 고르게 섞이지 않는다. */
+    function shuffled(list) {
+        const out = list.slice();
+        for (let index = out.length - 1; index > 0; index -= 1) {
+            const swap = Math.floor(Math.random() * (index + 1));
+            const held = out[index];
+            out[index] = out[swap];
+            out[swap] = held;
+        }
+        return out;
+    }
     const N = window.Notation;
 
     /* 표기는 영어(한글)로 적는다. 괄호 앞의 U+200B는 좁은 화면에서 줄을 나눌 자리다. */
@@ -1203,10 +1215,10 @@
         /* 첫 박은 되도록 그대로 두어 시작을 견주지 못하게 한다. */
         const movable = allowFirst ? cells.slice() : cells.filter(cell => cell > 0);
         if (!movable.length) return null;
-        const order = movable.slice().sort(() => Math.random() - .5);
+        const order = shuffled(movable);
         for (let index = 0; index < order.length; index += 1) {
             const from = order[index];
-            const ways = NUDGES.slice().sort(() => Math.random() - .5);
+            const ways = shuffled(NUDGES);
             for (let way = 0; way < ways.length; way += 1) {
                 const to = from + ways[way];
                 if (to < 0 || to >= BAR_CELLS || taken.has(to)) continue;
@@ -1244,7 +1256,7 @@
         fill(() => nudgeOnsets(RN.onsets(pick(bars)), true), 200);
         fill(() => rhythmBar(item.set).bar, 300);
 
-        const order = bars.slice().sort(() => Math.random() - .5);
+        const order = shuffled(bars);
         return {
             silentStaff: true,
             rhythm: { bar: answer, onsets: RN.onsets(answer) },
@@ -2001,12 +2013,34 @@
         session.pool = preset && !preset.ids
             ? [preset]
             : drill.items.filter(item => session.enabled.has(item.id));
+        session.bag = null;
         session.right = 0;
         session.total = 0;
         session.perItem = new Map();
         els.askText.textContent = drill.ask;
         showScreen("drill");
         nextQuestion();
+    }
+
+    /*
+     * 문제거리를 자루에서 뽑는다. 매번 아무거나 집으면 열 문제 내내 쉬운 것만
+     * 나오거나 같은 것이 세 번 나오기도 한다. 판에 든 것을 섞어 한 바퀴 다
+     * 돌린 뒤에 다시 섞으므로, 판에 든 것은 다 한 번씩 나온다.
+     */
+    function drawItem() {
+        if (!session.bag || !session.bag.length) {
+            session.bag = shuffled(session.pool);
+            /*
+             * 자루를 새로 채웠는데 첫 장이 바로 앞 문제와 같으면 뒤로 미룬다.
+             * 둘뿐인 판에서까지 미루면 번갈아 나오는 것이 빤히 보이므로 셋부터다.
+             */
+            const previous = session.current && session.current.item.id;
+            const last = session.bag.length - 1;
+            if (last > 1 && session.bag[last].id === previous) {
+                session.bag.unshift(session.bag.pop());
+            }
+        }
+        return session.bag.pop();
     }
 
     function nextQuestion() {
@@ -2017,9 +2051,7 @@
         }
 
         const drill = session.drill;
-        const previous = session.current && session.current.item.id;
-        let item = pick(session.pool);
-        if (session.pool.length > 2 && item.id === previous) item = pick(session.pool);
+        const item = drawItem();
 
         const question = drill.make(item, session.mode);
         question.preset = session.preset;
