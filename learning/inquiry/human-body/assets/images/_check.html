@@ -210,8 +210,10 @@ function box(svg, id) {
 function outlines(svg, id) {
     var e = svg.querySelector('#' + CSS.escape(id));
     if (!e) return [];
-    return e.matches('path,circle,ellipse,rect,polygon,polyline')
-        ? [e] : [].slice.call(e.querySelectorAll('path,circle,ellipse,rect,polygon,polyline'));
+    // <line> 도 넣는다. 눈의 진대는 선 여러 개로 그려져 있는데
+    // 이걸 빠뜨려서 「조각 없음」으로 잘못 나왔다.
+    var SEL = 'path,circle,ellipse,rect,polygon,polyline,line';
+    return e.matches(SEL) ? [e] : [].slice.call(e.querySelectorAll(SEL));
 }
 
 function samples(el, cap) {
