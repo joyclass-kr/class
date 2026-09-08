@@ -335,10 +335,13 @@
             : 0;
         const firstX = COLUMN_X + signWidth;
         /* 칸 수가 적어도 오선 길이는 같게 둔다. 짧은 오선이 넓은 자리에 떠 보이지 않게. */
-        const width = Math.max(
-            settings.minWidth || 0,
-            firstX + Math.max(1, columns.length) * COLUMN_GAP + 16
-        );
+        const needed = firstX + Math.max(1, columns.length) * COLUMN_GAP + 16;
+        const width = Math.max(settings.minWidth || 0, needed);
+        /*
+         * 그러면 칸이 하나·둘뿐일 때 음표가 자리표에 붙어 왼쪽에 몰리고 오른쪽이
+         * 텅 빈다. 남는 자리의 절반만큼 칸을 밀어 가운데에 앉힌다.
+         */
+        const slack = Math.max(0, width - needed) / 2;
 
         /*
          * 위아래 여백을 음표가 닿는 데까지만 남긴다. 임시표는 음표머리보다 위로 더
@@ -391,7 +394,7 @@
 
         const alters = signatureAlters(sign);
         columns.forEach((column, index) => {
-            const x = firstX + index * COLUMN_GAP;
+            const x = firstX + slack + index * COLUMN_GAP;
             if (!column) {
                 const unknown = make("text", { class: "sheet-unknown", x: x, y: TOP_LINE_Y + STEP_Y * 4 + 10 });
                 unknown.textContent = "?";

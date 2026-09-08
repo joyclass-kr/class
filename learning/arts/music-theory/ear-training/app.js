@@ -496,6 +496,28 @@
     }
 
     /*
+     * 음정 만들기. 기준음을 악보와 건반에 찍어 주고 그 위나 아래로 그 음정만큼
+     * 떨어진 음을 누르게 한다. 이름을 고르는 문제와 달라 찍어 맞힐 수가 없고,
+     * 한 가지 성질만 다루는 차시에서도 문제가 빈 문제가 되지 않는다.
+     */
+    function buildQuestion(item) {
+        const up = randomInt(0, 1) === 1;
+        const from = pick(intervalRoots(item, !up));
+        const to = up
+            ? N.step(from, item.degree, item.semis)
+            : N.step(from, -item.degree, -item.semis);
+        return {
+            ask: item.ko + (up ? " 위" : " 아래") + " 음을 누르세요",
+            playback: { groups: [[from.midi]], beat: .9 },
+            staffBefore: [{ notes: [from] }],
+            staffAfter: [{ notes: up ? [from, to] : [to, from] }],
+            /* 알려 준 음은 다른 문제와 같이 초록 표로만 찍는다(글씨는 건반에 안 들어간다). */
+            keyboard: { given: [{ midi: from.midi, text: "" }], answer: [to.midi] },
+            detail: N.name(from) + (up ? " → " : " ← ") + N.name(to)
+        };
+    }
+
+    /*
      * 음정. 두 음을 함께 울리는 것이 기본이고, 한 음씩 듣는 것은 문제 화면 단추로 한다.
      * 오르내림은 판을 쪼개지 않고 문제마다 무작위로 섞는다.
      */
@@ -968,6 +990,16 @@
             ],
             modes: [],
             make: readingQuestion
+        },
+        {
+            id: "build",
+            name: label("Interval Building", "음정 만들기"),
+            ask: "음을 누르세요",
+            items: INTERVALS.concat(DISPLAY_INTERVALS),
+            inputs: ["keyboard"],
+            levels: [],
+            modes: [],
+            make: buildQuestion
         },
         {
             id: "chord",
@@ -1874,6 +1906,12 @@
             els.lessonQuiz.dataset.limit = String(lesson.quizLimit || 0);
             els.lessonQuiz.textContent = (lesson.quizDrill || "reading") === "rhythmWrite" ? "받아쓰기 문제" : "읽기 문제";
         }
+        /* 음정 차시는 건반으로 만들어 보는 문제를 하나 더 둔다. */
+        els.lessonBuild.hidden = !lesson.build;
+        if (lesson.build) {
+            els.lessonBuild.dataset.items = lesson.build.join(",");
+            els.lessonBuild.dataset.limit = String(lesson.buildLimit || 0);
+        }
         setLessonMark(course.id, lesson.id, { read: true });
         showScreen("lesson");
     }
@@ -2223,6 +2261,23 @@
         session.limit = Number(els.lessonQuiz.dataset.limit) || ids.length * 2;
         session.enabled = new Set(ids);
         session.preset = null;
+        session.fromLesson = { courseId: course.id, lessonId: course.lessons[lessonIndex].id };
+        beginRound();
+    }
+
+    /* 건반으로 음정을 만들어 보는 문제. */
+    function startLessonBuild() {
+        const ids = (els.lessonBuild.dataset.items || "").split(",").filter(Boolean);
+        if (!ids.length) return;
+        session.drill = DRILL_BY_ID.build;
+        session.mode = "";
+        session.input = "keyboard";
+        session.inversions = [0];
+        session.reveal = false;
+        session.limit = Number(els.lessonBuild.dataset.limit) || ids.length * 3;
+        session.enabled = new Set(ids);
+        session.preset = null;
+        session.slots = [];
         session.fromLesson = { courseId: course.id, lessonId: course.lessons[lessonIndex].id };
         beginRound();
     }
@@ -2619,9 +2674,27 @@
         els.pairWrap.hidden = false;
         session.picked = { quality: null, number: null };
 
-        const usedNumbers = session.pool.map(item => item.number);
-        fillPairRow(els.qualityRow, QUALITIES, "quality");
-        fillPairRow(els.numberRow, NUMBERS.filter(entry => usedNumbers.indexOf(entry.id) >= 0), "number");
+        /*
+         * 답이 한 가지뿐인 줄은 아예 묻지 않는다. 완전음정 차시에서 성질을 물으면
+         * 답이 늘 "완전"이라, 누르는 시늉만 하면 되는 빈 문제가 된다.
+         * 답이 갈리는 줄은 보기를 다 보여 준다 — 나올 것만 남기면 보기 자체가
+         * 답의 범위를 알려 줘서, 3도 차시에서 도수가 새어 나간다.
+         */
+        const qualities = new Set(session.pool.map(item => item.quality));
+        const numbers = new Set(session.pool.map(item => item.number));
+        const askQuality = qualities.size > 1;
+        const askNumber = numbers.size > 1;
+
+        session.picked.quality = askQuality ? null : session.pool[0].quality;
+        session.picked.number = askNumber ? null : session.pool[0].number;
+        els.qualityRow.hidden = !askQuality;
+        els.numberRow.hidden = !askNumber;
+        if (askQuality) fillPairRow(els.qualityRow, QUALITIES, "quality");
+        if (askNumber) fillPairRow(els.numberRow, NUMBERS, "number");
+
+        els.askText.textContent = askQuality && askNumber ? session.drill.ask
+            : askQuality ? "무슨 성질인가요?" : "몇 도인가요?";
+        els.askText.hidden = false;
     }
 
     function fillPairRow(row, options, kind) {
@@ -2919,7 +2992,7 @@
     function init() {
         ["menuScreen", "courseScreen", "lessonScreen", "drillScreen", "resultScreen",
             "courseList", "courseTitle", "lessonList", "lessonTitle", "lessonBody", "lessonExamples",
-            "lessonNext", "lessonQuiz", "lessonKeys", "lessonKeysLabel", "wheelKeys", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
+            "lessonNext", "lessonQuiz", "lessonBuild", "lessonKeys", "lessonKeysLabel", "wheelKeys", "toolList", "wheelScreen", "wheelBoard", "wheelChords",
             "wheelPrev", "wheelNext", "wheelFlat", "wheelCadence",
             "helpRow", "arpButton",
             "presetScreen", "presetTitle", "presetList", "exerciseList", "melodicButton",
@@ -2970,6 +3043,7 @@
         els.toMenuButton.addEventListener("click", backToHub);
         els.lessonNext.addEventListener("click", nextLesson);
         els.lessonQuiz.addEventListener("click", startLessonQuiz);
+        els.lessonBuild.addEventListener("click", startLessonBuild);
         els.wheelPrev.addEventListener("click", () => wheel.step(-1));
         els.wheelNext.addEventListener("click", () => wheel.step(1));
         els.wheelFlat.addEventListener("click", () => wheel.toggleFlat());
