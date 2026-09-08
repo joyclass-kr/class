@@ -566,10 +566,12 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .sheet-ink { stroke: #1e293b; fill: #1e293b; }
 .sheet-ink .sheet-head { stroke: none; }
 .sheet-ink .sheet-ledger { stroke: #64748b; stroke-width: 1.3; }
-.sheet-ink.is-right { stroke: #16a34a; fill: #16a34a; }
-.sheet-ink.is-wrong { stroke: #dc2626; fill: #dc2626; }
+/* 밝은 종이 위에 얹는 색이라 한 단계 짙게 쓴다 — 음표가 또렷해야 한다. */
+.sheet-ink.is-right { stroke: #15803d; fill: #15803d; }
+.sheet-ink.is-wrong { stroke: #b91c1c; fill: #b91c1c; }
 .sheet-column { transition: none; }
-.sheet-column.is-lit { stroke: #d97706; fill: #d97706; }
+/* 불이 켜진 칸. 밝은 종이 위라 주황이 옅으면 켜진 줄을 모른다. */
+.sheet-column.is-lit { stroke: #c2410c; fill: #c2410c; }
 
 /* Play Controls */
 .play-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
@@ -1049,15 +1051,16 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
     filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.9));
 }
 .wheel-minor-name {
-    fill: #94a3b8;
+    /* 으뜸음 칸은 황금빛이라 회색 글씨가 묻힌다. 한 단계 밝게 둔다. */
+    fill: #cbd5e1;
     font-size: 14.5px;
     font-weight: 800;
     text-anchor: middle;
     dominant-baseline: middle;
     pointer-events: none;
 }
-.wheel .acc { font-size: .72em; fill: #38bdf8; font-weight: 900; }
-.wheel .sub { font-size: .6em; fill: #64748b; }
+.wheel .acc { font-size: .72em; fill: #7dd3fc; font-weight: 900; }
+.wheel .sub { font-size: .6em; fill: #cbd5e1; }
 
 .wheel-hub-face {
     fill: rgba(11, 17, 28, 0.98);
@@ -1168,8 +1171,8 @@ button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .rhythm-bar.is-end { stroke-width: 2.8; }
 .rhythm-meter { fill: #1e293b; stroke: none; font-family: Georgia, serif; font-size: 17px; font-weight: 800; text-anchor: middle; }
 .rhythm-ink { stroke: #1e293b; fill: #1e293b; }
-.rhythm-ink.is-right { stroke: #16a34a; fill: #16a34a; }
-.rhythm-ink.is-wrong { stroke: #dc2626; fill: #dc2626; }
+.rhythm-ink.is-right { stroke: #15803d; fill: #15803d; }
+.rhythm-ink.is-wrong { stroke: #b91c1c; fill: #b91c1c; }
 /* 머리와 꼬리는 채운 모양이므로 선을 두르지 않는다. */
 .rhythm-head, .rhythm-flag { stroke: none; }
 .rhythm-stem { stroke-width: 1.7; }
