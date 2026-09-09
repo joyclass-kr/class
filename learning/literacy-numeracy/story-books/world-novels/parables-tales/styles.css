@@ -245,9 +245,9 @@ body {
 .page-story p {
     margin: 0 0 10px;
     font-size: clamp(14px, 2.315cqh, 24px);
-    /* 줄 끝을 오른쪽까지 맞춘다. keep-all로 띄어쓰기에서만 끊기게 된
-       뒤로 줄 끝이 들쎄들쎄해졌다. 마지막 줄은 저절로 왼쪽에 붙는다. */
-    text-align: justify;
+    /* keep-all이라 줄 끝은 들쭉날쭉해도 그냥 둔다. 양쪽 맞춤은 짧은 문단에서
+       몇 안 되는 낱말 사이가 확 벌어져 오히려 읽기 나쁘다. */
+    text-align: left;
     font-weight: 500;
     line-height: 1.75;
     color: var(--ink);
@@ -299,9 +299,9 @@ body {
 .moral-box p {
     margin: 0;
     font-size: clamp(14px, 2.315cqh, 24px);
-    /* 줄 끝을 오른쪽까지 맞춘다. keep-all로 띄어쓰기에서만 끊기게 된
-       뒤로 줄 끝이 들쎄들쎄해졌다. 마지막 줄은 저절로 왼쪽에 붙는다. */
-    text-align: justify;
+    /* keep-all이라 줄 끝은 들쭉날쭉해도 그냥 둔다. 양쪽 맞춤은 짧은 문단에서
+       몇 안 되는 낱말 사이가 확 벌어져 오히려 읽기 나쁘다. */
+    text-align: left;
     font-weight: 500;
     color: #4a3009;
     text-indent: 0;
@@ -346,9 +346,9 @@ body {
 .page-cover .story-page-right p {
     margin: 0 0 10px;
     font-size: clamp(14px, 2.315cqh, 24px);
-    /* 줄 끝을 오른쪽까지 맞춘다. keep-all로 띄어쓰기에서만 끊기게 된
-       뒤로 줄 끝이 들쎄들쎄해졌다. 마지막 줄은 저절로 왼쪽에 붙는다. */
-    text-align: justify;
+    /* keep-all이라 줄 끝은 들쭉날쭉해도 그냥 둔다. 양쪽 맞춤은 짧은 문단에서
+       몇 안 되는 낱말 사이가 확 벌어져 오히려 읽기 나쁘다. */
+    text-align: left;
     font-weight: 500;
     line-height: 1.7;
     color: var(--ink);
