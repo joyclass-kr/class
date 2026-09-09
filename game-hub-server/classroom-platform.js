@@ -7641,12 +7641,23 @@ function createClassroomPlatform(options = {}) {
     if (teacherClass.rows[0]) {
       const tc = teacherClass.rows[0];
       const gName = `${tc.grade}-${tc.class_number}`;
-      await pool.query(
-        `INSERT INTO teacher_groups (school_id, teacher_user_id, academic_year, group_name, group_type, grade, class_number)
-         VALUES ($1, $2, $3, $4, 'homeroom', $5, $6)
-         ON CONFLICT (teacher_user_id, academic_year, group_name) DO NOTHING`,
-        [tc.school_id, teacher.id, year, gName, tc.grade, tc.class_number]
-      ).catch(() => {});
+      // ON CONFLICT (teacher_user_id, academic_year, group_name) 을 쓰고 있었는데
+      // 그 세 칸에 걸린 UNIQUE 가 없다. Postgres 는 그런 ON CONFLICT 를 오류로
+      // 돌려보내고, 그 오류를 catch 로 삼키고 있었다. 그래서 담임 학급 그룹이
+      // 한 번도 만들어지지 않았다. 있는지 먼저 보고 없을 때만 넣는다.
+      const already = await pool.query(
+        `SELECT 1 FROM teacher_groups
+         WHERE teacher_user_id = $1 AND academic_year = $2 AND group_name = $3
+         LIMIT 1`,
+        [teacher.id, year, gName]
+      );
+      if (already.rowCount === 0) {
+        await pool.query(
+          `INSERT INTO teacher_groups (school_id, teacher_user_id, academic_year, group_name, group_type, grade, class_number)
+           VALUES ($1, $2, $3, $4, 'homeroom', $5, $6)`,
+          [tc.school_id, teacher.id, year, gName, tc.grade, tc.class_number]
+        ).catch((error) => console.error("homeroom group provisioning failed:", error.message));
+      }
     }
 
     const result = await pool.query(
@@ -7704,6 +7715,17 @@ function createClassroomPlatform(options = {}) {
     // the roster's "동아리·방과후·셔틀" option failed on insert.
     if (!["homeroom", "subject", "club", "afterschool", "care", "shuttle", "other"].includes(groupType))
       throw new HttpError(400, "INVALID_GROUP_TYPE", "그룹 유형이 올바르지 않습니다.");
+
+    // 같은 이름으로 두 번 누르면 같은 그룹이 둘 생긴다. 이미 있으면 그것을 준다.
+    const already = await pool.query(
+      `SELECT id FROM teacher_groups
+       WHERE teacher_user_id = $1 AND academic_year = $2 AND group_name = $3
+       LIMIT 1`,
+      [teacher.id, year, groupName]
+    );
+    if (already.rows[0]) {
+      return res.json({ ok: true, groupId: String(already.rows[0].id), existed: true });
+    }
 
     const result = await pool.query(
       `INSERT INTO teacher_groups (school_id, teacher_user_id, academic_year, group_name, group_type, grade, class_number)

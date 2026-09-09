@@ -53,10 +53,21 @@ function answer(sql, params) {
       && (row.academic_year === params[1] || row.academic_year == null));
     return { rows: hit.slice(0, 1), rowCount: Math.min(hit.length, 1) };
   }
+  // ON CONFLICT (teacher_user_id, academic_year, group_name) 을 쓰면 그 세 칸에
+  // 걸린 UNIQUE 가 없어 Postgres 가 오류를 낸다. 진짜처럼 스텁도 거절한다.
+  if (text.includes("INSERT INTO teacher_groups") && text.includes("ON CONFLICT")) {
+    const error = new Error("there is no unique or exclusion constraint matching the ON CONFLICT specification");
+    error.code = "42P10";
+    throw error;
+  }
   if (text.includes("INSERT INTO teacher_groups")) {
     inserted.push({ school_id: params[0], teacher_user_id: params[1], academic_year: params[2], group_name: params[3], group_type: params[4], grade: params[5], class_number: params[6] });
     groupRows.push({ id: inserted.length, group_name: params[3], group_type: params[4], grade: params[5], class_number: params[6], academic_year: params[2], sort_order: 0, student_count: 0 });
     return { rows: [{ id: inserted.length }], rowCount: 1 };
+  }
+  if (text.includes("FROM teacher_groups") && text.includes("group_name = $3")) {
+    const hit = groupRows.filter((row) => row.academic_year === params[1] && row.group_name === params[2]);
+    return { rows: hit.slice(0, 1), rowCount: Math.min(hit.length, 1) };
   }
   if (text.includes("FROM teacher_groups g")) {
     const hit = groupRows.filter((row) => row.academic_year === params[1]);
@@ -146,6 +157,30 @@ app.use((error, _req, res, _next) => res.status(error.status || 500).json({ code
     assert.equal(savedGroup.grade, 6, "학년을 빼고 저장하면 그 반 학생이 붙지 않는다.");
     assert.equal(savedGroup.class_number, 2, "반을 빼고 저장하면 그 반 학생이 붙지 않는다.");
     assert.equal(savedGroup.academic_year, THIS_YEAR);
+
+    // 5-1. 교직원이면 담임이든 전담이든 아무 그룹이나 열 수 있어야 한다.
+    //      담임 학급이 없는 전담 교사로 바꾸고 세 학급을 잇달아 연다.
+    teacherRows = [{ user_id: 7, school_id: SCHOOL_ID, active: true, grade: null, class_number: null, academic_year: THIS_YEAR, teacher_type: "전담" }];
+    groupRows = [];
+    inserted = [];
+    for (const name of ["6-1", "6-2", "6-3"]) {
+      const made = await fetch(base + "/api/teacher/groups", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Cookie: "class_session=stub" },
+        body: JSON.stringify({ groupName: name, groupType: "homeroom", grade: 6, classNumber: Number(name.split("-")[1]), year: THIS_YEAR })
+      });
+      assert.equal(made.status, 200, `전담 교사도 ${name} 을 열 수 있어야 한다.`);
+    }
+    assert.equal(inserted.length, 3, "교직원이면 그룹을 여럿 열 수 있어야 한다.");
+
+    // 5-2. 같은 이름을 두 번 누르면 같은 그룹을 돌려준다.
+    const twice = await fetch(base + "/api/teacher/groups", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Cookie: "class_session=stub" },
+      body: JSON.stringify({ groupName: "6-1", groupType: "homeroom", grade: 6, classNumber: 1, year: THIS_YEAR })
+    });
+    assert.equal((await twice.json()).existed, true, "같은 이름으로 두 번 누르면 있던 그룹을 줘야 한다.");
+    assert.equal(inserted.length, 3, "같은 그룹이 둘 생기면 안 된다.");
 
     // 6. 화면 쪽: 학년도를 함께 보내고, 못 받아 왔으면 까닭을 보여 준다.
     const portal = fs.readFileSync(path.join(root, "classtools", "index.html"), "utf8");
