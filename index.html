@@ -988,7 +988,7 @@
 
     <div id="hubContent" hidden data-nosnippet>
         <h1 class="learning-hub-title">기초학력</h1>
-        <p class="hub-title-link"><a href="learning/class-race/" data-requires-player="true">학급 순위전 <span aria-hidden="true">→</span></a></p>
+        <p class="hub-title-link"><a href="learning/class-race/" data-requires-player="true" data-always-open="true">학급 순위전 <span aria-hidden="true">→</span></a></p>
         <section class="hub-section worksheet-section category-section" data-category-section aria-labelledby="worksheet-title">
         <h2 id="worksheet-title" class="category-heading"><button id="category-literacy-toggle" class="category-toggle" type="button" aria-expanded="false" aria-controls="category-literacy-panel"><span class="category-number" aria-hidden="true">01</span><span class="category-label">문해·수리</span><span class="category-chevron" aria-hidden="true"></span></button></h2>
         <div id="category-literacy-panel" class="worksheet-container category-panel" role="region" aria-labelledby="category-literacy-toggle" hidden>
@@ -1425,6 +1425,17 @@
                 // A site-wide lock always wins. Class locks remain the homeroom
                 // teacher's lower-priority setting for that one class.
                 hubLinks.forEach((link) => {
+                    // 학급 순위전처럼 늘 열어 두는 버튼은 공개 설정의 대상이 아니다.
+                    // 잠금 표시도 붙이지 않는다.
+                    if (link.dataset.alwaysOpen === 'true') {
+                        link.classList.remove('is-global-locked', 'is-class-locked');
+                        link.dataset.globalDisabled = 'false';
+                        link.dataset.globalLocked = 'false';
+                        link.dataset.classLocked = 'false';
+                        if (!link.dataset.lockedHref) link.removeAttribute('aria-disabled');
+                        link.removeAttribute('aria-label');
+                        return;
+                    }
                     const groupControl = accessControlForLink(link);
                     const path = contentPathForLink(link);
                     const globallyDisabled = isGloballyDisabledPath(path)
@@ -2128,6 +2139,10 @@
                 if (globalContentAccessEditing && selectedLink && hubContent.contains(selectedLink)) {
                     event.preventDefault();
                     event.stopImmediatePropagation();
+                    if (selectedLink.dataset.alwaysOpen === 'true') {
+                        setStatus('학급 순위전은 늘 열려 있어 공개 설정을 하지 않습니다.');
+                        return;
+                    }
                     const path = contentPathForLink(selectedLink);
                     if (!path) return;
                     const nextDisabled = !globallyDisabledPaths.has(path);
@@ -2158,6 +2173,10 @@
 
                 if (contentAccessEditing && selectedLink && hubContent.contains(selectedLink)) {
                     event.preventDefault();
+                    if (selectedLink.dataset.alwaysOpen === 'true') {
+                        setStatus('학급 순위전은 늘 열려 있어 공개 설정을 하지 않습니다.');
+                        return;
+                    }
                     const path = contentPathForLink(selectedLink);
                     if (!path) return;
                     const nextEnabled = !classEnabledPaths.has(path);
