@@ -494,7 +494,7 @@
         root.style.setProperty("--black-width", (PIANO_BLACK_KEY_MM.width * factor).toFixed(2) + "px");
         root.style.setProperty("--black-height", (PIANO_BLACK_KEY_MM.length * BLACK_KEY_LENGTH_SCALE * factor).toFixed(2) + "px");
         const percent = Math.round(state.keyboardScale * 100) + "%";
-        if (elements.keySizeReadout) elements.keySizeReadout.textContent = percent;
+        if (elements.keySizeReadout) elements.keySizeReadout.textContent = state.screenCalibrated ? percent : "보정 필요";
         if (elements.keyScaleOutput) elements.keyScaleOutput.textContent = percent;
         if (elements.keyScaleSlider) elements.keyScaleSlider.value = String(Math.round(state.keyboardScale * 100));
         if (shouldRender && elements.keyboard && elements.keyboard.children.length) renderKeyboard();
@@ -532,7 +532,7 @@
         saveKeyboardSize();
         syncCalibrationUi();
         applyKeyboardSize(true);
-        showToast("이 기기의 실물 건반 크기를 저장했어요.");
+        showToast("이 기기의 실물 건반 가로폭을 저장했어요.");
     }
 
     function resetScreenCalibration() {
@@ -2477,6 +2477,7 @@
         renderDrumPads();
         bindEvents();
         selectFamily("korean");
+        if (!state.screenCalibrated) window.requestAnimationFrame(openKeySizeDialog);
         animateVisual();
     }
 
