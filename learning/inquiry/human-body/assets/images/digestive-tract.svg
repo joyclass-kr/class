@@ -4,35 +4,35 @@
     <!-- Subtle linear gradients (135 deg angle, <=25% brightness diff, <=20deg hue diff) -->
     <linearGradient id="digestMouth" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#f2cfbf"/>
-      <stop offset="100%" stop-color="#d6a08f"/>
+      <stop offset="100%" stop-color="#dc8055"/>
     </linearGradient>
     <linearGradient id="digestStomach" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#db766e"/>
-      <stop offset="100%" stop-color="#b04941"/>
+      <stop offset="100%" stop-color="#a13128"/>
     </linearGradient>
     <linearGradient id="digestLiver" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#8a4d42"/>
-      <stop offset="100%" stop-color="#662f26"/>
+      <stop offset="100%" stop-color="#341d19"/>
     </linearGradient>
     <linearGradient id="digestGall" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#739e5e"/>
-      <stop offset="100%" stop-color="#51783f"/>
+      <stop offset="100%" stop-color="#394e2e"/>
     </linearGradient>
     <linearGradient id="digestPancreas" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#ebd16e"/>
-      <stop offset="100%" stop-color="#c4a53d"/>
+      <stop offset="100%" stop-color="#bf9d1a"/>
     </linearGradient>
     <linearGradient id="digestSmall" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#f5c29b"/>
-      <stop offset="100%" stop-color="#c98a63"/>
+      <stop offset="100%" stop-color="#e97b27"/>
     </linearGradient>
     <linearGradient id="digestLarge" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#c29472"/>
-      <stop offset="100%" stop-color="#996c4d"/>
+      <stop offset="100%" stop-color="#7e5537"/>
     </linearGradient>
     <linearGradient id="digestRectum" x1="20%" y1="20%" x2="80%" y2="80%">
       <stop offset="0%" stop-color="#b58265"/>
-      <stop offset="100%" stop-color="#8a5c43"/>
+      <stop offset="100%" stop-color="#684632"/>
     </linearGradient>
   </defs>
 

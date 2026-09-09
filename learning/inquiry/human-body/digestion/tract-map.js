@@ -86,47 +86,142 @@
     //   ➔ 하행결장(아래로) ➔ 곧창자
     // 로 돌아 나간다. 앞에서 본 그림이라 화면 왼쪽이 몸의 오른쪽이고,
     // 맹장·상행결장이 몸의 오른쪽에 있는 것과 맞는다.
+    // 점마다 organ 을 적어 둔다. 시간을 기관별로 나눠 주고(ORGAN_TIME),
+    // 지나가는 동안 음식 구슬의 생김새를 바꾸는 데(BOLUS_LOOK) 쓴다.
     var ROUTE = [
-        { x: 350, y: 80 },   // 입
-        { x: 350, y: 240 },  // 식도
-        { x: 398, y: 296 },  // 위
+        { x: 350, y: 80, organ: 'mouth' },        // 입
+        { x: 350, y: 240, organ: 'esophagus' },   // 식도
+        { x: 398, y: 296, organ: 'stomach' },     // 위
         // 위와 십이지장이 맞닿는 자리는 좁다. 눈금을 2씩 훑어 두 조각이
         // 나란히 닿는 줄(y 336~338)을 찾아 그리로 지난다. 조금만 비껴도
         // 음식이 배 속 빈 곳을 가로지른다.
-        { x: 352, y: 330 },  // 위의 아래쪽
-        { x: 344, y: 336 },  // 유문 (위의 출구)
-        { x: 338, y: 338 },  // 십이지장 들머리
-        { x: 320, y: 356 },  // 십이지장 위
-        { x: 316, y: 396 },  // 십이지장 가운데
-        { x: 334, y: 424 },  // 십이지장 끝
+        { x: 352, y: 330, organ: 'stomach' },     // 위의 아래쪽
+        { x: 344, y: 336, organ: 'stomach' },     // 유문 (위의 출구)
+        { x: 338, y: 338, organ: 'duodenum' },    // 십이지장 들머리
+        { x: 320, y: 356, organ: 'duodenum' },    // 십이지장 위
+        { x: 316, y: 396, organ: 'duodenum' },    // 십이지장 가운데
+        { x: 334, y: 424, organ: 'duodenum' },    // 십이지장 끝
         { 소장: true },      // ← 여기에 소장 길을 그림에서 읽어 끼워 넣는다
         // 아래 대장 자리는 새 그림에서 벽을 한 줄씩 훑어 한가운데를 집은 값이다
         // (x=230 세로줄은 y 408~643, x=300 가로줄은 y 397~419 …).
-        { x: 226, y: 630 },  // 맹장 (왼쪽 아래)
-        { x: 228, y: 560 },  // 상행결장
-        { x: 228, y: 470 },  // 상행결장 위쪽
-        { x: 234, y: 424 },  // 결장 왼쪽 위 모서리
-        { x: 300, y: 408 },  // 횡행결장 왼쪽
-        { x: 400, y: 408 },  // 횡행결장 오른쪽
-        { x: 462, y: 420 },  // 결장 오른쪽 위 모서리
-        { x: 480, y: 470 },  // 하행결장
-        { x: 480, y: 560 },  // 하행결장 가운데
-        { x: 480, y: 640 },  // 하행결장 아래쪽
-        { x: 455, y: 672 },  // 구불결장
-        { x: 411, y: 690 },  // 구불결장 아래
+        { x: 226, y: 630, organ: 'largeIntestine' },  // 맹장 (왼쪽 아래)
+        { x: 228, y: 560, organ: 'largeIntestine' },  // 상행결장
+        { x: 228, y: 470, organ: 'largeIntestine' },  // 상행결장 위쪽
+        { x: 234, y: 424, organ: 'largeIntestine' },  // 결장 왼쪽 위 모서리
+        { x: 300, y: 408, organ: 'largeIntestine' },  // 횡행결장 왼쪽
+        { x: 400, y: 408, organ: 'largeIntestine' },  // 횡행결장 오른쪽
+        { x: 462, y: 420, organ: 'largeIntestine' },  // 결장 오른쪽 위 모서리
+        { x: 480, y: 470, organ: 'largeIntestine' },  // 하행결장
+        { x: 480, y: 560, organ: 'largeIntestine' },  // 하행결장 가운데
+        { x: 480, y: 640, organ: 'largeIntestine' },  // 하행결장 아래쪽
+        { x: 455, y: 672, organ: 'largeIntestine' },  // 구불결장
+        { x: 411, y: 690, organ: 'largeIntestine' },  // 구불결장 아래
         // 구불결장과 곧창자가 겹치는 줄은 y 700~706 뿐이다. 그리로 지난다.
-        { x: 380, y: 698 },  // 구불결장 끝
-        { x: 366, y: 703 },  // 곧창자로 넘어가는 자리
-        { x: 355, y: 708 },  // 곧창자 들머리
-        { x: 351, y: 720 },  // 곧창자
-        { x: 350, y: 776 }   // 항문
+        { x: 380, y: 698, organ: 'rectum' },      // 구불결장 끝
+        { x: 366, y: 703, organ: 'rectum' },      // 곧창자로 넘어가는 자리
+        { x: 355, y: 708, organ: 'rectum' },      // 곧창자 들머리
+        { x: 351, y: 720, organ: 'rectum' },      // 곧창자
+        { x: 350, y: 776, organ: 'anus' }         // 항문
     ];
 
+    // 기관마다 쓰는 시간(초). 소장이 가장 오래 걸린다 — 실제로 거기서
+    // 가장 많은 일(마지막 분해와 흡수)이 일어난다.
+    //
+    // 예전에는 진행률이 초당 0.22 씩 올라 전체 길을 4.5초에 주파했다.
+    // 점 개수가 기관마다 다른데(소장만 스물 몇 개) 그 개수만큼 시간도
+    // 달라져서, 소장은 그나마 오래 걸리고 나머지는 눈 깜짝할 새 지나갔다.
+    // "빨리 움직여서 보기 어렵다"는 말이 맞았다.
+    var ORGAN_TIME = {
+        esophagus: 1.0,
+        stomach: 2.4,
+        duodenum: 1.6,
+        smallIntestine: 6.0,
+        largeIntestine: 3.6,
+        rectum: 1.2,
+        anus: 0.6
+    };
+
     var wrap, layer, svg, labelBox, leaderGroup, bolus;
-    var swallowing = false, progress = 1;
+    var swallowing = false, started = false, elapsed = 0, totalTime = 1;
     var lastT = 0;
     // 그림을 못 읽으면 표시 자리만 빼고 쓴다 (음식이 소장을 건너뛰지만 멈추지는 않는다)
     var route = ROUTE.filter(function (p) { return !p.소장; });
+    var legs = [];          // { p1, p2, organ, t0, t1 } — 다리 하나마다 시작·끝 시각
+    var organRange = {};    // organ → [처음 닿은 시각, 마지막으로 있던 시각]
+    var bolusKF = [];       // 음식 구슬의 생김새가 바뀌는 매듭점들 [{t, fill, r}, …]
+    var curLeg = 0;
+    var lastGlowOrgan = null;
+
+    function lerp(a, b, f) { return a + (b - a) * f; }
+
+    function lerpHex(a, b, f) {
+        var pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16);
+        var ra = (pa >> 16) & 255, ga = (pa >> 8) & 255, ba = pa & 255;
+        var rb = (pb >> 16) & 255, gb = (pb >> 8) & 255, bb = pb & 255;
+        var r = Math.round(lerp(ra, rb, f)), g = Math.round(lerp(ga, gb, f)), b2 = Math.round(lerp(ba, bb, f));
+        return '#' + [r, g, b2].map(function (v) { return Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0'); }).join('');
+    }
+
+    /**
+     * 다리(점과 점 사이)마다 몇 초를 쓸지 나눠 정한다.
+     * 같은 기관을 지나는 다리끼리 그 기관의 몫(ORGAN_TIME)을 똑같이 나눠 갖는다.
+     *
+     * 그리고 음식 구슬의 생김새가 바뀌는 매듭점(bolusKF)도 여기서 함께 짠다 —
+     * 기관이 끝나는 시각마다 하나씩. 위를 지나면 으깨져 커지고(미즙),
+     * 소장을 지나며 영양소가 빠져나가 작아지고 옅어지고, 대장·곧창자에서
+     * 물이 빠져 짙고 단단해진다(대변). 지금은 색과 크기만 늘 그대로였다.
+     */
+    function buildTiming() {
+        legs = [];
+        for (var i = 0; i < route.length - 1; i++) {
+            var organ = route[i + 1].organ || route[i].organ || 'mouth';
+            legs.push({ p1: route[i], p2: route[i + 1], organ: organ });
+        }
+        var counts = {};
+        legs.forEach(function (l) { counts[l.organ] = (counts[l.organ] || 0) + 1; });
+
+        var t = 0;
+        organRange = {};
+        legs.forEach(function (l) {
+            var total = ORGAN_TIME[l.organ] || 0.6;
+            var per = total / counts[l.organ];
+            l.t0 = t;
+            l.t1 = t + per;
+            if (!organRange[l.organ]) organRange[l.organ] = [l.t0, l.t1];
+            else organRange[l.organ][1] = l.t1;
+            t = l.t1;
+        });
+        totalTime = t || 1;
+        curLeg = 0;
+
+        bolusKF = [{ t: 0, fill: '#fde68a', r: 13 }];
+        var steps = [
+            ['esophagus', '#fde68a', 13],
+            ['stomach', '#e3b568', 16],
+            ['duodenum', '#ddc9a0', 13],
+            ['smallIntestine', '#b7a488', 6],
+            ['rectum', '#5b4632', 9],
+            ['largeIntestine', '#5b4632', 9]   // 곧창자 자리가 없을 때를 대비한 마지막 보루
+        ];
+        steps.forEach(function (s) {
+            var r = organRange[s[0]];
+            if (r) bolusKF.push({ t: r[1], fill: s[1], r: s[2] });
+        });
+    }
+
+    /** elapsed 시각에 음식 구슬이 어떤 빛깔·크기여야 하는지, 매듭점 사이를 이어 구한다 */
+    function bolusLook(t) {
+        if (!bolusKF.length) return { fill: '#f59e0b', r: 13 };
+        for (var i = 0; i < bolusKF.length - 1; i++) {
+            if (t <= bolusKF[i + 1].t) {
+                var a = bolusKF[i], b = bolusKF[i + 1];
+                var span = b.t - a.t;
+                var f = span > 0 ? (t - a.t) / span : 1;
+                return { fill: lerpHex(a.fill, b.fill, f), r: lerp(a.r, b.r, f) };
+            }
+        }
+        return bolusKF[bolusKF.length - 1];
+    }
 
     /**
      * 대장 밑에 깔려 안 보이는 조각을 위로 올린다.
@@ -178,7 +273,7 @@
         var STEPS = Math.max(24, Math.round(len / 12));
         for (var i = 0; i <= STEPS; i++) {
             var q = best.getPointAtLength(len * i / STEPS);
-            pts.push({ x: Math.round(q.x * 10) / 10, y: Math.round(q.y * 10) / 10 });
+            pts.push({ x: Math.round(q.x * 10) / 10, y: Math.round(q.y * 10) / 10, organ: 'smallIntestine' });
         }
 
         // 표시해 둔 자리에 끼운다
@@ -189,6 +284,7 @@
 
         // 잣대(_relevance.js)가 이 길을 훑어 관 밖으로 나간 자리를 셀 수 있게 내놓는다
         window.__tractRoute = route;
+        buildTiming();
     }
 
     function init() {
@@ -204,7 +300,10 @@
         if (!b) return;
         b.addEventListener('click', function () {
             swallowing = true;
-            progress = 0;
+            started = true;
+            elapsed = 0;
+            curLeg = 0;
+            lastGlowOrgan = null;
         });
     }
 
@@ -346,19 +445,31 @@
             if (layer.hidden === mine) setVisible(mine);
         }
 
-        if (layer && !layer.hidden && bolus) {
+        if (layer && !layer.hidden && bolus && legs.length) {
             if (swallowing && !isPaused()) {
-                progress += dt * 0.22;
-                if (progress >= 1) { progress = 1; swallowing = false; }
+                elapsed += dt;
+                if (elapsed >= totalTime) { elapsed = totalTime; swallowing = false; }
             }
-            if (progress < 1) {
-                var seg = progress * (route.length - 1);
-                var i = Math.floor(seg), f = seg - i;
-                var p1 = route[i] || route[0];
-                var p2 = route[Math.min(i + 1, route.length - 1)];
-                bolus.setAttribute('cx', (p1.x + (p2.x - p1.x) * f).toFixed(1));
-                bolus.setAttribute('cy', (p1.y + (p2.y - p1.y) * f).toFixed(1));
+            if (started && elapsed < totalTime) {
+                while (curLeg < legs.length - 1 && elapsed > legs[curLeg].t1) curLeg++;
+                var leg = legs[curLeg];
+                var span = leg.t1 - leg.t0;
+                var f = span > 0 ? Math.max(0, Math.min(1, (elapsed - leg.t0) / span)) : 1;
+                bolus.setAttribute('cx', (leg.p1.x + (leg.p2.x - leg.p1.x) * f).toFixed(1));
+                bolus.setAttribute('cy', (leg.p1.y + (leg.p2.y - leg.p1.y) * f).toFixed(1));
                 bolus.setAttribute('opacity', 1);
+
+                var look = bolusLook(elapsed);
+                bolus.setAttribute('fill', look.fill);
+                bolus.setAttribute('r', look.r.toFixed(1));
+
+                // 지금 지나는 기관을 은은하게 밝힌다. 입에는 이름표가 없고,
+                // 곧창자는 이름표가 따로 없어 대장 이름표가 대신 밝는다.
+                var glowOrgan = leg.organ === 'rectum' ? 'largeIntestine' : (leg.organ === 'mouth' ? null : leg.organ);
+                if (glowOrgan && glowOrgan !== lastGlowOrgan && typeof SimEngine !== 'undefined' && SimEngine.litPart) {
+                    SimEngine.litPart(svg, PARTS.map(function (x) { return x.id; }), glowOrgan);
+                    lastGlowOrgan = glowOrgan;
+                }
             } else {
                 bolus.setAttribute('opacity', 0);
             }
