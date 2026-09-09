@@ -6,7 +6,6 @@
   window.HANGUKSA_EXPLANATIONS = window.HANGUKSA_EXPLANATIONS || {};
   const EXPLANATIONS = window.HANGUKSA_EXPLANATIONS;
   const explanationJobs = new Map();
-  // 이 파일이 실린 주소에서 판 번호를 가져다 해설 파일에도 붙인다. 캐시에 옛 해설이 남지 않게.
   const assetVersion = (document.currentScript && document.currentScript.src.split("?v=")[1]) || "";
 
   function loadExamNotes(exam) {
@@ -17,7 +16,7 @@
       const version = assetVersion;
       script.src = "data/explanations/" + key + ".js" + (version ? "?v=" + version : "");
       script.onload = resolve;
-      script.onerror = resolve; // 해설이 없어도 문항은 풀 수 있어야 한다
+      script.onerror = resolve;
       document.head.appendChild(script);
     });
     explanationJobs.set(key, job);
@@ -32,6 +31,7 @@
     if (wanted.size === 0) return null;
     return Promise.all(Array.from(wanted, loadExamNotes));
   }
+
   const CIRCLED = ["①", "②", "③", "④"];
   const CHUNK_SIZE = 15;
 
@@ -162,6 +162,9 @@
     unitRow: document.getElementById("unit-row"),
     unitChips: document.getElementById("unit-chips"),
     examSelect: document.getElementById("exam-select"),
+    dashboard: document.getElementById("dashboard"),
+    eraGrid: document.getElementById("era-grid"),
+    examGrid: document.getElementById("exam-grid"),
     list: document.getElementById("list"),
     moreWrap: document.getElementById("more-wrap"),
     btnMore: document.getElementById("btn-more"),
@@ -169,7 +172,12 @@
     count: document.getElementById("count"),
     hideDone: document.getElementById("hide-done"),
     onlyWrong: document.getElementById("only-wrong"),
-    reset: document.getElementById("reset")
+    reset: document.getElementById("reset"),
+    btnScrollTop: document.getElementById("btn-scroll-top"),
+    statTotal: document.getElementById("stat-total"),
+    statSolved: document.getElementById("stat-solved"),
+    statWrong: document.getElementById("stat-wrong"),
+    statRate: document.getElementById("stat-rate")
   };
 
   /* ── 기록 관리 ── */
@@ -226,6 +234,20 @@
     }
   }
 
+  /* ── 상단 통계 바 갱신 ── */
+  function updateGlobalStats() {
+    const total = DATA.questions.length;
+    const solved = Object.keys(state.done).length;
+    const wrongCount = Object.values(state.done).filter((v) => v === "wrong").length;
+    const rightCount = solved - wrongCount;
+    const rate = solved > 0 ? Math.round((rightCount / solved) * 100) : 0;
+
+    if (els.statTotal) els.statTotal.textContent = total;
+    if (els.statSolved) els.statSolved.textContent = solved;
+    if (els.statWrong) els.statWrong.textContent = wrongCount;
+    if (els.statRate) els.statRate.textContent = rate + "%";
+  }
+
   /* ── 고르기 UI 빌드 ── */
   function countBy(pick) {
     return DATA.questions.filter(pick).length;
@@ -280,7 +302,6 @@
 
     const currentEra = eraById.get(state.era);
     if (!currentEra || currentEra.unitIds.length <= 1) {
-      // 단원이 1개뿐인 시대(고려, 시대통합)는 단원 줄을 숨겨 깔끔함 유지
       els.unitRow.hidden = true;
       return;
     }
@@ -322,6 +343,85 @@
     });
   }
 
+  /* ── 대시보드 카드 생성 ── */
+  function buildDashboard() {
+    if (!els.eraGrid || !els.examGrid) return;
+    els.eraGrid.textContent = "";
+    els.examGrid.textContent = "";
+
+    // 시대별 카드
+    ERAS.forEach((era) => {
+      const card = document.createElement("div");
+      card.className = "era-card";
+      const totalInEra = countByEra(era);
+      const solvedInEra = DATA.questions
+        .filter((q) => (era.id === "all" ? true : era.unitIds.includes(q.unitId)))
+        .filter((q) => state.done[q.id]).length;
+
+      card.innerHTML = `
+        <div class="era-card-head">
+          <span class="era-card-title">${era.name}</span>
+          <span class="era-card-badge">${totalInEra}문항</span>
+        </div>
+        <div class="era-card-footer">
+          <span class="era-card-progress">${solvedInEra > 0 ? `풀이 ${solvedInEra}/${totalInEra}` : "미완료"}</span>
+        </div>
+      `;
+
+      card.addEventListener("click", () => {
+        selectEra(era.id);
+      });
+
+      els.eraGrid.appendChild(card);
+    });
+
+    // 회차별 카드
+    DATA.exams.forEach((exam) => {
+      const card = document.createElement("div");
+      card.className = "exam-card";
+      const totalInExam = countBy((q) => q.exam === exam);
+      const solvedInExam = DATA.questions
+        .filter((q) => q.exam === exam)
+        .filter((q) => state.done[q.id]).length;
+
+      card.innerHTML = `
+        <div class="exam-card-title">제${exam}회</div>
+        <div class="exam-card-count">${totalInExam}문항</div>
+        <div class="exam-card-tag">${solvedInExam > 0 ? `${solvedInExam}/${totalInExam}` : "50문항"}</div>
+      `;
+
+      card.addEventListener("click", () => {
+        selectExam(String(exam));
+      });
+
+      els.examGrid.appendChild(card);
+    });
+  }
+
+  function selectEra(eraId) {
+    state.era = eraId;
+    state.unit = null;
+    state.displayLimit = CHUNK_SIZE;
+
+    if (els.eraTabs) {
+      els.eraTabs.querySelectorAll(".era-tab").forEach((b) => {
+        b.setAttribute("aria-selected", b.dataset.value === eraId ? "true" : "false");
+      });
+    }
+
+    buildUnitChips();
+    render();
+  }
+
+  function selectExam(examVal) {
+    state.exam = examVal;
+    state.displayLimit = CHUNK_SIZE;
+    if (els.examSelect) {
+      els.examSelect.value = examVal;
+    }
+    render();
+  }
+
   /* ── 문항 필터링 및 렌더링 ── */
   function visibleQuestions() {
     if (!state.era && !state.unit && !state.exam) {
@@ -345,6 +445,7 @@
   function markDone(question, card, right) {
     state.done[question.id] = right ? "right" : "wrong";
     saveDone();
+    updateGlobalStats();
     card.classList.add("is-done");
     card.classList.toggle("is-wrong", !right);
     card.querySelector(".item-mark").textContent = right ? "맞음" : "틀림";
@@ -392,31 +493,32 @@
     if (!note) return document.createDocumentFragment();
 
     const wrap = document.createElement("div");
-    const bar = document.createElement("div");
-    bar.className = "aids";
-
-    const body = document.createElement("div");
-    body.className = "aid-body";
-    body.hidden = true;
-    body.innerHTML =
-      "<p><b>정답</b>" + note.answerReason + "</p>" +
-      "<p><b>핵심</b>" + note.keyPoint + "</p>" +
-      "<p><b>오답</b>" + note.wrongReason + "</p>";
+    wrap.className = "aids-wrap";
 
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "aid-btn";
     btn.textContent = "해설";
     btn.setAttribute("aria-expanded", "false");
+
+    const body = document.createElement("div");
+    body.className = "aid-body";
+    body.hidden = true;
+    body.innerHTML = `
+      <p><b>정답</b> ${note.answerReason}</p>
+      <p><b>핵심</b> ${note.keyPoint}</p>
+      <p><b>오답</b> ${note.wrongReason}</p>
+    `;
+
     btn.addEventListener("click", function () {
       const open = body.hidden;
       body.hidden = !open;
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-      btn.textContent = open ? "해설 접기" : "해설";
+      btn.textContent = open ? "해설 닫기" : "해설";
     });
 
-    bar.appendChild(btn);
-    wrap.append(bar, body);
+    wrap.appendChild(btn);
+    wrap.appendChild(body);
     return wrap;
   }
 
@@ -430,17 +532,18 @@
     const unit = unitById.get(question.unitId);
     const head = document.createElement("div");
     head.className = "item-head";
-    head.innerHTML =
-      '<span class="item-src">제' + question.exam + "회 " + question.number + "번</span>" +
-      '<span class="item-unit">' + (unit ? unit.name : "") + " · " + question.points + "점</span>" +
-      '<span class="item-mark">' + (mark === "right" ? "맞음" : mark === "wrong" ? "틀림" : "") + "</span>";
+    head.innerHTML = `
+      <span class="item-src">제${question.exam}회 ${question.number}번</span>
+      <span class="item-unit">${unit ? unit.name : ""} · ${question.points}점</span>
+      <span class="item-mark">${mark === "right" ? "맞음" : mark === "wrong" ? "틀림" : ""}</span>
+    `;
     li.appendChild(head);
 
     const fig = document.createElement("div");
     fig.className = "figure";
     const img = document.createElement("img");
     img.src = question.image;
-    img.alt = "제" + question.exam + "회 기본 " + question.number + "번 문제";
+    img.alt = `제${question.exam}회 기본 ${question.number}번 문제`;
     img.loading = "lazy";
     img.decoding = "async";
 
@@ -460,9 +563,9 @@
     const solved = items.filter((q) => state.done[q.id]).length;
     const wrong = items.filter((q) => state.done[q.id] === "wrong").length;
     els.count.textContent =
-      items.length + "문항" +
-      (solved ? " · 푼 것 " + solved : "") +
-      (wrong ? " · 틀린 것 " + wrong : "") +
+      `${items.length}문항` +
+      (solved ? ` · 푼 것 ${solved}` : "") +
+      (wrong ? ` · 틀린 것 ${wrong}` : "") +
       (renderedCount < items.length ? ` (${renderedCount}/${items.length}개 표시 중)` : "");
   }
 
@@ -474,12 +577,17 @@
     const items = visibleQuestions();
 
     if (!isFilterSelected) {
+      if (els.dashboard) els.dashboard.hidden = false;
       els.list.textContent = "";
       els.empty.hidden = true;
       if (els.moreWrap) els.moreWrap.hidden = true;
       updateCount([], 0);
+      buildDashboard();
+      updateGlobalStats();
       return;
     }
+
+    if (els.dashboard) els.dashboard.hidden = true;
 
     if (items.length === 0) {
       els.list.textContent = "";
@@ -492,7 +600,6 @@
     els.empty.hidden = true;
 
     const toShow = items.slice(0, state.displayLimit);
-    // 띄울 문항의 해설을 먼저 받는다. 받는 동안 다른 화면으로 넘어갔으면 그리지 않는다.
     const pending = ensureNotesFor(toShow);
     if (pending) {
       await pending;
@@ -506,13 +613,30 @@
         els.moreWrap.hidden = false;
         const remain = items.length - state.displayLimit;
         const nextChunk = Math.min(CHUNK_SIZE, remain);
-        els.btnMore.textContent = `더 보기 (${nextChunk}개 더 표시 · ${state.displayLimit}/${items.length})`;
+        els.btnMore.querySelector("span").textContent = `더 보기 (${nextChunk}개 더 표시 · ${state.displayLimit}/${items.length})`;
       } else {
         els.moreWrap.hidden = true;
       }
     }
 
     updateCount(items, toShow.length);
+    updateGlobalStats();
+  }
+
+  /* ── 스크롤 감지 및 맨 위로 버튼 ── */
+  function initScrollTop() {
+    if (!els.btnScrollTop) return;
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        els.btnScrollTop.classList.add("is-visible");
+      } else {
+        els.btnScrollTop.classList.remove("is-visible");
+      }
+    }, { passive: true });
+
+    els.btnScrollTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   }
 
   function start() {
@@ -521,6 +645,9 @@
 
     buildEraTabs();
     buildExamSelect();
+    buildDashboard();
+    updateGlobalStats();
+    initScrollTop();
 
     if (els.eraTabs) {
       els.eraTabs.addEventListener("click", function (ev) {
@@ -528,16 +655,7 @@
         if (!btn) return;
         const val = btn.dataset.value;
         const nextValue = state.era === val ? null : val;
-        state.era = nextValue;
-        state.unit = null;
-        state.displayLimit = CHUNK_SIZE;
-
-        els.eraTabs.querySelectorAll(".era-tab").forEach((b) => {
-          b.setAttribute("aria-selected", b.dataset.value === nextValue ? "true" : "false");
-        });
-
-        buildUnitChips();
-        render();
+        selectEra(nextValue);
       });
     }
 
@@ -581,7 +699,7 @@
           els.moreWrap.hidden = false;
           const remain = items.length - state.displayLimit;
           const nextChunk = Math.min(CHUNK_SIZE, remain);
-          els.btnMore.textContent = `더 보기 (${nextChunk}개 더 표시 · ${state.displayLimit}/${items.length})`;
+          els.btnMore.querySelector("span").textContent = `더 보기 (${nextChunk}개 더 표시 · ${state.displayLimit}/${items.length})`;
         } else {
           els.moreWrap.hidden = true;
         }
@@ -606,6 +724,7 @@
       if (!window.confirm("지금까지 푼 기록을 모두 지울까요?")) return;
       state.done = {};
       saveDone();
+      updateGlobalStats();
       render();
     });
 

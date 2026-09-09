@@ -6,50 +6,140 @@
 <title>한능검 기본 기출</title>
 <meta name="description" content="한국사능력검정시험 기본 기출문제를 시대 단원과 회차로 골라 한 화면에서 이어 풉니다.">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-<link rel="stylesheet" href="styles.css?v=20260907-1">
+<link rel="stylesheet" href="styles.css?v=20260909-3">
 </head>
 <body>
 
-<a class="home-back" href="../../../index.html" aria-label="메인 화면으로 돌아가기">←</a>
+<!-- 뒤로가기 버튼 -->
+<a class="home-back" href="../../../index.html" aria-label="메인 화면으로 돌아가기" title="메인 화면으로">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="19" y1="12" x2="5" y2="12"></line>
+    <polyline points="12 19 5 12 12 5"></polyline>
+  </svg>
+</a>
+
+<!-- 상단 헤더 -->
+<header class="app-header">
+  <div class="header-inner">
+    <h1 class="header-title">한능검 기본 기출</h1>
+    
+    <!-- 통계 바 -->
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat-item">
+        <span class="stat-label">총 문항</span>
+        <span class="stat-num" id="stat-total">650</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">푼 문제</span>
+        <span class="stat-num" id="stat-solved">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">틀린 문제</span>
+        <span class="stat-num" id="stat-wrong">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">정답률</span>
+        <span class="stat-num stat-num--highlight" id="stat-rate">0%</span>
+      </div>
+    </div>
+  </div>
+</header>
 
 <main>
-  <!-- 고르기 (수학기출 2단계 탭 & 회차 선택 UI) -->
-  <section class="picker" aria-label="고르기">
+  <!-- 고르기 필터 바 -->
+  <section class="picker" aria-label="문제 필터링">
     <div class="picker-row picker-row--era">
       <span class="picker-label" id="era-label">시대</span>
       <div class="era-tabs" role="tablist" aria-labelledby="era-label" id="era-tabs"></div>
     </div>
+    
     <div class="picker-row picker-row--unit" id="unit-row" hidden>
       <span class="picker-label" id="unit-label">단원</span>
       <div class="chips" role="group" aria-labelledby="unit-label" id="unit-chips"></div>
     </div>
-    <div class="picker-row picker-row--select">
-      <label class="picker-label" for="exam-select">회차</label>
-      <div class="picker-select-wrap">
-        <select class="picker-select" id="exam-select" aria-label="회차 선택"></select>
+    
+    <div class="picker-bottom-bar">
+      <div class="picker-row picker-row--select">
+        <label class="picker-label" for="exam-select">회차</label>
+        <div class="picker-select-wrap">
+          <select class="picker-select" id="exam-select" aria-label="회차 선택"></select>
+        </div>
       </div>
-    </div>
-    <div class="picker-row picker-row--tail">
-      <p class="count" id="count" role="status"></p>
-      <label class="toggle"><input type="checkbox" id="hide-done"> 푼 문제 감추기</label>
-      <label class="toggle"><input type="checkbox" id="only-wrong"> 틀린 문제만</label>
-      <button type="button" class="reset" id="reset">기록 지우기</button>
+      
+      <div class="picker-row picker-row--tail">
+        <div class="count-badge" id="count" role="status"></div>
+        <div class="filter-toggles">
+          <label class="toggle-pill">
+            <input type="checkbox" id="hide-done">
+            <span class="toggle-text">푼 문제 감추기</span>
+          </label>
+          <label class="toggle-pill">
+            <input type="checkbox" id="only-wrong">
+            <span class="toggle-text">틀린 문제만</span>
+          </label>
+        </div>
+        <button type="button" class="btn-reset" id="reset" title="풀이 기록을 초기화합니다">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          기록 지우기
+        </button>
+      </div>
     </div>
   </section>
 
-  <!-- 문제 목록 (크롬북/아이패드 2열 및 최적 시험지 배율) -->
-  <ol class="list" id="list"></ol>
-  <div class="more-wrap" id="more-wrap" hidden>
-    <button type="button" class="btn-more" id="btn-more">더 보기</button>
+  <!-- 초기 대시보드 (선택된 조건이 없을 때 표시) -->
+  <div class="dashboard" id="dashboard">
+    <div class="dash-section">
+      <div class="dash-section-head">
+        <h2 class="dash-section-title">시대별</h2>
+      </div>
+      <div class="era-grid" id="era-grid"></div>
+    </div>
+
+    <div class="dash-section">
+      <div class="dash-section-head">
+        <h2 class="dash-section-title">회차별</h2>
+      </div>
+      <div class="exam-grid" id="exam-grid"></div>
+    </div>
   </div>
-  <p class="empty" id="empty" hidden>고른 조건에 맞는 문항이 없습니다.</p>
+
+  <!-- 문제 목록 -->
+  <ol class="list" id="list"></ol>
+  
+  <div class="more-wrap" id="more-wrap" hidden>
+    <button type="button" class="btn-more" id="btn-more">
+      <span>더 보기</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="empty-state" id="empty" hidden>
+    <p class="empty-title">조건에 맞는 문항이 없습니다.</p>
+  </div>
 </main>
 
+<!-- 맨 위로 가기 버튼 -->
+<button type="button" class="btn-scroll-top" id="btn-scroll-top" aria-label="맨 위로 이동" title="맨 위로">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+
 <footer class="foot">
-  <p>문제지의 저작권은 국사편찬위원회에 있습니다. 이곳은 학습용으로 문항을 옮겨 싣고 회차와 번호를 밝힙니다.</p>
+  <div class="foot-inner">
+    <p class="foot-copyright">문제지의 저작권은 국사편찬위원회에 있습니다. 이곳은 학습용으로 문항을 옮겨 싣고 회차와 번호를 밝힙니다.</p>
+  </div>
 </footer>
 
 <script src="data/questions.js?v=20260907-1"></script>
-<script src="app.js?v=20260907-1"></script>
+<script src="app.js?v=20260909-3"></script>
 </body>
 </html>
