@@ -130,7 +130,6 @@ body {
 }
 
 .app-card strong { font-size: 17px; }
-.app-card small { color: var(--muted-ink); font-size: 12px; font-weight: 800; }
 
 .app-card:hover,
 .app-card:focus-visible { border-color: #855021; background: #fff0d2; }
@@ -140,8 +139,6 @@ body {
     background: var(--brown);
     color: #fff5dc;
 }
-
-.app-card.is-selected small { color: #f4d79a; }
 
 .range-row {
     display: flex;
@@ -317,11 +314,6 @@ body {
     width: min(100%, 380px);
     margin: clamp(20px, 10vh, 90px) auto 0;
     text-align: center;
-}
-
-.join-title {
-    margin: 0 0 14px;
-    font-size: clamp(20px, 3.4vw, 26px);
 }
 
 .create-race-link {

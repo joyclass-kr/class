@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#24150c">
     <title>학급 순위전</title>
     <link rel="stylesheet" href="/assets/network/multiplayer-lobby.css">
-    <link rel="stylesheet" href="styles.css?v=20260909-1">
+    <link rel="stylesheet" href="styles.css?v=20260909-2">
     <script src="/assets/network/game-network.js?v=20260821" defer></script>
     <script src="/assets/network/multiplayer-lobby.js" defer></script>
-    <script src="app.js?v=20260909-1" defer></script>
+    <script src="app.js?v=20260909-2" defer></script>
 </head>
 <body>
     <div class="page-shell">
@@ -21,7 +21,6 @@
 
         <main>
             <section id="missingScreen" class="panel hidden" aria-labelledby="missingTitle">
-                <p class="kicker">CLASS RACE</p>
                 <h1 id="missingTitle">이름을 먼저 저장해 주세요</h1>
                 <p class="lead">학급 순위에는 메인 화면에서 저장한 한글 이름이 표시됩니다.</p>
                 <a class="primary-button" href="/">메인에서 이름 저장</a>
@@ -29,8 +28,6 @@
 
             <section id="lobbyScreen" class="panel hidden is-compact">
                 <div id="joinPane">
-                    <p class="kicker">CLASS RACE</p>
-                    <h1 class="join-title">학급 순위전</h1>
                     <div class="join-row">
                         <input id="joinCode" class="room-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="0000" aria-label="학급 코드">
                         <button id="joinBtn" class="primary-button" type="button">학급 참가</button>
@@ -71,7 +68,6 @@
             </section>
 
             <section id="resultScreen" class="panel result-panel hidden" aria-labelledby="resultTitle">
-                <p class="kicker">RACE COMPLETE</p>
                 <h2 id="resultTitle">순위전 결과</h2>
                 <div class="score-medallion" aria-label="최종 점수">
                     <strong id="finalScore">0</strong>

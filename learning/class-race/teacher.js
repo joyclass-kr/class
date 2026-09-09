@@ -111,15 +111,13 @@
         elements.appGrid.replaceChildren(...registry.list().map((app) => {
             const button = document.createElement("button");
             const title = document.createElement("strong");
-            const subject = document.createElement("small");
             button.type = "button";
             button.className = "app-card";
             button.dataset.appId = app.id;
             button.classList.toggle("is-selected", app.id === state.appId);
             button.setAttribute("aria-pressed", String(app.id === state.appId));
             title.textContent = app.title;
-            subject.textContent = app.subject;
-            button.append(title, subject);
+            button.append(title);
             button.addEventListener("click", () => selectApp(app.id));
             return button;
         }));
