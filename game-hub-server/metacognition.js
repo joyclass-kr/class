@@ -95,14 +95,14 @@ function createMetacognition(options = {}) {
     router.use((req, res) => {
       res.status(503).json({
         error: "METACOGNITION_UNAVAILABLE",
-        message: "메타인지 진단이 잠시 준비 중입니다."
+        message: "간편 진단이 잠시 준비 중입니다."
       });
     });
     return {
       router,
       initialize: async () => {},
       normalizeResponses: () => {
-        throw new HttpError(503, "METACOGNITION_UNAVAILABLE", "메타인지 진단이 잠시 준비 중입니다.");
+        throw new HttpError(503, "METACOGNITION_UNAVAILABLE", "간편 진단이 잠시 준비 중입니다.");
       },
       available: false,
       loadError,
