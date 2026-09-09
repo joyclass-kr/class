@@ -1246,18 +1246,38 @@
     <section class="hub-section training-section category-section" data-category-section aria-labelledby="other-subjects-title">
         <h2 id="other-subjects-title" class="category-heading"><button id="category-arts-toggle" class="category-toggle" type="button" aria-expanded="false" aria-controls="category-arts-panel"><span class="category-number" aria-hidden="true">05</span><span class="category-label">예술</span><span class="category-chevron" aria-hidden="true"></span></button></h2>
         <div id="category-arts-panel" class="worksheet-container category-panel" role="region" aria-labelledby="category-arts-toggle" hidden>
-            <a href="learning/arts/art-appreciation/museum/">
-                <span class="worksheet-copy"><strong>미술 감상</strong><small>(Art Appreciation)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="#8d6e63" stroke="#ffb300" stroke-width="2"/><rect x="5" y="5" width="14" height="14" fill="#64b5f6"/><circle cx="9" cy="9" r="2" fill="#ffeb3b"/><polygon points="5,19 11,12 15,16 19,10 19,19" fill="#81c784"/></svg></span>
-            </a>
-            <a href="learning/arts/music-listening/">
-                <span class="worksheet-copy"><strong>음악 감상</strong><small>(Music Appreciation)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="#ffb300" stroke-width="2.5" stroke-linecap="round" d="M4 13v-3a8 8 0 0 1 16 0v3"/><rect x="1" y="11" width="5" height="9" rx="2.5" fill="#ef5350"/><rect x="4" y="12.5" width="2" height="6" fill="#ffe082"/><rect x="18" y="11" width="5" height="9" rx="2.5" fill="#ef5350"/><rect x="18" y="12.5" width="2" height="6" fill="#ffe082"/></svg></span>
-            </a>
-            <a href="learning/arts/instrument-room/">
-                <span class="worksheet-copy"><strong>악기</strong><small>(Instruments)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.55rem">🎸</span>
-            </a>
+            <details class="worksheet-group" data-access-group="arts-appreciation">
+                <summary aria-label="작품 감상 메뉴 열기" data-content-paths="learning/arts/art-appreciation/|learning/arts/music-listening/">
+                    <span class="worksheet-copy"><strong>작품 감상</strong><small>(Arts Appreciation)</small></span>
+                    <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.55rem;line-height:1">🎭</span>
+                </summary>
+                <div class="worksheet-group-options" aria-label="작품 감상 선택">
+                    <a href="learning/arts/art-appreciation/museum/" data-access-parent="arts-appreciation">
+                        <span class="worksheet-copy"><strong>미술 감상</strong><small>(Art Appreciation)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="#8d6e63" stroke="#ffb300" stroke-width="2"/><rect x="5" y="5" width="14" height="14" fill="#64b5f6"/><circle cx="9" cy="9" r="2" fill="#ffeb3b"/><polygon points="5,19 11,12 15,16 19,10 19,19" fill="#81c784"/></svg></span>
+                    </a>
+                    <a href="learning/arts/music-listening/" data-access-parent="arts-appreciation">
+                        <span class="worksheet-copy"><strong>음악 감상</strong><small>(Music Appreciation)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="#ffb300" stroke-width="2.5" stroke-linecap="round" d="M4 13v-3a8 8 0 0 1 16 0v3"/><rect x="1" y="11" width="5" height="9" rx="2.5" fill="#ef5350"/><rect x="4" y="12.5" width="2" height="6" fill="#ffe082"/><rect x="18" y="11" width="5" height="9" rx="2.5" fill="#ef5350"/><rect x="18" y="12.5" width="2" height="6" fill="#ffe082"/></svg></span>
+                    </a>
+                </div>
+            </details>
+            <details class="worksheet-group" data-access-group="arts-experience">
+                <summary aria-label="체험 메뉴 열기" data-content-paths="learning/arts/instrument-room/|learning/arts/art-studio/">
+                    <span class="worksheet-copy"><strong>체험</strong><small>(Experience)</small></span>
+                    <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.55rem;line-height:1">🖐️</span>
+                </summary>
+                <div class="worksheet-group-options" aria-label="체험 선택">
+                    <a href="learning/arts/instrument-room/" data-access-parent="arts-experience">
+                        <span class="worksheet-copy"><strong>악기</strong><small>(Instruments)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.55rem">🎸</span>
+                    </a>
+                    <a href="learning/arts/art-studio/" data-access-parent="arts-experience">
+                        <span class="worksheet-copy"><strong>그림 그리기</strong><small>(Art Studio)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" fill="#fff8e1" stroke="#8d6e63" stroke-width="1.5"/><circle cx="8" cy="8" r="2.6" fill="#ff9f1c"/><circle cx="16" cy="8" r="2.6" fill="#3a86ff"/><circle cx="8" cy="16" r="2.6" fill="#2ec4b6"/><path fill="none" stroke="#e53935" stroke-width="2" stroke-linecap="round" d="M13.5 13.5l6 6M17.5 17.8l1.6-1.6"/></svg></span>
+                    </a>
+                </div>
+            </details>
             <details class="worksheet-group" data-access-group="music-theory">
                 <summary aria-label="음악 이론 메뉴 열기" data-content-paths="learning/arts/music-theory/ear-training/|learning/arts/music-theory/piano-skills/">
                     <span class="worksheet-copy"><strong>음악 이론</strong><small>(Music Theory)</small></span>
@@ -1268,10 +1288,6 @@
                     <a href="learning/arts/music-theory/piano-skills/" data-access-parent="music-theory"><span class="worksheet-copy"><strong>피아노 스케일·보이싱</strong><small>(Piano Scale &amp; Voicing)</small></span><span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">🎹</span></a>
                 </div>
             </details>
-            <a href="learning/arts/art-studio/">
-                <span class="worksheet-copy"><strong>그림 그리기</strong><small>(Art Studio)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" fill="#fff8e1" stroke="#8d6e63" stroke-width="1.5"/><circle cx="8" cy="8" r="2.6" fill="#ff9f1c"/><circle cx="16" cy="8" r="2.6" fill="#3a86ff"/><circle cx="8" cy="16" r="2.6" fill="#2ec4b6"/><path fill="none" stroke="#e53935" stroke-width="2" stroke-linecap="round" d="M13.5 13.5l6 6M17.5 17.8l1.6-1.6"/></svg></span>
-            </a>
         </div>
     </section>
     </div>
