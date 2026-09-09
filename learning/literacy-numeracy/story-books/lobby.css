@@ -46,7 +46,11 @@ body.shelf-korea::before { background-image: url('assets/images/korea.webp'); }
 body.shelf-world-tales::before { background-image: url('assets/images/world-tales.webp'); }
 body.shelf-world-novels::before { background-image: url('assets/images/world-novels.webp'); }
 
-body.shelf-world-novels::after { background: none; }
+body.shelf-world-novels::after {
+    background:
+        radial-gradient(ellipse 75% 70% at 50% 50%, rgba(8, 6, 12, 0.85) 0%, rgba(8, 6, 12, 0.58) 60%, rgba(8, 6, 12, 0.2) 100%),
+        linear-gradient(180deg, rgba(6, 4, 10, 0.65) 0%, rgba(6, 4, 10, 0.3) 30%, rgba(6, 4, 10, 0.65) 100%);
+}
 
 .top-bar {
     display: flex;
