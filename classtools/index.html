@@ -429,6 +429,11 @@
                         other: '📌'
                     };
 
+                    // 학급 그룹은 '6-4' 라는 이름으로 저장된다. 화면에서는 읽는 대로 적는다.
+                    const groupLabel = (g) => (g.group_type === 'homeroom' && g.grade && g.class_number)
+                        ? `${g.grade}학년 ${g.class_number}반`
+                        : g.group_name;
+
                     const typeLabels = {
                         homeroom: '담임 학급',
                         subject: '전담 교과',
@@ -446,7 +451,7 @@
                             const opt = document.createElement('option');
                             opt.value = g.id;
                             opt.style.color = '#000';
-                            opt.textContent = `${icon} ${g.group_name} (${g.student_count || 0}명)`;
+                            opt.textContent = `${icon} ${groupLabel(g)} (${g.student_count || 0}명)`;
                             activeGroupSelect.appendChild(opt);
                         });
 
@@ -465,10 +470,8 @@
                                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
                                         <span class="chip" style="font-size:0.75rem; padding:2px 8px; background:rgba(117,214,159,0.15); color:#75d69f;">${icon} ${label}</span>
                                     </div>
-                                    <h3 class="tool-name" style="margin:0 0 6px; font-size:1.15rem; color:var(--text-main);">${g.group_name}</h3>
-                                    <div style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">
-                                        ${g.grade ? `${g.grade}학년 ${g.class_number}반 · ` : ''}학생 ${g.student_count || 0}명
-                                    </div>
+                                    <h3 class="tool-name" style="margin:0 0 6px; font-size:1.15rem; color:var(--text-main, #eef4f0);">${groupLabel(g)}</h3>
+                                    <div style="font-size:0.85rem; color:var(--text-muted, #a0aec0); font-weight:700;">학생 ${g.student_count || 0}명</div>
                                 </div>
                             `;
                         }).join('') + `

@@ -205,6 +205,16 @@ app.use((error, _req, res, _next) => res.status(error.status || 500).json({ code
     assert.match(portal, /year: portalYear/,
       "그룹을 만들 때도 보고 있는 학년도로 만들어야 한다.");
 
+    // 8. 담임은 자기 학급이 기본으로 하나 있다. 그 카드가 저장된 이름('6-4')
+    //    말고 읽는 이름('6학년 4반')으로 보여야 한다.
+    assert.match(portal, /const groupLabel = /,
+      "학급 그룹은 읽는 이름으로 보여야 한다.");
+
+    // 9. 이 화면에는 --text-main/--text-muted 가 정의돼 있지 않다. 대체색 없이
+    //    쓰면 어두운 카드 위에 어두운 글씨가 얹혀 아무것도 안 보인다.
+    assert.doesNotMatch(portal, /var\(--text-main\)|var\(--text-muted\)/,
+      "정의되지 않은 색 이름을 대체색 없이 쓰면 글씨가 사라진다.");
+
     console.log("Teacher group creation contract: OK");
   } finally {
     server.close();
