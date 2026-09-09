@@ -20,10 +20,10 @@
             </div>
         </div>
         <div class="sim-header-right">
-            <button id="urinateBtn" class="sim-btn warning" type="button">
+            <button id="urinateBtn" data-for-scene="urine" class="sim-btn warning" type="button">
                 <span>🚽</span> 배뇨하기 (방광 비우기)
             </button>
-            <button id="playPauseBtn" class="tool-toggle-btn" type="button">
+            <button id="playPauseBtn" data-for-scene="nephron,urine" class="tool-toggle-btn" type="button">
                 <span>⏸️</span> 일시정지
             </button>
         </div>
@@ -178,7 +178,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="../shared/engine-core.js?v=20260908b"></script>
+    <script src="../shared/engine-core.js?v=20260909b"></script>
     <script src="../shared/exam-data.js?v=20260908b"></script>
     <script src="app.js?v=20260908b"></script>
     <script src="nephron-flow.js?v=20260908b"></script>

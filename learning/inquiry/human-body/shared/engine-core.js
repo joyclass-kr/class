@@ -589,6 +589,11 @@
                 el.hidden = !show;
                 el.style.display = show ? '' : 'none';
             });
+            // 멈춤 단추가 숨는 장면으로 옮길 때, 멈춰 둔 채였다면 풀어 준다.
+            // 안 그러면 단추가 사라진 채로 온 방이 얼어붙어 되돌릴 길이 없다.
+            var pp = document.getElementById('playPauseBtn');
+            if (pp && pp.hidden && paused) pp.click();
+
             // 보고 있던 갈피가 숨으면 첫 번째로 보이는 갈피로 옮긴다
             if (hidActive) {
                 for (var i = 0; i < tabs.length; i++) {

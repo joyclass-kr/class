@@ -126,8 +126,19 @@ function owns(src) {
  */
 function knobsOf(room, scenes) {
     const html = read(path.join(room, 'index.html'));
+
+    // 옆칸(aside)만 보면 안 된다. 윗줄 도구 자리(sim-header-right)에도 손잡이가 있다.
+    // 「반응 속도 재 보기」가 동공 반사 화면에서 말없이 다른 장면으로 튕겨 보내던 것을
+    // 이 잣대가 못 잡았던 까닭이 이것이다 — 아예 안 보고 있었다.
+    const parts = [];
+    const hr = html.indexOf('sim-header-right');
+    if (hr >= 0) {
+        const end = html.indexOf('</header>', hr);
+        parts.push(html.slice(hr, end < 0 ? hr + 4000 : end));
+    }
     const aside = html.indexOf('<aside');
-    const body = aside < 0 ? html : html.slice(aside);
+    parts.push(aside < 0 ? html : html.slice(aside));
+    const body = parts.join(String.fromCharCode(10));
 
     const VOID = new Set(['input', 'img', 'br', 'hr', 'meta', 'link', 'source', 'use']);
     const stack = [];
@@ -215,9 +226,13 @@ for (const room of ROOMS) {
             // 다만 'mode' 같은 흔한 낱말은 그냥 들어 있다고 잡은 것이 아니다 —
             // dataset.mode 나 data-mode 꼴로 쓰였을 때만 잡은 것으로 친다.
             const 낱말 = k.표.replace(/^data-/, '');
-            const 잡는가 = src => (k.표 === 낱말)
-                ? words(src).has(k.표)
-                : (src.includes('dataset.' + 낱말) || src.includes('data-' + 낱말));
+            // 멈춤 단추는 이름으로 잡지 않는다. 겹판은 SimEngine.isPaused() 로 듣는다.
+            // 그 부름이 없는 겹판에서는 멈춤 단추를 눌러도 아무 일이 없다.
+            const 잡는가 = k.표 === 'playPauseBtn'
+                ? (src => src.includes('isPaused'))
+                : (src => (k.표 === 낱말)
+                    ? words(src).has(k.표)
+                    : (src.includes('dataset.' + 낱말) || src.includes('data-' + 낱말)));
             let 길 = 그리는곳.some(l => 잡는가(l.src)) ? '곧바로' : null;
 
             if (!길 && app && 잡는가(app.src)) {
