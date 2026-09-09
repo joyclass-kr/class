@@ -200,9 +200,27 @@ function knobsOf(room, scenes) {
     return knobs;
 }
 
+/**
+ * 눌러서 확인을 마친 샛길.
+ *
+ * 샛길은 「이 방 어딘가에 통로가 있다」는 뜻일 뿐이라 기계가 끝을 못 낸다.
+ * 아래 것들은 2026-09-09 에 브라우저에서 하나씩 눌러 재 보고 살아 있음을
+ * 확인했다. 괄호 안은 잰 값이다. 코드가 바뀌면 다시 확인할 것.
+ */
+const 확인함 = {
+    'homeostasis/glucose/mealBtn': '식사 → 혈당 곡선 2곳',
+    'homeostasis/glucose/exerciseBtn': '운동 → 혈당 곡선 2곳',
+    'homeostasis/glucose/resetEventBtn': '평형 복귀 → 혈당 곡선 2곳',
+    'nervous/autonomic/actionTriggerBtn': '교감↔부교감 전환 → 기관 8곳',
+    'nervous/autonomic/btnParasympathetic': '부교감 → 기관 8곳',
+    'respiration/breath/rateSlider': '가로막 움직임 폭 10 → 35 (3.5배 빨라짐)',
+    'skeleton/joint/flexBtn': '팔 굽히기 → 23곳',
+    'skeleton/joint/extendBtn': '팔 펴기 → 23곳'
+};
+
 /* ── 따지기 ─────────────────────────────────────────────── */
 
-let 흠 = 0, 총 = 0;
+let 흠 = 0, 총 = 0, 의심 = 0, 확인 = 0;
 const 보고 = [];
 
 for (const room of ROOMS) {
@@ -214,7 +232,7 @@ for (const room of ROOMS) {
     const app = files.find(x => path.basename(x.f) === 'app.js');
     const layers = files.filter(x => x.owns.length);
 
-    const lines = [], 흠줄 = [];
+    const lines = [], 흠줄 = [], 의심줄 = [];
     for (const k of knobsOf(room, scenes)) {
         if (process.env.SHOW) lines.push('   · ' + k.표 + ' → ' + k.보임.join(',') + (k.적힘 ? '' : '  (표 없음)'));
         for (const s of k.보임) {
@@ -243,12 +261,26 @@ for (const room of ROOMS) {
             if (!길) {
                 흠줄.push('     ✘ ' + s + ' 화면의 [' + k.표 + '] — 이 화면을 그리는 곳이 잡지 않는다');
                 흠++;
+            } else if (/캔버스/.test(길)) {
+                // 샛길은 「이 방 어딘가에 통로가 있다」는 뜻일 뿐, 이 손잡이가 그 통로로
+                // 간다는 보증이 아니다. 실제로 소화 실험실의 영양소 단추 넷이
+                // 엉뚱한 통로(heatBtn) 덕에 통과했는데, 눌러도 화면이 안 바뀌었다.
+                // 그래서 통과가 아니라 「눌러서 확인할 것」으로 따로 센다.
+                const 표 = room + '/' + s + '/' + k.표;
+                if (확인함[표]) {
+                    확인 += 1;
+                } else {
+                    의심줄.push('     ? ' + s + ' 화면의 [' + k.표 + '] — ' + 길 + ' (눌러서 확인할 것)');
+                    의심++;
+                }
             }
         }
     }
-    보고.push('=== ' + room + ' (장면 ' + scenes.length + ': ' + scenes.join(', ') + ')\n'
-        + [...lines, ...흠줄].join('\n') + (흠줄.length ? '' : (lines.length ? '' : '     흠 없음 ✔')));
+    const 몸 = [...lines, ...흠줄, ...의심줄];
+    const NL = String.fromCharCode(10);
+    보고.push('=== ' + room + ' (장면 ' + scenes.length + ': ' + scenes.join(', ') + ')' + NL
+        + (몸.length ? 몸.join(NL) : '     흠 없음 ✔'));
 }
 
 console.log(보고.join('\n'));
-console.log('\n손잡이×화면 ' + 총 + '칸 가운데 헛것 ' + 흠 + '개');
+console.log(String.fromCharCode(10) + '손잡이×화면 ' + 총 + '칸 — 헛것 ' + 흠 + '개, 눌러서 확인할 것 ' + 의심 + '개, 눌러서 확인을 마친 샛길 ' + 확인 + '개');

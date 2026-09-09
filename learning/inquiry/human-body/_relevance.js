@@ -491,3 +491,222 @@
         return { 보임: st.ks.length, 산것: st.live, 죽은것: st.dead };
     };
 })();
+
+/*
+ * 스스로 움직이는 화면에서도 참을 가리는 손잡이 잣대.
+ *
+ * 앞선 잣대는 「만졌더니 그림이 바뀌었나」만 봤다. 그러면 피가 흐르는 심장처럼
+ * 스스로 움직이는 화면에서는 무엇을 만지든 바뀐 것으로 나온다.
+ *
+ * 그래서 두 번 잰다.
+ *   1. 아무것도 안 만지고 한 틱 두었을 때 저절로 달라지는 자리들 (밑값)
+ *   2. 손잡이를 만졌을 때 달라지는 자리들
+ * 2에서 1을 뺀 것이 남으면, 그 손잡이가 진짜로 무언가를 바꾼 것이다.
+ *
+ * 쓰는 차례 (부름 사이마다 화면을 한 장 찍어야 틱이 돈다):
+ *   __base0() → 찍기 → __base1() → __pk(0) → 찍기 → __rd(0) → __pk(1) → …
+ */
+(function () {
+    'use strict';
+
+    function seen(el) {
+        var r = el.getBoundingClientRect();
+        if (!(r.width > 0 && r.height > 0)) return false;
+        for (var p = el; p && p !== document.body; p = p.parentElement) {
+            var cs = getComputedStyle(p);
+            if (cs.display === 'none' || cs.visibility === 'hidden' || p.hidden) return false;
+        }
+        return true;
+    }
+
+    var ATTRS = ['d', 'transform', 'opacity', 'fill', 'stroke', 'stroke-width', 'stroke-dasharray',
+        'cx', 'cy', 'r', 'x', 'y', 'width', 'height', 'points', 'class', 'x1', 'y1', 'x2', 'y2'];
+
+    /** 화면을 「자리 → 값」 표로 뜬다. 자리마다 이름을 붙여 두어야 뺄셈이 된다. */
+    function map() {
+        var m = {};
+        var stage = document.querySelector('.sim-stage-area') || document.body;
+        var els = stage.querySelectorAll('svg *, canvas');
+        for (var i = 0; i < els.length; i++) {
+            var e = els[i];
+            if (e.tagName === 'canvas') {
+                try {
+                    var g = e.getContext('2d');
+                    var d = g.getImageData(0, 0, e.width, e.height).data;
+                    var h = 0;
+                    for (var j = 0; j < d.length; j += 388) h = (h * 33 + d[j] + d[j + 1] * 5 + d[j + 2] * 11) % 1e9;
+                    m['c' + i] = h;
+                } catch (err) { }
+                continue;
+            }
+            for (var a = 0; a < ATTRS.length; a++) {
+                var v = e.getAttribute(ATTRS[a]);
+                if (v !== null) m[i + ':' + ATTRS[a]] = v;
+            }
+        }
+        // 무대 위 글자도 본다
+        var spans = stage.querySelectorAll('span, div');
+        for (var s = 0; s < spans.length; s++) {
+            if (!spans[s].children.length) m['t' + s] = spans[s].textContent;
+        }
+        return m;
+    }
+
+    function changed(a, b) {
+        var out = {};
+        for (var k in b) if (a[k] !== b[k]) out[k] = 1;
+        for (var k2 in a) if (!(k2 in b)) out[k2] = 1;
+        return out;
+    }
+
+    var S = null;
+
+    function knobs() {
+        var skip = /scene-btn|sidebar-tab-btn|playPause|nav-back/;
+        return [].slice.call(document.querySelectorAll(
+            '.sim-sidebar button, .sim-sidebar input, .sim-header-right button'))
+            .filter(function (e) {
+                var c = (e.className && e.className.baseVal !== undefined) ? e.className.baseVal : (e.className || '');
+                if (skip.test(c) || skip.test(e.id || '')) return false;
+                if (e.closest('#quizContainer')) return false;
+                return seen(e);
+            });
+    }
+
+    function label(e) {
+        var t = (e.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 20);
+        if (!t) {
+            var w = e.closest('.sim-slider-wrapper, .circulation-slider-item');
+            var s = w && w.querySelector('.sim-slider-label');
+            t = s ? s.textContent.trim() : (e.id || '?');
+        }
+        return t;
+    }
+
+    window.__base0 = function () {
+        S = { ks: knobs(), idle: null, before: null, dead: [], live: 0 };
+        S.snap = map();
+        return { 손잡이: S.ks.map(label) };
+    };
+
+    window.__base1 = function () {
+        if (!S) return '먼저 __base0';
+        S.idle = changed(S.snap, map());
+        return '저절로 달라지는 자리 ' + Object.keys(S.idle).length + '곳';
+    };
+
+    window.__pk = function (i) {
+        if (!S || !S.ks[i]) return '없음';
+        var e = S.ks[i];
+
+        // 이미 눌려 있는 단추를 또 누르면 아무 일이 안 난다. 그것을 「죽었다」고
+        // 세면 헛것이다 (효소 실험의 아밀레이스·단백질이 그랬다).
+        // 옆의 다른 단추를 먼저 눌러 두고 나서 잰다.
+        if (/(^|\s)(active|on|picked)(\s|$)/.test(e.className || '') && e.parentElement) {
+            var sibs = [].slice.call(e.parentElement.children).filter(function (x) {
+                return x !== e && x.tagName === e.tagName && x.tagName === 'BUTTON';
+            });
+            if (sibs.length) sibs[0].click();
+        }
+
+        S.before = map();
+        if (e.tagName === 'INPUT' && e.type === 'range') {
+            var min = +e.min || 0, max = +e.max || 100, cur = +e.value;
+            e.value = (cur - min) > (max - cur) ? min : max;
+            e.dispatchEvent(new Event('input', { bubbles: true }));
+            e.dispatchEvent(new Event('change', { bubbles: true }));
+        } else e.click();
+        return label(e);
+    };
+
+    window.__rd = function (i) {
+        if (!S || !S.ks[i]) return '없음';
+        var diff = changed(S.before, map());
+        var extra = 0;
+        for (var k in diff) if (!S.idle[k]) extra++;
+        var name = label(S.ks[i]);
+        if (extra === 0) { S.dead.push(name); return '✘ ' + name + ' (저절로 바뀌는 자리 말고는 그대로)'; }
+        S.live++;
+        return '✔ ' + name + ' (' + extra + '곳)';
+    };
+
+    window.__res = function () {
+        if (!S) return '먼저 __base0';
+        return { 보임: S.ks.length, 산것: S.live, 죽은것: S.dead };
+    };
+})();
+
+/*
+ * 문제(퀴즈)와 장면 고르는 단추 훑기.
+ *
+ * 앞선 잣대들은 이 둘을 일부러 뺐다. 「다 보라」 하셔서 여기서 본다.
+ *
+ *   __quiz()    보기를 눌러 채점이 되는지, 다음 문제로 넘어가는지
+ *   __scenes2() 장면 단추마다 그림이 정말 달라지는지 (겹판 이름으로 가린다)
+ */
+(function () {
+    'use strict';
+
+    window.__quiz = async function () {
+        // 골격계는 갈피 없이 옆칸 아래에 문제를 늘 펼쳐 둔다. 갈피가 없다고
+        // 「문제가 없다」고 하면 안 된다 — 한 번 그렇게 잘못 짚었다.
+        var tab = [].slice.call(document.querySelectorAll('.sidebar-tab-btn'))
+            .filter(function (b) { return /문제/.test(b.textContent) && !b.hidden; })[0];
+        if (tab) {
+            tab.click();
+            await new Promise(function (r) { setTimeout(r, 120); });
+        }
+
+        var box = document.getElementById('quizContainer');
+        if (!box) return '문제 칸이 없습니다';
+        if (!box.getBoundingClientRect().height) return '문제 칸이 비어 있습니다';
+
+        var opts = [].slice.call(box.querySelectorAll('button'));
+        if (!opts.length) return '보기 단추가 없습니다';
+
+        var before = box.textContent;
+        var pick = opts.filter(function (b) { return !/다음|이전|다시/.test(b.textContent); })[0] || opts[0];
+        var name = pick.textContent.replace(/\s+/g, ' ').trim().slice(0, 24);
+        pick.click();
+        await new Promise(function (r) { setTimeout(r, 150); });
+
+        var after = box.textContent;
+        var 채점 = (after !== before);
+        var 표시 = [].slice.call(box.querySelectorAll('button')).some(function (b) {
+            return /correct|wrong|right|answer|ok|no/.test(b.className || '');
+        });
+        var next = [].slice.call(box.querySelectorAll('button'))
+            .filter(function (b) { return /다음/.test(b.textContent); })[0];
+
+        return {
+            누른보기: name,
+            채점글바뀜: 채점,
+            맞고틀림표시: 표시,
+            다음단추: !!next
+        };
+    };
+
+    /**
+     * 장면 단추마다 어느 겹판이 뜨는지.
+     *
+     * 주의: 도구로 조종할 때는 스크립트가 도는 동안 화면 갱신이 멈춘다.
+     * 겹판을 감추고 띄우는 일은 화면 갱신 때 일어나므로, 이 함수를 한 번에
+     * 죽 돌리면 앞 장면의 겹판이 그대로 남아 엉뚱하게 나온다
+     * (자율신경을 눌렀는데 뇌 겹판이라고 나왔다).
+     * 장면 하나 누르고 → 화면 한 장 찍고 → 읽는 식으로 나눠 쓸 것.
+     */
+    window.__scenes2 = async function () {
+        var bs = [].slice.call(document.querySelectorAll('.scene-btn'));
+        var out = [];
+        for (var i = 0; i < bs.length; i++) {
+            bs[i].click();
+            await new Promise(function (r) { setTimeout(r, 200); });
+            var l = [].slice.call(document.querySelectorAll('div[class$="-layer"]'))
+                .filter(function (x) { return !x.hidden; })[0];
+            var cv = document.querySelector('.sim-stage-area canvas');
+            var 캔버스 = cv && getComputedStyle(cv).visibility !== 'hidden';
+            out.push(bs[i].dataset.scene + ' → ' + (l ? l.className : (캔버스 ? '캔버스' : '아무것도 없음')));
+        }
+        return out;
+    };
+})();

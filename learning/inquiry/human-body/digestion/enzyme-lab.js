@@ -63,7 +63,7 @@
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
 
-    var wrap, layer, svg, tagLayer, liquids = {}, tubeNotes = {}, curvePath, marker, headline, summary;
+    var wrap, layer, svg, tagLayer, liquids = {}, glasses = {}, tubeNotes = {}, curvePath, marker, headline, summary, pairNote;
 
     function init() {
         wrap = document.querySelector('.cinematic-viewport');
@@ -163,10 +163,12 @@
             var x = 70 + i * 130;
 
             // 시험관 유리
-            g.appendChild(el('rect', {
+            var glass = el('rect', {
                 x: x, y: 90, width: 68, height: 250, rx: 30,
                 fill: 'rgba(226,232,240,0.10)', stroke: '#cbd5e1', 'stroke-width': 2.5
-            }));
+            });
+            g.appendChild(glass);
+            glasses[t.key] = glass;
 
             // 속 액체
             var liquid = el('rect', {
@@ -216,6 +218,7 @@
 
         headline = tag(620, 348, '', 'warm', 'start');
         summary = tag(620, 372, '', 'dim', 'start');
+        pairNote = tag(620, 396, '', 'dim', 'start');
     }
 
     /* ── 현재 조작 상태 읽기 (app.js 를 건드리지 않으려고 화면에서 직접 읽는다) ── */
@@ -223,12 +226,14 @@
     function current() {
         var reagentBtn = document.querySelector('[data-reagent].active');
         var enzymeBtn = document.querySelector('[data-enzyme].active');
+        var nutrientBtn = document.querySelector('[data-nutrient].active');
         var heatBtn = document.getElementById('heatBtn');
         var ph = parseFloat((document.getElementById('phSlider') || {}).value);
         var temp = parseFloat((document.getElementById('tempSlider') || {}).value);
         return {
             reagent: reagentBtn ? reagentBtn.dataset.reagent : null,
             enzyme: enzymeBtn ? enzymeBtn.dataset.enzyme : 'amylase',
+            nutrient: nutrientBtn ? nutrientBtn.dataset.nutrient : 'starch',
             heating: !!(heatBtn && heatBtn.classList.contains('active')),
             ph: isNaN(ph) ? 7 : ph,
             temp: isNaN(temp) ? 37 : temp
@@ -236,7 +241,7 @@
     }
 
     function watchControls() {
-        ['[data-reagent]', '[data-enzyme]', '#heatBtn'].forEach(function (sel) {
+        ['[data-reagent]', '[data-enzyme]', '[data-nutrient]', '#heatBtn'].forEach(function (sel) {
             document.querySelectorAll(sel).forEach(function (b) {
                 b.addEventListener('click', function () { setTimeout(render, 0); });
             });
@@ -335,6 +340,41 @@
 
         var stat = document.getElementById('statEnzymeActivity');
         if (stat) stat.textContent = pct + ' %';
+
+        markNutrient(c, e);
+    }
+
+    // 효소가 자를 수 있는 영양소 (기질 특이성 — 시험에 나온다)
+    var CUTS = { amylase: 'starch', pepsin: 'protein', trypsin: 'protein', lipase: 'fat' };
+
+    /**
+     * 고른 영양소의 시험관에 테를 두르고, 지금 고른 효소로 잘리는지 적는다.
+     *
+     * 전에는 영양소 단추 넷을 눌러도 화면이 꿈쩍도 안 했다. 시험관 넷이
+     * 이미 다 놓여 있어서 「무엇을 넣을까」가 그림에 나타날 데가 없었다.
+     * 효소는 정해진 영양소만 자른다 — 그 짝을 여기서 보여 준다.
+     */
+    function markNutrient(c, e) {
+        var picked = c.nutrient;
+        TUBES.forEach(function (t) {
+            var glass = glasses[t.key];
+            if (!glass) return;
+            var on = (t.key === picked);
+            glass.setAttribute('stroke', on ? '#facc15' : '#cbd5e1');
+            glass.setAttribute('stroke-width', on ? 4.5 : 2.5);
+        });
+
+        if (!pairNote) return;
+        var tube = TUBES.filter(function (t) { return t.key === picked; })[0];
+        var 이름 = tube ? tube.name : '';
+        // ENZYMES 의 from 은 녹말·단백질·펩톤·지방 — 모두 받침이 있어 「을」이 맞다
+        if (CUTS[c.enzyme] === picked) {
+            pairNote.textContent = 이름 + ' ➔ 잘립니다 (' + e.from + '을 자르는 효소)';
+            pairNote.style.color = '#86efac';
+        } else {
+            pairNote.textContent = 이름 + ' ➔ 안 잘립니다 (이 효소는 ' + e.from + '만 자름)';
+            pairNote.style.color = '#fca5a5';
+        }
     }
 
     /* ── 작은 도우미 ───────────────────────────────────────── */
