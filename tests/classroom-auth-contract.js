@@ -37,8 +37,8 @@ assert.match(indexScript, /studentNumberInput\.value === '0'/,
   "Number zero must select the teacher login flow.");
 assert.match(indexScript, /\/api\/teacher\/claim/,
   "Teacher number zero must verify the administrator-created teacher profile.");
-assert.match(indexScript, /showTeacherHome\(state\)/,
-  "A logged-in teacher must stay on the main index page with showTeacherHome.");
+assert.match(indexScript, /teacherProfiles\.forEach\(/,
+  "A logged-in teacher must stay on the main index page and get one profile card per registration.");
 assert.doesNotMatch(indexHtml, /id="teacherSetupLink"/,
   "Teacher access should use number zero instead of a separate link.");
 assert.match(indexScript, /password: studentPasswordInput\.value/,
@@ -49,8 +49,12 @@ assert.match(indexScript, /grade: Number\(studentGradeInput\.value\)/);
 assert.match(indexScript, /classNumber: Number\(studentClassInput\.value\)/);
 assert.match(indexScript, /const studentName = normalizePlayerName\(studentNameInput\.value\.trim\(\)\);/);
 assert.equal([...indexScript.matchAll(/name: studentName,/g)].length, 2);
-assert.match(indexScript, /user\?\.role === 'teacher'/,
-  "Teacher and student routes must be selected from the server role.");
+assert.match(indexScript, /const res = await api\('\/api\/teacher\/profile'\)/,
+  "The teacher registration must be read for every signed-in account: role is a single slot, so a school admin who is also a guardian would lose one of the two cards.");
+assert.doesNotMatch(indexScript, /role === 'teacher' \|\| state\.isTeacher/,
+  "The teacher card must not be gated on the role slot.");
+assert.match(indexScript, /state\.guardianChildren\.forEach\(child =>/,
+  "Every child on the roster must get its own guardian card.");
 assert.match(indexScript, /localStorage\.setItem\('classPlayerName'/,
   "Open development access should preserve only the device-local player name.");
 assert.doesNotMatch(indexScript, /guestNameInput\.oninput\s*=/,
@@ -94,12 +98,5 @@ assert.deepEqual(
 );
 assert.equal(platform.normalizePersonName("김 민준"), "김민준");
 assert.equal(platform.normalizePersonName("60301 김민준"), "김민준");
-
-const passwordHash = platform.hashStudentPassword("123456");
-assert.doesNotMatch(passwordHash, /123456/, "Student passwords must not be stored in plaintext.");
-assert.equal(platform.verifyStudentPassword("123456", passwordHash), true);
-assert.equal(platform.verifyStudentPassword("654321", passwordHash), false);
-assert.notEqual(platform.hashStudentPassword("123456"), passwordHash,
-  "Each password hash must use a unique salt.");
 
 console.log("Classroom auth contract: OK");

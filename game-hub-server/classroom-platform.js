@@ -1830,7 +1830,18 @@ function createClassroomPlatform(options = {}) {
       user.role = "student";
     }
     const guardianChildren = await getGuardianChildren(user);
-    const teacherRow = await pool.query("SELECT 1 FROM classroom_teachers WHERE user_id = $1 LIMIT 1", [user.id]);
+    // Match on google_email too, not just user_id: a row written by the admin
+    // (an ordinary teacher registration, or the school-master appointment)
+    // carries only the e-mail until that account's next fresh Google sign-in
+    // links user_id. With user_id alone, a school admin who is still on an
+    // older session reads as a non-teacher and loses their profile card.
+    const teacherRow = await pool.query(
+      `SELECT 1 FROM classroom_teachers
+       WHERE user_id = $1
+          OR ($2 <> '' AND google_email IS NOT NULL AND LOWER(google_email) = $2)
+       LIMIT 1`,
+      [user.id, normalizeEmail(user.email)]
+    );
     const isTeacher = teacherRow.rowCount > 0;
 
     return res.json({
@@ -2703,8 +2714,16 @@ function createClassroomPlatform(options = {}) {
     const user = userResult.rows[0];
 
     if (isTeacher) {
+      // One row at a time: classroom_teachers.user_id is UNIQUE, so linking two
+      // registrations of the same person (a school admin here, a teacher there)
+      // in one statement raises a unique violation and breaks the sign-in
+      // itself. The rows left unlinked are still found by google_email.
       await pool.query(
-        "UPDATE classroom_teachers SET user_id = $1, updated_at = NOW() WHERE LOWER(google_email) = $2",
+        `UPDATE classroom_teachers SET user_id = $1, updated_at = NOW()
+         WHERE id = (SELECT id FROM classroom_teachers
+                     WHERE LOWER(google_email) = $2 AND (user_id IS NULL OR user_id = $1)
+                     ORDER BY (user_id = $1) IS TRUE DESC, id
+                     LIMIT 1)`,
         [user.id, email]
       );
     }
@@ -3113,29 +3132,48 @@ function createClassroomPlatform(options = {}) {
     // same person can be a registered teacher in classroom_teachers
     // regardless of what their top-level role says. Look the row up directly.
     const user = await requireUser(req);
+    const email = normalizeEmail(user.email);
+    // Same reason as /auth/me: the row may still be keyed only by google_email.
     const result = await pool.query(
       `SELECT t.id, t.teacher_name, t.active, t.academic_year, t.grade, t.class_number, t.teacher_type,
+              t.user_id,
               sc.enabled AS school_enabled,
               sc.id AS school_id, sc.name AS school_name
        FROM classroom_teachers t
        JOIN classroom_schools sc ON sc.id = t.school_id
-       WHERE t.user_id = $1`,
-      [user.id]
+       WHERE t.user_id = $1
+          OR ($2 <> '' AND t.google_email IS NOT NULL AND LOWER(t.google_email) = $2)
+       ORDER BY COALESCE(t.user_id = $1, FALSE) DESC, sc.name, t.id`,
+      [user.id, email]
     );
+    // Link the row the first time it is matched by e-mail alone, so later
+    // lookups keyed on user_id find it. user_id is UNIQUE, so only one row can
+    // ever carry the link; any further registration stays e-mail-matched.
+    const unlinked = result.rows.find((row) => row.user_id === null);
+    if (unlinked && !result.rows.some((row) => String(row.user_id) === String(user.id))) {
+      await pool.query(
+        "UPDATE classroom_teachers SET user_id = $1, updated_at = NOW() WHERE id = $2 AND user_id IS NULL",
+        [user.id, unlinked.id]
+      ).catch(() => {});
+    }
+    const toProfile = (row) => ({
+      id: String(row.id),
+      name: row.teacher_name,
+      schoolId: String(row.school_id),
+      schoolName: row.school_name,
+      academicYear: row.academic_year,
+      grade: row.grade,
+      classNumber: row.class_number,
+      teacherType: row.teacher_type,
+      active: row.active
+    });
+    const profiles = result.rows.map(toProfile);
     const profile = result.rows[0];
     res.json({
-      registered: Boolean(profile?.active && profile?.school_enabled),
-      profile: profile ? {
-        id: String(profile.id),
-        name: profile.teacher_name,
-        schoolId: String(profile.school_id),
-        schoolName: profile.school_name,
-        academicYear: profile.academic_year,
-        grade: profile.grade,
-        classNumber: profile.class_number,
-        teacherType: profile.teacher_type,
-        active: profile.active
-      } : null
+      registered: result.rows.some((row) => row.active && row.school_enabled),
+      // profile stays for callers that only ever expected one registration.
+      profile: profile ? toProfile(profile) : null,
+      profiles
     });
   }));
 

@@ -1976,14 +1976,15 @@
                 const profileList = document.getElementById('profileList');
                 profileList.innerHTML = '';
 
-                // Fetch teacher profile to get teacherType and schoolName. Not gated on
-                // state.user.role: role is a single priority slot (admin beats teacher),
-                // so an account can be registered as a teacher even while its top-level
-                // role says 'admin'. state.isTeacher reflects the real registration.
-                let teacherProfileData = null;
-                if (state.user?.role === 'teacher' || state.isTeacher) {
+                // Ask for the teacher registrations of every signed-in account, without
+                // gating on state.user.role: role is a single priority slot (admin beats
+                // teacher beats guardian), so the same person can hold a school-admin or
+                // teacher registration while their role says something else entirely.
+                // The server answers with an empty list when there is no registration.
+                let teacherProfiles = [];
+                if (state.user && !state.guest) {
                     const res = await api('/api/teacher/profile').catch(() => null);
-                    teacherProfileData = res?.profile;
+                    teacherProfiles = res?.profiles || (res?.profile ? [res.profile] : []);
                 }
 
                 // 1. Admin
@@ -1996,8 +1997,9 @@
                     setPlayerIdentity(state.user?.name || state.user?.displayName);
                 }
 
-                // 2. School Admin (Principal / Vice Principal) or Teacher
-                if (teacherProfileData) {
+                // 2. School Admin (Principal / Vice Principal) or Teacher — one card per
+                // registration, so a person registered at two schools sees both.
+                teacherProfiles.forEach((teacherProfileData) => {
                     const btn = document.createElement('a');
                     const isSchoolAdmin = ['관리자', '교장', '교감'].includes(teacherProfileData.teacherType);
                     btn.className = isSchoolAdmin ? 'profile-btn school-admin' : 'profile-btn teacher';
@@ -2012,10 +2014,16 @@
                     isTeacherSignedIn = true;
                     restrictedPreview = false;
                     setPlayerIdentity(teacherProfileData.name);
-                }
+                });
 
                 // 3. Student
-                if (state.membership || state.user?.role === 'student' || (state.user && state.user.role !== 'teacher' && state.user.role !== 'admin' && !state.guest)) {
+                // The last arm catches accounts whose role slot is still 'user'. A
+                // guardian is not one of them: their own name on a 학생 card would be a
+                // classmate who does not exist.
+                const guardianOnly = !state.membership && state.user?.role !== 'student'
+                    && (state.guardianChildren?.length > 0 || state.user?.role === 'guardian');
+                if (state.membership || state.user?.role === 'student'
+                    || (state.user && state.user.role !== 'teacher' && state.user.role !== 'admin' && !state.guest && !guardianOnly)) {
                     const m = state.membership;
                     const btn = document.createElement('a');
                     btn.className = 'profile-btn student';
@@ -2096,7 +2104,7 @@
                                 method: 'POST',
                                 body: JSON.stringify({ credential }),
                             });
-                            await routeSignedIn({ user: state.user, membership: state.membership, guardianChildren: state.guardianChildren });
+                            await routeSignedIn({ user: state.user, membership: state.membership, guardianChildren: state.guardianChildren, isTeacher: state.isTeacher });
                         } catch (error) {
                             setStatus(error.message, true);
                         }
