@@ -308,8 +308,11 @@
 
     function soundForElement(element) {
         if (!element || element.matches(":disabled, [aria-disabled='true']")) return "";
-        const requested = String(element.dataset.sfx || "click").toLowerCase();
-        return requested === "none" ? "" : requested;
+        const requested = String(element.dataset.sfx || "").toLowerCase();
+        if (requested === "none") return "";
+        if (requested) return requested;
+        if (element.matches("[data-midi]")) return "";
+        return "click";
     }
 
     function noteInteraction(element) {

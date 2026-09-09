@@ -11,7 +11,7 @@ const musicControlCssPath = path.join(root, "assets", "sound", "music-control.cs
 const hubPath = path.join(root, "index.html");
 const fruitBellPath = path.join(root, "learning", "games", "fruitbell", "fruitbell.html");
 const voyagePath = path.join(root, "learning", "inquiry", "age-of-exploration", "public", "index.html");
-const sfxVersion = "20260909-global-feedback-2";
+const sfxVersion = "20260909-global-feedback-3";
 
 for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath, fruitBellPath, voyagePath]) {
     assert.ok(fs.existsSync(filePath), `Missing sound effect file: ${filePath}`);
@@ -35,6 +35,7 @@ assert.ok(sfxSource.includes("const soundUrls"), "Shared effects should resolve 
 assert.ok(sfxSource.includes("template.cloneNode()"), "Concurrent effects should use independent audio elements.");
 assert.ok(sfxSource.includes("playSynth(soundName)"), "File playback failures should retain synthesized fallbacks.");
 assert.ok(sfxSource.includes('soundName === "click"'), "The established low-latency synthesized click should remain in use.");
+assert.ok(sfxSource.includes('element.matches("[data-midi]")'), "Playable MIDI keys should not add a generic click over their instrument sound.");
 assert.ok(sfxSource.includes('latencyHint: "interactive"'), "Sound effects should request an interactive low-latency audio context.");
 assert.ok(sfxSource.includes('document.addEventListener("pointerdown"'), "Pointer feedback should begin on pointerdown.");
 assert.ok(sfxSource.includes("watchSemanticFeedback()"), "Shared effects should watch quiz feedback across learning pages.");
