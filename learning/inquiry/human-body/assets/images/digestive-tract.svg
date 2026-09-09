@@ -1,87 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 900" width="700" height="900">
   <defs>
-    <!-- 2-stop linearGradients: light from top-left (20% 20% to 80% 80%), brightness diff 15~18%, hue diff <= 2 deg -->
+    <!-- Subtle linear gradients (135 deg angle, <=25% brightness diff, <=20deg hue diff) -->
     <linearGradient id="digestMouth" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#efc8b9"/>
-      <stop offset="100%" stop-color="#cba08f"/>
+      <stop offset="0%" stop-color="#f2cfbf"/>
+      <stop offset="100%" stop-color="#d6a08f"/>
     </linearGradient>
     <linearGradient id="digestStomach" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#e4847c"/>
-      <stop offset="100%" stop-color="#b6574f"/>
+      <stop offset="0%" stop-color="#db766e"/>
+      <stop offset="100%" stop-color="#b04941"/>
     </linearGradient>
     <linearGradient id="digestLiver" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#9f574b"/>
-      <stop offset="100%" stop-color="#6e352d"/>
+      <stop offset="0%" stop-color="#8a4d42"/>
+      <stop offset="100%" stop-color="#662f26"/>
     </linearGradient>
     <linearGradient id="digestGall" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#7fac68"/>
-      <stop offset="100%" stop-color="#537941"/>
+      <stop offset="0%" stop-color="#739e5e"/>
+      <stop offset="100%" stop-color="#51783f"/>
     </linearGradient>
     <linearGradient id="digestPancreas" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#edcd75"/>
-      <stop offset="100%" stop-color="#c7a445"/>
+      <stop offset="0%" stop-color="#ebd16e"/>
+      <stop offset="100%" stop-color="#c4a53d"/>
     </linearGradient>
     <linearGradient id="digestSmall" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#f4b890"/>
-      <stop offset="100%" stop-color="#cc8b61"/>
+      <stop offset="0%" stop-color="#f5c29b"/>
+      <stop offset="100%" stop-color="#c98a63"/>
     </linearGradient>
     <linearGradient id="digestLarge" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#cfa17e"/>
-      <stop offset="100%" stop-color="#a47451"/>
+      <stop offset="0%" stop-color="#c29472"/>
+      <stop offset="100%" stop-color="#996c4d"/>
     </linearGradient>
     <linearGradient id="digestRectum" x1="20%" y1="20%" x2="80%" y2="80%">
-      <stop offset="0%" stop-color="#be8d72"/>
-      <stop offset="100%" stop-color="#936247"/>
+      <stop offset="0%" stop-color="#b58265"/>
+      <stop offset="100%" stop-color="#8a5c43"/>
     </linearGradient>
   </defs>
 
-  <!-- 1. Body Outline (Centered torso: x min 120, max 580 -> symmetric margins 120 each) -->
+  <!-- 1. Torso Outline (faint reference line, symmetric, centered at x=350) -->
   <path id="bodyOutline" d="
-    M 310 40
-    C 330 38, 370 38, 390 40
-    C 420 50, 425 90, 420 120
-    C 415 138, 405 145, 395 152
-    C 425 160, 520 180, 575 220
-    C 585 240, 565 340, 550 410
-    C 538 460, 528 500, 532 550
-    C 536 600, 550 670, 545 740
-    C 540 790, 490 830, 450 855
-    C 410 862, 380 840, 350 810
-    C 320 840, 290 862, 250 855
-    C 210 830, 160 790, 155 740
-    C 150 670, 164 600, 168 550
-    C 172 500, 162 460, 150 410
-    C 135 340, 115 240, 125 220
-    C 180 180, 275 160, 305 152
-    C 295 145, 285 138, 280 120
-    C 275 90, 280 50, 310 40 Z"
-    fill="none" stroke="#5b6a80" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+    M 350 40
+    C 380 50, 385 90, 380 120
+    C 375 138, 365 145, 355 152
+    C 385 160, 480 180, 535 220
+    C 545 240, 525 340, 510 410
+    C 498 460, 488 500, 492 550
+    C 496 600, 510 670, 505 740
+    C 500 790, 450 830, 410 855
+    C 370 862, 340 840, 320 840
+    C 300 840, 270 862, 230 855
+    C 190 830, 140 790, 135 740
+    C 130 670, 144 600, 148 550
+    C 152 500, 142 460, 130 410
+    C 115 340,  95 240, 105 220
+    C 160 180, 255 160, 285 152
+    C 275 145, 265 138, 260 120
+    C 255 90, 260 50, 290 40 Z"
+    fill="none" stroke="#5b6a80" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" opacity="0.45" />
 
-    <!-- 2. Portal Vein (간문맥: 소장 여러 곳에서 모여 간으로 올라가는 굵은 혈관 묶음) -->
-  <g id="portalVein" fill="none" stroke="#8f6d86" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+  <!-- 2. Portal Vein (간문맥: 소장 아래쪽 서너 곳에서 모여 한 줄기(굵기 6)로 간으로 직행) -->
+  <g id="portalVein" fill="none" stroke="#8f6d86" stroke-linecap="round" stroke-linejoin="round" opacity="0.95">
     <!-- 주 간문맥 줄기 (굵기 6.0) -->
-    <path d="M 315 435 C 300 395, 275 365, 265 330" stroke-width="6.0"/>
-    <!-- 소장 장간막 정맥 분기지류들 (소장 곳곳에서 모여드는 가지들) -->
-    <path d="M 360 475 C 340 455, 325 445, 315 435" stroke-width="4.0"/>
-    <path d="M 285 470 C 298 452, 310 442, 315 435" stroke-width="4.0"/>
-    <path d="M 325 515 C 322 485, 318 455, 315 435" stroke-width="3.5"/>
+    <path d="M 315 440 C 300 400, 285 368, 275 338" stroke-width="6.0"/>
+    <!-- 소장 장간막 정맥 분기지류 3개 (소장 곳곳에서 모여드는 가지들) -->
+    <path d="M 370 490 C 345 470, 325 455, 315 440" stroke-width="3.8"/>
+    <path d="M 275 490 C 290 470, 305 455, 315 440" stroke-width="3.8"/>
+    <path d="M 335 525 C 330 495, 322 465, 315 440" stroke-width="3.5"/>
   </g>
 
-  <!-- 3. Liver (간: 오른쪽 위/viewer left, dark brown, wedge shaped) -->
+  <!-- 3. Liver (간: 상단 패임으로 우엽·좌엽 분리, 하단 쐐기형 모서리) -->
   <g id="liver">
-    <path d="
-      M 345 250
-      C 345 235, 290 220, 240 225
-      C 180 230, 165 260, 170 295
-      C 175 335, 205 355, 250 355
-      C 295 355, 335 340, 345 320
-      C 350 305, 345 265, 345 250 Z"
-      fill="url(#digestLiver)" stroke="#6d382f" stroke-width="2" stroke-linejoin="round"/>
-    <!-- Hepatic lobe fissure -->
-    <path d="M 270 230 C 265 265, 260 310, 275 350" fill="none" stroke="#6d382f" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 272 238 C 285 232, 315 235, 345 255 C 352 265, 350 285, 340 310 C 325 332, 295 348, 275 348 C 255 348, 235 365, 215 362 C 180 355, 162 325, 168 285 C 172 250, 195 220, 235 222 C 255 223, 265 232, 272 238 Z" fill="url(#digestLiver)" stroke="#6d382f" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Lobe fissure / ligament notch line -->
+    <path d="M 272 238 C 268 268, 266 308, 275 346" fill="none" stroke="#6d382f" stroke-width="1.3" opacity="0.6"/>
   </g>
 
-  <!-- 4. Gallbladder (쓸개: 간 아래 작은 주머니, green) -->
+  <!-- 4. Gallbladder (쓸개: 간 아래 우측에 매달림) -->
   <g id="gallbladder">
     <path d="
       M 275 335
@@ -89,14 +82,12 @@
       C 266 372, 282 375, 288 362
       C 292 352, 285 335, 275 335 Z"
       fill="url(#digestGall)" stroke="#517341" stroke-width="1.8" stroke-linejoin="round"/>
-    <!-- Surface contour -->
     <path d="M 268 345 Q 275 355 282 345" fill="none" stroke="#517341" stroke-width="0.8"/>
   </g>
 
-  <!-- 5. Continuous Alimentary Canal: Mouth & Esophagus -->
+  <!-- 5. Mouth & Esophagus -->
   <g id="mouth">
     <ellipse cx="350" cy="70" rx="20" ry="12" fill="url(#digestMouth)" stroke="#c08d79" stroke-width="1.8"/>
-    <!-- Oral cavity opening slit -->
     <path d="M 338 70 Q 350 75 362 70" fill="none" stroke="#c08d79" stroke-width="1.2"/>
   </g>
 
@@ -105,28 +96,27 @@
       M 342 78 L 358 78
       L 358 245 L 342 245 Z"
       fill="url(#digestMouth)" stroke="#c08d79" stroke-width="1.8" stroke-linejoin="round"/>
-    <!-- Peristalsis contraction lines -->
     <line x1="344" y1="120" x2="356" y2="120" stroke="#c08d79" stroke-width="1" opacity="0.6"/>
     <line x1="344" y1="165" x2="356" y2="165" stroke="#c08d79" stroke-width="1" opacity="0.6"/>
     <line x1="344" y1="210" x2="356" y2="210" stroke="#c08d79" stroke-width="1" opacity="0.6"/>
   </g>
 
-  <!-- 6. Stomach (위: J-shaped pouch, expands to viewer's right, stays above y=356) -->
+  <!-- 6. Stomach (위) -->
   <g id="stomach">
     <path d="
       M 342 240
       C 342 235, 360 235, 368 240
       C 390 248, 445 265, 455 305
       C 465 345, 430 355, 395 355
-      C 365 355, 350 348, 345 340
-      C 335 315, 340 265, 342 240 Z"
+      C 365 355, 355 352, 348 350
+      L 336 350
+      C 334 330, 340 265, 342 240 Z"
       fill="url(#digestStomach)" stroke="#b0524a" stroke-width="2" stroke-linejoin="round"/>
-    <!-- Rugae folds (위 주름) -->
     <path d="M 365 260 C 385 278, 415 300, 420 330" fill="none" stroke="#b0524a" stroke-width="1.2" opacity="0.6"/>
     <path d="M 378 275 C 395 295, 410 320, 400 345" fill="none" stroke="#b0524a" stroke-width="1.2" opacity="0.6"/>
   </g>
 
-  <!-- 7. Pancreas (이자: 가로로 길쭉한 엽상 장기, yellow, >= 70% visible, placed below stomach at y=362..395) -->
+  <!-- 7. Pancreas (이자) -->
   <g id="pancreas">
     <path d="
       M 342 365
@@ -135,101 +125,95 @@
       C 405 392, 365 392, 338 384
       C 332 380, 332 368, 342 365 Z"
       fill="url(#digestPancreas)" stroke="#b89a41" stroke-width="1.8" stroke-linejoin="round"/>
-    <!-- Pancreatic lobule texture -->
     <path d="M 365 366 L 368 384 M 390 366 L 393 384 M 415 367 L 417 380" fill="none" stroke="#b89a41" stroke-width="1" opacity="0.6"/>
   </g>
 
-  <!-- 8. Duodenum (십이지장: C-shaped loop from stomach exit x=345,y=340 down around pancreas to x=340,y=420) -->
+  <!-- 8. Duodenum (십이지장) -->
   <g id="duodenum">
     <path d="
-      M 345 338
-      C 330 340, 316 358, 320 382
-      C 324 406, 332 420, 345 420
+      M 348 350
+      C 330 350, 314 362, 318 386
+      C 322 410, 332 422, 345 422
       L 345 435
-      C 318 435, 305 412, 302 380
-      C 298 348, 320 325, 345 325 Z"
+      C 318 435, 302 412, 298 380
+      C 295 348, 318 334, 348 334 Z"
       fill="url(#digestSmall)" stroke="#c1815a" stroke-width="1.8" stroke-linejoin="round"/>
   </g>
 
-  <!-- 9. Ducts (쓸개관 & 이자관: both touch duodenum) -->
+  <!-- 9. Ducts -->
   <g id="ducts" fill="none" stroke="#7fae8f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <!-- bileDuct: gallbladder (275, 360) to duodenum (315, 380) -->
     <path id="bileDuct" d="M 275 360 C 285 370, 300 375, 318 380" />
-    <!-- pancreaticDuct: along pancreas (380, 375) into duodenum (320, 380) -->
     <path id="pancreaticDuct" d="M 410 372 L 355 375 L 318 380" />
   </g>
 
-  <!-- 10. Small Intestine (소장: convoluted folds filling center abdomen from x=240 to 460, y=430 to 650) -->
+  <!-- 10. Small Intestine (소장: 굵기 24 가는 관, 11번 굽이, 맹장 연결 틈 0) -->
   <g id="smallIntestine">
+    <!-- Base border for overlapping tube coils -->
+    <path d="M 345 435 C 365 435, 400 440, 420 455 C 440 470, 435 490, 395 490 C 345 490, 285 470, 265 490 C 245 510, 270 530, 320 525 C 380 520, 435 525, 440 550 C 445 575, 400 580, 345 570 C 290 560, 255 575, 255 600 C 255 625, 310 615, 375 615 C 430 615, 435 640, 385 645 C 335 650, 290 630, 255 635 L 226 635" fill="none" stroke="#ba754d" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Main colored intestine tube (width 22) -->
+    <path d="M 345 435 C 365 435, 400 440, 420 455 C 440 470, 435 490, 395 490 C 345 490, 285 470, 265 490 C 245 510, 270 530, 320 525 C 380 520, 435 525, 440 550 C 445 575, 400 580, 345 570 C 290 560, 255 575, 255 600 C 255 625, 310 615, 375 615 C 430 615, 435 640, 385 645 C 335 650, 290 630, 255 635 L 226 635" fill="none" stroke="url(#digestSmall)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Intestinal fold crease lines across loops -->
     <path d="
-      M 335 435
-      C 360 435, 410 440, 425 460
-      C 440 480, 420 500, 385 500
-      C 350 500, 270 485, 260 510
-      C 250 535, 310 545, 360 540
-      C 420 535, 435 560, 415 585
-      C 395 610, 310 595, 270 615
-      C 240 630, 250 655, 300 650
-      C 350 645, 410 650, 415 635
-      C 420 620, 390 605, 370 605
-      C 330 605, 250 590, 245 565
-      C 240 540, 310 525, 350 525
-      C 410 525, 445 505, 440 475
-      C 435 445, 380 425, 335 425 Z"
-      fill="url(#digestSmall)" stroke="#c1815a" stroke-width="2" stroke-linejoin="round"/>
-    <!-- Fold textures -->
-    <path d="
-      M 285 470 C 310 475, 360 470, 390 475
-      M 280 530 C 320 535, 370 525, 400 545
-      M 275 570 C 310 580, 365 570, 390 575
-      M 290 630 C 330 635, 370 630, 395 630"
-      fill="none" stroke="#c1815a" stroke-width="1.2" opacity="0.6"/>
+      M 370 448 C 375 458, 385 460, 390 450
+      M 418 480 C 410 490, 400 492, 395 480
+      M 330 482 C 322 492, 315 492, 310 480
+      M 285 520 C 295 530, 305 530, 315 520
+      M 370 515 C 380 525, 390 525, 400 515
+      M 425 560 C 415 570, 405 572, 398 560
+      M 340 562 C 330 572, 320 572, 312 560
+      M 275 588 C 282 598, 292 598, 300 588
+      M 345 608 C 355 618, 365 618, 375 608
+      M 415 628 C 405 638, 395 640, 388 628
+      M 320 635 C 310 645, 300 645, 292 635
+    " fill="none" stroke="#a6633c" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>
   </g>
 
-    <!-- 11. Large Intestine (대장: ㄷ-shape framing small intestine, starts at cecum x=220, y=640) -->
+  <!-- 11. Large Intestine (대장: 굵기 40~46의 큰창자, cecum at x=196..240, y=620..665) -->
   <g id="largeIntestine">
     <path d="
-      M 220 640
-      C 210 630, 210 500, 215 440
-      C 220 400, 250 395, 300 398
-      L 410 398
-      C 460 395, 485 400, 490 440
-      C 495 500, 495 620, 485 660
-      C 475 700, 410 710, 360 705
-      L 360 685
-      C 410 688, 455 680, 465 650
-      C 475 615, 472 505, 470 445
-      C 468 420, 445 418, 405 418
-      L 295 418
-      C 255 418, 238 420, 235 445
-      C 232 505, 232 615, 240 645 Z"
+      M 196 645
+      C 194 625, 194 500, 196 438
+      C 198 395, 240 386, 300 386
+      L 410 386
+      C 470 386, 500 395, 502 438
+      C 504 500, 504 620, 492 660
+      C 478 700, 430 714, 375 712
+      L 344 712
+      L 344 672
+      L 375 672
+      C 420 672, 448 660, 458 640
+      C 462 610, 460 505, 458 445
+      C 456 428, 440 428, 405 428
+      L 295 428
+      C 255 428, 242 428, 240 445
+      C 238 505, 238 610, 240 635
+      C 240 655, 235 665, 226 665
+      C 208 665, 196 655, 196 645 Z"
       fill="url(#digestLarge)" stroke="#9a6f4f" stroke-width="2" stroke-linejoin="round"/>
-    <!-- Haustra colon bands -->
-    <line x1="215" y1="480" x2="235" y2="480" stroke="#9a6f4f" stroke-width="1.2"/>
-    <line x1="215" y1="530" x2="235" y2="530" stroke="#9a6f4f" stroke-width="1.2"/>
-    <line x1="215" y1="580" x2="235" y2="580" stroke="#9a6f4f" stroke-width="1.2"/>
-    <line x1="470" y1="480" x2="490" y2="480" stroke="#9a6f4f" stroke-width="1.2"/>
-    <line x1="470" y1="530" x2="490" y2="530" stroke="#9a6f4f" stroke-width="1.2"/>
-    <line x1="470" y1="580" x2="490" y2="580" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="202" y1="480" x2="234" y2="480" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="202" y1="530" x2="234" y2="530" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="202" y1="580" x2="234" y2="580" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="464" y1="480" x2="496" y2="480" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="464" y1="530" x2="496" y2="530" stroke="#9a6f4f" stroke-width="1.2"/>
+    <line x1="464" y1="580" x2="496" y2="580" stroke="#9a6f4f" stroke-width="1.2"/>
   </g>
 
-  <!-- 12. Rectum (곧창자: 가운데 아래로 곧게 내려가는 관, x=342..358, y=695..765) -->
+  <!-- 12. Rectum (곧창자) -->
   <g id="rectum">
     <path d="
-      M 360 700
+      M 360 690
       L 358 765
       L 342 765
-      L 344 700 Z"
+      L 344 690 Z"
       fill="url(#digestRectum)" stroke="#8a5f47" stroke-width="1.8" stroke-linejoin="round"/>
   </g>
 
-  <!-- 13. Anus (항문: 정중앙 x=350, y=765..785) -->
+  <!-- 13. Anus (항문) -->
   <g id="anus">
     <path d="
       M 342 765 L 358 765
       L 356 785 L 344 785 Z"
       fill="url(#digestRectum)" stroke="#8a5f47" stroke-width="1.8" stroke-linejoin="round"/>
-    <!-- Sphincter lines -->
     <ellipse cx="350" cy="785" rx="7" ry="2.5" fill="none" stroke="#8a5f47" stroke-width="1.2"/>
   </g>
 </svg>

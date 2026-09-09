@@ -88,8 +88,8 @@
     <path id="symToLung" d="M 436 200 L 420 200" stroke-width="4.0"/>
     <path id="symToHeart" d="M 436 325 L 460 325" stroke-width="4.0"/>
     <path id="symToAdrenal" d="M 436 415 L 410 415" stroke-width="4.0"/>
-    <path id="symToGut" d="M 436 460 L 448 460" stroke-width="4.0"/>
-    <path id="symToBladder" d="M 436 570 C 436 590, 450 595, 470 595" stroke-width="4.0"/>
+    <path id="symToGut" d="M 436 460 L 464 460" stroke-width="4.0"/>
+    <path id="symToBladder" d="M 436 570 C 436 590, 450 602, 472 602" stroke-width="4.0"/>
   </g>
 
   <!-- 4. Parasympathetic Nervous System (Right side, Teal #4a9d8f, Trunk width 5.5, Branches width 4.0) -->

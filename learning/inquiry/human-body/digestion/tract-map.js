@@ -129,6 +129,26 @@
     var route = ROUTE.filter(function (p) { return !p.소장; });
 
     /**
+     * 대장 밑에 깔려 안 보이는 조각을 위로 올린다.
+     *
+     * 대장을 소장보다 굵게 그리자(23 → 46) 횡행결장이 십이지장 위를 지나가면서
+     * 십이지장의 41%를 덮어 버렸다. 이름표는 가리키는데 가리키는 것이 안 보인다.
+     * 십이지장은 쓸개즙과 이자액이 들어오는 곳이라 시험에 나온다.
+     *
+     * 실제 몸에서는 횡행결장이 십이지장 앞에 있는 것이 맞지만, 이것은 배우려고
+     * 보는 그림이다. 교과서 그림도 십이지장을 앞에 그려 보여 준다.
+     */
+    function liftHiddenParts() {
+        if (!svg) return;
+        var colon = svg.querySelector('#largeIntestine');
+        if (!colon || !colon.parentNode) return;
+        ['pancreas', 'duodenum', 'ducts', 'gallbladder'].forEach(function (id) {
+            var e = svg.querySelector('#' + id);
+            if (e && e.parentNode === colon.parentNode) colon.parentNode.appendChild(e);
+        });
+    }
+
+    /**
      * 소장은 굵게 그은 선 하나다. 그러니 그 선 자체가 관의 한가운데다.
      * 좌표를 손으로 적는 대신 선을 따라 점을 떠서 길에 끼워 넣는다.
      * 그러면 그림이 바뀌어도 음식은 늘 관 속으로 지나간다.
@@ -243,6 +263,7 @@
                     e.addEventListener('click', function () { show(item); });
                 });
 
+                liftHiddenParts();
                 traceSmallIntestine();
                 placeLabels();
                 window.addEventListener('resize', placeLabels);

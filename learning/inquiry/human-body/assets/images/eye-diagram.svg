@@ -37,8 +37,8 @@
   <g id="opticNerve">
     <!-- Optic Disc / Lamina Cribrosa Entry into Retina (시각신경원판 / 사상판) -->
     <path d="M 326,420
-             C 338,418 352,416 366,415
-             L 366,455
+             C 338,418 352,416 369,414
+             L 369,454
              C 352,458 338,462 328,465 Z"
           fill="#f1e3c4" stroke="#c9b48a" stroke-width="1.4" />
     <!-- Outer Sheath -->
