@@ -36,6 +36,10 @@ assert.ok(sfxSource.includes("playSynth(soundName)"), "File playback failures sh
 assert.ok(sfxSource.includes('soundName === "click"'), "The established low-latency synthesized click should remain in use.");
 assert.ok(sfxSource.includes('latencyHint: "interactive"'), "Sound effects should request an interactive low-latency audio context.");
 assert.ok(sfxSource.includes('document.addEventListener("pointerdown"'), "Pointer feedback should begin on pointerdown.");
+assert.ok(sfxSource.includes("watchSemanticFeedback()"), "Shared effects should watch quiz feedback across learning pages.");
+assert.ok(sfxSource.includes('outcomes.includes("error") ? "error"'), "Wrong-answer feedback should win when a quiz reveals both wrong and correct choices.");
+assert.ok(sfxSource.includes("맞았습니다") && sfxSource.includes("다시 생각"), "Korean quiz feedback should map to success and error sounds.");
+assert.ok(sfxSource.includes("semanticSuppressedUntil"), "Custom sound controls should be able to suppress automatic semantic feedback.");
 assert.ok(sfxSource.includes('DEFAULT_VOLUME = 0.65;'), "Default SFX volume should be set to 65%.");
 
 const musicControlSource = fs.readFileSync(musicControlPath, "utf8");

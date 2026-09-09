@@ -214,16 +214,22 @@ const staticAssetOptions = {
 };
 
 const SITE_BACK_SCRIPT_TAG = '<script data-site-back-navigation="true" src="/assets/site-back-navigation.js?v=20260901-global-lock-1" defer></script>';
+const SITE_SFX_SCRIPT_TAG = '<script data-class-game-sfx="true" src="/assets/sound/game-sfx.js?v=20260909-global-feedback-1" defer></script>';
 
 function sendSiteHtml(req, res, filepath, next) {
   fs.readFile(filepath, "utf8", (error, htmlSource) => {
     if (error) return next(error);
 
-    const html = htmlSource.includes("/assets/site-back-navigation.js")
+    const htmlWithBackNavigation = htmlSource.includes("/assets/site-back-navigation.js")
       ? htmlSource
       : /<\/head>/i.test(htmlSource)
         ? htmlSource.replace(/<\/head>/i, `  ${SITE_BACK_SCRIPT_TAG}\n</head>`)
         : `${SITE_BACK_SCRIPT_TAG}\n${htmlSource}`;
+    const html = htmlWithBackNavigation.includes("/assets/sound/game-sfx.js")
+      ? htmlWithBackNavigation
+      : /<\/head>/i.test(htmlWithBackNavigation)
+        ? htmlWithBackNavigation.replace(/<\/head>/i, `  ${SITE_SFX_SCRIPT_TAG}\n</head>`)
+        : `${SITE_SFX_SCRIPT_TAG}\n${htmlWithBackNavigation}`;
 
     res.setHeader("Cache-Control", "no-cache");
     res.type("html");

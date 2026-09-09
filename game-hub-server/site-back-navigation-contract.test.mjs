@@ -12,6 +12,8 @@ test("site pages receive one shared icon-only back control", () => {
   const navigation = read("assets/site-back-navigation.js");
 
   assert.match(server, /SITE_BACK_SCRIPT_TAG[\s\S]*site-back-navigation\.js/);
+  assert.match(server, /SITE_SFX_SCRIPT_TAG[\s\S]*sound\/game-sfx\.js/);
+  assert.match(server, /htmlWithBackNavigation\.includes\("\/assets\/sound\/game-sfx\.js"\)/);
   assert.match(server, /sendSiteHtml\(req, res, indexCandidate, next\)/);
   assert.match(server, /sendSiteHtml\(req, res, candidate, next\)/);
   assert.match(server, /"\/classboard"/);

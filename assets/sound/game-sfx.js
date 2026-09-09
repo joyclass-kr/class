@@ -30,6 +30,17 @@
     const activeFiles = new Set();
     let muted = readStored(SFX_MUTED_KEY) === "1";
     let volume = readInitialVolume();
+    let lastInteractionAt = 0;
+    let semanticSuppressedUntil = 0;
+    let lastSemanticName = "";
+    let lastSemanticAt = 0;
+    const semanticSignatures = new WeakMap();
+    const pendingSemanticElements = new Set();
+    let semanticFlushScheduled = false;
+
+    const POSITIVE_OUTCOMES = new Set(["correct", "success", "succeeded", "complete", "completed", "passed"]);
+    const NEGATIVE_OUTCOMES = new Set(["wrong", "incorrect", "error", "failed", "failure", "invalid"]);
+    const FEEDBACK_TEXT_SELECTOR = ".feedback, .result, .answer-result, .quiz-feedback, [aria-live], [role='status'], [role='alert']";
 
     function readStored(key) {
         try {
@@ -301,9 +312,15 @@
         return requested === "none" ? "" : requested;
     }
 
+    function noteInteraction(element) {
+        lastInteractionAt = Date.now();
+        if (element?.dataset.sfx === "none") semanticSuppressedUntil = lastInteractionAt + 1200;
+    }
+
     function handlePress(event) {
         if (event.isPrimary === false || (typeof event.button === "number" && event.button > 0)) return;
         const element = interactiveFromTarget(event.target);
+        noteInteraction(element);
         const soundName = soundForElement(element);
         if (soundName) play(soundName);
     }
@@ -311,8 +328,101 @@
     function handleKeyboardClick(event) {
         if (event.detail !== 0) return;
         const element = interactiveFromTarget(event.target);
+        noteInteraction(element);
         const soundName = soundForElement(element);
         if (soundName) play(soundName);
+    }
+
+    function semanticOutcome(element) {
+        if (!(element instanceof Element)) return "";
+        const values = [
+            ...element.classList,
+            element.dataset.state,
+            element.dataset.status,
+            element.dataset.result,
+            element.dataset.outcome,
+            element.getAttribute("aria-invalid") === "true" ? "invalid" : ""
+        ].filter(Boolean).map(value => String(value).toLowerCase());
+        if (values.some(value => NEGATIVE_OUTCOMES.has(value))) return "error";
+        if (values.some(value => POSITIVE_OUTCOMES.has(value))) return "success";
+        if (!element.matches(FEEDBACK_TEXT_SELECTOR)) return "";
+
+        const text = String(element.textContent || "").replace(/\s+/g, " ").trim().slice(0, 180).toLowerCase();
+        if (/다시 생각|정답[^.!?]{0,12}아닙|오답(?:입니다|이에요|이야|!|\s|$)|틀렸|실패(?:했습니다|!|\s|$)|\bincorrect\b|\bwrong answer\b/.test(text)) return "error";
+        if (/맞았습니다|정답(?:입니다|이에요|이야|!|\s|$)|성공(?:했습니다|!|\s|$)|완료(?:했습니다|!|\s|$)|\bcorrect\b|\bwell done\b/.test(text)) return "success";
+        return "";
+    }
+
+    function semanticSignature(element, outcome) {
+        return [
+            outcome,
+            element.getAttribute("class") || "",
+            element.dataset.state || "",
+            element.dataset.status || "",
+            element.dataset.result || "",
+            element.dataset.outcome || "",
+            element.matches(FEEDBACK_TEXT_SELECTOR) ? String(element.textContent || "").trim().slice(0, 180) : ""
+        ].join("|");
+    }
+
+    function checkSemanticElement(element) {
+        if (!(element instanceof Element)) return "";
+        const outcome = semanticOutcome(element);
+        const signature = semanticSignature(element, outcome);
+        if (semanticSignatures.get(element) === signature) return "";
+        semanticSignatures.set(element, signature);
+
+        const now = Date.now();
+        if (!outcome || now - lastInteractionAt > 5000 || now < semanticSuppressedUntil) return "";
+        return outcome;
+    }
+
+    function playSemanticOutcome(outcome) {
+        if (!outcome) return;
+        const now = Date.now();
+        if (outcome === lastSemanticName && now - lastSemanticAt < 180) return;
+        lastSemanticName = outcome;
+        lastSemanticAt = now;
+        play(outcome);
+    }
+
+    function queueSemanticElement(element) {
+        if (!(element instanceof Element)) return;
+        pendingSemanticElements.add(element);
+        if (semanticFlushScheduled) return;
+        semanticFlushScheduled = true;
+        queueMicrotask(() => {
+            semanticFlushScheduled = false;
+            const outcomes = [...pendingSemanticElements].map(checkSemanticElement).filter(Boolean);
+            pendingSemanticElements.clear();
+            playSemanticOutcome(outcomes.includes("error") ? "error" : outcomes[0]);
+        });
+    }
+
+    function watchSemanticFeedback() {
+        if (typeof MutationObserver !== "function") return;
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                const target = mutation.target.nodeType === Node.ELEMENT_NODE
+                    ? mutation.target
+                    : mutation.target.parentElement;
+                queueSemanticElement(target);
+                if (mutation.type === "childList") {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType !== Node.ELEMENT_NODE) return;
+                        queueSemanticElement(node);
+                        node.querySelectorAll?.(FEEDBACK_TEXT_SELECTOR).forEach(queueSemanticElement);
+                    });
+                }
+            });
+        });
+        observer.observe(document.documentElement, {
+            subtree: true,
+            childList: true,
+            characterData: true,
+            attributes: true,
+            attributeFilter: ["class", "data-state", "data-status", "data-result", "data-outcome", "aria-invalid"]
+        });
     }
 
     if (window.PointerEvent) {
@@ -322,6 +432,7 @@
         document.addEventListener("mousedown", handlePress, { capture: true, passive: true });
     }
     document.addEventListener("click", handleKeyboardClick, { capture: true });
+    watchSemanticFeedback();
     window.addEventListener("classsfxchange", (event) => {
         if (!event.detail) return;
         setMuted(event.detail.muted);
