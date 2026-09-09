@@ -7587,6 +7587,26 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true, saved: cleanTeachers.length });
   }));
 
+  // 그룹 이름은 학교 명단에 있는 것만 쓴다. 명단에 없는 이름으로 만들면 그 그룹에
+  // 붙을 학생이 한 명도 없다. 쓸 수 있으면 저장할 이름을, 아니면 null 을 준다.
+  async function rosterGroupName(schoolId, year, groupType, groupName, grade, classNumber) {
+    if (groupType === "homeroom") {
+      if (!Number.isInteger(grade) || !Number.isInteger(classNumber)) return null;
+      const found = await pool.query(
+        `SELECT 1 FROM school_students
+         WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4
+         LIMIT 1`,
+        [schoolId, year, grade, classNumber]
+      );
+      // 학급 이름은 '6-2' 한 모양으로 맞춘다. 자동으로 만드는 자리도 이 모양을 쓴다.
+      return found.rowCount > 0 ? `${grade}-${classNumber}` : null;
+    }
+    // 전담 교과는 명단의 열이 아니라 교사가 맡은 과목이라 명단에서 찾을 수 없다.
+    if (groupType === "subject") return groupName;
+    const columns = await readRosterColumns(schoolId, year);
+    return columns.some((column) => (column.options || []).includes(groupName)) ? groupName : null;
+  }
+
   // 그룹을 개설할 때 고를 수 있는 이름들. 학교 관리자가 만든 명단 열의 선택지가
   // 그대로 후보가 된다. 명단에 없는 이름으로 그룹을 만들면 소속 학생이 한 명도
   // 잡히지 않으므로, 예시 이름 같은 것은 섞지 않는다.
@@ -7716,12 +7736,18 @@ function createClassroomPlatform(options = {}) {
     if (!["homeroom", "subject", "club", "afterschool", "care", "shuttle", "other"].includes(groupType))
       throw new HttpError(400, "INVALID_GROUP_TYPE", "그룹 유형이 올바르지 않습니다.");
 
+    const canonicalName = await rosterGroupName(schoolId, year, groupType, groupName, grade, classNumber);
+    if (!canonicalName) {
+      throw new HttpError(400, "GROUP_NOT_IN_ROSTER",
+        "전교생 명단에 있는 학급과 항목만 가져올 수 있습니다. 학교 관리자가 명단에 먼저 만들어야 합니다.");
+    }
+
     // 같은 이름으로 두 번 누르면 같은 그룹이 둘 생긴다. 이미 있으면 그것을 준다.
     const already = await pool.query(
       `SELECT id FROM teacher_groups
        WHERE teacher_user_id = $1 AND academic_year = $2 AND group_name = $3
        LIMIT 1`,
-      [teacher.id, year, groupName]
+      [teacher.id, year, canonicalName]
     );
     if (already.rows[0]) {
       return res.json({ ok: true, groupId: String(already.rows[0].id), existed: true });
@@ -7730,7 +7756,7 @@ function createClassroomPlatform(options = {}) {
     const result = await pool.query(
       `INSERT INTO teacher_groups (school_id, teacher_user_id, academic_year, group_name, group_type, grade, class_number)
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
-      [schoolId, teacher.id, year, groupName, groupType, grade, classNumber]
+      [schoolId, teacher.id, year, canonicalName, groupType, grade, classNumber]
     );
     res.json({ ok: true, groupId: String(result.rows[0].id) });
   }));

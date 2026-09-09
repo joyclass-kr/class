@@ -44,6 +44,11 @@ function answer(sql, params) {
     const uniq = new Map(hit.map((row) => [`${row.grade}-${row.class_number}`, row]));
     return { rows: [...uniq.values()], rowCount: uniq.size };
   }
+  if (text.includes("SELECT 1 FROM school_students")) {
+    const hit = studentRows.filter((row) => row.school_id === params[0] && row.academic_year === params[1]
+      && row.grade === params[2] && row.class_number === params[3]);
+    return { rows: hit.slice(0, 1), rowCount: Math.min(hit.length, 1) };
+  }
   if (text.includes("FROM school_roster_columns")) return { rows: [], rowCount: 0 };
 
   // 담임 학급 그룹 자동 만들기
@@ -163,7 +168,7 @@ app.use((error, _req, res, _next) => res.status(error.status || 500).json({ code
     teacherRows = [{ user_id: 7, school_id: SCHOOL_ID, active: true, grade: null, class_number: null, academic_year: THIS_YEAR, teacher_type: "전담" }];
     groupRows = [];
     inserted = [];
-    for (const name of ["6-1", "6-2", "6-3"]) {
+    for (const name of ["6-2", "6-4"]) {
       const made = await fetch(base + "/api/teacher/groups", {
         method: "POST",
         headers: { "Content-Type": "application/json", Cookie: "class_session=stub" },
@@ -171,16 +176,25 @@ app.use((error, _req, res, _next) => res.status(error.status || 500).json({ code
       });
       assert.equal(made.status, 200, `전담 교사도 ${name} 을 열 수 있어야 한다.`);
     }
-    assert.equal(inserted.length, 3, "교직원이면 그룹을 여럿 열 수 있어야 한다.");
+    assert.equal(inserted.length, 2, "교직원이면 그룹을 여럿 열 수 있어야 한다.");
 
-    // 5-2. 같은 이름을 두 번 누르면 같은 그룹을 돌려준다.
+    // 5-2. 명단에 없는 학급은 거절해야 한다. 그런 그룹에는 붙을 학생이 없다.
+    const notInRoster = await fetch(base + "/api/teacher/groups", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Cookie: "class_session=stub" },
+      body: JSON.stringify({ groupName: "3-9", groupType: "homeroom", grade: 3, classNumber: 9, year: THIS_YEAR })
+    });
+    assert.equal(notInRoster.status, 400, "명단에 없는 학급은 가져올 수 없어야 한다.");
+    assert.equal(inserted.length, 2, "거절한 그룹이 저장되면 안 된다.");
+
+    // 5-3. 같은 이름을 두 번 누르면 같은 그룹을 돌려준다.
     const twice = await fetch(base + "/api/teacher/groups", {
       method: "POST",
       headers: { "Content-Type": "application/json", Cookie: "class_session=stub" },
-      body: JSON.stringify({ groupName: "6-1", groupType: "homeroom", grade: 6, classNumber: 1, year: THIS_YEAR })
+      body: JSON.stringify({ groupName: "6-2", groupType: "homeroom", grade: 6, classNumber: 2, year: THIS_YEAR })
     });
     assert.equal((await twice.json()).existed, true, "같은 이름으로 두 번 누르면 있던 그룹을 줘야 한다.");
-    assert.equal(inserted.length, 3, "같은 그룹이 둘 생기면 안 된다.");
+    assert.equal(inserted.length, 2, "같은 그룹이 둘 생기면 안 된다.");
 
     // 6. 화면 쪽: 학년도를 함께 보내고, 못 받아 왔으면 까닭을 보여 준다.
     const portal = fs.readFileSync(path.join(root, "classtools", "index.html"), "utf8");
