@@ -128,7 +128,7 @@
     const DISPLAY_RANGE = { start: 21, end: 108 };
     const PIANO_WHITE_KEY_MM = { width: 23.5, length: 150 };
     const PIANO_BLACK_KEY_MM = { width: 13.7, length: 95 };
-    const WHITE_KEY_LENGTH_SCALE = 0.74;
+    const WHITE_KEY_LENGTH_SCALE = 0.726;
     const BLACK_KEY_LENGTH_SCALE = 0.62;
     const REFERENCE_CARD_MM = 85.6;
     const CSS_PX_PER_MM = 96 / 25.4;
