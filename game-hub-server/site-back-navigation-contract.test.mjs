@@ -13,6 +13,7 @@ test("site pages receive one shared icon-only back control", () => {
 
   assert.match(server, /SITE_BACK_SCRIPT_TAG[\s\S]*site-back-navigation\.js/);
   assert.match(server, /SITE_SFX_SCRIPT_TAG[\s\S]*sound\/game-sfx\.js/);
+  assert.match(server, /game-sfx\.js\?v=20260909-global-feedback-2/);
   assert.match(server, /htmlWithBackNavigation\.includes\("\/assets\/sound\/game-sfx\.js"\)/);
   assert.match(server, /sendSiteHtml\(req, res, indexCandidate, next\)/);
   assert.match(server, /sendSiteHtml\(req, res, candidate, next\)/);

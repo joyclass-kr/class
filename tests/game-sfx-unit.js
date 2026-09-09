@@ -11,6 +11,7 @@ const musicControlCssPath = path.join(root, "assets", "sound", "music-control.cs
 const hubPath = path.join(root, "index.html");
 const fruitBellPath = path.join(root, "learning", "games", "fruitbell", "fruitbell.html");
 const voyagePath = path.join(root, "learning", "inquiry", "age-of-exploration", "public", "index.html");
+const sfxVersion = "20260909-global-feedback-2";
 
 for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath, fruitBellPath, voyagePath]) {
     assert.ok(fs.existsSync(filePath), `Missing sound effect file: ${filePath}`);
@@ -39,6 +40,9 @@ assert.ok(sfxSource.includes('document.addEventListener("pointerdown"'), "Pointe
 assert.ok(sfxSource.includes("watchSemanticFeedback()"), "Shared effects should watch quiz feedback across learning pages.");
 assert.ok(sfxSource.includes('outcomes.includes("error") ? "error"'), "Wrong-answer feedback should win when a quiz reveals both wrong and correct choices.");
 assert.ok(sfxSource.includes("맞았습니다") && sfxSource.includes("다시 생각"), "Korean quiz feedback should map to success and error sounds.");
+assert.ok(sfxSource.includes("아쉬워") && sfxSource.includes("아직 아니"), "Alternative Korean retry feedback should map to the error sound.");
+assert.ok(sfxSource.includes("[id*='feedback' i]") && sfxSource.includes("[id*='result' i]"), "Feedback elements without a shared class should still be observed.");
+assert.ok(sfxSource.includes("split(/[-_\\s]+/)"), "Compound state classes such as answer-wrong and is-correct should be recognized.");
 assert.ok(sfxSource.includes("semanticSuppressedUntil"), "Custom sound controls should be able to suppress automatic semantic feedback.");
 assert.ok(sfxSource.includes('DEFAULT_VOLUME = 0.65;'), "Default SFX volume should be set to 65%.");
 
@@ -72,6 +76,10 @@ for (const relativePath of gameLinks) {
     const gameHtml = fs.readFileSync(path.join(root, ...relativePath.split("/")), "utf8");
     const hasSharedEffects = gameHtml.includes("assets/sound/game-sfx.js") || gameHtml.includes("assets/sound/music-control.js");
     assert.ok(hasSharedEffects, `${relativePath} does not load shared button effects.`);
+}
+for (const relativePath of ["learning/games/drawrelay/drawrelay.html", "learning/games/lastcard/lastcard.html"]) {
+    const gameHtml = fs.readFileSync(path.join(root, ...relativePath.split("/")), "utf8");
+    assert.ok(gameHtml.includes(`game-sfx.js?v=${sfxVersion}`), `${relativePath} should cache-bust the shared effects.`);
 }
 
 const fruitBell = fs.readFileSync(fruitBellPath, "utf8");

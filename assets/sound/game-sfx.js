@@ -40,7 +40,7 @@
 
     const POSITIVE_OUTCOMES = new Set(["correct", "success", "succeeded", "complete", "completed", "passed"]);
     const NEGATIVE_OUTCOMES = new Set(["wrong", "incorrect", "error", "failed", "failure", "invalid"]);
-    const FEEDBACK_TEXT_SELECTOR = ".feedback, .result, .answer-result, .quiz-feedback, [aria-live], [role='status'], [role='alert']";
+    const FEEDBACK_TEXT_SELECTOR = ".feedback, .result, .answer-result, .quiz-feedback, [class*='feedback' i], [id*='feedback' i], [id*='result' i], [aria-live], [role='status'], [role='alert']";
 
     function readStored(key) {
         try {
@@ -342,14 +342,14 @@
             element.dataset.result,
             element.dataset.outcome,
             element.getAttribute("aria-invalid") === "true" ? "invalid" : ""
-        ].filter(Boolean).map(value => String(value).toLowerCase());
+        ].filter(Boolean).flatMap(value => String(value).toLowerCase().split(/[-_\s]+/).filter(Boolean));
         if (values.some(value => NEGATIVE_OUTCOMES.has(value))) return "error";
         if (values.some(value => POSITIVE_OUTCOMES.has(value))) return "success";
         if (!element.matches(FEEDBACK_TEXT_SELECTOR)) return "";
 
         const text = String(element.textContent || "").replace(/\s+/g, " ").trim().slice(0, 180).toLowerCase();
-        if (/다시 생각|정답[^.!?]{0,12}아닙|오답(?:입니다|이에요|이야|!|\s|$)|틀렸|실패(?:했습니다|!|\s|$)|\bincorrect\b|\bwrong answer\b/.test(text)) return "error";
-        if (/맞았습니다|정답(?:입니다|이에요|이야|!|\s|$)|성공(?:했습니다|!|\s|$)|완료(?:했습니다|!|\s|$)|\bcorrect\b|\bwell done\b/.test(text)) return "success";
+        if (/다시 생각|다시 해|한 번 더|아쉬워|아직 아니|정답[^.!?]{0,12}아닙|오답(?:입니다|이에요|이야|!|\s|$)|틀렸|실패(?:했습니다|!|\s|$)|\bincorrect\b|\bwrong answer\b|\btry again\b|\bnot quite\b/.test(text)) return "error";
+        if (/맞았습니다|맞혔|모두 맞|잘했|훌륭|정답(?:입니다|이에요|이야|!|\s|$)|성공(?:했습니다|!|\s|$)|완료(?:했습니다|!|\s|$)|\bcorrect\b|\bwell done\b/.test(text)) return "success";
         return "";
     }
 
