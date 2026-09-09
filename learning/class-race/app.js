@@ -138,6 +138,18 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    // 수학 문항에는 $수식$ 이 섞여 있다. KaTeX 가 실렸을 때만 그린다.
+    function renderMath(element) {
+        if (!element || !window.renderMathInElement) return;
+        window.renderMathInElement(element, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false }
+            ],
+            throwOnError: false
+        });
+    }
+
     function renderQuestion() {
         const question = state.questions[state.currentIndex];
         state.answered = false;
@@ -150,6 +162,7 @@
         elements.questionCategory.classList.toggle("hidden", !question.category);
         elements.questionPrompt.textContent = question.prompt || "";
         elements.questionText.textContent = question.sentence;
+        renderMath(elements.questionText);
         elements.choiceList.replaceChildren();
         elements.choiceList.className = `choice-list ${["", "", "is-two", "is-three", "is-four"][question.choices.length] || ""}`;
         elements.feedback.classList.add("hidden");
@@ -212,6 +225,7 @@
         elements.feedback.classList.remove("is-wrong");
         elements.correctAnswer.textContent = `정답: ${question.answer}`;
         elements.explanation.textContent = question.explanation || "";
+        renderMath(elements.explanation);
         elements.feedback.classList.remove("hidden");
         elements.announcer.textContent = `정답이에요. 정답은 ${question.answer}입니다. ${question.explanation || ""}`;
         elements.nextButton.focus({ preventScroll: true });
@@ -255,6 +269,8 @@
         explanation.textContent = record.question.explanation || "";
         item.append(sentence, chosen, answer, explanation);
         elements.missedList.append(item);
+        renderMath(sentence);
+        renderMath(explanation);
     }
 
     function showResults() {

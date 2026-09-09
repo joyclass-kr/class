@@ -23,8 +23,8 @@ const CURRICULUM = {
   "기하": ["이차곡선", "공간도형과 공간좌표", "벡터"]
 };
 
-const src = fs.readFileSync(path.join(__dirname, "app.js"), "utf8");
-const data = eval(src.match(/const mathOxData = (\[[\s\S]*?\n  \]);/)[1]);
+const src = fs.readFileSync(path.join(__dirname, "data.js"), "utf8");
+const data = eval(src.match(/window\.MATH_OX_DATA = (\[[\s\S]*\n\]);/)[1]);
 
 const showAll = process.argv.includes("--all");
 let empty = 0, thin = 0, stray = 0;
