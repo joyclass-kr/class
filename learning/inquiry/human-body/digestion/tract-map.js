@@ -224,6 +224,77 @@
     }
 
     /**
+     * 흡수 알갱이 — 음식이 "분해되어 흡수되는" 것이 실제로 보이게 한다.
+     *
+     * 색과 크기가 바뀌는 것만으로는 부족했다. "장에 흡수되는 것조차 안 보인다"
+     * 는 말이 맞았다 — 구슬 하나가 색만 바뀌며 지나가는 걸로는 "흡수"라는
+     * 사건이 눈에 들어오지 않는다. 그래서 알갱이가 실제로 튀어 나가는 것을
+     * 보여 준다.
+     *
+     *   소장(작은창자)을 지나는 동안 — 노란 알갱이(영양소)가 튀어나가 간
+     *   쪽으로 날아가며 사라진다. 흡수한 것이 간문맥을 지나 먼저 간으로
+     *   간다는 것과 맞춘 것이다.
+     *   대장을 지나는 동안 — 옅푸른 알갱이(물)가 벽 쪽으로 스미듯 사라진다.
+     */
+    var LIVER_TARGET = { x: 257, y: 293 };
+    var particlePool = [];
+    var spawnTimer = 0;
+
+    function initParticles(rootSvg) {
+        particlePool = [];
+        for (var i = 0; i < 14; i++) {
+            var c = document.createElementNS(SVG_NS, 'circle');
+            c.setAttribute('r', 0);
+            c.setAttribute('opacity', 0);
+            rootSvg.appendChild(c);
+            particlePool.push({ el: c, active: false, age: 0, life: 1, sx: 0, sy: 0, tx: 0, ty: 0, r0: 4 });
+        }
+    }
+
+    function spawnParticle(sx, sy, tx, ty, color, r0, life) {
+        for (var i = 0; i < particlePool.length; i++) {
+            var p = particlePool[i];
+            if (p.active) continue;
+            p.active = true; p.age = 0; p.life = life;
+            p.sx = sx; p.sy = sy; p.tx = tx; p.ty = ty; p.r0 = r0;
+            p.el.setAttribute('fill', color);
+            return;
+        }
+    }
+
+    function updateParticles(dt) {
+        particlePool.forEach(function (p) {
+            if (!p.active) return;
+            p.age += dt;
+            if (p.age >= p.life) { p.active = false; p.el.setAttribute('opacity', 0); return; }
+            var f = p.age / p.life;
+            p.el.setAttribute('cx', lerp(p.sx, p.tx, f).toFixed(1));
+            p.el.setAttribute('cy', lerp(p.sy, p.ty, f).toFixed(1));
+            p.el.setAttribute('r', (p.r0 * (1 - f * 0.6)).toFixed(1));
+            // 나타났다가 사라진다 — 갑자기 튀어나와 갑자기 없어지면 눈에 거슬린다
+            p.el.setAttribute('opacity', Math.sin(Math.PI * f).toFixed(2));
+        });
+    }
+
+    /** 지금 지나는 기관에 맞춰 알갱이를 터뜨린다 */
+    function maybeSpawn(dt, organ, bx, by) {
+        spawnTimer -= dt;
+        if (spawnTimer > 0) return;
+        if (organ === 'duodenum' || organ === 'smallIntestine') {
+            spawnParticle(bx, by,
+                LIVER_TARGET.x + (Math.random() - 0.5) * 26, LIVER_TARGET.y + (Math.random() - 0.5) * 26,
+                '#fbbf24', 4, 0.85);
+            spawnTimer = 0.22 + Math.random() * 0.16;
+        } else if (organ === 'largeIntestine' || organ === 'rectum') {
+            spawnParticle(bx, by, bx + (Math.random() - 0.5) * 44, by + (Math.random() - 0.5) * 44,
+                '#7dd3fc', 3, 0.6);
+            spawnTimer = 0.32 + Math.random() * 0.22;
+        } else {
+            spawnTimer = 0.2;
+        }
+    }
+
+    /**
      * 대장 밑에 깔려 안 보이는 조각을 위로 올린다.
      *
      * 대장을 소장보다 굵게 그리자(23 → 46) 횡행결장이 십이지장 위를 지나가면서
@@ -355,6 +426,8 @@
                 bolus.setAttribute('opacity', 0);
                 svg.appendChild(bolus);
 
+                initParticles(svg);
+
                 PARTS.forEach(function (item) {
                     var e = svg.querySelector('#' + item.id);
                     if (!e) return;
@@ -446,22 +519,30 @@
         }
 
         if (layer && !layer.hidden && bolus && legs.length) {
-            if (swallowing && !isPaused()) {
+            var live = !isPaused();
+            if (swallowing && live) {
                 elapsed += dt;
                 if (elapsed >= totalTime) { elapsed = totalTime; swallowing = false; }
             }
+            // 이미 튀어나간 알갱이는 구슬이 멎거나 다 지나간 뒤에도 마저 날아간다
+            updateParticles(live ? dt : 0);
+
             if (started && elapsed < totalTime) {
                 while (curLeg < legs.length - 1 && elapsed > legs[curLeg].t1) curLeg++;
                 var leg = legs[curLeg];
                 var span = leg.t1 - leg.t0;
                 var f = span > 0 ? Math.max(0, Math.min(1, (elapsed - leg.t0) / span)) : 1;
-                bolus.setAttribute('cx', (leg.p1.x + (leg.p2.x - leg.p1.x) * f).toFixed(1));
-                bolus.setAttribute('cy', (leg.p1.y + (leg.p2.y - leg.p1.y) * f).toFixed(1));
+                var bx = leg.p1.x + (leg.p2.x - leg.p1.x) * f;
+                var by = leg.p1.y + (leg.p2.y - leg.p1.y) * f;
+                bolus.setAttribute('cx', bx.toFixed(1));
+                bolus.setAttribute('cy', by.toFixed(1));
                 bolus.setAttribute('opacity', 1);
 
                 var look = bolusLook(elapsed);
                 bolus.setAttribute('fill', look.fill);
                 bolus.setAttribute('r', look.r.toFixed(1));
+
+                if (swallowing && live) maybeSpawn(dt, leg.organ, bx, by);
 
                 // 지금 지나는 기관을 은은하게 밝힌다. 입에는 이름표가 없고,
                 // 곧창자는 이름표가 따로 없어 대장 이름표가 대신 밝는다.
