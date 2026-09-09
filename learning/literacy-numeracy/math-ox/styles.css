@@ -112,6 +112,59 @@ body {
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
+/* 단원 선택 줄 — 한 단원만 골라 공부할 수 있다 */
+.unit-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: -6px 0 18px;
+}
+
+.unit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: rgba(20, 24, 42, 0.6);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.unit-btn:hover {
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.unit-btn.active {
+  color: #12141c;
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+.unit-btn.done .unit-count {
+  color: var(--correct-green);
+}
+
+.unit-btn.active.done .unit-count {
+  color: #0f5132;
+}
+
+.unit-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+.unit-btn.active .unit-count {
+  color: rgba(18, 20, 28, 0.7);
+}
+
 /* Question Card List */
 .questions-list {
   display: flex;
