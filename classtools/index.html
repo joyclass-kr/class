@@ -339,14 +339,8 @@
             
             <div style="margin-bottom:18px;">
                 <label style="display:block; font-size:0.88rem; font-weight:800; margin-bottom:6px; color:#75d69f;">1. 그룹 유형 선택</label>
-                <select id="modal-group-type" style="width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:#111512; color:#fff; font-size:1rem; font-weight:700; outline:none;">
-                    <option value="homeroom">🏫 담임 학급</option>
-                    <option value="subject">📖 전담 교과</option>
-                    <option value="club" selected>🎯 동아리</option>
-                    <option value="afterschool">⚽ 방과후부</option>
-                    <option value="care">🧸 돌봄반</option>
-                    <option value="shuttle">🚌 통학버스</option>
-                </select>
+                <!-- 유형은 전교생 명단에 실제로 있는 열에서 만든다. -->
+                <select id="modal-group-type" style="width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:#111512; color:#fff; font-size:1rem; font-weight:700; outline:none;"></select>
             </div>
 
             <div style="margin-bottom:24px;">
@@ -504,6 +498,7 @@
                     availableData = { homerooms: [], columns: [] };
                     availableError = err.message || '후보 목록을 불러오지 못했습니다.';
                 }
+                populateTypeOptions();
                 populateModalDropdown();
                 const modal = document.getElementById('create-group-modal');
                 if (modal) modal.style.display = 'flex';
@@ -513,6 +508,55 @@
                 const modal = document.getElementById('create-group-modal');
                 if (modal) modal.style.display = 'none';
             };
+
+            // 학교마다 명단의 열이 다르다. 동아리가 없는 학교도 있고, 방과후 대신
+            // 다른 이름을 쓰는 학교도 있다. 그래서 유형은 미리 적어 두지 않고
+            // 그 학교 명단에 실제로 있는 열에서 만든다.
+            const COLUMN_TYPE_MAP = [
+                [/동아리|클럽/, 'club'],
+                [/방과\s*후|늘봄/, 'afterschool'],
+                [/돌봄/, 'care'],
+                [/버스|통학|차량/, 'shuttle'],
+                [/전담|교과/, 'subject']
+            ];
+
+            function groupTypeForColumn(name) {
+                const hit = COLUMN_TYPE_MAP.find(([pattern]) => pattern.test(name));
+                return hit ? hit[1] : 'other';
+            }
+
+            function populateTypeOptions() {
+                const typeSelect = document.getElementById('modal-group-type');
+                if (!typeSelect) return;
+                const previous = typeSelect.value;
+                typeSelect.replaceChildren();
+
+                const homeroom = document.createElement('option');
+                homeroom.value = 'homeroom';
+                homeroom.textContent = '🏫 담임 학급';
+                typeSelect.appendChild(homeroom);
+
+                (availableData.columns || []).forEach((col, index) => {
+                    const opt = document.createElement('option');
+                    opt.value = `col:${index}`;
+                    opt.textContent = col.name;
+                    typeSelect.appendChild(opt);
+                });
+
+                const other = document.createElement('option');
+                other.value = 'other';
+                other.textContent = '✍️ 그 밖 (직접 입력)';
+                typeSelect.appendChild(other);
+
+                if ([...typeSelect.options].some((opt) => opt.value === previous)) typeSelect.value = previous;
+            }
+
+            function selectedColumn() {
+                const typeSelect = document.getElementById('modal-group-type');
+                const match = /^col:(\d+)$/.exec(typeSelect ? typeSelect.value : '');
+                if (!match) return null;
+                return (availableData.columns || [])[Number(match[1])] || null;
+            }
 
             function populateModalDropdown() {
                 const typeSelect = document.getElementById('modal-group-type');
@@ -531,23 +575,16 @@
                         opt.textContent = h.label;
                         nameSelect.appendChild(opt);
                     });
-                } else if (type !== 'subject') {
-                    // 학교가 만든 명단 열의 항목이 그대로 후보다. 어느 열에서 온
-                    // 이름인지 보이게 열 이름으로 묶어 준다.
-                    (availableData.columns || []).forEach(col => {
-                        if (!(col.options || []).length) return;
-                        const group = document.createElement('optgroup');
-                        group.label = col.name;
-                        col.options.forEach(o => {
-                            const opt = document.createElement('option');
-                            opt.value = o;
-                            opt.textContent = o;
-                            group.appendChild(opt);
-                        });
-                        nameSelect.appendChild(group);
+                } else {
+                    // 고른 열에 적힌 항목이 그대로 후보다.
+                    const column = selectedColumn();
+                    (column?.options || []).forEach(o => {
+                        const opt = document.createElement('option');
+                        opt.value = o;
+                        opt.textContent = o;
+                        nameSelect.appendChild(opt);
                     });
                 }
-                // 전담 교과는 등록 목록이 없어 직접 입력만 받는다.
 
                 const customOpt = document.createElement('option');
                 customOpt.value = '__CUSTOM__';
@@ -558,12 +595,17 @@
                 const notice = document.getElementById('modal-group-notice');
                 if (!notice) return;
                 let message = '';
+                const column = selectedColumn();
                 if (availableError) {
                     message = availableError;
                 } else if (type === 'homeroom' && !(availableData.homerooms || []).length) {
                     message = `${portalYear}년도 전교생 명단에 학생이 없어 고를 학급이 없습니다. 학교 관리자가 전교생 명단을 먼저 채워야 합니다.`;
-                } else if (type !== 'homeroom' && type !== 'subject' && !(availableData.columns || []).some((col) => (col.options || []).length)) {
-                    message = `${portalYear}년도 명단에 이 갈래의 열이 없습니다. 학교 관리자가 전교생 명단에 열을 만들면 여기에 나옵니다.`;
+                } else if (column && !(column.options || []).length) {
+                    message = `'${column.name}' 열에 적힌 항목이 없습니다. 학교 관리자가 전교생 명단에서 이 열의 항목을 채우면 여기에 나옵니다.`;
+                } else if (type === 'homeroom' || column) {
+                    message = '';
+                } else if (!(availableData.columns || []).length) {
+                    message = `${portalYear}년도 전교생 명단에 만들어 둔 열이 없습니다. 학교 관리자가 열을 만들면 그 이름이 위 목록에 나옵니다.`;
                 }
                 notice.textContent = message;
                 notice.style.display = message ? 'block' : 'none';
@@ -595,14 +637,23 @@
                     return;
                 }
 
-                const groupType = typeSelect ? typeSelect.value : 'club';
+                const type = typeSelect ? typeSelect.value : 'other';
+                const column = selectedColumn();
+                // 서버가 받는 갈래 이름은 정해져 있다. 열 이름을 그 가운데 하나로 옮긴다.
+                const groupType = type === 'homeroom' ? 'homeroom' : (column ? groupTypeForColumn(column.name) : 'other');
+                // 담임 학급이면 이름이 '6-4' 모양이다. 학년·반을 함께 보내야 그 반
+                // 학생이 붙는다. 학년도도 보내야 목록에 뜨는 해와 어긋나지 않는다.
+                const homeroomMatch = type === 'homeroom' ? /^(\d+)-(\d+)$/.exec(groupName) : null;
 
                 try {
                     const res = await api('/api/teacher/groups', {
                         method: 'POST',
                         body: JSON.stringify({
                             groupName,
-                            groupType
+                            groupType,
+                            grade: homeroomMatch ? Number(homeroomMatch[1]) : null,
+                            classNumber: homeroomMatch ? Number(homeroomMatch[2]) : null,
+                            year: portalYear
                         })
                     });
                     alert(`'${groupName}' 그룹이 성공적으로 개설되었습니다!\n전교생 명단에서 '${groupName}' 속성을 가진 학생들이 자동 연결됩니다.`);

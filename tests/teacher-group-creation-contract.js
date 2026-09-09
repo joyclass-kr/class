@@ -21,6 +21,8 @@ let studentRows = [
   { school_id: SCHOOL_ID, academic_year: THIS_YEAR, grade: 6, class_number: 2 },
   { school_id: SCHOOL_ID, academic_year: THIS_YEAR, grade: 6, class_number: 4 }
 ];
+let groupRows = [];
+let inserted = [];
 
 function answer(sql, params) {
   const text = String(sql);
@@ -40,6 +42,23 @@ function answer(sql, params) {
     return { rows: [...uniq.values()], rowCount: uniq.size };
   }
   if (text.includes("FROM school_roster_columns")) return { rows: [], rowCount: 0 };
+
+  // 담임 학급 그룹 자동 만들기
+  if (text.includes("SELECT t.school_id, t.grade, t.class_number")) {
+    const hit = teacherRows.filter((row) => String(row.user_id) === String(params[0]) && row.active
+      && row.grade != null && row.class_number != null
+      && (row.academic_year === params[1] || row.academic_year == null));
+    return { rows: hit.slice(0, 1), rowCount: Math.min(hit.length, 1) };
+  }
+  if (text.includes("INSERT INTO teacher_groups")) {
+    inserted.push({ school_id: params[0], teacher_user_id: params[1], academic_year: params[2], group_name: params[3], group_type: params[4], grade: params[5], class_number: params[6] });
+    groupRows.push({ id: inserted.length, group_name: params[3], group_type: params[4], grade: params[5], class_number: params[6], academic_year: params[2], sort_order: 0, student_count: 0 });
+    return { rows: [{ id: inserted.length }], rowCount: 1 };
+  }
+  if (text.includes("FROM teacher_groups g")) {
+    const hit = groupRows.filter((row) => row.academic_year === params[1]);
+    return { rows: hit, rowCount: hit.length };
+  }
   return { rows: [], rowCount: 0 };
 }
 
@@ -90,7 +109,30 @@ app.use((error, _req, res, _next) => res.status(error.status || 500).json({ code
     const message = (await blocked.json()).message;
     assert.ok(message && message.length > 0, "막을 때는 까닭을 함께 보내야 한다.");
 
-    // 4. 화면 쪽: 학년도를 함께 보내고, 못 받아 왔으면 까닭을 보여 준다.
+    // 4. 담임인데 학년도가 비어 있는 옛 줄도 학급 그룹을 받아야 한다.
+    teacherRows = [{ user_id: 7, school_id: SCHOOL_ID, active: true, grade: 6, class_number: 4, academic_year: null }];
+    groupRows = [];
+    inserted = [];
+    await get(`/api/teacher/groups?year=${THIS_YEAR}`);
+    assert.equal(inserted.length, 1, "학년도가 비어 있어도 담임 학급 그룹은 만들어져야 한다.");
+    assert.equal(inserted[0].group_name, "6-4");
+    assert.equal(inserted[0].academic_year, THIS_YEAR, "그룹은 지금 보고 있는 해로 만들어야 한다.");
+
+    // 5. 개설할 때 보낸 학년·반과 학년도가 그대로 저장돼야 한다.
+    groupRows = [];
+    inserted = [];
+    const created = await fetch(base + "/api/teacher/groups", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Cookie: "class_session=stub" },
+      body: JSON.stringify({ groupName: "6-2", groupType: "homeroom", grade: 6, classNumber: 2, year: THIS_YEAR })
+    });
+    assert.equal(created.status, 200, "학급 그룹을 만들 수 있어야 한다.");
+    const savedGroup = inserted[inserted.length - 1];
+    assert.equal(savedGroup.grade, 6, "학년을 빼고 저장하면 그 반 학생이 붙지 않는다.");
+    assert.equal(savedGroup.class_number, 2, "반을 빼고 저장하면 그 반 학생이 붙지 않는다.");
+    assert.equal(savedGroup.academic_year, THIS_YEAR);
+
+    // 6. 화면 쪽: 학년도를 함께 보내고, 못 받아 왔으면 까닭을 보여 준다.
     const portal = fs.readFileSync(path.join(root, "classtools", "index.html"), "utf8");
     assert.match(portal, /available-groups\?year=\$\{portalYear\}/,
       "교사 포털이 보는 학년도를 함께 보내야 한다. 안 보내면 명단과 다른 해를 볼 수 있다.");
@@ -100,6 +142,18 @@ app.use((error, _req, res, _next) => res.status(error.status || 500).json({ code
       "왜 고를 것이 없는지 적을 자리가 있어야 한다.");
     assert.match(portal, /availableError = err\.message/,
       "서버가 보낸 까닭을 그대로 보여 줘야 한다.");
+
+    // 7. 갈래 목록은 학교 명단에 실제로 있는 열에서 만들어야 한다.
+    assert.doesNotMatch(portal, /<option value="club" selected>/,
+      "갈래를 화면에 박아 두면 그 학교에 없는 열이 목록에 뜬다.");
+    assert.match(portal, /function populateTypeOptions\(\)/,
+      "갈래 목록을 명단의 열에서 만들어야 한다.");
+    assert.match(portal, /availableData\.columns \|\| \[\]\)\.forEach\(\(col, index\)/,
+      "명단의 열마다 갈래 하나를 만들어야 한다.");
+    assert.match(portal, /classNumber: homeroomMatch \? Number\(homeroomMatch\[2\]\) : null/,
+      "담임 학급을 만들 때는 학년·반을 함께 보내야 한다.");
+    assert.match(portal, /year: portalYear/,
+      "그룹을 만들 때도 보고 있는 학년도로 만들어야 한다.");
 
     console.log("Teacher group creation contract: OK");
   } finally {

@@ -397,16 +397,23 @@ const asGroupOnlyHomeroom = () => { sessionRows = [{ id: 4, email: "new@x.kr", r
       assert.ok(offered.includes(t), `그룹 유형 "${t}"를 명단 화면에서 고를 수 있어야 한다.`);
     }
 
-    // 교사용 교실 도구의 개설 창도 같은 유형을 보내야 한다.
+    // 교사용 교실 도구의 개설 창은 갈래를 코드에 박아 두지 않는다. 학교마다
+    // 명단의 열이 다르므로, 그 학교에 실제로 있는 열에서 목록을 만든다.
+    // 다만 서버로 보내는 갈래 이름은 데이터베이스가 받는 것이어야 한다.
     const hubHtml = fs.readFileSync(
       path.join(__dirname, "..", "classtools", "index.html"), "utf8");
     const hubSelect = hubHtml.match(/id="modal-group-type"[\s\S]*?<\/select>/)[0];
-    const hubOffered = [...hubSelect.matchAll(/value="([a-z]+)"/g)].map(m => m[1]);
-    for (const t of hubOffered) {
+    assert.doesNotMatch(hubSelect, /<option/,
+      "교실 도구가 갈래를 박아 두면 그 학교에 없는 열이 목록에 뜬다.");
+    assert.match(hubHtml, /function populateTypeOptions\(\)/,
+      "교실 도구는 명단의 열에서 갈래 목록을 만들어야 한다.");
+    const hubMap = hubHtml.match(/const COLUMN_TYPE_MAP = \[[\s\S]*?\];/)[0];
+    const hubTypes = [...hubMap.matchAll(/'([a-z]+)'\]/g)].map(m => m[1]).concat(["homeroom", "other"]);
+    for (const t of hubTypes) {
       assert.ok(constraintTypes.includes(t),
         `교실 도구가 그룹 유형 "${t}"를 보내는데 데이터베이스가 거부한다.`);
     }
-    assert.ok(hubOffered.includes("care"), "돌봄반을 교실 도구에서도 만들 수 있어야 한다.");
+    assert.ok(hubTypes.includes("care"), "돌봄 열을 만든 학교는 돌봄반도 개설할 수 있어야 한다.");
 
     // 그룹 이름 후보는 학교가 등록한 목록에서만 와야 한다. 예시 이름을 채워 넣으면
     // 학교에 없는 이름으로 그룹이 만들어지고 소속 학생이 한 명도 안 잡힌다.

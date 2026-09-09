@@ -837,7 +837,7 @@
 
             const result = await api("/api/school/teachers", {
                 method: "PUT",
-                body: JSON.stringify({ teachers: clean })
+                body: JSON.stringify({ teachers: clean, year: currentYear })
             });
             setStatus("teacherRosterStatus", `✅ 교사 명단 ${result.saved}명 저장 완료`, "ok");
             await loadTeachers();

@@ -7465,6 +7465,9 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(403, "ADMIN_ONLY", "교사 명단 편집 권한은 학교 관리자만 갖고 있습니다.");
     }
     const schoolId = tp.rows[0].school_id;
+    // 학년도를 적지 않으면 이 교사의 학급 그룹이 만들어지지 않는다
+    // (/teacher/groups 가 academic_year 로 담임 학급을 찾는다).
+    const academicYear = Number(req.body?.year) || new Date().getFullYear();
     const teachers = Array.isArray(req.body?.teachers) ? req.body.teachers : [];
 
     const cleanTeachers = teachers.map((t) => ({
@@ -7520,17 +7523,17 @@ function createClassroomPlatform(options = {}) {
           const updated = await client.query(
             `UPDATE classroom_teachers
              SET teacher_name = $1, teacher_type = $2, google_email = $3, grade = $4, class_number = $5,
-                 subject_name = $6, room_name = $7, updated_at = NOW()
+                 subject_name = $6, room_name = $7, academic_year = $9, updated_at = NOW()
              WHERE id = $8 RETURNING id`,
-            [finalName, finalType, finalEmail, finalGrade, finalClass, finalSubject, finalRoom, existing.id]
+            [finalName, finalType, finalEmail, finalGrade, finalClass, finalSubject, finalRoom, existing.id, academicYear]
           );
           savedIds.push(updated.rows[0].id);
         } else {
           const inserted = await client.query(
             `INSERT INTO classroom_teachers
-               (school_id, teacher_name, grade, class_number, teacher_type, google_email, subject_name, room_name)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
-            [schoolId, t.name, t.grade, t.classNumber, t.type, t.email, t.subjectName, t.roomName]
+               (school_id, teacher_name, grade, class_number, teacher_type, google_email, subject_name, room_name, academic_year)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
+            [schoolId, t.name, t.grade, t.classNumber, t.type, t.email, t.subjectName, t.roomName, academicYear]
           );
           savedIds.push(inserted.rows[0].id);
         }
@@ -7574,6 +7577,12 @@ function createClassroomPlatform(options = {}) {
       await client.query("COMMIT");
     } catch (err) {
       await client.query("ROLLBACK");
+      // 한 학년도의 같은 반에 담임을 둘 적을 수는 없다. 이제 학년도를 함께
+      // 적으므로 이 겹침이 실제로 걸린다. 무슨 일인지 알아볼 수 있게 적어 준다.
+      if (err?.code === "23505" && String(err.constraint || "").includes("class_assignment")) {
+        throw new HttpError(400, "DUPLICATE_CLASS_ASSIGNMENT",
+          "같은 학년·반에 담임이 둘입니다. 학년과 반을 확인해 주세요.");
+      }
       throw err;
     } finally {
       client.release();
@@ -7623,11 +7632,15 @@ function createClassroomPlatform(options = {}) {
     // classroom_classes, so a teacher who has never opened their dashboard
     // (and so was never auto-provisioned into classroom_classes) still gets
     // their default group created here.
+    // academic_year 가 비어 있는 줄도 받아 준다. 교사 명단은 오랫동안 학년도를
+    // 적지 않고 저장돼 왔고, 그 줄들은 담임인데도 학급 그룹을 못 받았다.
     const teacherClass = await pool.query(
       `SELECT t.school_id, t.grade, t.class_number
        FROM classroom_teachers t
-       WHERE t.user_id = $1 AND t.active = TRUE AND t.academic_year = $2
+       WHERE t.user_id = $1 AND t.active = TRUE
+         AND (t.academic_year = $2 OR t.academic_year IS NULL)
          AND t.grade IS NOT NULL AND t.class_number IS NOT NULL
+       ORDER BY (t.academic_year = $2) DESC NULLS LAST
        LIMIT 1`,
       [teacher.id, year]
     );
