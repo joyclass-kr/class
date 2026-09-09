@@ -10,10 +10,10 @@ const CHAPTERS = [
                     "동해 바닷속에 멸치 한 마리가 살았습니다. 몸집은 새끼손가락만 했지요.",
                     "그런데 성질이 아주 급하고 으스대기를 좋아했어요.",
                     "\"이 바다에서 나만 한 놈이 어디 있나.\"",
-                    "멸치는 만나는 이마다 이렇게 뽐냈답니다."
+                    "멸치는 누구를 만나든 이렇게 뽐냈답니다."
                 ],
                 right: [
-                    "그날 밤 멸치는 이상한 꿈을 꾸었어요. 잠자리에 든 지 얼마 되지 않았을 때였지요.",
+                    "어느 날 밤 멸치는 이상한 꿈을 꾸었어요. 잠자리에 든 지 얼마 되지 않았을 때였지요.",
                     "몸이 두둥실 하늘로 떠오르는 꿈이었어요.",
                     "구름 속을 지나 다시 바다로 뚝 떨어졌지요.",
                     "멸치는 꿈속에서 어질어질 어지러웠답니다."
@@ -263,7 +263,7 @@ const EN = {
                         "He boasted so to everyone he met."
                     ],
                     right: [
-                        "That night the anchovy had a strange dream, not long after he lay down.",
+                        "One night the anchovy had a strange dream, not long after he lay down.",
                         "He dreamed his body floated up into the sky.",
                         "It went through the clouds and dropped back into the sea.",
                         "In the dream his head was spinning."
@@ -672,6 +672,7 @@ const EN = {
                     "This is one of the why-stories. It explains at one go why a flatfish has both eyes on one side and why a catfish's mouth is so wide.",
                     "Each shape of each sea fish has a reason attached to it. Korean tales are full of this kind of thing.",
                     "The flatfish's eyes on one side is really so. But it is not so from the start. A newly hatched flatfish has one eye on each side and swims upright like any fish. Then, within a month, the right eye travels round the head to the left side, and from then on it lives flat on the bottom. The thing the old people wondered at really does happen.",
+                    "The catfish is no sea fish at all. It lives in rivers and ponds. The old tale sat it down at a feast on the sea floor all the same. The people who passed the story on cared less about which water it lived in than about why its mouth is so wide.",
                     "And look again: the flatfish did nothing wrong. He was asked to read a dream and he read it as he saw it."
                 ],
                 right: [
@@ -715,6 +716,7 @@ const AFTERWORD = {
                 "이 이야기는 왜 그런지를 풀어 주는 이야기입니다. 넙치 눈이 왜 한쪽으로 몰렸는지, 메기 입이 왜 넓적한지를 한꺼번에 설명합니다.",
                 "바닷물고기의 생김새를 하나하나 이야기로 붙여 둔 셈입니다. 우리 옛이야기에는 이런 것이 아주 많습니다.",
                 "넙치 눈이 한쪽으로 몰린 것은 실제로도 그렇습니다. 다만 처음부터 그런 것은 아닙니다. 알에서 갓 깨어난 넙치는 여느 물고기처럼 눈이 양쪽에 하나씩 있고 똑바로 서서 헤엄칩니다. 그러다 한 달이 못 되어 오른쪽 눈이 머리를 돌아 왼쪽으로 옮겨 가고, 그때부터 바닥에 납작 엎드려 삽니다. 옛사람들이 궁금해한 그 일이 정말로 일어나는 셈입니다.",
+                "메기는 바닷물고기가 아닙니다. 냇물이나 저수지에 사는 민물고기지요. 그런데도 옛이야기는 메기를 바닷속 잔칫상에 앉혀 두었습니다. 이야기를 옮기던 사람들에게는 어느 물에 사는지보다 그 입이 왜 그렇게 넓적한지가 더 궁금했던 것이지요.",
                 "다시 보면 넙치는 잘못한 것이 없습니다. 꿈을 풀어 달라 해서 본 대로 풀었을 뿐입니다."
             ],
             right: [
@@ -740,7 +742,7 @@ const WORDS_KO = {
     "01-dream.webp": [
         { w: "몸집", k: "몸의 크기.", s: "몸집은 새끼손가락만 했지요." },
         { w: "으스대다", k: "잘난 체하며 뽐내다.", s: "성질이 아주 급하고 으스대기를 좋아했어요." },
-        { w: "뽐내다", k: "자랑하며 우쭐대다.", s: "멸치는 만나는 이마다 이렇게 뽐냈답니다." },
+        { w: "뽐내다", k: "자랑하며 우쭐대다.", s: "멸치는 누구를 만나든 이렇게 뽐냈답니다." },
         { w: "두둥실", k: "가볍게 떠오르는 모양.", s: "몸이 두둥실 하늘로 떠오르는 꿈이었어요." },
         { w: "어질어질", k: "정신이 아득해지는 모양.", s: "멸치는 꿈속에서 어질어질 어지러웠답니다." }
     ],

@@ -481,7 +481,7 @@ const EN = {
             q: "Which reaction to this book does NOT fit?",
             wide: true,
             choices: [
-                "He shut every story he heard into a bag, so what is never shared goes bad in the end.",
+                "He shut every story he heard into a bag, so what is never shared turns on you in the end.",
                 "The stories got angry and planned to pay him back, so the old people thought of stories as alive.",
                 "The old servant could explain nothing and took a beating for it, so you can do right and still be misunderstood.",
                 "The young master bowed low to the servant the moment he saw the snake, so it did not take him long to see his fault."
@@ -696,7 +696,7 @@ const QUIZ = [
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         wide: true,
         choices: [
-            "들은 이야기를 하나도 안 내주고 주머니에 가둔 것을 보면, 나누지 않은 것은 결국 상하는구나.",
+            "들은 이야기를 하나도 안 내주고 주머니에 가둔 것을 보면, 나누지 않은 것은 결국 해가 되는구나.",
             "이야기들이 화가 나서 앙갚음을 꾸민 것을 보면, 옛사람들은 이야기를 살아 있는 것으로 여겼네.",
             "늙은 하인이 아무 설명도 못 하고 매를 각오한 것을 보면, 옳은 일을 하고도 오해를 사는 때가 있어.",
             "도련님이 뱀을 보고 그 자리에서 하인에게 큰절을 올린 것을 보면, 잘못을 아는 데 오래 걸리지 않았나 봐."
