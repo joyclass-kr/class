@@ -355,6 +355,7 @@
                     <!-- Populated dynamically via JS -->
                 </select>
                 <input type="text" id="modal-group-custom-input" placeholder="그룹 이름 직접 입력..." style="display:none; width:100%; margin-top:10px; padding:12px 14px; border-radius:12px; border:1px solid #75d69f; background:#111512; color:#fff; font-size:0.95rem;">
+                <p id="modal-group-notice" style="display:none; margin:10px 0 0; font-size:0.85rem; line-height:1.5; color:#ffd166;"></p>
             </div>
 
             <div style="display:flex; justify-content:flex-end; gap:12px;">
@@ -388,8 +389,13 @@
                 return payload;
             }
 
+            // 전교생 명단과 그룹 개설이 서로 다른 해를 보면, 명단에 학생이 있는데도
+            // 고를 학급이 없는 것처럼 보인다. 교사 프로필의 학년도를 함께 쓴다.
+            let portalYear = new Date().getFullYear();
+
             function applyProfileData(data) {
-                const year = data.academicYear || 2026;
+                const year = data.academicYear || portalYear;
+                portalYear = year;
                 const grade = data.grade || '';
                 const classNum = data.classNumber || '';
                 const teacher = data.name || data.teacherName || '선생님';
@@ -416,7 +422,7 @@
             async function loadTeacherGroups() {
                 const mainGrid = document.getElementById('main-groups-grid');
                 try {
-                    const res = await api('/api/teacher/groups').catch(() => ({ groups: [] }));
+                    const res = await api(`/api/teacher/groups?year=${portalYear}`).catch(() => ({ groups: [] }));
                     const groups = res.groups || [];
                     
                     const groupTypeIcons = {
@@ -487,18 +493,20 @@
 
             let availableData = { homerooms: [], columns: [] };
 
+            let availableError = '';
+
             window.handleCreateGroupClick = async function() {
+                availableError = '';
                 try {
-                    const res = await api('/api/teacher/available-groups').catch(() => null);
-                    if (res) {
-                        availableData = res;
-                    }
-                    populateModalDropdown();
-                    const modal = document.getElementById('create-group-modal');
-                    if (modal) modal.style.display = 'flex';
+                    availableData = await api(`/api/teacher/available-groups?year=${portalYear}`);
                 } catch (err) {
-                    alert('그룹 목록을 불러오는 중 오류가 발생했습니다.');
+                    // 여기서 삼키면 화면에는 '고를 것이 없음'으로만 보인다. 까닭을 남긴다.
+                    availableData = { homerooms: [], columns: [] };
+                    availableError = err.message || '후보 목록을 불러오지 못했습니다.';
                 }
+                populateModalDropdown();
+                const modal = document.getElementById('create-group-modal');
+                if (modal) modal.style.display = 'flex';
             };
 
             window.closeCreateGroupModal = function() {
@@ -545,6 +553,25 @@
                 customOpt.value = '__CUSTOM__';
                 customOpt.textContent = '✍️ 목록에 없음 (직접 입력)';
                 nameSelect.appendChild(customOpt);
+
+                // 고를 것이 직접 입력뿐이면 왜 그런지 알려 준다.
+                const notice = document.getElementById('modal-group-notice');
+                if (!notice) return;
+                let message = '';
+                if (availableError) {
+                    message = availableError;
+                } else if (type === 'homeroom' && !(availableData.homerooms || []).length) {
+                    message = `${portalYear}년도 전교생 명단에 학생이 없어 고를 학급이 없습니다. 학교 관리자가 전교생 명단을 먼저 채워야 합니다.`;
+                } else if (type !== 'homeroom' && type !== 'subject' && !(availableData.columns || []).some((col) => (col.options || []).length)) {
+                    message = `${portalYear}년도 명단에 이 갈래의 열이 없습니다. 학교 관리자가 전교생 명단에 열을 만들면 여기에 나옵니다.`;
+                }
+                notice.textContent = message;
+                notice.style.display = message ? 'block' : 'none';
+                if (message) {
+                    nameSelect.value = '__CUSTOM__';
+                    const customInput = document.getElementById('modal-group-custom-input');
+                    if (customInput) customInput.style.display = 'block';
+                }
             }
 
             document.getElementById('modal-group-type')?.addEventListener('change', populateModalDropdown);
