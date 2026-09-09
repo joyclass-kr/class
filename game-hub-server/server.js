@@ -1826,6 +1826,11 @@ wss.on("connection", (socket, request) => {
     console.error("Failed to resolve WebSocket content-lock bypass:", error);
     return false;
   });
+  // 연결할 때 한 번만 물어보고, 방을 만들 때 이 답을 쓴다.
+  const teacherSession = classroomPlatform.isTeacherRequest(request).catch(error => {
+    console.error("Failed to resolve WebSocket teacher session:", error);
+    return false;
+  });
   socket.isAlive = true;
   socket.on("pong", () => { socket.isAlive = true; });
   socket.meta = {
@@ -1927,6 +1932,13 @@ wss.on("connection", (socket, request) => {
       const resumeOnly = message.resumeOnly === true;
       if (!gameId || !roomCode) {
         safeSend(socket, { type: "ERROR", message: "방 정보가 올바르지 않습니다." });
+        return;
+      }
+
+      // 학급 순위전은 교사가 여는 판이다. 화면에서 단추를 숨기는 것만으로는
+      // 주소를 아는 사람을 못 막으므로 서버에서 한 번 더 본다.
+      if (gameId === "quizrace" && !(await teacherSession)) {
+        safeSend(socket, { type: "ERROR", message: "학급 순위전은 교사 계정으로만 만들 수 있습니다." });
         return;
       }
 

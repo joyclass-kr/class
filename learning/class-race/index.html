@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#24150c">
     <title>학급 순위전</title>
     <link rel="stylesheet" href="/assets/network/multiplayer-lobby.css">
-    <link rel="stylesheet" href="styles.css?v=20260905-2">
+    <link rel="stylesheet" href="styles.css?v=20260909-1">
     <script src="/assets/network/game-network.js?v=20260821" defer></script>
     <script src="/assets/network/multiplayer-lobby.js" defer></script>
-    <script src="app.js?v=20260906-1" defer></script>
+    <script src="app.js?v=20260909-1" defer></script>
 </head>
 <body>
     <div class="page-shell">
@@ -27,13 +27,16 @@
                 <a class="primary-button" href="/">메인에서 이름 저장</a>
             </section>
 
-            <section id="lobbyScreen" class="panel hidden">
+            <section id="lobbyScreen" class="panel hidden is-compact">
                 <div id="joinPane">
+                    <p class="kicker">CLASS RACE</p>
+                    <h1 class="join-title">학급 순위전</h1>
                     <div class="join-row">
                         <input id="joinCode" class="room-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="0000" aria-label="학급 코드">
                         <button id="joinBtn" class="primary-button" type="button">학급 참가</button>
                     </div>
-                    <p id="joinStatus" class="lobby-status" role="status">교사가 만든 학급 코드를 입력하세요.</p>
+                    <p id="joinStatus" class="lobby-status" role="status">선생님이 알려 준 네 자리 학급 코드를 넣으세요.</p>
+                    <a id="createRaceLink" class="create-race-link hidden" href="teacher.html">＋ 학급 만들기</a>
                 </div>
 
                 <div id="waitingPane" class="hidden">
@@ -41,9 +44,8 @@
                     <h2>선생님의 시작을 기다리고 있어요</h2>
                     <div id="lobbyPlayers" class="mp-lobby-players player-list" aria-label="참가 학생"></div>
                     <p id="lobbyGuide" class="lobby-status">학급에 연결하는 중입니다.</p>
+                    <button id="leaveClassButton" class="text-button" type="button">← 학급에서 나가기</button>
                 </div>
-
-                <button id="leaveClassButton" class="text-button" type="button">← 학급에서 나가기</button>
             </section>
 
             <section id="quizScreen" class="hidden" aria-labelledby="questionText">

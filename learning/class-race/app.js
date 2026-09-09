@@ -11,6 +11,7 @@
         quizScreen: document.getElementById("quizScreen"),
         resultScreen: document.getElementById("resultScreen"),
         joinPane: document.getElementById("joinPane"),
+        createRaceLink: document.getElementById("createRaceLink"),
         waitingPane: document.getElementById("waitingPane"),
         studentRoomCode: document.getElementById("studentRoomCode"),
         joinStatus: document.getElementById("joinStatus"),
@@ -82,6 +83,8 @@
         const connected = snapshot.connected && snapshot.roomCode;
         elements.joinPane.classList.toggle("hidden", Boolean(connected));
         elements.waitingPane.classList.toggle("hidden", !connected);
+        // 코드를 넣는 자리는 좁은 카드, 대기실은 이름이 늘어서니 넓은 카드.
+        elements.lobbyScreen.classList.toggle("is-compact", !connected);
         if (connected) {
             elements.studentRoomCode.textContent = snapshot.roomCode;
             elements.lobbyGuide.textContent = `현재 ${Object.keys(snapshot.players).length}명 접속 · 선생님이 시작하면 동시에 문제가 열립니다.`;
@@ -336,6 +339,19 @@
         }
     }
 
+    async function revealCreateForTeacher() {
+        if (!elements.createRaceLink) return;
+        try {
+            const response = await fetch("/api/auth/me", { credentials: "same-origin" });
+            if (!response.ok) return;
+            const session = await response.json();
+            const canCreate = session?.isTeacher === true || session?.user?.role === "admin";
+            elements.createRaceLink.classList.toggle("hidden", !canCreate);
+        } catch (_) {
+            // 서버가 답하지 않으면 단추를 숨긴 채로 둔다.
+        }
+    }
+
     function initialize() {
         if (!hasValidPlayerName()) {
             setScreen(elements.missingScreen);
@@ -368,6 +384,9 @@
                 guideText: `현재 ${Math.max(1, count)}명 접속 · 선생님이 시작하면 동시에 문제가 열립니다.`
             })
         }).mount();
+        // 공용 대기실 스크립트가 참가 안내를 비우므로 여기서 다시 채운다.
+        elements.joinStatus.textContent = "선생님이 알려 준 네 자리 학급 코드를 넣으세요.";
+        revealCreateForTeacher();
     }
 
     elements.nextButton.addEventListener("click", goToNextQuestion);

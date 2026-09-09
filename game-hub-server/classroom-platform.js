@@ -1706,6 +1706,24 @@ function createClassroomPlatform(options = {}) {
     return user?.role === "admin";
   }
 
+  // 학급 순위전처럼 교사만 여는 방을 웹소켓에서 가려내는 데 쓴다. 교실
+  // 데이터베이스가 아예 없는 자리(개발·검사용 서버)에서는 막지 않는다. 가릴
+  // 근거가 없는데 막으면 그 자리에서는 아무도 방을 열지 못한다.
+  async function isTeacherRequest(req) {
+    if (!pool || !databaseReady) return true;
+    const user = await sessionUser(req);
+    if (!user) return false;
+    if (user.role === "admin") return true;
+    const result = await pool.query(
+      `SELECT 1 FROM classroom_teachers
+       WHERE user_id = $1
+          OR ($2 <> '' AND google_email IS NOT NULL AND LOWER(google_email) = $2)
+       LIMIT 1`,
+      [user.id, normalizeEmail(user.email)]
+    );
+    return result.rowCount > 0;
+  }
+
   const requireSiteAccess = asyncRoute(async (req, res, next) => {
     // mode and user are each resolved once per request and reused below --
     // this used to call getSiteAccessMode() and sessionUser() twice per
@@ -7772,6 +7790,7 @@ function createClassroomPlatform(options = {}) {
     requireSiteAccess,
     isContentGloballyDisabled,
     canBypassGlobalContentLock,
+    isTeacherRequest,
     verifyMuseumPresenceTicket,
     // 152개 정식 키만 통과시키므로 클라이언트가 보낸 값을 그대로 검증하는 데 쓴다.
     listFinisherRecords,
