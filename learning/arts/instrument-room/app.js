@@ -454,6 +454,10 @@
         ].forEach(function (id) { elements[id] = document.getElementById(id); });
     }
 
+    function isTouchKeyboardDevice() {
+        return navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches;
+    }
+
     function currentDisplayKey() {
         const shortSide = Math.min(window.screen.width, window.screen.height);
         const longSide = Math.max(window.screen.width, window.screen.height);
@@ -2477,7 +2481,7 @@
         renderDrumPads();
         bindEvents();
         selectFamily("korean");
-        if (!state.screenCalibrated) window.requestAnimationFrame(openKeySizeDialog);
+        if (isTouchKeyboardDevice() && !state.screenCalibrated) window.requestAnimationFrame(openKeySizeDialog);
         animateVisual();
     }
 
