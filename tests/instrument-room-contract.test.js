@@ -304,6 +304,12 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
   assert.match(app, /const calibratedGain = Math\.pow/);
   assert.match(app, /gainDb: -5\.68/);
   assert.match(app, /gainDb: 20\.0/);
+  assert.match(app, /id: "ocarina"[^\n]*gainDb: -4\.5/, 'ocarina must retain its perceptual loudness lift');
+  assert.match(app, /id: "gayageum-25"[^\n]*gainDb: 18\.6/);
+  assert.match(app, /id: "ajaeng-vibrato"[^\n]*gainDb: 17\.1/);
+  assert.match(app, /id: "guitar-s-funk"[^\n]*gainDb: 25\.1/);
+  assert.match(app, /id: "guitar-steel"[^\n]*gainDb: 25\.0/);
+  assert.match(app, /id: "glockenspiel"[^\n]*gainDb: 33\.1/);
   assert.match(app, /\["violin", "viola", "cello", "upright-bass"\]\.includes\(state\.currentModel\.id\) && state\.articulation === "pizzicato"/);
   assert.match(app, /\[\["sustain", "활긋기"\], \["pizzicato", "피치카토"\]\]/);
 });
