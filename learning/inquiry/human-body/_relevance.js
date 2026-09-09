@@ -35,7 +35,9 @@
     }
 
     function liveLayer() {
-        var ls = [].slice.call(document.querySelectorAll('[class$="-layer"]'));
+        // div 만 본다. 그림(SVG) 안에도 이름이 -layer 로 끝나는 무리가 있어서
+        // 그것을 겹판으로 잘못 집으면 손잡이가 0 개로 나온다.
+        var ls = [].slice.call(document.querySelectorAll('div[class$="-layer"]'));
         for (var i = 0; i < ls.length; i++) if (!ls[i].hidden) return ls[i];
         return null;
     }
@@ -238,7 +240,7 @@
         if (b) b.click();
         await new Promise(function (r) { setTimeout(r, 150); });
 
-        var layer = [].slice.call(document.querySelectorAll('[class$="-layer"]')).filter(function (x) { return !x.hidden; })[0];
+        var layer = [].slice.call(document.querySelectorAll('div[class$="-layer"]')).filter(function (x) { return !x.hidden; })[0];
         if (!layer) return { 장면: scene, 결과: '겹판 없음' };
 
         // 이름표 가운데는 누르는 것이 아니라 그냥 적어 둔 안내글도 있다
@@ -393,5 +395,99 @@
             catch (e) { }
         }
         return Math.round(x) + ',' + Math.round(y) + ' → ' + (hit || '✘ 관 밖');
+    };
+})();
+
+/*
+ * 무대 위 손잡이 훑기.
+ *
+ * 정적 잣대(_controls-check.js)는 index.html 에 적힌 손잡이만 본다.
+ * 그런데 겹판은 자기 무대 위에 단추를 스스로 만들어 붙인다 —
+ * 방어 작용의 단계 단추, 반사궁의 갈래 단추, 귀의 세 가지 느끼기 같은 것.
+ * 그것들은 글에 안 적혀 있으니 코드로는 셀 수 없다. 여기서 센다.
+ *
+ *   __stage()        지금 화면의 무대 위 손잡이 목록
+ *   __stagePoke(i)   i 번째를 만진다 (그 다음 화면을 한 장 찍을 것)
+ *   __stageRead(i)   그림이 바뀌었는지 본다
+ */
+(function () {
+    'use strict';
+
+    function seen(el) {
+        var r = el.getBoundingClientRect();
+        if (!(r.width > 0 && r.height > 0)) return false;
+        for (var p = el; p && p !== document.body; p = p.parentElement) {
+            var cs = getComputedStyle(p);
+            if (cs.display === 'none' || cs.visibility === 'hidden' || p.hidden) return false;
+        }
+        return true;
+    }
+
+    function liveLayer() {
+        // div 만 본다. 그림(SVG) 안에도 이름이 -layer 로 끝나는 무리가 있어서
+        // 그것을 겹판으로 잘못 집으면 손잡이가 0 개로 나온다.
+        var ls = [].slice.call(document.querySelectorAll('div[class$="-layer"]'));
+        for (var i = 0; i < ls.length; i++) if (!ls[i].hidden) return ls[i];
+        return null;
+    }
+
+    function shot() {
+        var l = liveLayer();
+        var p = [];
+        if (l) {
+            l.querySelectorAll('svg *').forEach(function (e) {
+                ['d', 'transform', 'opacity', 'fill', 'stroke', 'stroke-width',
+                 'cx', 'cy', 'r', 'x', 'y', 'width', 'height', 'points', 'class'].forEach(function (a) {
+                    var v = e.getAttribute(a);
+                    if (v !== null) p.push(v);
+                });
+            });
+            l.querySelectorAll('span,div,button').forEach(function (e) {
+                if (!e.children.length) p.push(e.textContent + '|' + e.className);
+            });
+        }
+        return p.join('|');
+    }
+
+    var st = null;
+
+    window.__stage = function () {
+        var l = liveLayer();
+        if (!l) return { 겹판: '없음', 손잡이: [] };
+        var ks = [].slice.call(l.querySelectorAll('button,input,select')).filter(function (e) {
+            var cls = e.className || '';
+            if (/scene-btn/.test(cls)) return false;
+            return seen(e);
+        });
+        st = { ks: ks, dead: [], live: 0, before: null };
+        return {
+            겹판: l.className,
+            손잡이: ks.map(function (e) { return (e.textContent || e.id || e.type).replace(/\s+/g, ' ').trim().slice(0, 22); })
+        };
+    };
+
+    window.__stagePoke = function (i) {
+        if (!st || !st.ks[i]) return '없음';
+        st.before = shot();
+        var e = st.ks[i];
+        if (e.tagName === 'INPUT' && e.type === 'range') {
+            var min = +e.min || 0, max = +e.max || 100, cur = +e.value;
+            e.value = (cur - min) > (max - cur) ? min : max;
+            e.dispatchEvent(new Event('input', { bubbles: true }));
+        } else e.click();
+        return (e.textContent || e.id).replace(/\s+/g, ' ').trim().slice(0, 22);
+    };
+
+    window.__stageRead = function (i) {
+        if (!st || !st.ks[i]) return '없음';
+        var name = (st.ks[i].textContent || st.ks[i].id).replace(/\s+/g, ' ').trim().slice(0, 22);
+        if (shot() === st.before) { st.dead.push(name); return '✘ ' + name; }
+        st.live++;
+        return '✔ ' + name;
+    };
+
+    window.__stageResult = function () {
+        if (!st) return '먼저 __stage 를 부르세요';
+        return { 보임: st.ks.length, 산것: st.live, 죽은것: st.dead };
     };
 })();
