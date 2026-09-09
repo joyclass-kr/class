@@ -49,18 +49,17 @@ body {
 .back-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   color: var(--accent-gold);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 13px;
-  margin-bottom: 0;
-  min-height: 44px;
-  padding: 8px 12px;
-  border-radius: 16px;
+  font-size: 20px;
+  line-height: 1;
   background: rgba(255, 181, 74, 0.1);
   border: 1px solid rgba(255, 181, 74, 0.2);
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .back-link:hover {
@@ -301,4 +300,19 @@ body {
   .page-title { font-size: 24px; }
   .question-card { padding: 18px; }
   .q-prompt { font-size: 16px; }
+}
+
+/* 단원 머리말 — 문항 목록을 2022 개정 교육과정 단원별로 묶어 준다 */
+.unit-heading {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--accent-gold);
+  margin: 8px 4px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 181, 74, 0.32);
+}
+
+.questions-list > .unit-heading:first-child {
+  margin-top: 0;
 }
