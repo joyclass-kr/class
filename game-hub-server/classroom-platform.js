@@ -2067,10 +2067,12 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.get("/student/profile", asyncRoute(async (req, res) => {
+    // Not gated on user.role: the slot is sticky and priority-ordered, so a
+    // child whose account once carried a staff or guardian marking can never
+    // read as 'student' again and would lose their own settings page. The
+    // roster lookup below is the real membership test, and it already refuses
+    // anyone without a student row.
     const user = await requireUser(req);
-    if (user.role !== "student") {
-      throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
-    }
     const result = await pool.query(
       `SELECT s.id AS student_id, s.roster_name, s.student_number, s.birthday_mmdd, s.birthday_visible,
               s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
@@ -2203,10 +2205,9 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.patch("/student/profile", asyncRoute(async (req, res) => {
+    // Same reason as GET /student/profile: the UPDATE below only ever touches
+    // the caller's own roster row and 404s when there is none.
     const user = await requireUser(req);
-    if (user.role !== "student") {
-      throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
-    }
     const birthdayMmdd = String(req.body?.birthdayMmdd || "").replace(/\D/g, "").slice(0, 4);
     const birthdayVisible = req.body?.birthdayVisible === true;
     if (birthdayMmdd) {
@@ -2246,10 +2247,9 @@ function createClassroomPlatform(options = {}) {
     });
   }));
   router.patch("/student/avatar", asyncRoute(async (req, res) => {
+    // Same reason as GET /student/profile: the row lookup inside the
+    // transaction below is the membership test.
     const user = await requireUser(req);
-    if (user.role !== "student") {
-      throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
-    }
     const requestedAvatarKey = normalizeAvatarKey(req.body?.avatarKey);
     if (!AVATAR_KEY_SET.has(requestedAvatarKey)) {
       throw new HttpError(400, "INVALID_AVATAR", "Choose an avatar from the available list.");
@@ -2578,12 +2578,19 @@ function createClassroomPlatform(options = {}) {
       "SELECT content_path FROM classroom_content_enabled WHERE class_id = $1 ORDER BY content_path",
       [classId]
     );
+    // Not gated on user.role. That slot is sticky (an account marked 'teacher'
+    // once never falls back to 'student') and priority-ordered, so a student
+    // whose account had once been registered as staff would be handed the
+    // homeroom lock control on their own home screen. The registration below
+    // is what PUT /teacher/home-content-access actually enforces; asking the
+    // same question here keeps the button and the action in agreement.
+    const registration = await teacherRegistration(user);
     res.json({
       mode,
       enabledPaths: enabled.rows.map((row) => row.content_path),
       globallyDisabledPaths,
       hasClassAccess: true,
-      canManage: user.role === "teacher",
+      canManage: Boolean(registration && registration.grade !== null && registration.class_number !== null),
       canManageGlobally: user.role === "admin"
     });
   }));
@@ -2732,6 +2739,10 @@ function createClassroomPlatform(options = {}) {
            WHEN $6 = 'admin' THEN 'admin'
            WHEN classroom_users.role = 'admin' THEN 'admin'
            WHEN $6 = 'teacher' THEN 'teacher'
+           -- 교직원 표시는 명단에서 빠진 뒤에도 계정에 남는다. 그 계정이 그 사이
+           -- 학생으로 등록됐다면 붙들고 있으면 안 된다. 그대로 두면 그 아이가
+           -- 교사 권한(우리 반 공개/잠금 설정 따위)을 물려받는다.
+           WHEN classroom_users.role = 'teacher' AND $6 = 'student' THEN 'student'
            WHEN classroom_users.role = 'teacher' THEN 'teacher'
            ELSE $6
          END,
