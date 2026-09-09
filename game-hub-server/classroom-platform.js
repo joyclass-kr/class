@@ -1376,21 +1376,38 @@ function createClassroomPlatform(options = {}) {
     }
   }
 
+  // 교직원 등록을 찾는 한 자리. user_id 만 보면 안 된다. 그 칸은 계정이 새로
+  // 구글 로그인을 해야 채워지고, UNIQUE 라서 여러 학교에 등록된 사람은 한 줄에만
+  // 붙는다. 이메일로도 찾고, 쓰고 있는 학교를 앞에 세운다.
+  async function teacherRegistrations(user) {
+    if (!user || !pool || !databaseReady) return [];
+    const result = await pool.query(
+      `SELECT t.id, t.school_id, t.teacher_type, t.teacher_name, t.grade, t.class_number,
+              t.academic_year, t.user_id
+       FROM classroom_teachers t
+       JOIN classroom_schools sc ON sc.id = t.school_id
+       WHERE t.active = TRUE AND sc.enabled = TRUE
+         AND (t.user_id = $1
+              OR ($2 <> '' AND t.google_email IS NOT NULL AND LOWER(t.google_email) = $2))
+       ORDER BY COALESCE(t.user_id = $1, FALSE) DESC, t.id`,
+      [user.id, normalizeEmail(user.email)]
+    );
+    return result.rows;
+  }
+
+  // 이 교직원이 지금 일하는 학교의 등록 하나. 쓰지 않는 학교는 위에서 걸렀다.
+  async function teacherRegistration(user) {
+    return (await teacherRegistrations(user))[0] || null;
+  }
+
   async function requireTeacher(req) {
     // Not gated on user.role: role is a single priority slot (admin beats
     // teacher), so a site admin who is also a registered active teacher
     // would otherwise be locked out of every teacher-only action. The
     // registration query below is the real, role-independent source of truth.
     const user = await requireUser(req);
-    const registration = await pool.query(
-      `SELECT 1
-       FROM classroom_teachers t
-       JOIN classroom_schools sc ON sc.id = t.school_id
-       WHERE t.user_id = $1 AND t.active = TRUE AND sc.enabled = TRUE`,
-      [user.id]
-    );
-    if (!registration.rows[0]) {
-      throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "Ask the administrator to register this teacher account.");
+    if (!await teacherRegistration(user)) {
+      throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학교 관리자에게 이 계정의 교사 등록을 요청하세요.");
     }
     return user;
   }
@@ -3826,10 +3843,7 @@ function createClassroomPlatform(options = {}) {
 
   router.get("/teacher/addressbook", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const tp = await pool.query(
-      `SELECT school_id FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
-      [teacher.id]
-    );
+    const tp = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     const schoolId = tp.rows[0]?.school_id || 1;
     const year = Number(req.query.year) || new Date().getFullYear();
 
@@ -5484,10 +5498,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "INVALID_DOC_REQUEST", "잘못된 서식 요청입니다.");
     }
 
-    const teacherRow = await pool.query(
-      `SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
-      [teacher.id]
-    );
+    const teacherRow = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     const teacherInfo = teacherRow.rows[0];
     if (!teacherInfo) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "교사 등록 정보가 없습니다.");
     const isAdmin = ["관리자", "교장", "교감"].includes(teacherInfo.teacher_type);
@@ -7008,10 +7019,7 @@ function createClassroomPlatform(options = {}) {
   // GET: 전교생 명단 조회 (학교에 속한 모든 교직원 접근 가능)
   router.get("/school/students", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const teacherProfile = await pool.query(
-      `SELECT school_id FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
-      [teacher.id]
-    );
+    const teacherProfile = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     if (!teacherProfile.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = teacherProfile.rows[0].school_id;
     const year = Number(req.query.year) || new Date().getFullYear();
@@ -7083,10 +7091,7 @@ function createClassroomPlatform(options = {}) {
   // PUT: 전교생 명단 일괄 저장 (학년/반 단위)
   router.put("/school/students", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const teacherProfile = await pool.query(
-      `SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
-      [teacher.id]
-    );
+    const teacherProfile = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     if (!teacherProfile.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const { school_id: schoolId, teacher_type: teacherType } = teacherProfile.rows[0];
     if (!["관리자", "교장", "교감"].includes(teacherType)) {
@@ -7339,10 +7344,7 @@ function createClassroomPlatform(options = {}) {
   // PUT: 학교 설정 저장 (명단 열 + 특별실)
   router.put("/school/settings", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const tp = await pool.query(
-      `SELECT t.school_id, t.teacher_type FROM classroom_teachers t WHERE t.user_id = $1 AND t.active = TRUE`,
-      [teacher.id]
-    );
+    const tp = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     if (!["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type)) {
       throw new HttpError(403, "ADMIN_ONLY", "학교 설정은 학교 관리자만 바꿀 수 있습니다.");
@@ -7420,10 +7422,7 @@ function createClassroomPlatform(options = {}) {
   // GET: 학교 교사 명단 조회
   router.get("/school/teachers", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const tp = await pool.query(
-      `SELECT t.school_id, t.teacher_type FROM classroom_teachers t WHERE t.user_id = $1 AND t.active = TRUE`,
-      [teacher.id]
-    );
+    const tp = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = tp.rows[0].school_id;
     const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
@@ -7456,10 +7455,7 @@ function createClassroomPlatform(options = {}) {
   // 바꾸고 목록에 없는 교사는 삭제하므로, 반드시 관리자만 호출할 수 있어야 한다)
   router.put("/school/teachers", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const tp = await pool.query(
-      `SELECT t.school_id, t.teacher_type FROM classroom_teachers t WHERE t.user_id = $1 AND t.active = TRUE`,
-      [teacher.id]
-    );
+    const tp = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     if (!["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type)) {
       throw new HttpError(403, "ADMIN_ONLY", "교사 명단 편집 권한은 학교 관리자만 갖고 있습니다.");
@@ -7596,10 +7592,7 @@ function createClassroomPlatform(options = {}) {
   // 잡히지 않으므로, 예시 이름 같은 것은 섞지 않는다.
   router.get("/teacher/available-groups", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const tp = await pool.query(
-      `SELECT school_id FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
-      [teacher.id]
-    );
+    const tp = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.query.year) || new Date().getFullYear();
@@ -7696,10 +7689,7 @@ function createClassroomPlatform(options = {}) {
   // POST: 새 그룹 개설
   router.post("/teacher/groups", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const tp = await pool.query(
-      `SELECT school_id FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
-      [teacher.id]
-    );
+    const tp = { rows: [await teacherRegistration(teacher)].filter(Boolean) };
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.body.year) || new Date().getFullYear();

@@ -28,13 +28,16 @@ function answer(sql, params) {
   const text = String(sql);
   if (!Array.isArray(params)) return { rows: [], rowCount: 0 };
   if (text.includes("FROM classroom_sessions s")) return { rows: sessionRows, rowCount: sessionRows.length };
+  // 교직원 등록 찾기. 스텁은 문장이 실제로 묻는 것만 답한다 — 이메일로 찾는
+  // 갈래가 문장에서 빠지면 스텁도 이메일로 찾아 주지 않아야, 그 갈래를 지웠을 때
+  // 검사가 짖는다.
   if (text.includes("FROM classroom_teachers t") && text.includes("sc.enabled = TRUE")) {
-    const hit = teacherRows.filter((row) => String(row.user_id) === String(params[0]) && row.active);
-    return { rows: hit.map(() => ({ ok: 1 })), rowCount: hit.length };
-  }
-  if (text.includes("SELECT school_id FROM classroom_teachers")) {
-    const hit = teacherRows.filter((row) => String(row.user_id) === String(params[0]) && row.active);
-    return { rows: hit.map((row) => ({ school_id: row.school_id })), rowCount: hit.length };
+    const asksEmail = text.includes("LOWER(t.google_email) = $2");
+    const email = asksEmail ? String(params[1] || "").toLowerCase() : "";
+    const hit = teacherRows.filter((row) => row.active
+      && (String(row.user_id) === String(params[0])
+          || (email && String(row.google_email || "").toLowerCase() === email)));
+    return { rows: hit, rowCount: hit.length };
   }
   if (text.includes("SELECT DISTINCT grade, class_number FROM school_students")) {
     const hit = studentRows.filter((row) => row.school_id === params[0] && row.academic_year === params[1]);
@@ -108,6 +111,18 @@ app.use((error, _req, res, _next) => res.status(error.status || 500).json({ code
     assert.equal(blocked.status, 403, "교직원이 아니면 막아야 한다.");
     const message = (await blocked.json()).message;
     assert.ok(message && message.length > 0, "막을 때는 까닭을 함께 보내야 한다.");
+
+    // 3-1. user_id 가 아직 안 붙은 줄(관리자가 이메일로만 올려 둔 계정)도
+    //      교직원으로 봐야 한다. user_id 는 그 계정이 새로 구글 로그인을 해야
+    //      채워지고, UNIQUE 라서 여러 학교에 등록된 사람은 한 줄에만 붙는다.
+    teacherRows = [{
+      user_id: null, google_email: "teacher@example.kr", school_id: SCHOOL_ID,
+      active: true, grade: 6, class_number: 4, academic_year: null
+    }];
+    const byEmail = await get(`/api/teacher/available-groups?year=${THIS_YEAR}`);
+    assert.equal(byEmail.status, 200, "이메일로만 등록된 교직원도 열람할 수 있어야 한다.");
+    assert.equal((await byEmail.json()).homerooms.length, 2,
+      "이메일로 찾은 교직원도 자기 학교의 학급을 봐야 한다.");
 
     // 4. 담임인데 학년도가 비어 있는 옛 줄도 학급 그룹을 받아야 한다.
     teacherRows = [{ user_id: 7, school_id: SCHOOL_ID, active: true, grade: 6, class_number: 4, academic_year: null }];
