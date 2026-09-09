@@ -242,11 +242,16 @@
         if (!layer) return { 장면: scene, 결과: '겹판 없음' };
 
         // 이름표 가운데는 누르는 것이 아니라 그냥 적어 둔 안내글도 있다
-        // (동공 반사 화면의 「자극이 지나가는 길」 같은 것). 그런 갈래는 뺀다.
+        // (동공 반사 화면의 「자극이 지나가는 길」, 피부 화면의 「만들어 내는 열」).
+        // 겹판이 누를 것에 clickable 을 달아 두었으면 그것만 본다 — 겹판이
+        // 스스로 「이건 누르는 것」이라고 적어 둔 셈이니 가장 믿을 만하다.
         var 안내 = /head|warm|note|cap|title|lead|legend/;
-        var tags = [].slice.call(layer.querySelectorAll('span,div')).filter(function (e) {
-            return !e.children.length && e.textContent.trim()
-                && /tag/.test(e.className) && !안내.test(e.className) && seen(e);
+        var 모두 = [].slice.call(layer.querySelectorAll('span,div')).filter(function (e) {
+            return !e.children.length && e.textContent.trim() && seen(e);
+        });
+        var 눌림 = 모두.filter(function (e) { return /clickable/.test(e.className); });
+        var tags = 눌림.length ? 눌림 : 모두.filter(function (e) {
+            return /tag/.test(e.className) && !안내.test(e.className);
         });
         if (!tags.length) return { 장면: scene, 결과: '누를 이름표가 없다' };
 

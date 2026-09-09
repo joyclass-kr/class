@@ -268,6 +268,16 @@
     color: #f8fafc;
 }
 
+.urine-tag.clickable {
+    /* 이름표 칸 자체는 pointer-events:none 이라, 누를 것만 되살린다 */
+    pointer-events: auto;
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(148, 163, 184, 0.55);
+}
+
+.urine-tag.clickable:hover { color: #fde047; border-bottom-color: #fde047; }
+.urine-tag.picked { color: #fde047; border-bottom-color: #fde047; }
+
 .urine-tag[data-anchor="start"] { transform: translate(0, -50%); }
 .urine-tag[data-anchor="end"] { transform: translate(-100%, -50%); }
 

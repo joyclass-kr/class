@@ -283,11 +283,60 @@
     /* ── 이름표 (HTML) ───────────────────────────────────── */
     var TAGS = [];
 
+    /**
+     * 이름표를 누르면 나오는 설명.
+     *
+     * 옆칸에는 「그림 위의 이름표를 눌러 자세한 설명을 보세요」라고 적혀 있는데
+     * 눌러도 아무 일이 없었다. 적어 놓고 안 되게 두면 안 된다.
+     */
+    var DETAIL = {
+        '오른쪽 콩팥': ['오른쪽 콩팥',
+            '등쪽 허리 높이에 좌우 <strong>한 쌍</strong>이 있습니다. 몸을 앞에서 본 그림이라 ' +
+            '<strong>화면 왼쪽이 몸의 오른쪽</strong>입니다. 간이 눌러서 오른쪽 콩팥이 왼쪽보다 조금 낮습니다.'],
+        '왼쪽 콩팥': ['왼쪽 콩팥',
+            '콩팥 하나에 <strong>네프론이 약 100만 개</strong> 들어 있습니다. 네프론은 오줌을 만드는 기본 단위입니다.'],
+        '겉질': ['겉질',
+            '콩팥의 <strong>바깥층</strong>입니다. <strong>사구체와 보먼주머니</strong>가 여기에 모여 있어 ' +
+            '<strong>여과</strong>가 일어납니다.'],
+        '속질': ['속질',
+            '겉질 <strong>안쪽</strong> 층입니다. <strong>세뇨관과 집합관</strong>이 부챗살처럼 뻗어 있고, ' +
+            '만들어진 오줌이 여기를 지나 콩팥깔때기로 모입니다.'],
+        '오줌관': ['오줌관',
+            '콩팥에서 만든 오줌을 <strong>꿈틀 운동</strong>으로 방광까지 내려보내는 가는 관입니다. ' +
+            '좌우로 <strong>한 개씩</strong> 있습니다.'],
+        '방광': ['방광',
+            '오줌을 <strong>300~500 mL</strong>까지 모아 두는 주머니입니다. 어느 정도 차면 오줌이 마렵다고 느낍니다. ' +
+            '항이뇨 호르몬이 많으면 물을 더 되흡수해서 오줌이 진해지고 양이 줍니다.'],
+        '요도': ['요도',
+            '방광에 모인 오줌이 <strong>몸 밖으로 나가는 마지막 길</strong>입니다. ' +
+            '오줌 길은 <strong>콩팥 ➔ 오줌관 ➔ 방광 ➔ 요도</strong> 차례입니다.']
+    };
+
+    function showDetail(name) {
+        var d = DETAIL[name];
+        if (!d) return;
+        var t = document.getElementById('organTitle');
+        var p = document.getElementById('organDesc');
+        if (t) t.textContent = d[0];
+        if (p) p.innerHTML = d[1];
+        if (tagLayer) {
+            tagLayer.querySelectorAll('.urine-tag.picked').forEach(function (x) { x.classList.remove('picked'); });
+        }
+        if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
+    }
+
     function htmlTag(x, y, str, cls, anchor) {
         var e = document.createElement('span');
         e.className = 'urine-tag' + (cls ? ' ' + cls : '');
         e.textContent = str || '';
         e.dataset.anchor = anchor || 'middle';
+        if (DETAIL[str]) {
+            e.classList.add('clickable');
+            e.addEventListener('click', function () {
+                showDetail(str);
+                e.classList.add('picked');
+            });
+        }
         tagLayer.appendChild(e);
         TAGS.push({ el: e, x: x, y: y });
         return e;

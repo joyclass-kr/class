@@ -189,6 +189,18 @@
     color: #cbd5e1;
 }
 
+.skin-tag.clickable {
+    /* 이름표 칸 자체는 pointer-events:none 이라, 누를 것만 되살린다 */
+    pointer-events: auto;
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(120, 53, 15, 0.55);
+}
+
+.skin-tag.clickable:hover { color: #b45309; border-bottom-color: #b45309; }
+.skin-tag.picked { color: #b45309; border-bottom-color: #b45309; }
+.skin-tag.pin.clickable { border-bottom-color: rgba(226, 232, 240, 0.6); }
+.skin-tag.pin.clickable:hover, .skin-tag.pin.picked { color: #fde047; border-bottom-color: #fde047; }
+
 .skin-tag[data-anchor="start"] { transform: translate(0, -50%); }
 .skin-tag[data-anchor="end"] { transform: translate(-100%, -50%); }
 

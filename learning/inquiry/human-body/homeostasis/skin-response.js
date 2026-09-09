@@ -332,11 +332,56 @@
        그림 좌표에 얹되 글씨 크기는 화면 기준으로 고정한다. */
     var TAGS = [], orderTags = [];
 
+    /**
+     * 이름표를 누르면 나오는 설명.
+     *
+     * 옆칸에는 「그림 위의 이름표를 눌러 자세한 설명을 보세요」라고 적혀 있는데
+     * 눌러도 아무 일이 없었다. 적어 놓고 안 되게 두면 안 된다.
+     */
+    var DETAIL = {
+        '표피': ['표피',
+            '피부의 <strong>가장 바깥층</strong>입니다. 죽은 세포가 쌓여 있어 몸속 물이 함부로 빠져나가지 못하게 막고, ' +
+            '세균이 들어오는 것도 막습니다. <strong>몸의 첫 번째 방어벽</strong>입니다.'],
+        '진피': ['진피',
+            '표피 <strong>아래층</strong>입니다. <strong>땀샘·피부 혈관·감각점·털세움근</strong>이 모두 여기에 있습니다. ' +
+            '체온 조절이 실제로 일어나는 층입니다.'],
+        '피하 지방': ['피하 지방',
+            '진피 아래의 <strong>기름층</strong>입니다. 열이 밖으로 달아나지 못하게 막는 <strong>이불</strong> 노릇을 합니다. ' +
+            '추운 곳에 사는 동물일수록 두껍습니다.'],
+        '땀샘': ['땀샘',
+            '더울 때 <strong>땀을 내보냅니다</strong>. 땀이 마르면서 몸의 열을 가져가기 때문에 체온이 내려갑니다. ' +
+            '추울 때는 땀이 거의 안 납니다. 시키는 곳은 <strong>간뇌 시상하부</strong>입니다.'],
+        '피부 혈관': ['피부 혈관',
+            '더울 때는 <strong>넓어져서</strong> 피가 많이 흐르고, 그만큼 열을 밖으로 많이 내보냅니다 (얼굴이 붉어집니다).<br>' +
+            '추울 때는 <strong>좁아져서</strong> 열을 덜 빼앗깁니다 (얼굴이 창백해집니다).<br>' +
+            '시험에서 <strong>확장·수축을 바꿔</strong> 냅니다.']
+    };
+
+    function showDetail(name) {
+        var d = DETAIL[name];
+        if (!d) return;
+        var t = document.getElementById('organTitle');
+        var p = document.getElementById('organDesc');
+        if (t) t.textContent = d[0];
+        if (p) p.innerHTML = d[1];
+        if (tagLayer) {
+            tagLayer.querySelectorAll('.skin-tag.picked').forEach(function (x) { x.classList.remove('picked'); });
+        }
+        if (typeof SimEngine !== 'undefined' && SimEngine.SoundFX) SimEngine.SoundFX.playClick();
+    }
+
     function tag(x, y, str, cls, anchor) {
         var e = document.createElement('span');
         e.className = 'skin-tag' + (cls ? ' ' + cls : '');
         e.textContent = str || '';
         e.dataset.anchor = anchor || 'middle';
+        if (DETAIL[str]) {
+            e.classList.add('clickable');
+            e.addEventListener('click', function () {
+                showDetail(str);
+                e.classList.add('picked');
+            });
+        }
         tagLayer.appendChild(e);
         TAGS.push({ el: e, x: x, y: y });
         return e;
