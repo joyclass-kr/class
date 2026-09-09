@@ -11,7 +11,9 @@ const musicControlCssPath = path.join(root, "assets", "sound", "music-control.cs
 const hubPath = path.join(root, "index.html");
 const fruitBellPath = path.join(root, "learning", "games", "fruitbell", "fruitbell.html");
 const voyagePath = path.join(root, "learning", "inquiry", "age-of-exploration", "public", "index.html");
-const sfxVersion = "20260909-global-feedback-3";
+const earTrainingPath = path.join(root, "learning", "arts", "music-theory", "ear-training", "index.html");
+const earTrainingEnginePath = path.join(root, "learning", "arts", "music-theory", "ear-training", "piano-engine.js");
+const sfxVersion = "20260910-music-controls-1";
 
 for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath, fruitBellPath, voyagePath]) {
     assert.ok(fs.existsSync(filePath), `Missing sound effect file: ${filePath}`);
@@ -36,6 +38,7 @@ assert.ok(sfxSource.includes("template.cloneNode()"), "Concurrent effects should
 assert.ok(sfxSource.includes("playSynth(soundName)"), "File playback failures should retain synthesized fallbacks.");
 assert.ok(sfxSource.includes('soundName === "click"'), "The established low-latency synthesized click should remain in use.");
 assert.ok(sfxSource.includes('element.matches("[data-midi]")'), "Playable MIDI keys should not add a generic click over their instrument sound.");
+assert.ok(sfxSource.includes("[data-sfx-clicks='none']"), "Music interfaces should be able to suppress generic clicks without suppressing answer feedback.");
 assert.ok(sfxSource.includes('latencyHint: "interactive"'), "Sound effects should request an interactive low-latency audio context.");
 assert.ok(sfxSource.includes('document.addEventListener("pointerdown"'), "Pointer feedback should begin on pointerdown.");
 assert.ok(sfxSource.includes("watchSemanticFeedback()"), "Shared effects should watch quiz feedback across learning pages.");
@@ -82,6 +85,12 @@ for (const relativePath of ["learning/games/drawrelay/drawrelay.html", "learning
     const gameHtml = fs.readFileSync(path.join(root, ...relativePath.split("/")), "utf8");
     assert.ok(gameHtml.includes(`game-sfx.js?v=${sfxVersion}`), `${relativePath} should cache-bust the shared effects.`);
 }
+
+const earTraining = fs.readFileSync(earTrainingPath, "utf8");
+const earTrainingEngine = fs.readFileSync(earTrainingEnginePath, "utf8");
+assert.ok(earTraining.includes('data-sfx-clicks="none"'), "Ear training should not mix generic button clicks into musical playback.");
+assert.ok(earTraining.includes("piano-engine.js?v=20260910-countin-1"), "Ear training should load the stronger count-in without stale caching.");
+assert.ok(earTrainingEngine.includes("strong ? .55 : .38") && earTrainingEngine.includes(".11, start + .003"), "The count-in transient and first-beat bell should remain clearly audible.");
 
 const fruitBell = fs.readFileSync(fruitBellPath, "utf8");
 assert.ok(fruitBell.includes('id="bellBtn" class="bell" type="button" data-sfx="none"'), "The bell should not also play a generic click.");

@@ -214,7 +214,7 @@ const staticAssetOptions = {
 };
 
 const SITE_BACK_SCRIPT_TAG = '<script data-site-back-navigation="true" src="/assets/site-back-navigation.js?v=20260901-global-lock-1" defer></script>';
-const SITE_SFX_SCRIPT_TAG = '<script data-class-game-sfx="true" src="/assets/sound/game-sfx.js?v=20260909-global-feedback-3" defer></script>';
+const SITE_SFX_SCRIPT_TAG = '<script data-class-game-sfx="true" src="/assets/sound/game-sfx.js?v=20260910-music-controls-1" defer></script>';
 
 function sendSiteHtml(req, res, filepath, next) {
   fs.readFile(filepath, "utf8", (error, htmlSource) => {

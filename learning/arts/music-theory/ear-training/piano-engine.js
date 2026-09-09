@@ -229,12 +229,12 @@
 
         const body = context.createBiquadFilter();
         body.type = "bandpass";
-        body.frequency.value = strong ? 2100 : 1250;
-        body.Q.value = 6;
+        body.frequency.value = strong ? 2200 : 1350;
+        body.Q.value = 4.5;
         const bodyGain = context.createGain();
         bodyGain.gain.setValueAtTime(.0001, start);
-        bodyGain.gain.exponentialRampToValueAtTime(strong ? .3 : .2, start + .001);
-        bodyGain.gain.exponentialRampToValueAtTime(.0001, start + (strong ? .045 : .035));
+        bodyGain.gain.exponentialRampToValueAtTime(strong ? .55 : .38, start + .001);
+        bodyGain.gain.exponentialRampToValueAtTime(.0001, start + (strong ? .065 : .05));
         body.connect(bodyGain);
         connectToMix(bodyGain, .004);
 
@@ -256,12 +256,12 @@
         bell.type = "sine";
         bell.frequency.value = 2637;
         bellGain.gain.setValueAtTime(.0001, start);
-        bellGain.gain.exponentialRampToValueAtTime(.055, start + .003);
-        bellGain.gain.exponentialRampToValueAtTime(.0001, start + .22);
+        bellGain.gain.exponentialRampToValueAtTime(.11, start + .003);
+        bellGain.gain.exponentialRampToValueAtTime(.0001, start + .26);
         bell.connect(bellGain);
         connectToMix(bellGain, .012);
         bell.start(start);
-        bell.stop(start + .25);
+        bell.stop(start + .29);
     }
 
     /*

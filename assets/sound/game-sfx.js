@@ -311,6 +311,7 @@
         const requested = String(element.dataset.sfx || "").toLowerCase();
         if (requested === "none") return "";
         if (requested) return requested;
+        if (element.closest("[data-sfx-clicks='none']")) return "";
         if (element.matches("[data-midi]")) return "";
         return "click";
     }
