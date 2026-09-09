@@ -128,7 +128,8 @@
     const DISPLAY_RANGE = { start: 21, end: 108 };
     const PIANO_WHITE_KEY_MM = { width: 23.5, length: 150 };
     const PIANO_BLACK_KEY_MM = { width: 13.7, length: 95 };
-    const BLACK_KEY_LENGTH_SCALE = 0.7;
+    const WHITE_KEY_LENGTH_SCALE = 0.74;
+    const BLACK_KEY_LENGTH_SCALE = 0.62;
     const REFERENCE_CARD_MM = 85.6;
     const CSS_PX_PER_MM = 96 / 25.4;
     const KEY_SIZE_STORAGE = "instrument-room-key-size-v1";
@@ -488,7 +489,7 @@
         const root = document.documentElement;
         const factor = state.pixelsPerMm * state.keyboardScale;
         root.style.setProperty("--key-width", (PIANO_WHITE_KEY_MM.width * factor).toFixed(2) + "px");
-        root.style.setProperty("--key-height", (PIANO_WHITE_KEY_MM.length * factor).toFixed(2) + "px");
+        root.style.setProperty("--key-height", (PIANO_WHITE_KEY_MM.length * WHITE_KEY_LENGTH_SCALE * factor).toFixed(2) + "px");
         root.style.setProperty("--black-width", (PIANO_BLACK_KEY_MM.width * factor).toFixed(2) + "px");
         root.style.setProperty("--black-height", (PIANO_BLACK_KEY_MM.length * BLACK_KEY_LENGTH_SCALE * factor).toFixed(2) + "px");
         const percent = Math.round(state.keyboardScale * 100) + "%";
