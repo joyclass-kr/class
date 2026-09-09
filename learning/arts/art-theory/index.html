@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6fb">
+  <title>미술 이론</title>
+  <meta name="description" content="색채 이론과 조형 이론을 차시별로 실험하며 배우는 미술 학습">
+  <link rel="stylesheet" href="styles.css?v=20260909-5">
+  <script src="app.js?v=20260909-5" defer></script>
+</head>
+<body>
+  <main class="course-shell">
+    <section id="courseMenu" class="course-menu" aria-labelledby="courseTitle">
+      <div class="course-top">
+        <a class="home-link" href="../../../">← 메인</a>
+        <span>미술 이론 · 7차시</span>
+      </div>
+
+      <header class="course-intro">
+        <p>ART THEORY</p>
+        <h1 id="courseTitle">미술 이론</h1>
+        <span>색채와 조형의 기본 개념을 직접 조작하며 익혀요.</span>
+      </header>
+
+      <section class="course-group color-group" aria-labelledby="colorGroupTitle">
+        <div class="group-heading">
+          <span class="group-number">01</span>
+          <div><h2 id="colorGroupTitle">색채 이론</h2><p>색의 성질과 관계, 우리 전통의 색을 배워요.</p></div>
+          <strong>4차시</strong>
+        </div>
+        <div class="lesson-list">
+          <button type="button" class="lesson-card" data-open-lesson="color-properties">
+            <span class="lesson-number">01</span>
+            <i class="card-visual property-visual" aria-hidden="true"></i>
+            <strong>색의 세 가지 속성</strong>
+            <p>색상·명도·채도가 무엇인지 색을 바꾸며 확인해요.</p>
+            <span class="lesson-open">학습하기 →</span>
+          </button>
+          <button type="button" class="lesson-card" data-open-lesson="color-mixing">
+            <span class="lesson-number">02</span>
+            <i class="card-visual mixing-visual" aria-hidden="true"></i>
+            <strong>색의 혼합</strong>
+            <p>물감의 삼원색과 빛의 삼원색이 섞이는 차이를 알아봐요.</p>
+            <span class="lesson-open">학습하기 →</span>
+          </button>
+          <button type="button" class="lesson-card" data-open-lesson="color-harmony">
+            <span class="lesson-number">03</span>
+            <i class="card-visual harmony-visual" aria-hidden="true"></i>
+            <strong>색의 관계와 배색</strong>
+            <p>비슷한색·보색·따뜻한색과 차가운색을 비교해요.</p>
+            <span class="lesson-open">학습하기 →</span>
+          </button>
+          <button type="button" class="lesson-card" data-open-lesson="obangsaek">
+            <span class="lesson-number">04</span>
+            <i class="card-visual obang-visual" aria-hidden="true"></i>
+            <strong>우리 전통의 색, 오방색</strong>
+            <p>청·적·황·백·흑과 다섯 방향의 관계를 살펴봐요.</p>
+            <span class="lesson-open">학습하기 →</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="course-group form-group" aria-labelledby="formGroupTitle">
+        <div class="group-heading">
+          <span class="group-number">02</span>
+          <div><h2 id="formGroupTitle">조형 이론</h2><p>그림을 이루고 짜임새 있게 만드는 방법을 배워요.</p></div>
+          <strong>3차시</strong>
+        </div>
+        <div class="lesson-list three-cards">
+          <button type="button" class="lesson-card" data-open-lesson="visual-elements">
+            <span class="lesson-number">05</span>
+            <i class="card-visual element-visual" aria-hidden="true"></i>
+            <strong>조형 요소</strong>
+            <p>점·선·면·형·질감이 그림에서 하는 일을 알아봐요.</p>
+            <span class="lesson-open">학습하기 →</span>
+          </button>
+          <button type="button" class="lesson-card" data-open-lesson="visual-principles">
+            <span class="lesson-number">06</span>
+            <i class="card-visual principle-visual" aria-hidden="true"></i>
+            <strong>조형 원리</strong>
+            <p>균형·강조·대비·반복·리듬으로 화면을 구성해요.</p>
+            <span class="lesson-open">학습하기 →</span>
+          </button>
+          <button type="button" class="lesson-card" data-open-lesson="space-composition">
+            <span class="lesson-number">07</span>
+            <i class="card-visual space-visual" aria-hidden="true"></i>
+            <strong>공간과 화면 구성</strong>
+            <p>겹침·크기·위치로 멀고 가까운 공간을 표현해요.</p>
+            <span class="lesson-open">학습하기 →</span>
+          </button>
+        </div>
+      </section>
+    </section>
+
+    <section id="lessonView" class="lesson-view" hidden>
+      <div class="lesson-toolbar">
+        <button type="button" id="backToList">← 차시 목록</button>
+        <span id="lessonProgress">1 / 7</span>
+      </div>
+
+      <article class="lesson-screen" data-lesson="color-properties" hidden>
+        <header class="lesson-heading"><p>색채 이론 · 01</p><h2>색의 세 가지 속성</h2><span>모든 색은 색상·명도·채도로 설명할 수 있어요.</span></header>
+        <div class="properties-lab">
+          <div class="color-sample" id="propertySample"><span id="propertyColorName">파랑</span></div>
+          <div class="property-controls">
+            <label><span><strong>색상</strong> 색의 이름과 종류</span><output id="hueValue">220°</output><input id="hueControl" type="range" min="0" max="360" value="220"></label>
+            <label><span><strong>명도</strong> 색의 밝고 어두운 정도</span><output id="lightValue">50%</output><input id="lightControl" type="range" min="15" max="90" value="50"></label>
+            <label><span><strong>채도</strong> 색의 맑고 탁한 정도</span><output id="saturationValue">85%</output><input id="saturationControl" type="range" min="0" max="100" value="85"></label>
+          </div>
+        </div>
+        <div class="theory-note"><strong>정리</strong><p>색상이 같아도 명도가 낮으면 어둡게, 채도가 낮으면 회색에 가까운 탁한 색으로 보여요.</p></div>
+      </article>
+
+      <article class="lesson-screen" data-lesson="color-mixing" hidden>
+        <header class="lesson-heading"><p>색채 이론 · 02</p><h2>색의 혼합</h2><span>두 색을 골라 물감과 빛의 혼합 결과를 비교해요.</span></header>
+        <div class="mix-layout">
+          <div class="mix-info">
+            <div class="mode-switch" role="group" aria-label="색 혼합 방법">
+              <button type="button" class="active" data-mix-mode="paint" aria-pressed="true">물감</button>
+              <button type="button" data-mix-mode="light" aria-pressed="false">빛</button>
+            </div>
+            <p id="mixRule"><strong>물감의 기초 색상환</strong>은 빨강·노랑·파랑을 출발색으로 살펴봐요.</p>
+            <div id="mixChoices" class="mix-choices" role="group" aria-label="섞을 색 고르기"></div>
+            <div class="mix-readout" aria-live="polite"><span id="mixFormula">? + ?</span><strong id="mixName">두 색을 골라 보세요.</strong><button id="mixReset" type="button">다시 고르기</button></div>
+          </div>
+          <div class="mix-stage" data-mode="paint">
+            <svg class="mix-diagram" viewBox="0 0 800 400" role="img" aria-labelledby="mixVisualLabel">
+              <title id="mixVisualLabel">두 색 원과 겹쳐진 혼합 영역</title>
+              <circle id="mixCircleA" class="mix-circle" cx="300" cy="200" r="180"></circle>
+              <circle id="mixCircleB" class="mix-circle" cx="500" cy="200" r="180"></circle>
+              <path id="mixIntersection" class="mix-intersection" d="M400 50 A180 180 0 0 1 400 350 A180 180 0 0 1 400 50 Z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="theory-note"><strong>더 알아보기</strong><p>화면의 빛은 더할수록 밝아지고, 물감은 빛을 흡수해 섞을수록 어두워져요. 인쇄에서는 청록·자홍·노랑(CMY)을 기본색으로 사용해요.</p></div>
+      </article>
+
+      <article class="lesson-screen" data-lesson="color-harmony" hidden>
+        <header class="lesson-heading"><p>색채 이론 · 03</p><h2>색의 관계와 배색</h2><span>색상환에서 색의 위치를 비교하면 어울림과 대비를 알 수 있어요.</span></header>
+        <div class="harmony-layout">
+          <div class="palette-preview" id="palettePreview" data-harmony="analogous" aria-label="선택한 배색 예시"><i></i><i></i><i></i></div>
+          <div class="choice-list" role="group" aria-label="배색 방법">
+            <button type="button" class="active" data-harmony="analogous"><strong>비슷한색 배색</strong><span>색상환에서 이웃한 색을 사용해 자연스럽고 편안해요.</span></button>
+            <button type="button" data-harmony="complementary"><strong>보색 배색</strong><span>색상환에서 마주 보는 색을 사용해 서로 선명해 보여요.</span></button>
+            <button type="button" data-harmony="temperature"><strong>따뜻한색과 차가운색</strong><span>빨강·주황 계열과 파랑·청록 계열이 다른 분위기를 만들어요.</span></button>
+          </div>
+        </div>
+        <div class="theory-note"><strong id="harmonyTerm">비슷한색</strong><p id="harmonyText">노랑·주황·빨강처럼 색상환에서 가까운 색을 함께 쓰는 배색이에요.</p></div>
+      </article>
+
+      <article class="lesson-screen" data-lesson="obangsaek" hidden>
+        <header class="lesson-heading"><p>색채 이론 · 04</p><h2>우리 전통의 색, 오방색</h2><span>오방색은 청·적·황·백·흑을 다섯 방향과 자연에 연결한 전통 색 체계예요.</span></header>
+        <div class="obang-layout">
+          <div class="direction-map" aria-label="오방색과 방향">
+            <button type="button" class="north" data-obang="black"><span>북</span><strong>흑</strong></button>
+            <button type="button" class="west" data-obang="white"><span>서</span><strong>백</strong></button>
+            <button type="button" class="center active" data-obang="yellow"><span>가운데</span><strong>황</strong></button>
+            <button type="button" class="east" data-obang="blue"><span>동</span><strong>청</strong></button>
+            <button type="button" class="south" data-obang="red"><span>남</span><strong>적</strong></button>
+          </div>
+          <div class="obang-card" id="obangCard">
+            <p id="obangHanja">黃 · CENTER</p><h3 id="obangName">황색 · 가운데</h3>
+            <dl><div><dt>자연</dt><dd id="obangNature">흙 · 계절 사이</dd></div><div><dt>살펴볼 곳</dt><dd id="obangUse">단청, 색동, 전통 문양</dd></div></dl>
+            <p id="obangMeaning">중심을 잡고 다른 네 방향을 이어 주는 색으로 보았어요.</p>
+          </div>
+        </div>
+        <div class="theory-note"><strong>오방색의 특징</strong><p>색을 섞는 공식이 아니라 색에 방향과 자연의 의미를 연결한 체계예요. 상징은 시대와 쓰임에 따라 달라질 수 있어요.</p></div>
+      </article>
+
+      <article class="lesson-screen" data-lesson="visual-elements" hidden>
+        <header class="lesson-heading"><p>조형 이론 · 05</p><h2>조형 요소</h2><span>점·선·면·형·질감은 작품을 만드는 기본 재료예요.</span></header>
+        <div class="elements-layout">
+          <div class="abstract-art" id="abstractArt" aria-label="여러 조형 요소로 구성된 추상 화면"><span class="art-dot"></span><span class="art-line"></span><span class="art-plane"></span><span class="art-form"></span><span class="art-texture"></span></div>
+          <div class="choice-list element-choices" role="group" aria-label="조형 요소 선택">
+            <button type="button" data-element="dot"><strong>점</strong><span>작은 표시가 모여 위치와 움직임을 만들어요.</span></button>
+            <button type="button" data-element="line"><strong>선</strong><span>방향과 속도, 윤곽을 나타내요.</span></button>
+            <button type="button" data-element="plane"><strong>면</strong><span>선이 둘러싼 넓은 자리를 만들어요.</span></button>
+            <button type="button" data-element="form"><strong>형</strong><span>대상의 생김새와 덩어리를 나타내요.</span></button>
+            <button type="button" data-element="texture"><strong>질감</strong><span>매끈함·거침 같은 표면 느낌을 나타내요.</span></button>
+          </div>
+        </div>
+        <div class="theory-note"><strong id="elementTerm">조형 요소</strong><p id="elementText">버튼을 누르면 화면에서 해당 요소가 강조돼요.</p></div>
+      </article>
+
+      <article class="lesson-screen" data-lesson="visual-principles" hidden>
+        <header class="lesson-heading"><p>조형 이론 · 06</p><h2>조형 원리</h2><span>조형 요소를 질서 있게 구성하는 방법을 알아봐요.</span></header>
+        <div class="principle-layout">
+          <div class="principle-canvas" id="principleCanvas" data-principle="balance"><i></i><i></i><i></i><i></i><b>★</b></div>
+          <div class="choice-list" role="group" aria-label="조형 원리 선택">
+            <button type="button" class="active" data-principle="balance"><strong>균형</strong><span>화면의 시각적 무게를 안정되게 맞춰요.</span></button>
+            <button type="button" data-principle="emphasis"><strong>강조와 대비</strong><span>색·크기·모양의 차이로 중요한 부분을 드러내요.</span></button>
+            <button type="button" data-principle="rhythm"><strong>반복과 리듬</strong><span>요소를 되풀이하고 변화시켜 흐름을 만들어요.</span></button>
+          </div>
+        </div>
+        <div class="theory-note"><strong id="principleTerm">균형</strong><p id="principleText">양쪽이 똑같지 않아도 크기와 색의 무게가 어울리면 안정되어 보여요.</p></div>
+      </article>
+
+      <article class="lesson-screen" data-lesson="space-composition" hidden>
+        <header class="lesson-heading"><p>조형 이론 · 07</p><h2>공간과 화면 구성</h2><span>평평한 화면에서도 요소의 관계로 깊이를 표현할 수 있어요.</span></header>
+        <div class="space-layout">
+          <div class="space-canvas" id="spaceCanvas" data-space="overlap"><span class="ground"></span><i class="object-a"></i><i class="object-b"></i><i class="object-c"></i></div>
+          <div class="choice-list" role="group" aria-label="공간 표현 방법 선택">
+            <button type="button" class="active" data-space="overlap"><strong>겹침</strong><span>가리는 대상은 앞, 가려지는 대상은 뒤로 보여요.</span></button>
+            <button type="button" data-space="size"><strong>크기 변화</strong><span>큰 대상은 가깝고 작은 대상은 멀게 보여요.</span></button>
+            <button type="button" data-space="position"><strong>위치 변화</strong><span>화면 아래는 가깝고 위쪽은 멀게 느껴져요.</span></button>
+          </div>
+        </div>
+        <div class="theory-note"><strong id="spaceTerm">겹침</strong><p id="spaceText">형태가 서로 겹치면 앞뒤 관계가 생겨 평면에서도 공간감이 나타나요.</p></div>
+      </article>
+
+      <div class="lesson-footer-nav">
+        <button type="button" id="previousLesson">← 이전 차시</button>
+        <button type="button" id="nextLesson">다음 차시 →</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

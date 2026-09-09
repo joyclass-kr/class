@@ -825,10 +825,10 @@ padding:22px;margin-bottom:16px}
       "<!DOCTYPE html>\n" +
       '<html lang="ko">\n<head>\n<meta charset="UTF-8">\n' +
       '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
-      "<title>간편 진단 결과 " + completedDate + "</title>\n" +
+      "<title>간이 진단 결과 " + completedDate + "</title>\n" +
       "<style>\n" + collectStyles() + "\n" + PRINT_CSS + "\n</style>\n</head>\n<body>\n" +
       '<div style="max-width:900px;margin:0 auto">\n' +
-      '<h1 style="font-size:22px;font-weight:800;margin:0 0 4px">간편 진단 결과</h1>\n' +
+      '<h1 style="font-size:22px;font-weight:800;margin:0 0 4px">간이 진단 결과</h1>\n' +
       '<p class="export-hint" style="font-size:13px;color:#64748b;margin:0 0 18px">' +
       completedDate + " · 문항 세트 " + payload.itemSetVersion +
       " · 브라우저에서 인쇄하면 종이로 뽑을 수 있습니다</p>\n" +
