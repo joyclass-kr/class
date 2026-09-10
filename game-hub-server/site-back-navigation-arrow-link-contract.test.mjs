@@ -29,5 +29,5 @@ test("ordinary content links and activity buttons are not arrow-link matches", (
 });
 
 test("legacy back-link classes are covered even when their arrow is decorative", () => {
-  assert.match(navigation, /a\.back, a\.back-link, a\.home, a\.home-link, a\.counting-back, a\.catalog-back/);
+  assert.match(navigation, /a\.back, a\.back-button, a\.back-link, a\.home, a\.home-link, a\.counting-back, a\.catalog-back/);
 });

@@ -82,6 +82,20 @@ test("the information and computing menu keeps both course links", () => {
   assert.match(lessonPage, /rel="icon" href="\.\.\/\.\.\/\.\.\/\.\.\/\.\.\/favicon\.ico"/);
 });
 
+test("typing practice returns to its own menu before leaving the page", () => {
+  const typingPage = read("learning/inquiry/information-computing/typing/index.html");
+  const typingScript = read("learning/inquiry/information-computing/typing/app.js");
+  assert.match(typingScript, /sitebackrequest[^\n]+if\(\$\('#typingHome'\)\.hidden\)/);
+  assert.doesNotMatch(typingScript, /sitebackrequest[^\n]+if\(!\$\('#typingHome'\)\.hidden\)/);
+  assert.match(typingPage, /app\.js\?v=20260910-fix-back-navigation/);
+});
+
+test("the first lesson names the process directly without promotional copy", () => {
+  const firstLesson = detailedLessons.find((lesson) => lesson.id === "a01");
+  assert.equal(firstLesson.workedExample.title, "입력부터 저장까지의 처리 과정");
+  assert.equal(firstLesson.workedExample.intro, "카메라로 들어온 데이터는 처리된 뒤 화면에 출력되고 파일로 저장됩니다.");
+  assert.doesNotMatch(JSON.stringify(firstLesson.workedExample), /1초|외울 네 단어|One Second/);
+});
 test("the 36-lesson core course is loaded in dependency order", () => {
   assert.equal(generatedLessons.length, 30);
   assert.equal(new Set(generatedLessons.map((lesson) => lesson.id)).size, 30);

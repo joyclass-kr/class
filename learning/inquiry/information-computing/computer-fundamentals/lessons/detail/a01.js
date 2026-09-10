@@ -62,9 +62,9 @@
                 ]
             },
             workedExample: {
-                title: "태블릿으로 사진을 찍은 뒤 1초",
-                english: "One Second After a Photo",
-                intro: "입력·처리·출력·저장은 외울 네 단어가 아니라 한 작업 안에서 이어지는 역할입니다.",
+                title: "입력부터 저장까지의 처리 과정",
+                english: "From Input to Storage",
+                intro: "카메라로 들어온 데이터는 처리된 뒤 화면에 출력되고 파일로 저장됩니다.",
                 steps: [
                     ["촬영 입력", "Capture Input", "손가락의 터치 좌표와 이미지 센서가 측정한 빛이 입력 데이터로 들어옵니다."],
                     ["RAM에 작업 준비", "Working in RAM", "카메라 앱과 센서 데이터가 CPU가 빠르게 사용할 수 있도록 RAM에 놓입니다."],
