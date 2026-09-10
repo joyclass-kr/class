@@ -10,8 +10,9 @@
 
     const questionsByPoem = new Map();
 
-    const here = document.currentScript ? document.currentScript.src.replace(/[^/]*$/, "") : "";
-    const version = (document.currentScript?.src.split("?v=")[1] || "");
+    const currentScriptEl = document.currentScript || document.querySelector('script[src*="app.js"]');
+    const here = currentScriptEl ? currentScriptEl.src.replace(/[^/]*$/, "") : "";
+    const version = (currentScriptEl?.src.split("?v=")[1] || "");
     const loading = new Map();
 
     function fetchScript(file) {
@@ -91,8 +92,6 @@
 
     // DOM 요소 캐시
     const $ = (id) => document.getElementById(id);
-    const shelfBackLink = $("shelfBackLink");
-    const bookShelfBtn = $("bookShelfBtn");
     const tocBtn = $("tocBtn");
     const shelfScreen = $("shelfScreen");
     const orderTabBtn = $("orderTabBtn");
@@ -615,10 +614,10 @@
 
         // UI 모드 전환: 책장 숨김, 책 뷰 표시
         shelfScreen.hidden = true;
+        shelfScreen.classList.add("hidden");
         bookScreen.hidden = false;
-        shelfBackLink.hidden = true;
-        bookShelfBtn.hidden = false;
-        tocBtn.hidden = false;
+        bookScreen.classList.remove("hidden");
+        if (tocBtn) tocBtn.hidden = false;
         window.scrollTo(0, 0);
 
         // 로딩 화면 표시
@@ -649,10 +648,10 @@
     /* ── 책장 화면 (Shelf Lobby) ──────────────────────────────── */
     function showShelf(activeTab = "order") {
         bookScreen.hidden = true;
+        bookScreen.classList.add("hidden");
         shelfScreen.hidden = false;
-        shelfBackLink.hidden = false;
-        bookShelfBtn.hidden = true;
-        tocBtn.hidden = true;
+        shelfScreen.classList.remove("hidden");
+        if (tocBtn) tocBtn.hidden = true;
         window.scrollTo(0, 0);
 
         setShelfTab(activeTab);
@@ -785,8 +784,24 @@
     orderTabBtn.onclick = () => setShelfTab("order");
     topicTabBtn.onclick = () => setShelfTab("topic");
 
-    bookShelfBtn.onclick = () => showShelf();
     tocBtn.onclick = () => goTo(0, "prev");
+
+    // 공용 뒤로가기 단추(assets/site-back-navigation.js) 연동
+    // 책을 보고 있는 중이면 책장으로 돌아가고, 책장이면 사이트 메인으로 돌아감
+    window.addEventListener("sitebackrequest", (e) => {
+        if (!bookScreen.hidden && !bookScreen.classList.contains("hidden")) {
+            e.preventDefault();
+            showShelf();
+        }
+    });
+
+    // 화면 왼쪽 위 화살표 링크가 직접 눌렸을 때의 대비
+    document.querySelector(".top-bar a.back-link")?.addEventListener("click", (e) => {
+        if (!bookScreen.hidden && !bookScreen.classList.contains("hidden")) {
+            e.preventDefault();
+            showShelf();
+        }
+    });
 
     prevBtn.onclick = () => goTo(currentSpreadIndex - 1, "prev");
     nextBtn.onclick = () => goTo(currentSpreadIndex + 1, "next");
