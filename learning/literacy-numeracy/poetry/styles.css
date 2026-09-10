@@ -864,37 +864,23 @@ a {
     z-index: 1;
     overflow: hidden;
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.read-spread-art .read-spread-art-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center bottom;
-    mix-blend-mode: multiply;
-    opacity: 0.88;
-    pointer-events: none;
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) calc(var(--art-max-height, 46%) - 10%), rgba(0,0,0,0) var(--art-max-height, 46%));
-    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) calc(var(--art-max-height, 46%) - 10%), rgba(0,0,0,0) var(--art-max-height, 46%));
-    transition: opacity 0.2s ease;
-}
-
-/* 본문이 80% 이상 꽉 찬 긴 시(사미인곡 등)만 우측 구석에 컴팩트하게 배치 */
-.read-spread-art.mode-corner-right {
     justify-content: flex-end;
     align-items: flex-end;
 }
 
-.read-spread-art.mode-corner-right .read-spread-art-img {
-    width: clamp(240px, 40%, 450px);
-    height: var(--art-max-height, 40%);
-    max-height: 44%;
+.read-spread-art .read-spread-art-img {
+    width: auto;
+    height: auto;
+    max-width: 58%;
+    max-height: 52%;
     object-fit: contain;
     object-position: bottom right;
-    margin-right: clamp(14px, 3vw, 36px);
-    margin-bottom: clamp(12px, 2.5vh, 28px);
+    mix-blend-mode: multiply;
+    opacity: 0.92;
+    pointer-events: none;
+    margin-right: clamp(10px, 2.5vw, 32px);
+    margin-bottom: clamp(10px, 2vh, 24px);
+    transition: opacity 0.2s ease;
 }
 
 .page-quiz-col {
@@ -1135,9 +1121,9 @@ a {
         border-bottom: 1px solid rgba(92, 58, 34, 0.22);
     }
 
-    .read-spread-art.mode-corner-right .read-spread-art-img {
-        width: clamp(160px, 45%, 260px);
-        max-height: 38%;
+    .read-spread-art .read-spread-art-img {
+        max-width: 50%;
+        max-height: 40%;
         margin-right: 12px;
         margin-bottom: 10px;
     }

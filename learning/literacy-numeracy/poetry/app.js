@@ -304,8 +304,8 @@
         let artHtml = "";
         if (poem.illustration) {
             artHtml = `
-                <div class="read-spread-art mode-bottom" aria-hidden="true">
-                    <img class="read-spread-art-img" src="${escapeHtml(poem.illustration)}?v=20260910-dynmeasure" alt="" />
+                <div class="read-spread-art" aria-hidden="true">
+                    <img class="read-spread-art-img" src="${escapeHtml(poem.illustration)}?v=20260910-rightcorner" alt="" />
                 </div>
             `;
         }
@@ -495,69 +495,6 @@
         // 4. 이벤트 바인딩
         attachSpreadEvents(s);
 
-        // 5. 시 읽기 화면일 때 실제 텍스트 끝 위치를 측정하여 시화 높이/여백 동적 맞춤
-        if (s.kind === "read") {
-            measureAndFitSpreadArt();
-        }
-    }
-
-    function measureAndFitSpreadArt() {
-        requestAnimationFrame(() => {
-            const artContainer = spreadEl.querySelector(".read-spread-art");
-            if (!artContainer) return;
-
-            const spreadRect = spreadEl.getBoundingClientRect();
-            if (!spreadRect.height || !spreadRect.width) return;
-
-            // 왼쪽 본문 끝 위치 측정
-            const bodyEl = spreadEl.querySelector(".poem-body-container");
-            let leftBottom = 0;
-            if (bodyEl) {
-                const stanzas = bodyEl.querySelectorAll(".poem-stanza");
-                if (stanzas.length > 0) {
-                    const lastStanza = stanzas[stanzas.length - 1];
-                    leftBottom = lastStanza.getBoundingClientRect().bottom - spreadRect.top;
-                } else {
-                    leftBottom = bodyEl.getBoundingClientRect().bottom - spreadRect.top;
-                }
-            }
-
-            // 오른쪽 단락(낱말 사전/감상 길잡이) 끝 위치 측정
-            const wordsBox = spreadEl.querySelector(".poem-words-box");
-            const pointBox = spreadEl.querySelector(".poem-point-box");
-            let rightBottom = 0;
-            if (wordsBox) {
-                rightBottom = Math.max(rightBottom, wordsBox.getBoundingClientRect().bottom - spreadRect.top);
-            }
-            if (pointBox) {
-                rightBottom = Math.max(rightBottom, pointBox.getBoundingClientRect().bottom - spreadRect.top);
-            }
-
-            const totalHeight = spreadRect.height;
-            // 텍스트 아래 넉넉한 완충 여백 (최소 24px)
-            const buffer = Math.max(24, totalHeight * 0.04);
-            const textBottomMax = Math.max(leftBottom, rightBottom);
-            const availableHeight = Math.max(0, totalHeight - (textBottomMax + buffer));
-
-            // 여백 비율 계산 (0.0 ~ 1.0)
-            const freeRatio = availableHeight / totalHeight;
-
-            // 본문이 아주 길어서 왼쪽 여백이 25% 미만인 경우(예: 사미인곡)는 오른쪽 하단(corner-right)으로 자동 전환
-            const leftFreeRatio = (totalHeight - (leftBottom + buffer)) / totalHeight;
-            if (leftFreeRatio < 0.22) {
-                artContainer.classList.remove("mode-bottom");
-                artContainer.classList.add("mode-corner-right");
-                const rightFreeRatio = Math.max(0.25, Math.min(0.44, (totalHeight - (rightBottom + buffer)) / totalHeight));
-                artContainer.style.setProperty("--art-max-height", `${Math.round(rightFreeRatio * 100)}%`);
-            } else {
-                // 본문 아래 충분한 여백이 있는 시(호수, 별똥, 감자꽃, 홍시 등):
-                // 글씨 아래 남은 여백에 딱 맞추어(최소 28%, 최대 55%) 양면 펼침화 적용
-                artContainer.classList.remove("mode-corner-right");
-                artContainer.classList.add("mode-bottom");
-                const fitPercent = Math.max(26, Math.min(54, Math.round(freeRatio * 100)));
-                artContainer.style.setProperty("--art-max-height", `${fitPercent}%`);
-            }
-        });
     }
 
     function attachSpreadEvents(s) {
@@ -889,15 +826,6 @@
             }
         }
     }, { passive: true });
-
-    // 브라우저 크기 변경 시 시화 높이 재측정
-    let resizeTimer = null;
-    window.addEventListener("resize", () => {
-        if (!bookScreen.hidden && currentSpreadIndex >= 0 && spreads[currentSpreadIndex]?.kind === "read") {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(measureAndFitSpreadArt, 100);
-        }
-    });
 
     /* ── 초기 실행 ─────────────────────────────────────────────── */
     showShelf("order");
