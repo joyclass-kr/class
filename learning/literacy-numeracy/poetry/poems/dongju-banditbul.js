@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-banditbul"] = {
         "poem": {
+            "illustration": "images/dongju-banditbul.webp",
             "lines": [
                 "가자 가자 가자",
                 "숲으로 가자",

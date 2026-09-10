@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-eommaya"] = {
         "poem": {
+            "illustration": "images/sowol-eommaya.webp",
             "lines": [
                 "엄마야 누나야 강변 살자,",
                 "뜰에는 반짝이는 금모랫빛,",

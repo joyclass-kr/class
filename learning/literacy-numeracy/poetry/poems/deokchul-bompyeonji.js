@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["deokchul-bompyeonji"] = {
         "poem": {
+            "illustration": "images/deokchul-bompyeonji.webp",
             "lines": [
                 "연못가에 새로 핀",
                 "버들잎을 따서요",

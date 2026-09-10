@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-geumjandi"] = {
         "poem": {
+            "illustration": "images/sowol-geumjandi.webp",
             "lines": [
                 "잔디,",
                 "잔디,",
