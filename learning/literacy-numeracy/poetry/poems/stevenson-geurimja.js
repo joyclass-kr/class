@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["stevenson-geurimja"] = {
         "poem": {
+            "illustration": "images/stevenson-geurimja.webp",
             "lines": [
                 "나에게는 그림자가 하나 있어요.",
                 "내가 가는 곳이면 어디든 따라와요.",

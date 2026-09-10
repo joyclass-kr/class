@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["stevenson-bi"] = {
         "poem": {
+            "illustration": "images/stevenson-bi.webp",
             "lines": [
                 "비가 사방에 내려요.",
                 "들에도 내리고 나무에도 내려요.",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leejanghee-bomeun"] = {
         "poem": {
+            "illustration": "images/leejanghee-bomeun.webp",
             "lines": [
                 "꽃가루와 같이 부드러운 고양이의 털에",
                 "고운 봄의 향기가 어리우도다",
