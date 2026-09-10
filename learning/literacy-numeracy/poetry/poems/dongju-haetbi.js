@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-haetbi"] = {
         "poem": {
+            "illustration": "images/dongju-haetbi.webp",
             "lines": [
                 "아씨처럼 나린다",
                 "보슬보슬 햇비",

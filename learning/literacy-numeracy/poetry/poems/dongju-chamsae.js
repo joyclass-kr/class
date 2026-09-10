@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-chamsae"] = {
         "poem": {
+            "illustration": "images/dongju-chamsae.webp",
             "lines": [
                 "가을 지난 마당은 하이얀 종이",
                 "참새들이 글씨를 공부하지요.",
