@@ -33,9 +33,11 @@
     if (!window.ClassGameSfx && !document.querySelector("script[data-class-game-sfx]")) {
         const sfxScript = document.createElement("script");
         sfxScript.dataset.classGameSfx = "true";
-        sfxScript.src = currentScript
-            ? new URL("game-sfx.js", currentScript.src).href
-            : "../../assets/sound/game-sfx.js";
+        const sfxScriptUrl = currentScript
+            ? new URL("game-sfx.js", currentScript.src)
+            : new URL("../../assets/sound/game-sfx.js", location.href);
+        sfxScriptUrl.searchParams.set("v", "20260910-tap-click-1");
+        sfxScript.src = sfxScriptUrl.href;
         document.head.appendChild(sfxScript);
     }
 
@@ -49,7 +51,7 @@
         const stylesheetUrl = currentScript
             ? new URL("music-control.css", currentScript.src)
             : new URL("../../assets/sound/music-control.css", location.href);
-        stylesheetUrl.searchParams.set("v", "20260825-compact-vertical-1");
+        stylesheetUrl.searchParams.set("v", "20260910-click-cache-1");
         stylesheet.href = stylesheetUrl.href;
         document.head.appendChild(stylesheet);
     }
