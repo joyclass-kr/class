@@ -296,12 +296,11 @@
     }
 
     function makeBookCard(book, poemProgress) {
-        const item = document.createElement("li");
         const button = document.createElement("button");
         const cover = document.createElement("span");
-        const numberEl = document.createElement("span");
-        const titleEl = document.createElement("span");
-        const metaEl = document.createElement("span");
+        const titleWrap = document.createElement("span");
+        const numberEl = document.createElement("b");
+        const titleText = document.createTextNode(book.title);
 
         button.type = "button";
         button.className = "book-card";
@@ -312,24 +311,17 @@
 
         cover.className = "book-cover";
         cover.textContent = book.title;
-        numberEl.className = "book-card-number";
-        numberEl.textContent = `${orderOf(book)}권`;
-        titleEl.className = "book-card-title";
-        titleEl.textContent = book.title;
-        metaEl.className = "book-card-meta";
-        metaEl.textContent = allRead
-            ? "✓ 다 읽음"
-            : readCount > 0
-                ? `${book.poemIds.length}편 가운데 ${readCount}편 읽음`
-                : `시 ${book.poemIds.length}편`;
 
-        button.append(cover, numberEl, titleEl, metaEl);
+        titleWrap.className = "book-title";
+        numberEl.textContent = `${orderOf(book)}권`;
+        titleWrap.append(numberEl, titleText);
+
+        button.append(cover, titleWrap);
         button.addEventListener("click", () => {
             state.browse = null;
             openBookDetail(books.indexOf(book));
         });
-        item.append(button);
-        return item;
+        return button;
     }
 
     // ── 이어서 읽기 ──────────────────────────────────────────────
@@ -346,23 +338,9 @@
     }
 
     function renderContinueBar() {
-        const point = findResumePoint();
-        if (!point) {
+        if (elements.continueBar) {
             elements.continueBar.classList.add("hidden");
-            return;
         }
-        const book = books[point.bookIndex];
-        const poem = poemById.get(book.poemIds[point.poemIndex]);
-        const startedAny = Object.keys(readProgress(POEM_PROGRESS_KEY)).length > 0;
-        elements.continueButton.textContent = startedAny
-            ? `이어서 읽기 · 「${poem.title}」`
-            : `시작하기 · 「${poem.title}」`;
-        elements.continueButton.onclick = () => guardedNav(() => {
-            state.browse = null;
-            state.bookIndex = point.bookIndex;
-            return openReadingUnlocked(point.poemIndex);
-        });
-        elements.continueBar.classList.remove("hidden");
     }
 
     // ── 소재별 ───────────────────────────────────────────────────

@@ -65,7 +65,7 @@ a {
 
 /* ── 바탕 ────────────────────────────────────────────────────── */
 .page-shell {
-    width: min(940px, calc(100% - 24px));
+    width: min(1080px, calc(100% - 24px));
     margin: 0 auto;
     padding: 8px 0 40px;
 }
@@ -234,29 +234,33 @@ a {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    margin: 20px 0 4px;
+    margin: 10px 0 8px;
 }
 
 .grade-tab {
-    min-height: 40px;
-    padding: 8px 15px;
-    border: 2px solid #c3a276;
+    min-height: 38px;
+    padding: 7px 16px;
+    border: 1px solid rgba(215, 180, 122, 0.55);
     border-radius: 999px;
-    background: #fffdf7;
-    color: #66391a;
+    background: rgba(14, 9, 7, 0.74);
+    color: #f6e7c8;
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.15s ease;
 }
 
-.grade-tab:hover {
-    background: #f8e9cd;
+.grade-tab:hover,
+.grade-tab:focus-visible {
+    border-color: #ffd18a;
+    background: rgba(40, 22, 8, 0.9);
+    color: #ffffff;
 }
 
 .grade-tab.is-active {
-    border-color: #4d2a11;
-    background: linear-gradient(135deg, #77431e, #3d1e0d);
-    color: #fff3d9;
+    border-color: #ffd18a;
+    background: rgba(184, 114, 31, 0.85);
+    color: #ffffff;
 }
 
 .topic-chips {
@@ -764,38 +768,30 @@ a {
 
 /* ── 책장(첫 화면) ───────────────────────────────────────────── */
 .shelf-screen {
-    width: min(1100px, calc(100% - 24px));
+    max-width: 1060px;
     margin: 0 auto;
     padding: 8px 0 40px;
 }
 
 .shelf-head {
     text-align: center;
+    margin-bottom: 8px;
 }
 
 .shelf-head h1 {
-    margin: 0 0 14px;
-    font-family: Georgia, "Nanum Myeongjo", serif;
-    font-size: clamp(26px, 4.4vw, 36px);
-    color: #fff3d9;
-    letter-spacing: -0.02em;
+    display: none;
 }
 
 .continue-bar {
-    max-width: 420px;
-    margin: 0 auto 22px;
-    text-align: center;
-}
-
-.continue-bar.hidden {
-    display: none;
+    display: none !important;
 }
 
 .shelf {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 16px 14px;
-    margin: 22px 0 0;
+    grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+    gap: 20px;
+    max-width: 1060px;
+    margin: 10px auto 0;
     padding: 0;
     list-style: none;
 }
@@ -803,65 +799,92 @@ a {
 .book-card {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 14px 12px 12px;
-    border: 2px solid #c1a176;
-    border-radius: 10px;
-    background: #fffdf7;
-    color: var(--ink);
-    text-align: left;
+    width: 100%;
+    padding: 7px 7px 0;
+    border: 1px solid rgba(215, 180, 122, 0.55);
+    border-radius: 3px;
+    background: rgba(14, 9, 7, 0.74);
+    color: #f6e7c8;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
     cursor: pointer;
+    text-align: center;
+    font: inherit;
 }
 
 .book-card:hover:not(:disabled),
 .book-card:focus-visible:not(:disabled) {
-    border-color: #855021;
-    background: #fff0d2;
+    transform: translateY(-4px);
+    border-color: #ffd18a;
+    background: rgba(40, 22, 8, 0.9);
+    color: #ffffff;
 }
 
 .book-card.is-done {
-    border-color: #8fb79c;
-    background: #f1f8f3;
+    border-color: rgba(143, 183, 156, 0.7);
 }
 
-.book-card.is-perfect {
-    border-color: var(--green);
-    background: var(--green-light);
+.book-card.is-done .book-title b {
+    color: #8fb79c;
 }
 
 .book-cover {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    width: 100%;
     aspect-ratio: 3 / 4;
-    border-radius: 6px;
-    background: linear-gradient(150deg, #77431e, #3d1e0d);
-    color: #fff3d9;
-    font-family: Georgia, "Nanum Myeongjo", serif;
-    font-size: 13px;
-    font-weight: 800;
+    overflow: hidden;
+    background: linear-gradient(160deg, #5a3016, #2d160a 70%);
+    box-shadow: inset 0 0 0 1px rgba(215, 180, 122, 0.28);
+    color: rgba(215, 180, 122, 0.95);
+    font-family: "Gowun Batang", "Noto Serif KR", Georgia, serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
     text-align: center;
-    padding: 10px;
-    line-height: 1.4;
+    padding: 14px;
     word-break: keep-all;
 }
 
-.book-card-number {
-    color: #8d5524;
-    font-size: 12px;
-    font-weight: 900;
-}
-
-.book-card-title {
-    font-size: 14.5px;
-    font-weight: 800;
+.book-title {
+    display: block;
+    padding: 9px 4px 11px;
+    font-family: "Gowun Batang", "Noto Serif KR", Georgia, serif;
+    font-size: 15px;
+    font-weight: 700;
     line-height: 1.35;
+    color: #f6e7c8;
+    text-align: center;
     word-break: keep-all;
 }
 
-.book-card-meta {
-    color: var(--muted-ink);
-    font-size: 12.5px;
+.book-title b {
+    display: block;
+    margin-bottom: 2px;
+    color: rgba(215, 180, 122, 0.8);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 600px) {
+    .shelf {
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+        gap: 13px;
+        margin-top: 18px;
+    }
+
+    .book-title {
+        font-size: 14px;
+    }
+
+    .book-cover {
+        font-size: 14.5px;
+        padding: 10px;
+    }
 }
 
 /* ── 시 읽기: 책 펼침면 ──────────────────────────────────────── */
