@@ -248,11 +248,10 @@
     function renderReadingPoem() {
         const poem = currentPoem();
         if (!poem) return;
-        if (poem.rights !== "public") {
-            elements.poemBody.replaceChildren();
-        } else {
-            renderPoemLines(elements.poemBody, activeLines(poem));
-        }
+        // 권리 분류는 자료 관리용 메타데이터다. 본문 표시 여부는 실제로
+        // 등록된 줄이 있는지로 결정한다. 허락받거나 직접 입력한 본문까지
+        // rights 값 하나로 숨기지 않는다.
+        renderPoemLines(elements.poemBody, activeLines(poem));
     }
 
     function bylineOf(poem) {
@@ -501,11 +500,9 @@
 
         renderReadingPoem();
 
-        const isProtected = poem.rights !== "public";
-        elements.poemNotice.classList.toggle("hidden", !isProtected);
-        elements.poemNotice.textContent = isProtected
-            ? "아직 저작권이 살아 있는 시라 본문을 여기에 옮기지 못했어요. 교과서를 펴고 읽어 보세요."
-            : "";
+        const hasLines = activeLines(poem).length > 0;
+        elements.poemNotice.classList.toggle("hidden", hasLines);
+        elements.poemNotice.textContent = hasLines ? "" : "본문을 준비하고 있어요.";
 
         elements.poemWords.replaceChildren();
         (poem.words || []).forEach((entry) => {
@@ -675,9 +672,10 @@
 
     // ── 3단계 · 작품 설명 ────────────────────────────────────────
     function noteParagraphsOf(poem) {
-        if (Array.isArray(poem.note) && poem.note.length > 0) return poem.note;
-        if (typeof poem.note === "string" && poem.note.trim()) return [poem.note.trim()];
-        return [];
+        const raw = Array.isArray(poem.note) && poem.note.length > 0
+            ? poem.note
+            : (typeof poem.note === "string" && poem.note.trim() ? [poem.note.trim()] : []);
+        return raw.filter((text) => !text.includes("저작권") && !text.includes("옮기지 못했"));
     }
 
     function appendMissed(list, answerRecord) {
