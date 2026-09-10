@@ -219,7 +219,6 @@
   const lessonView = document.getElementById('lessonView');
   const previousLesson = document.getElementById('previousLesson');
   const nextLesson = document.getElementById('nextLesson');
-  const courseListButton = document.getElementById('courseListButton');
   let currentIndex = 0;
 
   function renderVisual(visual) {
@@ -283,27 +282,23 @@
     if (study.type === 'lighting') {
       host.innerHTML = `
         <div class="study-lab-container">
-          <div class="study-lab-header">
-            <h3>광원 색온도 시뮬레이터</h3>
-            <p>다양한 조명 스펙트럼 아래에서 페르메이르 작품의 반사광이 어떻게 변하는지 실시간으로 확인해보세요.</p>
-          </div>
           <div class="light-sim-controls">
-            <button type="button" class="light-btn active" data-light="daylight"><i style="background:#fefefe;box-shadow:0 0 8px #fff"></i> 주광 (자연광 5500K)</button>
-            <button type="button" class="light-btn" data-light="incandescent"><i style="background:#ff9d3b;box-shadow:0 0 8px #ff9d3b"></i> 백열등 (따뜻한 황색 2700K)</button>
-            <button type="button" class="light-btn" data-light="cool-led"><i style="background:#8bc4ff;box-shadow:0 0 8px #8bc4ff"></i> 차가운 LED (푸른빛 6500K)</button>
-            <button type="button" class="light-btn" data-light="candle"><i style="background:#ff6122;box-shadow:0 0 8px #ff6122"></i> 촛불 (적황색 저조도 1900K)</button>
+            <button type="button" class="light-btn active" data-light="daylight"><i style="background:#fefefe;box-shadow:0 0 8px #fff"></i> 자연광 (5500K)</button>
+            <button type="button" class="light-btn" data-light="incandescent"><i style="background:#ff9d3b;box-shadow:0 0 8px #ff9d3b"></i> 백열등 (2700K)</button>
+            <button type="button" class="light-btn" data-light="cool-led"><i style="background:#8bc4ff;box-shadow:0 0 8px #8bc4ff"></i> 차가운 LED (6500K)</button>
+            <button type="button" class="light-btn" data-light="candle"><i style="background:#ff6122;box-shadow:0 0 8px #ff6122"></i> 촛불 (1900K)</button>
           </div>
           <div class="study-output" id="lightOutput">
-            <h3>자연광 (5500K) — 원본 균형</h3>
+            <h3>자연광 (5500K)</h3>
             <p>자연의 햇빛은 가시광선 전 영역을 고르게 포함하고 있어, 흰 벽의 청량함과 노란 옷감, 울트라마린 파랑이 왜곡 없이 각자의 본래 색채로 균형 있게 반사됩니다.</p>
           </div>
         </div>`;
       
       const lightData = {
-        'daylight': { filter: 'none', title: '자연광 (5500K) — 원본 균형', desc: '자연의 햇빛은 가시광선 전 영역을 고르게 포함하고 있어, 흰 벽의 청량함과 노란 옷감, 울트라마린 파랑이 왜곡 없이 각자의 본래 색채로 균형 있게 반사됩니다.' },
-        'incandescent': { filter: 'sepia(0.35) saturate(1.4) hue-rotate(-15deg)', title: '백열등 (2700K) — 장파장 강조', desc: '붉고 노란 파장이 강한 조명입니다. 노란 상의와 빵의 갈색 표면은 더욱 따뜻하고 풍성하게 반사되지만, 파란 치마의 채도는 어둡게 가라앉아 보입니다.' },
-        'cool-led': { filter: 'hue-rotate(18deg) saturate(1.1) brightness(1.05)', title: '차가운 LED (6500K) — 단파장 강조', desc: '푸른빛 성분이 많은 조명입니다. 울트라마린 치마와 창가 흰 벽의 차가운 반사광이 두드러지며, 노란색 계열은 채도가 다소 낮아져 차분하게 보입니다.' },
-        'candle': { filter: 'sepia(0.6) brightness(0.85) contrast(1.2)', title: '촛불 (1900K) — 극적 명암 대비', desc: '붉은빛이 지배적이고 광량이 낮아 명암 대비가 극대화됩니다. 물체 고유의 색상보다는 빛과 그림자의 부피감이 공간을 지배합니다.' }
+        'daylight': { filter: 'none', title: '자연광 (5500K)', desc: '자연의 햇빛은 가시광선 전 영역을 고르게 포함하고 있어, 흰 벽의 청량함과 노란 옷감, 울트라마린 파랑이 왜곡 없이 각자의 본래 색채로 균형 있게 반사됩니다.' },
+        'incandescent': { filter: 'sepia(0.35) saturate(1.4) hue-rotate(-15deg)', title: '백열등 (2700K)', desc: '붉고 노란 파장이 강한 조명입니다. 노란 상의와 빵의 갈색 표면은 더욱 따뜻하고 풍성하게 반사되지만, 파란 치마의 채도는 어둡게 가라앉아 보입니다.' },
+        'cool-led': { filter: 'hue-rotate(18deg) saturate(1.1) brightness(1.05)', title: '차가운 LED (6500K)', desc: '푸른빛 성분이 많은 조명입니다. 울트라마린 치마와 창가 흰 벽의 차가운 반사광이 두드러지며, 노란색 계열은 채도가 다소 낮아져 차분하게 보입니다.' },
+        'candle': { filter: 'sepia(0.6) brightness(0.85) contrast(1.2)', title: '촛불 (1900K)', desc: '붉은빛이 지배적이고 광량이 낮아 명암 대비가 극대화됩니다. 물체 고유의 색상보다는 빛과 그림자의 부피감이 공간을 지배합니다.' }
       };
 
       host.querySelectorAll('.light-btn').forEach((btn) => {
@@ -331,10 +326,6 @@
       host.innerHTML = `
         <div class="ten-hue-lab">
           <section class="hue-wheel-panel">
-            <header class="study-lab-header">
-              <h3>먼셀 기본 10색상환</h3>
-              <p>색상 기호를 눌러 이웃색과 반대편 보색의 원형 질서를 확인하세요.</p>
-            </header>
             <div class="ten-hue-wheel" aria-label="R, YR, Y, GY, G, BG, B, PB, P, RP 10색상환">
               <div class="hue-ring" aria-hidden="true"></div>
               ${tenHues.map((item, index) => `<button type="button" data-hue-index="${index}" style="--i:${index};--hue-color:${item.color}" class="${item.code === 'B' ? 'active' : ''}"><strong>${item.code}</strong><small>${item.name}</small></button>`).join('')}
@@ -342,14 +333,9 @@
             </div>
           </section>
           <section class="attribute-panel">
-            <header class="study-lab-header">
-              <h3>명도 & 채도 3차원 스케일</h3>
-              <p>슬라이더를 조작하여 밝기와 선명도의 독립적 변화를 체감하세요.</p>
-            </header>
             <div class="property-preview" id="propertyPreview"><span id="propertyNotation">B 5/8</span></div>
             <div class="scale-block"><header><h3>명도 Value</h3><output id="valueOutput">5</output></header><div class="value-scale" id="valueScale"></div><input id="valueControl" type="range" min="1" max="9" value="5" aria-label="명도"></div>
             <div class="scale-block"><header><h3>채도 Chroma</h3><output id="chromaOutput">8</output></header><div class="chroma-scale" id="chromaScale"></div><input id="chromaControl" type="range" min="0" max="12" step="2" value="8" aria-label="채도"></div>
-            <p class="screen-color-note">화면의 색은 색상·명도·채도의 관계를 비교하기 위한 근사값입니다. 표준 먼셀 색표의 실물 색과 같지 않을 수 있습니다.</p>
           </section>
         </div>
         <div class="claim"><strong>먼셀 기호 읽기</strong> — 표기 <strong>B 5/8</strong>은 파랑(B), 명도 5, 채도 8을 뜻합니다. 색상은 각도가 아니라 색상환의 위치와 기호로 읽습니다.</div>`;
@@ -394,10 +380,6 @@
           </div>
           <div class="study-output" id="mixOutput"></div>
           <div class="pointillism-zoom-box" id="pointillismBox" hidden>
-            <header class="study-lab-header">
-              <h3>쇠라의 점묘법 시각화 줌 슬라이더</h3>
-              <p>슬라이더를 조절하여 '미세한 개별 색점(가까이 보기)'이 어떻게 '부드러운 중간 톤(멀리 보기)'으로 합성되는지 체험해보세요.</p>
-            </header>
             <div class="pointillism-canvas" id="pointillismCanvas"></div>
             <input type="range" id="zoomSlider" min="4" max="32" value="16" aria-label="점묘 줌 크기">
           </div>
@@ -574,9 +556,9 @@
     host.innerHTML = `
       <p class="check-question">${quiz.question}</p>
       <div class="answer-list">
-        ${quiz.choices.map((choice, index) => `<button type="button" data-answer="${index}"><span class="choice-num">${index + 1}</span> <span class="choice-text">${choice}</span></button>`).join('')}
+        ${quiz.choices.map((choice, index) => `<button type="button" data-answer="${index}"><span class="choice-num">${index + 1}.</span> <span class="choice-text">${choice}</span></button>`).join('')}
       </div>
-      <p class="check-feedback" aria-live="polite">정답을 선택하면 시각적 조형 원리의 근거를 확인할 수 있습니다.</p>`;
+      <p class="check-feedback" aria-live="polite" hidden></p>`;
     
     const feedback = host.querySelector('.check-feedback');
     host.querySelectorAll('[data-answer]').forEach((button) => button.addEventListener('click', () => {
@@ -584,7 +566,8 @@
       host.querySelectorAll('[data-answer]').forEach((item) => item.classList.remove('correct', 'wrong'));
       button.classList.add(selected === quiz.correct ? 'correct' : 'wrong');
       host.querySelector(`[data-answer="${quiz.correct}"]`).classList.add('correct');
-      feedback.innerHTML = `<strong>${selected === quiz.correct ? '✓ 정확한 이해입니다.' : '다시 조형적 근거를 짚어보세요.'}</strong> ${quiz.explanation}`;
+      feedback.hidden = false;
+      feedback.innerHTML = `<strong>${selected === quiz.correct ? '정답입니다.' : '오답입니다.'}</strong> ${quiz.explanation}`;
     }));
   }
 
@@ -619,9 +602,6 @@
   document.querySelectorAll('[data-open-lesson]').forEach((button) => button.addEventListener('click', () => showLesson(button.dataset.openLesson)));
   previousLesson.addEventListener('click', () => showLesson(lessons[currentIndex - 1].id));
   nextLesson.addEventListener('click', () => showLesson(lessons[currentIndex + 1].id));
-  if (courseListButton) {
-    courseListButton.addEventListener('click', showCourseMenu);
-  }
   window.addEventListener('sitebackrequest', (event) => {
     if (lessonView.hidden) return;
     event.preventDefault();
