@@ -57,9 +57,28 @@ body::before {
     display: flex;
     align-items: center;
     gap: 8px;
-    text-decoration: none;
     white-space: nowrap;
     flex: none;
+}
+
+.back-link {
+    display: grid;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--bg-card);
+    color: var(--text-main);
+    font-size: 22px;
+    text-decoration: none;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+    border-color: var(--border-highlight);
+    color: #fff;
 }
 
 .header .user-info { margin-left: auto; white-space: nowrap; }
