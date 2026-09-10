@@ -1408,6 +1408,9 @@
             let classEnabledPaths = new Set();
             let globallyDisabledPaths = new Set();
             let canBypassGlobalContentLock = false;
+            // 우리 반 공개 설정을 할 수 있는 사람인가(담임). 사이트 관리자는 우리 반
+            // 잠금에 막히지 않지만, 담임을 겸하면 우리 반 설정도 따로 갖는다.
+            let canManageClassContent = false;
 
             function normalizedContentPath(href) {
                 if (!href) return '';
@@ -1452,6 +1455,13 @@
             function renderClassLocks() {
                 // A site-wide lock always wins. Class locks remain the homeroom
                 // teacher's lower-priority setting for that one class.
+                // 사이트 관리자는 우리 반 잠금에 막히지 않는다. 그래서 평소에는 우리 반
+                // 표시를 그리지 않는다. 다만 우리 반 공개 설정을 하는 동안에는 무엇이
+                // 열려 있는지 보여야 한다. 안 그리면 관리자 겸 담임에게는 두 설정이
+                // 한 덩어리처럼 보이고, 눌러도 화면이 그대로다.
+                const classLocksVisible = classContentAccessApplies
+                    || (contentAccessEditing && canManageClassContent);
+
                 hubLinks.forEach((link) => {
                     // 학급 순위전처럼 늘 열어 두는 버튼은 공개 설정의 대상이 아니다.
                     // 잠금 표시도 붙이지 않는다.
@@ -1470,7 +1480,7 @@
                         || Boolean(groupControl && isAccessControlGloballyDisabled(groupControl));
                     const globallyLocked = globallyDisabled && !canBypassGlobalContentLock;
                     const showGlobalDisabled = globallyDisabled && (globalContentAccessEditing || globallyLocked);
-                    const classLocked = classContentAccessApplies && (groupControl
+                    const classLocked = classLocksVisible && (groupControl
                         ? !isAccessControlEnabled(groupControl)
                         : !classEnabledPaths.has(path));
                     link.classList.toggle('is-global-locked', showGlobalDisabled);
@@ -1497,7 +1507,7 @@
                     const globallyLocked = isAccessControlGloballyDisabled(control);
                     const blockedForViewer = globallyLocked && !canBypassGlobalContentLock;
                     const showGlobalDisabled = globallyLocked && (globalContentAccessEditing || blockedForViewer);
-                    const classLocked = classContentAccessApplies && !isAccessControlEnabled(control);
+                    const classLocked = classLocksVisible && !isAccessControlEnabled(control);
                     control.classList.toggle('is-global-locked', showGlobalDisabled);
                     control.classList.toggle('is-class-locked', classLocked && !showGlobalDisabled);
                     control.dataset.globalDisabled = String(globallyLocked);
@@ -1519,6 +1529,7 @@
                 classEnabledPaths = new Set(result.enabledPaths || []);
                 globallyDisabledPaths = new Set(result.globallyDisabledPaths || []);
                 canBypassGlobalContentLock = result.canManageGlobally === true;
+                canManageClassContent = result.canManage === true;
                 classContentAccessApplies = result.hasClassAccess === true && !canBypassGlobalContentLock;
                 contentAccessButton.hidden = !result.canManage;
                 globalContentAccessButton.hidden = !result.canManageGlobally;
