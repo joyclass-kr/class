@@ -2548,9 +2548,12 @@ function createClassroomPlatform(options = {}) {
     if (!registration || !registration.grade || !registration.class_number) {
       throw new HttpError(403, "STUDENT_REQUIRED", "Museum presence is for student accounts only.");
     }
+    // classroom_teachers.academic_year는 오랫동안 비워둔 채 저장된 줄이 많다(위 teacherRegistrations
+    // 주석 참고). 비어 있으면 올해로 채워야 학생 쪽 classKey(실제 연도)와 갈라지지 않는다.
+    const teacherYear = registration.academic_year || new Date().getFullYear();
     const ticket = signMuseumPresence({
       kind: "museum-presence", exp: expiresAt, userId: String(user.id), name: registration.teacher_name,
-      classKey: `${registration.school_name}|${registration.academic_year}|${registration.grade}|${registration.class_number}`
+      classKey: `${registration.school_name}|${teacherYear}|${registration.grade}|${registration.class_number}`
     });
     res.json({ ticket, expiresAt, scope: "class" });
   }));
