@@ -242,9 +242,8 @@ body {
     line-height: 1.75;
     color: var(--ink);
     text-indent: 1em;
-    /* keep-all이라 줄 끝은 들쭉날쭉해도 그냥 둔다. 양쪽 맞춤은 짧은 문단에서
-       몇 안 되는 낱말 사이가 확 벌어져 오히려 읽기 나쁘다. */
-    text-align: left;
+    /* keep-all 이라 줄 끝이 들쭉날쭉해진다. 양쪽으로 맞춘다. */
+    text-align: justify;
 }
 
 .story-media {
@@ -334,7 +333,7 @@ body {
     line-height: 1.7;
     color: var(--ink);
     text-indent: 1em;
-    text-align: left;
+    text-align: justify;
 }
 
 /* toc */
