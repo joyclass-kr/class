@@ -80,13 +80,11 @@
             section.className = "unit-section";
             section.innerHTML = `
                 <header class="unit-header">
-                    <div><span><span class="grade-band"></span><h2></h2><p></p></span></div>
+                    <h2></h2>
                     <span class="unit-count"></span>
                 </header>
                 <div class="lesson-grid"></div>`;
             section.querySelector("h2").textContent = unit.title;
-            section.querySelector("p").textContent = unit.subtitle;
-            section.querySelector(".grade-band").textContent = unit.gradeBand;
             section.querySelector(".unit-count").textContent = `${unitComplete}/${unitLessons.length} 완료`;
             const grid = section.querySelector(".lesson-grid");
 
@@ -101,10 +99,9 @@
                 button.setAttribute("aria-label", `${index + 1}차시 ${item.title}${record.completed ? ", 완료" : ""}`);
                 button.innerHTML = `
                     <span class="lesson-number"></span>
-                    <span class="lesson-card-copy"><strong></strong><small></small></span>`;
+                    <strong></strong>`;
                 button.querySelector(".lesson-number").textContent = record.completed ? "✓" : String(index + 1).padStart(2, "0");
                 button.querySelector("strong").textContent = item.title;
-                button.querySelector("small").textContent = item.standards.map((code) => `[${code}]`).join(" · ");
                 button.addEventListener("click", () => startLesson(index));
                 grid.append(button);
             });
@@ -146,7 +143,7 @@
         elements.hintButton.hidden = false;
         elements.activityArea.replaceChildren();
         elements.lessonTitle.textContent = `${currentLessonIndex + 1}차시 ${lesson.title}`;
-        elements.lessonMeta.textContent = `${lesson.gradeBand} · ${lesson.standards.map((code) => `[${code}]`).join(" · ")} · ${lesson.goal}`;
+        elements.lessonMeta.textContent = `교사용 · ${lesson.gradeBand} · ${lesson.standards.map((code) => `[${code}]`).join(" · ")} · ${lesson.goal}`;
         elements.missionNumber.textContent = String(taskIndex + 1);
         elements.missionTotal.textContent = String(lesson.tasks.length);
         elements.missionProgressFill.style.width = `${(taskIndex / lesson.tasks.length) * 100}%`;

@@ -11,11 +11,11 @@ const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
 const hub = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 
 assert.match(html, /<title>문장·문단 쓰기 \| Joyclass<\/title>/);
-assert.match(html, /2022 개정 국어과 교육과정/);
-assert.match(html, /교육과정 원문/);
+assert.match(html, /2022 개정 국어과 성취기준/);
+assert.doesNotMatch(html, /교육과정 원문|course-intro/);
 assert.match(html, /id="courseScreen"/);
 assert.match(html, /id="lessonList"/);
-assert.match(html, /id="lessonMeta"/);
+assert.match(html, /id="lessonMeta" class="teacher-meta"/);
 assert.match(html, /id="lessonScreen"[^>]*hidden/);
 assert.match(html, /id="resultScreen"[^>]*hidden/);
 assert.match(html, /curriculum\.js/);
@@ -23,8 +23,7 @@ assert.doesNotMatch(html, /practice-extra\.js/);
 assert.match(html, /app\.js/);
 
 assert.match(css, /grid-template-columns:\s*repeat\(3/);
-assert.match(css, /\.course-intro/);
-assert.match(css, /\.grade-band/);
+assert.doesNotMatch(css, /\.course-intro|\.grade-band|\.lesson-card-copy/);
 assert.match(css, /\.rubric-list/);
 assert.match(css, /\.multi-guide/);
 assert.match(css, /@media \(max-width: 480px\)/);
@@ -36,7 +35,8 @@ assert.match(app, /task\.minChars/);
 assert.match(app, /task\.criteria/);
 assert.match(app, /rubric-checkbox/);
 assert.match(app, /rubricChecks\.some/);
-assert.match(app, /lessonMeta/);
+assert.match(app, /교사용.*lesson\.gradeBand/);
+assert.doesNotMatch(app, /grade-band|lesson-card-copy|unit\.subtitle/);
 assert.match(app, /sitebackrequest/);
 assert.doesNotMatch(app, /AudioContext|confetti|celebrate/);
 
@@ -83,12 +83,22 @@ for (const [lessonIndex, item] of course.lessons.entries()) {
         if (task.type === "choice") {
             assert.ok(task.options.length >= 4, `${taskWhere}: too few choices`);
             assert.ok(Number.isInteger(task.answer) && task.answer >= 0 && task.answer < task.options.length, `${taskWhere}: invalid answer`);
+            const optionLengths = task.options.map((option) => option.length);
+            const longestDistractor = Math.max(...optionLengths.filter((_, index) => index !== task.answer));
+            assert.ok(optionLengths[task.answer] <= longestDistractor, `${taskWhere}: correct answer is the uniquely longest option`);
         }
         if (task.type === "multi") {
             assert.ok(task.options.length >= 4, `${taskWhere}: too few choices`);
             assert.ok(task.answers.length >= 2, `${taskWhere}: multi-select needs multiple answers`);
+            assert.ok(task.answers.length < task.options.length, `${taskWhere}: selecting every option must not be correct`);
             assert.equal(new Set(task.answers).size, task.answers.length, `${taskWhere}: duplicate answers`);
             task.answers.forEach((answer) => assert.ok(Number.isInteger(answer) && answer >= 0 && answer < task.options.length, `${taskWhere}: invalid multi answer`));
+        }
+        if (task.type === "choice" || task.type === "multi") {
+            const optionLengths = task.options.map((option) => option.length);
+            if (Math.min(...optionLengths) > 1) {
+                assert.ok(Math.max(...optionLengths) - Math.min(...optionLengths) < 15, `${taskWhere}: option lengths reveal a visual clue`);
+            }
         }
         if (task.type === "order") {
             assert.equal(task.tokens.length, task.answer.length, `${taskWhere}: token count mismatch`);
@@ -112,6 +122,10 @@ assert.equal(lesson20.id, "citation-source");
 assert.ok(lesson20.standards.includes("6국03-02"));
 assert.match(JSON.stringify(lesson20), /출처/);
 assert.doesNotMatch(JSON.stringify(lesson20), /민지가 사과를 먹었다/);
+
+const firstTask = course.lessons[0].tasks[0];
+assert.match(firstTask.scene, /때:.*사람:.*장소:.*발견한 것:.*처리:/);
+assert.ok(!firstTask.scene.includes(firstTask.options[firstTask.answer]), "First task must require composing facts, not visual sentence matching.");
 
 const finalLesson = course.lessons.at(-1);
 const finalWriting = finalLesson.tasks.find((task) => task.type === "write");
