@@ -5,12 +5,12 @@ const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const groups = [...html.matchAll(/<details class="worksheet-group" data-access-group="([^"]+)">[\s\S]*?<\/details>/g)];
 const groupByName = new Map(groups.map((match) => [match[1], match[0]]));
 
-for (const groupName of ['idiomatic-language', 'story-books', 'information-computing', 'korea-maps', 'world-maps', 'space-observation', 'music-theory']) {
+for (const groupName of ['story-books', 'grammar', 'vocabulary', 'information-computing', 'korea-maps', 'world-maps', 'space-observation', 'arts-appreciation', 'arts-experience', 'music-theory']) {
   assert.ok(groupByName.has(groupName), `Missing disclosure menu: ${groupName}`);
 }
 
 const storyBooks = groupByName.get('story-books') || '';
-assert.match(storyBooks, /data-content-paths="learning\/literacy-numeracy\/story-books\/"/);
+assert.match(storyBooks, /data-content-paths="learning\/literacy-numeracy\/story-books\/\|/);
 assert.ok(
   html.indexOf('data-access-group="story-books"') < html.indexOf('aria-labelledby="exploration-title"'),
   'Story books must remain in the literacy and numeracy section.',
@@ -37,22 +37,30 @@ assert.match(worldMaps, /href="learning\/inquiry\/world-geography\/"[^>]*data-ac
 assert.match(worldMaps, /href="learning\/inquiry\/world-geography\/atlas\/"[^>]*data-access-parent="world-maps"[\s\S]*?<strong>테마도감<\/strong><small>\(Theme Atlas\)<\/small>/);
 assert.match(worldMaps, /id="cds95GameLink"[\s\S]*?href="\/learn\/world-voyage\/"[\s\S]*?data-player-handoff="query"[\s\S]*?data-access-parent="world-maps"[\s\S]*?<strong>대항해시대<\/strong>/);
 
-const idiomaticLanguage = groupByName.get('idiomatic-language') || '';
-assert.ok(idiomaticLanguage, 'Idiomatic language tools must be grouped in one disclosure menu.');
-assert.match(idiomaticLanguage, /<strong>관용 표현<\/strong><small>\(Idioms &amp; Proverbs\)<\/small>/);
-assert.match(idiomaticLanguage, /data-content-paths="learning\/literacy-numeracy\/idiomatic-expressions\/\|learning\/literacy-numeracy\/proverbs\/\|learning\/literacy-numeracy\/classical-chinese-idioms\/"/);
-const orderedIdiomaticItems = [
+const vocabulary = groupByName.get('vocabulary') || '';
+assert.ok(vocabulary, 'Vocabulary tools must be grouped in one disclosure menu.');
+assert.match(vocabulary, /<strong>어휘<\/strong><small>\(Vocabulary\)<\/small>/);
+const orderedVocabularyItems = [
   ['learning/literacy-numeracy/idiomatic-expressions/', '관용어'],
   ['learning/literacy-numeracy/proverbs/', '속담'],
   ['learning/literacy-numeracy/classical-chinese-idioms/', '한자성어'],
+  ['learning/literacy-numeracy/hanja-meaning/', '한자'],
+  ['learning/literacy-numeracy/phonics/', '파닉스'],
+  ['learning/literacy-numeracy/vocabulary/', '교육부 영단어'],
 ];
-let previousIdiomaticIndex = -1;
-for (const [href, label] of orderedIdiomaticItems) {
-  assert.match(idiomaticLanguage, new RegExp(`href="${href}"[^>]*data-access-parent="idiomatic-language"[\\s\\S]*?<strong>${label}<\\/strong>`));
-  const itemIndex = idiomaticLanguage.indexOf(`href="${href}"`);
-  assert.ok(itemIndex > previousIdiomaticIndex, `Idiomatic-language item ${label} must follow the requested order.`);
-  previousIdiomaticIndex = itemIndex;
+let previousVocabularyIndex = -1;
+for (const [href, label] of orderedVocabularyItems) {
+  assert.match(vocabulary, new RegExp(`href="${href}"[^>]*data-access-parent="vocabulary"[\\s\\S]*?<strong>${label}<\\/strong>`));
+  const itemIndex = vocabulary.indexOf(`href="${href}"`);
+  assert.ok(itemIndex > previousVocabularyIndex, `Vocabulary item ${label} must follow the requested order.`);
+  previousVocabularyIndex = itemIndex;
 }
+
+const grammar = groupByName.get('grammar') || '';
+assert.ok(grammar, 'Grammar tools must be grouped in one disclosure menu.');
+assert.match(grammar, /<strong>문법<\/strong><small>\(Grammar\)<\/small>/);
+assert.match(grammar, /href="learning\/literacy-numeracy\/spelling\/"[^>]*data-access-parent="grammar"/);
+assert.match(grammar, /href="learning\/literacy-numeracy\/sentence-building\/"[^>]*data-access-parent="grammar"/);
 
 const space = groupByName.get('space-observation') || '';
 assert.ok(space, 'Space observation must be grouped directly on the portal.');

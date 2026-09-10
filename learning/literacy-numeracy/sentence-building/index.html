@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#12223d">
+    <meta name="description" content="초등 3학년 이상을 위한 재미있는 문장 만들기 24차시">
+    <title>문장 만들기 | Joyclass</title>
+    <link rel="stylesheet" href="styles.css?v=20260910-1">
+    <script src="curriculum.js?v=20260910-1" defer></script>
+    <script src="app.js?v=20260910-1" defer></script>
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="home-button" href="../../../" aria-label="메인 화면으로 돌아가기">←</a>
+            <div class="mini-brand"><span aria-hidden="true">🕵️</span><strong>문장 탐정단</strong></div>
+            <div class="star-record" aria-label="모은 별"><span aria-hidden="true">⭐</span><strong id="totalStars">0</strong></div>
+        </header>
+
+        <main>
+            <section id="courseScreen" class="screen course-screen" aria-labelledby="courseTitle">
+                <header class="course-hero">
+                    <div>
+                        <p class="eyebrow">SENTENCE LAB · 3학년 이상</p>
+                        <h1 id="courseTitle">문장 만들기</h1>
+                        <p>흩어진 낱말을 조립하고, 수상한 문장을 고치며<br>나만의 문장까지 완성해 보세요.</p>
+                    </div>
+                    <div class="hero-case" aria-hidden="true">
+                        <span>누가?</span><span>무엇을?</span><span>어떻게?</span>
+                        <b>문장의 단서를 찾아라!</b>
+                    </div>
+                </header>
+
+                <section class="course-progress" aria-label="전체 진도">
+                    <div><strong id="progressText">0 / 24차시 완료</strong><span id="progressPercent">0%</span></div>
+                    <div class="progress-track"><span id="courseProgressFill"></span></div>
+                </section>
+
+                <div id="lessonList" class="unit-list" aria-label="차시 목록"></div>
+            </section>
+
+            <section id="lessonScreen" class="screen lesson-screen" hidden aria-labelledby="lessonTitle">
+                <div class="lesson-toolbar">
+                    <button id="backToListButton" class="text-button" type="button">← 차시 목록</button>
+                    <div class="mission-counter"><span id="missionNumber">1</span>/<span id="missionTotal">3</span></div>
+                </div>
+                <div class="mission-track" aria-hidden="true"><span id="missionProgressFill"></span></div>
+
+                <header class="lesson-heading">
+                    <div id="lessonIcon" class="lesson-icon" aria-hidden="true">🔎</div>
+                    <div>
+                        <p id="unitName" class="unit-name"></p>
+                        <h1 id="lessonTitle"></h1>
+                        <p id="lessonGoal" class="lesson-goal"></p>
+                    </div>
+                </header>
+
+                <article class="mission-card" aria-labelledby="taskPrompt">
+                    <div class="mission-card-top">
+                        <span id="taskType" class="task-type">단서 찾기</span>
+                        <span id="comboBadge" class="combo-badge" hidden></span>
+                    </div>
+                    <h2 id="taskPrompt"></h2>
+                    <p id="taskScene" class="task-scene"></p>
+                    <div id="activityArea" class="activity-area"></div>
+                    <div id="feedback" class="feedback" hidden aria-live="polite">
+                        <strong id="feedbackTitle"></strong>
+                        <p id="feedbackText"></p>
+                    </div>
+                    <div class="mission-actions">
+                        <button id="hintButton" class="hint-button" type="button">💡 단서</button>
+                        <button id="checkButton" class="primary-button" type="button">확인하기</button>
+                        <button id="nextButton" class="primary-button" type="button" hidden>다음 미션 →</button>
+                    </div>
+                </article>
+            </section>
+
+            <section id="resultScreen" class="screen result-screen" hidden aria-labelledby="resultTitle">
+                <div id="resultBurst" class="result-burst" aria-hidden="true">🎉</div>
+                <p class="eyebrow">CASE CLOSED!</p>
+                <h1 id="resultTitle">사건 해결!</h1>
+                <div id="earnedStars" class="earned-stars" aria-label="받은 별"></div>
+                <p id="resultMessage" class="result-message"></p>
+                <div class="result-stats">
+                    <div><span>정답</span><strong id="resultScore">0/3</strong></div>
+                    <div><span>연속 성공</span><strong id="resultCombo">0</strong></div>
+                </div>
+                <div class="result-actions">
+                    <button id="nextLessonButton" class="primary-button" type="button">다음 차시</button>
+                    <button id="retryButton" class="secondary-button" type="button">다시 도전</button>
+                    <button id="resultListButton" class="secondary-button" type="button">차시 목록</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="celebration" class="celebration" aria-hidden="true"></div>
+    <p id="announcer" class="visually-hidden" aria-live="assertive"></p>
+</body>
+</html>
