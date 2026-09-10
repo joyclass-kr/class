@@ -50,7 +50,7 @@ button { cursor: pointer; }
     position: relative;
     width: min(1100px, calc(100% - 30px));
     margin: 0 auto;
-    padding: 64px 0 48px;
+    padding: 20px 0 48px;
 }
 .screen { animation: screen-in .28s ease both; }
 
@@ -156,24 +156,12 @@ button { cursor: pointer; }
 .lesson-card.is-complete .lesson-number { background: var(--green); }
 .lesson-card strong { align-self: end; font-size: 15px; line-height: 1.35; word-break: keep-all; }
 .lesson-card small { color: var(--muted); font-size: 12px; line-height: 1.45; word-break: keep-all; }
-.lesson-screen { width: min(830px, 100%); margin: 12px auto 0; }
-.lesson-toolbar { display: flex; align-items: center; justify-content: space-between; color: white; }
-.text-button { min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: white; font-weight: 900; }
-.mission-counter { color: #dce7f6; font-weight: 900; }
-.mission-track { margin: 7px 0 20px; background: rgba(255,255,255,.18); }
+.lesson-screen { width: min(830px, 100%); margin: 0 auto; }
+.lesson-toolbar { display: flex; min-height: 38px; align-items: center; justify-content: space-between; gap: 18px; color: white; }
+.lesson-toolbar h1 { margin: 0; font-size: clamp(22px, 3vw, 28px); line-height: 1.3; letter-spacing: -.03em; }
+.mission-counter { color: #dce7f6; font-size: 15px; font-weight: 800; }
+.mission-track { margin: 8px 0 14px; background: rgba(255,255,255,.18); }
 .mission-track span { background: linear-gradient(90deg, var(--yellow), var(--coral)); }
-
-.lesson-heading {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
-    color: white;
-}
-
-.unit-name { margin: 0 0 3px; color: var(--cyan); font-size: 12px; font-weight: 900; letter-spacing: .08em; }
-.lesson-heading h1 { margin: 0; font-size: clamp(25px, 5vw, 38px); letter-spacing: -.04em; }
-.lesson-goal { margin: 5px 0 0; color: #d8e2f1; font-size: 14px; }
 
 .mission-card {
     padding: clamp(22px, 4.5vw, 42px);
@@ -185,11 +173,8 @@ button { cursor: pointer; }
     box-shadow: var(--shadow);
 }
 
-.mission-card-top { display: flex; justify-content: space-between; gap: 12px; }
-.task-type { padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 900; }
-.task-type { background: #dff7fa; color: #157583; }
-.mission-card h2 { margin: 19px 0 9px; font-size: clamp(21px, 4vw, 30px); line-height: 1.45; word-break: keep-all; }
-.task-scene { min-height: 28px; margin: 0 0 21px; color: var(--muted); font-size: 16px; line-height: 1.7; }
+.mission-card h2 { margin: 0 0 9px; font-size: clamp(20px, 2.8vw, 24px); line-height: 1.5; word-break: keep-all; }
+.task-scene { min-height: 28px; margin: 0 0 21px; color: var(--muted); font-size: 15px; line-height: 1.65; }
 .activity-area { min-height: 190px; }
 
 .choice-list { display: grid; gap: 10px; }
@@ -288,10 +273,6 @@ button { cursor: pointer; }
 .result-stats strong { display: block; margin-top: 4px; font-size: 22px; }
 .result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 
-.celebration { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 50; }
-.confetti { position: absolute; top: -20px; width: 10px; height: 18px; border-radius: 3px; animation: fall 1.7s ease-in forwards; }
-@keyframes fall { to { transform: translate3d(var(--drift), 110vh, 0) rotate(720deg); opacity: .2; } }
-
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -305,7 +286,7 @@ button { cursor: pointer; }
 }
 
 @media (max-width: 760px) {
-    .app-shell { width: min(100% - 20px, 680px); padding-top: 62px; }
+    .app-shell { width: min(100% - 20px, 680px); padding-top: 56px; }
     .lesson-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -315,7 +296,6 @@ button { cursor: pointer; }
     .unit-header > span { display: none; }
     .lesson-grid { grid-template-columns: 1fr; }
     .lesson-card { min-height: 102px; }
-    .lesson-heading { align-items: flex-start; }
     .mission-card { padding: 22px 17px; border-radius: 20px; }
     .mission-actions { flex-wrap: wrap; }
     .hint-button { width: 100%; margin-right: 0; }

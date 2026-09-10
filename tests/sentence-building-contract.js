@@ -15,13 +15,16 @@ assert.match(html, /id="lessonList"/);
 assert.match(html, /id="lessonScreen"[^>]*hidden/);
 assert.match(html, /id="resultScreen"[^>]*hidden/);
 assert.doesNotMatch(html, /topbar|course-hero|hero-case|totalStars|earnedStars/);
+assert.doesNotMatch(html, /backToListButton|resultListButton|>← 차시 목록<|>차시 목록<\/button>/);
 assert.match(html, /curriculum\.js/);
 assert.match(html, /app\.js/);
 assert.match(css, /grid-template-columns:\s*repeat\(3/);
 assert.match(css, /@media \(max-width: 480px\)/);
 assert.match(app, /localStorage/);
 assert.match(app, /sentenceCount/);
-assert.match(app, /celebrate/);
+assert.doesNotMatch(html, /taskType|unitName|lessonGoal|celebration/);
+assert.doesNotMatch(app, /AudioContext|confetti|celebrate/);
+assert.match(app, /sitebackrequest/);
 
 const context = { window: {} };
 vm.createContext(context);

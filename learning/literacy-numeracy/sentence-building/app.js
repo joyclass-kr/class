@@ -16,10 +16,7 @@
         missionNumber: document.getElementById("missionNumber"),
         missionTotal: document.getElementById("missionTotal"),
         missionProgressFill: document.getElementById("missionProgressFill"),
-        unitName: document.getElementById("unitName"),
         lessonTitle: document.getElementById("lessonTitle"),
-        lessonGoal: document.getElementById("lessonGoal"),
-        taskType: document.getElementById("taskType"),
         taskPrompt: document.getElementById("taskPrompt"),
         taskScene: document.getElementById("taskScene"),
         activityArea: document.getElementById("activityArea"),
@@ -29,13 +26,10 @@
         hintButton: document.getElementById("hintButton"),
         checkButton: document.getElementById("checkButton"),
         nextButton: document.getElementById("nextButton"),
-        backToListButton: document.getElementById("backToListButton"),
         resultMessage: document.getElementById("resultMessage"),
         resultScore: document.getElementById("resultScore"),
         nextLessonButton: document.getElementById("nextLessonButton"),
         retryButton: document.getElementById("retryButton"),
-        resultListButton: document.getElementById("resultListButton"),
-        celebration: document.getElementById("celebration"),
         announcer: document.getElementById("announcer")
     };
 
@@ -65,10 +59,6 @@
             item.hidden = item !== screen;
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function unitFor(id) {
-        return course.units.find((unit) => unit.id === id) || course.units[0];
     }
 
     function lessonRecord(id) {
@@ -151,7 +141,6 @@
 
     function renderTask() {
         const lesson = course.lessons[currentLessonIndex];
-        const unit = unitFor(lesson.unit);
         const task = lesson.tasks[taskIndex];
         checked = false;
         selectedChoice = null;
@@ -162,13 +151,10 @@
         elements.nextButton.hidden = true;
         elements.hintButton.hidden = false;
         elements.activityArea.replaceChildren();
-        elements.unitName.textContent = unit.title;
-        elements.lessonTitle.textContent = `${currentLessonIndex + 1}차시 · ${lesson.title}`;
-        elements.lessonGoal.textContent = lesson.goal;
+        elements.lessonTitle.textContent = `${currentLessonIndex + 1}차시 ${lesson.title}`;
         elements.missionNumber.textContent = String(taskIndex + 1);
         elements.missionTotal.textContent = String(lesson.tasks.length);
         elements.missionProgressFill.style.width = `${(taskIndex / lesson.tasks.length) * 100}%`;
-        elements.taskType.textContent = task.type === "order" ? "낱말 배열" : task.type === "write" ? "글쓰기" : "문제 풀기";
         elements.taskPrompt.textContent = task.prompt;
         elements.taskScene.textContent = task.scene || "";
         if (task.type === "choice") renderChoices(task);
@@ -314,10 +300,8 @@
         if (correct) {
             score += 1;
             showFeedback("good", "정답입니다", task.explain);
-            playTone(true);
         } else {
             showFeedback("bad", "정답을 확인해 보세요", task.explain);
-            playTone(false);
         }
 
         if (task.type === "choice") {
@@ -361,49 +345,17 @@
             : "틀린 문제는 다시 도전해서 확인해 보세요.";
         elements.nextLessonButton.hidden = currentLessonIndex >= course.lessons.length - 1;
         showOnly(elements.resultScreen);
-        celebrate();
-    }
-
-    function celebrate() {
-        elements.celebration.replaceChildren();
-        const colors = ["#ffd45b", "#4cc9d8", "#48ad78", "#f26b5b", "#7868cf"];
-        for (let i = 0; i < 18; i += 1) {
-            const piece = document.createElement("i");
-            piece.className = "confetti";
-            piece.style.left = `${Math.random() * 100}%`;
-            piece.style.background = colors[i % colors.length];
-            piece.style.setProperty("--drift", `${Math.round(Math.random() * 160 - 80)}px`);
-            piece.style.animationDelay = `${Math.random() * .45}s`;
-            elements.celebration.append(piece);
-        }
-        window.setTimeout(() => elements.celebration.replaceChildren(), 2400);
-    }
-
-    function playTone(success) {
-        try {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (!AudioContext) return;
-            const context = new AudioContext();
-            const oscillator = context.createOscillator();
-            const gain = context.createGain();
-            oscillator.type = success ? "sine" : "triangle";
-            oscillator.frequency.setValueAtTime(success ? 520 : 210, context.currentTime);
-            if (success) oscillator.frequency.exponentialRampToValueAtTime(780, context.currentTime + .14);
-            gain.gain.setValueAtTime(.0001, context.currentTime);
-            gain.gain.exponentialRampToValueAtTime(.12, context.currentTime + .02);
-            gain.gain.exponentialRampToValueAtTime(.0001, context.currentTime + .2);
-            oscillator.connect(gain).connect(context.destination);
-            oscillator.start();
-            oscillator.stop(context.currentTime + .21);
-            oscillator.addEventListener("ended", () => context.close());
-        } catch (_) {}
     }
 
     elements.hintButton.addEventListener("click", showHint);
     elements.checkButton.addEventListener("click", checkAnswer);
     elements.nextButton.addEventListener("click", nextTask);
-    elements.backToListButton.addEventListener("click", () => { renderCourse(); showOnly(elements.courseScreen); });
-    elements.resultListButton.addEventListener("click", () => { renderCourse(); showOnly(elements.courseScreen); });
+    window.addEventListener("sitebackrequest", (event) => {
+        if (!elements.courseScreen.hidden) return;
+        event.preventDefault();
+        renderCourse();
+        showOnly(elements.courseScreen);
+    });
     elements.retryButton.addEventListener("click", () => startLesson(currentLessonIndex));
     elements.nextLessonButton.addEventListener("click", () => startLesson(currentLessonIndex + 1));
 
