@@ -119,8 +119,8 @@ const CHAPTERS = [
                 "art": "04-beetle.webp",
                 "emoji": "🪲",
                 "left": [
-                    "마야는 다시 길을 나섰습니다. 흙길을 따라 낮게 날았지요. 저 앞에서 무언가가 꿈틀거렸습니다.",
-                    "커다란 공을 굴리는 딱정벌레였지요. 목에는 빳빳한 깃을 두르고 있었습니다. 얼굴이 온통 벌게져 있었지요.",
+                    "마야는 다시 길을 나섰습니다. 흙길을 따라 낮게 날았지요. 저 앞에서 어떤 딱정벌레가 꿈틀거렸습니다.",
+                    "그 딱정벌레는 커다란 공을 굴리는 쇠똥구리였지요. 목에는 빳빳한 깃을 두르고 있었습니다. 얼굴이 온통 벌게져 있었지요.",
                     "공이 자꾸 뒤로 굴러 내려왔거든요. 마야는 딱한 마음이 들었습니다."
                 ],
                 "right": [
@@ -296,35 +296,14 @@ const CHAPTERS = [
                     "꿀벌들은 숨을 죽였습니다. 마야도 맨 앞줄에 서 있었지요."
                 ],
                 "right": [
-                    "그런데 문이 단단히 막혀 있었습니다. 말벌들은 한참을 맴돌았지요.",
-                    "\"문이 안 열려!\" 말벌 하나가 짜증 난 목소리로 외쳤습니다.",
-                    "꿀벌들은 어깨를 꼭 붙인 채 눈 하나 깜빡하지 않았습니다."
-                ]
-            }
-        ]
-    },
-    {
-        "num": 9,
-        "title": "9장 · 잔칫날 밤",
-        "beats": [
-            {
-                "art": "09-feast.webp",
-                "emoji": "🛡️",
-                "left": [
-                    "파수병 벌 셋이 창을 꼭 쥔 채 문 앞을 지켰습니다. 등에 식은땀이 흘렀지요.",
-                    "말벌들은 좁은 틈을 이리저리 찔러 보았습니다. 그래도 문은 꿈쩍하지 않았지요.",
-                    "긴 시간이 흘렀습니다. 이윽고 말벌들이 방향을 돌렸지요.",
-                    "빈손으로 어둠 속에 사라졌습니다."
-                ],
-                "right": [
-                    "\"물러갔다! 다들 물러갔어!\" 소리가 벌집 안까지 퍼져 나갔습니다.",
-                    "카산드라가 마야의 어깨를 톡 쳤지요.",
-                    "\"바깥세상을 궁금해한 게 헛일은 아니었구나.\"",
-                    "마야는 그제야 빙그레 웃었습니다."
+                    "그런데 문이 단단히 막혀 있었습니다. 말벌들이 몸을 부딪치며 틈을 찾았지요. 그래도 문은 꿈쩍하지 않았습니다.",
+                    "말벌들은 한참을 그렇게 애썼습니다. 그러다 그냥 물러갔지요. 벌집에 환호성이 터졌습니다.",
+                    "카산드라가 마야의 어깨를 툭 쳤습니다. \"바깥세상을 궁금해한 게 헛일은 아니었구나.\"",
+                    "마야는 그제야 빙그레 웃었지요."
                 ]
             },
             {
-                "art": "09-feast-2.webp",
+                "art": "08-ending-3.webp",
                 "emoji": "🎉",
                 "left": [
                     "그 소리에 온 벌집이 잠에서 깼습니다. 방마다 문이 열리고 벌들이 쏟아져 나왔지요. \"마야가 우리를 살렸대!\" 누군가 외쳤습니다.",
@@ -773,8 +752,8 @@ const EN = {
                     left: [
                         "Maya set off again.",
                         "She flew low along a dirt path.",
-                        "Something was struggling away up ahead.",
-                        "It was a beetle rolling a great ball.",
+                        "A beetle was struggling away up ahead.",
+                        "It was a dung beetle rolling a great ball.",
                         "He wore a stiff collar round his neck.",
                         "His face was red all over.",
                         "The ball kept rolling back down on him.",
@@ -987,46 +966,22 @@ const EN = {
                         "Maya was standing in the front rank."
                     ],
                     right: [
-                        "But the door was blocked solid.",
-                        "The hornets circled a long while.",
-                        "\"It won't open!\" one hornet snapped.",
-                        "The bees pressed shoulder to shoulder and did not blink."
-                    ]
-                }
-            ]
-        },
-        {
-            num: 9,
-            title: 'Chapter 9 · The Night of the Feast',
-            beats: [
-                {
-                    art: '09-feast.webp',
-                    emoji: '🛡️',
-                    left: [
-                        "Three guard bees held the door, gripping their spears. Cold sweat ran down their backs.",
-                        "The hornets kept probing the narrow gap. Still the door did not budge.",
-                        "A long while passed. Then, at last, the hornets turned.",
-                        "They vanished into the dark, empty-handed."
-                    ],
-                    right: [
-                        "\"They're gone! They've all gone!\" The word ran clear through the hive.",
-                        "Cassandra tapped Maya on the shoulder.",
-                        "\"So wondering about the outside was not wasted after all.\"",
+                        "But the door was blocked solid. The hornets shoved and pushed, hunting for a gap. Still it would not budge.",
+                        "The hornets kept at it a long while. And then they simply withdrew. A great cheer went up in the hive.",
+                        "Cassandra tapped Maya on the shoulder. \"So wondering about the outside was not wasted after all.\"",
                         "And only then did Maya smile."
                     ]
                 },
                 {
-                    art: '09-feast-2.webp',
+                    art: '08-ending-3.webp',
                     emoji: '🎉',
                     left: [
-                        "At that, the whole hive woke up at once. Doors opened room after room, and bees came pouring out.",
-                        "\"Maya saved us all!\" somebody called.",
+                        "At that, the whole hive woke up at once. Doors opened room after room, and bees came pouring out. \"Maya saved us all!\" somebody called.",
                         "The word passed from bee to bee, and in no time the doorway was packed.",
                         "Then an elder bee came walking slowly out, the oldest bee in the whole hive."
                     ],
                     right: [
-                        "The elder bee stopped in front of Maya and laughed, warm and hearty.",
-                        "\"One small bee, and she kept us all safe.\"",
+                        "The elder bee stopped in front of Maya and laughed, warm and hearty. \"One small bee, and she kept us all safe.\"",
                         "\"Wondering about the outside world? There is nothing to be ashamed of in that.\"",
                         "The young guard bees raised their spears and cheered as flower petals drifted down like snow, and under the moon the feast went on all night."
                     ]
@@ -1149,8 +1104,8 @@ const EN = {
             { word: 'leap away', meaning: '훌쩍 뛰어 사라지다', sentence: 'He leapt away and was gone.' }
         ],
         '04-beetle.webp': [
-            { word: 'struggle', meaning: '꿈틀거리다', sentence: 'Something was struggling up ahead.' },
-            { word: 'roll', meaning: '굴리다', sentence: 'A beetle rolling a great ball.' },
+            { word: 'struggle', meaning: '꿈틀거리다', sentence: 'A beetle was struggling away up ahead.' },
+            { word: 'roll', meaning: '굴리다', sentence: 'It was a dung beetle rolling a great ball.' },
             { word: 'stiff collar', meaning: '빳빳한 깃', sentence: 'He wore a stiff collar.' },
             { word: 'feel sorry for', meaning: '딱하게 여기다', sentence: 'Maya felt sorry for him.' },
             { word: 'shortly', meaning: '퉁명스럽게', sentence: 'This is my work, he said shortly.' }
@@ -1211,18 +1166,11 @@ const EN = {
         '08-ending-2.webp': [
             { word: 'packed close', meaning: '빽빽이', sentence: 'The bees stood packed close.' },
             { word: 'hold one’s breath', meaning: '숨을 죽이다', sentence: 'The bees held their breath.' },
-            { word: 'blocked', meaning: '막힌', sentence: 'But the door was blocked solid.' },
-            { word: 'snap', meaning: '짜증 내며 말하다', sentence: '"It won\'t open!" one hornet snapped.' },
-            { word: 'blink', meaning: '눈을 깜빡이다', sentence: 'The bees pressed shoulder to shoulder and did not blink.' }
+            { word: 'withdraw', meaning: '물러가다', sentence: 'And then they simply withdrew.' },
+            { word: 'cheer', meaning: '환호성', sentence: 'A great cheer went up in the hive.' },
+            { word: 'wasted', meaning: '헛일인', sentence: 'It was not wasted after all.' }
         ],
-        '09-feast.webp': [
-            { word: 'grip', meaning: '꼭 쥐다', sentence: 'Three guard bees held the door, gripping their spears.' },
-            { word: 'probe', meaning: '찔러 보다', sentence: 'The hornets kept probing the narrow gap.' },
-            { word: 'empty-handed', meaning: '빈손으로', sentence: 'They vanished into the dark, empty-handed.' },
-            { word: 'tap', meaning: '톡 치다', sentence: 'Cassandra tapped Maya on the shoulder.' },
-            { word: 'not wasted', meaning: '헛일이 아닌', sentence: 'So wondering about the outside was not wasted after all.' }
-        ],
-        '09-feast-2.webp': [
+        '08-ending-3.webp': [
             { word: 'pour out', meaning: '쏟아져 나오다', sentence: 'Bees came pouring out.' },
             { word: 'pass', meaning: '옮겨 가다', sentence: 'The word passed from bee to bee.' },
             { word: 'oldest', meaning: '가장 나이 많은', sentence: 'He was the oldest bee in the whole hive.' },
