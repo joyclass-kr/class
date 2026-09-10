@@ -315,7 +315,17 @@ a {
 }
 
 .book-title-meta {
-    display: none !important;
+    margin-top: 8px;
+}
+
+.book-card-title {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #f7ebd4;
+    line-height: 1.35;
+    word-break: keep-all;
+    text-align: center;
 }
 
 /* 소재별 검색 뷰 */

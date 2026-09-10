@@ -695,6 +695,9 @@
                             ${poemItemsHtml}
                         </ol>
                     </div>
+                    <div class="book-title-meta">
+                        <p class="book-card-title">${escapeHtml(b.title)}</p>
+                    </div>
                 </div>
             `;
         }).join("");

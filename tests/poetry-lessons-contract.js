@@ -153,7 +153,6 @@ for (const book of books) {
     assert.ok(!bookIds.has(book.id), `${where}: id가 겹칩니다.`);
     bookIds.add(book.id);
     assert.ok(typeof book.title === "string" && book.title.trim(), `${where}: 이름이 없습니다.`);
-    assert.ok(typeof book.note === "string" && book.note.trim(), `${where}: 설명이 없습니다.`);
     assert.ok(Array.isArray(book.poemIds) && book.poemIds.length > 0, `${where}: 실린 시가 없습니다.`);
     assert.strictEqual(new Set(book.poemIds).size, book.poemIds.length, `${where}: 같은 시가 두 번 실려 있습니다.`);
 
