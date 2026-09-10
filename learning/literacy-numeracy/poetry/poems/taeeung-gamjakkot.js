@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["taeeung-gamjakkot"] = {
         "poem": {
+            "illustration": "images/taeeung-gamjakkot.webp",
             "lines": [
                 "자주 꽃 핀 건",
                 "자주 감자,",

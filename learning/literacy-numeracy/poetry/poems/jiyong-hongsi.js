@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-hongsi"] = {
         "poem": {
+            "illustration": "images/jiyong-hongsi.webp",
             "lines": [
                 "어저께도 홍시 하나.",
                 "오늘에도 홍시 하나.",
