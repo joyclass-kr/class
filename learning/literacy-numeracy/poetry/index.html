@@ -3,164 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#24150c">
+    <meta name="theme-color" content="#1b0f10">
     <title>시집</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260910-5">
-    <script src="poems-index.js?v=20260910-5" defer></script>
-    <script src="lessons.js?v=20260910-5" defer></script>
-    <script src="app.js?v=20260910-5" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260910-7">
+    <script src="poems-index.js?v=20260910-7" defer></script>
+    <script src="lessons.js?v=20260910-7" defer></script>
+    <script src="app.js?v=20260910-7" defer></script>
 </head>
 <body>
-    <div class="page-shell">
-        <nav class="topbar" aria-label="페이지 기능">
-            <a class="back-link" href="../../../" aria-label="뒤로 가기">←</a>
-        </nav>
-
-        <main>
-            <!-- 책장: 시집을 차례대로 보거나 소재로 찾는다. -->
-            <section id="shelfScreen" class="shelf-screen hidden" aria-labelledby="shelfTitle">
-                <div class="shelf-head">
-                    <h1 id="shelfTitle" class="visually-hidden">시집</h1>
-                    <div class="grade-tabs" role="tablist" aria-label="찾는 방법">
-                        <button id="orderTabBtn" class="grade-tab is-active" type="button" role="tab" aria-selected="true">차례대로</button>
-                        <button id="topicTabBtn" class="grade-tab" type="button" role="tab" aria-selected="false">소재로 찾기</button>
-                    </div>
-                </div>
-
-                <p id="continueBar" class="continue-bar hidden">
-                    <button id="continueButton" class="primary-button" type="button"></button>
-                </p>
-
-                <div id="orderView">
-                    <div class="shelf" id="bookShelf" aria-label="시집 목록"></div>
-                </div>
-
-                <div id="topicView" class="hidden">
-                    <div class="grade-tabs topic-chips" id="topicChips" aria-label="소재 선택"></div>
-                    <ol class="lesson-list" id="topicPoemList" aria-label="소재별 시 목록"></ol>
-                </div>
-            </section>
-
-            <!-- 책 목차: 시집 한 권에 실린 시 목록 -->
-            <section id="bookScreen" class="panel sheet hidden" aria-labelledby="bookTitle">
-                <h2 id="bookTitle" class="sheet-title"></h2>
-                <p id="bookNote" class="sheet-lead"></p>
-                <ol id="bookPoemList" class="lesson-list" aria-label="이 책의 시 목록"></ol>
-                <div class="sheet-actions">
-                    <button id="bookShelfButton" class="secondary-button" type="button">책장으로</button>
-                </div>
-            </section>
-
-            <!-- 1단계 · 시 읽기: 책 펼침면 -->
-            <section id="readScreen" class="hidden" aria-labelledby="poemTitle">
-                <p id="readKicker" class="sheet-kicker"></p>
-                <ol class="step-trail" aria-label="시 한 편의 차례">
-                    <li class="step-trail-item is-now">읽기</li>
-                    <li class="step-trail-item">문제</li>
-                    <li class="step-trail-item">작품 설명</li>
-                </ol>
-
-                <div class="book-stage">
-                    <div class="book" id="readBook">
-                        <div class="book-spread">
-                            <article class="book-page book-page-left">
-                                <h2 id="poemTitle" class="poem-title"></h2>
-                                <p id="poemByline" class="poem-byline"></p>
-                                <div id="versionToggle" class="version-toggle hidden">
-                                    <button class="version-btn is-active" type="button" data-version="original">옛말 그대로</button>
-                                    <button class="version-btn" type="button" data-version="modern">현대어로 보기</button>
-                                </div>
-                                <div id="poemBody" class="poem-body"></div>
-                                <div id="poemNotice" class="poem-notice hidden"></div>
-                            </article>
-                            <div class="book-page book-page-right">
-                                <dl id="poemWords" class="poem-words hidden"></dl>
-                                <p id="poemPoint" class="poem-point"></p>
-                                <div class="siwha-slot" id="siwhaSlot">
-                                    <span class="siwha-placeholder">시화 자리</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sheet-actions book-actions">
-                    <button id="readQuizButton" class="primary-button" type="button">문제 풀기</button>
-                    <button id="readListButton" class="secondary-button" type="button">책 목차</button>
-                </div>
-            </section>
-
-            <!-- 2단계 · 문제 -->
-            <section id="quizScreen" class="panel sheet hidden" aria-labelledby="questionText">
-                <p id="quizKicker" class="sheet-kicker"></p>
-                <ol class="step-trail" aria-label="시 한 편의 차례">
-                    <li class="step-trail-item">읽기</li>
-                    <li class="step-trail-item is-now">문제</li>
-                    <li class="step-trail-item">작품 설명</li>
-                </ol>
-
-                <div class="quiz-status">
-                    <span><span class="status-label">문제</span> <strong><span id="questionNumber">1</span>/<span id="questionTotal">3</span></strong></span>
-                    <span><span class="status-label">맞힌 문제</span> <strong id="currentScore">0</strong></span>
-                </div>
-                <div class="progress-track" aria-hidden="true">
-                    <span id="progressFill"></span>
-                </div>
-
-                <details id="quizPoemCard" class="poem-card quiz-poem-card" open>
-                    <summary class="quiz-poem-summary">
-                        <span id="quizPoemTitle" class="poem-title"></span>
-                        <span id="quizPoemByline" class="poem-byline"></span>
-                    </summary>
-                    <div id="quizPoemBody" class="poem-body"></div>
-                </details>
-
-                <div class="question-block">
-                    <span id="questionCategory" class="question-category">장면 확인</span>
-                    <p id="questionPrompt" class="question-prompt">시를 읽고 답해 보세요.</p>
-                    <h2 id="questionText" class="question-text"></h2>
-                    <div id="choiceList" class="choice-list" aria-label="답 선택"></div>
-
-                    <div id="feedback" class="feedback hidden" aria-live="polite">
-                        <h3 id="feedbackTitle"></h3>
-                        <p id="correctAnswer" class="correct-answer"></p>
-                        <p id="explanation" class="explanation"></p>
-                        <button id="nextButton" class="primary-button next-button" type="button">다음 문제</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3단계 · 작품 설명 -->
-            <section id="afterScreen" class="panel sheet hidden" aria-labelledby="afterTitle">
-                <p id="afterKicker" class="sheet-kicker"></p>
-                <ol class="step-trail" aria-label="시 한 편의 차례">
-                    <li class="step-trail-item">읽기</li>
-                    <li class="step-trail-item">문제</li>
-                    <li class="step-trail-item is-now">작품 설명</li>
-                </ol>
-
-                <h2 id="afterTitle" class="sheet-title"></h2>
-                <p id="afterByline" class="sheet-lead"></p>
-                <p id="afterScore" class="after-score"></p>
-
-                <div id="afterBody" class="after-body"></div>
-
-                <div id="afterMissed" class="after-missed hidden">
-                    <h3>다시 볼 문제</h3>
-                    <ol id="afterMissedList" class="missed-list"></ol>
-                </div>
-
-                <div class="sheet-actions">
-                    <button id="afterNextButton" class="primary-button" type="button">다음 시</button>
-                    <button id="afterListButton" class="secondary-button" type="button">책 목차</button>
-                </div>
-            </section>
-        </main>
+    <div class="top-bar">
+        <a class="back-link" id="shelfBackLink" href="../../../" aria-label="메인 화면으로 돌아가기">← 메인</a>
+        <button class="back-link" id="bookShelfBtn" type="button" aria-label="책장으로 돌아가기" hidden>← 책장</button>
+        <button class="toc-link" id="tocBtn" type="button" aria-label="시 목차로 이동" hidden>☰ 차례</button>
     </div>
 
-    <p id="announcer" class="visually-hidden" aria-live="assertive"></p>
+    <!-- 1. 책장 화면 (Lobby) -->
+    <div class="screen screen-shelf" id="shelfScreen">
+        <div class="shelf-container">
+            <div class="shelf-head">
+                <h1>시집</h1>
+                <div class="grade-tabs" role="tablist" aria-label="찾는 방법">
+                    <button id="orderTabBtn" class="grade-tab is-active" type="button" role="tab" aria-selected="true">차례대로</button>
+                    <button id="topicTabBtn" class="grade-tab" type="button" role="tab" aria-selected="false">소재로 찾기</button>
+                </div>
+            </div>
+
+            <div id="orderView">
+                <div class="shelf" id="bookShelf" aria-label="시집 목록"></div>
+            </div>
+
+            <div id="topicView" class="hidden">
+                <div class="grade-tabs topic-chips" id="topicChips" aria-label="소재 선택"></div>
+                <ol class="topic-poem-list" id="topicPoemList" aria-label="소재별 시 목록"></ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 책 펼침면 화면 (Book Reader: 전래동화/소설과 동일한 2쪽 펼침면 구조) -->
+    <div class="screen screen-book hidden" id="bookScreen">
+        <div class="book-stage">
+            <div class="book" id="book">
+                <div class="book-spread" id="spread"></div>
+                <span class="folio folio-left" id="folioLeft"></span>
+                <span class="folio folio-right" id="folioRight"></span>
+
+                <button class="nav-btn nav-prev" id="prevBtn" type="button" aria-label="이전 페이지">‹</button>
+                <button class="nav-btn nav-next" id="nextBtn" type="button" aria-label="다음 페이지">›</button>
+            </div>
+
+            <div class="page-indicator" id="pageIndicator"></div>
+        </div>
+    </div>
 </body>
 </html>

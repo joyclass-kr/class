@@ -1,14 +1,11 @@
 (() => {
     "use strict";
 
-    const PLAYER_NAME_KEY = "classPlayerName";
     const POEM_PROGRESS_KEY = "poetryPoemProgressV1";
 
-    // 처음에는 제목·시인·소재만 있는 차례표를 받는다.
-    // 본문과 낱말, 작품 설명, 그 시의 문제는 시를 열 때 poems/<아이디>.js로 받아 여기에 채운다.
+    // 색인 데이터: poems-index.js에서 POETRY_POEM_INDEX, lessons.js에서 POETRY_BOOKS를 받음
     const poems = Array.isArray(window.POETRY_POEM_INDEX) ? window.POETRY_POEM_INDEX : [];
-    const poemById = new Map(poems.map((poem) => [poem.id, poem]));
-    // 시집 차례표. 학년 표시는 없다 — 배열 순서가 곧 "차례대로" 읽는 순서다.
+    const poemById = new Map(poems.map((p) => [p.id, p]));
     const books = Array.isArray(window.POETRY_BOOKS) ? window.POETRY_BOOKS : [];
 
     const questionsByPoem = new Map();
@@ -16,826 +13,802 @@
     const here = document.currentScript ? document.currentScript.src.replace(/[^/]*$/, "") : "";
     const version = (document.currentScript?.src.split("?v=")[1] || "");
     const loading = new Map();
+
     function fetchScript(file) {
         if (loading.has(file)) return loading.get(file);
         const job = new Promise((resolve, reject) => {
             const script = document.createElement("script");
             script.src = here + file + (version ? "?v=" + version : "");
             script.onload = resolve;
-            script.onerror = () => reject(new Error(file + "을 받지 못했습니다."));
+            script.onerror = () => reject(new Error(file + "을 불러오지 못했습니다."));
             document.head.append(script);
         });
         loading.set(file, job);
         return job;
     }
 
-    // 시 한 편의 본문과 문제를 받아 차례표 항목에 채워 넣는다.
+    // 시 한 편의 본문, 낱말, 해설, 문제 로드
     async function loadPoem(poem) {
-        if (!poem || poem.lines) return poem;
-        await fetchScript(`poems/${poem.id}.js`);
-        const part = (window.POETRY_PART || {})[poem.id];
-        if (!part) return poem;
-        Object.assign(poem, part.poem);
-        if (!poem.lines) poem.lines = [];
-        questionsByPoem.set(poem.id, part.questions || []);
+        if (!poem) return null;
+        if (poem.lines && questionsByPoem.has(poem.id)) return poem;
+        try {
+            await fetchScript(`poems/${poem.id}.js`);
+            const part = (window.POETRY_PART || {})[poem.id];
+            if (part) {
+                Object.assign(poem, part.poem);
+                if (!poem.lines) poem.lines = [];
+                questionsByPoem.set(poem.id, part.questions || []);
+            }
+        } catch (e) {
+            console.error(e);
+        }
         return poem;
     }
 
-    // 소재로 고르는 문. "소재로 찾기" 갈래에서 쓴다.
-    const TOPICS = ["봄", "여름", "가을", "겨울", "가족", "동물", "밤과 달", "고향",
-        "그리움", "이별", "자연", "다짐", "시대", "나라", "사랑", "옛이야기", "놀이", "기다림"];
-    const poemsByTopic = new Map(TOPICS.map((topic) => [topic, poems.filter((poem) => (poem.topics || []).includes(topic))]));
-
-    const $ = (id) => document.getElementById(id);
-    const elements = {
-        backLink: document.querySelector(".back-link"),
-        shelfScreen: $("shelfScreen"),
-        bookScreen: $("bookScreen"),
-        readScreen: $("readScreen"),
-        quizScreen: $("quizScreen"),
-        afterScreen: $("afterScreen"),
-        orderTabBtn: $("orderTabBtn"),
-        topicTabBtn: $("topicTabBtn"),
-        orderView: $("orderView"),
-        topicView: $("topicView"),
-        continueBar: $("continueBar"),
-        continueButton: $("continueButton"),
-        bookShelf: $("bookShelf"),
-        topicChips: $("topicChips"),
-        topicPoemList: $("topicPoemList"),
-        bookTitle: $("bookTitle"),
-        bookNote: $("bookNote"),
-        bookPoemList: $("bookPoemList"),
-        bookShelfButton: $("bookShelfButton"),
-        readKicker: $("readKicker"),
-        poemTitle: $("poemTitle"),
-        poemByline: $("poemByline"),
-        versionToggle: $("versionToggle"),
-        poemBody: $("poemBody"),
-        poemNotice: $("poemNotice"),
-        poemWords: $("poemWords"),
-        poemPoint: $("poemPoint"),
-        readQuizButton: $("readQuizButton"),
-        readListButton: $("readListButton"),
-        quizKicker: $("quizKicker"),
-        quizPoemCard: $("quizPoemCard"),
-        quizPoemTitle: $("quizPoemTitle"),
-        quizPoemByline: $("quizPoemByline"),
-        quizPoemBody: $("quizPoemBody"),
-        questionNumber: $("questionNumber"),
-        questionTotal: $("questionTotal"),
-        currentScore: $("currentScore"),
-        progressFill: $("progressFill"),
-        questionCategory: $("questionCategory"),
-        questionPrompt: $("questionPrompt"),
-        questionText: $("questionText"),
-        choiceList: $("choiceList"),
-        feedback: $("feedback"),
-        feedbackTitle: $("feedbackTitle"),
-        correctAnswer: $("correctAnswer"),
-        explanation: $("explanation"),
-        nextButton: $("nextButton"),
-        afterKicker: $("afterKicker"),
-        afterTitle: $("afterTitle"),
-        afterByline: $("afterByline"),
-        afterScore: $("afterScore"),
-        afterBody: $("afterBody"),
-        afterMissed: $("afterMissed"),
-        afterMissedList: $("afterMissedList"),
-        afterNextButton: $("afterNextButton"),
-        afterListButton: $("afterListButton"),
-        announcer: $("announcer")
-    };
-
-    const screens = [
-        elements.shelfScreen,
-        elements.bookScreen,
-        elements.readScreen,
-        elements.quizScreen,
-        elements.afterScreen
-    ];
-
-    const state = {
-        shelfMode: "order",
-        topic: "",
-        browse: null,
-        bookIndex: -1,
-        poemIndex: -1,
-        version: "original",
-        questions: [],
-        currentIndex: 0,
-        score: 0,
-        answered: false,
-        hadWrong: false,
-        firstWrongChoice: "",
-        answers: []
-    };
-
-    // ── 저장 ─────────────────────────────────────────────────────
-    function readStoredValue(key) {
+    // 진도 저장 및 확인
+    function getProgress() {
         try {
-            return localStorage.getItem(key) || "";
-        } catch (error) {
-            return "";
-        }
-    }
-
-    function writeStoredValue(key, value) {
-        try {
-            localStorage.setItem(key, String(value));
-        } catch (error) {
-            // 저장이 막혀 있어도 이번 판은 그대로 굴러간다.
-        }
-    }
-
-    function getPlayerName() {
-        return readStoredValue(PLAYER_NAME_KEY).trim();
-    }
-
-    function readProgress(key) {
-        try {
-            const parsed = JSON.parse(readStoredValue(key) || "{}");
-            return parsed && typeof parsed === "object" ? parsed : {};
-        } catch (error) {
+            return JSON.parse(localStorage.getItem(POEM_PROGRESS_KEY)) || {};
+        } catch {
             return {};
         }
     }
 
-    function saveResult(key, itemId, score, total) {
-        const progress = readProgress(key);
-        const previous = progress[itemId];
-        const best = Math.max(Number(previous?.best) || 0, score);
-        progress[itemId] = { best, total, completedAt: Date.now() };
-        writeStoredValue(key, JSON.stringify(progress));
-        return { best, isNewBest: !previous || score > (Number(previous.best) || 0) };
-    }
-
-    function shuffle(items) {
-        const copy = [...items];
-        for (let index = copy.length - 1; index > 0; index -= 1) {
-            const randomIndex = Math.floor(Math.random() * (index + 1));
-            [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
+    function savePoemSolved(poemId, questionId) {
+        const prog = getProgress();
+        const cur = prog[poemId] || { solved: [] };
+        if (!cur.solved.includes(questionId)) {
+            cur.solved.push(questionId);
         }
-        return copy;
+        const qs = questionsByPoem.get(poemId) || [];
+        if (qs.length > 0 && cur.solved.length >= qs.length) {
+            cur.done = true;
+        }
+        prog[poemId] = cur;
+        try {
+            localStorage.setItem(POEM_PROGRESS_KEY, JSON.stringify(prog));
+        } catch (e) {}
     }
 
-    // ── 자료 묻기 ────────────────────────────────────────────────
-    function questionsOfPoem(poemId) {
-        return questionsByPoem.get(poemId) || [];
+    function isPoemDone(poemId) {
+        const prog = getProgress();
+        return Boolean(prog[poemId]?.done);
     }
 
-    function isReady(book) {
-        return Array.isArray(book.poemIds) && book.poemIds.length > 0;
+    function isBookDone(book) {
+        if (!book || !book.poemIds || book.poemIds.length === 0) return false;
+        return book.poemIds.every((id) => isPoemDone(id));
     }
 
-    function orderOf(book) {
-        return books.indexOf(book) + 1;
+    // 소재별 목록
+    const TOPICS = [
+        "봄", "여름", "가을", "겨울", "가족", "동물", "밤과 달", "고향",
+        "그리움", "이별", "자연", "다짐", "시대", "나라", "사랑", "옛이야기", "놀이", "기다림"
+    ];
+    const poemsByTopic = new Map(
+        TOPICS.map((topic) => [topic, poems.filter((poem) => (poem.topics || []).includes(topic))])
+    );
+
+    // DOM 요소 캐시
+    const $ = (id) => document.getElementById(id);
+    const shelfBackLink = $("shelfBackLink");
+    const bookShelfBtn = $("bookShelfBtn");
+    const tocBtn = $("tocBtn");
+    const shelfScreen = $("shelfScreen");
+    const orderTabBtn = $("orderTabBtn");
+    const topicTabBtn = $("topicTabBtn");
+    const orderView = $("orderView");
+    const topicView = $("topicView");
+    const bookShelf = $("bookShelf");
+    const topicChips = $("topicChips");
+    const topicPoemList = $("topicPoemList");
+
+    const bookScreen = $("bookScreen");
+    const spreadEl = $("spread");
+    const folioLeftEl = $("folioLeft");
+    const folioRightEl = $("folioRight");
+    const prevBtn = $("prevBtn");
+    const nextBtn = $("nextBtn");
+    const pageIndicator = $("pageIndicator");
+
+    // 앱 상태
+    let currentBookIndex = -1;
+    let currentSpreadIndex = 0;
+    let spreads = [];
+    let currentBookPoems = [];
+    let activeTopic = TOPICS[0];
+
+    /* ── 책갈피 & 펼침면 생성 ─────────────────────────────────── */
+    function buildSpreads(book, bookPoems) {
+        const list = [];
+
+        // 1. 표지 + 차례 (Spread 0)
+        list.push({
+            kind: "cover",
+            book,
+            poems: bookPoems
+        });
+
+        // 2. 각 시마다 3개의 펼침면:
+        //    (1) 시 읽기: 왼쪽(본문) / 오른쪽(감상 길잡이 & 시어 사전)
+        //    (2) 문제 풀기: 왼쪽(1, 2번 문제) / 오른쪽(3, 4번 문제)
+        //    (3) 작품 해설: 왼쪽(해설 전반부) / 오른쪽(해설 후반부 & 생각해 볼 거리)
+        bookPoems.forEach((poem, pIdx) => {
+            const qs = questionsByPoem.get(poem.id) || [];
+            list.push({
+                kind: "read",
+                book,
+                poem,
+                pIdx,
+                poems: bookPoems
+            });
+            list.push({
+                kind: "quiz",
+                book,
+                poem,
+                pIdx,
+                questions: qs,
+                poems: bookPoems
+            });
+            list.push({
+                kind: "note",
+                book,
+                poem,
+                pIdx,
+                poems: bookPoems
+            });
+        });
+
+        // 3. 완독 축하 펼침면 (마지막 Spread)
+        list.push({
+            kind: "complete",
+            book,
+            poems: bookPoems
+        });
+
+        return list;
     }
 
-    function currentBook() {
-        return books[state.bookIndex] || null;
+    /* ── 렌더링 헬퍼 ────────────────────────────────────────── */
+    function escapeHtml(text) {
+        return (text || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
     }
 
-    function currentPoemList() {
-        if (state.browse) return state.browse.poems;
-        const book = currentBook();
-        if (!book) return [];
-        return book.poemIds.map((id) => poemById.get(id)).filter(Boolean);
-    }
-
-    function currentPoem() {
-        return currentPoemList()[state.poemIndex] || null;
-    }
-
-    // 문제 수는 아직 받지 않은 시도 세어야 하므로 차례표에 적어 둔 수를 쓴다.
-    function poemQuestionCount(poem) {
-        if (!poem) return 0;
-        const loaded = questionsByPoem.get(poem.id);
-        return loaded ? loaded.length : (poem.questionCount || 0);
-    }
-
-    function setScreen(activeScreen) {
-        screens.forEach((screen) => screen?.classList.toggle("hidden", screen !== activeScreen));
-    }
-
-    function toTop() {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    // ── 시 그리기 ────────────────────────────────────────────────
-    function activeLines(poem) {
-        if (state.version === "modern" && Array.isArray(poem.modern) && poem.modern.length > 0) return poem.modern;
-        return poem.lines || [];
-    }
-
-    function renderPoemLines(container, lines) {
-        container.replaceChildren();
-        let stanza = document.createElement("p");
-        stanza.className = "poem-stanza";
+    // 시 본문 행/연 분리
+    function formatPoemLines(lines) {
+        if (!lines || lines.length === 0) {
+            return `<div class="poem-stanza"><p>본문을 준비하고 있습니다.</p></div>`;
+        }
+        let html = '<div class="poem-stanza">';
+        let prevEmpty = false;
         lines.forEach((line) => {
-            if (line === "") {
-                if (stanza.childNodes.length > 0) container.append(stanza);
-                stanza = document.createElement("p");
-                stanza.className = "poem-stanza";
-                return;
+            const trimmed = line.trim();
+            if (!trimmed) {
+                if (!prevEmpty) {
+                    html += '</div><div class="poem-stanza">';
+                    prevEmpty = true;
+                }
+            } else {
+                html += `<div class="poem-line">${escapeHtml(line)}</div>`;
+                prevEmpty = false;
             }
-            if (stanza.childNodes.length > 0) stanza.append(document.createElement("br"));
-            stanza.append(document.createTextNode(line));
         });
-        if (stanza.childNodes.length > 0) container.append(stanza);
+        html += "</div>";
+        return html;
     }
 
-    function renderReadingPoem() {
-        const poem = currentPoem();
-        if (!poem) return;
-        // 권리 분류는 자료 관리용 메타데이터다. 본문 표시 여부는 실제로
-        // 등록된 줄이 있는지로 결정한다. 허락받거나 직접 입력한 본문까지
-        // rights 값 하나로 숨기지 않는다.
-        renderPoemLines(elements.poemBody, activeLines(poem));
+    /* ── 펼침면 렌더링 함수들 ─────────────────────────────────── */
+
+    // 1. 표지 & 목차
+    function renderCoverSpread(s) {
+        const { book, poems } = s;
+        const volumeBadge = book.title.includes("·") ? book.title.split("·")[0].trim() : "시집";
+        const cleanTitle = book.title.includes("·") ? book.title.split("·").slice(1).join("·").trim() : book.title;
+
+        const leftHtml = `
+            <div class="story-page-left-full">
+                <div class="cover-art-box">
+                    <span class="cover-badge">${escapeHtml(volumeBadge)}</span>
+                    <h2 class="cover-title">${escapeHtml(cleanTitle)}</h2>
+                    <p class="cover-subtitle">${escapeHtml(book.note || "아름다운 우리 시를 읽고 감상해요.")}</p>
+                    <div class="cover-deco">📖</div>
+                    <button class="book-start-btn" id="startReadingBtn" type="button">첫 시부터 읽기 ›</button>
+                </div>
+            </div>
+        `;
+
+        const tocItemsHtml = poems.map((p, idx) => {
+            const done = isPoemDone(p.id);
+            return `
+                <li>
+                    <button class="book-toc-btn" type="button" data-jump-spread="${idx * 3 + 1}">
+                        <span class="toc-num">${idx + 1}</span>
+                        <div class="toc-info">
+                            <span class="toc-title">${escapeHtml(p.title)} ${done ? "✓" : ""}</span>
+                            <span class="toc-poet">${escapeHtml(p.poet || "")}</span>
+                        </div>
+                        <span class="toc-link-text">읽기 ›</span>
+                    </button>
+                </li>
+            `;
+        }).join("");
+
+        const rightHtml = `
+            <div class="story-page-right">
+                <div class="toc-header">
+                    <div class="page-head-kicker">차례</div>
+                    <h2>수록된 시</h2>
+                    <p class="toc-intro">총 ${poems.length}편의 시가 담겨 있습니다.</p>
+                </div>
+                <ul class="book-toc-list">
+                    ${tocItemsHtml}
+                </ul>
+            </div>
+        `;
+
+        return leftHtml + rightHtml;
     }
 
-    function bylineOf(poem) {
-        return poem.poet;
-    }
+    // 2. 시 읽기
+    function renderReadSpread(s) {
+        const { book, poem, pIdx } = s;
+        const volText = book.title.includes("·") ? book.title.split("·")[0].trim() : "시집";
 
-    function makeCard({ number, title, note, meta, onClick, disabled, className }) {
-        const item = document.createElement("li");
-        const button = document.createElement("button");
-        const numberEl = document.createElement("span");
-        const copy = document.createElement("span");
-        const titleEl = document.createElement("strong");
-        const metaEl = document.createElement("span");
+        const leftHtml = `
+            <div class="story-page-left">
+                <div class="page-head-kicker">${escapeHtml(volText)} · 제 ${pIdx + 1} 수</div>
+                <h2 class="poem-reading-title">${escapeHtml(poem.title)}</h2>
+                <div class="poem-reading-byline">${escapeHtml(poem.poet || "")}${poem.year ? ` · ${poem.year}` : ""}</div>
+                <div class="poem-body-container">
+                    ${formatPoemLines(poem.lines)}
+                </div>
+            </div>
+        `;
 
-        button.type = "button";
-        button.className = "lesson-card";
-        if (className) button.classList.add(className);
-        numberEl.className = "lesson-number";
-        numberEl.textContent = number;
-        copy.className = "lesson-copy";
-        titleEl.textContent = title;
-        copy.append(titleEl);
-        if (note) {
-            const noteEl = document.createElement("small");
-            noteEl.textContent = note;
-            copy.append(noteEl);
+        // 오른쪽 페이지: 감상 길잡이 & 시어 사전
+        let wordsHtml = "";
+        if (poem.words && poem.words.length > 0) {
+            const dlInner = poem.words.map(w => `
+                <dt>${escapeHtml(w.word)}</dt>
+                <dd>${escapeHtml(w.mean)}</dd>
+            `).join("");
+            wordsHtml = `
+                <div class="poem-words-box">
+                    <div class="words-label">시어 사전</div>
+                    <dl class="poem-words-dl">${dlInner}</dl>
+                </div>
+            `;
         }
-        metaEl.className = "lesson-meta";
-        metaEl.textContent = meta || "";
 
-        if (disabled) {
-            button.disabled = true;
-            button.classList.add("is-pending");
-        } else if (onClick) {
-            button.addEventListener("click", onClick);
+        const rightHtml = `
+            <div class="story-page-right">
+                <div class="page-head-kicker">감상과 낱말</div>
+                <div class="poem-point-box">
+                    <div class="point-label">감상 길잡이</div>
+                    <p class="point-text">${escapeHtml(poem.point || "시의 분위기와 시인의 마음을 가만히 헤아려 보세요.")}</p>
+                </div>
+                ${wordsHtml}
+                <div class="spread-next-guide">
+                    <button class="guide-nav-btn primary" id="btnGoQuiz" type="button">문제 풀기 ›</button>
+                </div>
+            </div>
+        `;
+
+        return leftHtml + rightHtml;
+    }
+
+    // 3. 문제 풀기 (왼쪽 Q1~Q2, 오른쪽 Q3~Q4)
+    function renderQuizSpread(s) {
+        const { poem, questions = [] } = s;
+        const qLeft = questions.slice(0, 2);
+        const qRight = questions.slice(2, 4);
+
+        const prog = getProgress()[poem.id]?.solved || [];
+
+        function renderQuestionCard(q, num) {
+            if (!q) return "";
+            const isSolved = prog.includes(q.id);
+            const choicesHtml = (q.choices || []).map((c, cIdx) => {
+                const isCorrect = c === q.answer;
+                const answeredClass = isSolved && isCorrect ? "correct" : "";
+                return `
+                    <button class="quiz-choice-btn ${answeredClass}" type="button"
+                            data-qid="${q.id}" data-choice="${escapeHtml(c)}" data-correct="${isCorrect ? '1' : '0'}">
+                        ${cIdx + 1}. ${escapeHtml(c)}
+                    </button>
+                `;
+            }).join("");
+
+            const explBoxHtml = isSolved
+                ? `<div class="quiz-expl-box"><strong>정답입니다!</strong> ${escapeHtml(q.explanation || "")}</div>`
+                : `<div class="quiz-expl-box hidden" id="expl_${q.id}"><strong>정답입니다!</strong> ${escapeHtml(q.explanation || "")}</div>`;
+
+            return `
+                <div class="quiz-card" data-qid="${q.id}">
+                    <span class="quiz-category-tag">${escapeHtml(q.category || "이해 확인")}</span>
+                    <p class="quiz-question">${num}. ${escapeHtml(q.sentence || q.prompt || "")}</p>
+                    <div class="quiz-choices-box">
+                        ${choicesHtml}
+                    </div>
+                    ${explBoxHtml}
+                </div>
+            `;
         }
 
-        button.append(numberEl, copy, metaEl);
-        item.append(button);
-        return item;
+        const leftCardsHtml = qLeft.map((q, idx) => renderQuestionCard(q, idx + 1)).join("");
+        const rightCardsHtml = qRight.map((q, idx) => renderQuestionCard(q, idx + 3)).join("");
+
+        const leftHtml = `
+            <div class="story-page-left page-quiz-col">
+                <div class="page-head-kicker">${escapeHtml(poem.title)} · 문제 풀기 (1/2)</div>
+                ${leftCardsHtml || '<p>등록된 문제가 없습니다.</p>'}
+            </div>
+        `;
+
+        const rightHtml = `
+            <div class="story-page-right page-quiz-col">
+                <div class="page-head-kicker">${escapeHtml(poem.title)} · 문제 풀기 (2/2)</div>
+                ${rightCardsHtml}
+                <div class="spread-next-guide">
+                    <button class="guide-nav-btn primary" id="btnGoNote" type="button">작품 해설 읽기 ›</button>
+                </div>
+            </div>
+        `;
+
+        return leftHtml + rightHtml;
     }
 
-    function makeBookCard(book, poemProgress) {
-        const button = document.createElement("button");
-        const cover = document.createElement("span");
-        const titleWrap = document.createElement("span");
-        const numberEl = document.createElement("b");
-        const titleText = document.createTextNode(book.title);
+    // 4. 작품 해설 (왼쪽 전반부, 오른쪽 후반부 및 생각거리)
+    function renderNoteSpread(s) {
+        const { book, poem, pIdx, poems } = s;
+        const notes = Array.isArray(poem.note) ? poem.note : (poem.note ? [poem.note] : []);
 
-        button.type = "button";
-        button.className = "book-card";
+        const half = Math.ceil(notes.length / 2);
+        const leftParas = notes.slice(0, half);
+        const rightParas = notes.slice(half);
 
-        const readCount = book.poemIds.filter((id) => poemProgress[id]).length;
-        const allRead = readCount === book.poemIds.length;
-        if (allRead) button.classList.add("is-done");
+        const leftHtml = `
+            <div class="story-page-left">
+                <div class="page-head-kicker">${escapeHtml(poem.title)} · 깊이 읽기</div>
+                <h3 class="note-head-title">작품 해설</h3>
+                <div class="note-paras">
+                    ${leftParas.map(p => `<p class="note-p">${escapeHtml(p)}</p>`).join("") || '<p class="note-p">해설을 준비하고 있습니다.</p>'}
+                </div>
+            </div>
+        `;
 
-        cover.className = "book-cover";
-        cover.textContent = book.title;
+        const isLastPoem = pIdx === poems.length - 1;
+        const nextPoem = !isLastPoem ? poems[pIdx + 1] : null;
 
-        titleWrap.className = "book-title";
-        numberEl.textContent = `${orderOf(book)}권`;
-        titleWrap.append(numberEl, titleText);
+        const nextBtnLabel = isLastPoem
+            ? "권 마무리하기 ›"
+            : `다음 시 읽기: 「${escapeHtml(nextPoem.title)}」 ›`;
 
-        button.append(cover, titleWrap);
-        button.addEventListener("click", () => {
-            state.browse = null;
-            openBookDetail(books.indexOf(book));
-        });
-        return button;
+        const reflection = poem.reflection || (
+            poem.topics?.includes("가족") ? "이 시를 읽고 나의 가족이나 소중한 사람을 떠올렸을 때 어떤 마음이 드나요?" :
+            poem.topics?.includes("그리움") || poem.topics?.includes("이별") ? "내가 가장 그립고 보고 싶은 대상은 누구인가요? 그때의 감정을 떠올려 보세요." :
+            "시에서 가장 마음에 와닿았던 구절은 어디인가요? 왜 그 구절이 인상 깊었는지 생각해 보세요."
+        );
+
+        const rightHtml = `
+            <div class="story-page-right">
+                <div class="note-paras">
+                    ${rightParas.map(p => `<p class="note-p">${escapeHtml(p)}</p>`).join("")}
+                </div>
+                <div class="note-reflection-box">
+                    <div class="reflection-label">생각해 볼 거리</div>
+                    <p class="reflection-text">${escapeHtml(reflection)}</p>
+                </div>
+                <div class="spread-next-guide">
+                    <button class="guide-nav-btn primary" id="btnGoNextAfterNote" type="button">${nextBtnLabel}</button>
+                </div>
+            </div>
+        `;
+
+        return leftHtml + rightHtml;
     }
 
-    // ── 이어서 읽기 ──────────────────────────────────────────────
-    function findResumePoint() {
-        const progress = readProgress(POEM_PROGRESS_KEY);
-        for (let bi = 0; bi < books.length; bi += 1) {
-            const book = books[bi];
-            if (!isReady(book)) continue;
-            for (let pi = 0; pi < book.poemIds.length; pi += 1) {
-                if (!progress[book.poemIds[pi]]) return { bookIndex: bi, poemIndex: pi };
-            }
+    // 5. 권 완독 펼침면
+    function renderCompleteSpread(s) {
+        const { book, poems } = s;
+        const cleanTitle = book.title;
+
+        const listItemsHtml = poems.map((p, idx) => `
+            <li>
+                <span class="check-icon">✓</span>
+                <span><strong>제 ${idx + 1} 수:</strong> 「${escapeHtml(p.title)}」 (${escapeHtml(p.poet || "")})</span>
+            </li>
+        `).join("");
+
+        const leftHtml = `
+            <div class="story-page-left page-complete-left">
+                <span class="complete-badge">완독 축하</span>
+                <h2 class="complete-title">${escapeHtml(cleanTitle)} 완독!</h2>
+                <p class="complete-subtitle">이 책에 실린 모든 시를 읽고 문제를 풀었습니다.</p>
+                <ul class="complete-poem-list">
+                    ${listItemsHtml}
+                </ul>
+            </div>
+        `;
+
+        const hasNextBook = currentBookIndex < books.length - 1;
+        const nextBook = hasNextBook ? books[currentBookIndex + 1] : null;
+
+        const rightHtml = `
+            <div class="story-page-right page-complete-right">
+                <div class="complete-actions">
+                    ${hasNextBook ? `
+                        <button class="book-action-btn primary" id="btnNextBook" type="button">
+                            다음 권 읽기: ${escapeHtml(nextBook.title)} ›
+                        </button>
+                    ` : ""}
+                    <button class="book-action-btn secondary" id="btnReturnToShelf" type="button">
+                        시집 책장으로 돌아가기
+                    </button>
+                    <button class="book-action-btn secondary" id="btnRestartBook" type="button">
+                        이 책 처음부터 다시 읽기
+                    </button>
+                </div>
+            </div>
+        `;
+
+        return leftHtml + rightHtml;
+    }
+
+    /* ── 화면 갱신 (Paint) ─────────────────────────────────────── */
+    function paint() {
+        if (!spreads.length || currentSpreadIndex < 0 || currentSpreadIndex >= spreads.length) {
+            return;
         }
-        return null;
-    }
 
-    function renderContinueBar() {
-        if (elements.continueBar) {
-            elements.continueBar.classList.add("hidden");
+        const s = spreads[currentSpreadIndex];
+
+        // 1. 펼침면 본문 HTML 주입
+        let html = "";
+        switch (s.kind) {
+            case "cover":
+                html = renderCoverSpread(s);
+                break;
+            case "read":
+                html = renderReadSpread(s);
+                break;
+            case "quiz":
+                html = renderQuizSpread(s);
+                break;
+            case "note":
+                html = renderNoteSpread(s);
+                break;
+            case "complete":
+                html = renderCompleteSpread(s);
+                break;
         }
-    }
+        spreadEl.innerHTML = html;
 
-    // ── 소재별 ───────────────────────────────────────────────────
-    function renderTopicView() {
-        if (!poemsByTopic.has(state.topic)) state.topic = TOPICS.find((topic) => poemsByTopic.get(topic).length > 0) || "";
-        elements.topicChips.replaceChildren(...TOPICS.filter((topic) => poemsByTopic.get(topic).length > 0).map((topic) => {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "grade-tab";
-            button.textContent = topic;
-            button.classList.toggle("is-active", topic === state.topic);
-            button.addEventListener("click", () => {
-                state.topic = topic;
-                renderTopicView();
-            });
-            return button;
-        }));
+        // 2. 인디케이터 및 쪽수(Folio)
+        pageIndicator.textContent = `${currentSpreadIndex + 1} / ${spreads.length}`;
 
-        const list = poemsByTopic.get(state.topic) || [];
-        const poemProgress = readProgress(POEM_PROGRESS_KEY);
-        elements.topicPoemList.replaceChildren(...list.map((poem, index) => {
-            const record = poemProgress[poem.id];
-            return makeCard({
-                number: "",
-                title: poem.title,
-                note: poem.point || "",
-                meta: record ? `✓ ${record.best}/${record.total}` : poem.poet,
-                className: record ? "is-done" : "",
-                onClick: () => openBrowse(list, index)
-            });
-        }));
-    }
-
-    function openBrowseUnlocked(list, index) {
-        state.browse = { topic: state.topic, poems: list };
-        state.bookIndex = -1;
-        return openReadingUnlocked(index);
-    }
-
-    function openBrowse(list, index) {
-        return guardedNav(() => openBrowseUnlocked(list, index));
-    }
-
-    function setShelfMode(mode) {
-        state.shelfMode = mode;
-        elements.orderTabBtn.classList.toggle("is-active", mode === "order");
-        elements.orderTabBtn.setAttribute("aria-selected", mode === "order" ? "true" : "false");
-        elements.topicTabBtn.classList.toggle("is-active", mode === "topic");
-        elements.topicTabBtn.setAttribute("aria-selected", mode === "topic" ? "true" : "false");
-        elements.orderView.classList.toggle("hidden", mode !== "order");
-        elements.topicView.classList.toggle("hidden", mode !== "topic");
-        if (elements.continueBar) {
-            elements.continueBar.classList.toggle("hidden", mode !== "order");
-        }
-        if (mode === "order") {
-            renderBookShelf();
-            renderContinueBar();
+        if (s.kind === "cover") {
+            folioLeftEl.textContent = "";
+            folioRightEl.textContent = "";
         } else {
+            folioLeftEl.textContent = String(currentSpreadIndex * 2);
+            folioRightEl.textContent = String(currentSpreadIndex * 2 + 1);
+        }
+
+        // 3. 이전/다음 버튼 활성/비활성
+        prevBtn.disabled = currentSpreadIndex === 0;
+        nextBtn.disabled = currentSpreadIndex === spreads.length - 1;
+
+        // 4. 이벤트 바인딩
+        attachSpreadEvents(s);
+    }
+
+    function attachSpreadEvents(s) {
+        // A. 표지 시작 버튼
+        const startBtn = $("startReadingBtn");
+        if (startBtn) {
+            startBtn.onclick = () => goTo(1, "next");
+        }
+
+        // B. 차례 목록 점프 버튼
+        spreadEl.querySelectorAll("[data-jump-spread]").forEach((btn) => {
+            btn.onclick = () => {
+                const target = parseInt(btn.getAttribute("data-jump-spread"), 10);
+                if (!isNaN(target)) goTo(target, target > currentSpreadIndex ? "next" : "prev");
+            };
+        });
+
+        // C. 시 읽기 -> 문제 풀기 버튼
+        const goQuizBtn = $("btnGoQuiz");
+        if (goQuizBtn) {
+            goQuizBtn.onclick = () => goTo(currentSpreadIndex + 1, "next");
+        }
+
+        // D. 문제 풀기 -> 해설 읽기 버튼
+        const goNoteBtn = $("btnGoNote");
+        if (goNoteBtn) {
+            goNoteBtn.onclick = () => goTo(currentSpreadIndex + 1, "next");
+        }
+
+        // E. 퀴즈 보기 클릭 시 채점
+        if (s.kind === "quiz") {
+            spreadEl.querySelectorAll(".quiz-choice-btn").forEach((btn) => {
+                btn.onclick = () => {
+                    const isCorrect = btn.getAttribute("data-correct") === "1";
+                    const qid = btn.getAttribute("data-qid");
+                    const card = btn.closest(".quiz-card");
+                    if (!card) return;
+
+                    if (isCorrect) {
+                        btn.classList.add("correct");
+                        btn.classList.remove("incorrect");
+                        // 같은 카드의 다른 선택지 오답 표시 정리 및 비활성화
+                        card.querySelectorAll(".quiz-choice-btn").forEach((other) => {
+                            if (other !== btn) {
+                                other.classList.remove("incorrect");
+                                other.disabled = true;
+                            }
+                        });
+                        const explEl = card.querySelector(".quiz-expl-box");
+                        if (explEl) explEl.classList.remove("hidden");
+
+                        savePoemSolved(s.poem.id, qid);
+                    } else {
+                        btn.classList.add("incorrect");
+                        setTimeout(() => btn.classList.remove("incorrect"), 600);
+                    }
+                };
+            });
+        }
+
+        // F. 해설 -> 다음 시 또는 권 마무리
+        const goNextAfterNote = $("btnGoNextAfterNote");
+        if (goNextAfterNote) {
+            goNextAfterNote.onclick = () => goTo(currentSpreadIndex + 1, "next");
+        }
+
+        // G. 완독 페이지 액션
+        const btnNextBook = $("btnNextBook");
+        if (btnNextBook) {
+            btnNextBook.onclick = () => openBook(currentBookIndex + 1, 0);
+        }
+        const btnReturnToShelf = $("btnReturnToShelf");
+        if (btnReturnToShelf) {
+            btnReturnToShelf.onclick = () => showShelf();
+        }
+        const btnRestartBook = $("btnRestartBook");
+        if (btnRestartBook) {
+            btnRestartBook.onclick = () => goTo(0, "prev");
+        }
+    }
+
+    // 페이지 이동
+    function goTo(targetSpreadIndex, animDirection) {
+        if (targetSpreadIndex < 0 || targetSpreadIndex >= spreads.length) return;
+        const dir = animDirection || (targetSpreadIndex > currentSpreadIndex ? "next" : "prev");
+
+        spreadEl.classList.remove("flip-next", "flip-prev");
+        // 트리거 리플로우
+        void spreadEl.offsetWidth;
+        spreadEl.classList.add(dir === "next" ? "flip-next" : "flip-prev");
+
+        currentSpreadIndex = targetSpreadIndex;
+        paint();
+    }
+
+    /* ── 책 열기 ─────────────────────────────────────────────── */
+    async function openBook(bookIndex, targetPoemIndex = -1) {
+        const book = books[bookIndex];
+        if (!book) return;
+
+        currentBookIndex = bookIndex;
+
+        // UI 모드 전환: 책장 숨김, 책 뷰 표시
+        shelfScreen.hidden = true;
+        bookScreen.hidden = false;
+        shelfBackLink.hidden = true;
+        bookShelfBtn.hidden = false;
+        tocBtn.hidden = false;
+        window.scrollTo(0, 0);
+
+        // 로딩 화면 표시
+        spreadEl.innerHTML = `
+            <div class="story-page-left-full" style="grid-column: 1 / -1; align-items:center; justify-content:center;">
+                <p style="font-size: 18px; color: var(--wood); font-weight: 700;">시집을 펼치는 중입니다...</p>
+            </div>
+        `;
+        pageIndicator.textContent = "";
+
+        // 해당 책에 수록된 시들을 모두 로드
+        const poemsInBook = book.poemIds.map((id) => poemById.get(id)).filter(Boolean);
+        await Promise.all(poemsInBook.map((p) => loadPoem(p)));
+        currentBookPoems = poemsInBook;
+
+        // 펼침면 생성
+        spreads = buildSpreads(book, poemsInBook);
+
+        if (targetPoemIndex >= 0 && targetPoemIndex < poemsInBook.length) {
+            currentSpreadIndex = targetPoemIndex * 3 + 1;
+        } else {
+            currentSpreadIndex = 0;
+        }
+
+        paint();
+    }
+
+    /* ── 책장 화면 (Shelf Lobby) ──────────────────────────────── */
+    function showShelf(activeTab = "order") {
+        bookScreen.hidden = true;
+        shelfScreen.hidden = false;
+        shelfBackLink.hidden = false;
+        bookShelfBtn.hidden = true;
+        tocBtn.hidden = true;
+        window.scrollTo(0, 0);
+
+        setShelfTab(activeTab);
+    }
+
+    function setShelfTab(tab) {
+        if (tab === "order") {
+            orderTabBtn.classList.add("is-active");
+            orderTabBtn.setAttribute("aria-selected", "true");
+            topicTabBtn.classList.remove("is-active");
+            topicTabBtn.setAttribute("aria-selected", "false");
+            orderView.classList.remove("hidden");
+            topicView.classList.add("hidden");
+            renderBookShelf();
+        } else {
+            topicTabBtn.classList.add("is-active");
+            topicTabBtn.setAttribute("aria-selected", "true");
+            orderTabBtn.classList.remove("is-active");
+            orderTabBtn.setAttribute("aria-selected", "false");
+            topicView.classList.remove("hidden");
+            orderView.classList.add("hidden");
             renderTopicView();
         }
     }
 
+    // 책장 그리드 렌더링
     function renderBookShelf() {
-        const poemProgress = readProgress(POEM_PROGRESS_KEY);
-        elements.bookShelf.replaceChildren(...books.filter(isReady).map((book) => makeBookCard(book, poemProgress)));
+        bookShelf.innerHTML = books.map((b, bIdx) => {
+            const done = isBookDone(b);
+            const volumeBadge = b.title.includes("·") ? b.title.split("·")[0].trim() : `제 ${bIdx + 1} 권`;
+            const cleanTitle = b.title.includes("·") ? b.title.split("·").slice(1).join("·").trim() : b.title;
+
+            return `
+                <div class="book-card ${done ? 'is-done' : ''}" role="button" tabindex="0" data-book-idx="${bIdx}">
+                    <div class="book-cover">
+                        <span class="book-cover-badge">${escapeHtml(volumeBadge)}</span>
+                        <div class="book-cover-title">${escapeHtml(cleanTitle)}</div>
+                        <div class="book-cover-icon">📖</div>
+                    </div>
+                    <div class="book-title-meta">
+                        <p class="book-card-title">${escapeHtml(b.title)}</p>
+                        <p class="book-card-note">${escapeHtml(b.note || "")}</p>
+                        <span class="book-card-badge">${done ? "완독 ✓" : `${b.poemIds.length}편 수록`}</span>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        bookShelf.querySelectorAll("[data-book-idx]").forEach((card) => {
+            const idx = parseInt(card.getAttribute("data-book-idx"), 10);
+            const open = () => openBook(idx);
+            card.onclick = open;
+            card.onkeydown = (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    open();
+                }
+            };
+        });
     }
 
-    function showShelfUnlocked(mode) {
-        state.bookIndex = -1;
-        state.poemIndex = -1;
-        state.browse = null;
-        setShelfMode(mode || state.shelfMode || "order");
-        setScreen(elements.shelfScreen);
-        toTop();
-    }
+    // 소재별 찾기 뷰 렌더링
+    function renderTopicView() {
+        topicChips.innerHTML = TOPICS.map((t) => `
+            <button class="topic-chip ${t === activeTopic ? 'is-active' : ''}" type="button" data-topic="${t}">
+                ${t}
+            </button>
+        `).join("");
 
-    function showShelf(mode) {
-        return guardedNav(() => showShelfUnlocked(mode));
-    }
+        topicChips.querySelectorAll("[data-topic]").forEach((btn) => {
+            btn.onclick = () => {
+                activeTopic = btn.getAttribute("data-topic");
+                renderTopicView();
+            };
+        });
 
-    // ── 책 목차 ──────────────────────────────────────────────────
-    function openBookDetailUnlocked(bookIndex) {
-        state.browse = null;
-        state.bookIndex = bookIndex;
-        state.poemIndex = -1;
-        const book = currentBook();
-        if (!book) {
-            showShelfUnlocked();
+        const list = poemsByTopic.get(activeTopic) || [];
+        if (list.length === 0) {
+            topicPoemList.innerHTML = `<li style="grid-column: 1/-1; text-align: center; color: var(--muted); padding: 30px;">등록된 시가 없습니다.</li>`;
             return;
         }
 
-        elements.bookTitle.textContent = `${orderOf(book)}권 · ${book.title}`;
-        elements.bookNote.textContent = book.note;
+        topicPoemList.innerHTML = list.map((p) => {
+            const done = isPoemDone(p.id);
+            return `
+                <li class="topic-poem-card" role="button" tabindex="0" data-poem-id="${p.id}">
+                    <div>
+                        <div class="topic-poem-title">${escapeHtml(p.title)} ${done ? "✓" : ""}</div>
+                        <div class="topic-poem-poet">${escapeHtml(p.poet || "")}</div>
+                    </div>
+                    <span style="font-size: 13px; font-weight: 700; color: var(--gold);">읽기 ›</span>
+                </li>
+            `;
+        }).join("");
 
-        const poemProgress = readProgress(POEM_PROGRESS_KEY);
-        const poemList = currentPoemList();
-        elements.bookPoemList.replaceChildren(...poemList.map((poem, index) => {
-            const record = poemProgress[poem.id];
-            const count = poemQuestionCount(poem);
-            return makeCard({
-                number: `${index + 1}`,
-                title: poem.title,
-                note: poem.point || "",
-                meta: record ? `✓ ${record.best}/${record.total}` : `${poem.poet} · 문제 ${count}개`,
-                className: record ? (record.best === record.total ? "is-perfect" : "is-done") : "",
-                onClick: () => openReading(index)
-            });
-        }));
-
-        setScreen(elements.bookScreen);
-        toTop();
-    }
-
-    function openBookDetail(bookIndex) {
-        return guardedNav(() => openBookDetailUnlocked(bookIndex));
-    }
-
-    // ── 1단계 · 시 읽기 ──────────────────────────────────────────
-    // 화면 전환은 전부 이 잠금 하나를 거쳐야 한다. 다음 시를 받는 동안(await) 같은 자리를
-    // 두 번 눌러도, 두 번째 누름이 첫 번째가 아직 안 바꾼 자리를 잘못 짚어 건너뛰는 일이 없도록.
-    let navBusy = false;
-    async function guardedNav(run) {
-        if (navBusy) return;
-        navBusy = true;
-        try {
-            await run();
-        } finally {
-            navBusy = false;
-        }
-    }
-
-    function openReading(poemIndex) {
-        return guardedNav(() => openReadingUnlocked(poemIndex));
-    }
-
-    async function openReadingUnlocked(poemIndex) {
-        state.poemIndex = poemIndex;
-        state.version = "original";
-        const poem = currentPoem();
-        if (poem) await loadPoem(poem);
-        if (!poem) {
-            showShelfUnlocked();
-            return;
-        }
-
-        const list = currentPoemList();
-        const book = currentBook();
-        elements.readKicker.textContent = state.browse
-            ? `소재별 · ${state.browse.topic} · ${poemIndex + 1}/${list.length}`
-            : `${orderOf(book)}권 · ${book.title} · ${poemIndex + 1}/${list.length}`;
-
-        elements.poemTitle.textContent = poem.title;
-        elements.poemByline.textContent = bylineOf(poem);
-
-        const hasModern = Array.isArray(poem.modern) && poem.modern.length > 0;
-        elements.versionToggle.classList.toggle("hidden", !hasModern);
-        elements.versionToggle.querySelectorAll(".version-btn").forEach((button) => {
-            button.classList.toggle("is-active", button.dataset.version === state.version);
-        });
-
-        renderReadingPoem();
-
-        const hasLines = activeLines(poem).length > 0;
-        elements.poemNotice.classList.toggle("hidden", hasLines);
-        elements.poemNotice.textContent = hasLines ? "" : "본문을 준비하고 있어요.";
-
-        elements.poemWords.replaceChildren();
-        (poem.words || []).forEach((entry) => {
-            const term = document.createElement("dt");
-            const desc = document.createElement("dd");
-            term.textContent = entry.word;
-            desc.textContent = entry.mean;
-            elements.poemWords.append(term, desc);
-        });
-        elements.poemWords.classList.toggle("hidden", (poem.words || []).length === 0);
-
-        elements.poemPoint.textContent = poem.point || "";
-        elements.poemPoint.classList.toggle("hidden", !poem.point);
-
-        const count = questionsOfPoem(poem.id).length;
-        elements.readQuizButton.disabled = count === 0;
-        elements.readQuizButton.textContent = count === 0 ? "문제 준비 중" : `문제 풀기 (${count}개)`;
-
-        elements.announcer.textContent = `${poem.title}. ${poem.poet}.`;
-        setScreen(elements.readScreen);
-        toTop();
-    }
-
-    function setVersion(nextVersion) {
-        if (state.version === nextVersion) return;
-        state.version = nextVersion;
-        elements.versionToggle.querySelectorAll(".version-btn").forEach((button) => {
-            button.classList.toggle("is-active", button.dataset.version === nextVersion);
-        });
-        renderReadingPoem();
-    }
-
-    // ── 2단계 · 문제 풀기 ────────────────────────────────────────
-    function buildSession(list) {
-        return list.map((question) => ({ ...question, choices: shuffle(question.choices) }));
-    }
-
-    function startQuiz() {
-        const poem = currentPoem();
-        const session = buildSession(questionsOfPoem(poem ? poem.id : ""));
-        if (session.length === 0) return;
-
-        state.questions = session;
-        state.currentIndex = 0;
-        state.score = 0;
-        state.answered = false;
-        state.answers = [];
-
-        elements.currentScore.textContent = "0";
-        elements.questionTotal.textContent = String(session.length);
-        elements.quizKicker.textContent = `「${poem.title}」 · 문제`;
-
-        setScreen(elements.quizScreen);
-        renderQuestion();
-        toTop();
-    }
-
-    function renderQuizPoem(question) {
-        const poem = question.poemId ? poemById.get(question.poemId) : null;
-        elements.quizPoemCard.classList.toggle("hidden", !poem);
-        if (!poem) return;
-        elements.quizPoemTitle.textContent = poem.title;
-        elements.quizPoemByline.textContent = bylineOf(poem);
-        if (poem.rights !== "public") {
-            elements.quizPoemBody.replaceChildren();
-            const notice = document.createElement("p");
-            notice.className = "poem-notice";
-            notice.textContent = "교과서를 펴고 이 시를 읽은 뒤 답해 보세요.";
-            elements.quizPoemBody.append(notice);
-        } else {
-            renderPoemLines(elements.quizPoemBody, poem.lines || []);
-        }
-    }
-
-    function renderQuestion() {
-        const question = state.questions[state.currentIndex];
-        const total = state.questions.length;
-        state.answered = false;
-        state.hadWrong = false;
-        state.firstWrongChoice = "";
-
-        elements.questionNumber.textContent = String(state.currentIndex + 1);
-        elements.progressFill.style.width = `${((state.currentIndex + 1) / total) * 100}%`;
-        elements.questionCategory.textContent = question.category;
-        elements.questionPrompt.textContent = question.prompt;
-        elements.questionText.textContent = question.sentence;
-        renderQuizPoem(question);
-        elements.choiceList.replaceChildren();
-        elements.feedback.classList.add("hidden");
-        elements.feedback.classList.remove("is-wrong");
-        elements.nextButton.textContent = state.currentIndex === total - 1 ? "작품 설명 보기" : "다음 문제";
-
-        question.choices.forEach((choice, index) => {
-            const button = document.createElement("button");
-            const number = document.createElement("span");
-
-            button.type = "button";
-            button.className = "choice-button";
-            button.dataset.choice = choice;
-            number.className = "choice-number";
-            number.setAttribute("aria-hidden", "true");
-            number.textContent = String(index + 1);
-            button.append(number, document.createTextNode(choice));
-
-            button.addEventListener("click", () => selectAnswer(choice, button));
-            elements.choiceList.append(button);
-        });
-
-        elements.choiceList.querySelector("button")?.focus({ preventScroll: true });
-    }
-
-    function selectAnswer(selectedChoice, selectedButton) {
-        if (state.answered) return;
-        const question = state.questions[state.currentIndex];
-        const isCorrect = selectedChoice === question.answer;
-        const buttons = [...elements.choiceList.querySelectorAll("button")];
-
-        if (!isCorrect) {
-            state.hadWrong = true;
-            if (!state.firstWrongChoice) state.firstWrongChoice = selectedChoice;
-            selectedButton.classList.add("is-wrong");
-            selectedButton.disabled = true;
-            elements.feedbackTitle.textContent = "다시 생각해 보세요.";
-            elements.explanation.textContent = "다른 답을 골라보세요.";
-            elements.correctAnswer.textContent = "";
-            elements.feedback.classList.add("is-wrong");
-            elements.feedback.classList.remove("hidden");
-            elements.announcer.textContent = "다시 생각하고 다른 답을 골라보세요.";
-            return;
-        }
-
-        state.answered = true;
-        buttons.forEach((button) => {
-            button.disabled = true;
-            if (button.dataset.choice === question.answer) button.classList.add("is-correct");
-        });
-
-        if (!state.hadWrong) {
-            state.score += 1;
-            elements.currentScore.textContent = String(state.score);
-        }
-
-        state.answers.push({
-            question,
-            selectedChoice: state.hadWrong ? state.firstWrongChoice : selectedChoice,
-            isCorrect: !state.hadWrong
-        });
-        elements.feedbackTitle.textContent = "정답이에요!";
-        elements.feedback.classList.remove("is-wrong");
-        elements.correctAnswer.textContent = `정답: ${question.answer}`;
-        elements.explanation.textContent = question.explanation;
-        elements.feedback.classList.remove("hidden");
-        elements.announcer.textContent = `정답은 ${question.answer}입니다. ${question.explanation}`;
-        elements.nextButton.focus({ preventScroll: true });
-    }
-
-    function goToNextQuestion() {
-        if (!state.answered) return;
-        if (state.currentIndex >= state.questions.length - 1) {
-            showAfterword();
-            return;
-        }
-        state.currentIndex += 1;
-        renderQuestion();
-        toTop();
-    }
-
-    // ── 3단계 · 작품 설명 ────────────────────────────────────────
-    function noteParagraphsOf(poem) {
-        const raw = Array.isArray(poem.note) && poem.note.length > 0
-            ? poem.note
-            : (typeof poem.note === "string" && poem.note.trim() ? [poem.note.trim()] : []);
-        return raw.filter((text) => !text.includes("저작권") && !text.includes("옮기지 못했"));
-    }
-
-    function appendMissed(list, answerRecord) {
-        const item = document.createElement("li");
-        const sentence = document.createElement("span");
-        const answer = document.createElement("span");
-        const chosen = document.createElement("span");
-        const explanation = document.createElement("span");
-
-        sentence.className = "review-sentence";
-        sentence.textContent = answerRecord.question.sentence;
-        answer.className = "review-answer";
-        answer.textContent = `정답: ${answerRecord.question.answer}`;
-        chosen.className = "review-chosen";
-        chosen.textContent = `내가 고른 답: ${answerRecord.selectedChoice}`;
-        explanation.className = "review-explanation";
-        explanation.textContent = answerRecord.question.explanation;
-        item.append(sentence, chosen, answer, explanation);
-        list.append(item);
-    }
-
-    // 이 시가 지금 읽는 줄에서 마지막 시인지, 다음은 무엇인지를 미리 정한다.
-    function nextStopAfter() {
-        const list = currentPoemList();
-        if (state.poemIndex < list.length - 1) {
-            return { kind: "poem", label: `다음 시 · ${list[state.poemIndex + 1].title}` };
-        }
-        if (state.browse) {
-            return { kind: "shelf-topic", label: "소재 목록으로" };
-        }
-        const nextBookIndex = state.bookIndex + 1;
-        const nextBook = books[nextBookIndex];
-        if (nextBook && isReady(nextBook)) {
-            return { kind: "book", bookIndex: nextBookIndex, label: `다음 책 · ${nextBook.title}` };
-        }
-        return { kind: "shelf-order", label: "책장으로" };
-    }
-
-    function showAfterword() {
-        const poem = currentPoem();
-        if (!poem) {
-            showShelf();
-            return;
-        }
-
-        const total = state.questions.length;
-        const { best, isNewBest } = saveResult(POEM_PROGRESS_KEY, poem.id, state.score, total);
-        const book = currentBook();
-
-        elements.afterKicker.textContent = state.browse
-            ? `소재별 · ${state.browse.topic}`
-            : `${orderOf(book)}권 · ${book.title}`;
-        elements.afterTitle.textContent = `「${poem.title}」 읽고 나서`;
-
-        elements.afterByline.textContent = `${poem.poet} 지음`;
-        elements.afterScore.textContent = total > 0
-            ? `문제 ${total}개 가운데 ${state.score}개를 한 번에 맞혔어요.${isNewBest && state.score > 0 ? " 지금까지 가장 잘한 기록이에요!" : ` 가장 잘한 기록은 ${best}/${total}이에요.`}`
-            : "";
-
-        const paragraphs = noteParagraphsOf(poem);
-        elements.afterBody.replaceChildren(...(paragraphs.length > 0 ? paragraphs : [poem.point || ""])
-            .filter(Boolean)
-            .map((text) => {
-                const p = document.createElement("p");
-                p.textContent = text;
-                return p;
-            }));
-
-        const missed = state.answers.filter((answer) => !answer.isCorrect);
-        elements.afterMissedList.replaceChildren();
-        missed.forEach((record) => appendMissed(elements.afterMissedList, record));
-        elements.afterMissed.classList.toggle("hidden", missed.length === 0);
-
-        elements.afterNextButton.textContent = nextStopAfter().label;
-        elements.afterListButton.textContent = state.browse ? "소재 목록" : "책 목차";
-
-        setScreen(elements.afterScreen);
-        elements.afterNextButton.focus({ preventScroll: true });
-        toTop();
-    }
-
-    // 다음 자리를 정하는 일과 그리로 옮겨 가는 일을 한 잠금 안에서 함께 한다.
-    // 따로 하면, 두 번 눌렀을 때 두 번째 누름이 첫 번째가 아직 옮기지 않은 자리를 보고
-    // 다음 자리를 잘못 짚어 시 한 편을 건너뛸 수 있다.
-    function goAfterNext() {
-        return guardedNav(() => {
-            const stop = nextStopAfter();
-            if (stop.kind === "poem") {
-                return openReadingUnlocked(state.poemIndex + 1);
-            }
-            if (stop.kind === "book") {
-                state.browse = null;
-                state.bookIndex = stop.bookIndex;
-                return openReadingUnlocked(0);
-            }
-            if (stop.kind === "shelf-topic") {
-                return showShelfUnlocked("topic");
-            }
-            return showShelfUnlocked("order");
+        topicPoemList.querySelectorAll("[data-poem-id]").forEach((card) => {
+            const poemId = card.getAttribute("data-poem-id");
+            const handleSelect = () => {
+                // 이 시가 속한 책 찾기
+                let bIdx = books.findIndex((b) => b.poemIds.includes(poemId));
+                if (bIdx < 0) bIdx = 0;
+                const book = books[bIdx];
+                const pIdxInBook = book.poemIds.indexOf(poemId);
+                openBook(bIdx, pIdxInBook >= 0 ? pIdxInBook : 0);
+            };
+            card.onclick = handleSelect;
+            card.onkeydown = (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelect();
+                }
+            };
         });
     }
 
-    function backToListUnlocked() {
-        if (state.browse) return showShelfUnlocked("topic");
-        if (state.bookIndex >= 0) return openBookDetailUnlocked(state.bookIndex);
-        return showShelfUnlocked();
-    }
+    /* ── 상단 네비게이션 & 키보드 & 터치 제스처 ───────────────── */
+    orderTabBtn.onclick = () => setShelfTab("order");
+    topicTabBtn.onclick = () => setShelfTab("topic");
 
-    function backToList() {
-        return guardedNav(() => backToListUnlocked());
-    }
+    bookShelfBtn.onclick = () => showShelf();
+    tocBtn.onclick = () => goTo(0, "prev");
 
-    // ── 손놀림 ───────────────────────────────────────────────────
-    function handleKeyboard(event) {
-        if (elements.quizScreen.classList.contains("hidden")) return;
-        if (!state.answered && /^[1-4]$/.test(event.key)) {
-            const choice = elements.choiceList.querySelectorAll("button")[Number(event.key) - 1];
-            if (choice) {
-                event.preventDefault();
-                choice.click();
-            }
-            return;
+    prevBtn.onclick = () => goTo(currentSpreadIndex - 1, "prev");
+    nextBtn.onclick = () => goTo(currentSpreadIndex + 1, "next");
+
+    // 키보드 방향키 이동
+    window.addEventListener("keydown", (e) => {
+        if (bookScreen.hidden) return;
+        if (e.key === "ArrowLeft" || e.key === "PageUp") {
+            e.preventDefault();
+            goTo(currentSpreadIndex - 1, "prev");
+        } else if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
+            e.preventDefault();
+            goTo(currentSpreadIndex + 1, "next");
         }
-        if (state.answered && event.key === "Enter" && document.activeElement !== elements.nextButton) {
-            event.preventDefault();
-            goToNextQuestion();
-        }
-    }
-
-    // 뒤로 가기는 한 단계씩만 물러난다. 책장에서만 사이트 메인으로 나간다.
-    function handleBackNavigation(event) {
-        const step = (run) => {
-            event?.preventDefault();
-            run();
-        };
-        if (!elements.readScreen.classList.contains("hidden")) return step(backToList);
-        if (!elements.quizScreen.classList.contains("hidden")) return step(() => openReading(state.poemIndex));
-        if (!elements.afterScreen.classList.contains("hidden")) return step(backToList);
-        if (!elements.bookScreen.classList.contains("hidden")) return step(() => showShelf());
-        // 책장에서는 사이트 메인 링크 동작을 그대로 둔다.
-    }
-
-    elements.orderTabBtn.addEventListener("click", () => setShelfMode("order"));
-    elements.topicTabBtn.addEventListener("click", () => setShelfMode("topic"));
-    elements.bookShelfButton.addEventListener("click", () => showShelf());
-    elements.versionToggle.addEventListener("click", (event) => {
-        const button = event.target.closest(".version-btn");
-        if (button) setVersion(button.dataset.version);
     });
-    elements.readQuizButton.addEventListener("click", startQuiz);
-    elements.readListButton.addEventListener("click", backToList);
-    elements.nextButton.addEventListener("click", goToNextQuestion);
-    elements.afterNextButton.addEventListener("click", goAfterNext);
-    elements.afterListButton.addEventListener("click", backToList);
-    document.addEventListener("keydown", handleKeyboard);
 
-    elements.backLink?.addEventListener("click", handleBackNavigation);
-    window.addEventListener("sitebackrequest", handleBackNavigation);
+    // 모바일 터치 스와이프
+    let touchStartX = 0;
+    let touchStartY = 0;
+    spreadEl.addEventListener("touchstart", (e) => {
+        if (e.touches && e.touches[0]) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }
+    }, { passive: true });
 
+    spreadEl.addEventListener("touchend", (e) => {
+        if (e.changedTouches && e.changedTouches[0]) {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+                if (dx > 0) {
+                    goTo(currentSpreadIndex - 1, "prev");
+                } else {
+                    goTo(currentSpreadIndex + 1, "next");
+                }
+            }
+        }
+    }, { passive: true });
+
+    /* ── 초기 실행 ─────────────────────────────────────────────── */
     showShelf("order");
+
 })();
