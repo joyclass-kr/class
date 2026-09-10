@@ -220,7 +220,7 @@
                     <h2 class="cover-title">${escapeHtml(book.note || "시집")}</h2>
                     <div class="cover-poem-list-box">
                         ${poems.map((p, idx) => `
-                            <div class="cover-poem-row">
+                            <div class="cover-poem-row" role="button" tabindex="0" data-jump-spread="${idx * 3 + 1}">
                                 <div class="cover-poem-title-row">
                                     <span class="cover-poem-idx">${idx + 1}.</span>
                                     <span class="cover-poem-name">${escapeHtml(p.title)}</span>
@@ -291,6 +291,15 @@
                 </div>
             `;
         }
+
+        const rightHtml = `
+            <div class="story-page-right">
+                <div class="poem-point-box">
+                    <p class="point-text">${escapeHtml(poem.point || "시의 분위기와 시인의 마음을 가만히 헤아려 보세요.")}</p>
+                </div>
+                ${wordsHtml}
+            </div>
+        `;
 
         let artHtml = "";
         if (poem.illustration) {
