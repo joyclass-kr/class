@@ -292,16 +292,16 @@
             `;
         }
 
-        const rightHtml = `
-            <div class="story-page-right">
-                <div class="poem-point-box">
-                    <p class="point-text">${escapeHtml(poem.point || "시의 분위기와 시인의 마음을 가만히 헤아려 보세요.")}</p>
+        let artHtml = "";
+        if (poem.illustration) {
+            artHtml = `
+                <div class="read-spread-art" aria-hidden="true">
+                    <img class="read-spread-art-img" src="${escapeHtml(poem.illustration)}" alt="" />
                 </div>
-                ${wordsHtml}
-            </div>
-        `;
+            `;
+        }
 
-        return leftHtml + rightHtml;
+        return leftHtml + rightHtml + artHtml;
     }
 
     // 3. 문제 풀기 (왼쪽 Q1~Q2, 오른쪽 Q3~Q4)

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-hosu"] = {
         "poem": {
+            "illustration": "images/jiyong-hosu.webp",
             "lines": [
                 "얼굴 하나야",
                 "손바닥 둘로",
