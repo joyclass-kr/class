@@ -7223,10 +7223,23 @@ function createClassroomPlatform(options = {}) {
             [s.studentEmail]
           );
           if (userRes.rows[0]) {
+            const linkedUserId = userRes.rows[0].id;
+            // user_id carries its own UNIQUE constraint, so if this Google
+            // account is still linked to another row (e.g. the student was
+            // renumbered/moved and the old row hasn't been deleted yet --
+            // that only happens after this whole loop), setting it on the
+            // new row would throw a duplicate-key error instead of updating.
+            // Release any such stale ownership first.
+            await client.query(
+              `UPDATE school_students SET user_id = NULL, updated_at = NOW()
+               WHERE user_id = $1
+                 AND NOT (school_id = $2 AND academic_year = $3 AND grade = $4 AND class_number = $5 AND student_number = $6)`,
+              [linkedUserId, schoolId, academicYear, s.grade, s.classNumber, s.studentNumber]
+            );
             await client.query(
               `UPDATE school_students SET user_id = $1, updated_at = NOW()
                WHERE school_id = $2 AND academic_year = $3 AND grade = $4 AND class_number = $5 AND student_number = $6`,
-              [userRes.rows[0].id, schoolId, academicYear, s.grade, s.classNumber, s.studentNumber]
+              [linkedUserId, schoolId, academicYear, s.grade, s.classNumber, s.studentNumber]
             );
           }
         }
