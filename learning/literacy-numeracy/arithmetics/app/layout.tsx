@@ -36,6 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <script src="/assets/sound/game-sfx.js?v=20260910-music-controls-1" defer />
+      </head>
       <body>{children}<ElementaryFocusScroll /><ArithmeticRaceController /></body>
     </html>
   );

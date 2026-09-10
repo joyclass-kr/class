@@ -13,6 +13,7 @@ const fruitBellPath = path.join(root, "learning", "games", "fruitbell", "fruitbe
 const voyagePath = path.join(root, "learning", "inquiry", "age-of-exploration", "public", "index.html");
 const earTrainingPath = path.join(root, "learning", "arts", "music-theory", "ear-training", "index.html");
 const earTrainingEnginePath = path.join(root, "learning", "arts", "music-theory", "ear-training", "piano-engine.js");
+const arithmeticLayoutPath = path.join(root, "learning", "literacy-numeracy", "arithmetics", "app", "layout.tsx");
 const sfxVersion = "20260910-music-controls-1";
 
 for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath, fruitBellPath, voyagePath]) {
@@ -88,9 +89,12 @@ for (const relativePath of ["learning/games/drawrelay/drawrelay.html", "learning
 
 const earTraining = fs.readFileSync(earTrainingPath, "utf8");
 const earTrainingEngine = fs.readFileSync(earTrainingEnginePath, "utf8");
+const arithmeticLayout = fs.readFileSync(arithmeticLayoutPath, "utf8");
 assert.ok(earTraining.includes('data-sfx-clicks="none"'), "Ear training should not mix generic button clicks into musical playback.");
 assert.ok(earTraining.includes("piano-engine.js?v=20260910-countin-1"), "Ear training should load the stronger count-in without stale caching.");
 assert.ok(earTrainingEngine.includes("strong ? .55 : .38") && earTrainingEngine.includes(".11, start + .003"), "The count-in transient and first-beat bell should remain clearly audible.");
+assert.ok(arithmeticLayout.includes(`/assets/sound/game-sfx.js?v=${sfxVersion}`), "The proxied arithmetic and fraction app should load shared button effects directly.");
+assert.ok(voyage.includes(`/assets/sound/game-sfx.js?v=${sfxVersion}`), "The proxied voyage app should load shared button effects directly.");
 
 const fruitBell = fs.readFileSync(fruitBellPath, "utf8");
 assert.ok(fruitBell.includes('id="bellBtn" class="bell" type="button" data-sfx="none"'), "The bell should not also play a generic click.");
