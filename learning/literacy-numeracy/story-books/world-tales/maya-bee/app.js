@@ -243,7 +243,7 @@ const CHAPTERS = [
                 ],
                 "right": [
                     "무언가를 의논하는 중이었지요.",
-                    "\"오늘 밤 꿀벌 집을 친다.\"",
+                    "\"오늘 밤 꿀벌 집을 공격한다.\"",
                     "\"문이 열리는 때를 노려라.\"",
                     "마야는 숨이 멎는 것 같았습니다. 다리가 후들거렸지요. 나무껍질을 잡은 발이 미끄러졌습니다.",
                     "마야는 얼른 몸을 붙였지요."
@@ -885,7 +885,7 @@ const EN = {
                     ],
                     right: [
                         "They were making some plan together.",
-                        "\"Tonight we strike the bee tree.\"",
+                        "\"Tonight we attack the bee tree.\"",
                         "\"Watch for the moment the door opens.\"",
                         "Maya felt her breath stop.",
                         "Her legs were shaking.",
@@ -1121,7 +1121,7 @@ const EN = {
             { word: 'trunk', meaning: '나무줄기', sentence: 'A great hole in the trunk.' },
             { word: 'bark', meaning: '나무껍질', sentence: 'Maya pressed herself against the bark.' },
             { word: 'hornet', meaning: '말벌', sentence: 'There were hornets gathered inside.' },
-            { word: 'strike', meaning: '치다', sentence: 'Tonight we strike the bee tree.' },
+            { word: 'attack', meaning: '공격하다', sentence: 'Tonight we attack the bee tree.' },
             { word: 'slip', meaning: '미끄러지다', sentence: 'A foot slipped on the bark.' }
         ],
         '07-hornets-2.webp': [
