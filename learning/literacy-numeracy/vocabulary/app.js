@@ -2,7 +2,7 @@
     "use strict";
 
     const DATA_URL = "assets/data/english-vocabulary-3000-v2.json";
-    const CURATED_EXAMPLES_URL = "assets/data/curated-examples-v1.json?v=20260909c";
+    const CURATED_EXAMPLES_URL = "assets/data/curated-examples-v1.json?v=20260910a";
     const IMAGE_MANIFEST_URL = "assets/data/vocabulary-word-images-v1.json?v=20260908a";
     const SPELLING_GAME_URL = "assets/data/vocabulary-spelling-game-v1.json";
     const IMAGE_BASE_URL = "assets/images/";
