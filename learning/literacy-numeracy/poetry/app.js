@@ -217,7 +217,7 @@
             <div class="story-page-left-full">
                 <div class="cover-art-box">
                     <span class="cover-badge">${escapeHtml(volumeBadge)}</span>
-                    <h2 class="cover-title">${escapeHtml(book.note || "시집")}</h2>
+                    <h2 class="cover-title">${escapeHtml(book.title)}</h2>
                     <div class="cover-poem-list-box">
                         ${poems.map((p, idx) => `
                             <div class="cover-poem-row" role="button" tabindex="0" data-jump-spread="${idx * 3 + 1}">
@@ -417,7 +417,7 @@
             <div class="story-page-left page-complete-left">
                 <span class="complete-badge">완독</span>
                 <h2 class="complete-title">${volumeBadge} 완독!</h2>
-                <p class="complete-subtitle">${escapeHtml(book.note || "이 책에 실린 모든 시를 읽고 문제를 풀었습니다.")}</p>
+                <p class="complete-subtitle">이 책에 실린 모든 시를 읽고 문제를 풀었습니다.</p>
                 <ul class="complete-poem-list">
                     ${listItemsHtml}
                 </ul>
