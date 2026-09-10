@@ -3,125 +3,190 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f3f1ec">
+  <meta name="theme-color" content="#181a1f">
   <title>미술 이론 · 색채와 조형</title>
-  <meta name="description" content="색이 보이는 원리부터 작품 형식 분석까지 이어지는 9차시 미술 이론">
-  <link rel="stylesheet" href="styles.css?v=20260910-8">
-  <script src="app.js?v=20260910-8" defer></script>
+  <meta name="description" content="색채의 물리적 지각 원리부터 화면 조형 질서, 명작 형식 분석까지 체계적으로 탐구하는 인터랙티브 미술 이론 9차시">
+  <link rel="stylesheet" href="styles.css?v=20260910-v2">
+  <script src="app.js?v=20260910-v2" defer></script>
 </head>
 <body>
   <main class="course-shell">
     <section id="courseMenu" class="course-menu" aria-label="미술 이론 9차시 목록">
+      <header class="menu-editorial-header">
+        <div class="editorial-badge">ART THEORY & VISUAL INQUIRY</div>
+        <h1 class="menu-main-title">색채와 조형의 시각적 문법</h1>
+        <p class="menu-sub-desc">시각 예술을 이해하는 핵심 원리 9단계를 눈으로 탐구하고, 명작을 통해 원리를 입증합니다.</p>
+      </header>
+
       <ol class="syllabus-list course-sequence">
-          <li class="unit-marker color-unit"><span>01–05</span><div><p>첫째 단원</p><h1>색을 이해하기</h1><small>지각에서 출발해 색상 체계·혼합·배색·오방색까지 이어집니다.</small></div></li>
-          <li>
-            <button type="button" data-open-lesson="color-perception">
-              <span class="syllabus-number">01</span>
-              <span class="syllabus-title"><strong>색은 어떻게 보이는가</strong><small>빛·물체·눈 가운데 하나만 없어도 색을 볼 수 있을까?</small></span>
-              <span class="syllabus-terms">광원 · 반사 · 지각</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" data-open-lesson="color-properties">
-              <span class="syllabus-number">02</span>
-              <span class="syllabus-title"><strong>색의 세 가지 속성</strong><small>같은 파랑도 왜 서로 다르게 보일까?</small></span>
-              <span class="syllabus-terms">10색상환 · 명도 · 채도</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" data-open-lesson="color-mixing">
-              <span class="syllabus-number">03</span>
-              <span class="syllabus-title"><strong>색의 혼합</strong><small>물감, 빛, 색점의 혼합은 무엇이 다른가?</small></span>
-              <span class="syllabus-terms">감산 · 가산 · 병치</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" data-open-lesson="color-harmony">
-              <span class="syllabus-number">04</span>
-              <span class="syllabus-title"><strong>색의 관계와 배색</strong><small>색의 거리는 어떻게 화면의 긴장을 만드는가?</small></span>
-              <span class="syllabus-terms">유사색 · 보색 · 주조색</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" data-open-lesson="obangsaek">
-              <span class="syllabus-number">05</span>
-              <span class="syllabus-title"><strong>오방색</strong><small>색은 어떻게 방향과 자연의 의미를 담았는가?</small></span>
-              <span class="syllabus-terms">청 · 적 · 황 · 백 · 흑</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li class="unit-marker form-unit"><span>06–08</span><div><p>둘째 단원</p><h2>화면을 구성하기</h2><small>조형 요소가 관계를 맺어 균형과 공간, 시선의 흐름을 만드는 방식을 배웁니다.</small></div></li>
-          <li>
-            <button type="button" data-open-lesson="visual-elements">
-              <span class="syllabus-number">06</span>
-              <span class="syllabus-title"><strong>조형 요소</strong><small>화면에서 실제로 관찰하고 지목할 수 있는 것은?</small></span>
-              <span class="syllabus-terms">선 · 형 · 색 · 질감 · 공간</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" data-open-lesson="visual-principles">
-              <span class="syllabus-number">07</span>
-              <span class="syllabus-title"><strong>조형 원리</strong><small>요소들은 어떤 질서로 관계를 맺는가?</small></span>
-              <span class="syllabus-terms">균형 · 강조 · 리듬 · 통일</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" data-open-lesson="space-composition">
-              <span class="syllabus-number">08</span>
-              <span class="syllabus-title"><strong>공간과 화면 구성</strong><small>평면은 어떻게 깊이와 시선의 길을 만드는가?</small></span>
-              <span class="syllabus-terms">원근 · 여백 · 시점 · 구도</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li class="unit-marker analysis-unit"><span>09</span><div><p>셋째 단원</p><h2>작품에 적용하기</h2><small>색채와 조형 개념을 함께 사용해 작품의 형식과 의미를 근거 있게 분석합니다.</small></div></li>
-          <li>
-            <button type="button" data-open-lesson="formal-analysis">
-              <span class="syllabus-number">09</span>
-              <span class="syllabus-title"><strong>작품 형식 분석</strong><small>보이는 사실에서 작품의 의미까지 어떻게 논리를 세울까?</small></span>
-              <span class="syllabus-terms">관찰 · 분석 · 해석 · 판단</span><span class="row-arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
+        <li class="unit-marker color-unit">
+          <span class="unit-range">01–05</span>
+          <div class="unit-info">
+            <p class="unit-tag">FIRST UNIT · COLOR INQUIRY</p>
+            <h2>색을 이해하기</h2>
+            <small>물리적 지각 메커니즘에서 10색상환·혼합·배색·오방색의 문화적 질서까지</small>
+          </div>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="color-perception">
+            <span class="syllabus-number">01</span>
+            <span class="syllabus-title"><strong>색은 어떻게 보이는가</strong><small>빛·물체·눈 가운데 하나만 없어도 색을 볼 수 있을까?</small></span>
+            <span class="syllabus-terms">광원 · 선택적 반사 · 시각 지각</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="color-properties">
+            <span class="syllabus-number">02</span>
+            <span class="syllabus-title"><strong>색의 세 가지 속성</strong><small>같은 파랑도 왜 서로 다르게 보일까?</small></span>
+            <span class="syllabus-terms">10색상환 · 명도 · 채도</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="color-mixing">
+            <span class="syllabus-number">03</span>
+            <span class="syllabus-title"><strong>색의 혼합</strong><small>물감, 빛, 색점의 혼합은 무엇이 다른가?</small></span>
+            <span class="syllabus-terms">감산 혼합 · 가산 혼합 · 병치 혼합</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="color-harmony">
+            <span class="syllabus-number">04</span>
+            <span class="syllabus-title"><strong>색의 관계와 배색</strong><small>색의 거리는 어떻게 화면의 긴장을 만드는가?</small></span>
+            <span class="syllabus-terms">유사색 · 보색 · 주조색 배색</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="obangsaek">
+            <span class="syllabus-number">05</span>
+            <span class="syllabus-title"><strong>오방색</strong><small>색은 어떻게 방향과 자연의 의미를 담았는가?</small></span>
+            <span class="syllabus-terms">청 · 적 · 황 · 백 · 흑</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
+
+        <li class="unit-marker form-unit">
+          <span class="unit-range">06–08</span>
+          <div class="unit-info">
+            <p class="unit-tag">SECOND UNIT · VISUAL COMPOSITION</p>
+            <h2>화면을 구성하기</h2>
+            <small>조형 요소가 관계를 맺어 균형과 공간, 시선의 흐름을 만드는 방식을 배웁니다.</small>
+          </div>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="visual-elements">
+            <span class="syllabus-number">06</span>
+            <span class="syllabus-title"><strong>조형 요소</strong><small>화면에서 실제로 관찰하고 지목할 수 있는 것은?</small></span>
+            <span class="syllabus-terms">선 · 형 · 색 · 질감 · 공간</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="visual-principles">
+            <span class="syllabus-number">07</span>
+            <span class="syllabus-title"><strong>조형 원리</strong><small>요소들은 어떤 질서로 관계를 맺는가?</small></span>
+            <span class="syllabus-terms">균형 · 강조 · 리듬 · 통일</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="space-composition">
+            <span class="syllabus-number">08</span>
+            <span class="syllabus-title"><strong>공간과 화면 구성</strong><small>평면은 어떻게 깊이와 시선의 길을 만드는가?</small></span>
+            <span class="syllabus-terms">선 원근법 · 다시점과 여백 · 구도</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
+
+        <li class="unit-marker analysis-unit">
+          <span class="unit-range">09</span>
+          <div class="unit-info">
+            <p class="unit-tag">THIRD UNIT · CRITICAL ANALYSIS</p>
+            <h2>작품에 적용하기</h2>
+            <small>색채와 조형 개념을 함께 사용해 작품의 형식과 의미를 근거 있게 분석합니다.</small>
+          </div>
+        </li>
+        <li>
+          <button type="button" data-open-lesson="formal-analysis">
+            <span class="syllabus-number">09</span>
+            <span class="syllabus-title"><strong>작품 형식 분석</strong><small>보이는 사실에서 작품의 의미까지 어떻게 논리를 세울까?</small></span>
+            <span class="syllabus-terms">관찰 · 분석 · 해석 · 판단</span>
+            <span class="row-arrow" aria-hidden="true">→</span>
+          </button>
+        </li>
       </ol>
     </section>
 
     <section id="lessonView" class="lesson-view" hidden aria-live="polite">
       <article class="lesson-article">
         <header class="lesson-heading">
-          <p id="lessonKicker"></p>
-          <h1 id="lessonTitle"></h1>
-          <div class="essential-question"><span>핵심 질문</span><strong id="lessonQuestion"></strong></div>
+          <div class="lesson-meta-bar">
+            <span id="lessonKicker" class="lesson-kicker"></span>
+            <span class="lesson-index-tag">Interactive Inquiry</span>
+          </div>
+          <h1 id="lessonTitle" class="lesson-main-title"></h1>
+          <div class="essential-question">
+            <span class="question-label">핵심 질문</span>
+            <strong id="lessonQuestion" class="question-body"></strong>
+          </div>
         </header>
 
         <div class="lesson-columns">
           <div class="lesson-reading">
             <section class="chapter concept-chapter" aria-labelledby="conceptHeading">
-              <div class="chapter-label"><span>01</span><h2 id="conceptHeading">개념 정리</h2></div>
+              <div class="chapter-label">
+                <span class="chapter-num">01</span>
+                <h2 id="conceptHeading">개념 체계</h2>
+              </div>
               <div id="conceptContent" class="concept-content"></div>
             </section>
 
             <section class="chapter analysis-chapter" aria-labelledby="analysisHeading">
-              <div class="chapter-label"><span>02</span><h2 id="analysisHeading">작품으로 확인</h2></div>
+              <div class="chapter-label">
+                <span class="chapter-num">02</span>
+                <h2 id="analysisHeading">명작 속 시각적 증거</h2>
+              </div>
               <div id="analysisContent" class="analysis-content"></div>
             </section>
           </div>
 
-          <aside class="artwork-column" aria-label="작품 예시">
+          <aside class="artwork-column" aria-label="작품 시각 분석">
             <figure id="artworkFigure" class="artwork-figure"></figure>
           </aside>
         </div>
 
         <section class="chapter study-chapter" aria-labelledby="studyHeading">
-          <div class="chapter-label"><span>03</span><h2 id="studyHeading">비교하며 적용</h2></div>
+          <div class="chapter-label">
+            <span class="chapter-num">03</span>
+            <h2 id="studyHeading">인터랙티브 시각 탐구</h2>
+          </div>
           <div id="studyContent" class="study-content"></div>
         </section>
 
         <section class="chapter check-chapter" aria-labelledby="checkHeading">
-          <div class="chapter-label"><span>04</span><h2 id="checkHeading">개념 확인</h2></div>
+          <div class="chapter-label">
+            <span class="chapter-num">04</span>
+            <h2 id="checkHeading">개념 검증</h2>
+          </div>
           <div id="checkContent" class="check-content"></div>
         </section>
       </article>
 
       <nav class="lesson-footer-nav" aria-label="차시 이동">
-        <button type="button" id="previousLesson">← 이전 차시</button>
-        <button type="button" id="nextLesson">다음 차시 →</button>
+        <button type="button" id="previousLesson" class="nav-button prev-button">
+          <span class="nav-arrow" aria-hidden="true">←</span>
+          <span class="nav-text">이전 차시</span>
+        </button>
+        <button type="button" id="courseListButton" class="nav-button list-button">
+          <span class="nav-text">목록으로</span>
+        </button>
+        <button type="button" id="nextLesson" class="nav-button next-button">
+          <span class="nav-text">다음 차시</span>
+          <span class="nav-arrow" aria-hidden="true">→</span>
+        </button>
       </nav>
     </section>
   </main>
