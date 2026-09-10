@@ -1383,7 +1383,7 @@ function createClassroomPlatform(options = {}) {
     if (!user || !pool || !databaseReady) return [];
     const result = await pool.query(
       `SELECT t.id, t.school_id, t.teacher_type, t.teacher_name, t.grade, t.class_number,
-              t.academic_year, t.user_id
+              t.academic_year, t.user_id, sc.name AS school_name
        FROM classroom_teachers t
        JOIN classroom_schools sc ON sc.id = t.school_id
        WHERE t.active = TRUE AND sc.enabled = TRUE
@@ -2533,12 +2533,24 @@ function createClassroomPlatform(options = {}) {
     }
 
     const user = await requireUser(req);
-    if (user.role !== "student") throw new HttpError(403, "STUDENT_REQUIRED", "Museum presence is for student accounts only.");
-    const membership = await studentMembership(user.id);
-    if (!membership) throw new HttpError(403, "CLASS_MEMBERSHIP_REQUIRED", "Join your class before entering the museum.");
+    if (user.role === "student") {
+      const membership = await studentMembership(user.id);
+      if (!membership) throw new HttpError(403, "CLASS_MEMBERSHIP_REQUIRED", "Join your class before entering the museum.");
+      const ticket = signMuseumPresence({
+        kind: "museum-presence", exp: expiresAt, userId: String(user.id), name: membership.name,
+        classKey: `${membership.schoolName}|${membership.academicYear}|${membership.grade}|${membership.classNumber}`
+      });
+      return res.json({ ticket, expiresAt, scope: "class" });
+    }
+
+    // 담임교사도 자기 반 학생들과 같은 공간에서 보이도록: 등록된 담임 학급이 있을 때만 허용한다.
+    const registration = await teacherRegistration(user);
+    if (!registration || !registration.grade || !registration.class_number) {
+      throw new HttpError(403, "STUDENT_REQUIRED", "Museum presence is for student accounts only.");
+    }
     const ticket = signMuseumPresence({
-      kind: "museum-presence", exp: expiresAt, userId: String(user.id), name: membership.name,
-      classKey: `${membership.schoolName}|${membership.academicYear}|${membership.grade}|${membership.classNumber}`
+      kind: "museum-presence", exp: expiresAt, userId: String(user.id), name: registration.teacher_name,
+      classKey: `${registration.school_name}|${registration.academic_year}|${registration.grade}|${registration.class_number}`
     });
     res.json({ ticket, expiresAt, scope: "class" });
   }));
