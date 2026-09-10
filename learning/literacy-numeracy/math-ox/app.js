@@ -144,12 +144,12 @@
             <div class="ox-btn-group">
               <button type="button" 
                 class="ox-btn btn-o ${selectedChoice === "O" ? (isCorrect ? "selected-correct" : "selected-wrong") : ""} ${isAnswered ? "disabled" : ""}" 
-                data-id="${q.id}" data-choice="O" ${isAnswered ? "disabled" : ""}>
+                data-id="${q.id}" data-choice="O" data-sfx="none" ${isAnswered ? "disabled" : ""}>
                 O
               </button>
               <button type="button" 
                 class="ox-btn btn-x ${selectedChoice === "X" ? (isCorrect ? "selected-correct" : "selected-wrong") : ""} ${isAnswered ? "disabled" : ""}" 
-                data-id="${q.id}" data-choice="X" ${isAnswered ? "disabled" : ""}>
+                data-id="${q.id}" data-choice="X" data-sfx="none" ${isAnswered ? "disabled" : ""}>
                 X
               </button>
             </div>
@@ -204,6 +204,7 @@
 
     renderUnitNav();
     renderQuestions();
+    window.ClassGameSfx?.play(isCorrect ? "success" : "error");
   }
 
 

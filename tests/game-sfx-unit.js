@@ -14,7 +14,7 @@ const voyagePath = path.join(root, "learning", "inquiry", "age-of-exploration", 
 const earTrainingPath = path.join(root, "learning", "arts", "music-theory", "ear-training", "index.html");
 const earTrainingEnginePath = path.join(root, "learning", "arts", "music-theory", "ear-training", "piano-engine.js");
 const arithmeticLayoutPath = path.join(root, "learning", "literacy-numeracy", "arithmetics", "app", "layout.tsx");
-const sfxVersion = "20260910-music-controls-1";
+const sfxVersion = "20260910-soft-click-1";
 
 for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath, fruitBellPath, voyagePath]) {
     assert.ok(fs.existsSync(filePath), `Missing sound effect file: ${filePath}`);
@@ -37,7 +37,7 @@ for (const soundName of ["click", "bell", "card", "stone", "success", "error", "
 assert.ok(sfxSource.includes("const soundUrls"), "Shared effects should resolve OGG asset URLs.");
 assert.ok(sfxSource.includes("template.cloneNode()"), "Concurrent effects should use independent audio elements.");
 assert.ok(sfxSource.includes("playSynth(soundName)"), "File playback failures should retain synthesized fallbacks.");
-assert.ok(sfxSource.includes('soundName === "click"'), "The established low-latency synthesized click should remain in use.");
+assert.ok(sfxSource.includes('name === "click" ? "select" : name'), "Generic clicks should use the softer file-backed select sound.");
 assert.ok(sfxSource.includes('element.matches("[data-midi]")'), "Playable MIDI keys should not add a generic click over their instrument sound.");
 assert.ok(sfxSource.includes("[data-sfx-clicks='none']"), "Music interfaces should be able to suppress generic clicks without suppressing answer feedback.");
 assert.ok(sfxSource.includes('latencyHint: "interactive"'), "Sound effects should request an interactive low-latency audio context.");
