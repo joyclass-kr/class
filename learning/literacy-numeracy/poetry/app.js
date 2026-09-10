@@ -206,16 +206,22 @@
     // 1. 표지 & 목차
     function renderCoverSpread(s) {
         const { book, poems } = s;
-        const volumeBadge = book.title.includes("·") ? book.title.split("·")[0].trim() : "시집";
-        const cleanTitle = book.title.includes("·") ? book.title.split("·").slice(1).join("·").trim() : book.title;
+        const volumeBadge = `제 ${currentBookIndex + 1} 권`;
 
         const leftHtml = `
             <div class="story-page-left-full">
                 <div class="cover-art-box">
                     <span class="cover-badge">${escapeHtml(volumeBadge)}</span>
-                    <h2 class="cover-title">${escapeHtml(cleanTitle)}</h2>
-                    <p class="cover-subtitle">${escapeHtml(book.note || "아름다운 우리 시를 읽고 감상해요.")}</p>
-                    <div class="cover-deco">📖</div>
+                    <h2 class="cover-title">${escapeHtml(book.note || "아름다운 우리 시")}</h2>
+                    <div class="cover-poem-list-box">
+                        ${poems.map((p, idx) => `
+                            <div class="cover-poem-row">
+                                <span class="cover-poem-idx">${idx + 1}.</span>
+                                <span class="cover-poem-name">${escapeHtml(p.title)}</span>
+                                <span class="cover-poem-author">${escapeHtml(p.poet || "")}</span>
+                            </div>
+                        `).join("")}
+                    </div>
                     <button class="book-start-btn" id="startReadingBtn" type="button">첫 시부터 읽기 ›</button>
                 </div>
             </div>
@@ -676,20 +682,33 @@
     function renderBookShelf() {
         bookShelf.innerHTML = books.map((b, bIdx) => {
             const done = isBookDone(b);
-            const volumeBadge = b.title.includes("·") ? b.title.split("·")[0].trim() : `제 ${bIdx + 1} 권`;
-            const cleanTitle = b.title.includes("·") ? b.title.split("·").slice(1).join("·").trim() : b.title;
+            const volumeBadge = `제 ${bIdx + 1} 권`;
+
+            // 해당 책의 시 목록 가져오기
+            const bookPoems = b.poemIds.map((id) => poemById.get(id)).filter(Boolean);
+
+            const poemItemsHtml = bookPoems.map((p, idx) => `
+                <li class="cover-poem-item">
+                    <span class="cover-poem-num">${idx + 1}.</span>
+                    <span class="cover-poem-title">${escapeHtml(p.title)}</span>
+                    <span class="cover-poem-poet">${escapeHtml(p.poet || "")}</span>
+                </li>
+            `).join("");
 
             return `
                 <div class="book-card ${done ? 'is-done' : ''}" role="button" tabindex="0" data-book-idx="${bIdx}">
                     <div class="book-cover">
-                        <span class="book-cover-badge">${escapeHtml(volumeBadge)}</span>
-                        <div class="book-cover-title">${escapeHtml(cleanTitle)}</div>
-                        <div class="book-cover-icon">📖</div>
+                        <div class="book-cover-header">
+                            <span class="book-cover-badge">${escapeHtml(volumeBadge)}</span>
+                            <span class="book-cover-count">${b.poemIds.length}편</span>
+                        </div>
+                        <ol class="book-cover-poem-list">
+                            ${poemItemsHtml}
+                        </ol>
                     </div>
                     <div class="book-title-meta">
-                        <p class="book-card-title">${escapeHtml(b.title)}</p>
-                        <p class="book-card-note">${escapeHtml(b.note || "")}</p>
-                        <span class="book-card-badge">${done ? "완독 ✓" : `${b.poemIds.length}편 수록`}</span>
+                        <p class="book-card-theme">${escapeHtml(b.note || "")}</p>
+                        <span class="book-card-badge">${done ? "완독 ✓" : "펼치기 ›"}</span>
                     </div>
                 </div>
             `;
