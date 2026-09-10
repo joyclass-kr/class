@@ -868,31 +868,31 @@ a {
     justify-content: center;
 }
 
-.read-spread-art.mode-bottom .read-spread-art-img {
+.read-spread-art .read-spread-art-img {
     width: 100%;
-    height: 100%;
+    height: var(--art-max-height, 46%);
+    max-height: 52%;
     object-fit: cover;
     object-position: bottom center;
     mix-blend-mode: multiply;
     opacity: 0.88;
     pointer-events: none;
+    transition: height 0.2s ease, opacity 0.2s ease;
 }
 
-/* 시화 우측 하단 배치: 왼쪽 페이지 본문 글씨 100% 보호 및 우측 하단 여백에 자연스럽게 안착 */
+/* 본문이 80% 이상 꽉 찬 긴 시(사미인곡 등)만 우측 구석에 컴팩트하게 배치 */
 .read-spread-art.mode-corner-right {
     justify-content: flex-end;
     align-items: flex-end;
 }
 
 .read-spread-art.mode-corner-right .read-spread-art-img {
-    width: clamp(260px, 42%, 480px);
-    max-height: 48%;
+    width: clamp(240px, 40%, 450px);
+    height: var(--art-max-height, 40%);
+    max-height: 44%;
     object-fit: contain;
     object-position: bottom right;
-    mix-blend-mode: multiply;
-    opacity: 0.9;
-    pointer-events: none;
-    margin-right: clamp(14px, 3.2vw, 36px);
+    margin-right: clamp(14px, 3vw, 36px);
     margin-bottom: clamp(12px, 2.5vh, 28px);
 }
 
