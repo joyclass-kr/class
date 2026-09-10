@@ -211,7 +211,7 @@
             <div class="story-page-left-full">
                 <div class="cover-art-box">
                     <span class="cover-badge">${escapeHtml(volumeBadge)}</span>
-                    <h2 class="cover-title">${escapeHtml(book.note || "아름다운 우리 시")}</h2>
+                    <h2 class="cover-title">${escapeHtml(book.title)}</h2>
                     <div class="cover-poem-list-box">
                         ${poems.map((p, idx) => `
                             <div class="cover-poem-row">
@@ -699,15 +699,14 @@
                     <div class="book-cover">
                         <div class="book-cover-header">
                             <span class="book-cover-badge">${escapeHtml(volumeBadge)}</span>
-                            <span class="book-cover-count">${b.poemIds.length}편</span>
                         </div>
                         <ol class="book-cover-poem-list">
                             ${poemItemsHtml}
                         </ol>
                     </div>
                     <div class="book-title-meta">
-                        <p class="book-card-theme">${escapeHtml(b.note || "")}</p>
-                        <span class="book-card-badge">${done ? "완독 ✓" : "펼치기 ›"}</span>
+                        <p class="book-card-title">${escapeHtml(b.title)}</p>
+                        ${done ? '<span class="book-card-badge">완독 ✓</span>' : ""}
                     </div>
                 </div>
             `;

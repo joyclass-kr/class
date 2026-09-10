@@ -121,15 +121,6 @@ a {
     margin-bottom: 24px;
 }
 
-.shelf-head h1 {
-    margin: 0 0 10px;
-    color: #ffeec4;
-    font-family: "Gowun Batang", "Noto Serif KR", serif;
-    font-size: 34px;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
-}
-
 .grade-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -219,7 +210,6 @@ a {
 .book-cover-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin-bottom: 6px;
     padding-bottom: 4px;
     border-bottom: 1px solid rgba(215, 171, 95, 0.25);
@@ -233,13 +223,6 @@ a {
     font-size: 11px;
     font-weight: 800;
     line-height: 1.2;
-}
-
-.book-cover-count {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gold-bright);
-    opacity: 0.85;
 }
 
 .book-cover-poem-list {
@@ -298,17 +281,13 @@ a {
     gap: 4px;
 }
 
-.book-card-theme {
+.book-card-title {
     margin: 0;
-    font-size: 12px;
-    color: #baa18c;
-    line-height: 1.4;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #f7ebd4;
+    line-height: 1.35;
     word-break: keep-all;
-    min-height: 34px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .book-card-badge {
