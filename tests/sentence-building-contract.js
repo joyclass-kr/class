@@ -66,5 +66,9 @@ assert.match(hub, /<strong>문법<\/strong><small>\(Grammar\)<\/small>/);
 assert.match(hub, /learning\/literacy-numeracy\/spelling\//);
 assert.match(hub, /learning\/literacy-numeracy\/sentence-building\//);
 assert.equal((hub.match(/href="learning\/literacy-numeracy\/sentence-building\/"/g) || []).length, 1);
+assert.ok(
+    hub.indexOf('href="learning/literacy-numeracy/sentence-building/"') < hub.indexOf('href="learning/literacy-numeracy/spelling/"'),
+    "Sentence building should appear before Korean spelling in the grammar menu."
+);
 
 console.log("sentence-building-contract: ok");
