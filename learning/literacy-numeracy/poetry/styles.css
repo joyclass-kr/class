@@ -28,10 +28,31 @@ body {
     color: var(--parchment);
     font-family: "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif;
     font-weight: 500;
+    background: #0d0a12;
+    position: relative;
+    isolation: isolate;
+}
+
+/* 갈래마다 다른 그림이 화면 전체에 깔린다 (전래동화/세계명작소설 메뉴와 동일) */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: #0d0a12 url('poetry-bg.webp') center / cover no-repeat;
+    pointer-events: none;
+}
+
+/* 책 표지 및 글씨 가독성을 위한 은은한 오버레이 */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
     background:
-        radial-gradient(circle at 20% 15%, rgba(215, 171, 95, 0.14), transparent 40rem),
-        radial-gradient(circle at 85% 80%, rgba(92, 58, 34, 0.35), transparent 38rem),
-        linear-gradient(160deg, var(--night) 0%, var(--night-soft) 55%, #170c0e 100%);
+        radial-gradient(ellipse 80% 75% at 50% 50%, rgba(13, 10, 18, 0.55) 0%, rgba(13, 10, 18, 0.3) 60%, rgba(13, 10, 18, 0.1) 100%),
+        linear-gradient(180deg, rgba(6, 4, 10, 0.45) 0%, rgba(6, 4, 10, 0.12) 30%, rgba(6, 4, 10, 0.45) 100%);
+    pointer-events: none;
 }
 
 button {
@@ -107,7 +128,7 @@ a {
 /* ── 1. 책장 화면 (Shelf Lobby) ─────────────────────────────── */
 .screen-shelf {
     align-items: flex-start;
-    padding: 68px 16px 60px;
+    padding: 12px 16px 40px;
 }
 
 .shelf-container {
@@ -118,7 +139,7 @@ a {
 
 .shelf-head {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 }
 
 .grade-tabs {
@@ -126,7 +147,7 @@ a {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    margin: 12px 0;
+    margin: 0;
 }
 
 .grade-tab {
@@ -486,7 +507,10 @@ a {
     -webkit-overflow-scrolling: touch;
     padding: clamp(16px, 4.5cqh, 44px);
     color: var(--ink);
+    font-family: "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif !important;
+    font-weight: 500;
     word-break: keep-all;
+    overflow-wrap: break-word;
     position: relative;
 }
 
@@ -495,11 +519,7 @@ a {
 }
 
 .page-head-kicker {
-    margin-bottom: 6px;
-    font-size: clamp(11.5px, 1.8cqh, 14px);
-    font-weight: 700;
-    color: var(--wood);
-    letter-spacing: 0.05em;
+    display: none !important;
 }
 
 /* ── A. 표지 & 시 목차 (Cover & TOC Spread) ──────────────────── */
@@ -617,18 +637,20 @@ a {
 }
 
 /* 시 목차 (TOC) */
+.book-start-btn {
+    display: none !important;
+}
+
 .toc-header h2 {
-    margin: 0 0 4px;
+    margin: 0 0 16px;
     font-family: "Gowun Batang", "Noto Serif KR", serif;
-    font-size: clamp(20px, 3.8cqh, 32px);
+    font-size: clamp(22px, 4cqh, 32px);
     font-weight: 700;
     color: var(--ink);
 }
 
 .toc-intro {
-    margin: 0 0 16px;
-    font-size: clamp(12.5px, 2cqh, 15px);
-    color: var(--muted);
+    display: none !important;
 }
 
 .book-toc-list {
@@ -695,10 +717,7 @@ a {
 }
 
 .toc-link-text {
-    flex: 0 0 auto;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--wood);
+    display: none !important;
 }
 
 /* ── B. 시 읽기 (Reading Spread) ─────────────────────────────── */
@@ -743,37 +762,39 @@ a {
 .poem-body-container {
     flex: 1;
     margin-top: 6px;
-    font-family: "Gowun Batang", "Noto Serif KR", serif;
-    font-size: clamp(14px, 2.6cqh, 20px);
-    line-height: 1.95;
+    font-family: "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif !important;
+    font-weight: 500;
+    font-size: clamp(14px, 2.5cqh, 22px);
+    line-height: 1.9;
     color: var(--ink);
+    word-break: keep-all;
 }
 
 .poem-stanza {
     margin: 0 0 16px;
 }
 
-/* 오른쪽 페이지: 감상 길잡이 & 낱말 사전 */
+/* 오른쪽 페이지: 감상 요점 & 시어 */
 .poem-point-box {
     padding: 12px 16px;
-    border-radius: 8px;
+    border-left: 4px solid var(--moral-border);
     background: var(--moral-bg);
-    border: 1px solid var(--moral-border);
+    border-radius: 4px;
     margin-bottom: 16px;
 }
 
 .point-label {
-    font-size: clamp(12px, 1.9cqh, 14px);
-    font-weight: 800;
-    color: #8c5310;
-    margin-bottom: 4px;
+    display: none !important;
 }
 
 .point-text {
     margin: 0;
-    font-size: clamp(13px, 2.1cqh, 15.5px);
-    line-height: 1.6;
-    color: var(--ink);
+    font-family: "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif !important;
+    font-size: clamp(14px, 2.2cqh, 16px);
+    font-weight: 500;
+    line-height: 1.7;
+    color: #4a3009;
+    text-align: justify;
 }
 
 .poem-words-box {
@@ -782,10 +803,7 @@ a {
 }
 
 .words-label {
-    font-size: clamp(12px, 1.9cqh, 14px);
-    font-weight: 800;
-    color: var(--wood);
-    margin-bottom: 8px;
+    display: none !important;
 }
 
 .poem-words-dl {
@@ -794,19 +812,23 @@ a {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    font-family: "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif !important;
 }
 
 .poem-words-dl dt {
-    font-weight: 800;
-    font-size: clamp(13px, 2cqh, 15px);
+    font-family: "Noto Serif KR", Georgia, serif !important;
+    font-weight: 700;
+    font-size: clamp(13.5px, 2cqh, 15.5px);
     color: var(--wood-dark);
 }
 
 .poem-words-dl dd {
     margin: 2px 0 0;
-    font-size: clamp(12.5px, 1.9cqh, 14px);
-    color: #554030;
-    line-height: 1.5;
+    font-family: "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif !important;
+    font-size: clamp(13px, 1.9cqh, 14.5px);
+    font-weight: 500;
+    color: #4a3420;
+    line-height: 1.55;
 }
 
 .spread-next-guide {
@@ -862,22 +884,16 @@ a {
 }
 
 .quiz-category-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 800;
-    color: #8c5310;
-    background: #faeed7;
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-bottom: 4px;
+    display: none !important;
 }
 
 .quiz-question {
     margin: 0 0 8px;
+    font-family: "Noto Serif KR", Georgia, serif !important;
     font-weight: 700;
     font-size: clamp(13.5px, 2.1cqh, 16px);
     color: var(--ink);
-    line-height: 1.45;
+    line-height: 1.5;
 }
 
 .quiz-choices-box {
@@ -894,7 +910,9 @@ a {
     border-radius: 6px;
     background: #ffffff;
     color: var(--ink);
+    font-family: "Noto Serif KR", Georgia, serif !important;
     font-size: clamp(12.5px, 1.9cqh, 14.5px);
+    font-weight: 500;
     text-align: left;
     cursor: pointer;
     line-height: 1.4;
@@ -960,13 +978,16 @@ a {
 }
 
 .note-p {
-    margin: 0;
-    font-size: clamp(13.5px, 2.2cqh, 16.5px);
+    margin: 0 0 10px;
+    font-family: "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif !important;
+    font-size: clamp(14px, 2.315cqh, 24px);
     font-weight: 500;
-    line-height: 1.8;
+    line-height: 1.75;
     color: var(--ink);
     text-indent: 1em;
     text-align: justify;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .note-reflection-box {
@@ -978,17 +999,16 @@ a {
 }
 
 .reflection-label {
-    font-size: 12.5px;
-    font-weight: 800;
-    color: #8c5310;
-    margin-bottom: 4px;
+    display: none !important;
 }
 
 .reflection-text {
     margin: 0;
-    font-size: clamp(12.5px, 2cqh, 14.5px);
+    font-family: "Noto Serif KR", "Apple SD Gothic Neo", Georgia, serif !important;
+    font-size: clamp(13.5px, 2.1cqh, 16px);
+    font-weight: 500;
     color: #4a3420;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 /* ── E. 시집 마무리 (Complete Spread) ────────────────────────── */

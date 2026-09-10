@@ -211,7 +211,7 @@
             <div class="story-page-left-full">
                 <div class="cover-art-box">
                     <span class="cover-badge">${escapeHtml(volumeBadge)}</span>
-                    <h2 class="cover-title">${escapeHtml(book.title)}</h2>
+                    <h2 class="cover-title">${escapeHtml(book.note || "시집")}</h2>
                     <div class="cover-poem-list-box">
                         ${poems.map((p, idx) => `
                             <div class="cover-poem-row">
@@ -221,7 +221,6 @@
                             </div>
                         `).join("")}
                     </div>
-                    <button class="book-start-btn" id="startReadingBtn" type="button">첫 시부터 읽기 ›</button>
                 </div>
             </div>
         `;
@@ -236,7 +235,6 @@
                             <span class="toc-title">${escapeHtml(p.title)} ${done ? "✓" : ""}</span>
                             <span class="toc-poet">${escapeHtml(p.poet || "")}</span>
                         </div>
-                        <span class="toc-link-text">읽기 ›</span>
                     </button>
                 </li>
             `;
@@ -245,9 +243,7 @@
         const rightHtml = `
             <div class="story-page-right">
                 <div class="toc-header">
-                    <div class="page-head-kicker">차례</div>
-                    <h2>수록된 시</h2>
-                    <p class="toc-intro">총 ${poems.length}편의 시가 담겨 있습니다.</p>
+                    <h2>차례</h2>
                 </div>
                 <ul class="book-toc-list">
                     ${tocItemsHtml}
@@ -260,12 +256,10 @@
 
     // 2. 시 읽기
     function renderReadSpread(s) {
-        const { book, poem, pIdx } = s;
-        const volText = book.title.includes("·") ? book.title.split("·")[0].trim() : "시집";
+        const { poem } = s;
 
         const leftHtml = `
             <div class="story-page-left">
-                <div class="page-head-kicker">${escapeHtml(volText)} · 제 ${pIdx + 1} 수</div>
                 <h2 class="poem-reading-title">${escapeHtml(poem.title)}</h2>
                 <div class="poem-reading-byline">${escapeHtml(poem.poet || "")}${poem.year ? ` · ${poem.year}` : ""}</div>
                 <div class="poem-body-container">
@@ -283,7 +277,6 @@
             `).join("");
             wordsHtml = `
                 <div class="poem-words-box">
-                    <div class="words-label">시어 사전</div>
                     <dl class="poem-words-dl">${dlInner}</dl>
                 </div>
             `;
@@ -291,9 +284,7 @@
 
         const rightHtml = `
             <div class="story-page-right">
-                <div class="page-head-kicker">감상과 낱말</div>
                 <div class="poem-point-box">
-                    <div class="point-label">감상 길잡이</div>
                     <p class="point-text">${escapeHtml(poem.point || "시의 분위기와 시인의 마음을 가만히 헤아려 보세요.")}</p>
                 </div>
                 ${wordsHtml}
@@ -308,11 +299,11 @@
 
     // 3. 문제 풀기 (왼쪽 Q1~Q2, 오른쪽 Q3~Q4)
     function renderQuizSpread(s) {
-        const { poem, questions = [] } = s;
+        const { questions = [] } = s;
         const qLeft = questions.slice(0, 2);
         const qRight = questions.slice(2, 4);
 
-        const prog = getProgress()[poem.id]?.solved || [];
+        const prog = getProgress()[s.poem.id]?.solved || [];
 
         function renderQuestionCard(q, num) {
             if (!q) return "";
@@ -334,7 +325,6 @@
 
             return `
                 <div class="quiz-card" data-qid="${q.id}">
-                    <span class="quiz-category-tag">${escapeHtml(q.category || "이해 확인")}</span>
                     <p class="quiz-question">${num}. ${escapeHtml(q.sentence || q.prompt || "")}</p>
                     <div class="quiz-choices-box">
                         ${choicesHtml}
@@ -349,14 +339,12 @@
 
         const leftHtml = `
             <div class="story-page-left page-quiz-col">
-                <div class="page-head-kicker">${escapeHtml(poem.title)} · 문제 풀기 (1/2)</div>
                 ${leftCardsHtml || '<p>등록된 문제가 없습니다.</p>'}
             </div>
         `;
 
         const rightHtml = `
             <div class="story-page-right page-quiz-col">
-                <div class="page-head-kicker">${escapeHtml(poem.title)} · 문제 풀기 (2/2)</div>
                 ${rightCardsHtml}
                 <div class="spread-next-guide">
                     <button class="guide-nav-btn primary" id="btnGoNote" type="button">작품 해설 읽기 ›</button>
@@ -369,7 +357,7 @@
 
     // 4. 작품 해설 (왼쪽 전반부, 오른쪽 후반부 및 생각거리)
     function renderNoteSpread(s) {
-        const { book, poem, pIdx, poems } = s;
+        const { poem, pIdx, poems } = s;
         const notes = Array.isArray(poem.note) ? poem.note : (poem.note ? [poem.note] : []);
 
         const half = Math.ceil(notes.length / 2);
@@ -378,7 +366,6 @@
 
         const leftHtml = `
             <div class="story-page-left">
-                <div class="page-head-kicker">${escapeHtml(poem.title)} · 깊이 읽기</div>
                 <h3 class="note-head-title">작품 해설</h3>
                 <div class="note-paras">
                     ${leftParas.map(p => `<p class="note-p">${escapeHtml(p)}</p>`).join("") || '<p class="note-p">해설을 준비하고 있습니다.</p>'}
@@ -405,7 +392,6 @@
                     ${rightParas.map(p => `<p class="note-p">${escapeHtml(p)}</p>`).join("")}
                 </div>
                 <div class="note-reflection-box">
-                    <div class="reflection-label">생각해 볼 거리</div>
                     <p class="reflection-text">${escapeHtml(reflection)}</p>
                 </div>
                 <div class="spread-next-guide">
@@ -420,7 +406,7 @@
     // 5. 권 완독 펼침면
     function renderCompleteSpread(s) {
         const { book, poems } = s;
-        const cleanTitle = book.title;
+        const volumeBadge = `제 ${currentBookIndex + 1} 권`;
 
         const listItemsHtml = poems.map((p, idx) => `
             <li>
@@ -431,9 +417,9 @@
 
         const leftHtml = `
             <div class="story-page-left page-complete-left">
-                <span class="complete-badge">완독 축하</span>
-                <h2 class="complete-title">${escapeHtml(cleanTitle)} 완독!</h2>
-                <p class="complete-subtitle">이 책에 실린 모든 시를 읽고 문제를 풀었습니다.</p>
+                <span class="complete-badge">완독</span>
+                <h2 class="complete-title">${volumeBadge} 완독!</h2>
+                <p class="complete-subtitle">${escapeHtml(book.note || "이 책에 실린 모든 시를 읽고 문제를 풀었습니다.")}</p>
                 <ul class="complete-poem-list">
                     ${listItemsHtml}
                 </ul>
@@ -448,7 +434,7 @@
                 <div class="complete-actions">
                     ${hasNextBook ? `
                         <button class="book-action-btn primary" id="btnNextBook" type="button">
-                            다음 권 읽기: ${escapeHtml(nextBook.title)} ›
+                            다음 권 읽기: 제 ${currentBookIndex + 2} 권 (${escapeHtml(nextBook.note || "")}) ›
                         </button>
                     ` : ""}
                     <button class="book-action-btn secondary" id="btnReturnToShelf" type="button">
@@ -705,7 +691,7 @@
                         </ol>
                     </div>
                     <div class="book-title-meta">
-                        <p class="book-card-title">${escapeHtml(b.title)}</p>
+                        <p class="book-card-title"><b>${bIdx + 1}권</b> ${escapeHtml(b.note || "")}</p>
                         ${done ? '<span class="book-card-badge">완독 ✓</span>' : ""}
                     </div>
                 </div>
@@ -754,7 +740,6 @@
                         <div class="topic-poem-title">${escapeHtml(p.title)} ${done ? "✓" : ""}</div>
                         <div class="topic-poem-poet">${escapeHtml(p.poet || "")}</div>
                     </div>
-                    <span style="font-size: 13px; font-weight: 700; color: var(--gold);">읽기 ›</span>
                 </li>
             `;
         }).join("");
