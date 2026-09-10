@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const navigation = fs.readFileSync(path.join(root, "assets/site-back-navigation.js"), "utf8");
+const humanBodyHub = fs.readFileSync(path.join(root, "learning/inquiry/human-body/index.html"), "utf8");
 const expression = navigation.match(/const LEGACY_LABEL = (\/.+\/i);/)?.[1];
 const legacyLabel = Function(`"use strict"; return (${expression})`)();
 
@@ -45,4 +46,8 @@ test("top rows collapse when legacy navigation is their only content", () => {
   assert.match(navigation, /\[data-site-back-empty\]\{display:none!important\}/);
   assert.match(navigation, /characterData: true/);
   assert.match(navigation, /attributeFilter: \["aria-label", "hidden"\]/);
+});
+
+test("the human body hub marks its decorative back link as legacy", () => {
+  assert.match(humanBodyHub, /class="floating-back-btn back-link"/);
 });
