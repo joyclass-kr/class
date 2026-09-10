@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hyangga-heonhwaga"] = {
         "poem": {
+            "illustration": "images/hyangga-heonhwaga.webp",
             "lines": [
                 "자줏빛 바위 가에",
                 "잡은 손 암소 놓게 하시고",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hyangga-seodongyo"] = {
         "poem": {
+            "illustration": "images/hyangga-seodongyo.webp",
             "lines": [
                 "선화 공주님은",
                 "남몰래 사귀어 두고",

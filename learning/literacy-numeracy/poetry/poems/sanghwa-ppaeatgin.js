@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sanghwa-ppaeatgin"] = {
         "poem": {
+            "illustration": "images/sanghwa-ppaeatgin.webp",
             "lines": [
                 "지금은 남의 땅 — 빼앗긴 들에도 봄은 오는가?",
                 "",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hyangga-jemangmaega"] = {
         "poem": {
+            "illustration": "images/hyangga-jemangmaega.webp",
             "lines": [
                 "삶과 죽음의 길은",
                 "여기 있으매 두려워",

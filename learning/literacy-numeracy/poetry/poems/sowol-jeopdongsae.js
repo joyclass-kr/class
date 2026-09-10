@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-jeopdongsae"] = {
         "poem": {
+            "illustration": "images/sowol-jeopdongsae.webp",
             "lines": [
                 "접동",
                 "접동",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-ganeungil"] = {
         "poem": {
+            "illustration": "images/sowol-ganeungil.webp",
             "lines": [
                 "그립다",
                 "말을 할까",

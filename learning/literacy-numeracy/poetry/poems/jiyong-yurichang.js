@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-yurichang"] = {
         "poem": {
+            "illustration": "images/jiyong-yurichang.webp",
             "lines": [
                 "유리에 차고 슬픈 것이 어른거린다.",
                 "열없이 붙어 서서 입김을 흐리우니",
