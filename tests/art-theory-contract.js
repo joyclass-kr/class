@@ -21,6 +21,9 @@ assert.doesNotMatch(page, /class="topbar"/, '화면 위를 가로지르는 헤�
 assert.match(page, /id="courseMenu"/, '첫 화면에 차시 목록이 필요합니다.');
 assert.doesNotMatch(page, /class="course-intro"/, '차시 목록 앞에 별도 소개 화면을 두지 않습니다.');
 assert.doesNotMatch(page, /class="course-top"/, '차시 목록 앞에 중복 제목 줄을 두지 않습니다.');
+assert.doesNotMatch(page, /menu-editorial-header|editorial-badge|ART THEORY|VISUAL INQUIRY/, '목록 위에 홍보용 히어로·영문 배지를 두지 않습니다.');
+assert.doesNotMatch(page, /Interactive Inquiry|FIRST UNIT|SECOND UNIT|THIRD UNIT/, '수업 화면에 장식용 영문 배지를 두지 않습니다.');
+assert.doesNotMatch(script, /LESSON \$\{lesson\.number\}/, '차시 표기는 한국어로 간결하게 표시합니다.');
 assert.doesNotMatch(page, /class="lesson-toolbar"/, '사이트 공통 뒤로가기와 겹치는 자체 툴바를 두지 않습니다.');
 assert.match(script, /sitebackrequest/, '공통 뒤로가기 버튼으로 차시 목록에 돌아갈 수 있어야 합니다.');
 assert.match(page, /data-open-lesson="color-perception"[\s\S]*data-open-lesson="obangsaek"[\s\S]*data-open-lesson="visual-elements"[\s\S]*data-open-lesson="formal-analysis"/, '색 이해에서 화면 구성과 작품 분석으로 이어져야 합니다.');

@@ -595,7 +595,7 @@
     currentIndex = index;
     courseMenu.hidden = true;
     lessonView.hidden = false;
-    document.getElementById('lessonKicker').textContent = `${lesson.track} · LESSON ${lesson.number} / 09`;
+    document.getElementById('lessonKicker').textContent = `${lesson.number}차시 · ${lesson.track}`;
     document.getElementById('lessonTitle').textContent = lesson.title;
     document.getElementById('lessonQuestion').textContent = lesson.question;
     document.getElementById('conceptContent').innerHTML = lesson.concept;
