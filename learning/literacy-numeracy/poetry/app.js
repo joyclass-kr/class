@@ -9,6 +9,8 @@
     const books = Array.isArray(window.POETRY_BOOKS) ? window.POETRY_BOOKS : [];
 
     const questionsByPoem = new Map();
+    const quizWrongChoices = new Map();
+    const quizPickedChoices = new Map();
 
     const currentScriptEl = document.currentScript || document.querySelector('script[src*="app.js"]');
     const here = currentScriptEl ? currentScriptEl.src.replace(/[^/]*$/, "") : "";
@@ -57,9 +59,13 @@
 
     function savePoemSolved(poemId, questionId) {
         const prog = getProgress();
-        const cur = prog[poemId] || { solved: [] };
+        const cur = prog[poemId] || { solved: [], wrong: {} };
         if (!cur.solved.includes(questionId)) {
             cur.solved.push(questionId);
+        }
+        if (!cur.wrong) cur.wrong = {};
+        if (quizWrongChoices.has(questionId)) {
+            cur.wrong[questionId] = Array.from(quizWrongChoices.get(questionId));
         }
         const qs = questionsByPoem.get(poemId) || [];
         if (qs.length > 0 && cur.solved.length >= qs.length) {
@@ -215,9 +221,13 @@
                     <div class="cover-poem-list-box">
                         ${poems.map((p, idx) => `
                             <div class="cover-poem-row">
-                                <span class="cover-poem-idx">${idx + 1}.</span>
-                                <span class="cover-poem-name">${escapeHtml(p.title)}</span>
-                                <span class="cover-poem-author">${escapeHtml(p.poet || "")}</span>
+                                <div class="cover-poem-title-row">
+                                    <span class="cover-poem-idx">${idx + 1}.</span>
+                                    <span class="cover-poem-name">${escapeHtml(p.title)}</span>
+                                </div>
+                                <div class="cover-poem-author-row">
+                                    <span class="cover-poem-author">${escapeHtml(p.poet || "")}</span>
+                                </div>
                             </div>
                         `).join("")}
                     </div>
@@ -288,9 +298,6 @@
                     <p class="point-text">${escapeHtml(poem.point || "시의 분위기와 시인의 마음을 가만히 헤아려 보세요.")}</p>
                 </div>
                 ${wordsHtml}
-                <div class="spread-next-guide">
-                    <button class="guide-nav-btn primary" id="btnGoQuiz" type="button">문제 풀기 ›</button>
-                </div>
             </div>
         `;
 
@@ -307,29 +314,33 @@
 
         function renderQuestionCard(q, num) {
             if (!q) return "";
-            const isSolved = prog.includes(q.id);
-            const choicesHtml = (q.choices || []).map((c, cIdx) => {
+            const isSolved = prog.includes(q.id) || quizPickedChoices.has(q.id);
+            const savedWrongs = getProgress()[s.poem.id]?.wrong?.[q.id] || [];
+            const memoryWrongs = quizWrongChoices.get(q.id) ? Array.from(quizWrongChoices.get(q.id)) : [];
+            const wrongSet = new Set([...savedWrongs, ...memoryWrongs]);
+
+            const choicesHtml = (q.choices || []).map((c) => {
                 const isCorrect = c === q.answer;
-                const answeredClass = isSolved && isCorrect ? "correct" : "";
+                let stateCls = "";
+                if (isSolved && isCorrect) {
+                    stateCls = " correct";
+                } else if (wrongSet.has(c)) {
+                    stateCls = " incorrect";
+                }
                 return `
-                    <button class="quiz-choice-btn ${answeredClass}" type="button"
+                    <button class="quiz-choice${stateCls}" type="button"
                             data-qid="${q.id}" data-choice="${escapeHtml(c)}" data-correct="${isCorrect ? '1' : '0'}">
-                        ${cIdx + 1}. ${escapeHtml(c)}
+                        ${escapeHtml(c)}
                     </button>
                 `;
             }).join("");
 
-            const explBoxHtml = isSolved
-                ? `<div class="quiz-expl-box"><strong>정답입니다!</strong> ${escapeHtml(q.explanation || "")}</div>`
-                : `<div class="quiz-expl-box hidden" id="expl_${q.id}"><strong>정답입니다!</strong> ${escapeHtml(q.explanation || "")}</div>`;
-
             return `
-                <div class="quiz-card" data-qid="${q.id}">
+                <div class="quiz-item${isSolved ? ' graded' : ''}" data-qid="${q.id}">
                     <p class="quiz-question">${num}. ${escapeHtml(q.sentence || q.prompt || "")}</p>
-                    <div class="quiz-choices-box">
+                    <div class="quiz-choices">
                         ${choicesHtml}
                     </div>
-                    ${explBoxHtml}
                 </div>
             `;
         }
@@ -346,18 +357,15 @@
         const rightHtml = `
             <div class="story-page-right page-quiz-col">
                 ${rightCardsHtml}
-                <div class="spread-next-guide">
-                    <button class="guide-nav-btn primary" id="btnGoNote" type="button">작품 해설 읽기 ›</button>
-                </div>
             </div>
         `;
 
         return leftHtml + rightHtml;
     }
 
-    // 4. 작품 해설 (왼쪽 전반부, 오른쪽 후반부 및 생각거리)
+    // 4. 작품 해설 (왼쪽 전반부, 오른쪽 후반부)
     function renderNoteSpread(s) {
-        const { poem, pIdx, poems } = s;
+        const { poem } = s;
         const notes = Array.isArray(poem.note) ? poem.note : (poem.note ? [poem.note] : []);
 
         const half = Math.ceil(notes.length / 2);
@@ -373,29 +381,10 @@
             </div>
         `;
 
-        const isLastPoem = pIdx === poems.length - 1;
-        const nextPoem = !isLastPoem ? poems[pIdx + 1] : null;
-
-        const nextBtnLabel = isLastPoem
-            ? "권 마무리하기 ›"
-            : `다음 시 읽기: 「${escapeHtml(nextPoem.title)}」 ›`;
-
-        const reflection = poem.reflection || (
-            poem.topics?.includes("가족") ? "이 시를 읽고 나의 가족이나 소중한 사람을 떠올렸을 때 어떤 마음이 드나요?" :
-            poem.topics?.includes("그리움") || poem.topics?.includes("이별") ? "내가 가장 그립고 보고 싶은 대상은 누구인가요? 그때의 감정을 떠올려 보세요." :
-            "시에서 가장 마음에 와닿았던 구절은 어디인가요? 왜 그 구절이 인상 깊었는지 생각해 보세요."
-        );
-
         const rightHtml = `
             <div class="story-page-right">
                 <div class="note-paras">
                     ${rightParas.map(p => `<p class="note-p">${escapeHtml(p)}</p>`).join("")}
-                </div>
-                <div class="note-reflection-box">
-                    <p class="reflection-text">${escapeHtml(reflection)}</p>
-                </div>
-                <div class="spread-next-guide">
-                    <button class="guide-nav-btn primary" id="btnGoNextAfterNote" type="button">${nextBtnLabel}</button>
                 </div>
             </div>
         `;
@@ -527,31 +516,32 @@
 
         // E. 퀴즈 보기 클릭 시 채점
         if (s.kind === "quiz") {
-            spreadEl.querySelectorAll(".quiz-choice-btn").forEach((btn) => {
+            spreadEl.querySelectorAll(".quiz-choice").forEach((btn) => {
                 btn.onclick = () => {
+                    const item = btn.closest(".quiz-item");
+                    if (!item || item.classList.contains("graded")) return;
+
                     const isCorrect = btn.getAttribute("data-correct") === "1";
                     const qid = btn.getAttribute("data-qid");
-                    const card = btn.closest(".quiz-card");
-                    if (!card) return;
+                    const choice = btn.getAttribute("data-choice");
 
-                    if (isCorrect) {
-                        btn.classList.add("correct");
-                        btn.classList.remove("incorrect");
-                        // 같은 카드의 다른 선택지 오답 표시 정리 및 비활성화
-                        card.querySelectorAll(".quiz-choice-btn").forEach((other) => {
-                            if (other !== btn) {
-                                other.classList.remove("incorrect");
-                                other.disabled = true;
-                            }
-                        });
-                        const explEl = card.querySelector(".quiz-expl-box");
-                        if (explEl) explEl.classList.remove("hidden");
-
-                        savePoemSolved(s.poem.id, qid);
-                    } else {
+                    if (!isCorrect) {
+                        // 틀리면 그 보기만 빨갛게 남기고, 맞는 것을 고를 때까지 다시 고르게 한다. (오답 색칠 유지)
                         btn.classList.add("incorrect");
-                        setTimeout(() => btn.classList.remove("incorrect"), 600);
+                        if (!quizWrongChoices.has(qid)) {
+                            quizWrongChoices.set(qid, new Set());
+                        }
+                        quizWrongChoices.get(qid).add(choice);
+                        savePoemSolved(s.poem.id, qid);
+                        return;
                     }
+
+                    // 정답을 맞추면 정답 초록색 표시 및 채점 완료(graded) 처리, 기존 오답 빨간색은 그대로 유지!
+                    btn.classList.add("correct");
+                    item.classList.add("graded");
+                    quizPickedChoices.set(qid, choice);
+
+                    savePoemSolved(s.poem.id, qid);
                 };
             });
         }
@@ -674,9 +664,13 @@
 
             const poemItemsHtml = bookPoems.map((p, idx) => `
                 <li class="cover-poem-item">
-                    <span class="cover-poem-num">${idx + 1}.</span>
-                    <span class="cover-poem-title">${escapeHtml(p.title)}</span>
-                    <span class="cover-poem-poet">${escapeHtml(p.poet || "")}</span>
+                    <div class="cover-poem-title-row">
+                        <span class="cover-poem-num">${idx + 1}.</span>
+                        <span class="cover-poem-title">${escapeHtml(p.title)}</span>
+                    </div>
+                    <div class="cover-poem-author-row">
+                        <span class="cover-poem-poet">${escapeHtml(p.poet || "")}</span>
+                    </div>
                 </li>
             `).join("");
 
@@ -685,14 +679,11 @@
                     <div class="book-cover">
                         <div class="book-cover-header">
                             <span class="book-cover-badge">${escapeHtml(volumeBadge)}</span>
+                            ${done ? '<span class="book-cover-done-badge">완독 ✓</span>' : ""}
                         </div>
                         <ol class="book-cover-poem-list">
                             ${poemItemsHtml}
                         </ol>
-                    </div>
-                    <div class="book-title-meta">
-                        <p class="book-card-title"><b>${bIdx + 1}권</b> ${escapeHtml(b.note || "")}</p>
-                        ${done ? '<span class="book-card-badge">완독 ✓</span>' : ""}
                     </div>
                 </div>
             `;
