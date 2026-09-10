@@ -4,7 +4,7 @@
     const course = window.SENTENCE_COURSE;
     if (!course || !Array.isArray(course.lessons)) return;
 
-    const STORAGE_KEY = "joyclass-sentence-building-progress-v1";
+    const STORAGE_KEY = "joyclass-sentence-building-progress-v2";
     const elements = {
         courseScreen: document.getElementById("courseScreen"),
         lessonScreen: document.getElementById("lessonScreen"),
@@ -14,6 +14,7 @@
         missionTotal: document.getElementById("missionTotal"),
         missionProgressFill: document.getElementById("missionProgressFill"),
         lessonTitle: document.getElementById("lessonTitle"),
+        lessonMeta: document.getElementById("lessonMeta"),
         taskPrompt: document.getElementById("taskPrompt"),
         taskScene: document.getElementById("taskScene"),
         activityArea: document.getElementById("activityArea"),
@@ -35,6 +36,7 @@
     let taskIndex = 0;
     let score = 0;
     let selectedChoice = null;
+    let selectedChoices = new Set();
     let orderTokens = [];
     let selectedOrder = [];
     let checked = false;
@@ -78,12 +80,13 @@
             section.className = "unit-section";
             section.innerHTML = `
                 <header class="unit-header">
-                    <div><span><h2></h2><p></p></span></div>
+                    <div><span><span class="grade-band"></span><h2></h2><p></p></span></div>
                     <span class="unit-count"></span>
                 </header>
                 <div class="lesson-grid"></div>`;
             section.querySelector("h2").textContent = unit.title;
             section.querySelector("p").textContent = unit.subtitle;
+            section.querySelector(".grade-band").textContent = unit.gradeBand;
             section.querySelector(".unit-count").textContent = `${unitComplete}/${unitLessons.length} 완료`;
             const grid = section.querySelector(".lesson-grid");
 
@@ -98,9 +101,10 @@
                 button.setAttribute("aria-label", `${index + 1}차시 ${item.title}${record.completed ? ", 완료" : ""}`);
                 button.innerHTML = `
                     <span class="lesson-number"></span>
-                    <strong></strong>`;
+                    <span class="lesson-card-copy"><strong></strong><small></small></span>`;
                 button.querySelector(".lesson-number").textContent = record.completed ? "✓" : String(index + 1).padStart(2, "0");
                 button.querySelector("strong").textContent = item.title;
+                button.querySelector("small").textContent = item.standards.map((code) => `[${code}]`).join(" · ");
                 button.addEventListener("click", () => startLesson(index));
                 grid.append(button);
             });
@@ -133,6 +137,7 @@
         const task = lesson.tasks[taskIndex];
         checked = false;
         selectedChoice = null;
+        selectedChoices = new Set();
         selectedOrder = [];
         elements.feedback.hidden = true;
         elements.feedback.className = "feedback";
@@ -141,28 +146,46 @@
         elements.hintButton.hidden = false;
         elements.activityArea.replaceChildren();
         elements.lessonTitle.textContent = `${currentLessonIndex + 1}차시 ${lesson.title}`;
+        elements.lessonMeta.textContent = `${lesson.gradeBand} · ${lesson.standards.map((code) => `[${code}]`).join(" · ")} · ${lesson.goal}`;
         elements.missionNumber.textContent = String(taskIndex + 1);
         elements.missionTotal.textContent = String(lesson.tasks.length);
         elements.missionProgressFill.style.width = `${(taskIndex / lesson.tasks.length) * 100}%`;
         elements.taskPrompt.textContent = task.prompt;
         elements.taskScene.textContent = task.scene || "";
-        if (task.type === "choice") renderChoices(task);
+        if (task.type === "choice") renderChoices(task, false);
+        if (task.type === "multi") renderChoices(task, true);
         if (task.type === "order") renderOrder(task);
         if (task.type === "write") renderWriting(task);
         elements.announcer.textContent = `${taskIndex + 1}번째 문제. ${task.prompt}`;
     }
 
-    function renderChoices(task) {
+    function renderChoices(task, allowMultiple) {
         const list = document.createElement("div");
         list.className = "choice-list";
-        task.options.forEach((option, index) => {
+        if (allowMultiple) {
+            const guide = document.createElement("p");
+            guide.className = "multi-guide";
+            guide.textContent = "정답을 모두 선택하세요.";
+            list.append(guide);
+        }
+        const optionEntries = shuffle(task.options.map((option, optionIndex) => ({ option, optionIndex })));
+        optionEntries.forEach(({ option, optionIndex }, displayIndex) => {
             const button = document.createElement("button");
             button.type = "button";
             button.className = "choice-button";
-            button.textContent = `${index + 1}. ${option}`;
+            button.dataset.optionIndex = String(optionIndex);
+            button.textContent = `${displayIndex + 1}. ${option}`;
+            if (allowMultiple) button.setAttribute("aria-pressed", "false");
             button.addEventListener("click", () => {
                 if (checked) return;
-                selectedChoice = index;
+                if (allowMultiple) {
+                    if (selectedChoices.has(optionIndex)) selectedChoices.delete(optionIndex);
+                    else selectedChoices.add(optionIndex);
+                    button.classList.toggle("is-selected", selectedChoices.has(optionIndex));
+                    button.setAttribute("aria-pressed", String(selectedChoices.has(optionIndex)));
+                    return;
+                }
+                selectedChoice = optionIndex;
                 list.querySelectorAll("button").forEach((item) => item.classList.remove("is-selected"));
                 button.classList.add("is-selected");
             });
@@ -175,10 +198,10 @@
         orderTokens = shuffle(task.tokens.map((value, index) => ({ id: `${index}-${value}`, value })));
         const board = document.createElement("div");
         board.className = "order-board";
-        board.innerHTML = '<p>내가 만든 문장</p><div class="token-row selected-tokens"></div>';
+        board.innerHTML = `<p>${task.boardLabel || "내가 정한 순서"}</p><div class="token-row selected-tokens"></div>`;
         const bank = document.createElement("div");
         bank.className = "token-bank";
-        bank.innerHTML = '<p>낱말 카드</p><div class="token-row bank-tokens"></div>';
+        bank.innerHTML = `<p>${task.bankLabel || "문장 카드"}</p><div class="token-row bank-tokens"></div>`;
         elements.activityArea.append(board, bank);
 
         function refresh() {
@@ -222,19 +245,36 @@
     function renderWriting(task) {
         const wrapper = document.createElement("div");
         wrapper.className = "write-area";
-        const scene = document.createElement("div");
-        scene.className = "writing-scene";
-        scene.textContent = task.scene;
-        elements.taskScene.textContent = "주어진 상황에서 장소·행동·느낌을 살펴보세요.";
         const textarea = document.createElement("textarea");
         textarea.id = "reportText";
-        textarea.placeholder = "예) 가족이 공원에 소풍을 왔다.\n함께 도시락을 먹었다.\n즐거운 하루였다.";
-        textarea.setAttribute("aria-label", "세 문장 글쓰기");
+        textarea.placeholder = task.placeholder || "조건을 확인하며 글을 쓰세요.";
+        textarea.setAttribute("aria-label", `${task.minSentences}문장 이상 글쓰기`);
+        const rubric = document.createElement("ul");
+        rubric.className = "rubric-list";
+        (task.criteria || []).forEach((criterion) => {
+            const item = document.createElement("li");
+            const label = document.createElement("label");
+            label.className = "rubric-check";
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.className = "rubric-checkbox";
+            const text = document.createElement("span");
+            text.textContent = criterion;
+            checkbox.addEventListener("change", () => {
+                item.classList.toggle("is-checked", checkbox.checked);
+            });
+            label.append(checkbox, text);
+            item.append(label);
+            rubric.append(item);
+        });
         const count = document.createElement("div");
         count.className = "writing-count";
-        const updateCount = () => { count.textContent = `${sentenceCount(textarea.value)} / ${task.minSentences}문장`; };
+        const updateCount = () => {
+            const length = textarea.value.trim().length;
+            count.textContent = `${sentenceCount(textarea.value)} / ${task.minSentences}문장 · ${length} / ${task.minChars || 20}자`;
+        };
         textarea.addEventListener("input", updateCount);
-        wrapper.append(scene, textarea, count);
+        wrapper.append(rubric, textarea, count);
         elements.activityArea.append(wrapper);
         updateCount();
     }
@@ -263,13 +303,20 @@
             if (selectedChoice === null) return null;
             return selectedChoice === task.answer;
         }
+        if (task.type === "multi") {
+            if (selectedChoices.size === 0) return null;
+            return selectedChoices.size === task.answers.length && task.answers.every((answer) => selectedChoices.has(answer));
+        }
         if (task.type === "order") {
             if (selectedOrder.length !== task.answer.length) return null;
             return selectedOrder.every((token, index) => token.value === task.answer[index]);
         }
         const textarea = document.getElementById("reportText");
         if (!textarea || !textarea.value.trim()) return null;
-        return sentenceCount(textarea.value) >= task.minSentences && textarea.value.trim().length >= 20;
+        if (sentenceCount(textarea.value) < task.minSentences || textarea.value.trim().length < (task.minChars || 20)) return null;
+        const rubricChecks = [...elements.activityArea.querySelectorAll(".rubric-checkbox")];
+        if (rubricChecks.some((input) => !input.checked)) return null;
+        return true;
     }
 
     function checkAnswer() {
@@ -277,7 +324,14 @@
         const task = currentTask();
         const correct = validateTask(task);
         if (correct === null) {
-            showFeedback("hint", "답을 완성해 주세요", task.type === "order" ? "모든 낱말 카드를 문장 칸에 놓아 보세요." : task.type === "write" ? `${task.minSentences}문장 이상 써 보세요.` : "정답이라고 생각하는 문장을 먼저 골라 보세요.");
+            const incomplete = task.type === "order"
+                ? "모든 문장 카드를 순서 칸에 놓아 보세요."
+                : task.type === "write"
+                    ? `${task.minSentences}문장, ${task.minChars || 20}자 이상 쓰고 작성 기준을 모두 확인해 체크해 주세요.`
+                    : task.type === "multi"
+                        ? "정답이라고 생각하는 항목을 모두 골라 보세요."
+                        : "정답이라고 생각하는 문장을 먼저 골라 보세요.";
+            showFeedback("hint", "답을 완성해 주세요", incomplete);
             elements.announcer.textContent = elements.feedbackText.textContent;
             return;
         }
@@ -288,16 +342,25 @@
         elements.nextButton.hidden = false;
         if (correct) {
             score += 1;
-            showFeedback("good", "정답입니다", task.explain);
+            showFeedback("good", task.type === "write" ? "작성 기준을 충족했어요" : "정답입니다", task.explain);
         } else {
             showFeedback("bad", "정답을 확인해 보세요", task.explain);
         }
 
         if (task.type === "choice") {
-            elements.activityArea.querySelectorAll(".choice-button").forEach((button, index) => {
+            elements.activityArea.querySelectorAll(".choice-button").forEach((button) => {
+                const optionIndex = Number(button.dataset.optionIndex);
                 button.disabled = true;
-                if (index === task.answer) button.classList.add("is-correct");
-                if (index === selectedChoice && index !== task.answer) button.classList.add("is-wrong");
+                if (optionIndex === task.answer) button.classList.add("is-correct");
+                if (optionIndex === selectedChoice && optionIndex !== task.answer) button.classList.add("is-wrong");
+            });
+        }
+        if (task.type === "multi") {
+            elements.activityArea.querySelectorAll(".choice-button").forEach((button) => {
+                const optionIndex = Number(button.dataset.optionIndex);
+                button.disabled = true;
+                if (task.answers.includes(optionIndex)) button.classList.add("is-correct");
+                if (selectedChoices.has(optionIndex) && !task.answers.includes(optionIndex)) button.classList.add("is-wrong");
             });
         }
         elements.nextButton.textContent = taskIndex === course.lessons[currentLessonIndex].tasks.length - 1 ? "학습 완료 →" : "다음 문제 →";

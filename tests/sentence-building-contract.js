@@ -7,81 +7,126 @@ const root = path.join(__dirname, "..", "learning", "literacy-numeracy", "senten
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const curriculumSource = fs.readFileSync(path.join(root, "curriculum.js"), "utf8");
-const practiceSource = fs.readFileSync(path.join(root, "practice-extra.js"), "utf8");
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
 const hub = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 
+assert.match(html, /<title>문장·문단 쓰기 \| Joyclass<\/title>/);
+assert.match(html, /2022 개정 국어과 교육과정/);
+assert.match(html, /교육과정 원문/);
 assert.match(html, /id="courseScreen"/);
 assert.match(html, /id="lessonList"/);
+assert.match(html, /id="lessonMeta"/);
 assert.match(html, /id="lessonScreen"[^>]*hidden/);
 assert.match(html, /id="resultScreen"[^>]*hidden/);
-assert.doesNotMatch(html, /topbar|course-hero|hero-case|totalStars|earnedStars/);
-assert.doesNotMatch(html, /course-progress|progressText|progressPercent|courseProgressFill/);
-assert.doesNotMatch(html, /backToListButton|resultListButton|>← 차시 목록<|>차시 목록<\/button>/);
 assert.match(html, /curriculum\.js/);
-assert.match(html, /practice-extra\.js/);
+assert.doesNotMatch(html, /practice-extra\.js/);
 assert.match(html, /app\.js/);
+
 assert.match(css, /grid-template-columns:\s*repeat\(3/);
+assert.match(css, /\.course-intro/);
+assert.match(css, /\.grade-band/);
+assert.match(css, /\.rubric-list/);
+assert.match(css, /\.multi-guide/);
 assert.match(css, /@media \(max-width: 480px\)/);
-assert.match(css, /\.lesson-toolbar h1\s*\{[^}]*font-size:\s*18px/);
-assert.match(css, /\.task-scene\s*\{[^}]*font-size:\s*19px[^}]*font-weight:\s*700/s);
-assert.match(app, /localStorage/);
-assert.match(app, /sentenceCount/);
-assert.doesNotMatch(html, /taskType|unitName|lessonGoal|celebration/);
-assert.doesNotMatch(app, /AudioContext|confetti|celebrate/);
-assert.doesNotMatch(app, /button\.querySelector\("small"\)/);
+
+assert.match(app, /joyclass-sentence-building-progress-v2/);
+assert.match(app, /selectedChoices/);
+assert.match(app, /task\.answers/);
+assert.match(app, /task\.minChars/);
+assert.match(app, /task\.criteria/);
+assert.match(app, /rubric-checkbox/);
+assert.match(app, /rubricChecks\.some/);
+assert.match(app, /lessonMeta/);
 assert.match(app, /sitebackrequest/);
+assert.doesNotMatch(app, /AudioContext|confetti|celebrate/);
 
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(curriculumSource, context);
-vm.runInContext(practiceSource, context);
 const course = context.window.SENTENCE_COURSE;
 assert.ok(course);
-assert.equal(course.units.length, 5);
+assert.equal(course.version, 2);
+assert.equal(course.units.length, 6);
 assert.equal(course.lessons.length, 24);
-assert.equal(new Set(course.lessons.map((lesson) => lesson.id)).size, 24);
+assert.equal(new Set(course.lessons.map((item) => item.id)).size, 24);
+assert.match(course.source.notice, /2022-33/);
+assert.match(course.source.url, /moe\.go\.kr/);
+
+const requiredStandards = [
+    "4국03-01", "4국03-02", "4국03-03", "4국03-04", "4국03-05", "4국04-03", "4국04-04",
+    "6국03-01", "6국03-02", "6국03-03", "6국03-04", "6국03-05", "6국03-06",
+    "6국04-01", "6국04-04", "6국04-05", "6국04-06"
+];
+assert.deepEqual(Object.keys(course.standards).sort(), requiredStandards.sort());
 
 const unitIds = new Set(course.units.map((unit) => unit.id));
-for (const [lessonIndex, lesson] of course.lessons.entries()) {
-    assert.ok(unitIds.has(lesson.unit), `lesson ${lessonIndex + 1}: unknown unit`);
-    assert.equal(lesson.tasks.length, 10, `lesson ${lessonIndex + 1}: expected 10 tasks`);
-    assert.ok(lesson.title && lesson.goal);
-    assert.equal(new Set(lesson.tasks.map((task) => task.scene)).size, lesson.tasks.length, `lesson ${lessonIndex + 1}: duplicate scenes`);
-    for (const [taskIndex, task] of lesson.tasks.entries()) {
-        const where = `lesson ${lessonIndex + 1}, task ${taskIndex + 1}`;
-        assert.ok(["choice", "order", "write"].includes(task.type), `${where}: invalid type`);
-        assert.ok(task.prompt && task.hint && task.explain, `${where}: missing copy`);
+const usedStandards = new Set();
+for (const [lessonIndex, item] of course.lessons.entries()) {
+    const where = `lesson ${lessonIndex + 1}`;
+    assert.ok(unitIds.has(item.unit), `${where}: unknown unit`);
+    assert.ok(item.title && item.goal && item.gradeBand, `${where}: missing metadata`);
+    assert.equal(item.tasks.length, 6, `${where}: expected six substantial tasks`);
+    assert.ok(item.standards.length >= 1, `${where}: missing achievement standard`);
+    item.standards.forEach((code) => {
+        assert.ok(course.standards[code], `${where}: unknown standard ${code}`);
+        usedStandards.add(code);
+    });
+    assert.equal(new Set(item.tasks.map((task) => task.scene)).size, item.tasks.length, `${where}: duplicate scenes`);
+    assert.equal(item.tasks.filter((task) => task.type === "multi").length, 1, `${where}: one multi-select task required`);
+    assert.equal(item.tasks.filter((task) => task.type === "order").length, 1, `${where}: one ordering task required`);
+    assert.equal(item.tasks.filter((task) => task.type === "write").length, 1, `${where}: one writing task required`);
+
+    for (const [taskIndex, task] of item.tasks.entries()) {
+        const taskWhere = `${where}, task ${taskIndex + 1}`;
+        assert.ok(["choice", "multi", "order", "write"].includes(task.type), `${taskWhere}: invalid type`);
+        assert.ok(task.prompt && task.scene && task.hint && task.explain, `${taskWhere}: missing copy`);
         if (task.type === "choice") {
-            assert.ok(task.options.length >= 3, `${where}: too few choices`);
-            assert.ok(Number.isInteger(task.answer) && task.answer >= 0 && task.answer < task.options.length, `${where}: invalid answer`);
+            assert.ok(task.options.length >= 4, `${taskWhere}: too few choices`);
+            assert.ok(Number.isInteger(task.answer) && task.answer >= 0 && task.answer < task.options.length, `${taskWhere}: invalid answer`);
+        }
+        if (task.type === "multi") {
+            assert.ok(task.options.length >= 4, `${taskWhere}: too few choices`);
+            assert.ok(task.answers.length >= 2, `${taskWhere}: multi-select needs multiple answers`);
+            assert.equal(new Set(task.answers).size, task.answers.length, `${taskWhere}: duplicate answers`);
+            task.answers.forEach((answer) => assert.ok(Number.isInteger(answer) && answer >= 0 && answer < task.options.length, `${taskWhere}: invalid multi answer`));
         }
         if (task.type === "order") {
-            assert.equal(task.tokens.length, task.answer.length, `${where}: token count mismatch`);
-            assert.deepEqual([...task.tokens].sort(), [...task.answer].sort(), `${where}: answer tokens mismatch`);
+            assert.equal(task.tokens.length, task.answer.length, `${taskWhere}: token count mismatch`);
+            assert.deepEqual([...task.tokens].sort(), [...task.answer].sort(), `${taskWhere}: answer tokens mismatch`);
         }
-        if (task.type === "write") assert.ok(task.minSentences >= 3, `${where}: writing target too low`);
+        if (task.type === "write") {
+            assert.ok(task.minSentences >= 3, `${taskWhere}: writing target too low`);
+            assert.ok(task.minChars >= 70, `${taskWhere}: character target too low`);
+            assert.ok(task.criteria.length >= 3, `${taskWhere}: writing rubric too thin`);
+            assert.ok(task.placeholder, `${taskWhere}: missing writing scaffold`);
+        }
     }
 }
 
-const visibleCopy = `${html}\n${curriculumSource}\n${practiceSource}\n${app}`;
-for (const banned of ["탐정", "사건", "열쇠", "구조대", "공방", "응급실", "보고서", "연결 다리", "단서", "미션"]) {
-    assert.ok(!visibleCopy.includes(banned), `unwanted themed copy remains: ${banned}`);
-}
-assert.ok(!course.lessons.at(-1).tasks.some((task) => /그림|[🌳🧺👨‍👩‍👧‍👦☀️🥪🍎🐕]/u.test(`${task.prompt} ${task.scene}`)), "The final writing lesson must use a real text situation, not emoji pretending to be an illustration.");
-const openingTask = course.lessons[0].tasks[0];
-assert.match(openingTask.prompt, /문장의 뜻/);
-assert.ok(openingTask.options.every((option) => /다\.$/.test(option)), "The opening task must not reveal the answer through sentence endings or punctuation.");
-assert.equal(new Set(openingTask.options.map((option) => option.at(-1))).size, 1, "The opening task choices must use the same punctuation.");
+assert.ok(requiredStandards.every((code) => usedStandards.has(code)), "Every selected achievement standard must be taught by at least one lesson.");
+assert.ok(course.lessons.slice(0, 12).every((item) => item.gradeBand === "3~4학년군"));
+assert.ok(course.lessons.slice(12).every((item) => item.gradeBand === "5~6학년군"));
+
+const lesson20 = course.lessons[19];
+assert.equal(lesson20.id, "citation-source");
+assert.ok(lesson20.standards.includes("6국03-02"));
+assert.match(JSON.stringify(lesson20), /출처/);
+assert.doesNotMatch(JSON.stringify(lesson20), /민지가 사과를 먹었다/);
+
+const finalLesson = course.lessons.at(-1);
+const finalWriting = finalLesson.tasks.find((task) => task.type === "write");
+assert.equal(finalLesson.id, "integrated-writing");
+assert.ok(finalWriting.minSentences >= 8);
+assert.ok(finalWriting.minChars >= 280);
+assert.ok(finalWriting.criteria.length >= 8);
+assert.doesNotMatch(`${finalWriting.prompt} ${finalWriting.scene}`, /그림|[🌳🧺👨‍👩‍👧‍👦☀️🥪🍎🐕]/u);
 
 assert.match(hub, /data-access-group="grammar"/);
 assert.match(hub, /<strong>문법<\/strong><small>\(Grammar\)<\/small>/);
 assert.match(hub, /learning\/literacy-numeracy\/spelling\//);
 assert.match(hub, /learning\/literacy-numeracy\/sentence-building\//);
+assert.match(hub, /<strong>문장·문단 쓰기<\/strong><small>\(Writing Lab\)<\/small>/);
+assert.doesNotMatch(hub, /<strong>문장 만들기<\/strong>/);
 assert.equal((hub.match(/href="learning\/literacy-numeracy\/sentence-building\/"/g) || []).length, 1);
-assert.ok(
-    hub.indexOf('href="learning/literacy-numeracy/sentence-building/"') < hub.indexOf('href="learning/literacy-numeracy/spelling/"'),
-    "Sentence building should appear before Korean spelling in the grammar menu."
-);
 
 console.log("sentence-building-contract: ok");

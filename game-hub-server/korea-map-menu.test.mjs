@@ -61,6 +61,8 @@ assert.ok(grammar, 'Grammar tools must be grouped in one disclosure menu.');
 assert.match(grammar, /<strong>문법<\/strong><small>\(Grammar\)<\/small>/);
 assert.match(grammar, /href="learning\/literacy-numeracy\/spelling\/"[^>]*data-access-parent="grammar"/);
 assert.match(grammar, /href="learning\/literacy-numeracy\/sentence-building\/"[^>]*data-access-parent="grammar"/);
+assert.match(grammar, /<strong>문장·문단 쓰기<\/strong><small>\(Writing Lab\)<\/small>/);
+assert.doesNotMatch(grammar, /<strong>문장 만들기<\/strong>/);
 
 const space = groupByName.get('space-observation') || '';
 assert.ok(space, 'Space observation must be grouped directly on the portal.');

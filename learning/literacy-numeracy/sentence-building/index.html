@@ -4,23 +4,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#12223d">
-    <meta name="description" content="초등 3학년 이상을 위한 재미있는 문장 만들기 24차시">
-    <title>문장 만들기 | Joyclass</title>
-    <link rel="stylesheet" href="styles.css?v=20260910-7">
-    <script src="curriculum.js?v=20260910-7" defer></script>
-    <script src="practice-extra.js?v=20260910-7" defer></script>
-    <script src="app.js?v=20260910-7" defer></script>
+    <meta name="description" content="2022 개정 국어과 성취기준에 따른 초등 3~6학년 문장·문단 쓰기 24차시">
+    <title>문장·문단 쓰기 | Joyclass</title>
+    <link rel="stylesheet" href="styles.css?v=20260911-2">
+    <script src="curriculum.js?v=20260911-1" defer></script>
+    <script src="app.js?v=20260911-2" defer></script>
 </head>
 <body>
     <div class="app-shell">
         <main>
             <section id="courseScreen" class="screen course-screen" aria-label="차시 목록">
+                <header class="course-intro">
+                    <div>
+                        <span class="course-kicker">2022 개정 국어과 교육과정 · 초등 3~6학년</span>
+                        <h1>문장·문단 쓰기</h1>
+                        <p>문장 성분 암기에서 끝내지 않고 문단, 보고, 근거와 출처, 독자와 매체, 글 전체의 고쳐쓰기까지 이어집니다.</p>
+                    </div>
+                    <a href="https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=141&amp;boardSeq=93458&amp;lev=0" target="_blank" rel="noreferrer">교육과정 원문</a>
+                </header>
                 <div id="lessonList" class="unit-list" aria-label="차시 목록"></div>
             </section>
 
             <section id="lessonScreen" class="screen lesson-screen" hidden aria-labelledby="lessonTitle">
                 <div class="lesson-toolbar">
-                    <h1 id="lessonTitle"></h1>
+                    <div>
+                        <h1 id="lessonTitle"></h1>
+                        <p id="lessonMeta"></p>
+                    </div>
                     <div class="mission-counter"><span id="missionNumber">1</span>/<span id="missionTotal">10</span></div>
                 </div>
                 <div class="mission-track" aria-hidden="true"><span id="missionProgressFill"></span></div>
@@ -45,7 +55,7 @@
                 <h1 id="resultTitle">학습 완료</h1>
                 <p id="resultMessage" class="result-message"></p>
                 <div class="result-stats">
-                    <div><span>정답</span><strong id="resultScore">0/3</strong></div>
+                    <div><span>정답</span><strong id="resultScore">0/6</strong></div>
                 </div>
                 <div class="result-actions">
                     <button id="nextLessonButton" class="primary-button" type="button">다음 차시</button>
