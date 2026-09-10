@@ -7,6 +7,7 @@ const root = path.join(__dirname, "..", "learning", "literacy-numeracy", "senten
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const curriculumSource = fs.readFileSync(path.join(root, "curriculum.js"), "utf8");
+const practiceSource = fs.readFileSync(path.join(root, "practice-extra.js"), "utf8");
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
 const hub = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 
@@ -18,9 +19,12 @@ assert.doesNotMatch(html, /topbar|course-hero|hero-case|totalStars|earnedStars/)
 assert.doesNotMatch(html, /course-progress|progressText|progressPercent|courseProgressFill/);
 assert.doesNotMatch(html, /backToListButton|resultListButton|>← 차시 목록<|>차시 목록<\/button>/);
 assert.match(html, /curriculum\.js/);
+assert.match(html, /practice-extra\.js/);
 assert.match(html, /app\.js/);
 assert.match(css, /grid-template-columns:\s*repeat\(3/);
 assert.match(css, /@media \(max-width: 480px\)/);
+assert.match(css, /\.lesson-toolbar h1\s*\{[^}]*font-size:\s*18px/);
+assert.match(css, /\.task-scene\s*\{[^}]*font-size:\s*19px[^}]*font-weight:\s*700/s);
 assert.match(app, /localStorage/);
 assert.match(app, /sentenceCount/);
 assert.doesNotMatch(html, /taskType|unitName|lessonGoal|celebration/);
@@ -31,6 +35,7 @@ assert.match(app, /sitebackrequest/);
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(curriculumSource, context);
+vm.runInContext(practiceSource, context);
 const course = context.window.SENTENCE_COURSE;
 assert.ok(course);
 assert.equal(course.units.length, 5);
@@ -40,8 +45,9 @@ assert.equal(new Set(course.lessons.map((lesson) => lesson.id)).size, 24);
 const unitIds = new Set(course.units.map((unit) => unit.id));
 for (const [lessonIndex, lesson] of course.lessons.entries()) {
     assert.ok(unitIds.has(lesson.unit), `lesson ${lessonIndex + 1}: unknown unit`);
-    assert.equal(lesson.tasks.length, 3, `lesson ${lessonIndex + 1}: expected 3 tasks`);
+    assert.equal(lesson.tasks.length, 10, `lesson ${lessonIndex + 1}: expected 10 tasks`);
     assert.ok(lesson.title && lesson.goal);
+    assert.equal(new Set(lesson.tasks.map((task) => task.scene)).size, lesson.tasks.length, `lesson ${lessonIndex + 1}: duplicate scenes`);
     for (const [taskIndex, task] of lesson.tasks.entries()) {
         const where = `lesson ${lessonIndex + 1}, task ${taskIndex + 1}`;
         assert.ok(["choice", "order", "write"].includes(task.type), `${where}: invalid type`);
@@ -58,7 +64,7 @@ for (const [lessonIndex, lesson] of course.lessons.entries()) {
     }
 }
 
-const visibleCopy = `${html}\n${curriculumSource}\n${app}`;
+const visibleCopy = `${html}\n${curriculumSource}\n${practiceSource}\n${app}`;
 for (const banned of ["탐정", "사건", "열쇠", "구조대", "공방", "응급실", "보고서", "연결 다리", "단서", "미션"]) {
     assert.ok(!visibleCopy.includes(banned), `unwanted themed copy remains: ${banned}`);
 }

@@ -60,7 +60,7 @@ button { cursor: pointer; }
 }
 
 .mission-track {
-    height: 10px;
+    height: 5px;
     margin-top: 12px;
     overflow: hidden;
     border-radius: 999px;
@@ -145,14 +145,14 @@ button { cursor: pointer; }
 .lesson-card.is-complete .lesson-number { background: var(--green); }
 .lesson-card strong { font-size: 15px; line-height: 1.35; word-break: keep-all; }
 .lesson-screen { width: min(830px, 100%); margin: 0 auto; }
-.lesson-toolbar { display: flex; min-height: 38px; align-items: center; justify-content: space-between; gap: 18px; color: white; }
-.lesson-toolbar h1 { margin: 0; font-size: clamp(22px, 3vw, 28px); line-height: 1.3; letter-spacing: -.03em; }
-.mission-counter { color: #dce7f6; font-size: 15px; font-weight: 800; }
-.mission-track { margin: 8px 0 14px; background: rgba(255,255,255,.18); }
+.lesson-toolbar { display: flex; min-height: 28px; align-items: center; justify-content: space-between; gap: 18px; color: white; }
+.lesson-toolbar h1 { margin: 0; font-size: 18px; line-height: 1.35; letter-spacing: -.02em; }
+.mission-counter { color: white; font-size: 14px; font-weight: 800; }
+.mission-track { margin: 6px 0 12px; background: rgba(255,255,255,.28); }
 .mission-track span { background: linear-gradient(90deg, var(--yellow), var(--coral)); }
 
 .mission-card {
-    padding: clamp(22px, 4.5vw, 42px);
+    padding: clamp(20px, 3vw, 28px);
     border: 2px solid #d7e0ed;
     border-radius: 26px;
     background:
@@ -161,14 +161,15 @@ button { cursor: pointer; }
     box-shadow: var(--shadow);
 }
 
-.mission-card h2 { margin: 0 0 9px; font-size: clamp(20px, 2.8vw, 24px); line-height: 1.5; word-break: keep-all; }
-.task-scene { min-height: 28px; margin: 0 0 21px; color: var(--muted); font-size: 15px; line-height: 1.65; }
-.activity-area { min-height: 190px; }
+.mission-card h2 { margin: 0 0 10px; font-size: 20px; line-height: 1.5; word-break: keep-all; }
+.task-scene { margin: 0 0 16px; padding: 11px 13px; border-radius: 10px; background: #edf2f7; color: #24344d; font-size: 19px; font-weight: 700; line-height: 1.6; }
+.task-scene:empty { display: none; }
+.activity-area { min-height: 0; }
 
 .choice-list { display: grid; gap: 10px; }
 .choice-button {
-    min-height: 56px;
-    padding: 13px 16px;
+    min-height: 48px;
+    padding: 11px 15px;
     border: 2px solid #d8e0eb;
     border-radius: 14px;
     background: white;
@@ -231,11 +232,11 @@ button { cursor: pointer; }
 .feedback.hint { background: #fff5cf; color: #795a0a; }
 .feedback strong { font-size: 17px; }
 .feedback p { margin: 6px 0 0; line-height: 1.65; }
-.mission-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+.mission-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
 
 .primary-button, .secondary-button, .hint-button {
-    min-height: 48px;
-    padding: 11px 18px;
+    min-height: 44px;
+    padding: 9px 16px;
     border-radius: 13px;
     font-weight: 900;
 }
