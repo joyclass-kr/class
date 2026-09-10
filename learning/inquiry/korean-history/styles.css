@@ -24,7 +24,9 @@
   --wrong-soft: #fff1f2;
   --wrong-border: #fb7185;
   
-  --sheet-max: clamp(340px, 66vw, 760px);
+  /* 원본은 모두 1,240px 폭이다. 모든 문항을 같은 폭으로 그려야
+     문항의 세로 길이와 관계없이 본문 글자 크기가 항상 같다. */
+  --sheet-max: clamp(340px, 58vw, 680px);
   --radius-xl: 18px;
   --radius-lg: 12px;
   --radius-md: 8px;
@@ -89,35 +91,36 @@ body {
 
 /* ── 상단 헤더 ── */
 .app-header {
-  padding: 36px 16px 18px;
+  padding: 12px 76px 10px;
   text-align: center;
 }
 .header-inner {
-  max-width: 800px;
+  max-width: 1080px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  gap: 28px;
 }
 
 .header-title {
   margin: 0;
-  font-size: clamp(1.6rem, 3.8vw, 2.2rem);
+  font-size: clamp(1.35rem, 2vw, 1.65rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 /* 통계 바 */
 .stats-bar {
   display: inline-flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
   background: rgba(15, 23, 42, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
-  padding: 7px 22px;
+  padding: 5px 18px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -793,7 +796,8 @@ main {
 
 /* ── 반응형 최적화 ── */
 @media (max-width: 768px) {
-  .app-header { padding: 28px 12px 14px; }
+  .app-header { padding: 18px 12px 12px; }
+  .header-inner { flex-direction: column; gap: 8px; }
   .stats-bar { gap: 12px; padding: 6px 16px; }
   .picker { padding: 12px 14px; }
   .picker-label { flex-basis: 100%; margin-bottom: -4px; }
