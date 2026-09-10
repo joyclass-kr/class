@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<path class="gut" d="M204,120 q10,-8 20,0 q10,8 20,0 q10,-8 12,6 q-2,12 -14,10 q-12,-2 -20,4 q-10,6 -18,-2 q-6,-8 0,-18 Z"/>`;
         out += `<text class="organ-label" x="190" y="132" text-anchor="end">소장</text>`;
 
-        out += `<path class="kidney" d="M 211 142 C 218 142 218 150 214 156 C 218 162 218 170 211 170 C 201 170 194 162 194 156 C 194 150 201 142 211 142 Z M 249 142 C 259 142 266 150 266 156 C 266 162 259 170 249 170 C 242 170 242 162 246 156 C 242 150 242 142 249 142 Z"/>`;
-        out += `<text class="organ-label" x="190" y="160" text-anchor="end">콩팥</text>`;
+        out += `<path class="kidney" d="M 214.4 104 C 220.2 104 220.2 112 216.9 118 C 220.2 124 220.2 132 214.4 132 C 206.2 132 200.5 124 200.5 118 C 200.5 112 206.2 104 214.4 104 Z M 245.6 104 C 253.8 104 259.5 112 259.5 118 C 259.5 124 253.8 132 245.6 132 C 239.8 132 239.8 124 243.1 118 C 239.8 112 239.8 104 245.6 104 Z"/>`;
+        out += `<text class="organ-label" x="190" y="122" text-anchor="end">콩팥</text>`;
 
         // Breathing and pumping on the left, feeding and filtering on the right.
         // The columns stop short of the body so the organ labels have room.
