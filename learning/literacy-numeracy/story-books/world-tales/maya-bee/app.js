@@ -291,8 +291,7 @@ const CHAPTERS = [
                 "right": [
                     "말벌들이 막힌 문에 몸을 부딪치며 한참 동안 틈을 찾았습니다.",
                     "그래도 문은 꿈쩍하지 않았습니다. 말벌들은 결국 물러갔지요. 벌집에 환호성이 터졌습니다.",
-                    "카산드라가 마야의 어깨를 툭 쳤습니다. \"바깥세상을 궁금해한 게 헛일은 아니었구나.\"",
-                    "마야는 그제야 빙그레 웃었지요."
+                    "마야는 그제야 빙그레 웃었지요. \"바깥세상을 궁금해한 게 헛일은 아니었구나.\""
                 ]
             },
             {
@@ -960,8 +959,7 @@ const EN = {
                     right: [
                         "The hornets shoved against the blocked door, hunting for a gap, for a long while.",
                         "Still it would not budge. And then they simply withdrew. A great cheer went up in the hive.",
-                        "Cassandra tapped Maya on the shoulder. \"So wondering about the outside was not wasted after all.\"",
-                        "And only then did Maya smile."
+                        "And only then did Maya smile. \"So wondering about the outside was not wasted after all.\""
                     ]
                 },
                 {
