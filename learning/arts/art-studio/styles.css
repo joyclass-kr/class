@@ -114,7 +114,9 @@ html, body {
 .workspace {
   flex: 1;
   display: grid;
-  grid-template-columns: 220px 1fr 240px;
+  /* Keep the palette beside the actual paper instead of pinning it to the
+     far edge of the viewport. The last track absorbs any spare space. */
+  grid-template-columns: 220px fit-content(1022px) 240px minmax(0, 1fr);
   gap: 14px;
   min-height: 0;
 }
