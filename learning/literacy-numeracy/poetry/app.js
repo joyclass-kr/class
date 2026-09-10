@@ -305,7 +305,7 @@
         if (poem.illustration) {
             artHtml = `
                 <div class="read-spread-art" aria-hidden="true">
-                    <img class="read-spread-art-img" src="${escapeHtml(poem.illustration)}" alt="" />
+                    <img class="read-spread-art-img" src="${escapeHtml(poem.illustration)}?v=20260910-smoothmist" alt="" />
                 </div>
             `;
         }
