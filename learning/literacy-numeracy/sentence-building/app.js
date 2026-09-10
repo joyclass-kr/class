@@ -10,19 +10,16 @@
         lessonScreen: document.getElementById("lessonScreen"),
         resultScreen: document.getElementById("resultScreen"),
         lessonList: document.getElementById("lessonList"),
-        totalStars: document.getElementById("totalStars"),
         progressText: document.getElementById("progressText"),
         progressPercent: document.getElementById("progressPercent"),
         courseProgressFill: document.getElementById("courseProgressFill"),
         missionNumber: document.getElementById("missionNumber"),
         missionTotal: document.getElementById("missionTotal"),
         missionProgressFill: document.getElementById("missionProgressFill"),
-        lessonIcon: document.getElementById("lessonIcon"),
         unitName: document.getElementById("unitName"),
         lessonTitle: document.getElementById("lessonTitle"),
         lessonGoal: document.getElementById("lessonGoal"),
         taskType: document.getElementById("taskType"),
-        comboBadge: document.getElementById("comboBadge"),
         taskPrompt: document.getElementById("taskPrompt"),
         taskScene: document.getElementById("taskScene"),
         activityArea: document.getElementById("activityArea"),
@@ -33,11 +30,8 @@
         checkButton: document.getElementById("checkButton"),
         nextButton: document.getElementById("nextButton"),
         backToListButton: document.getElementById("backToListButton"),
-        resultBurst: document.getElementById("resultBurst"),
-        earnedStars: document.getElementById("earnedStars"),
         resultMessage: document.getElementById("resultMessage"),
         resultScore: document.getElementById("resultScore"),
-        resultCombo: document.getElementById("resultCombo"),
         nextLessonButton: document.getElementById("nextLessonButton"),
         retryButton: document.getElementById("retryButton"),
         resultListButton: document.getElementById("resultListButton"),
@@ -49,8 +43,6 @@
     let currentLessonIndex = 0;
     let taskIndex = 0;
     let score = 0;
-    let combo = 0;
-    let bestCombo = 0;
     let selectedChoice = null;
     let orderTokens = [];
     let selectedOrder = [];
@@ -80,7 +72,7 @@
     }
 
     function lessonRecord(id) {
-        return saved.lessons[id] || { stars: 0, bestScore: 0, completed: false };
+        return saved.lessons[id] || { bestScore: 0, completed: false };
     }
 
     function currentSuggestedIndex() {
@@ -92,23 +84,19 @@
         elements.lessonList.replaceChildren();
         const suggested = currentSuggestedIndex();
         let completed = 0;
-        let stars = 0;
 
         course.units.forEach((unit) => {
             const unitLessons = course.lessons.filter((item) => item.unit === unit.id);
             const unitComplete = unitLessons.filter((item) => lessonRecord(item.id).completed).length;
             completed += unitComplete;
-            stars += unitLessons.reduce((sum, item) => sum + lessonRecord(item.id).stars, 0);
-
             const section = document.createElement("section");
             section.className = "unit-section";
             section.innerHTML = `
                 <header class="unit-header">
-                    <div><span class="unit-emoji" aria-hidden="true"></span><span><h2></h2><p></p></span></div>
+                    <div><span><h2></h2><p></p></span></div>
                     <span class="unit-count"></span>
                 </header>
                 <div class="lesson-grid"></div>`;
-            section.querySelector(".unit-emoji").textContent = unit.icon;
             section.querySelector("h2").textContent = unit.title;
             section.querySelector("p").textContent = unit.subtitle;
             section.querySelector(".unit-count").textContent = `${unitComplete}/${unitLessons.length} 완료`;
@@ -122,18 +110,14 @@
                 button.className = "lesson-card";
                 if (record.completed) button.classList.add("is-complete");
                 if (index === suggested && !record.completed) button.classList.add("is-current");
-                button.setAttribute("aria-label", `${index + 1}차시 ${item.title}${record.completed ? `, 별 ${record.stars}개 완료` : ""}`);
+                button.setAttribute("aria-label", `${index + 1}차시 ${item.title}${record.completed ? ", 완료" : ""}`);
                 button.innerHTML = `
                     <span class="lesson-number"></span>
                     <strong></strong>
-                    <small></small>
-                    <span class="lesson-stars" aria-hidden="true"></span>`;
+                    <small></small>`;
                 button.querySelector(".lesson-number").textContent = record.completed ? "✓" : String(index + 1).padStart(2, "0");
                 button.querySelector("strong").textContent = item.title;
                 button.querySelector("small").textContent = item.goal;
-                button.querySelector(".lesson-stars").textContent = record.stars
-                    ? "★".repeat(record.stars)
-                    : (index === suggested ? (saved.lastLesson === item.id ? "이어하기" : "시작") : "");
                 button.addEventListener("click", () => startLesson(index));
                 grid.append(button);
             });
@@ -141,7 +125,6 @@
         });
 
         const percent = Math.round((completed / course.lessons.length) * 100);
-        elements.totalStars.textContent = String(stars);
         elements.progressText.textContent = `${completed} / ${course.lessons.length}차시 완료`;
         elements.progressPercent.textContent = `${percent}%`;
         elements.courseProgressFill.style.width = `${percent}%`;
@@ -151,8 +134,6 @@
         currentLessonIndex = Math.max(0, Math.min(index, course.lessons.length - 1));
         taskIndex = 0;
         score = 0;
-        combo = 0;
-        bestCombo = 0;
         saved.lastLesson = course.lessons[currentLessonIndex].id;
         saveProgress();
         showOnly(elements.lessonScreen);
@@ -181,23 +162,19 @@
         elements.nextButton.hidden = true;
         elements.hintButton.hidden = false;
         elements.activityArea.replaceChildren();
-        elements.lessonIcon.textContent = lesson.icon;
         elements.unitName.textContent = unit.title;
         elements.lessonTitle.textContent = `${currentLessonIndex + 1}차시 · ${lesson.title}`;
         elements.lessonGoal.textContent = lesson.goal;
         elements.missionNumber.textContent = String(taskIndex + 1);
         elements.missionTotal.textContent = String(lesson.tasks.length);
         elements.missionProgressFill.style.width = `${(taskIndex / lesson.tasks.length) * 100}%`;
-        elements.taskType.textContent = task.type === "order" ? "카드 조립" : task.type === "write" ? "탐정 보고서" : "단서 찾기";
+        elements.taskType.textContent = task.type === "order" ? "낱말 배열" : task.type === "write" ? "글쓰기" : "문제 풀기";
         elements.taskPrompt.textContent = task.prompt;
         elements.taskScene.textContent = task.scene || "";
-        elements.comboBadge.hidden = combo < 2;
-        elements.comboBadge.textContent = combo >= 2 ? `🔥 ${combo}연속 정답` : "";
-
         if (task.type === "choice") renderChoices(task);
         if (task.type === "order") renderOrder(task);
         if (task.type === "write") renderWriting(task);
-        elements.announcer.textContent = `${taskIndex + 1}번째 미션. ${task.prompt}`;
+        elements.announcer.textContent = `${taskIndex + 1}번째 문제. ${task.prompt}`;
     }
 
     function renderChoices(task) {
@@ -273,11 +250,11 @@
         const scene = document.createElement("div");
         scene.className = "writing-scene";
         scene.textContent = task.scene;
-        elements.taskScene.textContent = "그림 단서에서 장소·행동·느낌을 찾아보세요.";
+        elements.taskScene.textContent = "그림에서 장소·행동·느낌을 살펴보세요.";
         const textarea = document.createElement("textarea");
         textarea.id = "reportText";
         textarea.placeholder = "예) 가족이 공원에 소풍을 왔다.\n함께 도시락을 먹었다.\n즐거운 하루였다.";
-        textarea.setAttribute("aria-label", "세 문장 사건 보고서");
+        textarea.setAttribute("aria-label", "세 문장 글쓰기");
         const count = document.createElement("div");
         count.className = "writing-count";
         const updateCount = () => { count.textContent = `${sentenceCount(textarea.value)} / ${task.minSentences}문장`; };
@@ -325,7 +302,7 @@
         const task = currentTask();
         const correct = validateTask(task);
         if (correct === null) {
-            showFeedback("hint", "아직 단서가 부족해요", task.type === "order" ? "모든 낱말 카드를 문장 칸에 놓아 보세요." : task.type === "write" ? `${task.minSentences}문장 이상 써 보세요.` : "정답이라고 생각하는 문장을 먼저 골라 보세요.");
+            showFeedback("hint", "답을 완성해 주세요", task.type === "order" ? "모든 낱말 카드를 문장 칸에 놓아 보세요." : task.type === "write" ? `${task.minSentences}문장 이상 써 보세요.` : "정답이라고 생각하는 문장을 먼저 골라 보세요.");
             elements.announcer.textContent = elements.feedbackText.textContent;
             return;
         }
@@ -336,13 +313,10 @@
         elements.nextButton.hidden = false;
         if (correct) {
             score += 1;
-            combo += 1;
-            bestCombo = Math.max(bestCombo, combo);
-            showFeedback("good", combo >= 2 ? `정답! ${combo}연속 성공 🔥` : "정답! 단서를 찾았어요", task.explain);
+            showFeedback("good", "정답입니다", task.explain);
             playTone(true);
         } else {
-            combo = 0;
-            showFeedback("bad", "아깝다! 사건 기록을 확인해요", task.explain);
+            showFeedback("bad", "정답을 확인해 보세요", task.explain);
             playTone(false);
         }
 
@@ -353,13 +327,13 @@
                 if (index === selectedChoice && index !== task.answer) button.classList.add("is-wrong");
             });
         }
-        elements.nextButton.textContent = taskIndex === course.lessons[currentLessonIndex].tasks.length - 1 ? "사건 해결하기 →" : "다음 미션 →";
+        elements.nextButton.textContent = taskIndex === course.lessons[currentLessonIndex].tasks.length - 1 ? "학습 완료 →" : "다음 문제 →";
         elements.announcer.textContent = `${elements.feedbackTitle.textContent}. ${task.explain}`;
     }
 
     function showHint() {
         const task = currentTask();
-        showFeedback("hint", "탐정의 단서 💡", task.hint);
+        showFeedback("hint", "힌트", task.hint);
         elements.announcer.textContent = task.hint;
     }
 
@@ -375,32 +349,25 @@
 
     function finishLesson() {
         const lesson = course.lessons[currentLessonIndex];
-        const stars = score === lesson.tasks.length ? 3 : score >= lesson.tasks.length - 1 ? 2 : 1;
         const old = lessonRecord(lesson.id);
         saved.lessons[lesson.id] = {
             completed: true,
-            stars: Math.max(old.stars || 0, stars),
             bestScore: Math.max(old.bestScore || 0, score)
         };
         saveProgress();
-        elements.earnedStars.innerHTML = [0, 1, 2].map((index) => `<span class="${index < stars ? "" : "empty"}">★</span>`).join("");
         elements.resultScore.textContent = `${score}/${lesson.tasks.length}`;
-        elements.resultCombo.textContent = `${bestCombo}회`;
-        elements.resultMessage.textContent = stars === 3
-            ? "모든 단서를 완벽하게 찾았어요. 진짜 문장 탐정이네요!"
-            : stars === 2
-                ? "거의 완벽해요! 헷갈린 단서만 한 번 더 살펴보세요."
-                : "사건을 끝까지 해결했어요. 다시 도전하면 별을 더 모을 수 있어요.";
-        elements.resultBurst.textContent = currentLessonIndex === course.lessons.length - 1 ? "🏆" : "🎉";
+        elements.resultMessage.textContent = score === lesson.tasks.length
+            ? "모든 문제를 맞혔습니다."
+            : "틀린 문제는 다시 도전해서 확인해 보세요.";
         elements.nextLessonButton.hidden = currentLessonIndex >= course.lessons.length - 1;
         showOnly(elements.resultScreen);
-        celebrate(stars);
+        celebrate();
     }
 
-    function celebrate(stars) {
+    function celebrate() {
         elements.celebration.replaceChildren();
         const colors = ["#ffd45b", "#4cc9d8", "#48ad78", "#f26b5b", "#7868cf"];
-        for (let i = 0; i < stars * 14; i += 1) {
+        for (let i = 0; i < 18; i += 1) {
             const piece = document.createElement("i");
             piece.className = "confetti";
             piece.style.left = `${Math.random() * 100}%`;

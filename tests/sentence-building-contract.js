@@ -14,6 +14,7 @@ assert.match(html, /id="courseScreen"/);
 assert.match(html, /id="lessonList"/);
 assert.match(html, /id="lessonScreen"[^>]*hidden/);
 assert.match(html, /id="resultScreen"[^>]*hidden/);
+assert.doesNotMatch(html, /topbar|course-hero|hero-case|totalStars|earnedStars/);
 assert.match(html, /curriculum\.js/);
 assert.match(html, /app\.js/);
 assert.match(css, /grid-template-columns:\s*repeat\(3/);
@@ -35,7 +36,7 @@ const unitIds = new Set(course.units.map((unit) => unit.id));
 for (const [lessonIndex, lesson] of course.lessons.entries()) {
     assert.ok(unitIds.has(lesson.unit), `lesson ${lessonIndex + 1}: unknown unit`);
     assert.equal(lesson.tasks.length, 3, `lesson ${lessonIndex + 1}: expected 3 tasks`);
-    assert.ok(lesson.title && lesson.goal && lesson.icon);
+    assert.ok(lesson.title && lesson.goal);
     for (const [taskIndex, task] of lesson.tasks.entries()) {
         const where = `lesson ${lessonIndex + 1}, task ${taskIndex + 1}`;
         assert.ok(["choice", "order", "write"].includes(task.type), `${where}: invalid type`);
@@ -50,6 +51,11 @@ for (const [lessonIndex, lesson] of course.lessons.entries()) {
         }
         if (task.type === "write") assert.ok(task.minSentences >= 3, `${where}: writing target too low`);
     }
+}
+
+const visibleCopy = `${html}\n${curriculumSource}\n${app}`;
+for (const banned of ["탐정", "사건", "열쇠", "구조대", "공방", "응급실", "보고서", "연결 다리", "단서", "미션"]) {
+    assert.ok(!visibleCopy.includes(banned), `unwanted themed copy remains: ${banned}`);
 }
 
 assert.match(hub, /data-access-group="grammar"/);
