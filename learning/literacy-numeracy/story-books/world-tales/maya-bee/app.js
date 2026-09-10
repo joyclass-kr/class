@@ -284,13 +284,13 @@ const CHAPTERS = [
                 "art": "08-ending-2.webp",
                 "emoji": "🏠",
                 "left": [
-                    "꿀벌들이 문 앞에 빽빽이 늘어섰습니다. 어깨를 맞대고 꼼짝하지 않았지요.",
+                    "꿀벌들이 나뭇가지와 통나무를 물어다 문을 막았습니다. 그 앞에 어깨를 맞대고 빽빽이 늘어섰지요.",
                     "한밤중에 말벌들이 날아왔습니다. 윙윙 소리가 온 나무를 울렸지요.",
                     "꿀벌들은 숨을 죽였습니다. 마야도 맨 앞줄에 서 있었지요."
                 ],
                 "right": [
-                    "그런데 문이 단단히 막혀 있었습니다. 말벌들이 몸을 부딪치며 틈을 찾았지요. 그래도 문은 꿈쩍하지 않았습니다.",
-                    "말벌들은 한참을 그렇게 애썼습니다. 그러다 그냥 물러갔지요. 벌집에 환호성이 터졌습니다.",
+                    "말벌들이 막힌 문에 몸을 부딪치며 한참 동안 틈을 찾았습니다.",
+                    "그래도 문은 꿈쩍하지 않았습니다. 말벌들은 결국 물러갔지요. 벌집에 환호성이 터졌습니다.",
                     "카산드라가 마야의 어깨를 툭 쳤습니다. \"바깥세상을 궁금해한 게 헛일은 아니었구나.\"",
                     "마야는 그제야 빙그레 웃었지요."
                 ]
@@ -301,10 +301,10 @@ const CHAPTERS = [
                 "left": [
                     "그 소리에 온 벌집이 잠에서 깼습니다. 방마다 문이 열리고 벌들이 쏟아져 나왔지요. \"마야가 우리를 살렸대!\" 누군가 외쳤습니다.",
                     "그 말이 입에서 입으로 옮겨 갔지요. 순식간에 문 앞이 가득 찼습니다.",
-                    "그때 촌장 벌이 천천히 걸어 나왔습니다. 벌집에서 가장 나이 많은 벌이었지요."
+                    "그때 카산드라가 천천히 걸어 나왔습니다."
                 ],
                 "right": [
-                    "촌장 벌이 마야 앞에 멈춰 섰습니다. 그러고는 껄껄 웃었지요. \"작은 벌 한 마리가 우리 모두를 지켰구나. 바깥세상이 궁금했다고? 부끄러워할 일이 아니야.\"",
+                    "카산드라가 마야 앞에 멈춰 섰습니다. 그러고는 마야를 꼭 안아 주었지요. \"장하구나, 마야.\"",
                     "젊은 벌들이 창을 높이 들고 환호했습니다. 꽃잎이 눈처럼 흩날렸지요.",
                     "달빛 아래, 벌집 앞에서는 밤새 잔치가 이어졌습니다."
                 ]
@@ -950,16 +950,16 @@ const EN = {
                     art: '08-ending-2.webp',
                     emoji: '🐝',
                     left: [
-                        "The bees stood packed close in front of the door.",
-                        "Shoulder to shoulder, and not one of them moved.",
+                        "The bees dragged branches and logs to block the door.",
+                        "Then they stood packed close in front of it, shoulder to shoulder, and not one of them moved.",
                         "At midnight the hornets came.",
                         "The humming of them rang through the whole tree.",
                         "The bees held their breath.",
                         "Maya was standing in the front rank."
                     ],
                     right: [
-                        "But the door was blocked solid. The hornets shoved and pushed, hunting for a gap. Still it would not budge.",
-                        "The hornets kept at it a long while. And then they simply withdrew. A great cheer went up in the hive.",
+                        "The hornets shoved against the blocked door, hunting for a gap, for a long while.",
+                        "Still it would not budge. And then they simply withdrew. A great cheer went up in the hive.",
                         "Cassandra tapped Maya on the shoulder. \"So wondering about the outside was not wasted after all.\"",
                         "And only then did Maya smile."
                     ]
@@ -970,11 +970,10 @@ const EN = {
                     left: [
                         "At that, the whole hive woke up at once. Doors opened room after room, and bees came pouring out. \"Maya saved us all!\" somebody called.",
                         "The word passed from bee to bee, and in no time the doorway was packed.",
-                        "Then an elder bee came walking slowly out, the oldest bee in the whole hive."
+                        "Then Cassandra came walking slowly out."
                     ],
                     right: [
-                        "The elder bee stopped in front of Maya and laughed, warm and hearty. \"One small bee, and she kept us all safe.\"",
-                        "\"Wondering about the outside world? There is nothing to be ashamed of in that.\"",
+                        "Cassandra stopped in front of Maya and hugged her tight. \"Well done, Maya.\"",
                         "The young guard bees raised their spears and cheered as flower petals drifted down like snow, and under the moon the feast went on all night."
                     ]
                 }
@@ -1165,8 +1164,8 @@ const EN = {
         '08-ending-3.webp': [
             { word: 'pour out', meaning: '쏟아져 나오다', sentence: 'Bees came pouring out.' },
             { word: 'pass', meaning: '옮겨 가다', sentence: 'The word passed from bee to bee.' },
-            { word: 'oldest', meaning: '가장 나이 많은', sentence: 'He was the oldest bee in the whole hive.' },
-            { word: 'ashamed', meaning: '부끄러운', sentence: 'There is nothing to be ashamed of in that.' },
+            { word: 'packed', meaning: '가득 찬', sentence: 'The doorway was packed.' },
+            { word: 'hug', meaning: '꼭 안다', sentence: 'Cassandra hugged her tight.' },
             { word: 'drift', meaning: '흩날리다', sentence: 'Flower petals drifted down like snow.' }
         ],
         'end.webp': [
