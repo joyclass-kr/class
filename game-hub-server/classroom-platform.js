@@ -3393,6 +3393,9 @@ function createClassroomPlatform(options = {}) {
     // even if they've never opened the roster editor before.
     await userClassId(teacher);
 
+    // 학급 전환기는 "이 교사와 관계있는 반"만 보여준다: 자기 담임 학급이거나,
+    // 전담교사별 시간표에 자기가 들어가 있는 반. 학교 전체 반을 다 보여주면
+    // 남의 반 학생 명단까지 담임 아닌 교사에게 노출된다.
     const classesResult = await pool.query(
       `SELECT c.id, c.academic_year, c.grade, c.class_number, c.teacher_name,
               (
@@ -3406,8 +3409,16 @@ function createClassroomPlatform(options = {}) {
               ) AS student_count
        FROM classroom_classes c
        WHERE c.school_id = $1
+         AND (
+           c.teacher_user_id = $2
+           OR EXISTS (
+             SELECT 1 FROM school_master_timetable t
+             WHERE t.school_id = c.school_id AND t.teacher_user_id = $2
+               AND t.academic_year = c.academic_year AND t.grade = c.grade AND t.class_number = c.class_number
+           )
+         )
        ORDER BY c.grade ASC, c.class_number ASC`,
-      [teacherInfo.school_id]
+      [teacherInfo.school_id, teacher.id]
     );
 
     // 전담교사별 시간표(school_master_timetable.teacher_user_id)에 이 교사가
@@ -7684,28 +7695,24 @@ function createClassroomPlatform(options = {}) {
     // classroom_classes, so a teacher who has never opened their dashboard
     // (and so was never auto-provisioned into classroom_classes) still gets
     // their default group created here.
-    // academic_year 가 비어 있는 줄도 받아 준다. 교사 명단은 오랫동안 학년도를
-    // 적지 않고 저장돼 왔고, 그 줄들은 담임인데도 학급 그룹을 못 받았다.
-    const teacherClass = await pool.query(
-      `SELECT t.school_id, t.grade, t.class_number
-       FROM classroom_teachers t
-       WHERE t.user_id = $1 AND t.active = TRUE
-         AND (t.academic_year = $2 OR t.academic_year IS NULL)
-         AND t.grade IS NOT NULL AND t.class_number IS NOT NULL
-       ORDER BY (t.academic_year = $2) DESC NULLS LAST
-       LIMIT 1`,
-      [teacher.id, year]
-    );
+    //
+    // 반드시 teacherRegistration()으로 골라야 한다 -- 같은 구글 계정이 여러
+    // 학교에 등록돼 있을 수 있는데(예: 테스트 학교가 여럿), 이 자리에서 따로
+    // WHERE user_id=$1 ... LIMIT 1 을 짰더니 requireTeacher가 권한 확인에 쓴
+    // 학교와 다른 학교 줄을 고르는 경우가 있었다. 그러면 그룹은 엉뚱한 학교의
+    // school_id로 만들어지고, /teacher/class가 보는 진짜 담임 학급과 어긋나서
+    // 학생이 실제로 있는데도 0명으로 보인다.
+    const registration = await teacherRegistration(teacher);
 
-    if (teacherClass.rows[0]) {
-      const tc = teacherClass.rows[0];
+    if (registration && registration.grade && registration.class_number) {
+      const tc = registration;
       const gName = `${tc.grade}-${tc.class_number}`;
       // ON CONFLICT (teacher_user_id, academic_year, group_name) 을 쓰고 있었는데
       // 그 세 칸에 걸린 UNIQUE 가 없다. Postgres 는 그런 ON CONFLICT 를 오류로
       // 돌려보내고, 그 오류를 catch 로 삼키고 있었다. 그래서 담임 학급 그룹이
       // 한 번도 만들어지지 않았다. 있는지 먼저 보고 없을 때만 넣는다.
       const already = await pool.query(
-        `SELECT 1 FROM teacher_groups
+        `SELECT id FROM teacher_groups
          WHERE teacher_user_id = $1 AND academic_year = $2 AND group_name = $3
          LIMIT 1`,
         [teacher.id, year, gName]
@@ -7716,6 +7723,15 @@ function createClassroomPlatform(options = {}) {
            VALUES ($1, $2, $3, $4, 'homeroom', $5, $6)`,
           [tc.school_id, teacher.id, year, gName, tc.grade, tc.class_number]
         ).catch((error) => console.error("homeroom group provisioning failed:", error.message));
+      } else {
+        // 예전의 잘못된 조회로 다른 학교의 school_id를 물고 만들어진 줄이 이미
+        // 있을 수 있다 -- 있는지만 보고 넘어가면 그 잘못된 줄이 영영 고쳐지지
+        // 않는다. 정본(teacherRegistration) 값으로 매번 맞춰 둔다.
+        await pool.query(
+          `UPDATE teacher_groups SET school_id = $1, grade = $2, class_number = $3, updated_at = NOW()
+           WHERE id = $4 AND (school_id IS DISTINCT FROM $1 OR grade IS DISTINCT FROM $2 OR class_number IS DISTINCT FROM $3)`,
+          [tc.school_id, tc.grade, tc.class_number, already.rows[0].id]
+        ).catch((error) => console.error("homeroom group repair failed:", error.message));
       }
     }
 
