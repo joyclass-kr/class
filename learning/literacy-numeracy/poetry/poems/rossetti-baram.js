@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["rossetti-baram"] = {
         "poem": {
+            "illustration": "images/rossetti-baram.webp",
             "lines": [
                 "누가 바람을 보았나요?",
                 "나도 당신도 보지 못했지요.",

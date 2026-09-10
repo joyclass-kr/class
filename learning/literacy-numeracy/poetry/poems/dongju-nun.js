@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-nun"] = {
         "poem": {
+            "illustration": "images/dongju-nun.webp",
             "lines": [
                 "지난밤에",
                 "눈이 소오복이 왔네",

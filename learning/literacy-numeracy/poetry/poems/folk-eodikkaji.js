@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["folk-eodikkaji"] = {
         "poem": {
+            "illustration": "images/folk-eodikkaji.webp",
             "lines": [
                 "어디까지 왔니",
                 "당당 멀었다",
