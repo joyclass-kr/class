@@ -300,7 +300,10 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
   assert.match(app, /const peak = volumeOnlyGain\(buffer, velocityGain \* calibratedGain\)/);
   assert.match(app, /function decodedBufferPeak\(buffer\)/);
   assert.match(app, /const safeGain = \.68 \/ decodedBufferPeak\(buffer\)/);
-  assert.match(app, /source\.connect\(state\.masterGain\)/);
+  assert.match(app, /source\.connect\(state\.limiter\)/, 'every dry voice must retain shared peak protection');
+  assert.doesNotMatch(app, /source\.connect\(state\.masterGain\)/);
+  assert.match(app, /connectToMix\(gain, \.035\)/, 'sampled instruments must retain the original room send');
+  assert.doesNotMatch(app, /Recorded samples already contain their own body and room tone/);
   assert.match(app, /const calibratedGain = Math\.pow/);
   assert.match(app, /gainDb: -5\.68/);
   assert.match(app, /gainDb: 20\.0/);

@@ -626,7 +626,9 @@
 
     function connectFastToMix(source, reverbAmount) {
         if (!source || !state.audioContext) return;
-        source.connect(state.masterGain);
+        // Skip the tone-shaping compressor/EQ when requested, but never bypass
+        // the shared peak guard; direct-to-master voices caused loud outliers.
+        source.connect(state.limiter);
         if (reverbAmount) {
             const send = state.audioContext.createGain();
             send.gain.value = reverbAmount;
@@ -1025,8 +1027,9 @@
             gain.gain.exponentialRampToValueAtTime(.0001, now + decay);
         }
         source.connect(gain);
-        // Recorded samples already contain their own body and room tone; keep their timbre intact.
-        connectFastToMix(gain, 0);
+        // Keep the original instrument-room tone: the shared mix bus evens out
+        // perceived level, while the short room send preserves each sample's body.
+        connectToMix(gain, .035);
         const voice = { source, gain, anchor, sampleSet, sampleKey: sampleSet + ":" + anchor, sampledPiano: true, released: false, held: false, percussiveDecay: decay };
         state.pianoVoices.set(midi, voice);
         source.onended = function () { if (state.pianoVoices.get(midi) === voice) state.pianoVoices.delete(midi); };
