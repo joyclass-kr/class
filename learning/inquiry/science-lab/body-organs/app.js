@@ -23,7 +23,7 @@ const SYSTEMS = {
             { n: '식도', x: 150, y: 64, w: 12, h: 26, d: 'M 145 51 C 148 51 152 51 155 51 C 156 59 154 69 155 77 C 152 77 148 77 145 77 C 146 69 144 59 145 51 Z', note: '꿈틀 운동으로 위까지 밀어 내립니다', stay: '7초' },
             { n: '위', x: 134, y: 100, w: 40, h: 30, d: 'M 148 85 C 138 85 124 88 118 96 C 113 103 115 112 124 115 C 134 117 146 112 153 104 C 155 101 154 96 147 96 C 138 96 130 99 126 97 C 124 94 130 90 144 89 Z', note: '위액과 섞어 죽처럼 만듭니다', stay: '3시간' },
             { n: '작은창자', x: 150, y: 140, w: 52, h: 30, d: 'M 130 126 C 142 125 158 125 170 127 C 176 133 174 141 166 143 C 174 146 175 152 168 155 C 156 155 144 154 132 155 C 125 152 126 146 134 143 C 126 141 124 133 130 126 Z', note: '영양소를 빨아들여 피로 보냅니다', stay: '5시간' },
-            { n: '큰창자', x: 150, y: 176, w: 58, h: 18, d: 'M 121 167 C 124 167 127 167 127 175 C 133 178 167 178 173 175 C 173 167 176 167 179 167 C 179 178 176 185 166 185 C 154 185 154 181 150 181 C 146 181 146 185 134 185 C 124 185 121 178 121 167 Z', note: '물을 빨아들이고 찌꺼기를 모읍니다', stay: '16시간' },
+            { n: '큰창자', x: 150, y: 140, w: 58, h: 16, d: 'M 121 131 C 124 131 127 131 127 139 C 133 142 167 142 173 139 C 173 131 176 131 179 131 C 179 142 176 149 166 149 C 154 149 154 145 150 145 C 146 145 146 149 134 149 C 124 149 121 142 121 131 Z', note: '물을 빨아들이고 찌꺼기를 모읍니다', stay: '16시간' },
         ],
     },
     resp: {
@@ -42,7 +42,7 @@ const SYSTEMS = {
         organs: [
             { n: '심장', x: 148, y: 104, w: 30, h: 34, d: 'M 146 87 C 153 87 163 90 163 99 C 163 110 151 117 144 121 C 139 116 133 108 133 98 C 133 90 140 87 146 87 Z', note: '펌프처럼 피를 밀어 보냅니다', stay: '한 번 뜀' },
             { n: '동맥', x: 182, y: 140, w: 12, h: 44, d: 'M 179 118 C 183 118 186 128 187 140 C 188 152 186 162 182 162 C 178 162 176 152 177 140 C 177 128 177 118 179 118 Z', note: '굵고 튼튼한 관으로 피가 힘차게 흘러 나갑니다', stay: '몇 초' },
-            { n: '모세혈관', x: 150, y: 186, w: 68, h: 12, d: 'M 116 186 C 126 180 140 180 150 183 C 160 180 174 180 184 186 C 174 192 160 192 150 189 C 140 192 126 192 116 186 Z', note: '온몸 구석구석에서 산소를 건넵니다', stay: '1초쯤' },
+            { n: '모세혈관', x: 150, y: 128, w: 44, h: 12, d: 'M 128 128 C 134.5 122 143.5 122 150 125 C 156.5 122 165.5 122 172 128 C 165.5 134 156.5 134 150 131 C 143.5 134 134.5 134 128 128 Z', note: '온몸 구석구석에서 산소를 건넵니다', stay: '1초쯤' },
             { n: '정맥', x: 118, y: 140, w: 12, h: 44, d: 'M 121 118 C 123 128 123 140 123 152 C 122 162 118 162 115 162 C 112 152 113 140 114 128 C 115 118 118 118 121 118 Z', note: '온몸을 돈 피가 심장으로 돌아옵니다', stay: '몇 초' },
         ],
     },
@@ -51,8 +51,8 @@ const SYSTEMS = {
         label: '하루에 거르는 피',
         organs: [
             { n: '콩팥', x: 150, y: 108, w: 56, h: 26, d: 'M 136 95 C 142 95 142 103 138 108 C 142 113 142 121 136 121 C 128 121 123 113 123 108 C 123 103 128 95 136 95 M 164 95 C 172 95 177 103 177 108 C 177 113 172 121 164 121 C 158 121 158 113 162 108 C 158 103 158 95 164 95 Z', note: '피 속 찌꺼기를 걸러 냅니다', stay: '늘' },
-            { n: '오줌관', x: 150, y: 144, w: 10, h: 30, d: 'M 143 129 C 145 139 146 149 147 159 C 146 159 144 159 144 159 C 143 149 142 139 140 129 Z M 157 129 C 158 139 157 149 156 159 C 154 159 153 159 153 159 C 154 149 155 139 160 129 Z', note: '콩팥에서 방광까지 내려갑니다', stay: '몇 초' },
-            { n: '방광', x: 150, y: 176, w: 34, h: 22, d: 'M 150 165 C 159 165 167 170 167 176 C 167 182 159 187 150 187 C 141 187 133 182 133 176 C 133 170 141 165 150 165 Z', note: '오줌을 모아 두었다가 내보냅니다', stay: '몇 시간' },
+            { n: '오줌관', x: 150, y: 132, w: 10, h: 24, d: 'M 143 117 C 145 127 146 137 147 147 C 146 147 144 147 144 147 C 143 137 142 127 140 117 Z M 157 117 C 158 127 157 137 156 147 C 154 147 153 147 153 147 C 154 137 155 127 160 117 Z', note: '콩팥에서 방광까지 내려갑니다', stay: '몇 초' },
+            { n: '방광', x: 150, y: 144, w: 26, h: 16, d: 'M 150 133 C 159 133 167 138 167 144 C 167 150 159 155 150 155 C 141 155 133 150 133 144 C 133 138 141 133 150 133 Z', note: '오줌을 모아 두었다가 내보냅니다', stay: '몇 시간' },
         ],
     },
 };
@@ -171,11 +171,10 @@ function drawBody(g) {
     g.appendChild(el('text', { x: 244, y: 22, class: 'small-label' }, `${a.sys.mover}가 지나는 차례`));
     organs.forEach((o, i) => {
         const here = i === stepAt;
-        const y = 44 + i * 32;
-        g.appendChild(el('circle', { cx: 252, cy: y - 4, r: 8, class: 'organ', style: `fill:${a.sys.colour}${here ? '' : '77'}` }));
-        g.appendChild(el('text', { x: 252, y: y - 1, 'text-anchor': 'middle', class: 'tiny-label', style: 'fill:#10202a;font-weight:900' }, String(i + 1)));
-        g.appendChild(el('text', { x: 266, y: y - 6, class: `step-text${here ? ' here' : ''}` }, `${o.n} · ${o.stay}`));
-        g.appendChild(el('text', { x: 266, y: y + 7, class: 'tiny-label' }, o.note));
+        const y = 44 + i * 22;
+        g.appendChild(el('circle', { cx: 252, cy: y, r: 8, class: 'organ', style: `fill:${a.sys.colour}${here ? '' : '77'}` }));
+        g.appendChild(el('text', { x: 252, y: y + 3, 'text-anchor': 'middle', class: 'tiny-label', style: 'fill:#10202a;font-weight:900' }, String(i + 1)));
+        g.appendChild(el('text', { x: 266, y: y + 4, class: `step-text${here ? ' here' : ''}` }, `${o.n} · ${o.stay}`));
     });
 }
 
@@ -206,7 +205,7 @@ function drawGraph(g) {
         g.appendChild(el('text', { x: cx, y: Y(v) - 6, 'text-anchor': 'middle', class: 'bar-text', style: `fill:${on ? '#059669' : '#475569'}` },
             `${fmt(v, v < 10 ? 1 : 0)} ${a.sys.unit}`));
         g.appendChild(el('text', { x: cx, y: yBot + 15, 'text-anchor': 'middle', class: 'axis-text', style: on ? 'fill:#059669' : '' }, ACTS[k].name));
-        g.appendChild(el('text', { x: cx, y: yBot + 28, 'text-anchor': 'middle', class: 'tiny-label' }, `쉴 때의 ${fmt(ratio(state.sys, k), 1)}배`));
+        g.appendChild(el('text', { x: cx, y: yBot + 33, 'text-anchor': 'middle', class: 'tiny-label' }, `쉴 때의 ${fmt(ratio(state.sys, k), 1)}배`));
     });
 
     g.appendChild(el('text', { x: (x0 + x1) / 2, y: 191, 'text-anchor': 'middle', class: 'axis-title' }, `무엇을 하고 있느냐에 따른 ${a.sys.label}`));
@@ -229,6 +228,7 @@ function updateReadout() {
     $('valueB').textContent = `${fmt(a.ratio, 1)}배`;
     const rows = [
         ['지나는 차례', a.sys.organs.map(o => o.n).join(' → '), false],
+        ...a.sys.organs.map(o => [o.n, o.note, false]),
         ['심장이 뛰는 횟수', `1분에 ${a.act.hr}번`, false],
         ['숨 쉬는 횟수', `1분에 ${a.act.br}번`, false],
         ['1분에 내보내는 피', `${fmt(a.act.hr * a.act.sv / 1000, 1)} L`, state.sys === 'circ'],
