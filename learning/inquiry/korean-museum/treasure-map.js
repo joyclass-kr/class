@@ -99,11 +99,8 @@
   const modalImage = document.getElementById('modal-image');
   const modalImagePlaceholder = document.getElementById('modal-image-placeholder');
   const modalMediaTitle = document.getElementById('modal-media-title');
-  const modalMediaKind = document.getElementById('modal-media-kind');
   const modalTitle = document.getElementById('modal-title');
   const modalSubtitle = document.getElementById('modal-subtitle');
-  const modalDesignation = document.getElementById('modal-designation');
-  const modalEra = document.getElementById('modal-era');
   const modalLocation = document.getElementById('modal-location');
   const modalMuseum = document.getElementById('modal-museum');
   const modalDocent = document.getElementById('modal-docent');
@@ -1221,12 +1218,9 @@
       modalImage.hidden = true;
       modalImagePlaceholder.hidden = false;
     }
-    modalMediaKind.textContent = mediaLabel;
     modalMediaTitle.textContent = relic.title;
     modalTitle.textContent = relic.title;
     modalSubtitle.textContent = relic.titleEn;
-    modalDesignation.textContent = relic.designation || '국보 유물';
-    modalEra.textContent = relic.era;
     modalLocation.textContent = relic.location;
     modalMuseum.textContent = relic.museum;
     modalDocent.textContent = relic.docent;
