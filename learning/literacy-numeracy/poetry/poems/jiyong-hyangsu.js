@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-hyangsu"] = {
         "poem": {
+            "illustration": "images/jiyong-hyangsu.webp",
             "lines": [
                 "넓은 벌 동쪽 끝으로",
                 "옛이야기 지줄대는 실개천이 회돌아 나가고,",

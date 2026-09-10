@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yuksa-cheongpodo"] = {
         "poem": {
+            "illustration": "images/yuksa-cheongpodo.webp",
             "lines": [
                 "내 고장 칠월은",
                 "청포도가 익어 가는 시절",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-seosi"] = {
         "poem": {
+            "illustration": "images/dongju-seosi.webp",
             "lines": [
                 "죽는 날까지 하늘을 우러러",
                 "한 점 부끄럼이 없기를,",

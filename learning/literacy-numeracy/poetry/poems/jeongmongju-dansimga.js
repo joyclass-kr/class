@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jeongmongju-dansimga"] = {
         "poem": {
+            "illustration": "images/jeongmongju-dansimga.webp",
             "lines": [
                 "이 몸이 죽고 죽어 일백 번 고쳐 죽어",
                 "백골이 진토 되어 넋이라도 있고 없고",

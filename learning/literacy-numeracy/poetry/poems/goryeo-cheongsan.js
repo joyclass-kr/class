@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["goryeo-cheongsan"] = {
         "poem": {
+            "illustration": "images/goryeo-cheongsan.webp",
             "lines": [
                 "살어리 살어리랏다 청산에 살어리랏다",
                 "멀위랑 다래랑 먹고 청산에 살어리랏다",

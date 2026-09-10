@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["nocheonmyeong-saseum"] = {
         "poem": {
+            "illustration": "images/nocheonmyeong-saseum.webp",
             "lines": [
                 "모가지가 길어서 슬픈 짐승이여",
                 "언제나 점잖은 편 말이 없구나",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["gojia-guji"] = {
         "poem": {
+            "illustration": "images/gojia-guji.webp",
             "lines": [
                 "거북아 거북아",
                 "머리를 내어라",

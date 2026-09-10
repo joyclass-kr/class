@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-jahwasang"] = {
         "poem": {
+            "illustration": "images/dongju-jahwasang.webp",
             "lines": [
                 "산모퉁이를 돌아 논가 외딴 우물을 홀로 찾아가선 가만히 들여다봅니다.",
                 "",

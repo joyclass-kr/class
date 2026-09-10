@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["goryeo-gasiri"] = {
         "poem": {
+            "illustration": "images/goryeo-gasiri.webp",
             "lines": [
                 "가시리 가시리잇고 나는",
                 "버리고 가시리잇고 나는",

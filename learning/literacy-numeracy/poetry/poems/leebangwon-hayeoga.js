@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leebangwon-hayeoga"] = {
         "poem": {
+            "illustration": "images/leebangwon-hayeoga.webp",
             "lines": [
                 "이런들 어떠하며 저런들 어떠하리",
                 "만수산 드렁칡이 얽혀진들 어떠하리",
