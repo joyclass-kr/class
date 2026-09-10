@@ -878,22 +878,22 @@ a {
     pointer-events: none;
 }
 
-/* 본문이 긴 시(사미인곡 등): 왼쪽 페이지 0% 배제, 오른쪽 하단 구석에만 배치 */
+/* 시화 우측 하단 배치: 왼쪽 페이지 본문 글씨 100% 보호 및 우측 하단 여백에 자연스럽게 안착 */
 .read-spread-art.mode-corner-right {
     justify-content: flex-end;
     align-items: flex-end;
 }
 
 .read-spread-art.mode-corner-right .read-spread-art-img {
-    width: 44%;
-    height: 44%;
+    width: clamp(260px, 42%, 480px);
+    max-height: 48%;
     object-fit: contain;
     object-position: bottom right;
     mix-blend-mode: multiply;
-    opacity: 0.88;
+    opacity: 0.9;
     pointer-events: none;
-    margin-right: clamp(16px, 3.5vw, 40px);
-    margin-bottom: clamp(14px, 3vh, 32px);
+    margin-right: clamp(14px, 3.2vw, 36px);
+    margin-bottom: clamp(12px, 2.5vh, 28px);
 }
 
 .page-quiz-col {
@@ -1132,6 +1132,13 @@ a {
     .story-page-left {
         border-right: none;
         border-bottom: 1px solid rgba(92, 58, 34, 0.22);
+    }
+
+    .read-spread-art.mode-corner-right .read-spread-art-img {
+        width: clamp(160px, 45%, 260px);
+        max-height: 38%;
+        margin-right: 12px;
+        margin-bottom: 10px;
     }
 
     .nav-prev { left: 4px; }
