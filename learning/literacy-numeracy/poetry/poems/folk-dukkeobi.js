@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["folk-dukkeobi"] = {
         "poem": {
+            "illustration": "images/folk-dukkeobi.webp",
             "lines": [
                 "두껍아 두껍아",
                 "헌 집 줄게",

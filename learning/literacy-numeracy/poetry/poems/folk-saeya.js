@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["folk-saeya"] = {
         "poem": {
+            "illustration": "images/folk-saeya.webp",
             "lines": [
                 "새야 새야 파랑새야",
                 "녹두밭에 앉지 마라",

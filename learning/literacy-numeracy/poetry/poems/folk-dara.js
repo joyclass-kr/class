@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["folk-dara"] = {
         "poem": {
+            "illustration": "images/folk-dara.webp",
             "lines": [
                 "달아 달아 밝은 달아",
                 "이태백이 놀던 달아",
