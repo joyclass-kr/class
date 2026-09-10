@@ -10,9 +10,6 @@
         lessonScreen: document.getElementById("lessonScreen"),
         resultScreen: document.getElementById("resultScreen"),
         lessonList: document.getElementById("lessonList"),
-        progressText: document.getElementById("progressText"),
-        progressPercent: document.getElementById("progressPercent"),
-        courseProgressFill: document.getElementById("courseProgressFill"),
         missionNumber: document.getElementById("missionNumber"),
         missionTotal: document.getElementById("missionTotal"),
         missionProgressFill: document.getElementById("missionProgressFill"),
@@ -73,12 +70,10 @@
     function renderCourse() {
         elements.lessonList.replaceChildren();
         const suggested = currentSuggestedIndex();
-        let completed = 0;
 
         course.units.forEach((unit) => {
             const unitLessons = course.lessons.filter((item) => item.unit === unit.id);
             const unitComplete = unitLessons.filter((item) => lessonRecord(item.id).completed).length;
-            completed += unitComplete;
             const section = document.createElement("section");
             section.className = "unit-section";
             section.innerHTML = `
@@ -103,21 +98,15 @@
                 button.setAttribute("aria-label", `${index + 1}차시 ${item.title}${record.completed ? ", 완료" : ""}`);
                 button.innerHTML = `
                     <span class="lesson-number"></span>
-                    <strong></strong>
-                    <small></small>`;
+                    <strong></strong>`;
                 button.querySelector(".lesson-number").textContent = record.completed ? "✓" : String(index + 1).padStart(2, "0");
                 button.querySelector("strong").textContent = item.title;
-                button.querySelector("small").textContent = item.goal;
                 button.addEventListener("click", () => startLesson(index));
                 grid.append(button);
             });
             elements.lessonList.append(section);
         });
 
-        const percent = Math.round((completed / course.lessons.length) * 100);
-        elements.progressText.textContent = `${completed} / ${course.lessons.length}차시 완료`;
-        elements.progressPercent.textContent = `${percent}%`;
-        elements.courseProgressFill.style.width = `${percent}%`;
     }
 
     function startLesson(index) {
@@ -236,7 +225,7 @@
         const scene = document.createElement("div");
         scene.className = "writing-scene";
         scene.textContent = task.scene;
-        elements.taskScene.textContent = "그림에서 장소·행동·느낌을 살펴보세요.";
+        elements.taskScene.textContent = "주어진 상황에서 장소·행동·느낌을 살펴보세요.";
         const textarea = document.createElement("textarea");
         textarea.id = "reportText";
         textarea.placeholder = "예) 가족이 공원에 소풍을 왔다.\n함께 도시락을 먹었다.\n즐거운 하루였다.";

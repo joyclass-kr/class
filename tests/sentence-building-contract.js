@@ -15,6 +15,7 @@ assert.match(html, /id="lessonList"/);
 assert.match(html, /id="lessonScreen"[^>]*hidden/);
 assert.match(html, /id="resultScreen"[^>]*hidden/);
 assert.doesNotMatch(html, /topbar|course-hero|hero-case|totalStars|earnedStars/);
+assert.doesNotMatch(html, /course-progress|progressText|progressPercent|courseProgressFill/);
 assert.doesNotMatch(html, /backToListButton|resultListButton|>← 차시 목록<|>차시 목록<\/button>/);
 assert.match(html, /curriculum\.js/);
 assert.match(html, /app\.js/);
@@ -24,6 +25,7 @@ assert.match(app, /localStorage/);
 assert.match(app, /sentenceCount/);
 assert.doesNotMatch(html, /taskType|unitName|lessonGoal|celebration/);
 assert.doesNotMatch(app, /AudioContext|confetti|celebrate/);
+assert.doesNotMatch(app, /button\.querySelector\("small"\)/);
 assert.match(app, /sitebackrequest/);
 
 const context = { window: {} };
@@ -60,6 +62,11 @@ const visibleCopy = `${html}\n${curriculumSource}\n${app}`;
 for (const banned of ["탐정", "사건", "열쇠", "구조대", "공방", "응급실", "보고서", "연결 다리", "단서", "미션"]) {
     assert.ok(!visibleCopy.includes(banned), `unwanted themed copy remains: ${banned}`);
 }
+assert.ok(!course.lessons.at(-1).tasks.some((task) => /그림|[🌳🧺👨‍👩‍👧‍👦☀️🥪🍎🐕]/u.test(`${task.prompt} ${task.scene}`)), "The final writing lesson must use a real text situation, not emoji pretending to be an illustration.");
+const openingTask = course.lessons[0].tasks[0];
+assert.match(openingTask.prompt, /문장의 뜻/);
+assert.ok(openingTask.options.every((option) => /다\.$/.test(option)), "The opening task must not reveal the answer through sentence endings or punctuation.");
+assert.equal(new Set(openingTask.options.map((option) => option.at(-1))).size, 1, "The opening task choices must use the same punctuation.");
 
 assert.match(hub, /data-access-group="grammar"/);
 assert.match(hub, /<strong>문법<\/strong><small>\(Grammar\)<\/small>/);
