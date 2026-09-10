@@ -94,7 +94,7 @@
             {
                 "id": "sapyeong-comfort",
                 "poemId": "jaegu-sapyeong",
-                "category": "시어의 의미",
+                "category": "표현 찾기",
                 "prompt": "시를 읽고 답해 보세요.",
                 "sentence": "화자가 불빛 속에 던져 준 '한 줌의 톱밥'과 '한 줌의 눈물'에 담긴 의미는 무엇인가요?",
                 "choices": [
@@ -108,7 +108,7 @@
             {
                 "id": "sapyeong-contrast",
                 "poemId": "jaegu-sapyeong",
-                "category": "표현상의 특징",
+                "category": "표현 찾기",
                 "prompt": "시를 읽고 답해 보세요.",
                 "sentence": "이 시의 공간적 배경과 심상에 대한 설명으로 가장 알맞은 것은 무엇인가요?",
                 "choices": [

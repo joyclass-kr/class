@@ -96,7 +96,7 @@
             {
                 "id": "nongmu-pun",
                 "poemId": "gyeongnim-nongmu",
-                "category": "표현상의 특징",
+                "category": "표현 찾기",
                 "prompt": "시를 읽고 답해 보세요.",
                 "sentence": "'우리는 분이 얼룩진 얼굴로'에 쓰인 '분'의 중의적 의미로 알맞은 것은 무엇인가요?",
                 "choices": [
@@ -110,7 +110,7 @@
             {
                 "id": "nongmu-structure",
                 "poemId": "gyeongnim-nongmu",
-                "category": "시상 전개",
+                "category": "표현 찾기",
                 "prompt": "시를 읽고 답해 보세요.",
                 "sentence": "이 시의 공간 이동 순서로 올바른 것은 무엇인가요?",
                 "choices": [
