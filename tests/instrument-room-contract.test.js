@@ -297,12 +297,14 @@ test('completed orchestral renders use compact note-grid Ogg samples', () => {
   assert.match(app, /sampleSet === "hammond-organ"[\s\S]*?"tuba"/);
   assert.match(app, /"contrabassoon"[\s\S]*?"flugelhorn"[\s\S]*?"euphonium"/);
   assert.match(app, /ONE_SHOT_SAMPLE_SETS = new Set\(\[[^\]]*"harp"[^\]]*"geomungo"[^\]]*"pyeongyeong"\]\)/);
-  assert.match(app, /const peak = volumeOnlyGain\(buffer, velocityGain \* calibratedGain\)/);
+  assert.match(app, /const peak = upwardBalancedGain\(buffer, velocityGain \* calibratedGain, velocityGain\)/);
   assert.match(app, /function decodedBufferPeak\(buffer\)/);
-  assert.match(app, /const safeGain = \.68 \/ decodedBufferPeak\(buffer\)/);
+  assert.match(app, /function decodedBufferActiveRms\(buffer\)/);
+  assert.match(app, /Math\.max\(requestedGain, quietSampleFloor\)/, 'quiet samples must be raised without lowering louder samples');
+  assert.match(app, /const safeGain = \.92 \/ decodedBufferPeak\(buffer\)/);
   assert.match(app, /source\.connect\(state\.limiter\)/, 'every dry voice must retain shared peak protection');
   assert.doesNotMatch(app, /source\.connect\(state\.masterGain\)/);
-  assert.match(app, /connectToMix\(gain, \.035\)/, 'sampled instruments must retain the original room send');
+  assert.match(app, /connectFastToMix\(gain, \.035\)/, 'sampled instruments must retain the original room send');
   assert.doesNotMatch(app, /Recorded samples already contain their own body and room tone/);
   assert.match(app, /const calibratedGain = Math\.pow/);
   assert.match(app, /gainDb: -5\.68/);

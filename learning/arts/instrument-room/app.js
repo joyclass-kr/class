@@ -403,6 +403,7 @@
         pianoVoices: new Map(),
         keyboardSamples: new Map(),
         samplePeaks: new WeakMap(),
+        sampleActiveRms: new WeakMap(),
         sampleStartOffsets: new WeakMap(),
         keyboardSampleLoads: new Map(),
         sampleCacheOpening: null,
@@ -650,8 +651,36 @@
     }
 
     function volumeOnlyGain(buffer, requestedGain) {
-        const safeGain = .68 / decodedBufferPeak(buffer);
+        const safeGain = .92 / decodedBufferPeak(buffer);
         return Math.max(.0001, Math.min(requestedGain, safeGain));
+    }
+
+    function decodedBufferActiveRms(buffer) {
+        if (!buffer) return 1;
+        const cached = state.sampleActiveRms.get(buffer);
+        if (Number.isFinite(cached)) return cached;
+        const gate = Math.max(.0008, decodedBufferPeak(buffer) * .002);
+        const scanLength = Math.min(buffer.length, Math.ceil(buffer.sampleRate * 4.5));
+        let sumSquares = 0;
+        let count = 0;
+        for (let channel = 0; channel < buffer.numberOfChannels; channel += 1) {
+            const data = buffer.getChannelData(channel);
+            for (let index = 0; index < scanLength; index += 1) {
+                const sample = data[index];
+                if (Math.abs(sample) < gate) continue;
+                sumSquares += sample * sample;
+                count += 1;
+            }
+        }
+        const rms = count ? Math.sqrt(sumSquares / count) : decodedBufferPeak(buffer);
+        state.sampleActiveRms.set(buffer, rms);
+        return rms;
+    }
+
+    function upwardBalancedGain(buffer, requestedGain, performanceGain) {
+        const performanceScale = Math.max(.08, Math.min(1.4, performanceGain / 1.22));
+        const quietSampleFloor = (.085 * performanceScale) / decodedBufferActiveRms(buffer);
+        return volumeOnlyGain(buffer, Math.max(requestedGain, quietSampleFloor));
     }
 
     function decodedBufferStartOffset(buffer) {
@@ -1010,7 +1039,7 @@
         const sampleConfig = KEYBOARD_SAMPLE_SETS[sampleSet];
         const calibratedGain = Math.pow(10, ((sampleConfig && sampleConfig.gainDb) || 0) / 20);
         const velocityGain = Math.max(.08, Math.min(1.7, Math.pow(velocity, .9) * 1.22 * highNoteCompensation));
-        const peak = volumeOnlyGain(buffer, velocityGain * calibratedGain);
+        const peak = upwardBalancedGain(buffer, velocityGain * calibratedGain, velocityGain);
         const decay = pluckedKeyboardDecay(sampleSet);
         const heldTone = sampleSet === "hammond-organ" || sampleSet === "pipe-organ" || ["flute", "oboe", "trumpet", "piccolo-trumpet", "clarinet", "bass-clarinet", "piccolo-flute", "french-horn", "english-horn", "soprano-sax", "saxophone", "tenor-sax", "baritone-sax", "bassoon", "contrabassoon", "flugelhorn", "alto-trombone", "trombone", "bass-trombone", "euphonium", "tuba", "violin", "viola", "cello", "upright-bass", "haegeum", "haegeum-vibrato", "daegeum", "daegeum-vibrato", "hyangpiri", "hyangpiri-vibrato", "taepyeongso", "yanggeum-tremolo", "ajaeng", "ajaeng-vibrato", "sogeum", "danso", "danso-vibrato", "hun", "ocarina", "recorder-piccolo", "recorder-soprano", "recorder-alto", "recorder-tenor"].includes(sampleSet);
         source.buffer = buffer;
@@ -1027,9 +1056,9 @@
             gain.gain.exponentialRampToValueAtTime(.0001, now + decay);
         }
         source.connect(gain);
-        // Keep the original instrument-room tone: the shared mix bus evens out
-        // perceived level, while the short room send preserves each sample's body.
-        connectToMix(gain, .035);
+        // Preserve the dry sample's level and tone, add the original short room,
+        // and leave only peak protection after the upward-only calibration.
+        connectFastToMix(gain, .035);
         const voice = { source, gain, anchor, sampleSet, sampleKey: sampleSet + ":" + anchor, sampledPiano: true, released: false, held: false, percussiveDecay: decay };
         state.pianoVoices.set(midi, voice);
         source.onended = function () { if (state.pianoVoices.get(midi) === voice) state.pianoVoices.delete(midi); };
