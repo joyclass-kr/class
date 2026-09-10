@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-bom"] = {
         "poem": {
+            "illustration": "images/dongju-bom.webp",
             "lines": [
                 "우리 애기는",
                 "아래 발치에서 코올코올,",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-geojitburi"] = {
         "poem": {
+            "illustration": "images/dongju-geojitburi.webp",
             "lines": [
                 "똑, 똑, 똑,",
                 "문 좀 열어 주세요",

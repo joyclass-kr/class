@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-gulttuk"] = {
         "poem": {
+            "illustration": "images/dongju-gulttuk.webp",
             "lines": [
                 "산골짜기 오막살이 낮은 굴뚝엔",
                 "몽기몽기 웨인 연기 대낮에 솟나",

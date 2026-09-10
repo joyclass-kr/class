@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-jogaekkeopjil"] = {
         "poem": {
+            "illustration": "images/dongju-jogaekkeopjil.webp",
             "lines": [
                 "아롱아롱 조개껍데기",
                 "울 언니 바닷가에서",

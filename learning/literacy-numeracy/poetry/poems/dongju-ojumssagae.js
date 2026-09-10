@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-ojumssagae"] = {
         "poem": {
+            "illustration": "images/dongju-ojumssagae.webp",
             "lines": [
                 "빨랫줄에 걸어 논",
                 "요에다 그린 지도",

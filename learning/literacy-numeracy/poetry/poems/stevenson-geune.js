@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["stevenson-geune"] = {
         "poem": {
+            "illustration": "images/stevenson-geune.webp",
             "lines": [
                 "그네를 타고 하늘로 올라가는 일,",
                 "이보다 즐거운 일이 있을까요?",

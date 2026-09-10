@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["rossetti-bunhong"] = {
         "poem": {
+            "illustration": "images/rossetti-bunhong.webp",
             "lines": [
                 "분홍은 무엇일까요? 장미가 분홍이에요.",
                 "샘가에 피어 있는 장미가 분홍이에요.",

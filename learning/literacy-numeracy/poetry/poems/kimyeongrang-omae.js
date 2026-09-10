@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["kimyeongrang-omae"] = {
         "poem": {
+            "illustration": "images/kimyeongrang-omae.webp",
             "lines": [
                 "“오매 단풍 들것네”",
                 "장광에 골 붉은 감잎 날아오아",

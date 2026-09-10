@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dubo-chunyahuiu"] = {
         "poem": {
+            "illustration": "images/dubo-chunyahuiu.webp",
             "lines": [
                 "좋은 비는 시절을 알아",
                 "봄이 되니 이내 내리네",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["manhae-narutbae"] = {
         "poem": {
+            "illustration": "images/manhae-narutbae.webp",
             "lines": [
                 "나는 나룻배",
                 "당신은 행인",

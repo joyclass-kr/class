@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yeongrang-doldam"] = {
         "poem": {
+            "illustration": "images/yeongrang-doldam.webp",
             "lines": [
                 "돌담에 속삭이는 햇발같이",
                 "풀 아래 웃음 짓는 샘물같이",

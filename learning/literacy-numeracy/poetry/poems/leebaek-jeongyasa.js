@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leebaek-jeongyasa"] = {
         "poem": {
+            "illustration": "images/leebaek-jeongyasa.webp",
             "lines": [
                 "잠자리 앞에 밝은 달빛",
                 "땅에 내린 서리인가 했네",
