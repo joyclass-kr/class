@@ -27,6 +27,7 @@
             key.type = "button";
             key.className = "key key-white";
             key.dataset.midi = String(midi);
+            key.dataset.sfx = "none";
             key.setAttribute("aria-label", noteLabel(midi));
             key.append(markLayer());
             whiteRow.append(key);
@@ -43,6 +44,7 @@
             key.type = "button";
             key.className = "key key-black";
             key.dataset.midi = String(midi);
+            key.dataset.sfx = "none";
             key.setAttribute("aria-label", noteLabel(midi));
             key.style.left = ((whitesBefore + 1) / whiteCount * 100) + "%";
             key.style.width = (100 / whiteCount * 0.6) + "%";
