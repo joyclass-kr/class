@@ -6,8 +6,8 @@ const CHAPTERS = [
     {
         num: 1,
         title: "쫓겨난 아우",
-        art: ["story-01-a.webp", "story-01-a2.webp", "story-01-b.webp", "story-01-c.webp"],
-        artAt: ["오늘부터 나가 살아라", "흥부가 무릎을 꿇었습니다", "손에는 밥주걱이 들려 있었습니다", "이쪽도 한 번만 때려 주십시오"],
+        art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+        artAt: ["오늘부터 나가 살아라", "흥부가 무릎을 꿇었습니다", "이쪽도 한 번만 때려 주십시오"],
         paras: [
             "옛날 전라도 어느 고을에 형제가 살았습니다. 형은 놀부요 아우는 흥부였습니다. 집안은 논밭이 제법 되어 먹고살 걱정은 없었습니다.",
             "한배에서 났는데도 두 사람은 물과 불처럼 달랐습니다. 흥부는 마음이 여려서 남의 일에 먼저 소매를 걷었고, 놀부는 제 것 아니면 눈길도 주지 않았습니다. 한 사람은 주려고 태어났고 한 사람은 받으려고 태어난 듯했습니다.",
@@ -440,7 +440,7 @@ function fillPages(segs, caps, headHtml) {
 }
 
 // 그림 자리가 안 맞을 때 펼침면을 몇 장까지 늘려 볼지. 늘리면 책이 성겨진다.
-const GROW_LIMIT = 3;
+const GROW_LIMIT = 1;
 
 function paginateChapter(ch, chIndex) {
     const segs = CHAPTER_SEGS[chIndex];
@@ -875,8 +875,8 @@ const EN = {
         {
             num: 1,
             title: "The Brother Turned Out",
-            art: ["story-01-a.webp", "story-01-a2.webp", "story-01-b.webp", "story-01-c.webp"],
-            artAt: ["From today you live somewhere else", "Heungbu went down on his knees", "She had a rice paddle in her hand", "hit this side too"],
+            art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
+            artAt: ["From today you live somewhere else", "Heungbu went down on his knees", "hit this side too"],
             paras: [
                 "Long ago, in a village in Jeolla, there lived two brothers. The elder was Nolbu and the younger was Heungbu. The family had a fair bit of land, so there was no worry about food.",
                 "They came from the same mother, and yet the two were as different as water and fire. Heungbu was soft-hearted and rolled up his sleeves for other people first. Nolbu never even glanced at anything that wasn't his. One was born to give and one was born to take.",

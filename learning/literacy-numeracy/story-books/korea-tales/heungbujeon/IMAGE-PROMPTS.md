@@ -139,7 +139,7 @@ wife and a crowd of small ragged children huddled behind him. Bare branches,
 grey-white light, no one shouting - just finality.
 ```
 
-### `story-01-a2.webp` — 1장 — 흥부가 무릎 꿇고 쌀을 빈다
+### `story-01-b.webp` — 1장 — 흥부가 무릎 꿇고 쌀을 빈다
 
 ```
 Wide 4:3 scene. Winter, snow on the ground, at Nolbu's gate at dusk. On the left
@@ -147,17 +147,6 @@ Heungbu kneels in the snow in worn white clothes, hands pressed together,
 tears on his face, pleading. On the right, framed in the half-open gate, Nolbu
 stands with arms folded, scowling down at him, warm lamplight and the smell of
 cooking rice behind him inside. Cold blue-grey light, no one else present.
-```
-
-### `story-01-b.webp` — 1장 — 형수가 밥주걱으로 뺨을 때린다
-
-```
-Wide 4:3 scene. A kitchen doorway. On the right a big red-faced woman has just
-swung a rice paddle and is following through, mouth wide in a shout. On the left
-the thin man staggers a half step back with one hand to his cheek - but he is
-already looking at his palm, where a few grains of rice are stuck. His expression
-is not anger but wonder. Steam from the cauldron, comic energy with a sad
-undertow.
 ```
 
 ### `story-01-c.webp` — 1장 — 반대쪽 뺨을 내민다
