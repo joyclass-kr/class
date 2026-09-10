@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-byeoltong"] = {
         "poem": {
+            "illustration": "images/jiyong-byeoltong.webp",
             "lines": [
                 "별똥 떨어진 곳,",
                 "",

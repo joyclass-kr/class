@@ -303,8 +303,10 @@
 
         let artHtml = "";
         if (poem.illustration) {
+            const isLong = (poem.lines && poem.lines.length >= 14);
+            const mode = poem.illustrationMode || (isLong ? "corner-right" : "bottom");
             artHtml = `
-                <div class="read-spread-art" aria-hidden="true">
+                <div class="read-spread-art mode-${mode}" aria-hidden="true">
                     <img class="read-spread-art-img" src="${escapeHtml(poem.illustration)}?v=20260910-smoothmist" alt="" />
                 </div>
             `;
