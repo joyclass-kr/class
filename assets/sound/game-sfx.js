@@ -16,10 +16,10 @@
                 select: "click", back: "click", turn: "bell", timeout: "error"
     });
     const scriptUrl = document.currentScript?.src || new URL("/assets/sound/game-sfx.js", window.location.href).href;
-    const FILE_SOUND_NAMES = new Set(SOUND_NAMES);
+    const FILE_SOUND_NAMES = new Set([...SOUND_NAMES].filter(name => name !== "click"));
     const soundUrls = Object.fromEntries([...FILE_SOUND_NAMES].map(name => [
         name,
-        new URL(`sfx/${name === "click" ? "select" : name}.ogg`, scriptUrl).href
+        new URL(`sfx/${name}.ogg`, scriptUrl).href
     ]));
 
     let context = null;
@@ -265,6 +265,7 @@
     function play(name = "click") {
         const soundName = SOUND_NAMES.has(name) ? name : "click";
         if (muted) return false;
+        if (soundName === "click") return playSynth(soundName);
         const template = getFileTemplate(soundName);
         if (!template) return playSynth(soundName);
         const audio = template.cloneNode();

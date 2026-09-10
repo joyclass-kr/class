@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <script src="/assets/sound/game-sfx.js?v=20260910-soft-click-1" defer />
+        <script src="/assets/sound/game-sfx.js?v=20260910-tap-click-1" defer />
       </head>
       <body>{children}<ElementaryFocusScroll /><ArithmeticRaceController /></body>
     </html>
