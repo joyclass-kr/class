@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-gaeyeoul"] = {
         "poem": {
+            "illustration": "images/sowol-gaeyeoul.webp",
             "lines": [
                 "당신은 무슨 일로",
                 "그리합니까?",

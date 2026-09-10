@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yunseondo-ouga"] = {
         "poem": {
+            "illustration": "images/yunseondo-ouga.webp",
             "lines": [
                 "내 벗이 몇이나 하니 수석과 송죽이라",
                 "동산에 달 오르니 그 더욱 반갑고야",

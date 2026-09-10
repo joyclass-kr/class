@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-sanyuhwa"] = {
         "poem": {
+            "illustration": "images/sowol-sanyuhwa.webp",
             "lines": [
                 "산에는 꽃 피네",
                 "꽃이 피네",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leesunsin-hansanseom"] = {
         "poem": {
+            "illustration": "images/leesunsin-hansanseom.webp",
             "lines": [
                 "한산섬 달 밝은 밤에 수루에 혼자 앉아",
                 "큰 칼 옆에 차고 깊은 시름 하는 적에",

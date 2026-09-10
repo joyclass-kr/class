@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["wangbangyeon-cheonmalli"] = {
         "poem": {
+            "illustration": "images/wangbangyeon-cheonmalli.webp",
             "lines": [
                 "천만 리 머나먼 길에 고운 님 여의옵고",
                 "내 마음 둘 데 없어 냇가에 앉았으니",

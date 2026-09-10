@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hwanghui-daechu"] = {
         "poem": {
+            "illustration": "images/hwanghui-daechu.webp",
             "lines": [
                 "대추 볼 붉은 골에 밤은 어이 뜯드르며",
                 "벼 벤 그루에 게는 어이 내리는고",

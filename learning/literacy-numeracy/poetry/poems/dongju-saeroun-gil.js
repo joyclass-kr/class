@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-saeroun-gil"] = {
         "poem": {
+            "illustration": "images/dongju-saeroun-gil.webp",
             "lines": [
                 "내를 건너서 숲으로",
                 "고개를 넘어서 마을로",

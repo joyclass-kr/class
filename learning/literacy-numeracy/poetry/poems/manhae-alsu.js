@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["manhae-alsu"] = {
         "poem": {
+            "illustration": "images/manhae-alsu.webp",
             "lines": [
                 "바람도 없는 공중에 수직의 파문을 내이며 고요히 떨어지는 오동잎은 누구의 발자취입니까",
                 "지리한 장마 끝에 서풍에 몰려가는 무서운 검은 구름의 터진 틈으로 언뜻언뜻 보이는 푸른 하늘은 누구의 얼굴입니까",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leegae-chokbul"] = {
         "poem": {
+            "illustration": "images/leegae-chokbul.webp",
             "lines": [
                 "방 안에 혓는 촉불 눌과 이별하였관대",
                 "겉으로 눈물지고 속 타는 줄 모르는고",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-jindallae"] = {
         "poem": {
+            "illustration": "images/sowol-jindallae.webp",
             "lines": [
                 "나 보기가 역겨워",
                 "가실 때에는",

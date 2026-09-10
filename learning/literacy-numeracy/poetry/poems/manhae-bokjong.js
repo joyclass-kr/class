@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["manhae-bokjong"] = {
         "poem": {
+            "illustration": "images/manhae-bokjong.webp",
             "lines": [
                 "남들은 자유를 사랑한다지마는 나는 복종을 좋아하여요",
                 "자유를 모르는 것은 아니지만 당신에게는 복종만 하고 싶어요",

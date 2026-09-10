@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leejeongbo-gukhwa"] = {
         "poem": {
+            "illustration": "images/leejeongbo-gukhwa.webp",
             "lines": [
                 "국화야 너는 어이 삼월 동풍 다 보내고",
                 "낙목한천에 네 홀로 피었는다",

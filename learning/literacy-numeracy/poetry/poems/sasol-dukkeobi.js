@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sasol-dukkeobi"] = {
         "poem": {
+            "illustration": "images/sasol-dukkeobi.webp",
             "lines": [
                 "두꺼비 파리를 물고 두험 위에 치달아 앉아",
                 "건넌산 바라보니 백송골이 떠 있거늘 가슴이 금즉하여 풀떡 뛰어 내닫다가 두험 아래 자빠졌구나",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-meonhuil"] = {
         "poem": {
+            "illustration": "images/sowol-meonhuil.webp",
             "lines": [
                 "먼 훗날 당신이 찾으시면",
                 "그때에 내 말이 “잊었노라”",
