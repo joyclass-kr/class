@@ -1002,7 +1002,7 @@
                 "겨울"
             ],
             "point": "앓는 아이를 위해 아버지가 눈 속에서 구해 온 붉은 열매를, 어른이 되어 눈 오는 날 떠올려요.",
-            "questionCount": 3,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -1017,7 +1017,7 @@
                 "자연"
             ],
             "point": "어머니에게 다툼 없는 먼 나라로 함께 가자고 거듭 묻는 시예요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -1627,7 +1627,7 @@
                 "시대"
             ],
             "point": "가족을 잃고 여승이 된 한 여인의 삶을, 지금 모습에서 지난날로 거슬러 올라가며 보여 줘요.",
-            "questionCount": 3,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -1641,7 +1641,7 @@
                 "자연"
             ],
             "point": "한 그루 나무를 길을 함께 가는 벗으로 삼되, 영혼만은 나눠 줄 수 없다고 말하는 시예요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -1656,7 +1656,7 @@
                 "도시"
             ],
             "point": "산이 파헤쳐지며 보금자리를 잃은 비둘기를 통해 사라져 가는 자연과 평화를 말하는 시예요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -1670,8 +1670,8 @@
                 "이별",
                 "봄"
             ],
-            "point": "가야 할 때를 알고 떠나는 것의 아름다움을, 지는 꽃과 맺히는 열매로 말하는 시예요.",
-            "questionCount": 2,
+            "point": "가야 할 때를 알고 떠나는 이의 뒷모습처럼, 꽃이 지는 일에서 헤어짐의 축복을 읽는 시예요.",
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -1991,7 +1991,7 @@
                 "명절"
             ],
             "point": "명절날 큰집에 모인 친척들을 아이의 눈으로 하나하나 늘어놓아요. 음식 냄새와 놀이로 흥성한 공동체를 그려요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2006,7 +2006,7 @@
                 "겨울"
             ],
             "point": "가족과 떨어져 남의 집 방에 세 들어 지내며 자책하다가, 끝에서 눈 속에 굳고 정하게 선 나무를 떠올리며 마음을 다잡아요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2021,7 +2021,7 @@
                 "그리움"
             ],
             "point": "좁은 방 흰 벽에 어머니와 사랑하던 사람의 모습이 지나가고, 외롭고 높고 쓸쓸한 제 운명을 받아들이는 시예요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2036,7 +2036,7 @@
                 "고향"
             ],
             "point": "살 수 없어 북쪽으로 떠난 털보네의 빈집을 통해, 나라 잃은 때 무너져 간 농촌을 이야기처럼 들려줘요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2051,7 +2051,7 @@
                 "밤과 달"
             ],
             "point": "도시의 밤, 가스등 아래에서 갈 곳을 모르는 사람의 외로움을 그림처럼 그린 시예요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2066,7 +2066,7 @@
                 "도시"
             ],
             "point": "가을 풍경을 낯선 나라의 돈, 공장 굴뚝, 급행열차 같은 도시의 사물에 빗대고, 끝에서 돌을 던지며 외로움을 드러내요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2081,7 +2081,7 @@
                 "바다"
             ],
             "point": "깃발을 소리 없는 외침으로 보고, 닿을 수 없는 곳을 향한 동경과 그 좌절을 물음으로 닫아요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2096,7 +2096,7 @@
                 "나"
             ],
             "point": "사막으로 가서 본래의 나를 찾겠다는 시예요. 찾지 못하면 그곳에서 죽어도 좋다고 해요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2111,7 +2111,7 @@
                 "여행"
             ],
             "point": "강나루 건너 밀밭 길을 구름에 달 가듯 걷는 나그네. 술 익는 마을을 지나는 느긋한 걸음이에요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2126,7 +2126,7 @@
                 "밤과 달"
             ],
             "point": "여승의 춤을 따라가며 번뇌가 춤으로 승화되는 순간을 그려요. 고깔, 나빌레라 같은 말이 유명해요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2141,7 +2141,7 @@
                 "자연"
             ],
             "point": "해야 솟아라 하고 부르며, 사슴과 칡범이 함께 노는 밝고 화합하는 세상을 바라는 시예요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2156,7 +2156,7 @@
                 "삶"
             ],
             "point": "소쩍새 울음과 천둥과 무서리를 거쳐 핀 국화를, 젊음을 지나 거울 앞에 선 누님에 견주어요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2171,7 +2171,7 @@
                 "다짐"
             ],
             "point": "춘향이 향단에게 그네를 밀어 달라고 해요. 벗어나고 싶지만 그네는 다시 땅으로 내려와요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2186,7 +2186,7 @@
                 "자연"
             ],
             "point": "바람에 눕는 풀이 바람보다 먼저 일어나요. 짓눌려도 다시 서는 민중을 풀에 실었어요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2201,7 +2201,7 @@
                 "다짐"
             ],
             "point": "눈은 살아 있다고 되풀이하며, 젊은 시인에게 기침을 하고 가래를 뱉자고 해요. 더러운 것을 뱉어 내자는 말이에요.",
-            "questionCount": 3,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2216,7 +2216,7 @@
                 "다짐"
             ],
             "point": "곧은 소리를 내며 떨어지는 폭포에, 게으름과 안일을 뒤집는 곧은 정신을 실었어요.",
-            "questionCount": 3,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2231,7 +2231,7 @@
                 "시대"
             ],
             "point": "큰 불의에는 입 다물고 설렁탕집 주인 같은 작은 일에만 화내는 자기를 스스로 비웃는 시예요.",
-            "questionCount": 3,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2246,7 +2246,7 @@
                 "나라"
             ],
             "point": "사월과 동학의 알맹이만 남고 껍데기는 가라고 외쳐요. 아사달 아사녀로 순수한 우리 겨레를 그렸어요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2261,7 +2261,7 @@
                 "사랑"
             ],
             "point": "이름을 불러 주기 전에는 몸짓이었다가 불러 주니 꽃이 돼요. 이름 부르기가 곧 뜻을 주는 일이에요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2275,7 +2275,7 @@
                 "나"
             ],
             "point": "꽃의 참모습에 닿으려 하지만 손대면 사라져요. 얼굴을 가린 신부처럼 본질은 끝내 감춰져 있어요.",
-            "questionCount": 3,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2290,7 +2290,7 @@
                 "하늘"
             ],
             "point": "삶을 소풍에 견주고, 이슬처럼 하늘로 돌아가 아름다웠다고 말하겠대요. 죽음을 담담히 받아들여요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2305,7 +2305,7 @@
                 "기다림"
             ],
             "point": "내 사랑이 사소하다고 말하지만 반대예요. 눈이 그치듯 사랑도 언젠가 그칠 줄 알면서 기다리겠다고 해요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2320,7 +2320,7 @@
                 "시대"
             ],
             "point": "장터에서 농악을 치는 농민들의 울분을 신명으로 풀어내요. 산업화에 밀려난 농촌의 한이에요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2335,7 +2335,7 @@
                 "가난"
             ],
             "point": "진주 장터 어물전에서 장사하던 어머니의 가난한 삶과 한을, 별빛과 눈물로 그려요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2350,7 +2350,7 @@
                 "이별"
             ],
             "point": "노을에 붉게 물든 가을 강을 울음이 타는 것으로 보고, 첫사랑부터 끝난 사랑까지의 한을 실어요.",
-            "questionCount": 3,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2365,7 +2365,7 @@
                 "삶"
             ],
             "point": "눈 오는 겨울밤 간이역 대합실, 톱밥 난로 곁에서 막차를 기다리는 가난하고 지친 사람들을 그려요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         },
         {
@@ -2380,7 +2380,7 @@
                 "사랑"
             ],
             "point": "사랑을 잃고 쓰는 시예요. 함께했던 것들에 작별하고 문을 잠그니, 사랑이 떠난 자리가 빈집이 돼요.",
-            "questionCount": 2,
+            "questionCount": 4,
             "hasModern": false
         }
     ];

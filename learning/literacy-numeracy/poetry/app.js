@@ -391,7 +391,9 @@
         elements.topicTabBtn.setAttribute("aria-selected", mode === "topic" ? "true" : "false");
         elements.orderView.classList.toggle("hidden", mode !== "order");
         elements.topicView.classList.toggle("hidden", mode !== "topic");
-        elements.continueBar.classList.toggle("hidden", mode !== "order");
+        if (elements.continueBar) {
+            elements.continueBar.classList.toggle("hidden", mode !== "order");
+        }
         if (mode === "order") {
             renderBookShelf();
             renderContinueBar();
