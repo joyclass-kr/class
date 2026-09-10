@@ -51,11 +51,6 @@
         return String(value || "").trim() || "플레이어";
     }
 
-    function playerFaceHtml(player) {
-        const url = avatarUrlFor(player?.avatarKey);
-        return url ? '<img class="mp-lobby-avatar" src="' + url + '" alt="">' : "";
-    }
-
     function getElement(id) {
         return id ? document.getElementById(id) : null;
     }
@@ -526,10 +521,7 @@
                     chip.className = `mp-lobby-player${id === this.myId ? " me" : ""}`;
                     const label = this.options.formatPlayerName?.(this.players[id], id, this.snapshot())
                         || safeName(this.players[id]?.name);
-                    // 이름은 사용자 입력이므로 textContent 로 넣고, 얼굴은 그 앞에 따로 붙인다.
                     chip.textContent = `${label}${id === this.myId ? " (나)" : ""}`;
-                    const face = playerFaceHtml(this.players[id]);
-                    if (face) chip.insertAdjacentHTML("afterbegin", face);
                     fragment.appendChild(chip);
                 });
                 list.replaceChildren(fragment);
