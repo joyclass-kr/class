@@ -16,7 +16,9 @@ const vm = require("vm");
 const EXPIRY_CUTOFF_YEAR = 1962;
 // classic은 1900년 이전에 지어진 옛 작품(시조·고전시가·옛 한시)이다.
 // 지은이의 사망 연도를 모르는 경우가 많지만 보호 기간이 끝난 것은 분명하다.
-const ALLOWED_BASIS = new Set(["expired", "oral", "own-translation", "classic"]);
+// included는 저작권이 아직 안 끝났지만(만료가 아니다) 사이트 운영자가 직접 판단해 싣기로 한 것이다.
+// 다른 넷과 달리 "권리가 끝났다"는 뜻이 전혀 아니므로 poetDied 검사를 하지 않는다.
+const ALLOWED_BASIS = new Set(["expired", "oral", "own-translation", "classic", "included"]);
 
 const poetryDir = path.join(__dirname, "..", "learning", "literacy-numeracy", "poetry");
 const read = (name) => fs.readFileSync(path.join(poetryDir, name), "utf8");
@@ -99,6 +101,14 @@ for (const poem of poems) {
         // 옛 작품은 지은이의 사망 연도를 모를 수 있다. 알면 적되, 근래 사람이면 막는다.
         assert.ok(poem.poetDied === null || (Number.isInteger(poem.poetDied) && poem.poetDied <= EXPIRY_CUTOFF_YEAR),
             `${where}: 옛 작품으로 두려면 poetDied가 null이거나 ${EXPIRY_CUTOFF_YEAR}년 이전이어야 합니다 (지금 ${poem.poetDied}).`);
+        continue;
+    }
+
+    if (poem.basis === "included") {
+        // 저작권이 끝나지 않은 걸 알면서 싣는 것이므로 사망 연도는 따지지 않는다.
+        // 다만 실수로 이 갈래를 남용하지 않도록, 정말 사망 연도가 만료 이전이면(그럼 expired여야 맞다) 막아 둔다.
+        assert.ok(!(Number.isInteger(poem.poetDied) && poem.poetDied <= EXPIRY_CUTOFF_YEAR),
+            `${where}: poetDied(${poem.poetDied})가 이미 만료 연도 이전입니다. basis를 included가 아니라 expired로 적으세요.`);
         continue;
     }
 

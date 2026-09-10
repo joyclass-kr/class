@@ -980,7 +980,8 @@
             "title": "엄마 걱정",
             "poet": "기형도",
             "poetDied": 1989,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 7,
             "topics": [
                 "가족",
@@ -995,7 +996,8 @@
             "title": "성탄제",
             "poet": "김종길",
             "poetDied": 2017,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 7,
             "topics": [
                 "가족",
@@ -1010,7 +1012,8 @@
             "title": "그 먼 나라를 알으십니까",
             "poet": "신석정",
             "poetDied": 1974,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 7,
             "topics": [
                 "가족",
@@ -1621,7 +1624,8 @@
             "title": "여승",
             "poet": "백석",
             "poetDied": 1996,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 10,
             "topics": [
                 "시대"
@@ -1635,7 +1639,8 @@
             "title": "플라타너스",
             "poet": "김현승",
             "poetDied": 1975,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 10,
             "topics": [
                 "자연"
@@ -1649,7 +1654,8 @@
             "title": "성북동 비둘기",
             "poet": "김광섭",
             "poetDied": 1977,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 10,
             "topics": [
                 "자연",
@@ -1664,7 +1670,8 @@
             "title": "낙화",
             "poet": "이형기",
             "poetDied": 2005,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 10,
             "topics": [
                 "이별",
@@ -1984,7 +1991,8 @@
             "title": "여우난골족",
             "poet": "백석",
             "poetDied": 1996,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "가족",
@@ -1999,7 +2007,8 @@
             "title": "남신의주 유동 박시봉방",
             "poet": "백석",
             "poetDied": 1996,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "나",
@@ -2014,7 +2023,8 @@
             "title": "흰 바람벽이 있어",
             "poet": "백석",
             "poetDied": 1996,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "나",
@@ -2029,7 +2039,8 @@
             "title": "낡은 집",
             "poet": "이용악",
             "poetDied": 1971,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "시대",
@@ -2044,7 +2055,8 @@
             "title": "와사등",
             "poet": "김광균",
             "poetDied": 1993,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "도시",
@@ -2059,7 +2071,8 @@
             "title": "추일서정",
             "poet": "김광균",
             "poetDied": 1993,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "가을",
@@ -2074,7 +2087,8 @@
             "title": "깃발",
             "poet": "유치환",
             "poetDied": 1967,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "다짐",
@@ -2089,7 +2103,8 @@
             "title": "생명의 서",
             "poet": "유치환",
             "poetDied": 1967,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "다짐",
@@ -2104,7 +2119,8 @@
             "title": "나그네",
             "poet": "박목월",
             "poetDied": 1978,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "자연",
@@ -2119,7 +2135,8 @@
             "title": "승무",
             "poet": "조지훈",
             "poetDied": 1968,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "춤",
@@ -2134,7 +2151,8 @@
             "title": "해",
             "poet": "박두진",
             "poetDied": 1998,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "다짐",
@@ -2149,7 +2167,8 @@
             "title": "국화 옆에서",
             "poet": "서정주",
             "poetDied": 2000,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "가을",
@@ -2164,7 +2183,8 @@
             "title": "추천사",
             "poet": "서정주",
             "poetDied": 2000,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "옛이야기",
@@ -2179,7 +2199,8 @@
             "title": "풀",
             "poet": "김수영",
             "poetDied": 1968,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "시대",
@@ -2194,7 +2215,8 @@
             "title": "눈",
             "poet": "김수영",
             "poetDied": 1968,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "겨울",
@@ -2209,7 +2231,8 @@
             "title": "폭포",
             "poet": "김수영",
             "poetDied": 1968,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "자연",
@@ -2224,7 +2247,8 @@
             "title": "어느 날 고궁을 나오면서",
             "poet": "김수영",
             "poetDied": 1968,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "나",
@@ -2239,7 +2263,8 @@
             "title": "껍데기는 가라",
             "poet": "신동엽",
             "poetDied": 1969,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "시대",
@@ -2254,7 +2279,8 @@
             "title": "꽃",
             "poet": "김춘수",
             "poetDied": 2004,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "나",
@@ -2269,7 +2295,8 @@
             "title": "꽃을 위한 서시",
             "poet": "김춘수",
             "poetDied": 2004,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "나"
@@ -2283,7 +2310,8 @@
             "title": "귀천",
             "poet": "천상병",
             "poetDied": 1993,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "삶",
@@ -2298,7 +2326,8 @@
             "title": "즐거운 편지",
             "poet": "황동규",
             "poetDied": null,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "사랑",
@@ -2313,7 +2342,8 @@
             "title": "농무",
             "poet": "신경림",
             "poetDied": 2024,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "농사",
@@ -2328,7 +2358,8 @@
             "title": "추억에서",
             "poet": "박재삼",
             "poetDied": 1997,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "가족",
@@ -2343,7 +2374,8 @@
             "title": "울음이 타는 가을 강",
             "poet": "박재삼",
             "poetDied": 1997,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "가을",
@@ -2358,7 +2390,8 @@
             "title": "사평역에서",
             "poet": "곽재구",
             "poetDied": null,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "겨울",
@@ -2373,7 +2406,8 @@
             "title": "빈집",
             "poet": "기형도",
             "poetDied": 1989,
-            "rights": "protected",
+            "rights": "public",
+            "basis": "included",
             "grade": 11,
             "topics": [
                 "이별",
