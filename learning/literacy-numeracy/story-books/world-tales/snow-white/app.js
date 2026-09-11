@@ -134,6 +134,7 @@ const CHAPTERS = [
                     "목소리까지 갈라지게 냈습니다."
                 ],
                 "right": [
+                    "왕비는 숲으로 향했습니다. 오두막을 찾아내고는 창을 두드렸지요.",
                     "\"고운 허리끈 사세요!\"",
                     "공주가 문을 빼꼼 열었습니다.",
                     "\"장사꾼 할머니로군요.\"",
@@ -148,7 +149,7 @@ const CHAPTERS = [
                     "왕비가 끈을 꽉 조였습니다. 공주는 숨이 막혀 쓰러졌지요. 왕비는 웃으며 사라졌습니다.",
                     "저녁에 난쟁이들이 돌아왔습니다. 얼른 끈을 끊어 냈지요.",
                     "공주가 크게 숨을 쉬었습니다.",
-                    "\"낯선 사람에게 문을 열지 마요.\""
+                    "난쟁이들이 나무랐습니다. \"낯선 사람에게 문을 열지 마요.\""
                 ],
                 "right": [
                     "며칠 뒤 또 장사꾼이 왔습니다. 이번에는 빗을 팔러 왔지요.",
@@ -702,6 +703,7 @@ const EN = {
                         "She cracked her voice until it sounded old."
                     ],
                     right: [
+                        "The queen went into the forest and found the cottage, and knocked at the window.",
                         "\"Fine sashes for sale!\"",
                         "Snow White opened the door a little way.",
                         "\"An old pedlar woman.\"",
@@ -716,7 +718,7 @@ const EN = {
                         "The queen pulled it tight. Snow White could not breathe, and down she fell. The queen went away laughing.",
                         "In the evening the dwarfs came home and cut the sash away at once.",
                         "Snow White drew a great breath.",
-                        "\"Never open the door to a stranger.\""
+                        "The dwarfs scolded her. \"Never open the door to a stranger.\""
                     ],
                     right: [
                         "A few days later a pedlar came again - this time selling combs.",
