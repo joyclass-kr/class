@@ -205,7 +205,7 @@ const CHAPTERS = [
                     "시녀들이 빙 둘러섰지요. 그러고는 치마를 활짝 폈습니다. 치맛자락이 바람에 펄럭였지요."
                 ],
                 "right": [
-                    "돼지들만 그 안을 들여다봤습니다. 아무도 보지 못하게 담장을 만든 것이었지요. 공주는 눈을 질끈 감았습니다.",
+                    "지나가는 사람들이 절대 보지 못하게 담장을 만든 것이었지요. 돼지들만 그 안을 들여다봤습니다. 공주는 눈을 질끈 감았습니다.",
                     "시녀들이 소리 내어 세었지요.",
                     "\"하나, 둘, 셋……\"",
                     "\"…아홉, 열!\""
@@ -278,10 +278,10 @@ const CHAPTERS = [
                 "emoji": "🚪",
                 "left": [
                     "하필 임금님이 창밖을 내다보았습니다. 뒷마당에 웬 사람들이 잔뜩 모여 있었지요. 임금님은 안경을 고쳐 썼습니다.",
-                    "치마 담장 사이로 벌어지는 일이 보였지요. 임금님의 얼굴이 새빨개졌습니다. 슬리퍼를 신은 채 계단을 뛰어 내려갔지요."
+                    "시녀들이 치마로 둘러친 담장 틈새로 벌어지는 일이 보였지요. 임금님의 얼굴이 새빨개졌습니다. 슬리퍼를 신은 채 계단을 뛰어 내려갔지요."
                 ],
                 "right": [
-                    "\"이게 무슨 짓이냐!\"",
+                    "\"더러운 돼지우리에서 이게 무슨 짓이냐!\"",
                     "시녀들이 화들짝 놀라 흩어졌습니다. 공주와 돼지치기만 덩그러니 남았지요. 임금님은 손을 부들부들 떨었습니다.",
                     "\"둘 다 이 나라에서 나가거라!\" 임금님은 그길로 성문을 닫아걸었습니다."
                 ]
@@ -845,8 +845,8 @@ const EN = {
                         "The skirts flapped in the wind."
                     ],
                     right: [
+                        "They had made a wall so that passersby could never look in.",
                         "Only the pigs could see inside.",
-                        "They had made a wall so that nobody could look in.",
                         "The princess squeezed her eyes shut,",
                         "and the maids counted out loud.",
                         "\"One, two, three…\"",
@@ -940,7 +940,7 @@ const EN = {
                         "and down the stairs he came in his slippers."
                     ],
                     right: [
-                        "\"What is the meaning of this!\"",
+                        "\"What is the meaning of this, in a filthy pigsty!\"",
                         "The maids scattered in fright,",
                         "and only the princess and the swineherd were left standing there.",
                         "The king's hands were shaking.",
