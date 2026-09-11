@@ -432,7 +432,7 @@
                 <div class="complete-actions">
                     ${hasNextBook ? `
                         <button class="book-action-btn primary" id="btnNextBook" type="button">
-                            다음 권 읽기: 제 ${currentBookIndex + 2} 권 (${escapeHtml(nextBook.note || "")}) ›
+                            다음 권 읽기: 제 ${currentBookIndex + 2} 권 ›
                         </button>
                     ` : ""}
                     <button class="book-action-btn secondary" id="btnReturnToShelf" type="button">
