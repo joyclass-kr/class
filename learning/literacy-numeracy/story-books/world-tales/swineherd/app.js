@@ -298,8 +298,8 @@ const CHAPTERS = [
                 "right": [
                     "그때 돼지치기가 우물가로 갔지요. 얼굴의 검댕을 깨끗이 씻었습니다. 그러고는 고운 옷으로 갈아입었지요.",
                     "눈앞에 젊은 왕자가 서 있었습니다.",
-                    "\"진짜 장미와 진짜 새는 마다하시더니요.\"",
-                    "\"참 딱하십니다.\"",
+                    "공주는 왕자 앞에 무릎을 꿇었습니다. \"제발 용서해 주세요. 저를 버리고 가지 마세요.\"",
+                    "\"진짜 장미와 진짜 새는 마다하시더니요. 참 딱하십니다.\"",
                     "왕자는 그 말만 남기고 제 나라로 돌아갔답니다."
                 ]
             }
@@ -959,10 +959,10 @@ const EN = {
                         "and there was no sound at all from inside the castle."
                     ],
                     right: [
-                        "And then the swineherd went to the well",
-                        "and washed the soot off his face,",
+                        "And then the swineherd went to the well and washed the soot off his face,",
                         "and changed into fine clothes.",
                         "And a young prince was standing in front of her.",
+                        "The princess knelt in the rain. \"Please forgive me. Don't leave me here.\"",
                         "\"You would have nothing to do with a real rose or a real bird.\"",
                         "\"What a pity for you.\"",
                         "And with those words he went home to his own country."
