@@ -212,19 +212,6 @@
                 <div class="cover-art-box">
                     <span class="cover-badge">${escapeHtml(volumeBadge)}</span>
                     <h2 class="cover-title">${escapeHtml(book.title)}</h2>
-                    <div class="cover-poem-list-box">
-                        ${poems.map((p, idx) => `
-                            <div class="cover-poem-row" role="button" tabindex="0" data-jump-spread="${idx * 3 + 1}">
-                                <div class="cover-poem-title-row">
-                                    <span class="cover-poem-idx">${idx + 1}.</span>
-                                    <span class="cover-poem-name">${escapeHtml(p.title)}</span>
-                                </div>
-                                <div class="cover-poem-author-row">
-                                    <span class="cover-poem-author">${escapeHtml(p.poet || "")}</span>
-                                </div>
-                            </div>
-                        `).join("")}
-                    </div>
                 </div>
             </div>
         `;
