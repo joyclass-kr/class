@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["inhwan-sewol"] = {
         "poem": {
+            "illustration": "images/inhwan-sewol.webp",
             "lines": [
                 "지금 그 사람 이름은 잊었지만",
                 "그 눈동자 입술은",

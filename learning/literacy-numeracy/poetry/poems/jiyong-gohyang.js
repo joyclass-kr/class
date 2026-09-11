@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-gohyang"] = {
         "poem": {
+            "illustration": "images/jiyong-gohyang.webp",
             "lines": [
                 "고향에 고향에 돌아와도",
                 "그리던 고향은 아니러뇨.",

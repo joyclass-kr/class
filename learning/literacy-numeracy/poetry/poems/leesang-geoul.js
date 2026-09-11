@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leesang-geoul"] = {
         "poem": {
+            "illustration": "images/leesang-geoul.webp",
             "lines": [
                 "거울속에는소리가없소",
                 "저렇게까지조용한세상은참없을것이오",

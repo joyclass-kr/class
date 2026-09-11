@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yeongro-nongae"] = {
         "poem": {
+            "illustration": "images/yeongro-nongae.webp",
             "lines": [
                 "거룩한 분노는",
                 "종교보다도 깊고",

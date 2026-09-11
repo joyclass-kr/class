@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jisang-songin"] = {
         "poem": {
+            "illustration": "images/jisang-songin.webp",
             "lines": [
                 "비 갠 긴 둑에 풀빛 짙은데",
                 "남포에서 님 보내며 슬픈 노래 부르네",

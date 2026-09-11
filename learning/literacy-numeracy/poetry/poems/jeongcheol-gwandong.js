@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jeongcheol-gwandong"] = {
         "poem": {
+            "illustration": "images/jeongcheol-gwandong.webp",
             "lines": [
                 "강호에 병이 깊어 죽림에 누웠더니",
                 "관동 팔백 리에 방면을 맡기시니",

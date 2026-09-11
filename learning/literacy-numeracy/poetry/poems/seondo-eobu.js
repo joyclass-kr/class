@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["seondo-eobu"] = {
         "poem": {
+            "illustration": "images/seondo-eobu.webp",
             "lines": [
                 "앞개에 안개 걷고 뒷뫼에 해 비친다",
                 "배 떠라 배 떠라",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["geugin-sangchun"] = {
         "poem": {
+            "illustration": "images/geugin-sangchun.webp",
             "lines": [
                 "홍진에 묻힌 분네 이내 생애 어떠한고",
                 "옛사람 풍류를 미칠까 못 미칠까",
