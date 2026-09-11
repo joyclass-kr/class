@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-chamhoerok"] = {
         "poem": {
+            "illustration": "images/dongju-chamhoerok.webp",
             "lines": [
                 "파란 녹이 낀 구리 거울 속에",
                 "내 얼굴이 남아 있는 것은",

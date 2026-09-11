@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-swipge"] = {
         "poem": {
+            "illustration": "images/dongju-swipge.webp",
             "lines": [
                 "창밖에 밤비가 속살거려",
                 "육첩방은 남의 나라,",

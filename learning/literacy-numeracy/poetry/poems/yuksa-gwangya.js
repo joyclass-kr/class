@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yuksa-gwangya"] = {
         "poem": {
+            "illustration": "images/yuksa-gwangya.webp",
             "lines": [
                 "까마득한 날에",
                 "하늘이 처음 열리고",

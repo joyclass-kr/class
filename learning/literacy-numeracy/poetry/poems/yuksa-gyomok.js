@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yuksa-gyomok"] = {
         "poem": {
+            "illustration": "images/yuksa-gyomok.webp",
             "lines": [
                 "푸른 하늘에 닿을 듯이",
                 "세월에 불타고 우뚝 남아 서서",

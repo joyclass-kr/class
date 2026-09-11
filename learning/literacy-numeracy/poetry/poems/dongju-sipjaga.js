@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-sipjaga"] = {
         "poem": {
+            "illustration": "images/dongju-sipjaga.webp",
             "lines": [
                 "쫓아오던 햇빛인데",
                 "지금 교회당 꼭대기",

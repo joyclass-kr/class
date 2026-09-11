@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-sakju"] = {
         "poem": {
+            "illustration": "images/sowol-sakju.webp",
             "lines": [
                 "물로 사흘 배 사흘",
                 "먼 삼천 리",

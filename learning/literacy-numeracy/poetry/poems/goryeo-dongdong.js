@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["goryeo-dongdong"] = {
         "poem": {
+            "illustration": "images/goryeo-dongdong.webp",
             "lines": [
                 "덕은 뒤 잔에 바치옵고 복은 앞 잔에 바치옵고",
                 "덕이며 복이라 하는 것을 드리러 오십시오",

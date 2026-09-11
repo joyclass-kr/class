@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sowol-chohon"] = {
         "poem": {
+            "illustration": "images/sowol-chohon.webp",
             "lines": [
                 "산산이 부서진 이름이여!",
                 "허공 중에 헤어진 이름이여!",

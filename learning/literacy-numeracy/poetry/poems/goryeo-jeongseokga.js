@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["goryeo-jeongseokga"] = {
         "poem": {
+            "illustration": "images/goryeo-jeongseokga.webp",
             "lines": [
                 "징이여 돌이여 지금에 계십니다",
                 "징이여 돌이여 지금에 계십니다",
