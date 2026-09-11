@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-gil"] = {
         "poem": {
+            "illustration": "images/dongju-gil.webp",
             "lines": [
                 "잃어버렸습니다.",
                 "무얼 어디다 잃었는지 몰라",

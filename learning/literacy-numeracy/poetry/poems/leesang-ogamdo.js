@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leesang-ogamdo"] = {
         "poem": {
+            "illustration": "images/leesang-ogamdo.webp",
             "lines": [
                 "13인의아해가도로로질주하오.",
                 "(길은막다른골목이적당하오.)",

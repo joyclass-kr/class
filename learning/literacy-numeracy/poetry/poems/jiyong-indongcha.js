@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-indongcha"] = {
         "poem": {
+            "illustration": "images/jiyong-indongcha.webp",
             "lines": [
                 "노주인의 장벽에",
                 "무시로 인동 삼긴 물이 나린다.",

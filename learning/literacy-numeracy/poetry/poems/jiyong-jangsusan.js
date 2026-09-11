@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-jangsusan"] = {
         "poem": {
+            "illustration": "images/jiyong-jangsusan.webp",
             "lines": [
                 "벌목정정 이랬거니 아람도리 큰 솔이 베혀짐직도 하이 골이 울어 멩아리 소리 쩌르렁 돌아옴직도 하이 다람쥐도 좇지 않고 묏새도 울지 않어 깊은 산 고요가 차라리 뼈를 저리우는데 눈과 밤이 종이보담 희고녀! 달도 보름을 기다려 흰 뜻은 한밤 이 골을 걸음이란다? 웃절 중이 여섯 판에 여섯 번 지고 웃고 올라간 뒤 조찰히 늙은 사나이의 남긴 내음새를 줏는다? 시름은 바람도 일지 않는 고요에 심히 흔들리우노니 오오 견디랸다 차고 올연히 슬픔도 꿈도 없이 장수산 속 겨울 한밤내―"
             ],

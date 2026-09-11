@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yeongrang-dok"] = {
         "poem": {
+            "illustration": "images/yeongrang-dok.webp",
             "lines": [
                 "내 가슴에 독을 찬 지 오래로다",
                 "아직 아무도 해한 일 없는 새로 뽑은 독",

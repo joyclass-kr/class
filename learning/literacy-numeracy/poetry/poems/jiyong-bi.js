@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jiyong-bi"] = {
         "poem": {
+            "illustration": "images/jiyong-bi.webp",
             "lines": [
                 "돌에",
                 "그늘이 차고,",

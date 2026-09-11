@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-gan"] = {
         "poem": {
+            "illustration": "images/dongju-gan.webp",
             "lines": [
                 "바닷가 햇빛 바른 바위 위에",
                 "습한 간을 펴서 말리우자.",

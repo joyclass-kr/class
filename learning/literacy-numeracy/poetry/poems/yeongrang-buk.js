@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yeongrang-buk"] = {
         "poem": {
+            "illustration": "images/yeongrang-buk.webp",
             "lines": [
                 "자네 소리 하게 내 북을 잡지",
                 "",

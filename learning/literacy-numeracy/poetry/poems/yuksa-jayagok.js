@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yuksa-jayagok"] = {
         "poem": {
+            "illustration": "images/yuksa-jayagok.webp",
             "lines": [
                 "수만 호 빛이라야 할 내 고향이언만",
                 "노랑나비도 오잖는 무덤 위에 이끼만 푸르러라.",
