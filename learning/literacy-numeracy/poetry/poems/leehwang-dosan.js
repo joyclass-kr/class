@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leehwang-dosan"] = {
         "poem": {
+            "illustration": "images/leehwang-dosan.webp",
             "lines": [
                 "이런들 어떠하며 저런들 어떠하료",
                 "초야우생이 이렇다 어떠하료",

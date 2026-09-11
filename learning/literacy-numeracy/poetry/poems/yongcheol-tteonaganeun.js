@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yongcheol-tteonaganeun"] = {
         "poem": {
+            "illustration": "images/yongcheol-tteonaganeun.webp",
             "lines": [
                 "나 두 야 간다",
                 "나의 이 젊은 나이를",

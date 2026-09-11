@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["ojanghwan-gohyang"] = {
         "poem": {
+            "illustration": "images/ojanghwan-gohyang.webp",
             "lines": [
                 "흙이 풀리는 내음새",
                 "강바람은",
