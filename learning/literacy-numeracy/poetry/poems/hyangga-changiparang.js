@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hyangga-changiparang"] = {
         "poem": {
+            "illustration": "images/hyangga-changiparang.webp",
             "lines": [
                 "흐느끼며 바라보니",
                 "이슬 밝힌 달이",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["gwangseop-bidulgi"] = {
         "poem": {
+            "illustration": "images/gwangseop-bidulgi.webp",
             "lines": [
                 "성북동 산에 번지가 새로 생기면서",
                 "본래 살던 성북동 비둘기만이 번지가 없어졌다.",

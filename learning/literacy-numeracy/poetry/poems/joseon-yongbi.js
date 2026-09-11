@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["joseon-yongbi"] = {
         "poem": {
+            "illustration": "images/joseon-yongbi.webp",
             "lines": [
                 "우리나라 여섯 용이 나시어",
                 "하시는 일마다 하늘의 복이시니",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jeongcheol-samiin"] = {
         "poem": {
+            "illustration": "images/jeongcheol-samiin.webp",
             "lines": [
                 "이 몸 삼기실 제 님을 좇아 삼기시니",
                 "한생 연분이며 하늘 모를 일이런가",

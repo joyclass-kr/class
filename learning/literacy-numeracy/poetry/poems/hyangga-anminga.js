@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hyangga-anminga"] = {
         "poem": {
+            "illustration": "images/hyangga-anminga.webp",
             "lines": [
                 "임금은 아버지요",
                 "신하는 사랑하실 어머니요",

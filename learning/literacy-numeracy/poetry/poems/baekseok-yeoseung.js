@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["baekseok-yeoseung"] = {
         "poem": {
+            "illustration": "images/baekseok-yeoseung.webp",
             "lines": [
                 "여승(女僧)은 합장(合掌)하고 절을 했다",
                 "가지취의 내음새가 났다",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hyeonggi-nakhwa"] = {
         "poem": {
+            "illustration": "images/hyeonggi-nakhwa.webp",
             "lines": [
                 "가야 할 때가 언제인가를",
                 "분명히 알고 가는 이의",

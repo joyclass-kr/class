@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hyeonseung-platanus"] = {
         "poem": {
+            "illustration": "images/hyeonseung-platanus.webp",
             "lines": [
                 "꿈을 아느냐 네게 물으면,",
                 "플라타너스",
