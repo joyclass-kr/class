@@ -26,7 +26,7 @@ const CHAPTERS = [
                 left: [
                     "눈이 무릎까지 쌓인 한겨울이었어요. 문틈으로 찬 바람이 쌩쌩 들어왔지요.",
                     "새어머니가 연이 앞에 소쿠리를 툭 던졌습니다.",
-                    "\"산에 가서 봄나물을 뜯어 오너라.\"",
+                    "\"산에 가서 나물을 뜯어 오너라.\"",
                     "소쿠리가 방바닥에 데구루루 굴렀어요."
                 ],
                 right: [
@@ -221,7 +221,7 @@ const CHAPTERS = [
                 emoji: "✨",
                 left: [
                     "연이는 떨리는 손으로 꽃을 하나씩 가슴 위에 올려놓았어요. 새하얀 꽃을 얹자 굽었던 몸이 반듯해졌지요.",
-                    "발그레한 꽃을 얹자 볼에 살이 돌았습니다.",
+                    "발그레한 꽃을 얹자 볼에 생기가 들었습니다.",
                     "빨간 꽃을 얹자—",
                     "가늘게, 아주 가늘게 숨소리가 돌아왔어요."
                 ],
@@ -262,7 +262,7 @@ const COVER = {
     art: "cover.webp",
     title: "연이와 버들 도령",
     intro: [
-        "연이와 버들 도령은 지은이가 없는 구전 설화예요. 한겨울에 봄나물을 뜯어 오라는 심부름에서 이야기가 시작된답니다.",
+        "연이와 버들 도령은 지은이가 없는 구전 설화예요. 한겨울에 나물을 뜯어 오라는 심부름에서 이야기가 시작된답니다.",
         "이 이야기에는 뼈살이꽃, 살살이꽃, 피살이꽃이라는 세 송이 꽃이 나와요. 쓰러진 사람을 되살리는 꽃이지요. 같은 꽃이 바리공주 이야기에도 나오는데, 죽은 사람을 되살리는 꽃으로 우리 옛이야기에 되풀이해 나온답니다.",
         "바위 문을 열면 그 안에 봄이 들어 있다는 생각은 우리 옛이야기에 자주 나와요. 겨울이 아무리 길어도 어딘가에 봄이 갇혀 있을 뿐이라고 여긴 것이지요."
     ]
@@ -278,7 +278,7 @@ const EN = {
         art: "cover.webp",
         title: "Yeoni and the Willow Boy",
         intro: [
-            "This is an oral tale with no known author. It starts with an errand: go and pick spring greens in midwinter.",
+            "This is an oral tale with no known author. It starts with an errand: go and pick greens in midwinter.",
             "Three flowers come into it, one for bone, one for flesh and one for blood. They bring a fallen person back to life.",
             "Open a rock door and spring is inside. Old tales held that however long the winter, spring is only shut up somewhere."
         ]
@@ -313,7 +313,7 @@ const EN = {
                         "It was midwinter, with snow up to the knee.",
                         "Cold wind came whistling through the cracks in the door.",
                         "The stepmother threw a basket down in front of Yeoni.",
-                        { t: "\"Go up the mountain and pick spring greens.\"", v: "woman" },
+                        { t: "\"Go up the mountain and pick greens.\"", v: "woman" },
                         "The basket rolled across the floor."
                     ],
                     right: [
@@ -561,7 +561,7 @@ const EN = {
         }
     ],
     quiz: [
-        { q: "What errand did the stepmother give in midwinter?", choices: ["To go and fetch water", "To pick spring greens", "To go and cut firewood"], answer: 1 },
+        { q: "What errand did the stepmother give in midwinter?", choices: ["To go and fetch water", "To pick greens", "To go and cut firewood"], answer: 1 },
         { q: "What happened when Yeoni sat under the willow?", choices: ["The snow stopped and the sun came", "Her stepmother came after her", "The rock slid aside"], answer: 2 },
         { q: "What was inside the rock door?", choices: ["A place in full spring", "A pitch dark cave", "A heap of gold and silver"], answer: 0 },
         { q: "What did the stepmother do to Yeoni?", choices: ["Went up the mountain alone", "Stopped sending her out", "Followed her in secret"], answer: 2 },
@@ -571,7 +571,7 @@ const EN = {
             q: "Which reaction to this book does NOT fit?",
             wide: true,
             choices: [
-                "She was told to pick spring greens in midwinter, so it was a task set to be failed and then found fault with.",
+                "She was told to pick greens in midwinter, so it was a task set to be failed and then found fault with.",
                 "Spring was only inside the rock door, so there are places that open for somebody who endures.",
                 "The door shut when the stepmother shoved him, so a door you try to open out of greed closes instead.",
                 "Yeoni only said the mountain when asked where the greens came from, so she must have wanted to keep it to herself."
@@ -585,8 +585,8 @@ const EN = {
     words: {
         "cover": [
             { w: "errand", k: "심부름", s: "It starts with an errand" },
-            { w: "greens", k: "나물", s: "go and pick spring greens in midwinter" },
-            { w: "midwinter", k: "한겨울", s: "go and pick spring greens in midwinter" },
+            { w: "greens", k: "나물", s: "go and pick greens in midwinter" },
+            { w: "midwinter", k: "한겨울", s: "go and pick greens in midwinter" },
             { w: "flesh", k: "살", s: "one for bone, one for flesh and one for blood" },
             { w: "fallen", k: "쓰러진", s: "They bring a fallen person back to life." },
             { w: "back to life", k: "되살아나게", s: "They bring a fallen person back to life." },
@@ -608,7 +608,7 @@ const EN = {
             { w: "up to the knee", k: "무릎까지", s: "It was midwinter, with snow up to the knee." },
             { w: "whistling (whistle)", k: "쌩쌩 부는", s: "Cold wind came whistling through the cracks in the door." },
             { w: "basket", k: "소쿠리", s: "The stepmother threw a basket down in front of Yeoni." },
-            { w: "pick", k: "뜯다", s: "Go up the mountain and pick spring greens." },
+            { w: "pick", k: "뜯다", s: "Go up the mountain and pick greens." },
             { w: "rolled across ~", k: "데구루루 굴렀다", s: "The basket rolled across the floor." },
             { w: "Where would ~ be", k: "어디에 있겠어요", s: "Where would greens be, in midwinter?" },
             { w: "Do not think of ~", k: "~할 생각도 마라", s: "Do not think of coming in without them." },
@@ -723,7 +723,7 @@ const EN = {
             { w: "one at a time", k: "하나씩", s: "Yeoni laid the flowers on his chest, one at a time." },
             { w: "bent", k: "굽은", s: "At the white flower his bent body straightened." },
             { w: "straightened (straighten)", k: "반듯해졌다", s: "his bent body straightened" },
-            { w: "the colour came back", k: "살이 돌았다", s: "At the pink flower the colour came back into his cheeks." },
+            { w: "life came into", k: "생기가 들었다", s: "At the pink flower, life came into his cheeks." },
             { w: "faint", k: "가느다란", s: "A breath came back, very thin, very faint." },
             { w: "Atchoo", k: "에취", s: "Atchoo!" },
             { w: "sat straight up (sit)", k: "벌떡 일어나 앉았다", s: "The Willow Boy sat straight up." },
@@ -776,7 +776,7 @@ const EN = {
 };
 
 const QUIZ = [
-    { q: "새어머니가 한겨울에 시킨 심부름은 무엇인가요?", choices: ["물을 길어 오라고", "봄나물을 뜯어 오라고", "나무를 해 오라고"], answer: 1 },
+    { q: "새어머니가 한겨울에 시킨 심부름은 무엇인가요?", choices: ["물을 길어 오라고", "나물을 뜯어 오라고", "나무를 해 오라고"], answer: 1 },
     { q: "연이가 버드나무 아래 주저앉자 무슨 일이 있었나요?", choices: ["눈이 그치고 해가 났다", "새어머니가 뒤따라왔다", "바위가 옆으로 밀려났다"], answer: 2 },
     { q: "바위 문 안은 어떤 곳이었나요?", choices: ["봄이 한창인 곳", "캄캄한 굴속", "금은이 쌓인 곳"], answer: 0 },
     { q: "새어머니는 연이를 어떻게 했나요?", choices: ["혼자 산에 갔다", "심부름을 그만두게 했다", "몰래 뒤를 따라갔다"], answer: 2 },
@@ -786,7 +786,7 @@ const QUIZ = [
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         wide: true,
         choices: [
-            "한겨울에 봄나물을 뜯어 오라 한 것을 보면, 못 할 일을 시켜 놓고 흠을 잡으려는 것이었구나.",
+            "한겨울에 나물을 뜯어 오라 한 것을 보면, 못 할 일을 시켜 놓고 흠을 잡으려는 것이었구나.",
             "바위 문 안에만 봄이 있었다는 것을 보면, 견디는 사람에게 열리는 자리가 따로 있네.",
             "새어머니가 밀치자 문이 닫혀 버린 것을 보면, 욕심으로 열려는 문은 되레 닫히는 거야.",
             "연이가 나물이 어디서 났느냐는 물음에 그냥 산이라고만 한 것을 보면, 혼자만 알고 싶었나 봐."
@@ -837,7 +837,7 @@ const WORDS_KO = {
         { w: "문틈", k: "문의 벌어진 사이.", s: "문틈으로 찬 바람이 쌩쌩 들어왔지요." },
         { w: "소쿠리", k: "대나 싸리로 엮어 만든 그릇.", s: "새어머니가 연이 앞에 소쿠리를 툭 던졌습니다." },
         { w: "데구루루", k: "둥근 것이 구르는 모양.", s: "소쿠리가 방바닥에 데구루루 굴렀어요." },
-        { w: "봄나물", k: "봄에 돋는 먹을 수 있는 풀.", s: "산에 가서 봄나물을 뜯어 오너라." }
+        { w: "나물", k: "먹을 수 있는 풀이나 잎.", s: "산에 가서 나물을 뜯어 오너라." }
     ],
     "03-snow.webp": [
         { w: "정강이", k: "무릎 아래 다리의 앞쪽.", s: "눈이 정강이까지 푹푹 빠졌지요." },

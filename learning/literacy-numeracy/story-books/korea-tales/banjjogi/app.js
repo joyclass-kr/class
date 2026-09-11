@@ -519,7 +519,7 @@ const EN = {
     quiz: [
         { q: "Why was Banjjogi born a half?", choices: ["Heaven sent it as a punishment", "His mother did not eat all the carp", "His brothers were so jealous"], answer: 1 },
         { q: "What did people say about Banjjogi at first?", choices: ["How will he get by on his own", "He has the strength of ten men", "They stared with round eyes"], answer: 0 },
-        { q: "What did the brothers do on the mountain?", choices: ["Tied him up and left him", "Drove him out of the house", "Sent him on a far errand"], answer: 0 },
+        { q: "What did the brothers do on the mountain?", choices: ["Tied him up with rope and left him", "Drove him out of the house", "Sent him on a far errand"], answer: 0 },
         { q: "How did the tied-up Banjjogi get back?", choices: ["Bit through the rope", "Somebody passing untied him", "Carried the whole tree back"], answer: 2 },
         { q: "What did Banjjogi take to catch the tiger?", choices: ["A coil of rope", "The storehouse pillar", "A great big jar"], answer: 0 },
         { q: "What was Kim's first contest?", choices: ["A trial of strength", "A race", "A trial of wits"], answer: 0 },
@@ -531,7 +531,7 @@ const EN = {
             choices: [
                 "The child they said would never get by caught a tiger, so you cannot decide about somebody by the look of them.",
                 "Kim promised and then set contests to put it off, so a promise made to somebody weak was easily overturned then.",
-                "Banjjogi seated the brothers who tied him up in the seats of honour, so covering for somebody is harder than paying them back.",
+                "Banjjogi seated the brothers who tied him up in the seats of honour, so covering for their wrong is harder than paying back a wrong done to you.",
                 "The brothers took Banjjogi up the mountain, so they meant to share the hard work of cutting wood between the three of them."
             ],
             answer: 3
@@ -727,7 +727,7 @@ const EN = {
 const QUIZ = [
     { q: "반쪽이가 반쪽으로 태어난 까닭은 무엇인가요?", choices: ["하늘에서 벌을 내렸기 때문에", "어머니가 잉어를 다 못 먹어서", "형들이 몹시 시샘을 해서"], answer: 1 },
     { q: "사람들이 처음에 반쪽이를 보고 뭐라고 했나요?", choices: ["혼자 살아가기나 하겠나", "힘이 어른 열 몫이라고 했다", "눈을 휘둥그레 뜨고 놀랐다"], answer: 0 },
-    { q: "형들은 반쪽이를 산으로 데려가 어떻게 했나요?", choices: ["꽁꽁 묶어 두고 왔다", "집 밖으로 내쫓아 버렸다", "멀리 심부름을 보냈다"], answer: 0 },
+    { q: "형들은 반쪽이를 산으로 데려가 어떻게 했나요?", choices: ["밧줄로 꽁꽁 묶어 두고 왔다", "집 밖으로 내쫓아 버렸다", "멀리 심부름을 보냈다"], answer: 0 },
     { q: "묶여 있던 반쪽이는 어떻게 돌아왔나요?", choices: ["밧줄을 이로 물어 끊고", "지나던 사람이 풀어 주어", "나무를 통째로 뽑아 지고"], answer: 2 },
     { q: "호랑이를 잡으러 나간 반쪽이가 들고 간 것은 무엇인가요?", choices: ["밧줄 한 타래", "곳간 기둥", "커다란 항아리"], answer: 0 },
     { q: "김 부자가 시킨 첫 번째 내기는 무엇인가요?", choices: ["힘겨루기", "달리기", "슬기 겨루기"], answer: 0 },
@@ -739,7 +739,7 @@ const QUIZ = [
         choices: [
             "혼자 살아가기나 하겠냐던 아이가 호랑이를 잡은 것을 보면, 겉만 보고 미리 정해 놓으면 안 되겠구나.",
             "김 부자가 약속해 놓고 내기를 걸어 미룬 것을 보면, 힘없는 쪽과 한 약속은 쉽게 뒤집히던 시절 같다.",
-            "반쪽이가 저를 묶어 두고 온 형들을 윗자리에 앉힌 것을 보면, 갚는 것보다 어려운 것이 덮어 주는 일이구나.",
+            "반쪽이가 저를 묶어 두고 온 형들을 윗자리에 앉힌 것을 보면, 원수를 갚는 것보다 어려운 것이 잘못을 덮어 주는 일이구나.",
             "형들이 반쪽이를 산에 데려간 것을 보면, 힘든 나무 일을 셋이 나누려 한 것이구나."
         ],
         answer: 3

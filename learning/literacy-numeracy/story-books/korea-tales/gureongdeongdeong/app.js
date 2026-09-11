@@ -129,8 +129,8 @@ const CHAPTERS = [
                 art: "08-gone.webp",
                 emoji: "🌫️",
                 left: [
-                    "그날 밤 신선비는 끝내 돌아오지 않았어요.",
-                    "아내는 밤새 문 앞에 앉아 있었지요. 이튿날도, 그다음 날도요.",
+                    "날이 가고 몇 달이 지나갔어요. 돌아올 때가 이미 지났지요. 그런데도 신선비는 돌아오지 않았어요.",
+                    "아내는 밤마다 문 앞에 앉아 있었지요. 그렇게 하루하루가 지났어요.",
                     "그러다 텅 빈 방 안에서 편지 한 장을 찾아냈습니다.",
                     "허물을 넣어 두었던 그 궤 위에 놓여 있었어요."
                 ],
@@ -388,9 +388,8 @@ const EN = {
                     art: "08-gone.webp",
                     emoji: "🌫️",
                     left: [
-                        "That night Shinseonbi did not come home, however long she waited.",
-                        "His wife sat in front of the door all night.",
-                        "The next day too, and the day after that.",
+                        "Days passed, and then months. The time he should have returned had long come and gone, and still Shinseonbi did not come home.",
+                        "His wife sat in front of the door every night. Day after day went by like that.",
                         "Then in the empty room she found a single letter.",
                         "It lay on top of the chest that had held the skin."
                     ],
@@ -498,7 +497,7 @@ const EN = {
             choices: [
                 "Only the third one called him Gureongdeongdeong Shinseonbi, so what a thing is depends on what you call it.",
                 "She helped the magpies and the boar while asking her way, so a long road is not one you walk on your own.",
-                "She put the skin in a chest and locked it, so the thing you must guard always ends up in someone else's hands.",
+                "She put the skin in a chest and locked it, so the wife tried hard to keep her husband's word.",
                 "The sisters burned the skin, so they must have been ashamed of how ugly it looked to other people."
             ],
             answer: 3
@@ -594,8 +593,8 @@ const EN = {
             { w: "slipped out (slip)", k: "빠져나갔다", s: "The sisters slipped out of the kitchen at once." }
         ],
         "08-gone.webp": [
-            { w: "however long", k: "아무리 오래", s: "Shinseonbi did not come home, however long she waited" },
-            { w: "the day after that", k: "그다음 날", s: "The next day too, and the day after that." },
+            { w: "long come and gone", k: "이미 지났다", s: "The time he should have returned had long come and gone." },
+            { w: "day after day", k: "하루하루", s: "Day after day went by like that." },
             { w: "a single letter", k: "편지 한 장", s: "Then in the empty room she found a single letter." },
             { w: "on top of ~", k: "~ 위에", s: "It lay on top of the chest that had held the skin." },
             { w: "If you would ~", k: "~하려거든", s: "If you would find me, come towards the setting sun." },
@@ -699,7 +698,7 @@ const QUIZ = [
         choices: [
             "셋째만 구렁덩덩 신선비라고 불러 준 것을 보면, 같은 것을 보고도 무어라 부르느냐에 달렸네.",
             "아내가 까치와 멧돼지를 도우며 길을 물어 간 것을 보면, 먼 길은 혼자 가는 게 아니야.",
-            "허물을 궤에 넣고 자물쇠를 채운 것을 보면, 지켜야 할 것은 늘 남의 손에 맡겨지는구나.",
+            "허물을 궤에 넣고 자물쇠를 채운 것을 보면, 아내는 남편의 말을 지키려고 애썼구나.",
             "언니들이 허물을 태운 것을 보면, 허물이 흉해서 남 보기에 부끄러웠던 거겠다."
         ],
         answer: 3
@@ -794,7 +793,7 @@ const WORDS_KO = {
         { w: "꾸역꾸역", k: "자꾸 밀려 나오는 모양.", s: "매캐한 연기가 굴뚝으로 꾸역꾸역 올랐어요." }
     ],
     "08-gone.webp": [
-        { w: "이튿날", k: "그다음 날.", s: "이튿날도, 그다음 날도요." },
+        { w: "하루하루", k: "날마다 매일.", s: "그렇게 하루하루가 지났어요." },
         { w: "틀림없다", k: "조금도 다르지 않다.", s: "틀림없는 신선비의 글씨였어요." },
         { w: "짚신", k: "짚으로 만든 신.", s: "아내는 그 종이를 품에 넣고 짚신을 챙겼지요." },
         { w: "그길로", k: "그 자리에서 곧바로.", s: "그길로 해 지는 쪽을 향해 걸었답니다." }

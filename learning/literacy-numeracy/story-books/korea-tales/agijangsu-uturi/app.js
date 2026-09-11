@@ -68,7 +68,7 @@ const CHAPTERS = [
                 ],
                 right: [
                     "\"콩 서 말과 팥 서 말만 볶아 주세요. 그것이면 됩니다.\"",
-                    "한 말은 커다란 되로 하나 가득이니 서 말은 아이가 지기에 무거웠지요.",
+                    "한 말은 커다란 그릇으로 하나 가득이니 여섯 말은 아이가 지기에 무거웠지요.",
                     "\"콩과 팥을 어디에 쓰려고?\"",
                     "\"때가 되면 아실 거예요.\"",
                     "우투리는 그 말만 했답니다."
@@ -333,7 +333,7 @@ const EN = {
                     ],
                     right: [
                         { t: "\"Roast me three mal of beans and three of red beans. That is all.\"", v: "boy" },
-                        "One mal fills a big measure, so three were heavy for a child to carry.",
+                        "One mal fills a big bowl, so six were heavy for a child to carry.",
                         { t: "\"What are the beans for?\"", v: "mother" },
                         { t: "\"You will know when the time comes.\"", v: "boy" },
                         "That was all Uturi said."
@@ -504,7 +504,7 @@ const EN = {
         { q: "What was different about Uturi at birth?", choices: ["He had wings under his arms", "He was covered in scales", "He had all of his teeth"], answer: 0 },
         { q: "What happened then if a winged child was born?", choices: ["The country gave out a reward", "The whole village was punished", "He was sent to a temple to grow up"], answer: 1 },
         { q: "What did Uturi ask his mother for?", choices: ["A suit of armour to wear", "A horse of his own to ride", "Roasted beans and red beans"], answer: 2 },
-        { q: "What did Uturi ask his mother to keep?", choices: ["Not to say where he went", "To put food on the rock daily", "To warn him if troops came"], answer: 0 },
+        { q: "What did Uturi ask his mother to keep?", choices: ["Not to say where he went, for three years", "To put food on the rock daily", "To warn him if troops came"], answer: 0 },
         { q: "What did the beans become inside the rock?", choices: ["Rice and barley", "Soldiers and horses", "Gold and silver"], answer: 1 },
         { q: "Why did his mother point at the rock?", choices: ["She feared he would go hungry", "She thought three years were up", "They would set fire to the village"], answer: 2 },
         { q: "Why was one place in the line empty?", choices: ["His mother ate one bean", "There were too few red beans", "The troops took one away"], answer: 0 },
@@ -573,8 +573,8 @@ const EN = {
             { w: "calm", k: "차분한", s: "His voice was calm, like a grown man's." },
             { w: "took him in her arms (take)", k: "끌어안았다", s: "His mother took him in her arms." },
             { w: "Roast (roast)", k: "볶다", s: "Roast me three mal of beans and three of red beans." },
-            { w: "mal", k: "말(되의 단위)", s: "One mal fills a big measure" },
-            { w: "measure", k: "되", s: "One mal fills a big measure, so three were heavy" },
+            { w: "mal", k: "말(부피를 재는 단위)", s: "One mal fills a big bowl, so six were heavy for a child to carry." },
+            { w: "bowl", k: "그릇", s: "One mal fills a big bowl, so six were heavy for a child to carry." },
             { w: "when the time comes", k: "때가 되면", s: "You will know when the time comes." }
         ],
         "05-beans.webp": [
@@ -703,7 +703,7 @@ const QUIZ = [
     { q: "우투리가 태어났을 때 남다른 점은 무엇이었나요?", choices: ["겨드랑이에 날개가 있었다", "온몸에 비늘이 있었다", "이가 다 나 있었다"], answer: 0 },
     { q: "그 시절 날개 달린 아이가 나면 어떻게 되었나요?", choices: ["나라에서 상을 내렸다", "온 마을이 벌을 받았다", "절에 보내 길렀다"], answer: 1 },
     { q: "우투리가 산으로 가며 어머니에게 달라고 한 것은 무엇인가요?", choices: ["갑옷 한 벌", "말 한 마리", "볶은 콩과 팥"], answer: 2 },
-    { q: "우투리가 어머니에게 지켜 달라고 한 것은 무엇인가요?", choices: ["들어간 곳을 삼 년 말하지 말라", "날마다 바위에 밥을 놓아 달라", "관군이 오면 먼저 알려 달라"], answer: 0 },
+    { q: "우투리가 어머니에게 지켜 달라고 한 것은 무엇인가요?", choices: ["들어간 곳을 삼 년 동안 말하지 말라", "날마다 바위에 밥을 놓아 달라", "관군이 오면 먼저 알려 달라"], answer: 0 },
     { q: "바위 속에서 콩과 팥은 무엇이 되었나요?", choices: ["쌀과 보리", "군사와 말", "금과 은"], answer: 1 },
     { q: "어머니가 바위를 가리킨 까닭은 무엇인가요?", choices: ["우투리가 밥을 굶을까 걱정되어서", "삼 년이 벌써 다 찼다고 여겨서", "관군이 마을에 불을 놓겠다고 해서"], answer: 2 },
     { q: "군사 한 자리가 비어 있던 까닭은 무엇인가요?", choices: ["어머니가 콩 한 알을 먹어서", "팥이 모자라서", "관군이 하나를 빼앗아서"], answer: 0 },
@@ -776,7 +776,7 @@ const WORDS_KO = {
     "04-decide.webp": [
         { w: "차분하다", k: "들뜨지 않고 가라앉아 있다.", s: "목소리가 어른처럼 차분했지요." },
         { w: "말", k: "곡식을 되는 큰 그릇, 또 그만큼의 양.", s: "콩 서 말과 팥 서 말만 볶아 주세요." },
-        { w: "되", k: "곡식을 되는 그릇, 말보다 작다.", s: "한 말은 커다란 되로 하나 가득이니" }
+        { w: "그릇", k: "물건을 담는 도구.", s: "한 말은 커다란 그릇으로 하나 가득이니 여섯 말은 아이가 지기에 무거웠지요." }
     ],
     "05-beans.webp": [
         { w: "가마솥", k: "아주 큰 무쇠솥.", s: "이튿날 어머니가 가마솥에 콩을 볶았어요." },

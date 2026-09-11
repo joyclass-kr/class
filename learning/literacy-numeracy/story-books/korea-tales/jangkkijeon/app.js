@@ -9,7 +9,7 @@ const CHAPTERS = [
                 left: [
                     "옛날 눈 많은 산골에 꿩 한 쌍이 살았습니다. 수꿩은 장끼, 암꿩은 까투리라 한답니다.",
                     "장끼는 꽁지가 길고 멋졌어요. 까투리는 깃털이 수수했지요.",
-                    "둘 사이에는 아들이 아홉, 딸이 열둘이었습니다.",
+                    "둘 사이에는 아들이 아홉, 딸이 열둘이 있었답니다.",
                     "\"어머니, 배고파요.\"",
                     "아이들이 자꾸 보챘어요."
                 ],
@@ -513,7 +513,7 @@ const EN = {
             choices: [
                 "Jangkki brushed her off as woman's talk, so what he paid for not listening was his life.",
                 "The birds who came to mourn talked themselves up instead of grieving, so some people count their own gain even at a grief.",
-                "The spring pheasant saw a bean and asked her first, so what Katuri chose was not a handsome bird.",
+                "The spring pheasant saw a bean and asked her first, so Katuri had found a careful mate who asked what she thought too.",
                 "Katuri lived alone to the end as her husband told her, so the words of the dead came before the living."
             ],
             answer: 3
@@ -705,7 +705,7 @@ const QUIZ = [
         choices: [
             "장끼가 아녀자 말이라며 흘려들은 것을 보면, 안 들은 값이 목숨이었구나.",
             "조문 온 새들이 슬퍼하기보다 제 자랑부터 한 것을 보면, 남의 슬픔에도 제 셈을 하는 이가 있네.",
-            "봄에 온 장끼가 콩을 보고 먼저 물어본 것을 보면, 까투리가 고른 것은 잘생긴 새가 아니었어.",
+            "봄에 온 장끼가 콩을 보고 먼저 물어본 것을 보면, 까투리는 자기의 의견도 물어보는 신중한 짝을 찾았어.",
             "까투리가 남편 말대로 끝까지 혼자 산 것을 보면, 죽은 이의 말이 산 이보다 앞섰나 봐."
         ],
         answer: 3
