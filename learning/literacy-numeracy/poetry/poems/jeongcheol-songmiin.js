@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jeongcheol-songmiin"] = {
         "poem": {
+            "illustration": "images/jeongcheol-songmiin.webp",
             "lines": [
                 "뎨 가는 저 각시 본 듯도 하구나",
                 "천상 백옥경을 어찌하여 이별하고",

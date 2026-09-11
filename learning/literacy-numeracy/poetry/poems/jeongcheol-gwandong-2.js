@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jeongcheol-gwandong-2"] = {
         "poem": {
+            "illustration": "images/jeongcheol-gwandong-2.webp",
             "lines": [
                 "소향로 대향로 눈 아래 굽어보고",
                 "정양사 진헐대 고쳐 올라 앉으니",

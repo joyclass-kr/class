@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jeonghakyu-nongga"] = {
         "poem": {
+            "illustration": "images/jeonghakyu-nongga.webp",
             "lines": [
                 "천지조판하매 일월성신 비추거다",
                 "일월은 도수 있고 성신은 전차 있어",

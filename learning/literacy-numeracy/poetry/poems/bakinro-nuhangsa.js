@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["bakinro-nuhangsa"] = {
         "poem": {
+            "illustration": "images/bakinro-nuhangsa.webp",
             "lines": [
                 "어리고 우활할산 이내 위에 더니 없다",
                 "길흉화복을 하늘께 부쳐 두고",

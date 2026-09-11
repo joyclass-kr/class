@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["heo-gyuwonga"] = {
         "poem": {
+            "illustration": "images/heo-gyuwonga.webp",
             "lines": [
                 "엊그제 젊었더니 하마 어이 다 늙거니",
                 "소년 행락 생각하니 일러도 속절없다",

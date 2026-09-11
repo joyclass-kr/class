@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["bakinro-seonsangtan"] = {
         "poem": {
+            "illustration": "images/bakinro-seonsangtan.webp",
             "lines": [
                 "늙고 병든 몸을 주사로 보내실새",
                 "을사 삼하에 진동영 내려오니",
