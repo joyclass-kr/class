@@ -98,6 +98,7 @@
 
     // DOM 요소 캐시
     const $ = (id) => document.getElementById(id);
+    const bookShelfBtn = $("bookShelfBtn");
     const tocBtn = $("tocBtn");
     const shelfScreen = $("shelfScreen");
     const orderTabBtn = $("orderTabBtn");
@@ -162,13 +163,6 @@
                 pIdx,
                 poems: bookPoems
             });
-        });
-
-        // 3. 완독 축하 펼침면 (마지막 Spread)
-        list.push({
-            kind: "complete",
-            book,
-            poems: bookPoems
         });
 
         return list;
@@ -401,53 +395,6 @@
         return leftHtml + rightHtml;
     }
 
-    // 5. 권 완독 펼침면
-    function renderCompleteSpread(s) {
-        const { book, poems } = s;
-        const volumeBadge = `제 ${currentBookIndex + 1} 권`;
-
-        const listItemsHtml = poems.map((p, idx) => `
-            <li>
-                <span class="check-icon">✓</span>
-                <span><strong>제 ${idx + 1} 수:</strong> 「${escapeHtml(p.title)}」 (${escapeHtml(p.poet || "")})</span>
-            </li>
-        `).join("");
-
-        const leftHtml = `
-            <div class="story-page-left page-complete-left">
-                <span class="complete-badge">완독</span>
-                <h2 class="complete-title">${volumeBadge} 완독!</h2>
-                <p class="complete-subtitle">이 책에 실린 모든 시를 읽고 문제를 풀었습니다.</p>
-                <ul class="complete-poem-list">
-                    ${listItemsHtml}
-                </ul>
-            </div>
-        `;
-
-        const hasNextBook = currentBookIndex < books.length - 1;
-        const nextBook = hasNextBook ? books[currentBookIndex + 1] : null;
-
-        const rightHtml = `
-            <div class="story-page-right page-complete-right">
-                <div class="complete-actions">
-                    ${hasNextBook ? `
-                        <button class="book-action-btn primary" id="btnNextBook" type="button">
-                            다음 권 읽기: 제 ${currentBookIndex + 2} 권 ›
-                        </button>
-                    ` : ""}
-                    <button class="book-action-btn secondary" id="btnReturnToShelf" type="button">
-                        시집 책장으로 돌아가기
-                    </button>
-                    <button class="book-action-btn secondary" id="btnRestartBook" type="button">
-                        이 책 처음부터 다시 읽기
-                    </button>
-                </div>
-            </div>
-        `;
-
-        return leftHtml + rightHtml;
-    }
-
     /* ── 화면 갱신 (Paint) ─────────────────────────────────────── */
     function paint() {
         if (!spreads.length || currentSpreadIndex < 0 || currentSpreadIndex >= spreads.length) {
@@ -470,9 +417,6 @@
                 break;
             case "note":
                 html = renderNoteSpread(s);
-                break;
-            case "complete":
-                html = renderCompleteSpread(s);
                 break;
         }
         spreadEl.innerHTML = html;
@@ -562,19 +506,6 @@
             goNextAfterNote.onclick = () => goTo(currentSpreadIndex + 1, "next");
         }
 
-        // G. 완독 페이지 액션
-        const btnNextBook = $("btnNextBook");
-        if (btnNextBook) {
-            btnNextBook.onclick = () => openBook(currentBookIndex + 1, 0);
-        }
-        const btnReturnToShelf = $("btnReturnToShelf");
-        if (btnReturnToShelf) {
-            btnReturnToShelf.onclick = () => showShelf();
-        }
-        const btnRestartBook = $("btnRestartBook");
-        if (btnRestartBook) {
-            btnRestartBook.onclick = () => goTo(0, "prev");
-        }
     }
 
     // 페이지 이동
@@ -603,6 +534,7 @@
         shelfScreen.classList.add("hidden");
         bookScreen.hidden = false;
         bookScreen.classList.remove("hidden");
+        if (bookShelfBtn) bookShelfBtn.hidden = false;
         if (tocBtn) tocBtn.hidden = false;
         window.scrollTo(0, 0);
 
@@ -637,6 +569,7 @@
         bookScreen.classList.add("hidden");
         shelfScreen.hidden = false;
         shelfScreen.classList.remove("hidden");
+        if (bookShelfBtn) bookShelfBtn.hidden = true;
         if (tocBtn) tocBtn.hidden = true;
         window.scrollTo(0, 0);
 
@@ -773,6 +706,7 @@
     topicTabBtn.onclick = () => setShelfTab("topic");
 
     tocBtn.onclick = () => goTo(0, "prev");
+    if (bookShelfBtn) bookShelfBtn.onclick = () => showShelf();
 
     // 공용 뒤로가기 단추(assets/site-back-navigation.js) 연동
     // 책을 보고 있는 중이면 책장으로 돌아가고, 책장이면 사이트 메인으로 돌아감
