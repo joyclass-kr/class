@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dongju-ttodareun"] = {
         "poem": {
+            "illustration": "images/dongju-ttodareun.webp",
             "lines": [
                 "고향에 돌아온 날 밤에",
                 "내 백골이 따라와 한 방에 누웠다.",

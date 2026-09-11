@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yuksa-jeoljeong"] = {
         "poem": {
+            "illustration": "images/yuksa-jeoljeong.webp",
             "lines": [
                 "매운 계절의 채찍에 갈겨",
                 "마침내 북방으로 휩쓸려 오다",

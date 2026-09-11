@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["gihyeongdo-eomma"] = {
         "poem": {
+            "illustration": "images/gihyeongdo-eomma.webp",
             "lines": [
                 "열무 삼십 단을 이고",
                 "시장에 간 우리 엄마",

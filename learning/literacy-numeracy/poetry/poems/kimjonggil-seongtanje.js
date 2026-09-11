@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["kimjonggil-seongtanje"] = {
         "poem": {
+            "illustration": "images/kimjonggil-seongtanje.webp",
             "lines": [
                 "어두운 방 안엔",
                 "빠알간 숯불이 피고,",

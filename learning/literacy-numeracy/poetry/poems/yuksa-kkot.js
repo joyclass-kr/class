@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yuksa-kkot"] = {
         "poem": {
+            "illustration": "images/yuksa-kkot.webp",
             "lines": [
                 "동방은 하늘도 다 끝나고",
                 "비 한 방울 내리잖는 그때에도",

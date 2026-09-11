@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["sinseokjeong-meonnara"] = {
         "poem": {
+            "illustration": "images/sinseokjeong-meonnara.webp",
             "lines": [
                 "어머니",
                 "당신은 그 먼 나라를 알으십니까.",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["manhae-nim"] = {
         "poem": {
+            "illustration": "images/manhae-nim.webp",
             "lines": [
                 "님은 갔습니다. 아아, 사랑하는 나의 님은 갔습니다.",
                 "푸른 산빛을 깨치고 단풍나무 숲을 향하여 난 작은 길을 걸어서, 차마 떨치고 갔습니다.",

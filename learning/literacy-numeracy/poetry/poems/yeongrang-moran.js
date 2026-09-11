@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yeongrang-moran"] = {
         "poem": {
+            "illustration": "images/yeongrang-moran.webp",
             "lines": [
                 "모란이 피기까지는",
                 "나는 아직 나의 봄을 기다리고 있을 테요",
