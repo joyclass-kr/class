@@ -5,6 +5,8 @@
         const items = spec.nodes.flatMap((node, index) => node[3].map((label, itemIndex) => [
             `${spec.id}i${index}${itemIndex}`, label[0], label[1], `k${index}`
         ]));
+        const activityCategories = spec.activityCategories || categories;
+        const activityItems = spec.activityItems || items;
         const comparisons = spec.comparisons || spec.nodes.map((node) => [
             node[0],
             node[1],
@@ -27,7 +29,7 @@
             comparisons,
             analogy: spec.analogy,
             deviceComparison: spec.deviceComparison,
-            activity: spec.activity ? [spec.activity[0], spec.activity[1], categories, items, spec.activity[2]] : null,
+            activity: spec.activity ? [spec.activity[0], spec.activity[1], activityCategories, activityItems, spec.activity[2]] : null,
             questions: spec.questions
         });
     };

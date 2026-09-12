@@ -511,6 +511,18 @@ test("generic sort lessons continue directly to questions while real experiments
   );
 });
 
+test("G01 uses one classification axis and keeps binary and conversion in their proper hierarchy", () => {
+  const g01 = allLessons.find((lesson) => lesson.id === "g01");
+  assert.deepEqual(
+    Array.from(g01.activity.categories, ({ id, label }) => [id, label]),
+    [["analog", "아날로그"], ["digital", "디지털"]]
+  );
+  assert.ok(g01.activity.items.every((item) => ["analog", "digital"].includes(item.category)));
+  assert.match(g01.conceptTitle, /이진 표현은 디지털의 한 방식/);
+  assert.match(g01.activity.instruction, /연속적으로 변하는지, 구분된 단계나 기호로 표현되는지/);
+  assert.match(g01.activity.success, /변환은 분류 항목이 아니라/);
+});
+
 test("a wrong choice is disabled for retry without revealing the correct answer", () => {
   const handler = lessonSource.slice(
     lessonSource.indexOf('submitAnswer.addEventListener("click"'),
