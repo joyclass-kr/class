@@ -134,7 +134,7 @@ const CHAPTERS = [
                 ],
                 right: [
                     "고양이가 자물쇠를 이리저리 만져 보았어요. 발톱으로 긁어도 꿈쩍하지 않았지요.",
-                    "이빨로 물어뜯어도 마찬가지였습니다.",
+                    "개가 이빨로 물어뜯어도 마찬가지였습니다.",
                     "\"이걸 어쩌지…\"",
                     "둘은 어두운 방에서 서로 얼굴만 쳐다보았어요.",
                     "날은 자꾸 밝아 오고 있었답니다."
@@ -237,7 +237,7 @@ const CHAPTERS = [
                     "바로 그 푸른 구슬이었어요!",
                     "물고기가 삼킨 것을 고양이가 찾아낸 것이었지요. 고양이는 구슬을 입에 물고 집으로 달렸습니다.",
                     "들길을 가로질러 숨이 턱에 차도록 달렸어요.",
-                    "\"아이고, 우리 고양이가 다 찾아왔구나!\""
+                    "\"아이고, 우리 고양이가 다시 찾아왔구나!\""
                 ],
                 right: [
                     "할머니가 고양이를 번쩍 끌어안았어요. 그날부터 고양이는 따뜻한 방 안에서 지내게 되었지요.",
@@ -259,7 +259,7 @@ const COVER = {
     title: "푸른 구슬",
     intro: [
         "푸른 구슬은 지은이가 없는 구전 설화예요. 개와 고양이가 잃어버린 구슬을 찾아오는 이야기라, 개와 고양이의 구슬 찾기라는 이름으로도 전해진답니다.",
-        "이 이야기는 왜 그렇게 되었는지를 풀어 주는 유래담이기도 해요. 왜 개는 마당에서 지내고 고양이는 방 안에서 지내는지, 왜 개와 고양이는 사이가 나쁜지를 이야기 하나로 설명하지요. 우리 옛이야기는 이렇게 늘 보던 것에 까닭을 붙이기를 좋아한답니다.",
+        "이 이야기는 왜 그렇게 되었는지를 풀어 주는 유래담이기도 해요. 우리 옛이야기는 이렇게 늘 보던 것에 까닭을 붙이기를 좋아한답니다.",
         "잃어버린 보물을 짐승 둘이 짝을 지어 되찾아 오는 이야기는 우리나라뿐 아니라 중국과 일본, 멀리 유럽에도 전해요. 물을 건널 때 헤엄 못 치는 쪽이 업혀 간다는 대목까지 여러 나라 이야기에 똑같이 나온답니다."
     ]
 };
@@ -431,7 +431,7 @@ const EN = {
                     right: [
                         "The cat felt all over the lock.",
                         "Scratch at it with her claws as she might, it did not move.",
-                        "Bite it with her teeth, and it was the same.",
+                        "The dog bit it with his teeth, and it was the same.",
                         { t: "\"What are we to do about this...\"", v: "woman" },
                         "The two looked at each other in the dark room. It was growing light outside."
                     ]
@@ -565,7 +565,7 @@ const EN = {
             q: "Which reaction to this book does NOT fit?",
             wide: true,
             choices: [
-                "He loosened the net at the sight of the carp's tear, so looking away was harder for him than going hungry.",
+                "He loosened the net at the sight of the carp's tear, so looking away from it was harder for him than going hungry.",
                 "The dog and the cat set out after the bead on their own, so they had not forgotten what they had been fed.",
                 "The story explains why dogs and cats do not get on, so old people put a reason to everything around them.",
                 "The cat answered even with the bead in her mouth, so she was thinking first of putting the dog's mind at rest."
@@ -781,7 +781,7 @@ const QUIZ = [
         q: "이 책을 읽고 난 반응으로 알맞지 않은 것은 무엇인가요?",
         wide: true,
         choices: [
-            "할아버지가 잉어의 눈물을 보고 그물을 푼 것을 보면, 굶는 것보다 못 본 척하는 것이 더 어려웠구나.",
+            "할아버지가 잉어의 눈물을 보고 그물을 푼 것을 보면, 굶는 것보다 눈물을 못 본 척하는 것이 더 어려웠구나.",
             "개와 고양이가 저희끼리 나서서 구슬을 찾으러 간 것을 보면, 얻어먹은 것을 잊지 않았네.",
             "개와 고양이 사이가 나빠진 까닭을 이렇게 풀어 놓은 것을 보면, 옛사람들은 둘레의 일마다 사연을 붙인 거야.",
             "고양이가 구슬을 입에 물고도 대답을 한 것을 보면, 개를 안심시키려는 마음이 앞섰나 봐."

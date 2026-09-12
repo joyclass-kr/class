@@ -65,7 +65,7 @@ const CHAPTERS = [
                     "마을 사람들이 웅성거리며 물러섰어요.",
                     "\"그놈에게 끌려간 사람이 돌아온 적은 없다.\"",
                     "아들은 그 자리에서 지게를 벗어 마당에 던졌지요.",
-                    "\"제가 가서 데려오겠습니다.\""
+                    "\"제가 가서 어머니를 찾아 모셔오겠습니다.\""
                 ]
             },
             {
@@ -128,9 +128,9 @@ const CHAPTERS = [
                 art: "08-field.webp",
                 emoji: "🌾",
                 left: [
-                    "이튿날은 밭 매는 노인을 만났어요. 허리가 굽어 호미질이 자꾸 멈췄지요.",
+                    "이튿날은 밭 매는 노인을 만났어요. 허리가 굽어 괭이질이 자꾸 멈췄지요.",
                     "밭고랑은 끝이 보이지 않았습니다.",
-                    "아들은 말없이 옆 고랑에 앉아 호미를 들었어요.",
+                    "아들은 말없이 옆 고랑에 앉아 괭이를 들었어요.",
                     "노인이 그런 아들을 흘끔 보고는 아무 말도 하지 않았답니다."
                 ],
                 right: [
@@ -182,7 +182,7 @@ const CHAPTERS = [
                 art: "11-nest.webp",
                 emoji: "🪹",
                 left: [
-                    "아들은 손발로 바위를 짚고 기어올랐어요.",
+                    "아들은 손으로 바위 사이사이를 조심스럽게 짚고 기어올랐어요.",
                     "바위가 미끄럽고 손끝이 찢어졌지요.",
                     "아들은 이를 악물고 한 뼘씩 올라갔습니다.",
                     "해가 넘어가기 전이라 둥지는 비어 있었어요.",
@@ -237,7 +237,7 @@ const CHAPTERS = [
                     "새가 비명을 지르며 벼랑 아래로 굴러떨어졌답니다."
                 ],
                 right: [
-                    "그날부터 그 고장에는 다시는 하늘이 어두워지는 일이 없었지요. 아들이 어머니를 등에 업고 벼랑을 내려왔어요.",
+                    "그날부터 그 고장에는 다시는 하늘이 어두워지는 일이 없었지요. 아들이 어머니를 등에 업고 좋은 길을 찾아 돌아 내려왔어요.",
                     "\"무겁지 않으냐.\"",
                     "\"어머니는 나물 바구니보다 가벼운데요.\"",
                     "어머니는 아들의 등에서 한참을 울었답니다."
@@ -477,7 +477,7 @@ const EN = {
                     art: "11-nest.webp",
                     emoji: "🪹",
                     left: [
-                        "The son climbed the rock with his hands and feet.",
+                        "The son felt his way up the rock, hand over hand, careful of every gap.",
                         "The rock was slippery and his fingertips tore.",
                         "He set his teeth and went up a hand's width at a time.",
                         "The sun was not down yet, so the nest was empty.",
@@ -539,7 +539,7 @@ const EN = {
                     ],
                     right: [
                         "From that day the sky over that district never went dark again.",
-                        "The son came down the cliff with his mother on his back.",
+                        "The son found a gentler way down, carrying his mother on his back.",
                         { t: "\"Am I not heavy?\"", v: "mother" },
                         { t: "\"You are lighter than a greens basket.\"", v: "boy" },
                         "His mother cried on his back a long while."
@@ -656,7 +656,7 @@ const EN = {
         "08-field.webp": [
             { w: "weeding (weed)", k: "밭을 매는", s: "Next day he met an old man weeding a field." },
             { w: "bent", k: "굽은", s: "His back was bent and the hoe kept stopping." },
-            { w: "hoe", k: "호미", s: "His back was bent and the hoe kept stopping." },
+            { w: "hoe", k: "괭이", s: "His back was bent and the hoe kept stopping." },
             { w: "no end in sight", k: "끝이 보이지 않는", s: "There was no end in sight to the furrows." },
             { w: "furrows", k: "밭고랑", s: "There was no end in sight to the furrows." },
             { w: "glanced at ~", k: "흘끔 보았다", s: "The old man glanced at him and said nothing at all." },
@@ -727,7 +727,7 @@ const EN = {
             { w: "closed on ~", k: "덥석 물었다", s: "The monster bird closed on it and bit." },
             { w: "screamed (scream)", k: "비명을 질렀다", s: "It screamed and rolled off the cliff below." },
             { w: "district", k: "고장", s: "the sky over that district never went dark again" },
-            { w: "on his back", k: "등에 업고", s: "The son came down the cliff with his mother on his back." },
+            { w: "on his back", k: "등에 업고", s: "The son found a gentler way down, carrying his mother on his back." },
             { w: "lighter than ~", k: "~보다 가벼운", s: "You are lighter than a greens basket." }
         ],
         "after": [
@@ -870,7 +870,7 @@ const WORDS_KO = {
     ],
     "08-field.webp": [
         { w: "이튿날", k: "그다음 날.", s: "이튿날은 밭 매는 노인을 만났어요." },
-        { w: "굽다", k: "등이나 허리가 앞으로 휘다.", s: "허리가 굽어 호미질이 자꾸 멈췄지요." },
+        { w: "굽다", k: "등이나 허리가 앞으로 휘다.", s: "허리가 굽어 괭이질이 자꾸 멈췄지요." },
         { w: "밭고랑", k: "밭에 길게 파 놓은 골.", s: "밭고랑은 끝이 보이지 않았습니다." },
         { w: "흘끔", k: "곁눈으로 슬쩍 보는 모양.", s: "노인이 그런 아들을 흘끔 보고는" },
         { w: "트다", k: "살갗이 갈라지다.", s: "아들의 손바닥이 다 터져 있었지요." }
@@ -890,7 +890,7 @@ const WORDS_KO = {
         { w: "꿀꺽", k: "한꺼번에 삼키는 모양.", s: "침을 꿀꺽 삼켰어요." }
     ],
     "11-nest.webp": [
-        { w: "짚다", k: "손을 대어 몸을 받치다.", s: "아들은 손발로 바위를 짚고 기어올랐어요." },
+        { w: "짚다", k: "손을 대어 몸을 받치다.", s: "아들은 손으로 바위 사이사이를 조심스럽게 짚고 기어올랐어요." },
         { w: "이를 악물다", k: "이를 꽉 물고 참아 내다.", s: "아들은 이를 악물고 한 뼘씩 올라갔습니다." },
         { w: "우지끈", k: "단단한 것이 부러지는 소리.", s: "나뭇가지가 우지끈했지요." },
         { w: "신음", k: "아파서 내는 앓는 소리.", s: "그런데 둥지 한쪽에서 신음 소리가 났어요." },

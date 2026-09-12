@@ -51,7 +51,7 @@ const CHAPTERS = [
                     "한 사람이 떨리는 목소리로 물었어요. 소리가 그 노래를 일러 주었지요.",
                     "\"거북아 거북아, 머리를 내어라—\"",
                     "\"내놓지 않으면 구워서 먹으리—\"",
-                    "아주 짧고 외기 쉬운 노래였답니다."
+                    "아주 짧고 외우기 쉬운 노래였답니다."
                 ]
             },
             {
@@ -582,7 +582,7 @@ const EN = {
         { q: "Where did the Nine Gan hear the voice?", choices: ["At the landing by the sea", "On Guji Peak", "By the Nakdong River"], answer: 1 },
         { q: "How does the song the voice taught begin?", choices: ["Heaven told me to set up a country", "Is there anybody here", "Turtle, turtle, put out your head"], answer: 2 },
         { q: "What was in the golden box inside the red cloth?", choices: ["Six golden eggs", "One gold crown", "Six jade beads"], answer: 0 },
-        { q: "What did the Nine Gan say about the child?", choices: ["That he was their king", "That they would give a daughter", "That he should take a valley"], answer: 0 },
+        { q: "What did the Nine Gan say about the child who broke out of his egg first?", choices: ["That he was their king", "That they would give a daughter", "That he should take a valley"], answer: 0 },
         { q: "What became of the other five children?", choices: ["They became Suro's officers", "Each set up a country", "They all went back to the sky"], answer: 1 },
         { q: "What did Heo Hwangok bring on her ship?", choices: ["Iron and ploughs", "A golden box", "Seed and books"], answer: 2 },
         {
@@ -638,7 +638,7 @@ const EN = {
             { w: "in a shaking voice", k: "떨리는 목소리로", s: "One of them asked it in a shaking voice." },
             { w: "put out ~", k: "내어라", s: "Turtle, turtle, put out your head" },
             { w: "roast", k: "굽다", s: "Put it out, or we roast you and eat you" },
-            { w: "easy to remember", k: "외기 쉬운", s: "It was very short and easy to remember." }
+            { w: "easy to remember", k: "외우기 쉬운", s: "It was very short and easy to remember." }
         ],
         "04-dance.webp": [
             { w: "all over the place", k: "제각각인", s: "At first the voices were all over the place." },
@@ -788,7 +788,7 @@ const QUIZ = [
     { q: "아홉 간이 소리를 들은 곳은 어디인가요?", choices: ["바닷가 나루", "구지봉", "낙동강 가"], answer: 1 },
     { q: "소리가 일러 준 노래는 어떻게 시작하나요?", choices: ["하늘이 나라를 세우라 하셨다", "여기에 사람이 있느냐", "거북아 거북아 머리를 내어라"], answer: 2 },
     { q: "붉은 보자기 속 금상자에 무엇이 들어 있었나요?", choices: ["황금 알 여섯 개", "금관 하나", "옥구슬 여섯 개"], answer: 0 },
-    { q: "아홉 간은 그 아이를 보고 무엇이라 했나요?", choices: ["우리 임금이라고", "제 딸을 주겠다고", "골짜기를 맡으라고"], answer: 0 },
+    { q: "아홉 간은 가장 먼저 알을 깨고 나온 아이를 보고 무엇이라 했나요?", choices: ["우리 임금이라고", "제 딸을 주겠다고", "골짜기를 맡으라고"], answer: 0 },
     { q: "나머지 다섯 아이는 어떻게 되었나요?", choices: ["수로를 도와 신하가 되었다", "저마다 나라를 세웠다", "모두 하늘로 돌아갔다"], answer: 1 },
     { q: "허황옥이 배에 싣고 온 것은 무엇인가요?", choices: ["쇠와 쟁기", "금빛 상자", "씨앗과 책"], answer: 2 },
     {
@@ -855,7 +855,7 @@ const WORDS_KO = {
         { w: "넙죽", k: "바닥에 대고 얼른 엎드리는 모양.", s: "아홉 간이 그 자리에 넙죽 엎드렸지요." },
         { w: "감히", k: "두려움을 무릅쓰고.", s: "누구도 감히 고개를 들지 못했어요." },
         { w: "일러 주다", k: "알려 주다.", s: "소리가 그 노래를 일러 주었지요." },
-        { w: "외다", k: "잊지 않게 소리 내어 익히다.", s: "아주 짧고 외기 쉬운 노래였답니다." }
+        { w: "외우다", k: "잊지 않게 소리 내어 익히다.", s: "아주 짧고 외우기 쉬운 노래였답니다." }
     ],
     "04-dance.webp": [
         { w: "제각각", k: "저마다 따로따로.", s: "처음에는 목소리가 제각각이었지요." },

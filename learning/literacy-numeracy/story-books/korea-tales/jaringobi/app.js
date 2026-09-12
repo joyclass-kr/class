@@ -59,7 +59,7 @@ const CHAPTERS = [
                 emoji: "🌬️",
                 left: [
                     "한여름이었어요. 땀이 등줄기로 줄줄 흘러내렸지요.",
-                    "자린고비가 부채를 활짝 펴 들고 마루에 걸터앉았어요.",
+                    "자린고비가 부채를 활짝 펴 들고 방에 앉아 있었어요.",
                     "그런데 부채는 든 채로 꼼짝도 하지 않았어요.",
                     "대신 제 고개를 좌우로 홰홰 흔드는 것이 아니겠어요."
                 ],
@@ -120,7 +120,7 @@ const CHAPTERS = [
                 ],
                 right: [
                     "자린고비가 제 발을 한참 내려다보았어요.",
-                    "\"된장 한 숟갈 값도 안 되는 짚신이 다 떨어졌구나.\"",
+                    "\"된장 한 숟갈 값도 안 되는 것에 짚신이 다 떨어졌구나.\"",
                     "그러고는 갑자기 껄껄 웃었어요. 저잣거리 사람들이 다 돌아볼 만큼 큰 웃음이었지요.",
                     "자린고비는 빈손으로 터덜터덜 충주로 돌아갔답니다."
                 ]
@@ -132,10 +132,10 @@ const CHAPTERS = [
                     "그 소문이 경상도까지 퍼졌어요. 파리를 한양까지 쫓아갔다는 이야기였지요.",
                     "그곳에도 지지 않는 구두쇠가 하나 살고 있었거든요.",
                     "\"충주에 나보다 더한 자가 있다고?\"",
-                    "구두쇠는 그 말을 듣고 발끈했어요."
+                    "경상도 구두쇠는 그 말을 듣고 발끈했어요."
                 ],
                 right: [
-                    "구두쇠는 이튿날 봇짐을 지고 충주로 길을 떠났어요.",
+                    "경상도 구두쇠는 이튿날 바로 봇짐을 지고 충주로 길을 떠났어요.",
                     "봇짐 속에는 주먹밥 하나뿐이었지요. 사흘 길에 주먹밥 하나였습니다.",
                     "\"어디 한번 겨루어 보자.\"",
                     "구두쇠는 그 주먹밥을 아껴 먹으며 사흘을 꼬박 걸었답니다."
@@ -236,7 +236,7 @@ const CHAPTERS = [
                 art: "14-fish.webp",
                 emoji: "🐟",
                 left: [
-                    "그날 저녁, 자린고비네 밥상에도 밥과 물뿐이었어요.",
+                    "그날 저녁, 자린고비네 밥상에는 여전히 밥과 물뿐이었어요.",
                     "곳간은 텅 비어 있었지요. 살림은 하나도 달라지지 않았어요.",
                     "천장에는 여전히 굴비 한 마리가 매달려 있었어요.",
                     "어제와 똑같이 노릇노릇한 그 굴비였답니다."
@@ -347,7 +347,7 @@ const EN = {
                     left: [
                         "It was the middle of summer.",
                         "Sweat ran in a line down his back.",
-                        "The Jaringobi opened a fan wide and sat down on the floor edge.",
+                        "The Jaringobi opened a fan wide and sat in the room.",
                         "But he held the fan still and did not move it at all.",
                         "Instead he waved his own head from side to side."
                     ],
@@ -538,7 +538,7 @@ const EN = {
                     art: "14-fish.webp",
                     emoji: "🐟",
                     left: [
-                        "That evening there was rice and water on his table too.",
+                        "That evening there was still just rice and water on his table.",
                         "The storehouses were empty.",
                         "Nothing in the house had changed at all.",
                         "The dried fish still hung from the ceiling.",
@@ -619,7 +619,7 @@ const EN = {
             { w: "the middle of summer", k: "한여름", s: "It was the middle of summer." },
             { w: "in a line", k: "줄줄", s: "Sweat ran in a line down his back." },
             { w: "fan", k: "부채", s: "The Jaringobi opened a fan wide" },
-            { w: "the floor edge", k: "마루", s: "sat down on the floor edge" },
+            { w: "opened wide", k: "활짝", s: "The Jaringobi opened a fan wide and sat in the room." },
             { w: "from side to side", k: "좌우로", s: "Instead he waved his own head from side to side." },
             { w: "what sort of ~", k: "그게 무슨 ~이오", s: "Husband, what sort of fanning is that?" },
             { w: "wears out (wear)", k: "닳는다", s: "Fan the fan and the fan wears out." },
@@ -838,7 +838,7 @@ const WORDS_KO = {
     ],
     "04-fan.webp": [
         { w: "등줄기", k: "등의 한가운데.", s: "땀이 등줄기로 줄줄 흘러내렸지요." },
-        { w: "걸터앉다", k: "걸치듯이 앉다.", s: "자린고비가 부채를 활짝 펴 들고 마루에 걸터앉았어요." },
+        { w: "활짝", k: "한껏 넓게 펼친 모양.", s: "자린고비가 부채를 활짝 펴 들고 방에 앉아 있었어요." },
         { w: "홰홰", k: "이리저리 자꾸 흔드는 모양.", s: "제 고개를 좌우로 홰홰 흔드는 것이 아니겠어요." },
         { w: "휘둥그레지다", k: "놀라서 눈이 커지다.", s: "옆에서 보던 아내가 눈이 휘둥그레졌어요." },
         { w: "닳다", k: "오래 써서 줄어들다.", s: "부채를 부치면 부채가 닳지 않소." }
@@ -863,8 +863,8 @@ const WORDS_KO = {
         { w: "터덜터덜", k: "힘없이 걷는 모양.", s: "자린고비는 빈손으로 터덜터덜 충주로 돌아갔답니다." }
     ],
     "08-rival.webp": [
-        { w: "발끈하다", k: "갑자기 왈칵 화를 내다.", s: "구두쇠는 그 말을 듣고 발끈했어요." },
-        { w: "이튿날", k: "그다음 날.", s: "구두쇠는 이튿날 봇짐을 지고 충주로 길을 떠났어요." },
+        { w: "발끈하다", k: "갑자기 왈칵 화를 내다.", s: "경상도 구두쇠는 그 말을 듣고 발끈했어요." },
+        { w: "이튿날", k: "그다음 날.", s: "경상도 구두쇠는 이튿날 바로 봇짐을 지고 충주로 길을 떠났어요." },
         { w: "봇짐", k: "등에 지고 다니는 짐 보따리.", s: "봇짐을 지고 충주로 길을 떠났어요." },
         { w: "주먹밥", k: "손으로 뭉친 밥덩이.", s: "봇짐 속에는 주먹밥 하나뿐이었지요." }
     ],
