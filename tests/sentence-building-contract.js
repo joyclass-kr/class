@@ -23,6 +23,10 @@ assert.doesNotMatch(html, /practice-extra\.js/);
 assert.match(html, /app\.js/);
 
 assert.match(css, /grid-template-columns:\s*repeat\(4/);
+assert.match(css, /\.unit-header h2[^}]*font-size:\s*13px/);
+assert.match(css, /\.lesson-card strong[^}]*font-size:\s*15px/);
+assert.match(css, /--exam-font:\s*"KoPubWorld Batang"/);
+assert.match(css, /\.choice-button[\s\S]*?font-family:\s*var\(--exam-font\)/);
 assert.doesNotMatch(css, /\.course-intro|\.grade-band|\.lesson-card-copy/);
 assert.match(css, /\.rubric-list/);
 assert.match(css, /\.multi-guide/);
