@@ -91,3 +91,11 @@
 .stage-readout:empty { display: none; }
 .stage-note { margin: 8px 0 0; font-size: 13px; font-weight: 700; color: #64748b; line-height: 1.5; }
 .stage-note:empty { display: none; }
+
+/* 도구가 하는 일: 자석이 내려오고, 물이 차오르고, 체가 흔들린다 */
+.magnet { transition: transform .42s cubic-bezier(.3, .7, .4, 1); }
+.water { fill: rgba(56, 189, 248, .28); stroke: #0284c7; stroke-width: 1.2; transition: y .55s ease, height .55s ease; }
+.sieve { transition: transform .11s linear; }
+@media (prefers-reduced-motion: reduce) {
+    .magnet, .water, .sieve { transition: none; }
+}
