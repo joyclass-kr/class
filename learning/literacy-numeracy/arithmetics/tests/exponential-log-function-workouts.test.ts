@@ -7,21 +7,26 @@ import {
 } from "../lib/exponential-log-function-workouts.ts";
 
 const expectedKinds = [
-  "exponential-monotonicity",
-  "exponential-asymptote",
+  "exponential-value",
+  "exponential-shifted-value",
   "exponential-base",
-  "logarithmic-domain",
-  "logarithmic-asymptote",
-  "inverse-functions",
+  "logarithmic-value",
+  "logarithmic-shifted-value",
+  "inverse-function-value",
   "exponential-model",
   "logarithmic-model",
 ];
 
-test("지수·로그함수는 그래프와 활용의 핵심 여덟 유형을 다룬다", () => {
+test("지수·로그함수는 값 계산과 활용의 핵심 여덟 유형을 다룬다", () => {
   assert.deepEqual(
     exponentialLogFunctionProblems.map(({ kind }) => kind),
     expectedKinds,
   );
+});
+
+test("증가·감소, 점근선, 정의역 같은 단순 개념 판별은 연산 학습지에 넣지 않는다", () => {
+  const text = exponentialLogFunctionProblems.map(({ kind, label, prompt }) => `${kind} ${label} ${prompt}`).join(" ");
+  assert.doesNotMatch(text, /monotonicity|asymptote|domain|증가·감소|점근선|정의역/);
 });
 
 test("모든 지수·로그함수 문제는 명시적 질문과 유일한 정답을 가진다", () => {

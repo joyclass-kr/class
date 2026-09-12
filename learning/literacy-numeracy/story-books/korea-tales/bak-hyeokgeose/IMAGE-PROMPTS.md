@@ -180,8 +180,8 @@ motion.
 ```
 Wide scene in a quiet grove. In the centre, beside a low round stone well and an
 old tree, a brilliant white horse kneels on its front knees with its head thrown
-back, mane and tail trailing streams of light, mouth open in a long cry. On the
-right, the six chiefs come running in through the trees and stop dead. Green
+back, mane and tail trailing streams of light, mouth open in a long cry under a shaft of golden light. On the
+right, the six village chiefs (the exact same six elderly grandfathers with white hair in headbands, white beards, and plain cream hemp clothes) come running in through the trees and stop dead in awe. Green
 shade, one blazing white shape.
 ```
 

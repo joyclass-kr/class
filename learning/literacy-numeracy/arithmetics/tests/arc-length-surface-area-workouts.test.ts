@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { arcLengthSurfaceAreaProblems } from "../lib/arc-length-surface-area-workouts.ts";
+import { arcLengthSurfaceAreaProblems, createArcLengthProblems } from "../lib/arc-length-surface-area-workouts.ts";
 
 test("곡선의 길이에서 회전체 겉넓이까지 단계적으로 다룬다", () => {
   assert.equal(arcLengthSurfaceAreaProblems.length, 7);
@@ -13,6 +13,13 @@ test("곡선의 길이에서 회전체 겉넓이까지 단계적으로 다룬다
     assert.equal(problem.choices.filter(({ correct }) => correct).length, 1);
     assert.equal(new Set(problem.choices.map(({ latex }) => latex)).size, 4);
   }
+});
+
+test("곡선 길이 연산지는 공식 고르기 없이 모두 길이를 계산한다", () => {
+  const problems = createArcLengthProblems(20260809);
+  assert.equal(problems.length, 4);
+  assert.ok(problems.every(({ prompt }) => prompt === "곡선의 길이는?"));
+  assert.ok(problems.every(({ label }) => !label.includes("공식")));
 });
 
 test("곡선 길이와 회전면 넓이 계산값이 정확하다", () => {

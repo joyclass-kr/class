@@ -1,4 +1,4 @@
-import { createFunctionTransformationProblemSet } from "./function-transformation-workouts.ts";
+import { createFunctionTransformationWorksheetSet } from "./function-transformation-workouts.ts";
 
 export type FunctionFoundationKind =
   | "function-correspondence"
@@ -146,8 +146,5 @@ export function createFunctionFoundationReviewProblems(kinds: string[], seed: nu
 }
 
 export function createCombinedFunctionTransformationProblemSet(seed: number) {
-  const foundations = createFunctionFoundationProblemSet(seed);
-  const calculations = createFunctionTransformationProblemSet(seed).problems
-    .filter(({ kind }) => kind === "compose-fg" || kind === "rational-inverse");
-  return { seed, problems: [...foundations.problems, ...calculations] };
+  return createFunctionTransformationWorksheetSet(seed);
 }

@@ -33,7 +33,6 @@ export type MiddleCurriculumVisual =
 export const MIDDLE_CURRICULUM_KINDS: MiddleCurriculumKind[] = [
   "coordinate-proportion",
   "linear-function-basics",
-  "construction-congruence",
   "frequency-graphs",
   "plane-geometry",
   "solid-geometry",
@@ -71,8 +70,8 @@ export const MIDDLE_CURRICULUM_GRADES: Record<MiddleCurriculumKind, string> = {
 
 const METHOD_PLANS: Record<MiddleCurriculumKind, string[]> = {
   "coordinate-proportion": [
-    "quadrant",
-    "point-on-axis",
+    "direct-input",
+    "inverse-input",
     "direct-coefficient",
     "direct-value",
     "inverse-coefficient",
@@ -173,8 +172,8 @@ const METHOD_PLANS: Record<MiddleCurriculumKind, string[]> = {
 };
 
 const METHOD_TITLES: Record<string, string> = {
-  quadrant: "좌표와 사분면",
-  "point-on-axis": "좌표축 위의 점",
+  "direct-input": "정비례의 역산",
+  "inverse-input": "반비례의 역산",
   "direct-coefficient": "정비례 상수",
   "direct-value": "정비례의 값",
   "inverse-coefficient": "반비례 상수",
@@ -386,25 +385,21 @@ function buildCoordinate(
   id: string,
   index: number,
 ) {
-  if (method === "quadrant") {
-    const quadrant = (index + integer(next, 0, 3)) % 4 + 1;
-    const x = (quadrant === 2 || quadrant === 3 ? -1 : 1) * integer(next, 2, 8);
-    const y = (quadrant >= 3 ? -1 : 1) * integer(next, 2, 8);
-    const answer = `\\text{제${quadrant}사분면}`;
-    return make(id, method, `P(${x},\\ ${y})`, answer,
-      "x와 y의 부호를 차례로 확인해 점이 놓인 사분면을 정한다.",
-      [1, 2, 3, 4].filter((value) => value !== quadrant).map((value) => `\\text{제${value}사분면}`));
-  }
-  if (method === "point-on-axis") {
-    const xAxis = index % 2 === 1;
-    const value = nonzero(next, -8, 8);
-    const answer = xAxis ? "\\text{x축}" : "\\text{y축}";
-    return make(id, method, xAxis ? `P(${value},\\ 0)` : `P(0,\\ ${value})`, answer,
-      "x좌표가 0이면 y축, y좌표가 0이면 x축 위의 점이다.",
-      [xAxis ? "\\text{y축}" : "\\text{x축}", "\\text{원점}", "\\text{좌표축 위가 아님}"]);
-  }
   const a = nonzero(next, -6, 6);
   const x = nonzero(next, -6, 6);
+  if (method === "direct-input") {
+    const y = a * x;
+    return make(id, method, `y=${coefficient(a, "x", true)},\\quad y=${y},\\quad x=?`, `${x}`,
+      `${coefficient(a, "x", true)}=${y}인 일차방정식을 풀어 x를 구한다.`,
+      [`${-x}`, `${y - a}`, `${x + 1}`, `${x - 1}`, `${y}`, `${a}`]);
+  }
+  if (method === "inverse-input") {
+    const y = nonzero(next, -7, 7);
+    const constant = x * y;
+    return make(id, method, `y=\\dfrac{${constant}}{x},\\quad y=${y},\\quad x=?`, `${x}`,
+      `xy=${constant}에 y=${y}를 대입해 x=${constant}\\div${y}로 구한다.`,
+      [`${-x}`, `${constant - y}`, `${x + 1}`, `${x - 1}`, `${constant}`, `${y}`]);
+  }
   if (method === "direct-coefficient") {
     const y = a * x;
     return make(id, method, `y=ax,\\quad (x,y)=(${x},${y}),\\quad a=?`, `${a}`,

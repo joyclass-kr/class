@@ -64,7 +64,7 @@ test("중등 교육과정 공통 발문은 구할 대상을 정확히 밝힌다"
 
 const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
   "coordinate-proportion": [
-    "quadrant", "point-on-axis", "direct-coefficient", "direct-value",
+    "direct-input", "inverse-input", "direct-coefficient", "direct-value",
     "inverse-coefficient", "inverse-value", "direct-table", "inverse-table",
   ],
   "linear-function-basics": [
@@ -108,7 +108,7 @@ const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
 };
 
 test("교육과정 보완 학습지는 필수 유형을 적정 문제 수로 묶는다", () => {
-  assert.deepEqual(MIDDLE_CURRICULUM_KINDS, Object.keys(EXPECTED_METHODS));
+  assert.deepEqual(MIDDLE_CURRICULUM_KINDS, Object.keys(EXPECTED_METHODS).filter((kind) => kind !== "construction-congruence"));
   for (const kind of MIDDLE_CURRICULUM_KINDS) {
     const set = createMiddleCurriculumProblemSet(kind, 20260730);
     assert.equal(set.problems.length, kind === "frequency-graphs" ? 4 : EXPECTED_METHODS[kind].length, kind);

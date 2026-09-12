@@ -48,6 +48,20 @@ function shifted(variable: string, value: number) {
   return `(${variable}${signed(-value)})`;
 }
 
+function signedTerm(value: number, variable = "") {
+  if (value === 0) return "";
+  const magnitude = Math.abs(value);
+  return `${value < 0 ? "-" : "+"}${magnitude === 1 && variable ? "" : magnitude}${variable}`;
+}
+
+function coordinateTriple(x: number, y: number, z: number, denominator = 1) {
+  return `\\left(${fractionLatex(x, denominator)},${fractionLatex(y, denominator)},${fractionLatex(z, denominator)}\\right)`;
+}
+
+function coordinatePair(x: number, y: number, denominator = 1) {
+  return `\\left(${fractionLatex(x, denominator)},${fractionLatex(y, denominator)}\\right)`;
+}
+
 function choiceList(id: string, answer: string, distractors: string[]) {
   const unique = [...new Set([answer, ...distractors.filter((value) => value !== answer)])].slice(0, 4);
   if (unique.length < 4) throw new Error(`${id}: 실제 오답 후보가 3개보다 적습니다.`);
@@ -66,16 +80,17 @@ export function createConicProblems(seed: number): GeometryChoiceItem[] {
   const b2 = b * b;
   const c2 = a2 - b2;
   const p = integer(next, 2, 6);
+  const t = integer(next, 2, 4);
   const h = nonzero(next, -4, 4);
   const k = nonzero(next, -4, 4);
   return [
     item("c1", "타원의 초점", `\\frac{x^2}{${a2}}+\\frac{y^2}{${b2}}=1`, `(\\pm\\sqrt{${c2}},0)`, [`(0,\\pm\\sqrt{${c2}})`, `(\\pm${a},0)`, `(\\pm\\sqrt{${a2 + b2}},0)`]),
-    item("c2", "쌍곡선의 꼭짓점", `\\frac{x^2}{${a2}}-\\frac{y^2}{${b2}}=1`, `(\\pm${a},0)`, [`(0,\\pm${b})`, `(\\pm${b},0)`, `(\\pm\\sqrt{${a2 + b2}},0)`]),
-    item("c3", "포물선의 초점", `y^2=${4 * p}x`, `(${p},0)`, [`(${2 * p},0)`, `(0,${p})`, `(-${p},0)`]),
-    item("c4", "평행이동한 타원의 중심", `\\frac{${shifted("x", h)}^2}{${a2}}+\\frac{${shifted("y", k)}^2}{${b2}}=1`, `(${h},${k})`, [`(${-h},${-k})`, `(${k},${h})`, `(${-h},${k})`, `(${h},${-k})`, `(${-k},${h})`]),
+    item("c2", "쌍곡선의 초점", `\\frac{x^2}{${a2}}-\\frac{y^2}{${b2}}=1`, `(\\pm\\sqrt{${a2 + b2}},0)`, [`(\\pm${a},0)`, `(0,\\pm${b})`, `(\\pm\\sqrt{${c2}},0)`]),
+    item("c3", "포물선의 계수 계산", `y^2=4qx,\\quad P(${p * t * t},${2 * p * t})`, `q=${p}`, [`q=${p + 1}`, `q=${p + 2}`, `q=${p + 3}`], "점 $P$를 지나는 포물선의 $q$는?"),
+    item("c4", "타원의 중심 계산", `\\frac{x^2${signedTerm(-2 * h, "x")}${signedTerm(h * h)}}{${a2}}+\\frac{y^2${signedTerm(-2 * k, "y")}${signedTerm(k * k)}}{${b2}}=1`, `(${h},${k})`, [`(${-h},${-k})`, `(${k},${h})`, `(${-h},${k})`, `(${h},${-k})`, `(${-k},${h})`], "완전제곱식으로 고쳐 구한 중심은?"),
     item("c5", "타원의 이심률", `\\frac{x^2}{${a2}}+\\frac{y^2}{${b2}}=1,\\quad e=?`, `\\frac{\\sqrt{${c2}}}{${a}}`, [`\\frac{${b}}{${a}}`, `\\frac{${a}}{\\sqrt{${c2}}}`, `\\frac{\\sqrt{${c2}}}{${b}}`]),
     item("c6", "쌍곡선의 점근선", `\\frac{x^2}{${a2}}-\\frac{y^2}{${b2}}=1`, `y=\\pm\\frac{${b}}{${a}}x`, [`y=\\pm\\frac{${a}}{${b}}x`, `y=\\pm${a}x`, `y=\\pm${b}x`]),
-    item("c7", "포물선의 준선", `x^2=${-4 * p}y`, `y=${p}`, [`y=-${p}`, `x=${p}`, `x=-${p}`]),
+    item("c7", "평행이동한 포물선의 준선", `x^2${signedTerm(-2 * h, "x")}${signedTerm(h * h)}=${-4 * p}${shifted("y", k)}`, `y=${k + p}`, [`y=${k - p}`, `x=${h + p}`, `x=${h - p}`, `y=${p}`, `y=${-p}`], "완전제곱식으로 고쳐 구한 준선은?"),
   ];
 }
 
@@ -115,7 +130,7 @@ export function createPlaneVectorProblems(seed: number): GeometryChoiceItem[] {
     item("v4", "단위벡터", `\\vec a=(${3 * scale},${4 * scale}),\\quad \\frac{\\vec a}{|\\vec a|}=?`, `\\left(\\frac35,\\frac45\\right)`, [`(${3 * scale},${4 * scale})`, `\\left(\\frac45,\\frac35\\right)`, `\\left(\\frac15,\\frac15\\right)`]),
     item("v5", "평행 조건", `(k,${scale * by})\\parallel(${bx},${by}),\\quad k=?`, `k=${scale * bx}`, [`k=${bx}`, `k=${scale * by}`, `k=${-scale * bx}`, `k=${scale * bx + by}`, `k=${scale * bx - by}`]),
     item("v6", "위치벡터", `\\overrightarrow{OA}=(${ax},${ay}),\\quad\\overrightarrow{AB}=(${bx},${by}),\\quad\\overrightarrow{OB}=?`, `(${ax + bx},${ay + by})`, [`(${ax - bx},${ay - by})`, `(${bx - ax},${by - ay})`, `(${ax + bx},${ay - by})`, `(${ax - bx},${ay + by})`, `(${-ax - bx},${-ay - by})`]),
-    item("v7", "내분점의 위치벡터", `AP:PB=${ratio}:1,\\quad\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by})`, `\\vec p=\\frac{\\vec a+${ratio}\\vec b}{${ratio + 1}}`, [`\\vec p=\\frac{${ratio}\\vec a+\\vec b}{${ratio + 1}}`, `\\vec p=\\vec a+\\vec b`, `\\vec p=\\frac{\\vec a+\\vec b}{2}`]),
+    item("v7", "내분점의 위치벡터 계산", `AP:PB=${ratio}:1,\\quad\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by})`, `\\vec p=${coordinatePair(ax + ratio * bx, ay + ratio * by, ratio + 1)}`, [`\\vec p=${coordinatePair(ratio * ax + bx, ratio * ay + by, ratio + 1)}`, `\\vec p=${coordinatePair(ax + ratio * bx + ratio + 1, ay + ratio * by, ratio + 1)}`, `\\vec p=${coordinatePair(ax + ratio * bx, ay + ratio * by + ratio + 1, ratio + 1)}`, `\\vec p=${coordinatePair(ax + ratio * bx + ratio + 1, ay + ratio * by + ratio + 1, ratio + 1)}`], "내분점 $P$의 위치벡터를 계산하면?"),
   ];
 }
 
@@ -128,13 +143,22 @@ export function createProjectionProblems(seed: number): GeometryChoiceItem[] {
   const scale = integer(next, 2, 5);
   const projectionFactorNumerator = dot;
   const projectionFactorDenominator = bx * bx + by * by;
+  const triples = [[3, 4, 5], [5, 12, 13], [8, 15, 17]] as const;
+  const [angleX, angleY, angleLength] = triples[integer(next, 0, triples.length - 1)];
+  const orthogonalScale = integer(next, 1, 3);
+  const scalarX = 3 * scale + 4 * orthogonalScale;
+  const scalarY = 4 * scale - 3 * orthogonalScale;
+  const projectionXNumerator = projectionFactorNumerator * bx;
+  const projectionYNumerator = projectionFactorNumerator * by;
+  const perpendicularXNumerator = ax * projectionFactorDenominator - projectionXNumerator;
+  const perpendicularYNumerator = ay * projectionFactorDenominator - projectionYNumerator;
   return [
     item("p1", "내적", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\vec a\\cdot\\vec b=?`, `${dot}`, [`${ax * bx - ay * by}`, `${ax + ay + bx + by}`, `${-dot}`, `${ax * by + ay * bx}`, `${ax * bx}`, `${ay * by}`]),
     item("p2", "수직 조건", `(k,${scale})\\perp(${perpendicularX},${perpendicularY}),\\quad k=?`, `k=${fractionLatex(scale * bx, by)}`, [`k=${fractionLatex(-scale * bx, by)}`, `k=${scale}`, `k=${perpendicularX}`, `k=${fractionLatex(-scale * by, bx)}`, `k=${scale * perpendicularX}`, `k=${-scale}`, "k=0"]),
-    item("p3", "두 벡터가 이루는 각", `\\vec a=(1,0),\\quad\\vec b=(1,1),\\quad\\theta=?`, `\\frac{\\pi}{4}`, [`\\frac{\\pi}{3}`, `\\frac{\\pi}{6}`, `\\frac{3\\pi}{4}`]),
-    item("p4", "스칼라 정사영", `\\vec a=(${3 * scale},${4 * scale}),\\quad\\vec b=(1,0),\\quad\\frac{\\vec a\\cdot\\vec b}{|\\vec b|}=?`, `${3 * scale}`, [`${4 * scale}`, `${5 * scale}`, `${12 * scale * scale}`]),
-    item("p5", "벡터 정사영", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\mathrm{proj}_{\\vec b}\\vec a=?`, `\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${bx},${by})`, [`\\frac{${projectionFactorDenominator}}{${projectionFactorNumerator || 1}}(${bx},${by})`, `(${ax},${ay})`, `${dot}(${bx},${by})`, `-\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${bx},${by})`, `\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${ax},${ay})`, `\\frac{${projectionFactorNumerator}}{\\sqrt{${projectionFactorDenominator}}}(${bx},${by})`]),
-    item("p6", "수직 성분", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\vec a_{\\perp}=?`, `\\vec a-\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}\\vec b`, [`\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}\\vec b`, `\\vec a+\\vec b`, `\\vec a-\\vec b`]),
+    item("p3", "두 벡터가 이루는 각 계산", `\\vec a=(1,0),\\quad\\vec b=(${angleX},${angleY}),\\quad\\cos\\theta=?`, `\\frac{${angleX}}{${angleLength}}`, [`\\frac{${angleY}}{${angleLength}}`, `\\frac{${angleX}}{${angleY}}`, `\\frac{${angleLength}}{${angleX}}`]),
+    item("p4", "스칼라 정사영 계산", `\\vec a=(${scalarX},${scalarY}),\\quad\\vec b=(3,4),\\quad\\frac{\\vec a\\cdot\\vec b}{|\\vec b|}=?`, `${5 * scale}`, [`${3 * scale}`, `${4 * scale}`, `${25 * scale}`]),
+    item("p5", "벡터 정사영 계산", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\mathrm{proj}_{\\vec b}\\vec a=?`, coordinatePair(projectionXNumerator, projectionYNumerator, projectionFactorDenominator), [coordinatePair(projectionXNumerator + projectionFactorDenominator, projectionYNumerator, projectionFactorDenominator), coordinatePair(projectionXNumerator, projectionYNumerator + projectionFactorDenominator, projectionFactorDenominator), coordinatePair(projectionXNumerator + projectionFactorDenominator, projectionYNumerator + projectionFactorDenominator, projectionFactorDenominator)]),
+    item("p6", "수직 성분 계산", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\vec a_{\\perp}=?`, coordinatePair(perpendicularXNumerator, perpendicularYNumerator, projectionFactorDenominator), [coordinatePair(perpendicularXNumerator + projectionFactorDenominator, perpendicularYNumerator, projectionFactorDenominator), coordinatePair(perpendicularXNumerator, perpendicularYNumerator + projectionFactorDenominator, projectionFactorDenominator), coordinatePair(perpendicularXNumerator + projectionFactorDenominator, perpendicularYNumerator + projectionFactorDenominator, projectionFactorDenominator)]),
     item("p7", "좌표축과 이루는 각", `\\vec a=(${3 * scale},${4 * scale}),\\quad\\cos\\angle(\\vec a,\\ x\\text{축})=?`, `\\frac35`, [`\\frac45`, `\\frac34`, `\\frac53`], "$\\cos\\angle(\\vec a, x\\text{축})$는?"),
   ];
 }
@@ -145,19 +169,21 @@ export function createVectorGeometryProblems(seed: number): GeometryChoiceItem[]
   const px = nonzero(next), py = nonzero(next);
   const dx = nonzero(next), dy = nonzero(next);
   const distanceNumerator = Math.abs(a * px + b * py + c);
+  const lineScale = integer(next, 2, 5);
+  const triangleX = nonzero(next);
+  const triangleY = nonzero(next);
+  const determinant = Math.abs(triangleX * dy - triangleY * dx);
+  const triangleArea = fractionLatex(determinant, 2);
   return [
-    item("g1", "직선의 방향벡터", `${a}x${signed(b)}y${signed(c)}=0`, `(${b},${-a})`, [`(${a},${b})`, `(${-a},${-b})`, `(${a},0)`]),
-    item("g2", "법선벡터", `${a}x${signed(b)}y${signed(c)}=0`, `(${a},${b})`, [`(${b},${-a})`, `(${-b},${a})`, `(${a},${-b})`, `(0,${b})`]),
-    item("g3", "벡터로 나타낸 직선", `P(${px},${py}),\\quad\\vec d=(${dx},${dy})`, `(x,y)=(${px},${py})+t(${dx},${dy})`, [`(x,y)=(${px},${py})+t(${-dy},${dx})`, `(x,y)=(${px - dy},${py + dx})+t(${dx},${dy})`, `(x,y)=(${px - 2 * dy},${py + 2 * dx})+t(${dx},${dy})`]),
+    item("g1", "직선의 기울기 계산", `${a}x${signed(b)}y${signed(c)}=0,\\quad m=?`, `m=${fractionLatex(-a, b)}`, [`m=${fractionLatex(a, b)}`, `m=${fractionLatex(-b, a)}`, `m=${fractionLatex(b, a)}`, "m=0", "m=2", "m=-2"]),
+    item("g2", "법선벡터의 크기 계산", `\\vec n=(${a},${b}),\\quad |\\vec n|=?`, `\\sqrt{${a * a + b * b}}`, [`${a * a + b * b}`, `\\sqrt{${a * a + b * b + 1}}`, `${Math.abs(a) + Math.abs(b)}`]),
+    item("g3", "직선 위 점의 좌표 계산", `(x,y)=(${px},${py})+t(${dx},${dy}),\\quad t=${lineScale}`, `(${px + lineScale * dx},${py + lineScale * dy})`, [`(${px - lineScale * dx},${py - lineScale * dy})`, `(${px + dx},${py + dy})`, `(${px + lineScale * dy},${py + lineScale * dx})`, `(${lineScale * dx},${lineScale * dy})`]),
     item("g4", "점과 직선 사이의 거리", `P(${px},${py}),\\quad ${a}x${signed(b)}y${signed(c)}=0`, `\\frac{${distanceNumerator}}{\\sqrt{${a * a + b * b}}}`, [`\\frac{${distanceNumerator}}{${a * a + b * b}}`, `${distanceNumerator}`, `\\sqrt{${a * a + b * b}}`]),
-    item("g5", "삼각형의 넓이", `\\overrightarrow{AB}=(${ax(next)},${ay(next)}),\\quad\\overrightarrow{AC}=(${dx},${dy})`, `\\frac12|\\det(\\overrightarrow{AB},\\overrightarrow{AC})|`, [`|\\overrightarrow{AB}\\cdot\\overrightarrow{AC}|`, `|\\det(\\overrightarrow{AB},\\overrightarrow{AC})|`, `\\frac12|\\overrightarrow{AB}\\cdot\\overrightarrow{AC}|`]),
-    item("g6", "좌표축에 내린 수선의 발", `P(${px},${py}),\\quad x\\text{축에 내린 수선의 발 }H=?`, `H=(${px},0)`, [`H=(0,${py})`, `H=(${px},${py})`, `H=(0,${px})`, `H=(${px},${-py})`, `H=(${-px},0)`], "수선의 발 $H$는?"),
+    item("g5", "삼각형의 넓이 계산", `\\overrightarrow{AB}=(${triangleX},${triangleY}),\\quad\\overrightarrow{AC}=(${dx},${dy})`, triangleArea, [fractionLatex(determinant + 2, 2), fractionLatex(determinant + 4, 2), `${determinant + 3}`]),
+    item("g6", "좌표축까지 거리의 합", `P(${px},${py}),\\quad d_x+d_y=?`, `${Math.abs(px) + Math.abs(py)}`, [`${Math.abs(px)}`, `${Math.abs(py)}`, `\\sqrt{${px * px + py * py}}`, `${Math.abs(px) + Math.abs(py) + 1}`], "$P$에서 두 좌표축까지 거리의 합은?"),
     item("g7", "두 직선의 수직 조건", `\\vec d_1=(${dx},${dy}),\\quad\\vec d_2=(k,${dx}),\\quad\\vec d_1\\perp\\vec d_2`, `k=${-dy}`, [`k=${dy}`, `k=${dx}`, `k=${-dx}`, "k=0", `k=${dx + dy}`, `k=${dx - dy}`]),
   ];
 }
-
-function ax(next: Next) { return nonzero(next); }
-function ay(next: Next) { return nonzero(next); }
 
 export function createSpaceCoordinateProblems(seed: number): GeometryChoiceItem[] {
   const next = rng(seed);
@@ -166,15 +192,34 @@ export function createSpaceCoordinateProblems(seed: number): GeometryChoiceItem[
   const bx = ax + dx, by = ay + dy, bz = az + dz;
   const cx = nonzero(next), cy = nonzero(next), cz = nonzero(next);
   const radius = integer(next, 2, 7);
-  const ratio = integer(next, 1, 3);
+  const ratio = integer(next, 2, 4);
+  const sphereConstant = cx * cx + cy * cy + cz * cz - radius * radius;
+  const generalSphere = `x^2+y^2+z^2${signedTerm(-2 * cx, "x")}${signedTerm(-2 * cy, "y")}${signedTerm(-2 * cz, "z")}${signedTerm(sphereConstant)}=0`;
+  const planeIndex = integer(next, 0, 2);
+  const planeNames = ["xy", "xz", "yz"];
+  const tangentRadius = Math.abs([cz, cy, cx][planeIndex]);
+  const tangentSphere = `${shifted("x", cx)}^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${tangentRadius * tangentRadius}`;
+  const planeCenteredSphere = [
+    `${shifted("x", cx)}^2+${shifted("y", cy)}^2+z^2=${tangentRadius * tangentRadius}`,
+    `${shifted("x", cx)}^2+y^2+${shifted("z", cz)}^2=${tangentRadius * tangentRadius}`,
+    `x^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${tangentRadius * tangentRadius}`,
+  ][planeIndex];
+  const reflected = [
+    [ax, ay, -az],
+    [ax, -ay, az],
+    [-ax, ay, az],
+  ][planeIndex];
+  const reflectionDistance = 2 * Math.abs([az, ay, ax][planeIndex]);
+  const equalityCoordinate = nonzero(next, -5, 5);
+  const equalityOffset = nonzero(next, -4, 4);
   return [
     item("s1", "공간에서 두 점 사이의 거리", `A(${ax},${ay},${az}),\\quad B(${bx},${by},${bz})`, `\\sqrt{${dx * dx + dy * dy + dz * dz}}`, [`\\sqrt{${Math.abs(dx) + Math.abs(dy) + Math.abs(dz)}}`, `${dx * dx + dy * dy + dz * dz}`, `\\sqrt{${dx * dx + dy * dy}}`, `\\sqrt{${dx * dx + dz * dz}}`, `\\sqrt{${dy * dy + dz * dz}}`, `${Math.abs(dx) + Math.abs(dy) + Math.abs(dz)}`, `\\max\\{${Math.abs(dx)},${Math.abs(dy)},${Math.abs(dz)}\\}`]),
-    item("s2", "선분의 중점", `A(${ax},${ay},${az}),\\quad B(${bx},${by},${bz})`, `\\left(\\frac{${ax + bx}}2,\\frac{${ay + by}}2,\\frac{${az + bz}}2\\right)`, [`(${ax + bx},${ay + by},${az + bz})`, `\\left(\\frac{${ax - bx}}2,\\frac{${ay - by}}2,\\frac{${az - bz}}2\\right)`, `(${bx},${by},${bz})`, `(${ax},${ay},${az})`, `\\left(\\frac{${ax + bx}}2,\\frac{${ay - by}}2,\\frac{${az + bz}}2\\right)`]),
-    item("s3", "내분점", `AP:PB=${ratio}:1,\\quad A(${ax},${ay},${az}),\\quad B(${bx},${by},${bz})`, `P=\\frac{A+${ratio}B}{${ratio + 1}}`, [`P=\\frac{${ratio}A+B}{${ratio + 1}}`, `P=\\frac{A+B}{2}`, `P=A+${ratio}B`]),
-    item("s4", "구의 중심과 반지름", `${shifted("x", cx)}^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${radius * radius}`, `C=(${cx},${cy},${cz}),\\quad r=${radius}`, [`C=(${-cx},${-cy},${-cz}),\\quad r=${radius}`, `C=(${cx},${cy},${cz}),\\quad r=${radius * radius}`, `C=(${cy},${cz},${cx}),\\quad r=${radius}`, `C=(${-cx},${cy},${cz}),\\quad r=${radius}`, `C=(${cx},${-cy},${cz}),\\quad r=${radius}`]),
-    item("s5", "구의 방정식", `C=(${cx},${cy},${cz}),\\quad r=${radius}`, `${shifted("x", cx)}^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${radius * radius}`, [`${shifted("x", -cx)}^2+${shifted("y", -cy)}^2+${shifted("z", -cz)}^2=${radius * radius}`, `${shifted("x", cx)}^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${radius}`, `x^2+y^2+z^2=${radius * radius}`], "구의 방정식은?"),
-    item("s6", "좌표평면에 대한 대칭", `P(${ax},${ay},${az})\\text{를 }xy\\text{평면에 대칭이동}`, `(${ax},${ay},${-az})`, [`(${-ax},${-ay},${az})`, `(${ax},${-ay},${az})`, `(${-ax},${ay},${az})`], "대칭이동한 점의 좌표는?"),
-    item("s7", "좌표평면 위의 점", `P(a,b,c)\\text{가 }yz\\text{평면 위}`, `a=0`, [`b=0`, `c=0`, `a=b=c`], "$a$는?"),
+    item("s2", "선분의 중점", `A(${ax},${ay},${az}),\\quad B(${bx},${by},${bz})`, coordinateTriple(ax + bx, ay + by, az + bz, 2), [coordinateTriple(ax + bx + 2, ay + by, az + bz, 2), `(${ax},${ay},${az})`, `(${bx},${by},${bz})`]),
+    item("s3", "내분점의 좌표", `AP:PB=${ratio}:1,\\quad A(${ax},${ay},${az}),\\quad B(${bx},${by},${bz})`, `P=${coordinateTriple(ax + ratio * bx, ay + ratio * by, az + ratio * bz, ratio + 1)}`, [`P=${coordinateTriple(ratio * ax + bx, ratio * ay + by, ratio * az + bz, ratio + 1)}`, `P=(${ax},${ay},${az})`, `P=(${bx},${by},${bz})`, `P=${coordinateTriple(ax + bx, ay + by, az + bz, 2)}`], "내분점 $P$의 좌표는?"),
+    item("s4", "구의 중심과 반지름", generalSphere, `C=(${cx},${cy},${cz}),\\quad r=${radius}`, [`C=(${-cx},${-cy},${-cz}),\\quad r=${radius}`, `C=(${cx},${cy},${cz}),\\quad r=${radius * radius}`, `C=(${2 * cx},${2 * cy},${2 * cz}),\\quad r=${radius}`, `C=(${cx},${cy},${cz}),\\quad r=\\sqrt{${cx * cx + cy * cy + cz * cz + radius * radius}}`], "완전제곱식으로 고쳐 구한 중심과 반지름은?"),
+    item("s5", "좌표평면에 접하는 구", `C=(${cx},${cy},${cz}),\\quad ${planeNames[planeIndex]}\\text{평면에 접한다}`, tangentSphere, [`${shifted("x", -cx)}^2+${shifted("y", -cy)}^2+${shifted("z", -cz)}^2=${tangentRadius * tangentRadius}`, `${shifted("x", cx)}^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${(tangentRadius + 1) * (tangentRadius + 1)}`, planeCenteredSphere], "구의 방정식은?"),
+    item("s6", "좌표평면 대칭점 사이의 거리", `P(${ax},${ay},${az})\\text{의 }${planeNames[planeIndex]}\\text{평면 대칭점을 }Q(${reflected.join(",")})\\text{라 하자}`, `PQ=${reflectionDistance}`, [`PQ=${Math.abs([az, ay, ax][planeIndex])}`, `PQ=${reflectionDistance + 1}`, `PQ=${reflectionDistance + 2}`, `PQ=${reflectionDistance * 2}`], "$PQ$는?"),
+    item("s7", "등거리 조건", `P=(0,t,${equalityOffset}),\\quad A=(${Math.abs(equalityOffset)},0,${equalityOffset}),\\quad B=(${-Math.abs(equalityOffset)},${2 * equalityCoordinate},${equalityOffset}),\\quad PA=PB`, `t=${equalityCoordinate}`, [`t=${-equalityCoordinate}`, `t=${2 * equalityCoordinate}`, "t=0", `t=${equalityCoordinate + 1}`, `t=${equalityCoordinate - 1}`], "$t$는?"),
   ];
 }
 
@@ -196,14 +241,17 @@ export function createSpaceGeometryProjectionProblems(seed: number): GeometryCho
   const projectionZ = nonzero(next, -4, 4);
   const originalArea = 12 * scale;
   const projectedArea = originalArea / 2;
+  const angleTriples = [[3, 4, 5], [5, 12, 13], [8, 15, 17]] as const;
+  const [angleX, angleY, angleLength] = angleTriples[integer(next, 0, angleTriples.length - 1)];
+  const threePerpendicularScale = integer(next, 1, 3);
   return [
-    item("sg1", "두 직선이 이루는 각", `\\begin{gathered}\\ell_1:\\vec x=(1,0,0)+s(${scale},0,0)\\\\[4pt]\\ell_2:\\vec x=(0,1,0)+t(${scale},${scale},0)\\end{gathered}`, `\\frac{\\pi}{4}`, [`\\frac{\\pi}{3}`, `\\frac{\\pi}{6}`, `\\frac{\\pi}{2}`], "두 직선이 이루는 각은?", "space-lines-angle"),
-    item("sg3", "두 평면이 이루는 각", `\\begin{gathered}\\alpha:x=${scale}\\\\[4pt]\\beta:x+y=${2 * scale}\\end{gathered}`, `\\frac{\\pi}{4}`, [`\\frac{\\pi}{3}`, `\\frac{\\pi}{6}`, `\\frac{\\pi}{2}`], "두 평면이 이루는 각은?", "space-planes-angle"),
+    item("sg1", "두 직선이 이루는 각 계산", `\\begin{gathered}\\ell_1:\\vec x=(1,0,0)+s(${angleLength},0,0)\\\\[4pt]\\ell_2:\\vec x=(0,1,0)+t(${angleX},${angleY},0)\\end{gathered}`, `\\cos\\theta=\\frac{${angleX}}{${angleLength}}`, [`\\cos\\theta=\\frac{${angleY}}{${angleLength}}`, `\\cos\\theta=\\frac{${angleX}}{${angleY}}`, `\\cos\\theta=\\frac{${angleLength}}{${angleX}}`], "두 직선이 이루는 각 $\\theta$의 $\\cos\\theta$는?", "space-lines-angle"),
+    item("sg3", "두 평면이 이루는 각 계산", `\\begin{gathered}\\alpha:${angleLength}x=${scale * angleLength}\\\\[4pt]\\beta:${angleX}x+${angleY}y=${2 * scale}\\end{gathered}`, `\\cos\\theta=\\frac{${angleX}}{${angleLength}}`, [`\\cos\\theta=\\frac{${angleY}}{${angleLength}}`, `\\cos\\theta=\\frac{${angleX}}{${angleY}}`, `\\cos\\theta=\\frac{${angleLength}}{${angleX}}`], "두 평면이 이루는 각 $\\theta$의 $\\cos\\theta$는?", "space-planes-angle"),
     item("sg4", "점과 평면 사이의 거리", `\\begin{gathered}P(${pointX},${pointY},${pointZ})\\\\[4pt]\\alpha:x+2y+2z=${planeConstant}\\end{gathered}`, `${3 * distanceScale}`, [`${distanceScale}`, `${9 * distanceScale}`, `\\sqrt{${3 * distanceScale}}`], "점 P와 평면 α 사이의 거리는?", "space-point-plane-distance"),
     item("sg5", "평행한 두 평면 사이의 거리", `\\begin{gathered}\\alpha:x+2y+2z=${planeConstant}\\\\[4pt]\\beta:x+2y+2z=${planeConstant + 3 * scale}\\end{gathered}`, `${scale}`, [`${3 * scale}`, `${9 * scale}`, `\\frac{${scale}}{3}`], "두 평면 사이의 거리는?", "space-parallel-planes"),
     item("sg6", "평면에 내린 수선의 발", `\\begin{gathered}P(${pointX},${pointY},${pointZ})\\\\[4pt]\\alpha:x+2y+2z=${planeConstant}\\end{gathered}`, `H=(${hx},${hy},${hz})`, [`H=(${pointX},${pointY},${pointZ})`, `H=(${hx},${hy},${pointZ})`, `H=(${-hx},${-hy},${-hz})`, `H=(${pointX},${hy},${hz})`, `H=(${hx},${pointY},${hz})`], "수선의 발 H의 좌표는?", "space-perpendicular-foot"),
     item("sg7", "직선 방향으로의 벡터 정사영", `\\begin{gathered}\\vec a=(${projectionX},${projectionY},${projectionZ})\\\\[4pt]\\vec b=(3,4,0)\\end{gathered}`, `(${3 * projectionScale},${4 * projectionScale},0)`, [`(${projectionX},${projectionY},0)`, `(${4 * projectionScale},${3 * projectionScale},0)`, `(${-3 * projectionScale},${-4 * projectionScale},0)`], "$\\mathrm{proj}_{\\vec b}\\vec a$는?", "space-vector-projection"),
     item("sg8", "평면도형의 정사영 넓이", `\\begin{gathered}S=${originalArea}\\\\[4pt]\\theta=60^\\circ\\end{gathered}`, `${projectedArea}`, [`${originalArea}`, `${originalArea * 2}`, `${originalArea * 3 / 2}`], "정사영의 넓이는?", "space-area-projection"),
-    item("sg9", "삼수선의 정리", `\\begin{gathered}PH\\perp\\alpha\\\\[3pt]HA\\perp AB\\\\[3pt]A,B,H\\in\\alpha\\end{gathered}`, `PA\\perp AB`, [`PA\\parallel AB`, `PH\\perp AB`, `PA\\parallel HA`], "삼수선의 정리로 알 수 있는 관계는?", "space-three-perpendiculars"),
+    item("sg9", "삼수선과 거리 계산", `\\begin{gathered}PH\\perp\\alpha,\\quad HA\\perp AB\\\\[3pt]PH=${3 * threePerpendicularScale},\\quad HA=${4 * threePerpendicularScale},\\quad AB=${12 * threePerpendicularScale}\\end{gathered}`, `PB=${13 * threePerpendicularScale}`, [`PB=${12 * threePerpendicularScale}`, `PB=${17 * threePerpendicularScale}`, `PB=${5 * threePerpendicularScale}`], "삼수선의 정리와 피타고라스 정리로 구한 $PB$는?", "space-three-perpendiculars"),
   ];
 }

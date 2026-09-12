@@ -1,12 +1,12 @@
 import type { GeometryChoiceItem } from "../app/arithmetic/high-school/components/geometry-choice-worksheet";
 
 export type ExponentialLogFunctionKind =
-  | "exponential-monotonicity"
-  | "exponential-asymptote"
+  | "exponential-value"
+  | "exponential-shifted-value"
   | "exponential-base"
-  | "logarithmic-domain"
-  | "logarithmic-asymptote"
-  | "inverse-functions"
+  | "logarithmic-value"
+  | "logarithmic-shifted-value"
+  | "inverse-function-value"
   | "exponential-model"
   | "logarithmic-model";
 
@@ -49,11 +49,7 @@ function choices(id: string, answer: string, distractors: string[]) {
   const values = [answer, ...distractors.filter((value) => value !== answer)];
   const unique = [...new Set(values)].slice(0, 4);
   if (unique.length < 4) throw new Error(`${id}: 실제 오답 후보가 3개보다 적습니다.`);
-  return unique.map((latex, index) => ({
-    id: `${id}-${index}`,
-    latex,
-    correct: index === 0,
-  }));
+  return unique.map((latex, index) => ({ id: `${id}-${index}`, latex, correct: index === 0 }));
 }
 
 function item(
@@ -67,15 +63,7 @@ function item(
   distractors: string[],
 ): ExponentialLogFunctionProblem {
   const id = `exponential-log-function-${seed}-${index}`;
-  return {
-    id,
-    kind,
-    label,
-    prompt,
-    latex,
-    correctLatex: answer,
-    choices: choices(id, answer, distractors),
-  };
+  return { id, kind, label, prompt, latex, correctLatex: answer, choices: choices(id, answer, distractors) };
 }
 
 export function createExponentialLogFunctionProblems(seed: number) {
@@ -83,108 +71,63 @@ export function createExponentialLogFunctionProblems(seed: number) {
   const problems: ExponentialLogFunctionProblem[] = [];
 
   {
-    const increasing = next() >= 0.5;
-    const base = pick(next, [2, 3, 4] as const);
-    const expression = increasing ? `${base}` : `\\frac1${base}`;
-    const answer = increasing ? "\\text{증가함수}" : "\\text{감소함수}";
-    problems.push(item(
-      seed,
-      0,
-      "exponential-monotonicity",
-      "지수함수의 증가·감소",
-      "그래프의 증가·감소는?",
-      `y=\\left(${expression}\\right)^x`,
-      answer,
-      [
-        increasing ? "\\text{감소함수}" : "\\text{증가함수}",
-        "\\text{상수함수}",
-        "\\text{일대일함수가 아님}",
-      ],
-    ));
+    const base = pick(next, [2, 3, 4, 5] as const);
+    const exponent = integer(next, 2, 4);
+    const answer = base ** exponent;
+    problems.push(item(seed, 0, "exponential-value", "지수함숫값 계산", "함숫값은?",
+      `f(x)=${base}^x,\\quad f(${exponent})=?`, `f(${exponent})=${answer}`,
+      [`f(${exponent})=${base * exponent}`, `f(${exponent})=${base ** (exponent - 1)}`, `f(${exponent})=${answer + base}`, `f(${exponent})=${answer - base}`, `f(${exponent})=${answer + 1}`, `f(${exponent})=${answer + 2}`, `f(${exponent})=${answer + 3}`]));
   }
 
   {
     const base = pick(next, [2, 3, 4] as const);
     const shift = integer(next, -3, 3);
-    let vertical = integer(next, -4, 4);
-    if (vertical === shift) vertical = vertical === 4 ? -4 : vertical + 1;
-    problems.push(item(
-      seed,
-      1,
-      "exponential-asymptote",
-      "지수함수의 평행이동",
-      "점근선의 방정식은?",
-      `y=${base}^{${shiftedVariable(shift)}}${signed(vertical)}`,
-      `y=${vertical}`,
-      [`x=${shift}`, `y=${shift}`, `x=${vertical}`],
-    ));
+    const vertical = integer(next, -4, 4);
+    const exponent = integer(next, 2, 3);
+    const input = shift + exponent;
+    const answer = base ** exponent + vertical;
+    problems.push(item(seed, 1, "exponential-shifted-value", "평행이동한 지수함숫값", "주어진 $x$에서 $y$는?",
+      `y=${base}^{${shiftedVariable(shift)}}${signed(vertical)},\\quad x=${input}`, `y=${answer}`,
+      [`y=${base ** input + vertical}`, `y=${base * exponent + vertical}`, `y=${base ** exponent - vertical}`, `y=${answer + base}`, `y=${answer - base}`, `y=${answer + 1}`, `y=${answer + 2}`, `y=${answer + 3}`]));
   }
 
   {
-    const base = pick(next, [2, 3, 4] as const);
-    const x = pick(next, [2, 3] as const);
-    const y = base ** x;
-    problems.push(item(
-      seed,
-      2,
-      "exponential-base",
-      "그래프 위의 점",
-      "밑 $a$의 값은?",
-      `y=a^x,\\quad a>1,\\quad (${x},${y})`,
-      `a=${base}`,
-      [`a=${base + 1}`, `a=${base - 1}`, `a=${base * x}`],
-    ));
+    const base = pick(next, [2, 3, 4, 5] as const);
+    const exponent = pick(next, [2, 3] as const);
+    const value = base ** exponent;
+    problems.push(item(seed, 2, "exponential-base", "지수함수의 밑 계산", "밑 $a$의 값은?",
+      `y=a^x,\\quad a>1,\\quad (${exponent},${value})`, `a=${base}`,
+      [`a=${base + 1}`, `a=${Math.max(1, base - 1)}`, `a=${base * exponent}`, `a=${value}`]));
+  }
+
+  {
+    const base = pick(next, [2, 3, 5] as const);
+    const exponent = integer(next, 2, 5);
+    const value = base ** exponent;
+    problems.push(item(seed, 3, "logarithmic-value", "로그값 계산", "로그의 값은?",
+      `\\log_{${base}}${value}=?`, `${exponent}`,
+      [`${exponent + 1}`, `${exponent - 1}`, `${base * exponent}`, `${value}`, `${base + exponent}`]));
   }
 
   {
     const base = pick(next, [2, 3, 5] as const);
     const shift = integer(next, -4, 4);
-    const boundary = shift;
-    problems.push(item(
-      seed,
-      3,
-      "logarithmic-domain",
-      "로그함수의 정의역",
-      "정의역은?",
-      `y=\\log_{${base}}(${shiftedVariable(shift)})`,
-      `x>${boundary}`,
-      [`x\\ge${boundary}`, `x<${boundary}`, `x\\le${boundary}`],
-    ));
+    const vertical = integer(next, -3, 3);
+    const exponent = integer(next, 2, 4);
+    const input = shift + base ** exponent;
+    const answer = exponent + vertical;
+    problems.push(item(seed, 4, "logarithmic-shifted-value", "평행이동한 로그함숫값", "주어진 $x$에서 $y$는?",
+      `y=\\log_{${base}}(${shiftedVariable(shift)})${signed(vertical)},\\quad x=${input}`, `y=${answer}`,
+      [`y=${exponent - vertical}`, `y=${base + vertical}`, `y=${exponent + shift}`, `y=${answer + 1}`, `y=${answer - 1}`, `y=${answer + 2}`, `y=${answer + 3}`]));
   }
 
   {
     const base = pick(next, [2, 3, 5] as const);
-    const shift = integer(next, -4, 4);
-    let vertical = integer(next, -3, 3);
-    if (vertical === shift) vertical = vertical === 3 ? -3 : vertical + 1;
-    problems.push(item(
-      seed,
-      4,
-      "logarithmic-asymptote",
-      "로그함수의 평행이동",
-      "점근선의 방정식은?",
-      `y=\\log_{${base}}(${shiftedVariable(shift)})${signed(vertical)}`,
-      `x=${shift}`,
-      [`y=${shift}`, `x=${vertical}`, `y=${vertical}`],
-    ));
-  }
-
-  {
-    const base = pick(next, [2, 3, 5] as const);
-    problems.push(item(
-      seed,
-      5,
-      "inverse-functions",
-      "지수함수와 로그함수의 관계",
-      "역함수는?",
-      `f(x)=${base}^x`,
-      `f^{-1}(x)=\\log_{${base}}x`,
-      [
-        `f^{-1}(x)=-\\log_{${base}}x`,
-        `f^{-1}(x)=\\frac1{${base}^x}`,
-        `f^{-1}(x)=x^{${base}}`,
-      ],
-    ));
+    const exponent = integer(next, 2, 5);
+    const value = base ** exponent;
+    problems.push(item(seed, 5, "inverse-function-value", "역함숫값 계산", "역함숫값은?",
+      `f(x)=${base}^x,\\quad f^{-1}(${value})=?`, `${exponent}`,
+      [`${base}`, `${value}`, `${exponent + 1}`, `${exponent - 1}`, `${base * exponent}`]));
   }
 
   {
@@ -192,42 +135,21 @@ export function createExponentialLogFunctionProblems(seed: number) {
     const ratio = pick(next, [2, 3] as const);
     const time = integer(next, 3, 5);
     const answer = initial * ratio ** time;
-    problems.push(item(
-      seed,
-      6,
-      "exponential-model",
-      "지수적 증가 모델",
-      `${time}시간 뒤의 양은?`,
-      `N(t)=${initial}\\cdot${ratio}^{t}`,
-      `N(${time})=${answer}`,
-      [
-        `N(${time})=${initial * ratio * time}`,
-        `N(${time})=${initial + ratio ** time}`,
-        `N(${time})=${initial * ratio ** (time - 1)}`,
-        `N(${time})=${initial * ratio ** (time + 1)}`,
-        `N(${time})=${initial + ratio * time}`,
-      ],
-    ));
+    problems.push(item(seed, 6, "exponential-model", "지수적 증가 계산", `${time}시간 뒤의 양은?`,
+      `N(t)=${initial}\\cdot${ratio}^{t}`, `N(${time})=${answer}`,
+      [`N(${time})=${initial * ratio * time}`, `N(${time})=${initial + ratio ** time}`, `N(${time})=${initial * ratio ** (time - 1)}`, `N(${time})=${initial * ratio ** (time + 1)}`]));
   }
 
   {
     const base = pick(next, [2, 3, 5] as const);
     const exponent = integer(next, 2, 5);
     const value = base ** exponent;
-    problems.push(item(
-      seed,
-      7,
-      "logarithmic-model",
-      "로그를 이용한 지수 구하기",
-      "조건을 만족하는 $t$는?",
-      `${base}^{t}=${value}`,
-      `t=${exponent}`,
-      [`t=${exponent + 1}`, `t=${exponent - 1}`, `t=${2 * exponent}`],
-    ));
+    problems.push(item(seed, 7, "logarithmic-model", "지수 방정식의 지수 계산", "조건을 만족하는 $t$는?",
+      `${base}^{t}=${value}`, `t=${exponent}`,
+      [`t=${exponent + 1}`, `t=${exponent - 1}`, `t=${2 * exponent}`, `t=${base}`]));
   }
 
   return problems;
 }
 
-export const exponentialLogFunctionProblems =
-  createExponentialLogFunctionProblems(20260829);
+export const exponentialLogFunctionProblems = createExponentialLogFunctionProblems(20260829);

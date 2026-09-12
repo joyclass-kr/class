@@ -67,6 +67,10 @@ export default function MiddleCurriculumCalculationsPage() {
       window.location.replace("/arithmetic");
       return;
     }
+    if (legacyKind === "construction-congruence") {
+      window.location.replace("/math-ox/");
+      return;
+    }
     const requested = legacyKind === "linear-function-equations" ? "linear-function-basics" : legacyKind;
     if (!isMiddleCurriculumKind(requested) || requested === kind) return;
     setKind(requested);

@@ -495,7 +495,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const functionResponse = await render("/arithmetic/high-school/function-transformations");
   assert.equal(functionResponse.status, 200);
   const functionHtml = await functionResponse.text();
-  assert.match(functionHtml, /함수의 대응과 역함수 조건을 확인하고 필요한 계산을 하세요/);
+  assert.match(functionHtml, /합성함수를 전개하고 역함수를 계산하세요/);
   assert.match(functionHtml, /합성함수와 역함수/);
   assert.doesNotMatch(functionHtml, /f\(x\+h\)/);
   assert.equal((functionHtml.match(/data-testid="numeric-choice-question"/g) ?? []).length, 16);

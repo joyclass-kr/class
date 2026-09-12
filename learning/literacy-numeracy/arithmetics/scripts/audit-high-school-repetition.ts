@@ -38,7 +38,7 @@ const FACTORIES: Record<string, readonly [modulePath: string, exportName: string
   "coordinate-lines": ["../lib/coordinate-line-workouts.ts", "createCoordinateLineProblemSet"],
   "circle-equations": ["../lib/circle-equation-workouts.ts", "createCircleProblemSet"],
   "sets-propositions": ["../lib/sets-propositions-workouts.ts", "createLogicProblemSet"],
-  "function-transformations": ["../lib/function-foundation-workouts.ts", "createCombinedFunctionTransformationProblemSet"],
+  "function-transformations": ["../lib/function-transformation-workouts.ts", "createFunctionTransformationWorksheetSet"],
   "rational-radical-functions": ["../lib/rational-radical-function-workouts.ts", "createRationalRadicalProblemSet"],
   logarithms: ["../lib/logarithm-workouts.ts", "createLogarithmProblemSet"],
   "exponential-log-functions": ["../lib/exponential-log-function-workouts.ts", "createExponentialLogFunctionProblems"],

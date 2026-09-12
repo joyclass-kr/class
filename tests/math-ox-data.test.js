@@ -66,6 +66,28 @@ test("오답으로 등록됐던 핵심 문항의 정답과 조건을 유지한�
   assert.match(byId.get(135).reason, /0\.1/, "135번 해설에는 원래 나머지 0.1이 있어야 합니다.");
 });
 
+test("연산이 아닌 공간좌표 개념은 수학 OX에서 다룬다", () => {
+  const questions = loadQuestions();
+  const byId = new Map(questions.map((question) => [question.id, question]));
+
+  assert.equal(byId.get(726).answer, "O");
+  assert.match(byId.get(726).prompt, /xy.*대칭이동/);
+  assert.equal(byId.get(727).answer, "X");
+  assert.match(byId.get(727).reason, /a=0/);
+});
+
+test("연산에서 분리한 함수·벡터의 단순 지식은 수학 OX에서 다룬다", () => {
+  const questions = loadQuestions();
+  const byId = new Map(questions.map((question) => [question.id, question]));
+
+  assert.match(byId.get(728).prompt, /함수/);
+  assert.match(byId.get(729).prompt, /역함수/);
+  assert.equal(byId.get(730).answer, "X");
+  assert.match(byId.get(731).topic, /방향벡터/);
+  assert.match(byId.get(732).topic, /법선벡터/);
+  assert.equal(byId.get(733).answer, "X");
+});
+
 // "반드시·항상·언제나"나 "~만 ~하면 된다", "~뿐이다"가 든 문항은 정답이 X이면
 // 읽지 않고도 X를 찍을 수 있다. 정답이 O이면 오히려 좋다 — 그런 말이 나와도
 // 참일 수 있다는 것을 가르쳐 주기 때문이다. 그래서 X인 것만 막는다.

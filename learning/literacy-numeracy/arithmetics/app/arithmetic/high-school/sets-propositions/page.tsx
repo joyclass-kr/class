@@ -72,10 +72,10 @@ export default function SetsPropositionsPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet logic-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>공통수학 2</span><strong>집합과 명제{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>공통수학 2</span><strong>집합의 연산과 원소 개수{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
-        <div className="polynomial-instruction"><b>조건을 분석하여 알맞은 답을 고르세요. 빈 공간에 판단 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점</span></div>
+        <div className="polynomial-instruction"><b>집합의 원소 개수를 계산하세요. 빈 공간에 계산 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점</span></div>
         <div className="polynomial-problem-grid logic-problem-grid">{problems.map((problem, index) => row(problem, index, answerSheet))}</div>
       </div>
     );
@@ -96,7 +96,7 @@ export default function SetsPropositionsPage() {
       </div>
       <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(false)}</div>
       <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(true)}</div>
-      {panelOpen && <WorksheetChoicePanel title="집합과 명제" problems={choiceProblems} selected={selected} results={results} onSelect={choose} onGrade={checkAll} onClose={() => setPanelOpen(false)} />}
+      {panelOpen && <WorksheetChoicePanel title="집합의 연산과 원소 개수" problems={choiceProblems} selected={selected} results={results} onSelect={choose} onGrade={checkAll} onClose={() => setPanelOpen(false)} />}
     </main>
   );
 }

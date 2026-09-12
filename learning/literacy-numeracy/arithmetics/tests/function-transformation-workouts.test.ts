@@ -3,13 +3,20 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import {
   composeDifferenceAnswer, composeFG, composeGF, createFunctionTransformationProblemSet,
-  createFunctionTransformationReviewProblems, formatFunctionAnswerLatex, formatFunctionProblemLatex,
+  createFunctionTransformationReviewProblems, createFunctionTransformationWorksheetSet,
+  formatFunctionAnswerLatex, formatFunctionProblemLatex,
 } from "../lib/function-transformation-workouts.ts";
 
 test("one set covers five distinct composition and inverse-function skills", () => {
   const first = createFunctionTransformationProblemSet(20260726);
   assert.deepEqual(first, createFunctionTransformationProblemSet(20260726));
   assert.deepEqual(first.problems.map(({ kind }) => kind), ["compose-fg", "compose-gf", "composition-difference", "linear-inverse", "rational-inverse"]);
+});
+test("worksheet set contains only eight composition and inverse calculations", () => {
+  const problems = createFunctionTransformationWorksheetSet(20260726).problems;
+  assert.equal(problems.length, 8);
+  assert.equal(new Set(problems.map(({ id }) => id)).size, 8);
+  assert.ok(problems.every(({ kind }) => ["compose-fg", "compose-gf", "composition-difference", "linear-inverse", "rational-inverse"].includes(kind)));
 });
 test("both composition orders and their difference are calculated exactly", () => {
   assert.deepEqual(composeFG([1, -2, 3], [2, -1]), [4, -8, 6]);
@@ -32,7 +39,8 @@ test("review problems preserve wrong types and stop at two", () => {
 test("worksheet names the actual skill and hides type labels before solving", async () => {
   const page = await readFile(new URL("../app/arithmetic/high-school/function-transformations/page.tsx", import.meta.url), "utf8");
   assert.match(page, /title="합성함수와 역함수"/);
-  assert.match(page, /instruction="함수의 대응과 역함수 조건을 확인하고 필요한 계산을 하세요/);
+  assert.match(page, /instruction="합성함수를 전개하고 역함수를 계산하세요/);
+  assert.doesNotMatch(page, /function-foundation|conceptOptions|함수의 대응/);
   assert.match(page, /NumericChoiceWorksheet/);
 });
 test("complete function expressions are used as four-choice answers", async () => {

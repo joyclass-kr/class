@@ -14,17 +14,17 @@ const physicalPages = fs.readdirSync(pageRoot, { withFileTypes: true })
 
 const baseRoute = (route: string | null) => route?.split("?")[0].split("/").at(-1) ?? "";
 
-test("중등 40개 필수 목차는 중복 없이 모두 실제 페이지에 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 40);
+test("중등 39개 반복 연산 목차는 중복 없이 모두 실제 페이지에 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 39);
   assert.deepEqual(
     middleSchoolWorksheetCatalog.reduce<Record<string, number>>((counts, worksheet) => {
       counts[worksheet.grade] = (counts[worksheet.grade] ?? 0) + 1;
       return counts;
     }, {}),
-    { 중1: 9, 중2: 9, 중3: 22 },
+    { 중1: 8, 중2: 9, 중3: 22 },
   );
-  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size, 40);
-  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size, 40);
+  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size, 39);
+  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size, 39);
   assert.deepEqual(
     middleSchoolWorksheetCatalog
       .filter(({ route }) => !physicalPages.includes(baseRoute(route)))
@@ -41,7 +41,6 @@ test("필수 연산 영역은 목차에 하나도 빠지지 않는다", () => {
     "/arithmetic/middle-school/rational-mixed",
     "/arithmetic/middle-school/core-calculations?kind=linear-equation",
     "/arithmetic/middle-school/curriculum-calculations?kind=coordinate-proportion",
-    "/arithmetic/middle-school/curriculum-calculations?kind=construction-congruence",
     "/arithmetic/middle-school/curriculum-calculations?kind=plane-geometry",
     "/arithmetic/middle-school/curriculum-calculations?kind=solid-geometry",
     "/arithmetic/middle-school/statistics?kind=representative-values",
@@ -70,6 +69,7 @@ test("필수 연산 영역은 목차에 하나도 빠지지 않는다", () => {
 test("개별 반복 가치가 낮은 쉬운 유형은 한 페이지에 통합한다", () => {
   const routes = middleSchoolWorksheetCatalog.map(({ route }) => route);
   for (const mergedRoute of [
+    "/arithmetic/middle-school/curriculum-calculations?kind=construction-congruence",
     "/arithmetic/middle-school/core-calculations?kind=linear-expression",
     "/arithmetic/middle-school/core-calculations?kind=linear-inequality-application",
     "/arithmetic/middle-school/core-calculations?kind=simultaneous-substitution",
@@ -147,4 +147,9 @@ test("같은 공용 페이지에서 kind만 바뀌어도 해당 학습지로 갱
     assert.match(source, /searchParams\.get\("kind"\)/);
     assert.doesNotMatch(source, /window\.location\.search/);
   }
+});
+
+test("옛 작도·합동 개념 학습지 주소는 수학 OX로 이동한다", () => {
+  const source = fs.readFileSync(path.join(pageRoot, "curriculum-calculations", "page.tsx"), "utf8");
+  assert.match(source, /construction-congruence[\s\S]*window\.location\.replace\("\/math-ox\/"\)/);
 });

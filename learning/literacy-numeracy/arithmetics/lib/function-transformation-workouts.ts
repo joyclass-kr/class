@@ -47,6 +47,13 @@ function build(kind: FunctionTransformationKind, next: () => number, id: string)
   return { id, kind, label: LABELS[kind], numerator, denominator, answer: { type: "rational", numerator: [-denominator[1], numerator[1]], denominator: [denominator[0], -numerator[0]] } };
 }
 export function createFunctionTransformationProblemSet(seed: number) { const next = random(seed); return { seed, problems: KINDS.map((kind, index) => build(kind, next, `function-transformation-${index}`)) }; }
+export function createFunctionTransformationWorksheetSet(seed: number) {
+  const primary = createFunctionTransformationProblemSet(seed).problems;
+  const extra = createFunctionTransformationProblemSet((seed ^ 0x9e3779b9) >>> 0).problems
+    .slice(0, 3)
+    .map((problem, index) => ({ ...problem, id: `function-transformation-extra-${index}` }));
+  return { seed, problems: [...primary, ...extra] };
+}
 export function createFunctionTransformationReviewProblems(kinds: FunctionTransformationKind[], seed: number) {
   const next = random(seed); return [...new Set(kinds)].slice(0, 2).map((kind, index) => build(kind, next, `function-review-${index}-${seed}`));
 }

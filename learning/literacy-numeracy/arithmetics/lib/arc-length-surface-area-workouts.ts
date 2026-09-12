@@ -25,14 +25,14 @@ function make(
 export const arcLengthSurfaceAreaProblems: GeometryChoiceItem[] = [
   make(
     "as1",
-    "곡선의 길이 공식",
-    "곡선의 길이 $L$을 나타낸 것은?",
-    String.raw`y=f(x),\quad a\le x\le b`,
-    String.raw`L=\int_a^b\sqrt{1+\{f'(x)\}^2}\,dx`,
+    "분수 기울기 선분의 길이",
+    "곡선의 길이는?",
+    String.raw`y=\frac34x,\quad 0\le x\le8`,
+    String.raw`10`,
     [
-      String.raw`L=\int_a^b\{1+f'(x)\}\,dx`,
-      String.raw`L=\int_a^b\sqrt{1+f'(x)}\,dx`,
-      String.raw`L=\int_a^b\{1+\{f'(x)\}^2\}\,dx`,
+      String.raw`6`,
+      String.raw`8`,
+      String.raw`12`,
     ],
   ),
   make(
