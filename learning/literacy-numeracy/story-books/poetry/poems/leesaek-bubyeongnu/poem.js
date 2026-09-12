@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leesaek-bubyeongnu"] = {
         "poem": {
+            "illustration": "poems/leesaek-bubyeongnu/illustration.webp",
             "lines": [
                 "어제 영명사를 지나다",
                 "잠시 부벽루에 올랐네",

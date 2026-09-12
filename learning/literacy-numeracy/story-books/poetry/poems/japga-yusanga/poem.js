@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["japga-yusanga"] = {
         "poem": {
+            "illustration": "poems/japga-yusanga/illustration.webp",
             "lines": [
                 "화란춘성하고 만화방창이라",
                 "때 좋다 벗님네야 산천경개를 구경을 가세",

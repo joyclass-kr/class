@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["yongak-nalgeunjip"] = {
         "poem": {
+            "illustration": "poems/yongak-nalgeunjip/illustration.webp",
             "lines": [
                 "날로 밤으로",
                 "왕거미 줄 치기에 분주한 집",

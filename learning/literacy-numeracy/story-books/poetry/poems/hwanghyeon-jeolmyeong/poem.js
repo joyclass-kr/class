@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["hwanghyeon-jeolmyeong"] = {
         "poem": {
+            "illustration": "poems/hwanghyeon-jeolmyeong/illustration.webp",
             "lines": [
                 "새 짐승도 슬피 울고 산과 강도 찡그리니",
                 "무궁화 세상은 이미 가라앉았구나",

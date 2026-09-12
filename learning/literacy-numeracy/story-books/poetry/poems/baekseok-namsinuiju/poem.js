@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["baekseok-namsinuiju"] = {
         "poem": {
+            "illustration": "poems/baekseok-namsinuiju/illustration.webp",
             "lines": [
                 "어느 사이에 나는 아내도 없고, 또,",
                 "아내와 같이 살던 집도 없어지고,",

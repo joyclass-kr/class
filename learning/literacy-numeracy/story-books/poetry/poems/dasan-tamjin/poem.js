@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["dasan-tamjin"] = {
         "poem": {
+            "illustration": "poems/dasan-tamjin/illustration.webp",
             "lines": [
                 "새로 짜낸 무명이 눈처럼 고왔는데",
                 "이방 줄 돈이라고 황두가 뺏어 가네",

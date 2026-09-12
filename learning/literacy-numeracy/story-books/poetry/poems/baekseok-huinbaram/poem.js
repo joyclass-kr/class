@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["baekseok-huinbaram"] = {
         "poem": {
+            "illustration": "poems/baekseok-huinbaram/illustration.webp",
             "lines": [
                 "오늘 저녁 이 좁다란 방의 흰 바람벽에",
                 "어쩐지 쓸쓸한 것만이 오고 간다",

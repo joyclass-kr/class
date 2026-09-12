@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["baekseok-yeounangol"] = {
         "poem": {
+            "illustration": "poems/baekseok-yeounangol/illustration.webp",
             "lines": [
                 "명절날 나는 엄매 아배 따라 우리 집 개는 나를 따라 진할머니 진할아버지가 있는 큰집으로 가면",
                 "",

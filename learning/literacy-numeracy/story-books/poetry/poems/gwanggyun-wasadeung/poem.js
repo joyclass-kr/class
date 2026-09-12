@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["gwanggyun-wasadeung"] = {
         "poem": {
+            "illustration": "poems/gwanggyun-wasadeung/illustration.webp",
             "lines": [
                 "차단-한 등불이 하나 비인 하늘에 걸려 있다",
                 "내 호올로 어델 가라는 슬픈 신호냐",

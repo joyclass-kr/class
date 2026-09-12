@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["folk-sijipsari"] = {
         "poem": {
+            "illustration": "poems/folk-sijipsari/illustration.webp",
             "lines": [
                 "형님 온다 형님 온다 분고개로 형님 온다",
                 "형님 마중 누가 갈까 형님 동생 내가 가지",

@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jehyeon-sarihwa"] = {
         "poem": {
+            "illustration": "poems/jehyeon-sarihwa/illustration.webp",
             "lines": [
                 "참새야 어디서 오가며 나느냐",
                 "일 년 농사는 아랑곳하지 않고",
