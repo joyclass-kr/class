@@ -131,7 +131,7 @@ const CHAPTERS = [
                     "사흘이 지나자 호랑이가 안절부절못하기 시작했어요.",
                     "동굴 안을 빙빙 돌며 으르렁거리고 발톱으로 벽을 긁었지요.",
                     "그러다 일곱 날이 지나자 끝내 벌떡 일어서고 말았습니다.",
-                    "\"이건 도무지 사람이 할 짓이 아니다!\""
+                    "\"이건 도무지 내가 할 짓이 아니다!\""
                 ],
                 right: [
                     "\"못 하겠다! 나는 이렇게는 못 산다!\"",
@@ -433,7 +433,7 @@ const EN = {
                         "He went round and round the cave, growling.",
                         "He scratched at the wall with his claws.",
                         "Then, on the seventh day, he got to his feet for good.",
-                        { t: "\"This is no thing for anybody to do!\"", v: "beast" }
+                        { t: "\"This is no thing for me to do!\"", v: "beast" }
                     ],
                     right: [
                         { t: "\"I cannot! I cannot live like this!\"", v: "beast" },
@@ -677,7 +677,7 @@ const EN = {
             { w: "growling (growl)", k: "으르렁거리며", s: "He went round and round the cave, growling." },
             { w: "scratched (scratch)", k: "긁었다", s: "He scratched at the wall with his claws." },
             { w: "for good", k: "끝내", s: "Then, on the seventh day, he got to his feet for good." },
-            { w: "no thing for ~ to do", k: "사람이 할 짓이 아닌", s: "This is no thing for anybody to do!" },
+            { w: "no thing for ~ to do", k: "내가 할 짓이 아닌", s: "This is no thing for me to do!" },
             { w: "One bite of ~", k: "한 점만", s: "One bite of meat and I should be well again!" },
             { w: "in a moment", k: "순식간에", s: "It was over in a moment, with no time to stop him." },
             { w: "looked after ~ (look)", k: "뒷모습을 바라보았다", s: "The bear only looked steadily after him." }
@@ -1462,7 +1462,7 @@ function renderVocab() {
             <li>
                 <div class="vocab-top">
                     <p class="vocab-word">${w.w}</p>
-                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                    ${(CAN_SPEAK && LANG === 'en') ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
                 </div>
                 <p class="vocab-mean">${w.k}</p>
                 <p class="vocab-sent">${w.s}</p>

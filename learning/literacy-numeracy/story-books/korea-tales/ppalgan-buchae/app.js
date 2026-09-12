@@ -147,7 +147,7 @@ const CHAPTERS = [
     },
     {
         num: 3,
-        title: "3장 · 웬 지진이냐",
+        title: "3장 · 웬 소동이냐",
         beats: [
             {
                 art: "09-play.webp",
@@ -194,9 +194,9 @@ const CHAPTERS = [
                 ],
                 right: [
                     "국그릇에서 국물이 찰랑찰랑 넘쳤습니다. 젓가락이 데굴데굴 굴러떨어졌지요.",
-                    "\"웬 지진이냐!\"",
+                    "\"웬 소동이냐!\"",
                     "옥황상제가 수저를 놓고 벌떡 일어섰답니다.",
-                    "\"어느 놈이 하늘을 흔드느냐!\"",
+                    "\"어느 놈이 구름을 흔드느냐!\"",
                     "신하들이 허둥지둥 달려 나왔답니다."
                 ]
             },
@@ -443,7 +443,7 @@ const EN = {
         },
         {
             num: 3,
-            title: "Chapter 3 · What Earthquake Is This",
+            title: "Chapter 3 · What Is This Commotion",
             beats: [
                 {
                     art: "09-play.webp",
@@ -495,9 +495,9 @@ const EN = {
                     right: [
                         "Soup slopped over the edge of the bowl.",
                         "The chopsticks rolled off and fell.",
-                        { t: "\"What earthquake is this!\"", v: "old" },
+                        { t: "\"What is this commotion!\"", v: "old" },
                         "The Jade Emperor put down his spoon and got to his feet.",
-                        { t: "\"Who is shaking the sky!\"", v: "old" },
+                        { t: "\"Who is shaking the clouds!\"", v: "old" },
                         "The officials came running out in a fluster."
                     ]
                 },
@@ -702,7 +702,7 @@ const EN = {
             { w: "drew his brows together (draw)", k: "눈살을 찌푸렸다", s: "The Jade Emperor drew his brows together." },
             { w: "slopped over (slop)", k: "찰랑찰랑 넘쳤다", s: "Soup slopped over the edge of the bowl." },
             { w: "rolled off (roll)", k: "데굴데굴 굴러떨어졌다", s: "The chopsticks rolled off and fell." },
-            { w: "earthquake", k: "지진", s: "What earthquake is this!" },
+            { w: "commotion", k: "소동", s: "What is this commotion!" },
             { w: "got to his feet", k: "벌떡 일어섰다", s: "The Jade Emperor put down his spoon and got to his feet." }
         ],
         "12-pillar.webp": [
@@ -897,7 +897,7 @@ const WORDS_KO = {
         { w: "눈살을 찌푸리다", k: "못마땅해 이맛살을 찡그리다.", s: "옥황상제가 눈살을 찌푸렸지요." },
         { w: "찰랑찰랑", k: "물이 넘칠 듯 흔들리는 모양.", s: "국그릇에서 국물이 찰랑찰랑 넘쳤습니다." },
         { w: "데굴데굴", k: "자꾸 구르는 모양.", s: "젓가락이 데굴데굴 굴러떨어졌지요." },
-        { w: "지진", k: "땅이 흔들리는 것.", s: "웬 지진이냐!" }
+        { w: "소동", k: "갑자기 시끄럽고 어수선한 일.", s: "웬 소동이냐!" }
     ],
     "12-pillar.webp": [
         { w: "불쑥", k: "갑자기 쑥 나타나는 모양.", s: "웬 벌건 기둥이 하나 불쑥 솟아 있었어요." },
@@ -1462,7 +1462,7 @@ function renderVocab() {
             <li>
                 <div class="vocab-top">
                     <p class="vocab-word">${w.w}</p>
-                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                    ${(CAN_SPEAK && LANG === 'en') ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
                 </div>
                 <p class="vocab-mean">${w.k}</p>
                 <p class="vocab-sent">${w.s}</p>

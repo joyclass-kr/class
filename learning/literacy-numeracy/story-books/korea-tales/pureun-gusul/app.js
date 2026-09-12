@@ -1457,7 +1457,7 @@ function renderVocab() {
             <li>
                 <div class="vocab-top">
                     <p class="vocab-word">${w.w}</p>
-                    ${CAN_SPEAK ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
+                    ${(CAN_SPEAK && LANG === 'en') ? `<button type="button" class="vocab-say" data-i="${i}" aria-label="Listen">🔊</button>` : ''}
                 </div>
                 <p class="vocab-mean">${w.k}</p>
                 <p class="vocab-sent">${w.s}</p>
