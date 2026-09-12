@@ -245,10 +245,10 @@ const CHAPTERS = [
                     "알라딘은 앞이 캄캄했습니다. 밤새 성 밖을 헤맸지요.",
                     "그러다 문득 반지가 생각났습니다. 알라딘은 손가락을 문질렀지요.",
                     "그러자 반지의 지니가 나타났습니다.",
-                    "\"궁전은 어디 있느냐?\""
+                    "알라딘이 다급히 물었습니다. \"궁전은 어디 있느냐?\""
                 ],
                 "right": [
-                    "\"아주 먼 사막 너머입니다.\"",
+                    "지니가 대답했습니다. \"아주 먼 사막 너머입니다.\"",
                     "\"저를 그리로 보내 주세요.\"",
                     "눈을 뜨니 온통 모래였습니다. 저 멀리 낯익은 궁전이 보였지요.",
                     "알라딘은 밤이 되기를 기다렸습니다. 그러고는 몰래 담을 넘어 공주의 방을 찾았지요."
@@ -855,7 +855,7 @@ const EN = {
                         "And then he remembered the ring.",
                         "He rubbed his finger,",
                         "and the genie of the ring appeared.",
-                        "\"Where is the palace?\""
+                        "Aladdin asked at once, \"Where is the palace?\""
                     ],
                     right: [
                         "\"Far beyond the desert, master.\"",
