@@ -35,6 +35,7 @@ assert.match(css, /@media \(max-width: 480px\)/);
 assert.match(app, /joyclass-sentence-building-progress-v2/);
 assert.match(app, /selectedChoices/);
 assert.match(app, /task\.answers/);
+assert.match(app, /task\.shuffleOptions === false/);
 assert.match(app, /task\.minChars/);
 assert.match(app, /task\.criteria/);
 assert.match(app, /rubric-checkbox/);
@@ -118,6 +119,17 @@ for (const [lessonIndex, item] of course.lessons.entries()) {
 }
 
 assert.ok(requiredStandards.every((code) => usedStandards.has(code)), "Every selected achievement standard must be taught by at least one lesson.");
+
+const numberedReferenceTasks = course.lessons.flatMap((item) => item.tasks).filter((task) =>
+    task.type === "choice" && task.options.every((option) => /^[①②③④⑤]$/.test(option))
+);
+assert.equal(numberedReferenceTasks.length, 3, "expected three numbered-sentence choice tasks");
+numberedReferenceTasks.forEach((task) => {
+    assert.deepEqual([...task.options], ["①", "②", "③", "④", "⑤"]);
+    assert.equal(task.shuffleOptions, false, "numbered-sentence choices must keep their printed order");
+    ["①", "②", "③", "④", "⑤"].forEach((label) => assert.match(task.scene, new RegExp(label)));
+});
+
 assert.ok(course.lessons.slice(0, 12).every((item) => item.gradeBand === "3~4학년군"));
 assert.ok(course.lessons.slice(12).every((item) => item.gradeBand === "5~6학년군"));
 

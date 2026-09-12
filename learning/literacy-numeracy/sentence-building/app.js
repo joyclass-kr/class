@@ -165,7 +165,8 @@
             guide.textContent = "정답을 모두 선택하세요.";
             list.append(guide);
         }
-        const optionEntries = shuffle(task.options.map((option, optionIndex) => ({ option, optionIndex })));
+        const indexedOptions = task.options.map((option, optionIndex) => ({ option, optionIndex }));
+        const optionEntries = task.shuffleOptions === false ? indexedOptions : shuffle(indexedOptions);
         optionEntries.forEach(({ option, optionIndex }, displayIndex) => {
             const button = document.createElement("button");
             button.type = "button";
