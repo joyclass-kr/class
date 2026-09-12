@@ -239,10 +239,10 @@ export default function GradeTwoAdditionSubtractionTwoPage() {
           <button className="button primary" type="button" onClick={checkAll}>전체 채점</button>
         </div>
       </div>
-      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 2학년 덧셈뺄셈② 문제지">
+      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 2학년 세로셈 빈칸 문제지">
         {renderSheet(false)}
       </div>
-      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 2학년 덧셈뺄셈② 전체 답지">
+      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 2학년 세로셈 빈칸 전체 답지">
         {renderSheet(true)}
       </div>
     </main>

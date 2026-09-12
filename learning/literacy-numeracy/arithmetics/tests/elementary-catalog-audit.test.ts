@@ -20,10 +20,23 @@ test("초1 학습지는 실제 유형명을 쓰고 암산 표시를 붙이지 �
   assert.equal(gradeOne.some(({ badge }) => badge === "암산"), false);
 });
 
+test("초2 학습지는 구형 순번 제목 대신 실제 훈련 유형명을 쓴다", () => {
+  const gradeTwo = arithmeticWorksheetCatalog.filter(({ grade }) => grade === "초2");
+  assert.deepEqual(gradeTwo.slice(0, 3).map(({ title }) => title), [
+    "두 자리 수 세로셈",
+    "세로셈 빈칸",
+    "덧셈·뺄셈 빈칸",
+  ]);
+  for (const worksheet of gradeTwo) {
+    assert.doesNotMatch(worksheet.name, /덧셈뺄셈[①②③]/u);
+    assert.doesNotMatch(worksheet.title, /덧셈뺄셈[①②③]/u);
+  }
+});
+
 test("암산과 암기 표시는 사용자가 지정한 학습지에만 붙인다", () => {
   assert.deepEqual(
     arithmeticWorksheetCatalog.filter(({ badge }) => badge === "암산").map(({ name }) => name),
-    ["2덧셈뺄셈③", "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3곱셈②", "19단", "4큰수곱셈", "5약수,배수", "5분수③", "6소수①"],
+    ["2덧셈·뺄셈 빈칸", "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3곱셈②", "19단", "4큰수곱셈", "5약수,배수", "5분수③", "6소수①"],
   );
   assert.deepEqual(arithmeticWorksheetCatalog.filter(({ badge }) => badge === "암기").map(({ name }) => name), ["제곱수"]);
 });
@@ -43,7 +56,7 @@ test("목록의 모든 암산 학습지는 실제 문제지 제목에도 암산 
       ? `../app/arithmetic/${worksheet.route!.replace("/arithmetic/", "")}/page.tsx`
       : `../app${worksheet.route}/page.tsx`;
     const source = readFileSync(new URL(pagePath, import.meta.url), "utf8");
-    if (worksheet.name === "2덧셈뺄셈③") assert.match(source, /mentalMath/, worksheet.route!);
+    if (worksheet.name === "2덧셈·뺄셈 빈칸") assert.match(source, /mentalMath/, worksheet.route!);
     else assert.match(source, /className="a4-sheet counting-sheet mental-math-sheet /, worksheet.route!);
   }
   const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");

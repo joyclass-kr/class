@@ -13,6 +13,10 @@ const dataSource = fs.readFileSync(
   path.join(root, "learning", "literacy-numeracy", "math-ox", "data.js"),
   "utf8"
 );
+const index = fs.readFileSync(
+  path.join(root, "learning", "literacy-numeracy", "math-ox", "index.html"),
+  "utf8"
+);
 
 function loadQuestions() {
   const marker = "window.MATH_OX_DATA = ";
@@ -24,6 +28,7 @@ function loadQuestions() {
 test("과목과 단원 선택은 부드러운 공통 클릭음을 사용한다", () => {
   assert.match(app, /class="filter-btn/);
   assert.match(app, /class="unit-btn/);
+  assert.match(index, /id="questionsList"[^>]+data-sfx-feedback="none"/);
   assert.doesNotMatch(app, /(?:data-subject|data-unit)="[^`]+data-sfx="none"/);
 });
 

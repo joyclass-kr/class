@@ -14,7 +14,7 @@ const voyagePath = path.join(root, "learning", "inquiry", "age-of-exploration", 
 const earTrainingPath = path.join(root, "learning", "arts", "music-theory", "ear-training", "index.html");
 const earTrainingEnginePath = path.join(root, "learning", "arts", "music-theory", "ear-training", "piano-engine.js");
 const arithmeticLayoutPath = path.join(root, "learning", "literacy-numeracy", "arithmetics", "app", "layout.tsx");
-const sfxVersion = "20260910-tap-click-1";
+const sfxVersion = "20260912-feedback-scope-1";
 
 for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath, fruitBellPath, voyagePath]) {
     assert.ok(fs.existsSync(filePath), `Missing sound effect file: ${filePath}`);
@@ -49,11 +49,13 @@ assert.ok(sfxSource.includes("아쉬워") && sfxSource.includes("아직 아니")
 assert.ok(sfxSource.includes("[id*='feedback' i]") && sfxSource.includes("[id*='result' i]"), "Feedback elements without a shared class should still be observed.");
 assert.ok(sfxSource.includes("split(/[-_\\s]+/)"), "Compound state classes such as answer-wrong and is-correct should be recognized.");
 assert.ok(sfxSource.includes("semanticSuppressedUntil"), "Custom sound controls should be able to suppress automatic semantic feedback.");
+assert.ok(sfxSource.includes("[data-sfx-feedback='none']"), "Apps with explicit result sounds should be able to exclude their feedback subtree from automatic semantic sounds.");
 assert.ok(sfxSource.includes('DEFAULT_VOLUME = 0.65;'), "Default SFX volume should be set to 65%.");
 
 const musicControlSource = fs.readFileSync(musicControlPath, "utf8");
 new vm.Script(musicControlSource, { filename: musicControlPath });
 assert.ok(musicControlSource.includes('new URL("game-sfx.js", currentScript.src)'), "Music-enabled games should load the shared effect module.");
+assert.ok(musicControlSource.includes('sfxScriptUrl.searchParams.set("v", "20260912-feedback-scope-1")'), "Music-enabled games should cache-bust the current shared effect module.");
 assert.ok(musicControlSource.includes("classmusicchange"), "Music controls should publish the shared mute and volume state.");
 assert.ok(musicControlSource.includes('id="musicVolumeSlider"'), "Shared music volume should use the compact linear slider.");
 assert.ok(musicControlSource.includes('id="sfxVolumeSlider"'), "Shared effect volume should use the compact linear slider.");

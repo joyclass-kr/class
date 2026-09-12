@@ -36,7 +36,7 @@
         const sfxScriptUrl = currentScript
             ? new URL("game-sfx.js", currentScript.src)
             : new URL("../../assets/sound/game-sfx.js", location.href);
-        sfxScriptUrl.searchParams.set("v", "20260910-tap-click-1");
+        sfxScriptUrl.searchParams.set("v", "20260912-feedback-scope-1");
         sfxScript.src = sfxScriptUrl.href;
         document.head.appendChild(sfxScript);
     }

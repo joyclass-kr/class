@@ -963,9 +963,10 @@ test("renders the first grade-two vertical addition and subtraction worksheet", 
   const html = await response.text();
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /2학년/);
-  assert.match(html, /덧셈뺄셈①/);
-  assert.match(html, /aria-label="A4 2학년 덧셈뺄셈① 문제지"/);
-  assert.match(html, /aria-label="A4 2학년 덧셈뺄셈① 전체 답지"/);
+  assert.match(html, /두 자리 수 세로셈/);
+  assert.match(html, /aria-label="A4 2학년 두 자리 수 세로셈 문제지"/);
+  assert.match(html, /aria-label="A4 2학년 두 자리 수 세로셈 전체 답지"/);
+  assert.doesNotMatch(html, /덧셈뺄셈①/);
   assert.equal((html.match(/data-testid="vertical-equation"/g) ?? []).length, 32);
   assert.equal((html.match(/class="vertical-input"/g) ?? []).length, 16);
   assert.equal((html.match(/class="vertical-static-answer"/g) ?? []).length, 16);
@@ -984,9 +985,10 @@ test("renders the second grade-two worksheet with two missing digits per problem
   const html = await response.text();
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /2학년/);
-  assert.match(html, /덧셈뺄셈②/);
-  assert.match(html, /aria-label="A4 2학년 덧셈뺄셈② 문제지"/);
-  assert.match(html, /aria-label="A4 2학년 덧셈뺄셈② 전체 답지"/);
+  assert.match(html, /세로셈 빈칸/);
+  assert.match(html, /aria-label="A4 2학년 세로셈 빈칸 문제지"/);
+  assert.match(html, /aria-label="A4 2학년 세로셈 빈칸 전체 답지"/);
+  assert.doesNotMatch(html, /덧셈뺄셈②/);
   assert.equal((html.match(/data-testid="digit-equation"/g) ?? []).length, 24);
   assert.equal((html.match(/class="digit-input"/g) ?? []).length, 24);
   assert.equal((html.match(/class="digit-static-answer"/g) ?? []).length, 24);
@@ -2114,9 +2116,10 @@ test("renders the third grade-two worksheet with mixed missing terms", async () 
 
   const html = await response.text();
   assert.match(html, /2학년/);
-  assert.match(html, /덧셈뺄셈③/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈③ 문제지"/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈③ 전체 답지"/);
+  assert.match(html, /덧셈·뺄셈 빈칸/);
+  assert.match(html, /aria-label="A4 덧셈·뺄셈 빈칸 문제지"/);
+  assert.match(html, /aria-label="A4 덧셈·뺄셈 빈칸 전체 답지"/);
+  assert.doesNotMatch(html, /덧셈뺄셈③/);
   assert.equal((html.match(/class="addsub-equation-row"/g) ?? []).length, 60);
   assert.equal((html.match(/class="addsub-input /g) ?? []).length, 30);
   assert.equal((html.match(/maxLength="3"/g) ?? []).length, 30);

@@ -338,7 +338,7 @@
     }
 
     function semanticOutcome(element) {
-        if (!(element instanceof Element)) return "";
+        if (!(element instanceof Element) || element.closest("[data-sfx-feedback='none']")) return "";
         const values = [
             ...element.classList,
             element.dataset.state,
