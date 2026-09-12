@@ -17,8 +17,8 @@ for (const name of ["poems-index.js", "lessons.js"]) {
 const index = context.window.POETRY_POEM_INDEX;
 
 for (const entry of index) {
-    const file = path.join(ROOT, entry.id, "poem.js");
-    if (!fs.existsSync(file)) throw new Error(`시 ${entry.id}: ${entry.id}/poem.js가 없습니다.`);
+    const file = path.join(ROOT, "poems", entry.id, "poem.js");
+    if (!fs.existsSync(file)) throw new Error(`시 ${entry.id}: poems/${entry.id}/poem.js가 없습니다.`);
     vm.runInContext(fs.readFileSync(file, "utf8"), context, { filename: `${entry.id}/poem.js` });
     const part = context.window.POETRY_PART[entry.id];
     if (!part) throw new Error(`시 ${entry.id}: 본문 파일이 제 자리에 등록되지 않았습니다.`);
