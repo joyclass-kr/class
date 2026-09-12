@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["leei-gosan"] = {
         "poem": {
+            "illustration": "images/leei-gosan.webp",
             "lines": [
                 "고산 구곡담을 사람이 모르더니",
                 "주모복거하니 벗님네 다 오신다",

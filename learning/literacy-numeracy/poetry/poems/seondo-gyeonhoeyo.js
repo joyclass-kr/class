@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["seondo-gyeonhoeyo"] = {
         "poem": {
+            "illustration": "images/seondo-gyeonhoeyo.webp",
             "lines": [
                 "슬프나 즐거우나 옳다 하나 외다 하나",
                 "내 몸의 해올 일만 닦고 닦을 뿐이언정",

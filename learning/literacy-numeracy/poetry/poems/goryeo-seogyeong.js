@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["goryeo-seogyeong"] = {
         "poem": {
+            "illustration": "images/goryeo-seogyeong.webp",
             "lines": [
                 "서경이 아즐가 서경이 서울이지마는",
                 "위 두어렁셩 두어렁셩 다링디리",

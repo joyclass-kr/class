@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["jeongseo-jeonggwajeong"] = {
         "poem": {
+            "illustration": "images/jeongseo-jeonggwajeong.webp",
             "lines": [
                 "내 님을 그리워하여 우니다니",
                 "산 접동새 난 이슷하요이다",

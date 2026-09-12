@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["minyeong-maehwasa"] = {
         "poem": {
+            "illustration": "images/minyeong-maehwasa.webp",
             "lines": [
                 "매영이 부딪친 창에 옥인금차 비겼는데",
                 "이삼 백발옹은 거문고와 노래로다",

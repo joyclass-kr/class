@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["goryeo-manjeonchun"] = {
         "poem": {
+            "illustration": "images/goryeo-manjeonchun.webp",
             "lines": [
                 "얼음 위에 댓잎 자리 보아 님과 나와 얼어 죽을망정",
                 "얼음 위에 댓잎 자리 보아 님과 나와 얼어 죽을망정",

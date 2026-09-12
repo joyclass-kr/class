@@ -4,6 +4,7 @@
     window.POETRY_PART = window.POETRY_PART || {};
     window.POETRY_PART["seondo-manheung"] = {
         "poem": {
+            "illustration": "images/seondo-manheung.webp",
             "lines": [
                 "산수간 바위 아래 띠집을 짓노라 하니",
                 "그 모른 남들은 웃는다 한다마는",
