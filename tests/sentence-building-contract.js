@@ -22,7 +22,7 @@ assert.match(html, /curriculum\.js/);
 assert.doesNotMatch(html, /practice-extra\.js/);
 assert.match(html, /app\.js/);
 
-assert.match(css, /grid-template-columns:\s*repeat\(3/);
+assert.match(css, /grid-template-columns:\s*repeat\(4/);
 assert.doesNotMatch(css, /\.course-intro|\.grade-band|\.lesson-card-copy/);
 assert.match(css, /\.rubric-list/);
 assert.match(css, /\.multi-guide/);
