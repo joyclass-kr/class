@@ -573,7 +573,7 @@ const EN = {
                 "Kim Cheomji gave back the house he got with a fan, so a thing got by cheating does not stay long.",
                 "The old man gave a whole house for a fan, so once your eye is caught you cannot judge a price.",
                 "The officials tied the nose thinking it a pillar, so from above you cannot even tell what a thing is.",
-                "The old man picked up the blue fan and shrank his nose, so he must have come to his senses then."
+                "The old man never touched the fans again after that, so being punished taught him to hold himself back."
             ],
             answer: 3
         }
@@ -783,7 +783,7 @@ const QUIZ = [
             "김 첨지가 부채로 얻은 집을 도로 내준 것을 보면, 속이고 얻은 것은 오래 못 가지는구나.",
             "영감이 집을 통째로 주고 부채를 산 것을 보면, 한번 눈이 멀면 값을 못 재네.",
             "하늘 신하들이 코를 기둥인 줄 알고 묶은 것을 보면, 위에서 보면 무엇인지도 몰라.",
-            "영감이 파란 부채를 집어 코를 줄인 것을 보면, 그제야 정신을 차렸겠다."
+            "영감이 그 뒤로 다시는 부채를 손에 대지 않았다는 것을 보면, 혼이 나고서야 스스로 자제할 줄 알게 됐구나."
         ],
         answer: 3
     }
