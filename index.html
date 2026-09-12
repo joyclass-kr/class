@@ -185,16 +185,22 @@
             width: min(1180px, 100%);
         }
 
+        .hub-title-row {
+            position: relative;
+            width: min(1180px, 100%);
+            margin: 0 auto 16px;
+        }
+
         .learning-hub-title {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 14px;
-            width: min(1180px, 100%);
-            margin: 0 auto 16px;
+            width: 100%;
+            margin: 0;
             color: #fff8e8;
             font-family: Pretendard, Noto Sans KR, Apple SD Gothic Neo, Malgun Gothic, sans-serif;
-            font-size: clamp(1.16rem, 1.7vw, 1.38rem);
+            font-size: clamp(0.98rem, 1.35vw, 1.12rem);
             font-weight: 700;
             letter-spacing: 0.045em;
             line-height: 1.25;
@@ -384,11 +390,14 @@
         }
 
         .hub-title-link {
-            width: min(1180px, 100%);
-            margin: -8px auto 14px;
-            text-align: center;
-            font-size: 0.86rem;
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: 0;
+            font-size: 0.78rem;
             letter-spacing: 0.03em;
+            white-space: nowrap;
         }
 
         .hub-title-link a {
@@ -872,7 +881,14 @@
             .music-control { gap: 7px; transform: scale(0.93); }
             .music-label { font-size: 14px; }
             .volume-step { width: 20px; }
-            .learning-hub-title { margin-bottom: 12px; }
+            .hub-title-row { margin-bottom: 12px; }
+            .hub-title-link {
+                position: static;
+                transform: none;
+                display: block;
+                text-align: right;
+                margin: 4px 4px 0;
+            }
             .category-section { margin-bottom: 8px; border-radius: 11px; }
             .category-toggle {
                 grid-template-columns: 40px 1fr 40px;
@@ -987,8 +1003,10 @@
     </div>
 
     <div id="hubContent" hidden data-nosnippet>
-        <h1 class="learning-hub-title">기초학력</h1>
-        <p class="hub-title-link"><a href="learning/class-race/" data-requires-player="true" data-always-open="true">학급 순위전 <span aria-hidden="true">→</span></a></p>
+        <div class="hub-title-row">
+            <h1 class="learning-hub-title">기초학력</h1>
+            <p class="hub-title-link"><a href="learning/class-race/" data-requires-player="true" data-always-open="true">학급 순위전 <span aria-hidden="true">→</span></a></p>
+        </div>
         <section class="hub-section worksheet-section category-section" data-category-section aria-labelledby="worksheet-title">
         <h2 id="worksheet-title" class="category-heading"><button id="category-literacy-toggle" class="category-toggle" type="button" aria-expanded="false" aria-controls="category-literacy-panel"><span class="category-number" aria-hidden="true">01</span><span class="category-label">문해·수리</span><span class="category-chevron" aria-hidden="true"></span></button></h2>
         <div id="category-literacy-panel" class="worksheet-container category-panel" role="region" aria-labelledby="category-literacy-toggle" hidden>
