@@ -592,20 +592,27 @@
             // 해당 책의 시 목록 가져오기
             const bookPoems = b.poemIds.map((id) => poemById.get(id)).filter(Boolean);
 
-            const poemItemsHtml = bookPoems.map((p, idx) => `
-                <li class="cover-poem-item">
-                    <div class="cover-poem-title-row">
-                        <span class="cover-poem-num">${idx + 1}.</span>
-                        <span class="cover-poem-title">${escapeHtml(p.title)}</span>
-                    </div>
-                    <div class="cover-poem-author-row">
-                        <span class="cover-poem-poet">${escapeHtml(p.poet || "")}</span>
-                    </div>
-                </li>
-            `).join("");
+            const poemItemsHtml = bookPoems.map((p, idx) => {
+                const poemDone = isPoemDone(p.id);
+                return `
+                    <li>
+                        <a class="cover-poem-item" href="${p.id}/" title="${escapeHtml(p.title)} 읽기">
+                            <div class="cover-poem-title-row">
+                                <span class="cover-poem-num">${idx + 1}.</span>
+                                <span class="cover-poem-title">${escapeHtml(p.title)} ${poemDone ? "✓" : ""}</span>
+                            </div>
+                            <div class="cover-poem-author-row">
+                                <span class="cover-poem-poet">${escapeHtml(p.poet || "")}</span>
+                            </div>
+                        </a>
+                    </li>
+                `;
+            }).join("");
+
+            const firstPoemId = bookPoems[0]?.id || "";
 
             return `
-                <div class="book-card ${done ? 'is-done' : ''}" role="button" tabindex="0" data-book-idx="${bIdx}">
+                <div class="book-card ${done ? 'is-done' : ''}" data-book-idx="${bIdx}" data-first-poem="${firstPoemId}">
                     <div class="book-cover">
                         <div class="book-cover-header">
                             <span class="book-cover-badge">${escapeHtml(volumeBadge)}</span>
@@ -616,23 +623,13 @@
                         </ol>
                     </div>
                     <div class="book-title-meta">
-                        <p class="book-card-title">${escapeHtml(b.title)}</p>
+                        <a class="book-card-title" href="${firstPoemId}/" style="text-decoration:none; color:inherit; display:block;">
+                            ${escapeHtml(b.title)}
+                        </a>
                     </div>
                 </div>
             `;
         }).join("");
-
-        bookShelf.querySelectorAll("[data-book-idx]").forEach((card) => {
-            const idx = parseInt(card.getAttribute("data-book-idx"), 10);
-            const open = () => openBook(idx);
-            card.onclick = open;
-            card.onkeydown = (e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    open();
-                }
-            };
-        });
     }
 
     // 소재별 찾기 뷰 렌더링
@@ -659,33 +656,16 @@
         topicPoemList.innerHTML = list.map((p) => {
             const done = isPoemDone(p.id);
             return `
-                <li class="topic-poem-card" role="button" tabindex="0" data-poem-id="${p.id}">
-                    <div>
-                        <div class="topic-poem-title">${escapeHtml(p.title)} ${done ? "✓" : ""}</div>
-                        <div class="topic-poem-poet">${escapeHtml(p.poet || "")}</div>
-                    </div>
+                <li>
+                    <a class="topic-poem-card" href="${p.id}/">
+                        <div>
+                            <div class="topic-poem-title">${escapeHtml(p.title)} ${done ? "✓" : ""}</div>
+                            <div class="topic-poem-poet">${escapeHtml(p.poet || "")}</div>
+                        </div>
+                    </a>
                 </li>
             `;
         }).join("");
-
-        topicPoemList.querySelectorAll("[data-poem-id]").forEach((card) => {
-            const poemId = card.getAttribute("data-poem-id");
-            const handleSelect = () => {
-                // 이 시가 속한 책 찾기
-                let bIdx = books.findIndex((b) => b.poemIds.includes(poemId));
-                if (bIdx < 0) bIdx = 0;
-                const book = books[bIdx];
-                const pIdxInBook = book.poemIds.indexOf(poemId);
-                openBook(bIdx, pIdxInBook >= 0 ? pIdxInBook : 0);
-            };
-            card.onclick = handleSelect;
-            card.onkeydown = (e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleSelect();
-                }
-            };
-        });
     }
 
     /* ── 상단 네비게이션 & 키보드 & 터치 제스처 ───────────────── */
