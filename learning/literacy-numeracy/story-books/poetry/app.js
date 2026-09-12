@@ -98,7 +98,6 @@
 
     // DOM 요소 캐시
     const $ = (id) => document.getElementById(id);
-    const bookShelfBtn = $("bookShelfBtn");
     const tocBtn = $("tocBtn");
     const shelfScreen = $("shelfScreen");
     const orderTabBtn = $("orderTabBtn");
@@ -521,9 +520,12 @@
         shelfScreen.classList.add("hidden");
         bookScreen.hidden = false;
         bookScreen.classList.remove("hidden");
-        if (bookShelfBtn) bookShelfBtn.hidden = false;
         if (tocBtn) tocBtn.hidden = false;
         window.scrollTo(0, 0);
+
+        try {
+            history.pushState({ book: bookIndex }, "");
+        } catch (e) {}
 
         // 로딩 화면 표시
         spreadEl.innerHTML = `
@@ -556,7 +558,6 @@
         bookScreen.classList.add("hidden");
         shelfScreen.hidden = false;
         shelfScreen.classList.remove("hidden");
-        if (bookShelfBtn) bookShelfBtn.hidden = true;
         if (tocBtn) tocBtn.hidden = true;
         window.scrollTo(0, 0);
 
@@ -693,7 +694,13 @@
     topicTabBtn.onclick = () => setShelfTab("topic");
 
     tocBtn.onclick = () => goTo(0, "prev");
-    if (bookShelfBtn) bookShelfBtn.onclick = () => showShelf();
+
+    // 브라우저 뒤로가기 시 책 읽는 중이면 책장으로 돌아가기
+    window.addEventListener("popstate", () => {
+        if (!bookScreen.hidden && !bookScreen.classList.contains("hidden")) {
+            showShelf();
+        }
+    });
 
     // 공용 뒤로가기 단추(assets/site-back-navigation.js) 연동
     // 책을 보고 있는 중이면 책장으로 돌아가고, 책장이면 사이트 메인으로 돌아감
